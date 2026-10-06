@@ -68,6 +68,11 @@ EXPECTED_BLANKS = {
     # have no Finding on cycle 3's side and are blank there, never on `_rj4`'s. B5 is a body leg
     # with no rate and is not a row of F5 at all (`figures.rated_legs`).
     "scan_2026-09-10_rj4": {"B1", "B2", "B4", "D2", "D3", "G4"},
+    # The snapshot since `cc_tasks/2026-10-06_absence_verdicts_rules.md`, against the same cycle-3
+    # judgement. The six above are blank on cycle 3's side, as before. A2, A9, D1 and F4 are
+    # blank on `_rj5`'s, because generation 14 left every one of their Findings `error` and a
+    # rate over no measured verdict does not exist.
+    "scan_2026-09-10_rj5": {"B1", "B2", "B4", "D2", "D3", "G4", "A2", "A9", "D1", "F4"},
 }
 
 #: The cycles whose F5 is a figure that can be drawn and therefore checked.
@@ -111,14 +116,21 @@ def recorded_names() -> list:
 
 
 def legs_with_findings(cycle: str) -> set | None:
-    """The legs a cycle actually judged, read off its Findings. `None` when the payload is not
-    on disk. Deliberately NOT `legs_judged`: that key exists only on a re-judged payload, and a
-    measured cycle is just as legitimate a comparison series."""
+    """The legs a cycle actually MEASURED, read off its Findings: at least one verdict that is
+    not `error`. `None` when the payload is not on disk. Deliberately NOT `legs_judged`: that
+    key exists only on a re-judged payload, and a measured cycle is just as legitimate a
+    comparison series.
+
+    A leg whose every Finding is `error` was judged and measured nothing, so it has no rate and
+    its blank row is DD-055's case: not measured is a reason, not a zero.
+    `scan_2026-09-10_rj5` is the first cycle with such legs (A2, A9, D1, F4; generation 14,
+    `cc_tasks/2026-10-06_absence_verdicts_rules.md`). Counting a leg as measured because it
+    carries `error` Findings would call those blanks false."""
     p = REPO / "state" / f"{cycle}.json"
     if not p.is_file():
         return None
     return {f["leg"] for f in json.loads(p.read_text(encoding="utf-8"))
-            .get("findings_detail") or []}
+            .get("findings_detail") or [] if f.get("verdict") != "error"}
 
 
 # ------------------------------------------------------------------ decision 1

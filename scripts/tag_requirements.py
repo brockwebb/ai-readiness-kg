@@ -334,6 +334,11 @@ UNMAPPED_ERROR_CLASSES = {
                               "code, and no requirement of the body's stands in the way"),
     "unknown": ("the harness's error map does not name the failure; it is counted per cycle "
                 "until it is named, and nothing can be said to unlock what is not named"),
+    # `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 2: the bound is this harness's
+    # own request budget, not anything the body withholds.
+    "unprobed_over_cap": ("the link was left unprobed by this harness's own per-surface "
+                          "request bound; what unlocks it is a collection that probes it, "
+                          "which is the project's cap or rescan, not a grant or a tool"),
 }
 
 # ------------------------------------------------------------------------------- the scope

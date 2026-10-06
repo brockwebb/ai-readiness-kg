@@ -20,14 +20,19 @@
 # `_rj4`, generation 12, because under DN-004 the snapshot moves when a published number would
 # change, and three tagged Results and 161 product cells would: the guard, once it walked the
 # `SUPERSEDES` chain past `_rj3` to the newest judgement, refused the build.
-snapshot_cycle: scan_2026-09-10_rj4
+#
+# `_rj5` from 2026-10-06. `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 6 re-judged
+# the same evidence under generation 14 (DN-012 d1 to d3): 402 absence verdicts reached over a
+# partial search moved from `fail` to `error`, and every view is regenerated from it, so no
+# `fail` on A1, A2, A3 or D4 is shown that does not state the search it was reached over.
+snapshot_cycle: scan_2026-09-10_rj5
 
 title: "AI readiness of the federal statistical system: host-level findings"
 
 # The version identifier the report carries, per DN-002 decision 5. The snapshot cycle IS the
 # version: two builds of the same cycle are the same findings, and a new cycle is a new
 # document rather than a new edition of this one.
-version: "2026-09-10_rj4"
+version: "2026-09-10_rj5"
 
 # The date each version was RELEASED, keyed by version. Every date a published file carries —
 # CITATION.cff `date-released`, the Zenodo `publication_date`, the sitemap `lastmod`, the index
@@ -50,6 +55,7 @@ version: "2026-09-10_rj4"
 # the clock with the version unchanged; this restores it.
 released:
   "2026-09-10_rj4": "2026-09-19"
+  "2026-09-10_rj5": "2026-10-06"
 
 # Corrections to a released version's WORDS, keyed by version. A correction moves no number, no
 # verdict and no matrix cell — a change that would is a new snapshot under DN-004 decision 1,

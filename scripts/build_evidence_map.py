@@ -182,6 +182,11 @@ Q2_COLUMNS = ("access_denial", "absence", "nonconformant", "error_other", "pass"
 CATALOG_ABSENCE = (r"holds no catalog record for the product among its (\d+) record",
                    r"a catalog is served at https://www\.census\.gov/data\.json but the "
                    r"product is not in it")
+#: Generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`, DN-012 d1/d3): the same
+#: Census catalog evidence, judged `error` because the inventories ind:D4 names were not all
+#: searched. The sentence names each inventory not observed, and quotes no record count, so the
+#: count is read from the catalog Observation the Finding cites.
+INVENTORY_REMAINDER = r"declared inventory not observed: (https://\S+?) \("
 
 #: Named queries: the `id` of every `query` evidence entry is a key here, and the test resolves
 #: it against this table. The value says what was computed and from what.
@@ -690,18 +695,13 @@ def q4_claims(M: Map) -> list:
         u = re.search(r"product page at (https://\S+?)[,;]? ", f["reason"])
         if u:
             urls.setdefault(f["target_doc_id"], set()).add(u.group(1).rstrip(","))
+    if not hits:
+        # A cycle judged under generation 14 says `error` here, not `fail`.
+        return q4_claims_unsearched(M, where)
     if len(counts) != 1:
         raise SystemExit(f"FATAL: Census catalog-absence findings quote {sorted(counts)} "
                          "data.json record counts, not exactly one")
-    # The product URL of each probed Census surface, from the published product matrix.
-    pm = M.s.matrices()["product"][1]
-    matrix_urls = {r["surface"]: r["url"] for r in pm["rows"] if r["agency"] == CENSUS}
-    targets = sorted({M.findings[f]["target_doc_id"] for f in hits})
-    probed = []
-    for t in targets:
-        u = matrix_urls.get(t) or ", ".join(sorted(urls.get(t, ()))) or "not recorded"
-        probed.append(f"`{t}` (`{u}`)")
-    legs = sorted({M.findings[f]["leg"] for f in hits}, key=BP.code_key)
+    probed, legs = _census_probed(M, hits, urls)
     c = Claim("q4.census_catalog", "Q4", "record")
     c.text = (f"On cycle `{M.cycle}`, census.gov serves a catalog at "
               f"`https://www.census.gov/data.json` holding "
@@ -710,6 +710,79 @@ def q4_claims(M: Map) -> list:
               f"Census findings on legs {', '.join(f'`{x}`' for x in legs)} "
               f"({c.n(len(legs), 'distinct legs among them')} legs) fail because no record in it "
               f"names the probed product; the surfaces probed were {'; '.join(probed)}.")
+    c.q("cycle.findings")
+    for fid in hits:
+        f = M.findings[fid]
+        c.ev("finding", fid, M.floc(fid), f"{f['leg']} on {f['target_doc_id']}")
+    return [c]
+
+
+def _census_probed(M: Map, hits: list, urls: dict) -> tuple:
+    """The probed Census surfaces (with their product URL) and the legs among `hits`."""
+    pm = M.s.matrices()["product"][1]
+    matrix_urls = {r["surface"]: r["url"] for r in pm["rows"] if r["agency"] == CENSUS}
+    targets = sorted({M.findings[f]["target_doc_id"] for f in hits})
+    probed = []
+    for t in targets:
+        u = matrix_urls.get(t) or ", ".join(sorted(urls.get(t, ()))) or "not recorded"
+        probed.append(f"`{t}` (`{u}`)")
+    legs = sorted({M.findings[f]["leg"] for f in hits}, key=BP.code_key)
+    return probed, legs
+
+
+def _catalog_record_counts(M: Map, hits: list, url: str) -> set:
+    """`dataset_count` of the catalog Observation at `url` that the `hits` cite, read from the
+    payload the cycle's Findings were judged over (`derived_from` for a re-judgement)."""
+    payload = json.loads((REPO / "state" / f"{M.cycle}.json").read_text(encoding="utf-8"))
+    src = payload.get("derived_from") or M.cycle
+    rows = json.loads((REPO / "state" / f"{src}.json").read_text(encoding="utf-8"))
+    obs = {o["obs_id"]: o for o in rows["observations_detail"]}
+    out = set()
+    for fid in hits:
+        for oid in M.findings[fid].get("evidence") or []:
+            o = obs.get(oid)
+            if o and o.get("target_url") == url and (o.get("parsed") or {}).get("present"):
+                out.add(int(o["parsed"]["dataset_count"]))
+    return out
+
+
+def q4_claims_unsearched(M: Map, where: dict) -> list:
+    """Q4's Census record under generation 14: the host's catalog is served and the product is
+    not in it, and every Census finding on the D4 family is `error`, because the department's
+    inventory and data.gov's, which ind:D4 names, were not searched (DN-012 d1)."""
+    hits, remainder = [], set()
+    for fid, f in sorted(M.findings.items()):
+        if where[f["target_doc_id"]][0] != CENSUS or f["verdict"] != "error":
+            continue
+        found = re.findall(INVENTORY_REMAINDER, f["reason"])
+        if not found:
+            continue
+        hits.append(fid)
+        remainder.update(found)
+    if not hits:
+        raise SystemExit("FATAL: no Census finding names a catalog record or an unsearched "
+                         "inventory; Q4's Census record has nothing to stand on")
+    catalog = "https://www.census.gov/data.json"
+    counts = _catalog_record_counts(M, hits, catalog)
+    if len(counts) != 1:
+        raise SystemExit(f"FATAL: the Census findings cite {sorted(counts)} record counts for "
+                         f"{catalog}, not exactly one")
+    # Each surface's URL from the payload's own matrix, which carries every surface the cycle
+    # judged; the product matrix carries only the declared flagships.
+    payload = json.loads((REPO / "state" / f"{M.cycle}.json").read_text(encoding="utf-8"))
+    surface_urls = {r["doc_id"]: {r["url"]} for r in payload.get("matrix") or [] if r.get("url")}
+    probed, legs = _census_probed(M, hits, surface_urls)
+    c = Claim("q4.census_catalog", "Q4", "record")
+    c.text = (f"On cycle `{M.cycle}`, census.gov serves a catalog at `{catalog}` holding "
+              f"{c.n(counts.pop(), 'record count of the census.gov catalog the Census findings cite')} "
+              f"records, and {c.n(len(hits), 'Census findings that name an inventory not searched')} "
+              f"Census findings on legs {', '.join(f'`{x}`' for x in legs)} "
+              f"({c.n(len(legs), 'distinct legs among them')} legs) are `error`, not `fail`: "
+              f"no record in that catalog names the probed product, and the inventories the "
+              f"indicator also names were not searched "
+              f"({', '.join(f'`{u}`' for u in sorted(remainder))}, and the body's "
+              f"catalog.data.gov organization), so absence is not established; the surfaces "
+              f"probed were {'; '.join(probed)}.")
     c.q("cycle.findings")
     for fid in hits:
         f = M.findings[fid]

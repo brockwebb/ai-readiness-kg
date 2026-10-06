@@ -30,7 +30,11 @@ sys.path.insert(0, "/Users/brock/GitHub/seldon")
 from scan import load_params, spot                                   # noqa: E402
 
 TODAY = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
-SNAPSHOT = "scan_2026-09-10_rj4"
+#: The cycle of record, read from its one declaration rather than typed: it moved to `_rj5`
+#: (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), and a literal here would be a second
+#: declaration of it.
+SNAPSHOT = __import__("yaml").safe_load(
+    (REPO / "docs" / "reports" / "publication.yaml").read_text(encoding="utf-8"))["snapshot_cycle"]
 
 
 def _payload(cycle: str, **extra) -> dict:

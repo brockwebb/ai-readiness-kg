@@ -179,12 +179,19 @@ def test_every_rule_returns_its_expected_verdict_on_the_control_fixture(fixture,
     real rule defects on its first run — A8 passing on a bare HTTP Last-Modified header, A9
     accepting a soft-404 HTML shell as an agent surface, and B3 accepting the product page as
     its own methodology document."""
+    from scan import declarations
     from scan.manners import Fetcher
     from scan.run import CONTROL_LEGS, run_surface, specs
     params = load_params()
     with FixtureServer(fixture) as base:
+        # The target `run.run_controls` builds: since generation 14 a fixture declares the API
+        # description, terms, changelog and catalog it serves, so its absence branches are
+        # judged over a declared location that was observed
+        # (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4).
         _, findings = run_surface(specs(), {"doc_id": f"control:{fixture}",
-                                            "url": f"{base}/index.html"},
+                                            "url": f"{base}/index.html",
+                                            "declared": declarations.control_fixture(
+                                                base, params)},
                                   params, CONTROL_LEGS, Fetcher(params, clock=VirtualClock()))
     bad = {f.leg: f.verdict for f in findings if f.verdict != expected}
     assert not bad, bad

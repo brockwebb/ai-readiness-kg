@@ -55,6 +55,19 @@ from .collectors import dcat, v2clauses
 #: trusting any key, as the rules check `DCAT_FIELDS_SCHEME` and `CONTENT_SIGNAL_SCHEME`.
 REREAD_SCHEME = 1
 
+#: Scheme 2 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 6) adds what DN-012 d2 and
+#: d3 put on an Observation at collection: the `link_candidates` accounting on a link-probe
+#: page, and the `declared` block on every leg that reads a declared location. Neither is
+#: computed from a retained BODY. The accounting comes from the page Observation's own
+#: `parsed.links` and from the cycle's link Observations. The declarations come from
+#: `targets.yaml` as it stood at re-judgement, and they are COPIED onto the record, so a later
+#: edit to `targets.yaml` cannot move this payload's re-derivation. Scheme 1 payloads are
+#: untouched: the second pass runs only when `declared` is given.
+REREAD_SCHEME_DECLARED = 2
+
+#: The legs scheme 2 attaches a `declared` block to, beside the link-probe page.
+DECLARED_LEGS = ("link_probe", "A2", "A9", "D4", "D1", "F4")
+
 #: Which blocks are re-read, per leg. Named once so the record on the payload and the code that
 #: fills the blocks cannot disagree about what was done.
 BLOCKS = {"D4": ("membership", "dcat_fields"), "A4": ("content_signal",)}
@@ -123,7 +136,46 @@ def _a4(parsed: dict, body: bytes, product_url: str, params: dict) -> tuple:
     return parsed, ["content_signal"]
 
 
-def reread(rows: list, urls: dict, params: dict) -> tuple:
+def _declared_pass(rows: list, declared: dict, params: dict) -> tuple:
+    """Scheme 2's second pass over already-copied rows: `link_candidates` on each link-probe
+    page and `declared` on each declaration-reading leg, filled only where absent. Mutates the
+    copies it is given and returns `(rows, counts)`."""
+    from . import declarations
+    from .collectors import links
+    from .model import Observation
+    block, bodies = declared["block"], declared["bodies"]
+    counts = {"link_probe": {"link_candidates": 0, "declared": 0},
+              **{leg: {"declared": 0} for leg in DECLARED_LEGS if leg != "link_probe"}}
+    by_doc: dict = {}
+    for r in rows:
+        if r.get("leg") == "link_probe":
+            by_doc.setdefault(r["target_doc_id"], []).append(r)
+    for r in rows:
+        leg, doc = r.get("leg"), r.get("target_doc_id")
+        if leg not in DECLARED_LEGS:
+            continue
+        body = bodies.get(doc)
+        decl = declarations.for_body(block, body)
+        parsed = r.get("parsed")
+        is_page = (leg == "link_probe" and isinstance(parsed, dict) and "links" in parsed)
+        if leg == "link_probe" and not is_page:
+            continue
+        parsed = dict(parsed or {})
+        if is_page and "link_candidates" not in parsed:
+            admitted = declarations.admitted_hosts(decl, leg, params)
+            sibling = [Observation(**x) for x in by_doc.get(doc, [])
+                       if (x.get("parsed") or {}).get("probe") == "link"]
+            parsed["link_candidates"] = links.account(sibling, parsed["links"],
+                                                      r["target_url"], params, admitted)
+            counts[leg]["link_candidates"] += 1
+        if "declared" not in parsed:
+            parsed["declared"] = declarations.record(decl, body, leg, params)
+            counts[leg]["declared"] += 1
+        r["parsed"] = parsed
+    return rows, counts
+
+
+def reread(rows: list, urls: dict, params: dict, declared: dict | None = None) -> tuple:
     """`(rows', record)`: deep copies of `rows` with the absent blocks filled from each
     Observation's retained body, and the record of what was filled.
 
@@ -133,6 +185,10 @@ def reread(rows: list, urls: dict, params: dict) -> tuple:
 
     The input is never mutated. The rows are the stored payload's, and the payload is
     immutable.
+
+    `declared` (scheme 2) is `{"block": <targets.yaml declared_locations>, "bodies": {doc_id:
+    body code}}`. When given, the second pass in `_declared_pass` runs too, and the record
+    carries `declared` whole so the re-derivation gate re-applies exactly it.
     """
     out, counts = [], {leg: {b: 0 for b in blocks} for leg, blocks in BLOCKS.items()}
     for row in rows:
@@ -157,8 +213,10 @@ def reread(rows: list, urls: dict, params: dict) -> tuple:
         for b in added:
             counts[leg][b] += 1
         out.append(new)
+    if declared is not None:
+        out, declared_counts = _declared_pass(out, declared, params)
     record = {
-        "scheme": REREAD_SCHEME,
+        "scheme": REREAD_SCHEME if declared is None else REREAD_SCHEME_DECLARED,
         "blocks": {leg: list(b) for leg, b in BLOCKS.items()},
         "observations_reread": counts,
         "functions": ["scan.collectors.dcat.membership_block",
@@ -171,4 +229,15 @@ def reread(rows: list, urls: dict, params: dict) -> tuple:
                  "changed. `rederive.observations_for` applies the same re-read, so the "
                  "re-derivation gate judges exactly what this payload judged."),
     }
+    if declared is not None:
+        record["declared"] = declared
+        record["declared_blocks"] = {"link_probe": ["link_candidates", "declared"],
+                                     **{leg: ["declared"] for leg in DECLARED_LEGS
+                                        if leg != "link_probe"}}
+        record["declared_reread"] = declared_counts
+        record["declared_note"] = (
+            "Scheme 2: `link_candidates` was computed from each link-probe page's own "
+            "`parsed.links` and the cycle's link Observations (`collectors.links.account`), and "
+            "`declared` from `targets.yaml` `declared_locations` as copied here. Neither is "
+            "read from a retained body; both are what the collector now records at collection.")
     return out, record

@@ -116,6 +116,17 @@ CLASSES: dict = {
                          "note": "not fetched, because the robots.txt that declared this "
                                  "sitemap is on a different site; the declaration is recorded "
                                  "with its URL and nothing is requested"},
+    # DN-012 d2 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 2). An on-host link
+    # the product page offers that the cap on requests (`link_probe.max_links_probed`) left
+    # unprobed. BLIND, not SCOPE: the URL is inside the product and nobody looked at it, which
+    # is exactly what `robots_disallowed` means under harness-v5 (DN-012 d1: "blind is blind
+    # whether the cause is a refused fetch or a cap"). Before it existed the link after the cap
+    # left no record at all (`links.probe` broke out of its loop), so an absence verdict over
+    # 25 of 244 links could not see the other 219.
+    "unprobed_over_cap": {"kind": BLIND, "requested": False,
+                          "note": "not fetched, because the per-surface request bound "
+                                  "(`link_probe.max_links_probed`) was spent on higher-ranked "
+                                  "candidates: inside the product and not looked at"},
     "parse_error": {"kind": BLIND, "requested": True,
                     "note": "a response arrived and could not be read"},
     # New in harness-v5 (decision 4). Cycle 4 filed `httpx.TooManyRedirects` on Census's A10

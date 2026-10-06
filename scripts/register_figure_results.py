@@ -94,6 +94,11 @@ def rows(cycle: str) -> list:
     for leg in [l for l in mx["legs"] if l in mx["per_leg"]]:
         pl = mx["per_leg"][leg]
         k, n = pl["pass"], pl["applicable_n"]
+        # No interval at n = 0: every cell of the leg is `error`, there is no rate to bound, and
+        # F1 draws the leg as "not measured" (`figures.measured`). First reached by
+        # `scan_2026-09-10_rj5` (`cc_tasks/2026-10-06_absence_verdicts_rules.md`).
+        if not n:
+            continue
         lo, hi = wilson(k, n, Z)
         # The matrix was written by the same arithmetic; if these disagree, one of them is a
         # second implementation and the whole point of scan/stats.py has been lost.

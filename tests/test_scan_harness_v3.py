@@ -147,8 +147,11 @@ def test_the_closed_set_grew_and_nothing_left_it():
     # `redirect_loop` joined in `cc_tasks/2026-09-10_harness_v5_blind.md` decision 4. Cycle 4
     # filed `httpx.TooManyRedirects` under `unknown` — correctly, because the map did not name
     # it — and `unknown` is the map asking to be extended. Growth, pinned, deliberate.
+    # `unprobed_over_cap` joined in `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 2:
+    # an on-host link past `link_probe.max_links_probed`, recorded where it used to leave no
+    # record. Growth, pinned, deliberate.
     assert now - was == {"connection_reset", "refused", "unknown", "off_host",
-                         "sitemap_off_site", "redirect_loop"}
+                         "sitemap_off_site", "redirect_loop", "unprobed_over_cap"}
 
 
 def test_the_blind_set_grew_only_by_the_new_classes():
@@ -165,7 +168,10 @@ def test_the_blind_set_grew_only_by_the_new_classes():
     was = {"dns", "timeout", "http_5xx", "parse_error", "collector_unavailable"}
     v4 = set(_errors.blind_classes(4))
     assert was <= v4, f"a class stopped being blind under v4: {sorted(was - v4)}"
-    assert v4 - was == {"connection_reset", "refused", "unknown", "redirect_loop"}
+    # `unprobed_over_cap` (generation 14) is blind under every version: it is a NEW class, no
+    # payload judged under v4 carries it, so reading it as blind there moves nothing stored.
+    assert v4 - was == {"connection_reset", "refused", "unknown", "redirect_loop",
+                        "unprobed_over_cap"}
     assert "robots_disallowed" not in v4, "v4's reading is what nine stored payloads were judged under"
     assert "http_4xx" not in v4
 

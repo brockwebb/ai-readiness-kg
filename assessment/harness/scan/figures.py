@@ -349,6 +349,17 @@ def rated_legs(mx: dict) -> list:
     return [l for l in mx["legs"] if l in (mx.get("per_leg") or {})]
 
 
+def measured(mx: dict, leg: str) -> bool:
+    """Whether the leg has a pass rate at all: at least one `pass` or `fail` cell.
+
+    `scan_2026-09-10_rj5` was the first cycle with a rated leg at n = 0. Generation 14
+    (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) turned every A1, A2, A9, D1 and F4 cell on
+    the product surfaces to `error`, and `scan_report` registers no rate where there is no
+    denominator, which is the right answer. A figure that asked for the rate anyway would be
+    asking for a number that does not exist."""
+    return bool(((mx.get("per_leg") or {}).get(leg) or {}).get("applicable_n"))
+
+
 def criterion_of(leg: str) -> str:
     """`A11-declared` -> `A`. The framework's own code shape: a criterion letter then digits."""
     return leg[:1]
@@ -376,7 +387,8 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
         members = [l for l in legs if criterion_of(l) == crit]
         if not members:
             continue
-        members.sort(key=lambda l: -R[rname(f"scan_{slug(l)}_pass_rate", cfg)])
+        members.sort(key=lambda l: -R[rname(f"scan_{slug(l)}_pass_rate", cfg)]
+                     if measured(mx, l) else 1)
         groups.append((crit, members))
 
     left, plot = f["label_w"], f["plot_w"]
@@ -389,6 +401,16 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
         body.append(text(0, y - f["group_label_dy"], f"criterion {crit}", "grp", "label"))
         for leg in members:
             n = f"scan_{slug(leg)}"
+            if not measured(mx, leg):
+                # A leg every cell of which is `error` has no pass rate, no interval and no
+                # registered name for either; it is drawn as what it is, last in its criterion.
+                # DD-055: not measured is a reason, not a zero.
+                cy = y + f["row_h"] / 2
+                body.append(text(0, cy + f["text_dy"], leg, "lbl", "label"))
+                body.append(text(left, cy + f["text_dy"],
+                                 "not measured: every cell is `error`", "sub", "label"))
+                y += f["row_h"]
+                continue
             rate = R[rname(f"{n}_pass_rate", cfg)]
             lo = R[f"{n}_wilson_lo_{cfg['cycle_suffix']}"]
             hi = R[f"{n}_wilson_hi_{cfg['cycle_suffix']}"]

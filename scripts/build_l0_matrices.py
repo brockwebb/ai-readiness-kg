@@ -337,7 +337,13 @@ def leg_results(counts: dict, prefix: str, cycle: str, population: str,
             out.append((f"{prefix}{k}_{v}", s_[v], f"{base} Verdicts of `{v}`: {s_[v]}."))
         out.append((f"{prefix}{k}_applicable_n", s_["applicable_n"],
                     f"{base} Denominator: pass + fail, which is {s_['applicable_n']}."))
-        if with_upper95:
+        # No bound at a denominator of zero. A leg whose every cell is `error` has no pass rate
+        # to bound, and `wilson_interval` says so with `None`. DD-055: not measured is a reason,
+        # not a number. The counts above carry the reason (`applicable_n` 0, every cell `error`).
+        # First reached by `scan_2026-09-10_rj5`, where generation 14 turned five product legs
+        # entirely to `error` (`cc_tasks/2026-10-06_absence_verdicts_rules.md`). The registrar
+        # refused the `None`, and refusing it is the right answer.
+        if with_upper95 and s_["applicable_n"]:
             out.append((
                 f"scan_l0_{family}_leg_rate_{k}_upper95", s_["wilson_hi"],
                 f"{base} Upper bound of the 95% Wilson score interval on the pass rate, "

@@ -211,7 +211,7 @@ def test_overview_counts_indicators_by_tier_and_basis_from_the_record(offline):
 def test_overview_names_the_cycle_of_record_its_date_and_its_bodies(offline):
     o = offline.get_overview()
     c = o["cycle_of_record"]
-    assert c["cycle"] == "scan_2026-09-10_rj4"
+    assert c["cycle"] == "scan_2026-09-10_rj5"
     assert c["measured"] == "2026-09-10"
     assert c["n_bodies"] == len(c["bodies"]) == 16
     assert "BEA" in c["bodies"]
@@ -246,8 +246,9 @@ def test_indicator_carries_its_definition_construct_spec_rule_tier_and_actions(o
     assert i["measurement_tier"] == "M"
     assert i["measurement_basis"] == "harness_leg"
     assert i["tier_source"].startswith("rules.CURRENT['A1']")
-    assert i["spec"]["rule_id"] == "RULE-A1-v4"
-    assert i["rule"]["rule_id"] == "RULE-A1-v4" and i["rule"]["version"] == "v4"
+    # Generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) made A1's rule v5.
+    assert i["spec"]["rule_id"] == "RULE-A1-v5"
+    assert i["rule"]["rule_id"] == "RULE-A1-v5" and i["rule"]["version"] == "v5"
     assert {a["id"] for a in i["actions"]} == {
         "act:a1-serve-the-data-files-with-their-own-media-type",
         "act:a1-publish-a-structured-distribution"}
@@ -262,7 +263,7 @@ def test_an_unknown_indicator_code_says_so_and_lists_the_codes(offline):
 def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
     i = tools.get_indicator("A1")
     v = i["cycle_of_record"]["verdicts"]
-    assert i["cycle_of_record"]["cycle"] == "scan_2026-09-10_rj4"
+    assert i["cycle_of_record"]["cycle"] == "scan_2026-09-10_rj5"
     assert sum(v.values()) > 0
     assert set(v) <= {"pass", "fail", "error", "not_applicable"}
 
@@ -271,7 +272,7 @@ def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
 
 def test_body_names_the_finding_and_the_evidence_for_every_judged_cell(tools):
     b = tools.get_body("BEA")
-    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-09-10_rj4"
+    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-09-10_rj5"
     assert b["n_judged"] == len(b["legs"]) > 0
     assert b["summary"].startswith(f"{b['n_failing']} failing of {b['n_judged']} judged")
     for cell in b["legs"]:
@@ -399,7 +400,7 @@ def test_search_text_carries_a_doc_id_on_every_corpus_hit(tools):
 
 def test_cycle_of_record_carries_both_hashes_the_matrices_and_the_supersession(tools):
     c = tools.get_cycle_of_record()
-    assert c["cycle"] == "scan_2026-09-10_rj4"
+    assert c["cycle"] == "scan_2026-09-10_rj5"
     assert c["kind"] == "rejudged"
     assert c["derived_from"] == "scan_2026-09-10"
     assert len(c["derived_from_params_hash"]) == 64
@@ -547,7 +548,7 @@ def test_every_tool_carries_a_description_and_is_marked_read_only(client_call):
 
 
 ONE_QUESTION_EACH = [
-    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-09-10_rj4"),
+    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-09-10_rj5"),
     ("get_indicator", {"code": "A5"}, lambda a: a["code"] == "A5" and a["actions"]),
     ("get_body", {"name": "NCHS"}, lambda a: a["body"] == "NCHS" and a["legs"]),
     ("get_prescriptions", {"body": "NCHS"}, lambda a: a["body"] == "NCHS" and a["actions"]),

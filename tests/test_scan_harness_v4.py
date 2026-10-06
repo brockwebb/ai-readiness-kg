@@ -126,6 +126,12 @@ PRIOR_CYCLES = {
     # (`observations_reread`, `scan/reread.py`) and on the same per-surface legs
     # (`surface_legs`).
     "scan_2026-09-10_rj4": 1009,
+    # Cycle 4's fifth judgement (`cc_tasks/2026-10-06_absence_verdicts_rules.md`): generation 14
+    # over the same Observations, 402 absence verdicts `fail` -> `error`. 1,009 Findings, one per
+    # `_rj4` Finding. It re-derives over the scheme-2 re-read it was judged over: the link-probe
+    # accounting and the `declared` blocks, with the declarations COPIED onto the payload, so a
+    # later edit to `targets.yaml` cannot move it.
+    "scan_2026-09-10_rj5": 1009,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -685,7 +691,7 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: Cycle 4's newest judgement and the measurement it derives from. `_rj1` moves to the slow tier
 #: as `_rj2` supersedes it: "the two most recent" is a rolling window, not a list that grows, and
 #: a window that grew by two every re-judgement would make the fast tier the full tier.
-RECENT_CYCLES = ("scan_2026-09-10_rj4", "scan_2026-09-10")
+RECENT_CYCLES = ("scan_2026-09-10_rj5", "scan_2026-09-10")
 
 
 def _tier(cycle: str):

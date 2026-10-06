@@ -85,7 +85,11 @@ def observations_for(payload: dict, params: dict | None = None) -> list:
     # is reading ids and error classes, which the re-read never changes.
     if payload.get("observations_reread"):
         from scan.reread import reread
-        rows, _ = reread(rows, _surface_urls(payload), params or load_params())
+        # Scheme 2 carries the declarations it applied (`cc_tasks/2026-10-06_absence_verdicts_
+        # rules.md` decision 6), and they are re-applied from the RECORD, never re-read from
+        # `targets.yaml`: a body resolved later must not move this payload's re-derivation.
+        rows, _ = reread(rows, _surface_urls(payload), params or load_params(),
+                         declared=payload["observations_reread"].get("declared"))
     return rows
 
 
@@ -208,7 +212,7 @@ def rules_by_leg(payload: dict) -> dict:
 
 def rejudge(payload: dict, params: dict, cycle: str | None = None,
             control_gate: dict | None = None, reread_retained: bool = False,
-            frame: list | None = None) -> dict:
+            frame: list | None = None, declared: dict | None = None) -> dict:
     """Judge a stored cycle's Observations under CURRENT and the params on disk.
 
     Findings only. No Observation is created: every Finding cites the `obs_id`s the source
@@ -242,7 +246,17 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
     the Tier C reference hosts, which DD-059 limits to `tier0.legs`. And `RULE-G1-D-v1` would
     stay on the `home` surfaces DD-066 withdrew it from. The default is None, so every earlier
     re-judgement script produces what it always produced.
+
+    **`declared`** (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 6, DN-012 d2/d3)
+    is `{"block": <targets.yaml declared_locations>, "bodies": {doc_id: body}}`. It requires
+    `reread_retained`, and it makes the re-read scheme 2: the link-probe accounting and the
+    `declared` blocks the collector now records are attached to the stored Observations, and
+    the declarations are copied onto the payload's `observations_reread`. The default is None,
+    so every earlier re-judgement script produces what it always produced.
     """
+    if declared is not None and not reread_retained:
+        raise ValueError("declared requires reread_retained: the declarations ride on the "
+                         "re-read, and its record is what the re-derivation gate re-applies")
     src_cycle = payload["cycle"]
     cycle = cycle or f"{src_cycle}{REJUDGE_SUFFIX}"
     rows = rejudgeable(payload["observations_detail"])
@@ -250,7 +264,8 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
     if reread_retained:
         from scan.reread import reread
         rows, reread_record = reread(
-            rows, {r["doc_id"]: r.get("url") for r in payload.get("matrix") or []}, params)
+            rows, {r["doc_id"]: r.get("url") for r in payload.get("matrix") or []}, params,
+            declared=declared)
     obs = rehydrate(rows)
     surface_legs = ({t["doc_id"]: list(t["legs"]) for t in frame} if frame is not None
                     else None)

@@ -11,6 +11,7 @@ from __future__ import annotations
 import re
 import urllib.parse
 
+from . import declarations
 from .collectors import dcat, extent, http, lighthouse, links, robots, sitemap, structured_data
 from .collectors import v2clauses
 
@@ -37,12 +38,37 @@ def _enrich_extent(o, params: dict) -> None:
         o.parsed = dict(o.parsed or {}, extent=extent.features(body, params))
 
 
+def _with_declared(obs: list, block) -> list:
+    """Every Observation of a declaration-reading leg carries the body's `declared` block
+    (`declarations.record`), so the rule judging them can ask whether the search reached the
+    places the body declared without reaching outside its arguments."""
+    if block is not None:
+        for o in obs:
+            o.parsed = dict(o.parsed or {}, declared=block)
+    return obs
+
+
+def _declared_api_urls(decl, already: list) -> list:
+    """The declared API base and its description, where declared and not already probed."""
+    api = (decl or {}).get("api_base") or {}
+    return [u for u in (api.get("url"), api.get("description_url"))
+            if u and u not in already]
+
+
 def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
-    from .manners import Fetcher
+    from .manners import Fetcher, on_roster_host
     f = fetcher or Fetcher(params)
     leg, doc_id, url = spec["leg"], target["doc_id"], target["url"]
     base = "{0.scheme}://{0.netloc}".format(urllib.parse.urlsplit(url))
     join = lambda p: urllib.parse.urljoin(base, p)          # noqa: E731
+    # DN-012 d3 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4). The body's
+    # declared locations, attached to the target by `run.targets` (or by `run.run_controls`
+    # for a fixture). A target without the key declares nothing, and the leg's Observations say
+    # so rather than guessing.
+    decl = target.get("declared")
+    body = target.get("agency")
+    admitted = declarations.admitted_hosts(decl, leg, params)
+    declared = declarations.record(decl, body, leg, params)
 
     lp = params["link_probe"]
     if leg == lp["shared_leg"]:
@@ -53,7 +79,15 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
         # governs what may be fetched and licenses nothing about fetching it twice).
         page = http.fetch(f, leg, doc_id, url, params, parse_links=True)
         found = ((page[0].parsed or {}).get("links") or [])
-        return page + links.probe(f, leg, doc_id, found, params, page_url=url)
+        probed = links.probe(f, leg, doc_id, found, params, page_url=url, admitted=admitted)
+        # The per-surface report (DN-012 d2): on-host candidates, probed, unprobed, cap. On the
+        # page Observation, because it is a fact about the page's link set as a whole, and only
+        # where the page's links were read: a page that was not HTML, or not served, offers no
+        # candidate set to count.
+        if isinstance(page[0].parsed, dict) and "links" in page[0].parsed:
+            page[0].parsed = dict(page[0].parsed, link_candidates=links.account(
+                probed, found, url, params, admitted))
+        return _with_declared(page, declared) + probed
     if leg in lp["legs_served"]:
         # Nothing of their own: everything the CURRENT rules for these legs read is on the
         # shared leg above, which they declare through `CONSUMES`. The superseded rules that
@@ -62,14 +96,20 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
         return []
     if leg == "A2":
         out = []
-        for p in params["a9_m2m"]["probes"]:
-            if "openapi" in p or "swagger" in p:
-                obs = http.fetch(f, leg, doc_id, join(p), params)
-                for o in obs:
-                    o.parsed = dict(o.parsed or {}, api=v2clauses.api_declarations(
-                        _body(o), (o.response or {}).get("headers") or {}, params))
-                out += obs
-        return out
+        guessed = [join(p) for p in params["a9_m2m"]["probes"]
+                   if "openapi" in p or "swagger" in p]
+        # spec:A2 says GET "the documented API base". The guessed paths stay (a description
+        # served at one is still a description), and the declared base and its description are
+        # GOT as well, through the same gate every collector uses, admitted for this leg of
+        # this body only.
+        for u in guessed + [u for u in _declared_api_urls(decl, guessed)
+                            if on_roster_host(u, url, params, admitted)]:
+            obs = http.fetch(f, leg, doc_id, u, params)
+            for o in obs:
+                o.parsed = dict(o.parsed or {}, api=v2clauses.api_declarations(
+                    _body(o), (o.response or {}).get("headers") or {}, params))
+            out += obs
+        return _with_declared(out, declared)
     if leg == "A12":
         # The two layers, observed against the SAME path so the comparison is real. A12 judges
         # a host, and the path it probes is the one the target row names — the agency's
@@ -112,8 +152,13 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                                 f, ptrs, params, surface_url=o.target_url))
         return obs
     if leg == "A9":
-        return [o for p in params["a9_m2m"]["probes"]
-                for o in http.fetch(f, leg, doc_id, join(p), params)]
+        # spec:A9 names "OpenAPI at the documented base" among its entry points, so the declared
+        # base is probed beside the conventional paths, as for A2.
+        guessed = [join(p) for p in params["a9_m2m"]["probes"]]
+        return _with_declared(
+            [o for u in guessed + [u for u in _declared_api_urls(decl, guessed)
+                                   if on_roster_host(u, url, params, admitted)]
+             for o in http.fetch(f, leg, doc_id, u, params)], declared)
     if leg == "A10":
         obs = lighthouse.fetch(f, leg, doc_id, url, params)
         for o in obs:
@@ -133,8 +178,11 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
         return obs + page
     if leg == "B3":
         obs = http.fetch(f, leg, doc_id, url, params, parse_links=True)
+        # The token was a literal here; it is `params.b3_methodology.link_tokens` now, unchanged,
+        # because `RULE-B3-v4` counts the same candidates to say how many were not followed.
+        toks = params["b3_methodology"]["link_tokens"]
         for link in ((obs[0].parsed or {}).get("links") or []):
-            if "methodolog" in (link.get("href", "") + link.get("text", "")).lower():
+            if any(t in (link.get("href", "") + link.get("text", "")).lower() for t in toks):
                 doc = http.fetch(f, leg, doc_id, link["href"], params)
                 for o in doc:
                     _enrich_extent(o, params)
@@ -163,9 +211,36 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                 st = (t[0].response or {}).get("status")
                 if isinstance(st, int) and st < 400:
                     break
-        return obs
+            # spec:D1's third source is "the API's terms endpoint". The paths above are this
+            # harness's guesses at it on the product host; a DECLARED one (`api_base.terms_url`,
+            # DN-012 d3) is read too, once, when it is not one of them.
+            terms = ((decl or {}).get("api_base") or {}).get("terms_url")
+            if terms and terms not in {o.target_url for o in obs} \
+                    and on_roster_host(terms, url, params, admitted):
+                t = http.fetch(f, leg, doc_id, terms, params)
+                for o in t:
+                    o.parsed = dict(o.parsed or {}, probe="terms",
+                                    terms_text=_body(o).decode("utf-8", "replace")[:20000])
+                obs += t
+        return _with_declared(obs, declared)
     if leg == "D4":
         obs = dcat.fetch_catalog(f, leg, doc_id, url, params)
+        # ind:D4 says "data.gov/agency inventory": every DECLARED inventory is read too
+        # (DN-012 d3), each once. A `data_json` entry is a catalog and is membership-tested
+        # against the product; a `catalog_organization` page is fetched so that it is OBSERVED,
+        # and tests nothing.
+        fetched = {dcat.normalize_url(o.target_url, params) for o in obs}
+        for e in (decl or {}).get("inventory_urls") or []:
+            if dcat.normalize_url(e["url"], params) in fetched:
+                continue
+            fetched.add(dcat.normalize_url(e["url"], params))
+            if not on_roster_host(e["url"], url, params, admitted):
+                continue
+            if e["kind"] == "data_json":
+                obs += dcat.fetch_catalog_url(f, leg, doc_id, e["url"], url, params)
+            else:
+                obs += http.fetch(f, leg, doc_id, e["url"], params)
+        _with_declared(obs, declared)
         from .manners import repo_root
         import json as _json
         for o in obs:
@@ -200,13 +275,18 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
         return []
     if leg == "F4":
         out = []
-        for p in params["f4_changelog"]["paths"]:
-            obs = http.fetch(f, leg, doc_id, join(p), params)
+        guessed = [join(p) for p in params["f4_changelog"]["paths"]]
+        # spec:F4 says "any changelog or release-notes endpoint": a DECLARED one
+        # (`changelog_urls`, DN-012 d3) is read beside the guessed paths.
+        extra = [e["url"] for e in (decl or {}).get("changelog_urls") or []
+                 if e["url"] not in guessed and on_roster_host(e["url"], url, params, admitted)]
+        for u in guessed + extra:
+            obs = http.fetch(f, leg, doc_id, u, params)
             for o in obs:
                 o.parsed = dict(o.parsed or {}, changelog=v2clauses.changelog_entries(
                     _body(o), (o.parsed or {}).get("content_type") or "", params))
             out += obs
-        return out
+        return _with_declared(out, declared)
     if leg == "G1-D":
         obs = http.fetch(f, leg, doc_id, url, params)
         toks = params["g1d_uncertainty"]["field_tokens"]

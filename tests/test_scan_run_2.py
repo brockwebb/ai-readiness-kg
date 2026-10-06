@@ -506,8 +506,10 @@ def test_every_error_class_on_this_cycle_is_grounded_in_recorded_text_or_a_statu
     if not path.is_file():
         pytest.skip(f"{cycle} has not been run yet")
     payload = json.loads(path.read_text(encoding="utf-8"))
+    # `unprobed_over_cap` joined with generation 14 (`cc_tasks/2026-10-06_absence_verdicts_
+    # rules.md`): a link the cap left unprobed is recorded and never requested.
     assert set(scan_errors.NOT_REQUESTED) == {"robots_disallowed", "off_host",
-                                            "sitemap_off_site"}, (
+                                            "sitemap_off_site", "unprobed_over_cap"}, (
         "the classes recorded without a request changed; this test's exemption follows them")
     ungrounded = []
     for o in payload["observations_detail"]:

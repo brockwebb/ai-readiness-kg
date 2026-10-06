@@ -43,6 +43,12 @@ sys.path.insert(0, str(REPO / "scripts"))
 SURFACE_LEGS = ("B1", "B2", "D2")
 LEGS = SURFACE_LEGS + ("B5",)
 
+#: The rules this exercise judged with, by id. It read `rules.CURRENT` until generation 14
+#: (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) moved B1 to `RULE-B1-v3`. A record of
+#: generation 12's exercise is a record of generation 12's rules, so it names them; the
+#: pinned distribution below is theirs.
+RULES = {"B1": "RULE-B1-v2", "B2": "RULE-B2-v1", "D2": "RULE-D2-v1", "B5": "RULE-B5-v1"}
+
 #: The distribution the RESULT §1 reports, pinned so a change to a rule, a reader or the
 #: retained evidence is seen rather than absorbed. Unpublished: see the module docstring.
 EXPECTED_DISTRIBUTION = {
@@ -72,7 +78,7 @@ def exercise() -> dict:
     from scan import load_params
     from scan.collectors import v2clauses
     from scan.model import Observation
-    from scan.rules import CURRENT, body_groups, judge as judge_rule
+    from scan.rules import body_groups, judge as judge_rule
     params = load_params()
     cor = _payload(dx.cycle_of_record())
     source_name = cor.get("derived_from") or cor["cycle"]
@@ -118,13 +124,13 @@ def exercise() -> dict:
     for doc in sorted(by_doc):
         for leg in SURFACE_LEGS:
             group = by_doc[doc]
-            record(leg, doc, judge_rule(CURRENT[leg], group, params),
-                   judge_rule(CURRENT[leg], copy.deepcopy(group), params))
+            record(leg, doc, judge_rule(RULES[leg], group, params),
+                   judge_rule(RULES[leg], copy.deepcopy(group), params))
     everything = [o for obs in by_doc.values() for o in obs]
-    for _body, group in body_groups(CURRENT["B5"], everything, params).items():
-        f1 = judge_rule(CURRENT["B5"], group, params)
+    for _body, group in body_groups(RULES["B5"], everything, params).items():
+        f1 = judge_rule(RULES["B5"], group, params)
         record("B5", f1.target_doc_id, f1,
-               judge_rule(CURRENT["B5"], copy.deepcopy(group), params))
+               judge_rule(RULES["B5"], copy.deepcopy(group), params))
 
     return {"cycle_of_record": dx.cycle_of_record(), "observations_from": source_name,
             "surfaces": len(by_doc), "robots_bodies_missing": missing,

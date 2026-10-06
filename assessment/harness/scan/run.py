@@ -21,6 +21,7 @@ REPO = HARNESS.parents[1]
 sys.path.insert(0, str(HARNESS))
 sys.path.insert(0, str(REPO))
 
+from scan import declarations                                 # noqa: E402
 from scan import errors as _errors                             # noqa: E402
 from scan import load_params                                   # noqa: E402
 from scan.model import (Observation, SYNTHETIC_PREFIXES,       # noqa: E402
@@ -261,8 +262,12 @@ def run_controls(params: dict, clock=None) -> tuple:
         with FixtureServer(fixture) as base:
             fetcher = Fetcher(params, clock=clock)
             for path in products or ("/index.html",):
+                # A fixture declares the API description and catalog it serves, relative to
+                # its own port (`declarations.control_fixture`), so its absence branches are
+                # judged over a declared location that WAS observed, as a body's are.
                 target = {"doc_id": f"control:{fixture}{path if products else ''}",
-                          "url": f"{base}{path}"}
+                          "url": f"{base}{path}",
+                          "declared": declarations.control_fixture(base, params)}
                 o, f = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS, fetcher)
                 obs += o
                 findings += f
@@ -369,6 +374,9 @@ def targets(params: dict, bodies=None) -> list:
     doc = json.loads(src.read_text(encoding="utf-8"))
     entries = json.loads(MANIFEST.read_text(encoding="utf-8"))["entries"]
     tier0 = [l for l in tier0_legs(params) if l not in CANDIDATE_LEGS]
+    # DN-012 d3: each row carries its body's declared locations (`targets.yaml`
+    # `declared_locations`), read once per call and never cached, like every parameter.
+    declared = declarations.load()
     out, skipped = [], []
     rows = doc["rows"] if bodies is None else rows_of_bodies(doc["rows"], bodies)
     for r in rows:
@@ -398,7 +406,8 @@ def targets(params: dict, bodies=None) -> list:
             url = ((entries[doc_id].get("identity") or {}).get("source_url") or url)
         entry = {"doc_id": doc_id, "url": url, "surface_kind": kind, "tier": tier,
                  "agency": r["agency"], "legs": legs, "admitted": not synthetic,
-                 "host": r["host"]}
+                 "host": r["host"],
+                 "declared": declarations.for_body(declared, r["agency"])}
         if kind == "well_known":
             # A12 compares the declared and enforced layers against the SAME path, so the
             # probe is the host's home rather than /robots.txt.

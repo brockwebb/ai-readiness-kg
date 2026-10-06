@@ -114,7 +114,10 @@ def test_the_four_absence_rules_that_dereference_are_the_expected_ones():
     deref = dereferencing_legs()
     absence_deref = sorted(leg for leg, rid in CURRENT.items()
                            if claim_of(rid) == "absence" and leg in deref)
-    assert absence_deref == ["A3", "A5", "A8", "B3"], absence_deref
+    # A1 joins with generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`): DN-012 d1
+    # names its `fail` an absence over the link candidates, and `RULE-A1-v5` declares
+    # `CLAIM = "absence"` and guards it. A fifth, named by the task that made it one.
+    assert absence_deref == ["A1", "A3", "A5", "A8", "B3"], absence_deref
 
 
 def test_the_helper_is_the_three_cases_it_claims_to_be():

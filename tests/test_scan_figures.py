@@ -187,6 +187,11 @@ def test_the_registered_intervals_are_the_ones_the_matrix_holds(results):
     suffix = cfg()["cycle_suffix"]
     for leg, pl in mx["per_leg"].items():
         s = leg.replace("-", "_").lower()
+        if not pl["applicable_n"]:
+            # No interval exists at n = 0 and none is registered (`register_figure_results`,
+            # `cc_tasks/2026-10-06_absence_verdicts_rules.md`); the matrix's own bounds say so.
+            assert f"scan_{s}_wilson_lo_{suffix}" not in results, leg
+            continue
         assert results[f"scan_{s}_wilson_lo_{suffix}"] == pl["ci95_low"], leg
         assert results[f"scan_{s}_wilson_hi_{suffix}"] == pl["ci95_high"], leg
 

@@ -61,6 +61,53 @@ def read(observations: list, params: dict) -> dict:
     return {"kind": "records", "obs": obs, "probe": probe, "fields": block}
 
 
+#: The `read_inventory` kinds whose verdict is an ABSENCE over the body's inventories: the
+#: product has no catalog record anywhere that was read. Each is reached as `fail` only when the
+#: inventory search was complete (`_scope.inventory_scope`, DN-012 d1).
+ABSENCE_KINDS = ("scope", "no_catalog", "unparsed", "no_record")
+
+
+def read_inventory(observations: list, params: dict) -> dict:
+    """`read`, over EVERY catalog the D4 leg observed rather than the first one served.
+
+    `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4. Since DN-012 d3 the D4 leg reads
+    each declared inventory (the host's own `/data.json`, the department's, the
+    catalog.data.gov organization), so the product's record may be in a catalog that is not the
+    first one served. The kinds are `read`'s. `records` is taken from the first served catalog
+    that holds the product's records. Failing that, `unread` if any served catalog carries no
+    field block, `unparsed` if any does not parse, and otherwise `no_record` over the first
+    catalog served. `read` stays as it is, because the generation-11 and -12 rules call it.
+    """
+    obs = [o for o in observations if o.leg == "D4"]
+    if not obs:
+        return {"kind": "empty", "obs": obs}
+    if c.only_errors(obs, params):
+        return {"kind": "unobserved", "obs": obs, "probe": obs[0]}
+    served = [o for o in obs if (o.parsed or {}).get("present")]
+    if not served:
+        blind = [o for o in obs if c.unobserved(o, params)]
+        if blind:
+            return {"kind": "scope", "obs": obs, "blind": blind}
+        return {"kind": "no_catalog", "obs": obs}
+
+    def block(o):
+        b = (o.parsed or {}).get("dcat_fields")
+        return b if isinstance(b, dict) and b.get("scheme") == SCHEME else None
+
+    for o in served:
+        b = block(o)
+        if b and b.get("parsed") and b.get("product_records"):
+            return {"kind": "records", "obs": obs, "probe": o, "fields": b}
+    unread = [o for o in served if block(o) is None]
+    if unread:
+        return {"kind": "unread", "obs": obs, "probe": unread[0]}
+    unparsed = [o for o in served if not block(o).get("parsed")]
+    if unparsed:
+        return {"kind": "unparsed", "obs": obs, "probe": unparsed[0],
+                "reason": block(unparsed[0]).get("reason") or "no reason recorded"}
+    return {"kind": "no_record", "obs": obs, "probe": served[0], "fields": block(served[0])}
+
+
 def satisfies(carried, clause: dict) -> bool:
     """Whether one record's carried fields satisfy one clause (`any_of` / `all_of`)."""
     have = set(carried)

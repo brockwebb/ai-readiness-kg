@@ -40,6 +40,8 @@ from . import rule_a12_v3
 from . import rule_b1, rule_b4, rule_d3, rule_g4
 from . import rule_b1_v2, rule_b2, rule_b5, rule_d2
 from . import rule_d4_v3
+from . import (rule_a1_v5, rule_a2_v4, rule_a3_v7, rule_a9_v2, rule_b1_v3, rule_b3_v4,
+               rule_b4_v2, rule_d1_v4, rule_d3_v2, rule_d4_v4, rule_f4_v4, rule_g4_v2)
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -156,6 +158,20 @@ V12 = [rule_b1_v2, rule_b2, rule_b5, rule_d2]
 #: none of their Findings moves and none needs a version.
 V13 = [rule_d4_v3]
 
+#: Generation 14 — `cc_tasks/2026-10-06_absence_verdicts_rules.md`, DN-012 d1 to d3, the audit's
+#: C-01, C-04 and C-14. Twelve modules, one idea, and it is generation 9's widened:
+#: **an absence verdict is never reached over a partial search.** Generation 9 drew the line at a
+#: BLIND candidate. This one draws it at any candidate the search did not reach: a link past the
+#: cap (`unprobed_over_cap`, now recorded), a documented API base or a department inventory that
+#: was never declared or never probed, a methodology link not followed, a terms endpoint or a
+#: changelog nobody located. Each `fail` that asserts absence is reached only over a complete
+#: search; otherwise it is `error`, naming the remainder (`_scope.py`). Every existence verdict
+#: (`pass`) is unchanged. The list is the inventory's (`docs/research/2026-10-06_absence_rules_
+#: inventory.md` §2): the four the audit named (A1, A2, A3, D4) with D4's four consumers, plus
+#: A9, B3, D1 and F4 found by it. Every predecessor stays in `REGISTRY`, unedited.
+V14 = [rule_a1_v5, rule_a2_v4, rule_a3_v7, rule_a9_v2, rule_b1_v3, rule_b3_v4, rule_b4_v2,
+       rule_d1_v4, rule_d3_v2, rule_d4_v4, rule_f4_v4, rule_g4_v2]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -251,7 +267,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in

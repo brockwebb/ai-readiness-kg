@@ -1,15 +1,16 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj4` · version `2026-09-10_rj4` · released `2026-09-19`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Corrected `2026-10-06`** (audit finding `C-02`, `docs/audit/2026-10-04_full_audit.md`; `cc_tasks/2026-10-06_l0_report_robots_wording.md`). The draft described the three refusing bodies as declaring, in their `robots.txt` files, an access the scanner then obeyed. The scanner never read those files: every request for them was answered with HTTP `403`. The coherence paragraph under the matrix and the section on the refusing bodies now say what the findings say, and cite RFC 9309 §2.3.1.3 for what a crawler may do when the file is refused. No number, verdict or matrix cell moved. The text as published before this correction is kept unchanged at `reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.md` and `reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.pdf`. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
+**Version.** Snapshot cycle `scan_2026-09-10_rj5` · version `2026-09-10_rj5` · released `2026-10-06`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
-under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` and re-snapshotted under
-`cc_tasks/2026-09-19_resnapshot_rj4.md`. The snapshot is cycle `scan_2026-09-10`, the first
-over the complete frame, re-judged as `scan_2026-09-10_rj4`: the same stored observations
-under the rules current when this was written, which judge seven product checks the earlier
-judgements of this cycle did not. Every number
+under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, re-snapshotted under
+`cc_tasks/2026-09-19_resnapshot_rj4.md` and again under
+`cc_tasks/2026-10-06_absence_verdicts_rules.md`. The snapshot is cycle `scan_2026-09-10`, the
+first over the complete frame, re-judged as `scan_2026-09-10_rj5`: the same stored observations
+under the rules current when this was written. Those rules make an absence a `fail` only over a
+complete search, and say `error`, naming what was not searched, everywhere else. Every number
 below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
@@ -234,76 +235,94 @@ below.
 
 | Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 | B1 | B2 | B4 | B5 | D2 | D3 | G4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| BEA | bea-flagship-1-interactive-data | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BEA | bea-flagship-2-news-releases | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-1-data-by-topic | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-2-death-in-custody-reporting-act | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BEA | bea-flagship-1-interactive-data | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BEA | bea-flagship-2-news-releases | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BJS | bjs-flagship-1-data-by-topic | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
 | BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| CENSUS | census-flagship-1-surveys-programs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| CENSUS | census-flagship-2-american-community-survey-acs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | fail | fail | fail | pass | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | pass |
-| EIA | eia-flagship-1-open-data | error | fail | error | error | error | fail | error | fail | fail | fail | error | error | fail | error | fail | fail | fail |
-| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| ERS | ers-flagship-2-agricultural-baseline-database | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-1-data-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-2-livestock-county-estimates | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NCES | flagship:nces.ed.gov/programs/digest/ | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NCHS | nchs-flagship-1-data-briefs | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | fail | fail | fail | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| CENSUS | census-flagship-1-surveys-programs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-2-american-community-survey-acs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | error | error | error | pass | pass | error | fail | error | pass | error | fail | fail | fail | fail | fail | fail | pass |
+| EIA | eia-flagship-1-open-data | error | error | error | error | error | error | error | error | error | error | error | error | error | error | fail | error | error |
+| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| ERS | ers-flagship-2-agricultural-baseline-database | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NASS | nass-flagship-1-data-statistics | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NASS | nass-flagship-2-livestock-county-estimates | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NCHS | nchs-flagship-1-data-briefs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
 | ORES | flagship:www.ssa.gov/policy/docs/statcomps/supplement/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | fail | fail | fail | fail | fail | fail | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
-| SOI | soi-flagship-1-individual-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| SOI | soi-flagship-2-business-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | error | error | error | fail | fail | error | error | error | error | error | error | fail | error | fail | fail | error | error |
+| SOI | soi-flagship-1-individual-tax-statistics | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| SOI | soi-flagship-2-business-tax-statistics | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 
 Across the 23 declared
-surfaces, 11 of the
-17 product checks return not a single pass.
-None of these is present on any declared flagship surface measured in this cycle: the product
-offered as structured data rather than as a document, a documented API with its auth model and
-its rate limits, a machine-first entry point an agent could address, a machine-readable
-licence, a changelog per release, variable-level metadata, concept definitions linked from the
-variables, data-quality attributes published as metadata rather than prose, terms that address
-model training and retrieval, and published source lineage. The last of the checks at zero is
-asked of the body rather than of a surface: whether the same concept carries the same
-identifier across a body's products, and no body answers it yes.
+surfaces, five product checks have no verdict at all, and that is the first thing to read off
+the matrix. Structured data rather than a document, a documented API with its auth model and its
+rate limits, a machine-first entry point an agent could address, a machine-readable licence and
+a changelog per release are `error` on every declared surface: structured data, for one, on
+23 of
+23. On these checks a `fail` would
+claim that something is absent, and this judgement does not make an absence claim over a search
+it did not complete (`DN-012`). The product page links far more of its own site than the scanner's
+request bound probed, and the links it did not reach may hold the data file. The agency's
+documented API base was never declared to the scanner, or was declared and not probed, so the
+paths it guessed instead cannot show the API is missing. No location is declared for an API's
+terms or for a changelog. Each `error` names what was not searched, and those are what the next
+collection looks at.
 
-The others are not at zero and are close to it. A bulk download of the whole product is linked
-from 4 of
-14 surfaces, the only check on
-this page with a pass rate a reader would notice.
-3 of
-19 serve their substantive content
-without requiring a browser to execute code. Structured markup describing the data, a
-resolvable pointer to the current vintage and an entry in a public inventory are present on
-1 of
-19,
+6 of the
+17 product checks were measured and return not
+a single pass: variable-level metadata, concept definitions linked from the variables,
+data-quality attributes published as metadata rather than prose, terms that address model
+training and retrieval, and published source lineage. The last check at zero is asked of the
+body rather than of a surface: whether the same concept carries the same identifier across a
+body's products, and no body answers it yes. Three of these are measured on very few surfaces.
+Their catalogue-record half is reached only where the product's own record was found, and
+everywhere else the department's inventory and data.gov's were not searched.
+
+The other checks are not at zero. A bulk download of the whole product is linked from
+4 of
+4 surfaces on which the question
+could be answered. On 19 more it could not,
+because the links the scanner did not probe may hold the download. That is the only check on
+this page with a pass rate a reader would notice, and the denominator is why it should not be
+noticed for long. 3 of
+18 serve their substantive content
+without requiring a browser to execute code. Structured markup describing the data and a
+resolvable pointer to the current vintage are present on
 1 of
 19 and
 1 of
-19 surfaces, and the matrix above
-shows all three on the same row. That row carries the only pass on any check this judgement
-added: the issuing authority and its programme carried as structured metadata in the product's
-catalogue record, present on 1 of
-19 surfaces.
+19 surfaces. An entry in a public
+inventory is found on 1 of
+1, and
+22 more are `error`. Each of those names the
+department inventory and the data.gov catalogue that the indicator points to and this cycle did
+not read. The matrix above shows the passes on the same row. That row also carries the issuing
+authority and its programme as structured metadata in the product's catalogue record, present on
+1 of
+1 surfaces.
 
-A zero at this denominator is not proof of universal absence, and the report will not let it be
-read as one. With 0 passes in
-19 surfaces, the upper bound of
-the ninety-five percent score interval is
-0.168179, which is the number a
-reader should carry rather than the zero. Hanley and Lippman-Hand give the same magnitude by
-their rule of thumb for zero events. The bound quoted here is the score interval, computed once
-and registered rather than worked out in a sentence. The correct statement is that the true
-rate is unlikely to exceed that bound, not that it is nothing.
+A low count at this denominator is not proof of universal absence, and the report will not let
+it be read as one. Structured markup describing the data is present on
+1 of
+19 surfaces. The upper bound of the
+ninety-five percent score interval on that rate is
+0.246387, and that bound is the number
+a reader should carry rather than the count. Every check at zero has its own registered bound
+beside it, for the same reason. The bound quoted here is the score interval, computed once and
+registered rather than worked out in a sentence. The correct statement is that the true rate is
+unlikely to exceed that bound, not that it is what the count shows.
 
 The interval is still wide, and the declaration list is no longer what makes it so. It is wide
-because one product is one surface and the frame holds
-19 observable ones on this check,
-4 more having answered with something
-this scanner could not read. A denominator that small is what a report of a system this size
+because one product is one surface, and the frame holds
+19 observable surfaces on this
+check. 4 more answered with something
+this scanner could not read. A denominator that small is what a report on a system this size
 gets, and saying so is cheaper than pretending the bound is tighter.
 
 ## What the matrix cannot see
@@ -358,16 +377,18 @@ having if nothing was quietly swept into it.
 ## What moved since the previous cycle, and what moved it
 
 The frame moved, and this time the instrument moved too. The previous cycle is drawn as it
-was judged under an earlier generation of the rules, and one check on the figure below changed
-rule between that judgement and this one: the public-inventory check, marked as a rule change,
-so a difference on its row is the instrument and not the host. The checks this judgement added
-were never asked of the previous cycle and have no point on its side. Everywhere else the
+was judged under an earlier generation of the rules, and eight checks on the figure below
+changed rule between that judgement and this one. Each is marked as a rule change, so a
+difference on its row is the instrument and not the host. Five of them have no point at all on
+this cycle's side, because every product surface is `error` on them (see the product section).
+The checks added by later judgements were never asked of the previous cycle and have no point on
+its side. Everywhere else the
 difference is the hosts or the frame, and what changed is the frame: the bodies that had
 declared no product now have one, and the product page of this report is about
 23 declared surfaces where the
 previous one was about a minority of them.
 
-![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-10_rj4/cycle_over_cycle.svg)
+![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-10_rj5/cycle_over_cycle.svg)
 
 The figure draws no line and no arrow between the two points. A difference between two
 measurements is not a direction of travel, and two cycles taken a day apart on federal
@@ -376,24 +397,31 @@ cycle is left blank rather than plotted at zero, because not measured is a reaso
 zero.
 
 Both cycles here are re-judgements. The measurements they rest on were taken on their own days
-and are untouched; what has moved twice is the rule that reads them, and each time in the same
+and are untouched. What has moved is the rule that reads them, and each time in the same
 direction. A verdict about a product used to be allowed to rest on a probe the collector never
-made — a connection closed mid-request, a page a `robots.txt` forbade — and three successive
-corrections turned each of those into `error`. That is why the `error` counts in this report are
-larger than a naive reading of an earlier cycle would suggest, and why they should be.
+made: a connection closed mid-request, a page a `robots.txt` forbade. Three successive
+corrections turned each of those into `error`. The fourth went further. An absence is now a
+`fail` only over a search that reached everything the check names: every link on the product
+page, the agency's documented API, its department's inventory and data.gov's. Wherever the
+search stopped short, at the scanner's own request bound or at a location nobody declared, the
+verdict is `error`, and the `error` says which places were not searched. That is why the `error`
+counts in this report are larger than a naive reading of an earlier cycle would suggest, and why
+they should be.
 
-**The last of those corrections cost this report its strongest product number, and that is the
-correction working.** Under the first re-judgement of this same cycle, the bulk-download check
-was answered over
-19 declared flagship surfaces; it
-is now answered over 14. The
-surfaces that left are ones whose whole-product download the scanner was forbidden to look for,
-and which had been counted as products that offer none. Nothing about those products changed
-and nothing was re-fetched. The upper bound of the ninety-five percent interval on the rate rose
-from 0.433343 to
-0.546491: a smaller denominator is a
-weaker claim, and an instrument that stops scoring what it was not allowed to see has to say
-less, not more.
+**These corrections cost this report its strongest product number, and that is the correction
+working.** Under the first re-judgement of this same cycle, the bulk-download check was answered
+over 19 declared flagship surfaces.
+It was then answered over 14, and
+is now answered over 4. The surfaces
+that left first are those whose whole-product download the scanner was forbidden to look for.
+The ones that left last are those whose links ran past the request bound before the download
+could be reached. Both groups had been counted as products that offer none. Nothing about those
+products changed and nothing was re-fetched. The upper bound of the ninety-five percent interval
+on the rate went from 0.433343 to
+0.546491 to
+1. A smaller denominator is a
+weaker claim, and an instrument that stops scoring what it did not look at has to say less, not
+more.
 
 ## What this cannot answer, and what would
 
@@ -474,29 +502,29 @@ hand-written expectation was wrong once.
 
 | Check | Rule that judged this cycle |
 |---|---|
-| A1 | RULE-A1-v4 |
+| A1 | RULE-A1-v5 |
 | A10 | RULE-A10-v3 |
 | A11-declared | RULE-A11-declared-v2 |
 | A12 | RULE-A12-v3 |
-| A2 | RULE-A2-v3 |
-| A3 | RULE-A3-v6 |
+| A2 | RULE-A2-v4 |
+| A3 | RULE-A3-v7 |
 | A4 | RULE-A4-v1 |
 | A5 | RULE-A5-v2 |
 | A6 | RULE-A6-v2 |
 | A8 | RULE-A8-v4 |
-| A9 | RULE-A9-v1 |
-| B1 | RULE-B1-v2 |
+| A9 | RULE-A9-v2 |
+| B1 | RULE-B1-v3 |
 | B2 | RULE-B2-v1 |
-| B3 | RULE-B3-v3 |
-| B4 | RULE-B4-v1 |
+| B3 | RULE-B3-v4 |
+| B4 | RULE-B4-v2 |
 | B5 | RULE-B5-v1 |
-| D1 | RULE-D1-v3 |
+| D1 | RULE-D1-v4 |
 | D2 | RULE-D2-v1 |
-| D3 | RULE-D3-v1 |
-| D4 | RULE-D4-v3 |
-| F4 | RULE-F4-v3 |
+| D3 | RULE-D3-v2 |
+| D4 | RULE-D4-v4 |
+| F4 | RULE-F4-v4 |
 | G1-D | RULE-G1-D-v1 |
-| G4 | RULE-G4-v1 |
+| G4 | RULE-G4-v2 |
 
 **Requests issued, per netloc.**
 
@@ -627,14 +655,14 @@ One row per check and admitted source: the check as the report names it, the fra
 | G4 | G4 · Authority metadata | W3C Dataset Exchange Working Group. *Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)*. 2024. <https://www.w3.org/TR/vocab-dcat-3/>. | `w3c-dcat-3` | §6.4.10 Property: publisher, dcterms:publisher, for the issuing-authority clause: "The entity responsible for making the resource available." |
 | G4 | G4 · Authority metadata | W3C. *PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)*. 2013. <https://www.w3.org/TR/prov-o/>. | `w3c-prov-o-ontology` | prov:wasAttributedTo, the issuing-authority clause as a provenance relation: "Attribution is the ascribing of an entity to an agent." |
 
-**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj4.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-09-10_rj4.*`, the reference hosts;
-`scan_matrix_product_2026-09-10_rj4.*`, the product matrix. Every row carries its Finding
+**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj5.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-09-10_rj5.*`, the reference hosts;
+`scan_matrix_product_2026-09-10_rj5.*`, the product matrix. Every row carries its Finding
 identities.
 
 **Provenance.** Cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
-`scan_2026-09-10_rj4`: the same stored observations under the rules current on 2026-09-18, with
+`scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06, with
 every superseded judgement still registered under its own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061

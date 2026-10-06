@@ -104,8 +104,14 @@ def test_generation_eleven_is_four_first_versions_and_they_are_current():
     for leg, rid in RULES.items():
         assert REGISTRY[rid].LEG == leg
         # B1 moved to `RULE-B1-v2` in generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`),
-        # which joins the schema.org half; v1 stays in REGISTRY and is what this file tests.
-        assert CURRENT[leg] == ("RULE-B1-v2" if leg == "B1" else rid)
+        # which joins the schema.org half, and all four moved again in generation 14
+        # (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), which reads every declared
+        # inventory. The generation-11 modules stay in REGISTRY and are what this file tests;
+        # each leg's current rule is a later version of the same leg.
+        assert REGISTRY[CURRENT[leg]].LEG == leg
+        assert GENERATIONS.index(next(g for g in GENERATIONS
+                                      if CURRENT[leg] in {m.RULE_ID for m in g})) > \
+            GENERATIONS.index(V11)
 
 
 def test_each_rule_reads_d4s_catalog_and_declares_its_claim_and_subject():

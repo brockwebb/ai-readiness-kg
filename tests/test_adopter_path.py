@@ -40,8 +40,10 @@ LOG = REPO / "logs" / "adopt_runbook.log"
 PROJECT_UA = yaml.safe_load(adopt.PROJECT_FRAME.read_text(encoding="utf-8"))["user_agent"]
 ADOPTER_UA = "example-readiness-scan/1.0 (+mailto:webmaster@example.org)"
 #: The snapshot whose params_hash the committed params.yaml reproduces today (measured before
-#: this task: `0ef2e016fea2…`). Adding `schedule:` must not move it.
-SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-09-10_rj4.json"
+#: this task: `0ef2e016fea2…`). Adding `schedule:` must not move it. The snapshot moved to `_rj5`
+#: with generation 14's parameters (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), and the
+#: property is the same one: today's params are the snapshot's.
+SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-09-10_rj5.json"
 
 
 def _frame_file(tmp: Path, text: str, name: str = "my_site.yaml") -> Path:

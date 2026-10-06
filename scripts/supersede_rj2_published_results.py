@@ -22,6 +22,14 @@ itself `published` — so this runs AFTER `publish_result_states.py publish`, an
 is not yet the published answer leaves its predecessor alone.
 
     /opt/anaconda3/bin/python3 scripts/supersede_rj2_published_results.py [--dry-run]
+
+**Any later re-snapshot uses the same act** (`cc_tasks/2026-10-06_absence_verdicts_rules.md`,
+`_rj4` to `_rj5`). `--old`, `--new`, `--task` and `--generation` name the pair; the defaults are
+the `_rj2` to `_rj4` pair this script was written for, so its first use reproduces exactly.
+
+    /opt/anaconda3/bin/python3 scripts/supersede_rj2_published_results.py \
+        --old _2026-09-10_rj4 --new _2026-09-10_rj5 \
+        --task cc_tasks/2026-10-06_absence_verdicts_rules.md --generation 12
 """
 from __future__ import annotations
 
@@ -43,7 +51,14 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--old", default=OLD, help="the suffix of the Results the report stopped "
+                                               "quoting")
+    ap.add_argument("--new", default=NEW, help="the suffix of the Results it quotes now")
+    ap.add_argument("--task", default=TASK, help="the task that re-snapshotted")
+    ap.add_argument("--generation", default="9",
+                    help="the rule generation the superseded values were judged under")
     a = ap.parse_args(argv)
+    old_sfx, new_sfx, task = a.old, a.new, a.task
     from seldon.config import get_current_session, get_neo4j_driver, load_project_config
     from seldon.core.artifacts import transition_state, update_artifact
     from seldon.domain.loader import load_domain_config
@@ -58,13 +73,13 @@ def main(argv=None) -> int:
         with driver.session(database=db) as s:
             old = s.run("MATCH (r:Result {state: 'published'}) WHERE r.name ENDS WITH $sfx "
                         "RETURN r.name AS name, r.artifact_id AS id, r.value AS value "
-                        "ORDER BY name", sfx=OLD).data()
-            names = [r["name"][: -len(OLD)] + NEW for r in old]
+                        "ORDER BY name", sfx=old_sfx).data()
+            names = [r["name"][: -len(old_sfx)] + new_sfx for r in old]
             new = {r["name"]: r for r in s.run(
                 "MATCH (r:Result) WHERE r.name IN $n "
                 "RETURN r.name AS name, r.state AS state, r.value AS value", n=names).data()}
         for r in old:
-            succ = r["name"][: -len(OLD)] + NEW
+            succ = r["name"][: -len(old_sfx)] + new_sfx
             n = new.get(succ)
             if n is None or n["state"] != "published":
                 unmatched.append({"name": r["name"], "successor": succ,
@@ -83,16 +98,16 @@ def main(argv=None) -> int:
                     properties={
                         "superseded_by": succ,
                         "superseded_reason": (
-                            "the L0 report was re-snapshotted from scan_2026-09-10_rj2 onto "
-                            "scan_2026-09-10_rj4 (DN-004: a published number would change); "
+                            f"the L0 report was re-snapshotted from scan{old_sfx} onto "
+                            f"scan{new_sfx} (DN-004: a published number would change); "
                             f"the report now quotes {succ}. The value stands as measured "
-                            "under generation 9 (AD-028: a name binds once)."),
-                        "superseded_by_task": TASK},
+                            f"under generation {a.generation} (AD-028: a name binds once)."),
+                        "superseded_by_task": task},
                     actor="cc", authority="accepted", session_id=session_id)
             out.append(rec)
     finally:
         driver.close()
-    print(json.dumps({"task": TASK, "target_state": TARGET_STATE, "dry_run": a.dry_run,
+    print(json.dumps({"task": task, "target_state": TARGET_STATE, "dry_run": a.dry_run,
                       "moved": len(out), "values_that_differ": [r for r in out
                                                                 if r["moved_value"]],
                       "not_moved_successor_not_published": unmatched, "results": out},

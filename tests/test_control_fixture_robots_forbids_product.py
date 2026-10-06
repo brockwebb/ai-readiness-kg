@@ -287,9 +287,13 @@ def test_the_rules_moved_to_meet_the_expectation_and_not_the_other_way_round(cyc
     """`params.yaml` says it outright: a gate whose expectation is edited to match its output is
     not a gate. The table was DERIVED before the fixture ever ran and expects `error` for A3 and
     B3. It is unchanged; the rules moved to meet it."""
+    from scan.rules import CURRENT
     table = cycle["params"]["e5_control"]["expected_verdicts"][FIXTURE]
     assert table["A3"] == "error" and table["B3"] == "error"
     assert cycle["by_leg"]["A3"].verdict == "error"
     assert cycle["by_leg"]["B3"].verdict == "error"
-    assert cycle["by_leg"]["A3"].rule_id == "RULE-A3-v6"
-    assert cycle["by_leg"]["B3"].rule_id == "RULE-B3-v3"
+    # The rules that meet it are the CURRENT ones, and the expectation has still not moved:
+    # generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) superseded both and
+    # reaches the same `error` on this fixture.
+    assert cycle["by_leg"]["A3"].rule_id == CURRENT["A3"]
+    assert cycle["by_leg"]["B3"].rule_id == CURRENT["B3"]

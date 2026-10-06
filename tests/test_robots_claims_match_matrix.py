@@ -250,10 +250,20 @@ def _builder():
 def test_the_built_report_states_its_correction_and_points_at_the_kept_text():
     """The corrected snapshot says what was corrected and when, on its face, and names the
     kept prior text, which exists. Read from the declaration, so a second correction is one
-    more entry and no edit here."""
-    entries = PUB["corrections"][PUB["version"]]
+    more entry and no edit here.
+
+    A correction belongs to the VERSION it corrects. The report moved to `2026-09-10_rj5`
+    (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), a new version whose text was written with
+    the correction already in it, so the built report carries no change line. The `_rj4`
+    correction stays declared under `_rj4`, and its kept text stays on disk."""
+    entries = PUB["corrections"].get(PUB["version"]) or []
     head = (REPORTS / "2026-09_fss_ai_readiness_L0.md").read_text(encoding="utf-8").splitlines()[:4]
     block = next(l for l in head if l.startswith("**Version.**"))
+    if not entries:
+        assert "**Corrected" not in block
+    for c in (x for v in PUB["corrections"].values() for x in v):
+        for key in ("prior_md", "prior_pdf"):
+            assert (REPO / c[key]).is_file(), c[key]
     for c in entries:
         assert f"**Corrected `{c['date']}`**" in block
         assert f"`{c['finding']}`" in block
@@ -269,10 +279,12 @@ def test_the_built_report_states_its_correction_and_points_at_the_kept_text():
 ])
 def test_a_correction_that_points_at_nothing_or_predates_the_release_is_refused(change, message):
     B = _builder()
-    entry = dict(PUB["corrections"][PUB["version"]][0], **change)
-    pub = dict(PUB, corrections={PUB["version"]: [entry]})
+    # Over the version that HAS a correction (`2026-09-10_rj4`); the current one may not.
+    version = next(iter(PUB["corrections"]))
+    entry = dict(PUB["corrections"][version][0], **change)
+    pub = dict(PUB, version=version, corrections={version: [entry]})
     with pytest.raises(SystemExit, match=message):
-        B.correction_lines(pub, PUB["released"][PUB["version"]])
+        B.correction_lines(pub, PUB["released"][version])
 
 
 def test_a_version_with_no_corrections_renders_no_change_line():

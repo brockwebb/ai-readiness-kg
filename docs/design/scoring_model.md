@@ -10,14 +10,14 @@ Two sources and no third: `framework/ai_readiness_framework.json` and the publis
 
 ## Coverage on the cycle of record
 
-Cycle `scan_2026-09-10_rj4`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-09-10_rj4.json`, `docs/reports/scan_matrix_product_2026-09-10_rj4.json`.
+Cycle `scan_2026-09-10_rj5`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-09-10_rj5.json`, `docs/reports/scan_matrix_product_2026-09-10_rj5.json`.
 
 | level | measured | total |
 |---|---|---|
 | adopted harness legs scored (candidates excluded, DD-054) | 21 | 23 |
-| indicators measured, of the framework | 21 | 48 |
-| indicators measured, of `harness_leg` | 21 | 23 |
-| criteria with a measured construct | 5 | 7 |
+| indicators measured, of the framework | 16 | 48 |
+| indicators measured, of `harness_leg` | 16 | 23 |
+| criteria with a measured construct | 4 | 7 |
 | bodies scored | 13 | 16 |
 
 ## The steps, in the Handbook's order

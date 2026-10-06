@@ -68,7 +68,10 @@ CYCLES = ("scan_smoke_2026-09-06", "scan_controls_2026-09-06", "scan_2026-09-07"
           # a re-judgement that did not clear what it was made for would show up here as a
           # failure rather than as a sentence in a RESULT.
           "scan_2026-09-07_rj2", "scan_2026-09-07b_rj3", "scan_2026-09-09_rj2",
-          "scan_2026-09-10_rj2")
+          "scan_2026-09-10_rj2",
+          # Generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`): the cycle of record
+          # judged under rules that reach no absence over a partial search. Zero, asserted.
+          "scan_2026-09-10_rj5")
 
 UNDER_OWN_HARNESS = {c: 0 for c in CYCLES}
 
@@ -240,31 +243,39 @@ def test_a12_is_the_only_leg_that_declares_a_non_product_subject():
 # findings cite a blind candidate, and `RULE-A3-v5` went on excluding them and answering anyway.
 #: payload -> `fail` verdicts from absence-claim rules that excluded at least one blind candidate.
 ABSENCE_UNDER_PARTIAL_BLINDNESS = {
+    # **Generation 14 raised these counts, and it measured nothing new**
+    # (`cc_tasks/2026-10-06_absence_verdicts_rules.md`). `RULE-A1-v5`, `RULE-A9-v2`, `RULE-D1-v4`
+    # and `RULE-F4-v4` declare `CLAIM = "absence"`, and `rules.claim_of` reads a leg's claim from
+    # its newest module (the claim belongs to the LEG). So every historical `fail` on A1, A9, D1
+    # and F4 is now read as what DN-012 d1 says it was: an absence over the candidates. Those whose
+    # cited evidence includes a blind candidate are counted here. The pre-generation-14 count
+    # stands beside each new one. No payload changed; the classification did.
     "scan_smoke_2026-09-06": 0,
     "scan_controls_2026-09-06": 0,
     # PERMANENT, and nothing will ever clear it. The verdict is on leg A3, and cycle 1 never
     # collected the `link_probe` leg `RULE-A3-v6` reads — that leg entered with harness-v3 — so
     # A3 is not re-judged for cycle 1 at all and `scan_2026-09-07_rj2` registers nothing for it.
     # A re-judgement cannot clear a verdict it is not able to make
-    # (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9_RESULT.md` §3).
-    "scan_2026-09-07": 1,
+    # (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9_RESULT.md` §3). Generation 14 adds the A1 twin.
+    "scan_2026-09-07": 2,           # was 1
     "scan_2026-09-07_controls": 0,
-    "scan_2026-09-07b": 5,
+    "scan_2026-09-07b": 17,         # was 5
     "scan_2026-09-07_rj1": 0,
-    "scan_2026-09-07b_rj1": 5,
-    "scan_2026-09-09": 5,
-    "scan_2026-09-10": 9,
-    "scan_2026-09-07b_rj2": 2,
-    "scan_2026-09-09_rj1": 1,
-    "scan_2026-09-10_rj1": 10,
-    # Generation 9, and this row of zeros is the whole point of that task: the 1, 2, 1 and 10
-    # above are the same four cycles, judged by `RULE-A3-v6` and `RULE-B3-v3` instead of their
-    # predecessors. Every one of those verdicts is now `error` — the scope limitation it always
-    # was — and not one of them moved to `pass`.
-    "scan_2026-09-07_rj2": 0,
-    "scan_2026-09-07b_rj3": 0,
-    "scan_2026-09-09_rj2": 0,
-    "scan_2026-09-10_rj2": 0,
+    "scan_2026-09-07b_rj1": 17,     # was 5
+    "scan_2026-09-09": 20,          # was 5
+    "scan_2026-09-10": 30,          # was 9
+    "scan_2026-09-07b_rj2": 14,     # was 2
+    "scan_2026-09-09_rj1": 16,      # was 1
+    "scan_2026-09-10_rj1": 37,      # was 10
+    # Generation 9 cleared A3 and B3 in these four, and they were zero. What generation 14 now
+    # counts in them is A1, A9, D1 and F4, the legs generation 9 did not touch. The cycle of
+    # record's own successor, `scan_2026-09-10_rj5`, judges all four under generation 14.
+    "scan_2026-09-07_rj2": 1,       # was 0
+    "scan_2026-09-07b_rj3": 12,     # was 0
+    "scan_2026-09-09_rj2": 15,      # was 0
+    "scan_2026-09-10_rj2": 27,      # was 0
+    # The successor generation 14 made for exactly these: zero, and asserted, not xfailed.
+    "scan_2026-09-10_rj5": 0,
 }
 
 

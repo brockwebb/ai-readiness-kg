@@ -343,7 +343,14 @@ def test_writing_into_a_temporary_tree_restores_the_published_one(tmp_path, snap
 #: by `_rj3` on 2026-09-14 and `_rj3` by `_rj4` on 2026-09-18, and a one-hop guard asked about
 #: `_rj2` answered with `_rj3`, two generations short of the judgement of record.
 OLD_SNAPSHOT = "scan_2026-09-10_rj2"
-CHAIN_FROM_OLD = ["scan_2026-09-10_rj2", "scan_2026-09-10_rj3", "scan_2026-09-10_rj4"]
+#: Grew by one with generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`, `_rj5` on
+#: 2026-10-06): the walk goes to the HEAD, wherever that is, and that is the property pinned.
+CHAIN_FROM_OLD = ["scan_2026-09-10_rj2", "scan_2026-09-10_rj3", "scan_2026-09-10_rj4",
+                  "scan_2026-09-10_rj5"]
+#: The judgement the 2026-09-18 incident was about. The numbers the pin below asserts are the
+#: `_rj2` -> `_rj4` move, which is a fact of the log, so they are asserted against `_rj4` by name
+#: rather than against whatever the head is today.
+RJ4 = "scan_2026-09-10_rj4"
 
 
 @pytest.fixture(scope="module")
@@ -377,7 +384,8 @@ def test_the_old_one_hop_answer_would_have_missed_rj4(succ, session):
     one_hop = succ.next_judgement(session, OLD_SNAPSHOT)
     assert one_hop["cycle"] == "scan_2026-09-10_rj3"
     assert succ.moved(OLD_SNAPSHOT, one_hop["cycle"])["moved"] == 0
-    walked = succ.moved(OLD_SNAPSHOT, succ.successor_info(session, OLD_SNAPSHOT)["successor"])
+    assert RJ4 in succ.successor_info(session, OLD_SNAPSHOT)["chain"]
+    walked = succ.moved(OLD_SNAPSHOT, RJ4)
     cells = [m for m in walked["moves"] if m["what"] == "matrix cell"]
     # 23 product rows x the seven columns generation 12 added, each `None` -> a verdict; the
     # host matrices do not move (`2026-09-18_rejudge_seven_legs_RESULT.md` §3).
@@ -385,7 +393,7 @@ def test_the_old_one_hop_answer_would_have_missed_rj4(succ, session):
     # The three tagged Results that moved, compared by value. Since the re-snapshot the report
     # tags `_rj4` names, so `moved` no longer finds them by the old suffix; the values are what
     # licensed the re-snapshot and they are asserted directly.
-    old_v, new_v = succ.result_values(OLD_SNAPSHOT), succ.result_values(CHAIN_FROM_OLD[-1])
+    old_v, new_v = succ.result_values(OLD_SNAPSHOT), succ.result_values(RJ4)
     assert {b: (old_v[b], new_v[b]) for b in ("scan_findings", "scan_l0_product_legs",
                                               "scan_l0_product_legs_at_zero")} == {
         "scan_findings": (739, 1009), "scan_l0_product_legs": (10, 17),

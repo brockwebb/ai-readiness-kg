@@ -128,9 +128,11 @@ def test_the_collector_records_both_tests_side_by_side(params):
 
 # ------------------------------------------------------------------ the rule
 
-def test_generation_thirteen_is_d4_v3_and_it_is_current():
-    assert CURRENT["D4"] == "RULE-D4-v3"
-    assert [m.RULE_ID for m in GENERATIONS[-1]] == ["RULE-D4-v3"]
+def test_generation_thirteen_is_d4_v3_and_fourteen_supersedes_it():
+    # Generation 13 is D4-v3 alone; generation 14 (`cc_tasks/2026-10-06_absence_verdicts_
+    # rules.md`) superseded it with `RULE-D4-v4`, which keeps every existence branch of v3.
+    assert [m.RULE_ID for m in GENERATIONS[12]] == ["RULE-D4-v3"]
+    assert CURRENT["D4"] == "RULE-D4-v4"
     assert {"RULE-D4-v1", "RULE-D4-v2", "RULE-D4-v3"} <= set(REGISTRY)
 
 
@@ -166,10 +168,16 @@ def test_v3_over_a_catalog_collected_before_the_block_is_error_not_fail(params):
 def test_v3_keeps_every_prescription_fragment_of_v2():
     """`tag_prescriptions.OUTCOMES["D4"]` names D4's fail branches by a verbatim fragment of
     the CURRENT module's source; v3 must still produce every one."""
-    import tag_prescriptions as tp
+    # v2's three fragments, written out: `OUTCOMES["D4"]` follows the CURRENT rule, which is
+    # `RULE-D4-v4` since generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), whose
+    # `no_catalog` sentence names the declared inventories it searched. What this test owns is
+    # that v3 kept v2's, and that is a fact about two shipped modules.
     src = Path(REGISTRY["RULE-D4-v3"].__file__).read_text(encoding="utf-8")
-    for outcome, frag in tp.OUTCOMES["D4"].items():
-        assert frag in src, outcome
+    v2 = Path(REGISTRY["RULE-D4-v2"].__file__).read_text(encoding="utf-8")
+    for outcome, frag in {"catalog_schema_violation": "but the catalog violates ",
+                          "product_absent_from_catalog": "but the product is not in it",
+                          "no_catalog": "no public data.json catalog served on this host"}.items():
+        assert frag in v2 and frag in src, outcome
 
 
 def test_the_field_legs_follow_d4s_membership(params):

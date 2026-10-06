@@ -223,10 +223,13 @@ OUTCOMES = {
         "licence_is_free_text": "free text, not a recognised identifier",
         "no_licence": "no licence in the product page's markup, in an HTTP Link header, or at a ",
     },
+    # `RULE-D4-v4` (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 7) reaches
+    # `no_catalog` only over every inventory the body declared, so its sentence names them; an
+    # `error` (an inventory not searched) carries none of these fragments and prescribes nothing.
     "D4": {
         "catalog_schema_violation": "but the catalog violates ",
         "product_absent_from_catalog": "but the product is not in it",
-        "no_catalog": "no public data.json catalog served on this host",
+        "no_catalog": "no public data.json catalog served at any of the ",
     },
     "E5": {
         "zero_controls_fired": "a cycle with zero fired controls is INVALID: expected ",
@@ -298,14 +301,18 @@ OUTCOMES = {
 # band that could be defaulted, which is the thing the empty band was protecting against.
 # `class_reason` is written only where the class is not obvious on the description's face.
 def _a(leg, outcome, slug, title, description, sources, cls, note=None,
-       applies_to_publisher=True, applies_to_note=None, class_reason=None, task=None):
+       applies_to_publisher=True, applies_to_note=None, class_reason=None, task=None,
+       withdrawn_when_declared=None):
     # `task` names the task that AUTHORED this action when it is not `TASK`, so an action added
     # by a later task says so on the node rather than inheriting the layer's founding task.
+    # `withdrawn_when_declared` names a `targets.yaml` `declared_locations` field: for a body
+    # that declares it, the action is not shown (`prescriptions.applicable`), because the
+    # declaration is the record that the act it prescribes was already done.
     return {"leg": leg, "outcome": outcome, "slug": slug, "title": title,
             "description": description, "sources": sources, "technique_class": cls,
             "class_reason": class_reason, "note": note,
             "applies_to_publisher": applies_to_publisher, "applies_to_note": applies_to_note,
-            "task": task}
+            "task": task, "withdrawn_when_declared": withdrawn_when_declared}
 
 
 # Quotes reused across several actions, named once so a re-quote cannot drift from its twin.
@@ -544,7 +551,11 @@ ACTIONS = [
        "through a documented HTTP API and publish a machine-readable description of it; where "
        "the product already sits on a data platform, enabling the platform's own API is the "
        "cheaper route than building one.",
-       [Q_BP23, Q_BP25, Q_OAS, Q_SCHEMA_API], cls="expose_api"),
+       [Q_BP23, Q_BP25, Q_OAS, Q_SCHEMA_API], cls="expose_api",
+       # Audit C-14: the ACS flagship was told to build an API it has. A body that declares an
+       # `api_base` HAS a documented API, so what it can lack is the description, which the
+       # outcome above prescribes (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 7).
+       withdrawn_when_declared="api_base"),
     # ---------------------------------------------------------------------------- A3
     _a("A3", "filtered_query_not_whole_product",
        "a3-add-a-whole-product-download-beside-the-query-builder",
@@ -827,7 +838,8 @@ ACTIONS = [
        [Q_DCAT_CATALOG, Q_SCHEMA_CAT], cls="edit_existing"),
     _a("D4", "no_catalog", "d4-publish-a-data-json-inventory",
        "Publish a data.json inventory on the host",
-       "No public `data.json` catalog is served on this host, so there is no machine-readable "
+       "No public `data.json` catalog is served on this host, nor at any other inventory the "
+       "body declares (its department's, data.gov's), so there is no machine-readable "
        "inventory of what the agency publishes. Publish one at `/data.json` and let its own "
        "URL be its identifier.",
        [Q_DCAT_CATALOG, Q_DCAT_ID], cls="publish_new_file"),
@@ -1280,6 +1292,8 @@ def build(g: dict) -> tuple:
             props["applies_to_note"] = a["applies_to_note"]
         if a["note"]:
             props["note"] = a["note"]
+        if a["withdrawn_when_declared"]:
+            props["withdrawn_when_declared"] = a["withdrawn_when_declared"]
         nodes.append({"id": f"act:{a['slug']}", "labels": ["Action"], "properties": props})
         edges.append({"from": f"act:{a['slug']}", "type": "REMEDIATES", "to": f"ind:{code}",
                       "properties": {"outcome": a["outcome"],

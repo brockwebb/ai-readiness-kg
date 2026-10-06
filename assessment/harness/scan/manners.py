@@ -376,7 +376,8 @@ def same_host_only(params: dict) -> bool:
     return next(iter(seen.values()), True)
 
 
-def on_roster_host(url: str, surface_url: str, params: dict) -> bool:
+def on_roster_host(url: str, surface_url: str, params: dict,
+                   admitted: frozenset = frozenset()) -> bool:
     """True when `url` may be dereferenced while measuring the surface at `surface_url`.
 
     The single gate every collector that follows a discovered link goes through. A surface's
@@ -386,7 +387,16 @@ def on_roster_host(url: str, surface_url: str, params: dict) -> bool:
     A surface URL with no host (the empty string a caller may pass when there is nothing to
     compare against) leaves the policy unenforceable, and the answer is True: refusing every
     URL because the caller gave us nothing to compare against would silently stop collecting.
+
+    **`admitted`** is the set of hosts a body DECLARED for the leg being collected
+    (`declarations.admitted_hosts`, DN-012 d3): its `api_base` host for A1/A2/A3/A9, its
+    `inventory_urls` hosts for D4 and the legs that read it. The caller computes it for one
+    body and one leg, so a declared host is reachable from that leg of that body and from
+    nothing else. It is following the indicator to where it points, not a sweep (operator scope
+    ruling 2026-09-08). Exact netloc match: a declaration names a host, never a domain.
     """
+    if admitted and netloc_of(url) in {netloc_of(h) for h in admitted}:
+        return True
     if not same_host_only(params):
         return True
     if not netloc_of(surface_url):

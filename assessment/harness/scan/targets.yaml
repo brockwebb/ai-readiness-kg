@@ -220,3 +220,373 @@ machine_entry_tokens:
   - bulk
   - quick stats
 
+
+# DECLARED LOCATIONS — DN-012 d3, `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4.
+#
+# Where each body's API and inventories ARE, so an absence verdict can be reached over the place
+# the indicator names instead of over paths the harness guessed. spec:A2 says "the documented
+# API base"; ind:D4 says "data.gov/agency inventory". A1/A2/A3 (and A9, whose spec names "the
+# documented base" too) read `api_base`; D4 and the four legs that consume it read every
+# `inventory_urls` entry. `manners.on_roster_host` admits these hosts for those legs of THIS body
+# only (`params.declarations`); it is not a sweep.
+#
+# Keyed by the frame's body code (`state/scan_targets_fss_2026-09_v5.json` `agency`), not under
+# `agencies:` above: that list is the cycle-1 roster `scripts/build_roster.py` and
+# `scripts/build_scan_targets.py` read, and three of the 16 bodies are not on it.
+#
+# Every entry carries the page it was read from. Populated ONLY where this repository already
+# cites the location (decision 4); everything else is listed under `unresolved` with why, and a
+# rule that needs it says `error` naming it (DN-012 d1). The recollection task resolves those
+# with network. A body with no entry here has declared nothing, which is also `error`, never
+# `fail`.
+declared_locations:
+  scheme: 1
+  bodies:
+    BEA:
+      inventory_urls:
+        - url: https://www.bea.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.bea.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.commerce.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.bea.gov/
+            obs_id: obs_188973f1c62371643104a0dd
+            body_sha256: b430ee2459cfa9e4c69d4ec3badccea83f61c3e090ba7f3ca2f53fe28372af02
+            link: https://www.commerce.gov/
+            anchor: "U.S. Department of Commerce"
+            how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    BJS:
+      inventory_urls:
+        - url: https://bjs.ojp.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://bjs.ojp.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.justice.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://bjs.ojp.gov/
+            obs_id: obs_9e134bd545a8f8d9faa51696
+            body_sha256: 48f65d8b9c246cdf7142d129a6da066d7f880736081476986471bd4205e71516
+            link: https://www.justice.gov/
+            anchor: "Justice.gov"
+            how: the body's own page links the home page of its parent department (Department of Justice); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    BLS:
+      inventory_urls:
+        - url: https://www.bls.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.bls.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+      unresolved:
+        - role: department
+          why: the home page of the body's parent department (Department of Labor) is written nowhere in this repository; the body's own pages answered 403 on every cycle, so none is retained to read it from
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    BTS:
+      inventory_urls:
+        - url: https://www.bts.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.bts.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+      unresolved:
+        - role: department
+          why: the home page of the body's parent department (Department of Transportation) is written nowhere in this repository; the body's own pages answered 403 on every cycle, so none is retained to read it from
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    CENSUS:
+      api_base:
+        url: https://api.census.gov/data
+        read_from:
+          page: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+          cited_at: docs/data/sources_per_check.json:237
+          doc_id: census-api-acs5-2023-b19013-counties-colorado
+          how: the Census Data API endpoint this project cites for ACS 5-year; the base is its path up to the dataset
+      inventory_urls:
+        - url: https://www.census.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.census.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.commerce.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.census.gov/
+            obs_id: obs_5c5d0a97c73c0d9b4f71ad56
+            body_sha256: 9a3e102a3d45ab3eadf587f53e93d2046be9d6937b49b68898f79f4de7437a28
+            link: https://www.commerce.gov/
+            anchor: "U.S. Department of Commerce"
+            how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    DRSMSU:
+      # The parent (Board of Governors of the Federal Reserve System) publishes on the roster host itself, so the own-host
+      # inventory IS the department's: there is no second data.json to declare.
+      department_is_own_host: true
+      inventory_urls:
+        - url: https://www.federalreserve.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.federalreserve.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    EIA:
+      inventory_urls:
+        - url: https://www.eia.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.eia.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.energy.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.eia.gov/
+            obs_id: obs_cf388e1d6c76caac46fd6d87
+            body_sha256: 8ecb87bb73ddda52a03b1f614ad97c30ed74892dbf0d107a5e5be83e53511f8c
+            link: https://www.energy.gov/
+            anchor: "U.S. Department of Energy"
+            how: the body's own page links the home page of its parent department (Department of Energy); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    ERS:
+      inventory_urls:
+        - url: https://www.ers.usda.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.ers.usda.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.usda.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.ers.usda.gov/
+            obs_id: obs_a2f2985ed97be6a7df2283e5
+            body_sha256: 381c01a65f8f4c3d8fd1ffef1355bc9825f5f37fad279e804cc45987fd15c291
+            link: https://www.usda.gov/
+            anchor: "U.S. DEPARTMENT OF AGRICULTURE"
+            how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    NAHMSAPHIS:
+      inventory_urls:
+        - url: https://www.aphis.usda.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.aphis.usda.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.usda.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+            obs_id: obs_7186c4dc5485becc8d940b75
+            body_sha256: 8ebee66ad30d5860d89f28762e00e96d3d6a667b29716e9c3e4609af56fdbf8b
+            link: https://www.usda.gov/
+            anchor: "U.S. Department of Agriculture"
+            how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    NASS:
+      api_base:
+        url: https://quickstats.nass.usda.gov/api
+        read_from:
+          page: https://www.nass.usda.gov
+          cited_at: state/scan_preflight_2026-09.json (obs_91b1ffd453634126f8891d10, parsed.links[181])
+          anchor: API
+          how: the agency's own home page links its Quick Stats API under the anchor text "API"
+      inventory_urls:
+        - url: https://www.nass.usda.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.nass.usda.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.usda.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.nass.usda.gov/
+            obs_id: obs_d5cc5336fba2e11f89ac1b66
+            body_sha256: fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3
+            link: http://www.usda.gov
+            anchor: "United States Department of Agriculture"
+            how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    NCES:
+      inventory_urls:
+        - url: https://nces.ed.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://nces.ed.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.ed.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://nces.ed.gov/national-center-education-statistics-nces/about
+            retained_at: corpus/evidence/frame/5d/5de6d5e4e78b46afd50d3ccbf467571814b37edc1ff6c4fe17c0bdf2a6b5a42b
+            link: https://www.ed.gov/
+            anchor: "U.S. Department of Education"
+            how: the body's own About page names its parent department (Department of Education) and links its home page; data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    NCHS:
+      inventory_urls:
+        - url: https://www.cdc.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.cdc.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://hhs.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.cdc.gov/nchs/products/databriefs.htm
+            obs_id: obs_c48e9ca25ff13cde06f8d6c3
+            body_sha256: 2b56d9806fea7ef4b73220427c7f68b6cafabfc6e2d37710c92c311437680e16
+            link: https://hhs.gov
+            anchor: "HHS.gov"
+            how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    NCSES:
+      inventory_urls:
+        - url: https://ncses.nsf.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://ncses.nsf.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.nsf.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://ncses.nsf.gov/
+            obs_id: obs_2f9b3b0127dabf0c15c66b9d
+            body_sha256: 7d0cac89aebb5977121750c1d6ad4458e82a969e12e7664b1a4b3d0829998e2c
+            link: https://www.nsf.gov/
+            anchor: ""
+            how: the body's own page links the home page of its parent department (National Science Foundation); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    ORES:
+      # The parent (Social Security Administration) publishes on the roster host itself, so the own-host
+      # inventory IS the department's: there is no second data.json to declare.
+      department_is_own_host: true
+      inventory_urls:
+        - url: https://www.ssa.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.ssa.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    SAMHSACBHS:
+      inventory_urls:
+        - url: https://www.samhsa.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.samhsa.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.hhs.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
+            obs_id: obs_2b51f27e8b43387ec26bdb5a
+            body_sha256: 1919c75a295a086e2fb9cc0b08cd568f2f431944bbdf8e339e531d9d6663fa6b
+            link: https://www.hhs.gov
+            anchor: "HHS.gov"
+            how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+    SOI:
+      inventory_urls:
+        - url: https://www.irs.gov/data.json
+          kind: data_json
+          role: own_host
+          read_from:
+            page: https://www.irs.gov
+            how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.treasury.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
+            obs_id: obs_59324d211b83678dea83bb1f
+            body_sha256: e5d61cbb510bc44323040dee6bcb0b4d48929122cdffdb65bec49e626d6e8419
+            link: https://www.treasury.gov/
+            anchor: "U.S. Treasury"
+            how: the body's own page links the home page of its parent department (Department of the Treasury); data.gov reads each department's data.json (params.yaml dept_domains)
+      unresolved:
+        - role: api_base
+          why: no documented API base for this body is cited in this repository
+        - role: catalog_organization
+          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+

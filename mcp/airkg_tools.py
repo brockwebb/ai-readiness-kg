@@ -807,7 +807,10 @@ class Tools:
             latest = presc.latest_for(body)
             failing = presc.failing(latest).get(body, {})
             failing_legs = sorted(failing)
-            acts = [a for a in acts if a["leg"] in failing]
+            # An action withdrawn for a body that declares what it prescribes is not shown to
+            # it (`prescriptions.applicable`, `cc_tasks/2026-10-06_absence_verdicts_rules.md`
+            # decision 7).
+            acts = presc.applicable([a for a in acts if a["leg"] in failing], body)
         if leg is not None:
             acts = [a for a in acts if a["leg"] == leg]
         rows = []

@@ -169,7 +169,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
+    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -218,7 +218,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
+    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -267,7 +267,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
+    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -548,7 +548,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
+    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -678,12 +678,12 @@
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "B",
+    "requirement_none_reason": "The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds.",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
+    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
-    "requirement_none_reason": "The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds."
+    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured."
    }
   },
   {
@@ -713,12 +713,12 @@
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "B",
+    "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant.",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
-    "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant."
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
    }
   },
   {
@@ -766,7 +766,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B3'] = RULE-B3-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
+    "tier_source": "rules.CURRENT['B3'] = RULE-B3-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -797,12 +797,12 @@
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "B",
+    "requirement_none_reason": "The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant.",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B4'] = RULE-B4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
+    "tier_source": "rules.CURRENT['B4'] = RULE-B4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
-    "requirement_none_reason": "The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant."
+    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured."
    }
   },
   {
@@ -1085,7 +1085,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
+    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -1150,12 +1150,12 @@
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "D",
+    "requirement_none_reason": "Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's.",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D3'] = RULE-D3-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
+    "tier_source": "rules.CURRENT['D3'] = RULE-D3-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
-    "requirement_none_reason": "Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's."
+    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured."
    }
   },
   {
@@ -1203,7 +1203,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
+    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -1673,7 +1673,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
+    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -1803,12 +1803,12 @@
     "gap": null,
     "criterion_code": "G",
     "g1_leg_of": "G1",
+    "requirement_none_reason": "Measured: the G1 instrument exists and judged it (DD-036, `measurement_status: measured`). Nothing stands between it and a verdict.",
     "measurement_tier": "M",
     "measurement_basis": "judged_reading",
     "tier_source": "DD-036 §2 (docs/design_decisions.md): G1-O is the v2 EVAL; spec `spec:G1-O` names its collector; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G1-O`: \"when the pinned consumer restates that same captured surface\"",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
-    "tier_note": "Reached by rule 5, and its basis is `judged_reading` rather than `evaluation` because the instrument exists: it is the one rule 4 cites.",
-    "requirement_none_reason": "Measured: the G1 instrument exists and judged it (DD-036, `measurement_status: measured`). Nothing stands between it and a verdict."
+    "tier_note": "Reached by rule 5, and its basis is `judged_reading` rather than `evaluation` because the instrument exists: it is the one rule 4 cites."
    }
   },
   {
@@ -1903,12 +1903,12 @@
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "G",
+    "requirement_none_reason": "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant.",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['G4'] = RULE-G4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
+    "tier_source": "rules.CURRENT['G4'] = RULE-G4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
-    "requirement_none_reason": "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant."
+    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured."
    }
   },
   {
@@ -1985,7 +1985,7 @@
     "indicator_code": "A1",
     "leg": "A1",
     "mode": "auto",
-    "rule_id": "RULE-A1-v4",
+    "rule_id": "RULE-A1-v5",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the product page; extract every download link; for each, HEAD and read Content-Type and file extension. Structured iff any of csv/json/parquet/xlsx/xml; PDF-only iff every link is application/pdf.",
     "collector": "httpx",
@@ -2002,7 +2002,7 @@
     "indicator_code": "A2",
     "leg": "A2",
     "mode": "auto",
-    "rule_id": "RULE-A2-v3",
+    "rule_id": "RULE-A2-v4",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the documented API base and any OpenAPI/Swagger document; record auth scheme, declared rate limits, and whether the description is machine-readable.",
     "collector": "httpx",
@@ -2020,7 +2020,7 @@
     "indicator_code": "A3",
     "leg": "A3",
     "mode": "auto",
-    "rule_id": "RULE-A3-v6",
+    "rule_id": "RULE-A3-v7",
     "collector_pin": "scrapy>=2.11",
     "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
     "collector": "scrapy",
@@ -2122,7 +2122,7 @@
     "indicator_code": "A9",
     "leg": "A9",
     "mode": "auto",
-    "rule_id": "RULE-A9-v1",
+    "rule_id": "RULE-A9-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "Probe for a machine-first entry point: OpenAPI at the documented base, /.well-known/mcp or an advertised MCP/A2A endpoint, /llms.txt.",
     "collector": "httpx",
@@ -2183,7 +2183,7 @@
     "indicator_code": "B3",
     "leg": "B3",
     "mode": "auto",
-    "rule_id": "RULE-B3-v3",
+    "rule_id": "RULE-B3-v4",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch the methodology document; test whether it is structured text (HTML/markdown) or PDF-only, and whether it is retrievable without JS.",
     "collector": "httpx",
@@ -2219,7 +2219,7 @@
     "indicator_code": "D1",
     "leg": "D1",
     "mode": "auto",
-    "rule_id": "RULE-D1-v3",
+    "rule_id": "RULE-D1-v4",
     "collector_pin": "extruct>=0.17",
     "signal": "Read the licence from schema.org/DCAT markup, an HTTP Link header, and the API's terms endpoint; test whether it is a recognised identifier (SPDX or a known URL) rather than free text.",
     "collector": "extruct + httpx",
@@ -2237,7 +2237,7 @@
     "indicator_code": "D4",
     "leg": "D4",
     "mode": "auto",
-    "rule_id": "RULE-D4-v3",
+    "rule_id": "RULE-D4-v4",
     "collector_pin": "json-schema (Project Open Data v1.1 schema)",
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
@@ -2308,7 +2308,7 @@
     "indicator_code": "F4",
     "leg": "F4",
     "mode": "auto",
-    "rule_id": "RULE-F4-v3",
+    "rule_id": "RULE-F4-v4",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
     "collector": "httpx",
@@ -2443,15 +2443,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A1-v4",
+    "verifies_by": "RULE-A1-v5",
     "leg": "A1",
     "indicator_code": "A1",
     "outcome": "only_pdf",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -2482,15 +2482,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:change_server_behaviour, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A1-v4",
+    "verifies_by": "RULE-A1-v5",
     "leg": "A1",
     "indicator_code": "A1",
     "outcome": "no_structured_link",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -2522,15 +2522,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A2-v3",
+    "verifies_by": "RULE-A2-v4",
     "leg": "A2",
     "indicator_code": "A2",
     "outcome": "served_but_not_an_api_description",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -2563,15 +2563,15 @@
     "cost_band": "procurement",
     "cost_source": "notional:technique_class:expose_api, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A2-v3",
+    "verifies_by": "RULE-A2-v4",
     "leg": "A2",
     "indicator_code": "A2",
     "outcome": "no_api_description",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -2580,7 +2580,8 @@
      "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
      "bodies_failing_now_caveat": "a per-LEG count. `A2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
     },
-    "authored_by": "cc_tasks/2026-09-17_prescription_layer.md"
+    "authored_by": "cc_tasks/2026-09-17_prescription_layer.md",
+    "withdrawn_when_declared": "api_base"
    }
   },
   {
@@ -2601,15 +2602,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v6",
+    "verifies_by": "RULE-A3-v7",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "filtered_query_not_whole_product",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 7,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 7 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -2639,15 +2640,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v6",
+    "verifies_by": "RULE-A3-v7",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "below_bulk_floor",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 7,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 7 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -2677,15 +2678,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v6",
+    "verifies_by": "RULE-A3-v7",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "no_whole_product_download",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 7,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 7 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -2724,7 +2725,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -2767,7 +2768,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -2809,7 +2810,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -2848,7 +2849,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -2887,7 +2888,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -2926,7 +2927,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -2966,7 +2967,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3004,7 +3005,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3043,7 +3044,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3081,7 +3082,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3121,7 +3122,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3152,15 +3153,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:change_server_behaviour, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A9-v1",
+    "verifies_by": "RULE-A9-v2",
     "leg": "A9",
     "indicator_code": "A9",
     "outcome": "machine_path_answers_html",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3191,15 +3192,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A9-v1",
+    "verifies_by": "RULE-A9-v2",
     "leg": "A9",
     "indicator_code": "A9",
     "outcome": "no_machine_first_path",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3237,7 +3238,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3275,7 +3276,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3314,7 +3315,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3353,7 +3354,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3394,7 +3395,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3434,7 +3435,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3474,7 +3475,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3515,7 +3516,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3557,7 +3558,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3589,15 +3590,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:change_server_behaviour, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B3-v3",
+    "verifies_by": "RULE-B3-v4",
     "leg": "B3",
     "indicator_code": "B3",
     "outcome": "methodology_requires_js",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 10,
+     "bodies_failing_now": 9,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -3628,15 +3629,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B3-v3",
+    "verifies_by": "RULE-B3-v4",
     "leg": "B3",
     "indicator_code": "B3",
     "outcome": "methodology_pdf_only",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 10,
+     "bodies_failing_now": 9,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -3666,15 +3667,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B3-v3",
+    "verifies_by": "RULE-B3-v4",
     "leg": "B3",
     "indicator_code": "B3",
     "outcome": "no_methodology_link",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 10,
+     "bodies_failing_now": 9,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -3704,15 +3705,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B3-v3",
+    "verifies_by": "RULE-B3-v4",
     "leg": "B3",
     "indicator_code": "B3",
     "outcome": "no_structured_text_methodology",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 10,
+     "bodies_failing_now": 9,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -3742,15 +3743,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D1-v3",
+    "verifies_by": "RULE-D1-v4",
     "leg": "D1",
     "indicator_code": "D1",
     "outcome": "licence_is_free_text",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -3780,15 +3781,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D1-v3",
+    "verifies_by": "RULE-D1-v4",
     "leg": "D1",
     "indicator_code": "D1",
     "outcome": "no_licence",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -3820,15 +3821,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v3",
+    "verifies_by": "RULE-D4-v4",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "catalog_schema_violation",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -3858,15 +3859,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v3",
+    "verifies_by": "RULE-D4-v4",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "product_absent_from_catalog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -3885,7 +3886,7 @@
    ],
    "properties": {
     "title": "Publish a data.json inventory on the host",
-    "description": "No public `data.json` catalog is served on this host, so there is no machine-readable inventory of what the agency publishes. Publish one at `/data.json` and let its own URL be its identifier.",
+    "description": "No public `data.json` catalog is served on this host, nor at any other inventory the body declares (its department's, data.gov's), so there is no machine-readable inventory of what the agency publishes. Publish one at `/data.json` and let its own URL be its identifier.",
     "technique_source": [
      "corpus/kernel/dcat-us-1-1-schema.md (doc_id `dcat-us-1-1-schema`), 'What to Document - Datasets and Web APIs': \"The catalog file for each agency should list all of the agency’s datasets that can be made public, regardless of whether they are distributed by a file download or a Web API.\"",
      "corpus/kernel/dcat-us-1-1-schema.md (doc_id `dcat-us-1-1-schema`), 'Catalog' fields, Metadata Catalog ID: \"This should be the URL of the data.json file itself\""
@@ -3896,15 +3897,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v3",
+    "verifies_by": "RULE-D4-v4",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "no_catalog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -3942,7 +3943,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj4` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -3982,7 +3983,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj4` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4022,7 +4023,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj4` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4053,15 +4054,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v3",
+    "verifies_by": "RULE-F4-v4",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "changelog_entries_lack_revision_class",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4091,15 +4092,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v3",
+    "verifies_by": "RULE-F4-v4",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "changelog_not_machine_readable",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4129,15 +4130,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v3",
+    "verifies_by": "RULE-F4-v4",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "no_changelog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 13,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4175,7 +4176,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-09-10_rj4` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Uncertainty legibility (two legs, scored as a vector)"
      ],
@@ -4196,7 +4197,7 @@
     "indicator_code": "B1",
     "leg": "B1",
     "mode": "auto",
-    "rule_id": "RULE-B1-v2",
+    "rule_id": "RULE-B1-v3",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1) over D4's observation; assessment/harness/scan/rules/_schema_terms.py over A6's (`parsed.raw`, extruct>=0.17)",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product links a data dictionary (DCAT-US `describedBy`, on the dataset or a distribution); on A6's markup of the product page, test whether a schema.org `Dataset` lists `variableMeasured`. Either half passes the leg.",
     "collector": "dcat-record-fields and schema-terms",
@@ -4213,7 +4214,7 @@
     "indicator_code": "B4",
     "leg": "B4",
     "mode": "auto",
-    "rule_id": "RULE-B4-v1",
+    "rule_id": "RULE-B4-v2",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product carries a quality measurement (`hasQualityMeasurement`) and revision metadata (`versionNotes`, `previousVersion` or `hasCurrentVersion`).",
     "collector": "dcat-record-fields",
@@ -4231,7 +4232,7 @@
     "indicator_code": "D3",
     "leg": "D3",
     "mode": "auto",
-    "rule_id": "RULE-D3-v1",
+    "rule_id": "RULE-D3-v2",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product names a lineage (`wasGeneratedBy`, `prov:wasGeneratedBy`, `wasDerivedFrom` or `prov:wasDerivedFrom`).",
     "collector": "dcat-record-fields",
@@ -4248,7 +4249,7 @@
     "indicator_code": "G4",
     "leg": "G4",
     "mode": "auto",
-    "rule_id": "RULE-G4-v1",
+    "rule_id": "RULE-G4-v2",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product carries a well-formed `bureauCode` and `programCode`.",
     "collector": "dcat-record-fields",
@@ -4275,15 +4276,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v2",
+    "verifies_by": "RULE-B1-v3",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4314,15 +4315,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v2",
+    "verifies_by": "RULE-B1-v3",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_data_dictionary",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4352,15 +4353,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v1",
+    "verifies_by": "RULE-B4-v2",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4391,15 +4392,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v1",
+    "verifies_by": "RULE-B4-v2",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "quality_measurement_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4430,15 +4431,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v1",
+    "verifies_by": "RULE-B4-v2",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "revision_metadata_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4468,15 +4469,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D3-v1",
+    "verifies_by": "RULE-D3-v2",
     "leg": "D3",
     "indicator_code": "D3",
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -4507,15 +4508,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D3-v1",
+    "verifies_by": "RULE-D3-v2",
     "leg": "D3",
     "indicator_code": "D3",
     "outcome": "no_lineage_field",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 12,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -4545,15 +4546,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-G4-v1",
+    "verifies_by": "RULE-G4-v2",
     "leg": "G4",
     "indicator_code": "G4",
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -4585,15 +4586,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-G4-v1",
+    "verifies_by": "RULE-G4-v2",
     "leg": "G4",
     "indicator_code": "G4",
     "outcome": "authority_codes_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -4677,15 +4678,15 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v2",
+    "verifies_by": "RULE-B1-v3",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_variable_measured",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 11,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4723,7 +4724,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -4761,7 +4762,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -4799,7 +4800,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -4838,7 +4839,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -4877,7 +4878,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -4915,7 +4916,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -4954,7 +4955,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],
@@ -4992,7 +4993,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],
@@ -7374,7 +7375,7 @@
    "to": "ind:A1",
    "properties": {
     "outcome": "only_pdf",
-    "rule_id": "RULE-A1-v4",
+    "rule_id": "RULE-A1-v5",
     "leg": "A1",
     "reason_fragment": "only PDF served; first: "
    }
@@ -7385,7 +7386,7 @@
    "to": "ind:A1",
    "properties": {
     "outcome": "no_structured_link",
-    "rule_id": "RULE-A1-v4",
+    "rule_id": "RULE-A1-v5",
     "leg": "A1",
     "reason_fragment": "no probed link serves a structured content type"
    }
@@ -7396,7 +7397,7 @@
    "to": "ind:A2",
    "properties": {
     "outcome": "served_but_not_an_api_description",
-    "rule_id": "RULE-A2-v3",
+    "rule_id": "RULE-A2-v4",
     "leg": "A2",
     "reason_fragment": "does not parse as an API "
    }
@@ -7407,7 +7408,7 @@
    "to": "ind:A2",
    "properties": {
     "outcome": "no_api_description",
-    "rule_id": "RULE-A2-v3",
+    "rule_id": "RULE-A2-v4",
     "leg": "A2",
     "reason_fragment": "no OpenAPI/JSON API description served at any probed path"
    }
@@ -7418,7 +7419,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "filtered_query_not_whole_product",
-    "rule_id": "RULE-A3-v6",
+    "rule_id": "RULE-A3-v7",
     "leg": "A3",
     "reason_fragment": "download link(s) are filtered queries, not "
    }
@@ -7429,7 +7430,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "below_bulk_floor",
-    "rule_id": "RULE-A3-v6",
+    "rule_id": "RULE-A3-v7",
     "leg": "A3",
     "reason_fragment": "the largest linked download is below the "
    }
@@ -7440,7 +7441,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "no_whole_product_download",
-    "rule_id": "RULE-A3-v6",
+    "rule_id": "RULE-A3-v7",
     "leg": "A3",
     "reason_fragment": "no whole-product download linked from the product page "
    }
@@ -7572,7 +7573,7 @@
    "to": "ind:A9",
    "properties": {
     "outcome": "machine_path_answers_html",
-    "rule_id": "RULE-A9-v1",
+    "rule_id": "RULE-A9-v2",
     "leg": "A9",
     "reason_fragment": "probed path(s) answer with HTML rather than a "
    }
@@ -7583,7 +7584,7 @@
    "to": "ind:A9",
    "properties": {
     "outcome": "no_machine_first_path",
-    "rule_id": "RULE-A9-v1",
+    "rule_id": "RULE-A9-v2",
     "leg": "A9",
     "reason_fragment": "probed machine-first paths is served"
    }
@@ -7693,7 +7694,7 @@
    "to": "ind:B3",
    "properties": {
     "outcome": "methodology_requires_js",
-    "rule_id": "RULE-B3-v3",
+    "rule_id": "RULE-B3-v4",
     "leg": "B3",
     "reason_fragment": "retrievable without JS: "
    }
@@ -7704,7 +7705,7 @@
    "to": "ind:B3",
    "properties": {
     "outcome": "methodology_pdf_only",
-    "rule_id": "RULE-B3-v3",
+    "rule_id": "RULE-B3-v4",
     "leg": "B3",
     "reason_fragment": "methodology is PDF-only: "
    }
@@ -7715,7 +7716,7 @@
    "to": "ind:B3",
    "properties": {
     "outcome": "no_methodology_link",
-    "rule_id": "RULE-B3-v3",
+    "rule_id": "RULE-B3-v4",
     "leg": "B3",
     "reason_fragment": "no link to a methodology document from the product surface"
    }
@@ -7726,7 +7727,7 @@
    "to": "ind:B3",
    "properties": {
     "outcome": "no_structured_text_methodology",
-    "rule_id": "RULE-B3-v3",
+    "rule_id": "RULE-B3-v4",
     "leg": "B3",
     "reason_fragment": "no structured-text methodology document reachable from the product surface"
    }
@@ -7737,7 +7738,7 @@
    "to": "ind:D1",
    "properties": {
     "outcome": "licence_is_free_text",
-    "rule_id": "RULE-D1-v3",
+    "rule_id": "RULE-D1-v4",
     "leg": "D1",
     "reason_fragment": "free text, not a recognised identifier"
    }
@@ -7748,7 +7749,7 @@
    "to": "ind:D1",
    "properties": {
     "outcome": "no_licence",
-    "rule_id": "RULE-D1-v3",
+    "rule_id": "RULE-D1-v4",
     "leg": "D1",
     "reason_fragment": "no licence in the product page's markup, in an HTTP Link header, or at a "
    }
@@ -7759,7 +7760,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "catalog_schema_violation",
-    "rule_id": "RULE-D4-v3",
+    "rule_id": "RULE-D4-v4",
     "leg": "D4",
     "reason_fragment": "but the catalog violates "
    }
@@ -7770,7 +7771,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "product_absent_from_catalog",
-    "rule_id": "RULE-D4-v3",
+    "rule_id": "RULE-D4-v4",
     "leg": "D4",
     "reason_fragment": "but the product is not in it"
    }
@@ -7781,9 +7782,9 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "no_catalog",
-    "rule_id": "RULE-D4-v3",
+    "rule_id": "RULE-D4-v4",
     "leg": "D4",
-    "reason_fragment": "no public data.json catalog served on this host"
+    "reason_fragment": "no public data.json catalog served at any of the "
    }
   },
   {
@@ -7825,7 +7826,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "changelog_entries_lack_revision_class",
-    "rule_id": "RULE-F4-v3",
+    "rule_id": "RULE-F4-v4",
     "leg": "F4",
     "reason_fragment": "entries carry a revision class (floor "
    }
@@ -7836,7 +7837,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "changelog_not_machine_readable",
-    "rule_id": "RULE-F4-v3",
+    "rule_id": "RULE-F4-v4",
     "leg": "F4",
     "reason_fragment": "a changelog page is served at "
    }
@@ -7847,7 +7848,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "no_changelog",
-    "rule_id": "RULE-F4-v3",
+    "rule_id": "RULE-F4-v4",
     "leg": "F4",
     "reason_fragment": "no changelog or release-notes endpoint served"
    }
@@ -7905,7 +7906,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-B1-v2",
+    "rule_id": "RULE-B1-v3",
     "leg": "B1",
     "reason_fragment": "no catalog record for the product"
    }
@@ -7916,7 +7917,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_data_dictionary",
-    "rule_id": "RULE-B1-v2",
+    "rule_id": "RULE-B1-v3",
     "leg": "B1",
     "reason_fragment": "lack a data dictionary ("
    }
@@ -7927,7 +7928,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-B4-v1",
+    "rule_id": "RULE-B4-v2",
     "leg": "B4",
     "reason_fragment": "no catalog record for the product"
    }
@@ -7938,7 +7939,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "quality_measurement_absent",
-    "rule_id": "RULE-B4-v1",
+    "rule_id": "RULE-B4-v2",
     "leg": "B4",
     "reason_fragment": "lack a quality measurement ("
    }
@@ -7949,7 +7950,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "revision_metadata_absent",
-    "rule_id": "RULE-B4-v1",
+    "rule_id": "RULE-B4-v2",
     "leg": "B4",
     "reason_fragment": "lack revision metadata ("
    }
@@ -7960,7 +7961,7 @@
    "to": "ind:D3",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-D3-v1",
+    "rule_id": "RULE-D3-v2",
     "leg": "D3",
     "reason_fragment": "no catalog record for the product"
    }
@@ -7971,7 +7972,7 @@
    "to": "ind:D3",
    "properties": {
     "outcome": "no_lineage_field",
-    "rule_id": "RULE-D3-v1",
+    "rule_id": "RULE-D3-v2",
     "leg": "D3",
     "reason_fragment": "lack a lineage field ("
    }
@@ -7982,7 +7983,7 @@
    "to": "ind:G4",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-G4-v1",
+    "rule_id": "RULE-G4-v2",
     "leg": "G4",
     "reason_fragment": "no catalog record for the product"
    }
@@ -7993,7 +7994,7 @@
    "to": "ind:G4",
    "properties": {
     "outcome": "authority_codes_absent",
-    "rule_id": "RULE-G4-v1",
+    "rule_id": "RULE-G4-v2",
     "leg": "G4",
     "reason_fragment": "lack a valid `bureauCode` and `programCode`"
    }
@@ -8019,7 +8020,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_variable_measured",
-    "rule_id": "RULE-B1-v2",
+    "rule_id": "RULE-B1-v3",
     "leg": "B1",
     "reason_fragment": "no `variableMeasured`"
    }

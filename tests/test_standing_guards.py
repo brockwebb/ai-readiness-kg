@@ -77,7 +77,8 @@ PRE_DN003_CYCLES = frozenset({"scan_2026-09-07_rj1", "scan_2026-09-07b_rj1"})
 #: red test reconstructs as off the log. Closed and named, like the two sets around it; it grows
 #: by one name per later re-judgement, and each name is the task that published it.
 #: `scan_2026-09-10_rj4`: `cc_tasks/2026-09-18_rejudge_seven_legs.md`.
-PUBLISHED_AFTER_THE_GUARD = frozenset({"scan_2026-09-10_rj4"})
+#: `scan_2026-09-10_rj5`: `cc_tasks/2026-10-06_absence_verdicts_rules.md`.
+PUBLISHED_AFTER_THE_GUARD = frozenset({"scan_2026-09-10_rj4", "scan_2026-09-10_rj5"})
 
 #: The loopback control fixtures. Same rule: closed, named, may only shrink.
 CONTROLS_ONLY = frozenset({"scan_controls_2026-09-06", "scan_2026-09-07_controls",
@@ -244,12 +245,14 @@ def test_the_guard_reports_a_rejudgement_published_without_its_supersession(live
 # ================================================================== green: what ships today
 
 def test_every_stored_judgement_is_on_the_log(live):
-    """DN-003 decision 6, standing. Green at 15 re-judged and 6 measured (the fifteenth is
-    `scan_2026-09-10_rj4`, `cc_tasks/2026-09-18_rejudge_seven_legs.md`)."""
+    """DN-003 decision 6, standing. Green at 16 re-judged and 6 measured (the fifteenth is
+    `scan_2026-09-10_rj4`, `cc_tasks/2026-09-18_rejudge_seven_legs.md`; the sixteenth
+    `scan_2026-09-10_rj5`, `cc_tasks/2026-10-06_absence_verdicts_rules.md`, whose every Finding
+    pairs with one of `_rj4`'s, so the new-leg count below does not move)."""
     _payloads, a = live
     assert a["unpublished"] == [], json.dumps(a["unpublished"], indent=1)
     assert a["unpaired"] == [], json.dumps(a["unpaired"], indent=1)
-    assert a["by_kind"] == {"rejudged": 15, "measured": 6, "controls_only": 3}, a["by_kind"]
+    assert a["by_kind"] == {"rejudged": 16, "measured": 6, "controls_only": 3}, a["by_kind"]
     # The one cycle with Findings on legs its predecessor never judged, and how many.
     new_legs = {r["cycle"]: r["findings_on_new_legs"] for r in a["rows"]
                 if r.get("findings_on_new_legs")}

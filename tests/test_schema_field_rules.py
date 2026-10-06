@@ -145,8 +145,11 @@ def test_generation_twelve_is_registered_and_current():
     # decision 4) followed; twelve is the one before it.
     assert GENERATIONS[11] is V12
     assert {m.RULE_ID for m in V12} == set(RULES.values())
+    # Generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) moved B1 again, to
+    # `RULE-B1-v3`; B2, B5 and D2 are still generation twelve's.
     for leg, rid in RULES.items():
-        assert CURRENT[leg] == rid and REGISTRY[rid].LEG == leg
+        assert REGISTRY[rid].LEG == leg
+        assert CURRENT[leg] == ("RULE-B1-v3" if leg == "B1" else rid)
     # B1-v1 is shipped and stays: every Finding recorded under it must keep re-deriving.
     assert "RULE-B1-v1" in REGISTRY
 

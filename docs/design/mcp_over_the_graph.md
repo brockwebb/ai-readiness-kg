@@ -157,7 +157,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     ]
   },
   "cycle_of_record": {
-    "cycle": "scan_2026-09-10_rj4",
+    "cycle": "scan_2026-09-10_rj5",
     "measured": "2026-09-10",
     "kind": "rejudged",
     "bodies": [
@@ -169,7 +169,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "matrices": [
       {
         "kind": "tierA",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
         "legs": [
           "A4",
           "A5",
@@ -179,7 +179,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       },
       {
         "kind": "product",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj5.json",
         "legs": [
           "A1",
           "A2",
@@ -196,17 +196,17 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       },
       {
         "kind": "payload",
-        "path": "state/scan_2026-09-10_rj4.json",
+        "path": "state/scan_2026-09-10_rj5.json",
         "key": "derived_from"
       },
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
         "cell": "BEA/A4"
       },
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj5.json",
         "cell": "BEA/A1"
       }
     ]
@@ -215,7 +215,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "full": [
       "scan_2026-09-09",
       "scan_2026-09-10_rj2",
-      "… 1 more (elided by mcp/airkg_doc.py, not by the tool)"
+      "… 2 more (elided by mcp/airkg_doc.py, not by the tool)"
     ],
     "spot": [],
     "note": "A spot cycle measures only the bodies it names, on request, through the same controls and rules as a full cycle. It is never the cycle of record and supersedes nothing; `get_body` shows it beside the snapshot.",
@@ -378,7 +378,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     }
   ],
   "cycle_of_record": {
-    "cycle": "scan_2026-09-10_rj4",
+    "cycle": "scan_2026-09-10_rj5",
     "locators": [
       {
         "kind": "config",
@@ -389,7 +389,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         "kind": "graph",
         "label": "Finding",
         "id_property": "cycle",
-        "id": "scan_2026-09-10_rj4"
+        "id": "scan_2026-09-10_rj5"
       }
     ],
     "verdicts": {
@@ -408,38 +408,38 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 ```json
 {
   "body": "NCHS",
-  "cycle": "scan_2026-09-10_rj4",
+  "cycle": "scan_2026-09-10_rj5",
   "n_judged": 39,
-  "n_failing": 35,
-  "summary": "35 failing of 39 judged on scan_2026-09-10_rj4; 16 bodies are on this cycle. NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is F4: 0 pass of 2 judged rows on F4; were that leg's verdicts reversed it would rank 2.",
+  "n_failing": 15,
+  "summary": "15 failing of 39 judged on scan_2026-09-10_rj5; 16 bodies are on this cycle. NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 3.",
   "score": {
-    "score": 0.04,
+    "score": 0.09523809523809523,
     "rank": 13,
-    "flat": 0.09523809523809523,
+    "flat": 0.18181818181818182,
     "flat_rank": 13,
     "of": 13,
     "concentration": {
-      "leg": "F4",
+      "leg": "D2",
       "pass": 0,
       "judged": 2,
       "rank": 13,
-      "rank_if_reversed": 2,
+      "rank_if_reversed": 3,
       "of": 13,
-      "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is F4: 0 pass of 2 judged rows on F4; were that leg's verdicts reversed it would rank 2."
+      "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 3."
     }
   },
   "latest_measurement": {
     "body": "NCHS",
-    "snapshot": "scan_2026-09-10_rj4",
+    "snapshot": "scan_2026-09-10_rj5",
     "snapshot_measured_on": "2026-09-10",
-    "latest": "scan_2026-09-10_rj4",
+    "latest": "scan_2026-09-10_rj5",
     "latest_measured_on": "2026-09-10",
     "latest_is_spot": false,
     "passed_since_snapshot": [],
     "still_failing": [
-      "A1",
       "A10",
-      "… 17 more (elided by mcp/airkg_doc.py, not by the tool)"
+      "A11-declared",
+      "… 7 more (elided by mcp/airkg_doc.py, not by the tool)"
     ],
     "failing_since_snapshot": [],
     "other_changes": [],
@@ -450,34 +450,34 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "A10": "fail",
       "A11-declared": "fail",
       "A12": "pass",
-      "A1": "fail",
-      "A2": "fail",
+      "A1": "error",
+      "A2": "error",
       "A3": "error/pass",
       "A6": "fail",
       "A8": "fail",
-      "A9": "fail",
+      "A9": "error",
       "B3": "fail",
-      "D1": "fail",
-      "D4": "fail",
-      "F4": "fail",
-      "B1": "fail",
+      "D1": "error",
+      "D4": "error",
+      "F4": "error",
+      "B1": "error",
       "B2": "fail",
-      "B4": "fail",
+      "B4": "error",
       "B5": "fail",
       "D2": "fail",
-      "D3": "fail",
-      "G4": "fail"
+      "D3": "error",
+      "G4": "error"
     },
-    "sentence": "NCHS's latest measurement is the snapshot scan_2026-09-10_rj4; no spot cycle has measured it since.",
+    "sentence": "NCHS's latest measurement is the snapshot scan_2026-09-10_rj5; no spot cycle has measured it since.",
     "locators": [
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
         "cell": "NCHS/A4"
       },
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj5.json",
         "cell": "NCHS/A1"
       },
       {
@@ -493,8 +493,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "verdict": "pass",
       "surface": "home:www.cdc.gov",
       "url": "https://www.cdc.gov/nchs/index.htm",
-      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
-      "finding_id": "fnd_736ed34942f7874a6c712ba5",
+      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
+      "finding_id": "fnd_4eb20b9e5c92d2c1797f659c",
       "reason": "robots.txt allows the product path for all 8 AI-crawler user agents",
       "rule_id": "RULE-A4-v1",
       "evidence": [
@@ -524,14 +524,14 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "locators": [
         {
           "kind": "matrix",
-          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
           "cell": "NCHS/A4"
         },
         {
           "kind": "graph",
           "label": "Finding",
           "id_property": "finding_id",
-          "id": "fnd_736ed34942f7874a6c712ba5"
+          "id": "fnd_4eb20b9e5c92d2c1797f659c"
         }
       ]
     },
@@ -540,8 +540,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "verdict": "fail",
       "surface": "home:www.cdc.gov",
       "url": "https://www.cdc.gov/nchs/index.htm",
-      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
-      "finding_id": "fnd_d5d3cba6079d3a8b665e308f",
+      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
+      "finding_id": "fnd_e2a6776d8d69f942e186817b",
       "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
       "rule_id": "RULE-A5-v2",
       "evidence": [
@@ -594,14 +594,14 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "locators": [
         {
           "kind": "matrix",
-          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
           "cell": "NCHS/A5"
         },
         {
           "kind": "graph",
           "label": "Finding",
           "id_property": "finding_id",
-          "id": "fnd_d5d3cba6079d3a8b665e308f"
+          "id": "fnd_e2a6776d8d69f942e186817b"
         }
       ]
     },
@@ -628,51 +628,50 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 
 ```json
 {
-  "cycle": "scan_2026-09-10_rj4",
+  "cycle": "scan_2026-09-10_rj5",
   "body": "NCHS",
   "leg": null,
   "failing_legs": [
-    "A1",
     "A10",
-    "… 17 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "A11-declared",
+    "… 7 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
-  "failing_legs_from": "scan_2026-09-10_rj4",
-  "bodies_failing_now_from": "scan_2026-09-10_rj4",
+  "failing_legs_from": "scan_2026-09-10_rj5",
+  "bodies_failing_now_from": "scan_2026-09-10_rj5",
   "bodies_on_cycle": 16,
   "notional": "(notional)",
   "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
   "ranked_by": "value.bodies_failing_now, then leg, then action id",
   "actions": [
     {
-      "id": "act:a2-expose-an-api-and-publish-its-description",
-      "title": "Expose the product through an API and publish the API's description",
-      "description": "No OpenAPI or JSON API description was served at any probed path. Expose the product through a documented HTTP API and publish a machine-readable description of it; where the product already sits on a data platform, enabling the platform's own API is the cheaper route than building one.",
-      "leg": "A2",
-      "outcome": "no_api_description",
-      "indicator_id": "ind:A2",
-      "effort": "quarter",
-      "effort_source": "notional:technique_class:expose_api, task 2026-09-17_notional_bands",
-      "cost": "procurement",
-      "cost_source": "notional:technique_class:expose_api, task 2026-09-17_notional_bands",
-      "technique_class": "expose_api",
+      "id": "act:d2-declare-ai-training-and-input-terms-in-robots-txt",
+      "title": "Declare the terms for AI training and AI input in robots.txt",
+      "description": "The host's robots.txt carries no `Content-Signal` for `ai-train` or `ai-input`, so the terms for the two uses the indicator names are not machine-readable where a crawler reads its rules. Add a `Content-Signal` line under the `User-agent` group, declaring `ai-train` and `ai-input` as `yes` or `no`.",
+      "leg": "D2",
+      "outcome": "no_content_signal",
+      "indicator_id": "ind:D2",
+      "effort": "hours",
+      "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+      "cost": "none",
+      "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+      "technique_class": "edit_existing",
       "technique_source": [
-        "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 23 'Possible Approach to Implementation': \"If you use a data management platform, such as CKAN, you may be able to enable an existing API.\"",
-        "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 25 'Possible Approach to Implementation': \"A typical API reference provides a comprehensive list of the calls the API can handle, describing the purpose of each one\"",
-        "… 2 more (elided by mcp/airkg_doc.py, not by the tool)"
+        "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories': \"The Content-Signal directive works by signaling your preference of either allowing (yes) or disallowing (no) certain categories of AI actions.\"",
+        "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories', example: \"Content-Signal: ai-train=no, search=yes, ai-input=no\""
       ],
-      "verifies_by": "RULE-A2-v3",
+      "verifies_by": "RULE-D2-v1",
       "applies_to_publisher": true,
       "value": {
         "bodies_failing_now": 13,
         "bodies_on_the_cycle_of_record": 16,
-        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
         "constructs_served": [
-          "Programmatic access"
+          "Reuse permissions for AI"
         ],
-        "constructs_served_source": "`con:A:programmatic-access` -[DECOMPOSES_INTO]-> `ind:A2` in framework/ai_readiness_framework.json",
+        "constructs_served_source": "`con:D:reuse-permissions-for-ai` -[DECOMPOSES_INTO]-> `ind:D2` in framework/ai_readiness_framework.json",
         "downstream_indicators": [],
         "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
-        "bodies_failing_now_caveat": "a per-LEG count. `A2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+        "bodies_failing_now_caveat": "a per-LEG count. `D2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
       },
       "failing_on": [
         "scan-nchs-flagship-1-data-briefs",
@@ -682,69 +681,56 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         {
           "kind": "record",
           "path": "framework/ai_readiness_framework.json",
-          "node_id": "act:a2-expose-an-api-and-publish-its-description"
+          "node_id": "act:d2-declare-ai-training-and-input-terms-in-robots-txt"
         },
         {
           "kind": "record",
           "path": "framework/ai_readiness_framework.json",
-          "node_id": "ind:A2"
+          "node_id": "ind:D2"
         },
         {
           "kind": "document",
-          "doc_id": "w3c-dwbp-2017",
-          "section": "Best Practice 23 'Possible Approach to Implementation",
-          "path": "corpus/kernel/w3c-dwbp-2017.md"
+          "doc_id": "cloudflare-content-signals-policy",
+          "section": "Categories",
+          "path": "corpus/kernel/cloudflare-content-signals-policy.md"
         },
         {
           "kind": "document",
-          "doc_id": "w3c-dwbp-2017",
-          "section": "Best Practice 25 'Possible Approach to Implementation",
-          "path": "corpus/kernel/w3c-dwbp-2017.md"
-        },
-        {
-          "kind": "document",
-          "doc_id": "openapi-specification-core",
-          "section": "section 2 'Introduction",
-          "path": "corpus/kernel/openapi-specification-core.md"
-        },
-        {
-          "kind": "document",
-          "doc_id": "schema-org-webapi",
-          "section": "property `documentation`",
-          "path": "corpus/kernel/schema-org-webapi.md"
+          "doc_id": "cloudflare-content-signals-policy",
+          "section": "Categories', example",
+          "path": "corpus/kernel/cloudflare-content-signals-policy.md"
         }
       ]
     },
     {
-      "id": "act:a2-serve-a-parseable-api-description-at-the-documented-path",
-      "title": "Serve a parseable OpenAPI description where the API is documented",
-      "description": "A document is served at a probed API path but does not parse as an API description; a JSON content type alone is not a description. Publish an OpenAPI Description document (YAML or JSON) at that path, so a client can discover the operations without reading prose.",
-      "leg": "A2",
-      "outcome": "served_but_not_an_api_description",
-      "indicator_id": "ind:A2",
-      "effort": "days",
-      "effort_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
-      "cost": "staff_time",
-      "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
-      "technique_class": "publish_new_file",
+      "id": "act:d2-use-only-the-defined-content-signal-categories",
+      "title": "Use only the categories and values the Content Signals Policy defines",
+      "description": "A `Content-Signal` in the host's robots.txt names a category or a value the policy does not define, so a reader cannot know what it declares. Use `search`, `ai-input` and `ai-train`, each `yes` or `no`.",
+      "leg": "D2",
+      "outcome": "unknown_category",
+      "indicator_id": "ind:D2",
+      "effort": "hours",
+      "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+      "cost": "none",
+      "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+      "technique_class": "edit_existing",
       "technique_source": [
-        "corpus/kernel/openapi-specification-core.md (doc_id `openapi-specification-core`), section 2 'Introduction': \"The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to HTTP APIs which allows both humans and computers to discover and understand the capabilities of the service without access to s… [386 chars]",
-        "corpus/kernel/openapi-specification-core.md (doc_id `openapi-specification-core`), section 2 'Introduction': \"An OpenAPI Description (OAD) can then be used by documentation generation tools to display the API\"",
-        "… 1 more (elided by mcp/airkg_doc.py, not by the tool)"
+        "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories': \"The Content-Signal directive works by signaling your preference of either allowing (yes) or disallowing (no) certain categories of AI actions.\"",
+        "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories', example: \"Content-Signal: ai-train=no, search=yes, ai-input=no\""
       ],
-      "verifies_by": "RULE-A2-v3",
+      "verifies_by": "RULE-D2-v1",
       "applies_to_publisher": true,
       "value": {
         "bodies_failing_now": 13,
         "bodies_on_the_cycle_of_record": 16,
-        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
         "constructs_served": [
-          "Programmatic access"
+          "Reuse permissions for AI"
         ],
-        "constructs_served_source": "`con:A:programmatic-access` -[DECOMPOSES_INTO]-> `ind:A2` in framework/ai_readiness_framework.json",
+        "constructs_served_source": "`con:D:reuse-permissions-for-ai` -[DECOMPOSES_INTO]-> `ind:D2` in framework/ai_readiness_framework.json",
         "downstream_indicators": [],
         "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
-        "bodies_failing_now_caveat": "a per-LEG count. `A2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+        "bodies_failing_now_caveat": "a per-LEG count. `D2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
       },
       "failing_on": [
         "scan-nchs-flagship-1-data-briefs",
@@ -754,34 +740,28 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         {
           "kind": "record",
           "path": "framework/ai_readiness_framework.json",
-          "node_id": "act:a2-serve-a-parseable-api-description-at-the-documented-path"
+          "node_id": "act:d2-use-only-the-defined-content-signal-categories"
         },
         {
           "kind": "record",
           "path": "framework/ai_readiness_framework.json",
-          "node_id": "ind:A2"
+          "node_id": "ind:D2"
         },
         {
           "kind": "document",
-          "doc_id": "openapi-specification-core",
-          "section": "section 2 'Introduction",
-          "path": "corpus/kernel/openapi-specification-core.md"
+          "doc_id": "cloudflare-content-signals-policy",
+          "section": "Categories",
+          "path": "corpus/kernel/cloudflare-content-signals-policy.md"
         },
         {
           "kind": "document",
-          "doc_id": "openapi-specification-core",
-          "section": "section 2 'Introduction",
-          "path": "corpus/kernel/openapi-specification-core.md"
-        },
-        {
-          "kind": "document",
-          "doc_id": "w3c-dwbp-2017",
-          "section": "Best Practice 25 'Possible Approach to Implementation",
-          "path": "corpus/kernel/w3c-dwbp-2017.md"
+          "doc_id": "cloudflare-content-signals-policy",
+          "section": "Categories', example",
+          "path": "corpus/kernel/cloudflare-content-signals-policy.md"
         }
       ]
     },
-    "… 49 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 25 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "locators": [
     {
@@ -1021,13 +1001,13 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 }
 ```
 
-### `get_evidence(finding_id='fnd_736ed34942f7874a6c712ba5')`
+### `get_evidence(finding_id='fnd_4eb20b9e5c92d2c1797f659c')`
 
 
 
 ```json
 {
-  "finding_id": "fnd_736ed34942f7874a6c712ba5",
+  "finding_id": "fnd_4eb20b9e5c92d2c1797f659c",
   "verdict": "pass",
   "reason": "robots.txt allows the product path for all 8 AI-crawler user agents",
   "rule_id": "RULE-A4-v1",
@@ -1066,7 +1046,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "kind": "graph",
       "label": "Finding",
       "id_property": "finding_id",
-      "id": "fnd_736ed34942f7874a6c712ba5"
+      "id": "fnd_4eb20b9e5c92d2c1797f659c"
     }
   ]
 }
@@ -1176,15 +1156,15 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 
 ```json
 {
-  "cycle": "scan_2026-09-10_rj4",
+  "cycle": "scan_2026-09-10_rj5",
   "kind": "rejudged",
   "derived_from": "scan_2026-09-10",
   "derived_from_params_hash": "4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df",
-  "judgement_params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
+  "judgement_params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
   "hash_meaning": "`derived_from_params_hash` identifies the COLLECTION the evidence came from; `judgement_params_hash` identifies this judgement of it. A re-judgement re-reads stored observations and fetches nothing.",
   "rejudged_note": "Findings only. Every Finding cites the `obs_id`s scan_2026-09-10 recorded; not one byte was re-fetched and not one Observation was created. The evidence is that cycle's, the judgement is this one's.",
   "rules": [
-    "RULE-A1-v4",
+    "RULE-A1-v5",
     "RULE-A10-v3",
     "… 21 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
@@ -1198,40 +1178,40 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
   },
   "verdict_counts": {
     "pass": 160,
-    "fail": 682,
+    "fail": 280,
     "not_applicable": 0,
-    "error": 167
+    "error": 569
   },
   "matrices": [
     {
       "kind": "tierA",
-      "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+      "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
       "legs": [
         "A4",
         "A5",
         "… 3 more (elided by mcp/airkg_doc.py, not by the tool)"
       ],
       "rows": 16,
-      "params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
       "locator": {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
         "cell": "BEA/A4"
       }
     },
     {
       "kind": "product",
-      "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+      "path": "docs/reports/scan_matrix_product_2026-09-10_rj5.json",
       "legs": [
         "A1",
         "A2",
         "… 15 more (elided by mcp/airkg_doc.py, not by the tool)"
       ],
       "rows": 23,
-      "params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
       "locator": {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj5.json",
         "cell": "BEA/A1"
       }
     }
@@ -1244,12 +1224,12 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     },
     {
       "kind": "payload",
-      "path": "state/scan_2026-09-10_rj4.json",
+      "path": "state/scan_2026-09-10_rj5.json",
       "key": "derived_from_params_hash"
     },
     {
       "kind": "payload",
-      "path": "state/scan_2026-09-10_rj4.json",
+      "path": "state/scan_2026-09-10_rj5.json",
       "key": "params_hash"
     }
   ],

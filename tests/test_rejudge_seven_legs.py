@@ -169,7 +169,11 @@ def test_the_rederivation_gate_holds_itself_to_the_recorded_frame(rj4, params):
     p = copy.deepcopy(rj4)
     doc = "home:www.census.gov"
     p["surface_legs"][doc] = [l for l in p["surface_legs"][doc] if l != "D2"]
-    out = rd.rederive(p, params)
+    # Under the params `_rj4` was judged with, recovered by hash, as every re-derivation is:
+    # `params.yaml` has moved since (generation 14), and under today's the gate rightly answers
+    # `params_changed` instead of re-deriving (`cc_tasks/2026-10-06_absence_verdicts_rules.md`).
+    from test_scan_harness_v4 import _params_for
+    out = rd.rederive(p, _params_for(rj4))
     want = [f["finding_id"] for f in rj4["findings_detail"]
             if f["target_doc_id"] == doc and f["leg"] == "D2"]
     assert out["missing_after_rederive"] == want and not out["unexpected_after_rederive"]

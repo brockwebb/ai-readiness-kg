@@ -729,6 +729,22 @@ link_probe:
   # collection is therefore empty — everything they need is on the shared leg.
   shared_leg: link_probe
   legs_served: ["A1", "A3"]
+  # DN-012 d2 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 2). The cap above
+  # bounds REQUESTS; it no longer chooses WHICH candidates by document order. On-host candidates
+  # are ranked by data-likeness before the cap, so navigation chrome (the first links on almost
+  # every federal page) stops spending the budget, and every candidate past the cap is RECORDED
+  # as `unprobed_over_cap` rather than dropped. Tiers, lowest first, then document order:
+  #   0  the path ends in one of the extensions the lists below name (archive or data file);
+  #   1  a token below appears in the path or in the anchor text;
+  #   2  everything else.
+  # The extension lists are NAMED rather than copied, so A3's archive list and A1's data list
+  # stay one definition each.
+  rank:
+    extension_lists: ["a3_bulk.archive_extensions", "a1_formats.structured_extensions"]
+    tokens: ["download", "data"]
+    # The `link_candidates` block the page Observation carries (on-host candidates, probed,
+    # unprobed, cap). The rules read only this scheme.
+    candidates_scheme: 1
 
 a3_bulk:
   # A3-v2: "classify links as bulk (whole-product archive or full dataset file) vs filtered
@@ -972,3 +988,36 @@ schedule:
   # (`model.UNHASHED_KEYS`): when a scan was triggered shapes none of its evidence.
   when: on_demand
   frame: assessment/harness/scan/frames/fss16.yaml
+
+b3_methodology:
+  # The token that marks a page link as a methodology candidate. It was a literal in
+  # `runner.collect_leg` (`"methodolog" in href + text`); moved here unchanged
+  # (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 5), because `RULE-B3-v4` needs
+  # the same candidate set the collector chose from to say how many it did not follow.
+  link_tokens: ["methodolog"]
+
+declarations:
+  # DN-012 d3 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4). Where each body's
+  # API and inventories are, per `targets.yaml` `declared_locations`. These lists say which legs
+  # read which field, and so which legs' collectors may contact the declared host
+  # (`manners.on_roster_host`, for that body only). `link_probe` is A1/A3's shared leg; A9 reads
+  # `api_base` because spec:A9 names "OpenAPI at the documented base".
+  scheme: 1
+  api_base_legs: ["link_probe", "A1", "A2", "A3", "A9"]
+  inventory_legs: ["D4", "B1", "B4", "D3", "G4"]
+  # Two more places a spec names and the harness only guessed at, found by the inventory
+  # (`docs/research/2026-10-06_absence_rules_inventory.md` §2): spec:D1's "the API's terms
+  # endpoint" (`api_base.terms_url`) and spec:F4's "any changelog or release-notes endpoint"
+  # (`changelog_urls`). Both are OPTIONAL and none is populated yet, so D1's and F4's absence
+  # branches are `error` naming them until a body declares one.
+  terms_legs: ["D1"]
+  changelog_legs: ["F4"]
+  # A control fixture is not a body, and it serves its own API description, terms, changelog
+  # and catalog. It declares them relative to its own port, so every control keeps exercising
+  # the branch it was built for: a declared location that WAS observed. Without this, every
+  # fixture's absence would be "nothing declared" and the `fail` branches would have no control.
+  control_fixture:
+    api_base_path: "/openapi.json"
+    api_terms_path: "/terms"
+    changelog_paths: ["/changelog.json"]
+    inventory_paths: ["/data.json"]

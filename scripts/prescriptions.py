@@ -79,6 +79,22 @@ def actions(g: dict) -> list:
     return out
 
 
+def applicable(acts: list, body: str) -> list:
+    """`acts` less the ones WITHDRAWN for `body`: an action carrying `withdrawn_when_declared`
+    is not shown to a body that declares that field in `targets.yaml` `declared_locations`.
+
+    `cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 7, audit C-14: the ACS flagship
+    was prescribed "Expose the product through an API" while the Census Data API is cited in
+    this repository. A body that declares an `api_base` has a documented API, and the act it
+    can still owe is the API's description, which a sibling action on the same leg prescribes.
+    A body the declarations do not name declares nothing, and nothing is withdrawn for it.
+    """
+    from scan import declarations
+    mine = declarations.for_body(declarations.load(), body) or {}
+    return [a for a in acts if not (a.get("withdrawn_when_declared")
+                                    and mine.get(a["withdrawn_when_declared"]))]
+
+
 def use_run(frame_dir) -> None:
     """Point this module's readers at an adopter's frame directory (`out/<frame>/`) instead of
     this project's published tree. `cc_tasks/2026-09-19_adopter_path.md` decision 4.
@@ -328,8 +344,13 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
         return 0
     order = sorted(mine, key=lambda l: -next(
         a["value"]["bodies_failing_now"] for a in acts if a["leg"] == l))
+    shown = applicable(acts, name)
     for leg in order:
-        on_leg = [a for a in acts if a["leg"] == leg]
+        on_leg = [a for a in shown if a["leg"] == leg]
+        if not on_leg:
+            print(f"\n{leg}: every action on this leg is withdrawn for {name} "
+                  f"(`withdrawn_when_declared`)")
+            continue
         shared = on_leg[0]["value"]["bodies_failing_now"]
         print(f"\n{'=' * width}\n{leg}  ({on_leg[0]['indicator_id']})"
               f"   failing on: {', '.join(sorted(set(mine[leg])))}")

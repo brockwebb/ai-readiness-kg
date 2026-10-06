@@ -148,6 +148,26 @@ compare_to_by_cycle:
     note: "cycle 3 judged under generation 9, cycle 4 under generation 12: D4 changed rule between them, and the legs generation 12 added were never judged on cycle 3"
     rule_changed:
       D4: "v2 → v3"
+  # Cycle 4 as re-snapshotted under generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`
+  # decision 6), against the same like-for-like point `_rj4` used, for the same reason. The rated
+  # legs whose rule differs between the two judgements, read from the payloads' own `rule_id`s:
+  # eight. A12 moved too and is not listed, for the reason above. On the generation-14 side five
+  # of them (A1, A2, A9, D1, F4) are `error` on every product surface, which F1 and F5 draw as
+  # "not measured", never as zero.
+  scan_2026-09-10_rj5:
+    cycle: scan_2026-09-09_rj2
+    suffix: "2026-09-09_rj2"
+    label: "cycle 3 · 2026-09-09, re-judged (generation 9)"
+    note: "cycle 3 judged under generation 9, cycle 4 under generation 14, which makes an absence a fail only over a complete search: eight rated legs changed rule, and the legs generation 12 added were never judged on cycle 3"
+    rule_changed:
+      A1: "v4 → v5"
+      A2: "v3 → v4"
+      A3: "v6 → v7"
+      A9: "v1 → v2"
+      B3: "v3 → v4"
+      D1: "v3 → v4"
+      D4: "v2 → v4"
+      F4: "v3 → v4"
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

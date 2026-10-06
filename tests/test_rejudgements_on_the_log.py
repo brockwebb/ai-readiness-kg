@@ -45,6 +45,9 @@ REJUDGED = {
     "scan_2026-09-10_rj1": 739, "scan_2026-09-10_rj2": 739, "scan_2026-09-10_rj3": 739,
     # `cc_tasks/2026-09-18_rejudge_seven_legs.md`: the whole current registry, seven new legs.
     "scan_2026-09-10_rj4": 1009,
+    # `cc_tasks/2026-10-06_absence_verdicts_rules.md`: generation 14 over the same evidence; every
+    # Finding pairs with an `_rj4` one, so it adds nothing to `NEW_LEG_FINDINGS`.
+    "scan_2026-09-10_rj5": 1009,
     "self_2026-09-13_rj1": 6,
 }
 
@@ -565,7 +568,7 @@ def test_no_finding_supersedes_itself_or_forms_a_cycle(graph):
 
 
 @pytest.mark.parametrize("cycle", ["scan_2026-09-07_rj3", "scan_2026-09-07b_rj4",
-                                   "scan_2026-09-09_rj3", "scan_2026-09-10_rj4",
+                                   "scan_2026-09-09_rj3", "scan_2026-09-10_rj5",
                                    "self_2026-09-13_rj1"])
 def test_the_newest_judgement_of_every_cycle_is_current(graph, cycle):
     """A Finding with no successor is current (DN-003 decision 3). The five newest judgements —

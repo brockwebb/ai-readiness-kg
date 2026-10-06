@@ -90,6 +90,22 @@ def _snapshot() -> str:
 SNAPSHOT = _snapshot()
 CYCLE_RJ1 = "scan_2026-09-10_rj1"
 
+#: An earlier judgement of the snapshot's cycle, by name: `scan_<date>_rj<N>`, as a Result's
+#: cycle suffix carries it (`cycle_results.cycle_suffix`).
+_EARLIER = re.compile(r"_(\d{4}-\d{2}-\d{2}_rj\d+)$")
+
+
+def earlier_cycles(names) -> list:
+    """The judgements OTHER than the snapshot whose Results the report tags, oldest first.
+
+    `_rj1` was the only one until `cc_tasks/2026-10-06_absence_verdicts_rules.md`, whose
+    movement section quotes A3's denominator under `_rj1`, `_rj4` and `_rj5`. Read from the tags,
+    for the reason the tagged set is: a cycle the report starts quoting tomorrow is driven
+    tomorrow without anybody remembering to add it.
+    """
+    out = {f"scan_{m.group(1)}" for n in names for m in [_EARLIER.search(n)] if m}
+    return sorted(out - {SNAPSHOT}, key=lambda c: int(c.rsplit("_rj", 1)[1]))
+
 
 
 def tagged_names() -> list:
@@ -184,11 +200,13 @@ def drive(module_name: str, argv: list, captured: Captured) -> None:
 # The adapters that cannot just be driven
 # ---------------------------------------------------------------------------
 
-def rederive_matrices_rj1(captured: Captured) -> None:
-    """`build_l0_matrices` over the rj1 cycle, writing into a temp tree.
+def rederive_matrices_rj1(captured: Captured, cycle: str = CYCLE_RJ1) -> None:
+    """`build_l0_matrices` over an earlier judgement (`_rj1` by default), into a temp tree.
 
-    Only two rj1 Results are tagged, but the module registers a cycle's whole family at once,
-    so the run is the whole family and the comparison picks out what the report quotes.
+    Only a few of its Results are tagged, but the module registers a cycle's whole family at
+    once, so the run is the whole family and the comparison picks out what the report quotes.
+    Into a temporary tree for every earlier cycle, not only `_rj1`: its matrices are shipped,
+    and a re-derivation must not rewrite a published file.
     """
     import build_l0_matrices as blm
     out_dir, gen_dir = blm.OUT_DIR, blm.GEN_DIR
@@ -200,7 +218,7 @@ def rederive_matrices_rj1(captured: Captured) -> None:
         blm.OUT_DIR = Path(tmp)
         blm.GEN_DIR = Path(tmp) / "generated"
         try:
-            drive("build_l0_matrices", ["--cycle", CYCLE_RJ1], captured)
+            drive("build_l0_matrices", ["--cycle", cycle], captured)
         finally:
             blm.OUT_DIR, blm.GEN_DIR = out_dir, gen_dir
 
@@ -382,10 +400,12 @@ def rederive_preflight(captured: Captured) -> None:
 
 # ---------------------------------------------------------------------------
 
-def rederive_all() -> tuple:
+def rederive_all(earlier=(CYCLE_RJ1,)) -> tuple:
     captured = Captured()
-    # rj1 FIRST and into a temp tree, so the shipped fragments end the run at the snapshot.
-    rederive_matrices_rj1(captured)
+    # Earlier judgements FIRST and into a temp tree, so the shipped fragments end the run at the
+    # snapshot.
+    for cycle in earlier:
+        rederive_matrices_rj1(captured, cycle)
     drive("build_l0_matrices", ["--cycle", SNAPSHOT], captured)
     drive("scan_report", ["--cycle", SNAPSHOT], captured)
     ephemeral = rederive_ephemeral(captured)
@@ -407,14 +427,15 @@ def main(argv=None) -> int:
 
     names = tagged_names()
     reg = registered(names)
-    for cyc in (CYCLE_RJ1, SNAPSHOT):
+    earlier = earlier_cycles(names)
+    for cyc in earlier + [SNAPSHOT]:
         suffix = cyc[len("scan_"):]
         if not any(n.endswith(suffix) for n in names):
             raise SystemExit(
                 f"FATAL: this gate drives the {cyc} cycle and the report tags nothing from "
                 f"it; the cycle constants are stale and the gate is checking the wrong run")
 
-    captured, ephemeral = rederive_all()
+    captured, ephemeral = rederive_all(earlier)
 
     rows, missing, disagree = [], [], []
     for n in names:
