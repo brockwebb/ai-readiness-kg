@@ -92,6 +92,13 @@ def flatten(props: dict) -> dict:
                         raise SystemExit(f"FATAL: {k}.{src} is nested; `value` must stay flat")
                     out[f"{_VALUE_PREFIX}_{src}"] = val
             continue
+        if isinstance(v, list) and all(isinstance(x, dict) for x in v) and v:
+            # A list of maps, stored the way a map is: one JSON string under `<k>_json`.
+            # `measured_previously` (DD-069) is the first: the `measured_by` maps an indicator
+            # held before the cycle of record re-derived it. Its history is read from the JSON
+            # of record; nothing queries inside it, so no scalar is lifted out.
+            out[f"{k}_json"] = json.dumps(v, sort_keys=True, ensure_ascii=False)
+            continue
         if isinstance(v, list) and any(isinstance(x, (dict, list)) for x in v):
             raise SystemExit(f"FATAL: property {k!r} is a nested list; extend flatten()")
         out[k] = v

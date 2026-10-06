@@ -8,10 +8,10 @@
 
 | row_id | who_can_run | method_kind | route | rule_id | tool_name | q1_class | measurement_tier | effort_level | value_rating | evidence_grade | cheap_pass | row_source |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| S-A1-rule-A1 | public_outside_in | built_rule | rule:A1 | RULE-A1-v5 | httpx | measured | M | 1 | 5 | plausible | yes | record |
-| S-A2-rule-A2 | public_outside_in | built_rule | rule:A2 | RULE-A2-v4 | httpx | measured | M | 1 | 4 | unevidenced | yes | record |
-| S-A2-openapi_spec_validator | public_outside_in | tool_open_source | openapi_spec_validator |  | openapi-spec-validator | measured | M | TBD | 4 | unevidenced | yes | record |
-| S-A2-prance | public_outside_in | tool_open_source | prance |  | prance | measured | M | TBD | 4 | unevidenced | yes | record |
+| S-A1-rule-A1 | public_outside_in | built_rule | rule:A1 | RULE-A1-v5 | httpx | open_tooling | M | 1 | 5 | plausible | yes | record |
+| S-A2-rule-A2 | public_outside_in | built_rule | rule:A2 | RULE-A2-v4 | httpx | open_tooling | M | 1 | 4 | unevidenced | yes | record |
+| S-A2-openapi_spec_validator | public_outside_in | tool_open_source | openapi_spec_validator |  | openapi-spec-validator | open_tooling | M | TBD | 4 | unevidenced | yes | record |
+| S-A2-prance | public_outside_in | tool_open_source | prance |  | prance | open_tooling | M | TBD | 4 | unevidenced | yes | record |
 | S-A3-rule-A3 | public_outside_in | built_rule | rule:A3 | RULE-A3-v7 | scrapy | measured | M | 1 | 4 | plausible | yes | record |
 | S-A4-rule-A4 | public_outside_in | built_rule | rule:A4 | RULE-A4-v1 | protego | measured | M | 1 | 5 | established | yes | record |
 | S-A5-rule-A5 | public_outside_in | built_rule | rule:A5 | RULE-A5-v2 | ultimate-sitemap-parser | measured | M | 1 | 4 | established | yes | record |
@@ -21,7 +21,7 @@
 | S-A6-extruct_at_scale | public_outside_in | tool_open_source | extruct_at_scale |  | extruct | measured | M | TBD | 4 | established | yes | record |
 | S-A7-wayback_cdx | public_outside_in | roll_your_own | wayback_cdx |  | Wayback Machine CDX Server API | open_tooling | O | TBD | 4 | unevidenced | TBD | record |
 | S-A8-rule-A8 | public_outside_in | built_rule | rule:A8 | RULE-A8-v4 | httpx + extruct | measured | M | 1 | 3 | plausible | yes | record |
-| S-A9-rule-A9 | public_outside_in | built_rule | rule:A9 | RULE-A9-v2 | httpx | measured | M | 1 | 3 | plausible | yes | record |
+| S-A9-rule-A9 | public_outside_in | built_rule | rule:A9 | RULE-A9-v2 | httpx | open_tooling | M | 1 | 3 | plausible | yes | record |
 | S-A10-rule-A10 | public_outside_in | built_rule | rule:A10 | RULE-A10-v3 | lighthouse | measured | M | 1 | 5 | plausible | TBD | record |
 | S-A11-rule-A11-declared | public_outside_in | built_rule | rule:A11-declared | RULE-A11-declared-v2 | protego | measured | M | 1 | 5 | established | yes | record |
 | S-A11-agency_logs | agency_records | roll_your_own | agency_logs |  |  | measured | M | TBD | 5 | established | TBD | record |
@@ -29,13 +29,13 @@
 | S-A12-rule-A12 | public_outside_in | built_rule | rule:A12 | RULE-A12-v3 | http + robots | TBD | M | 1 | 5 | established | no | record |
 | S-B1-rule-B1 | public_outside_in | built_rule | rule:B1 | RULE-B1-v3 | dcat-record-fields and schema-terms | no_standard | M | 1 | 3 | plausible | yes | record |
 | S-B1-unmeasured_half | needs_standard | none_known | unmeasured_half |  |  | no_standard | M | TBD | 3 | plausible | yes | record |
-| S-B2-rule-B2 | public_outside_in | built_rule | rule:B2 | RULE-B2-v1 | schema-terms | no_standard | M | 1 | 3 | plausible | yes | record |
-| S-B2-unmeasured_half | needs_standard | none_known | unmeasured_half |  |  | no_standard | M | TBD | 3 | plausible | yes | record |
+| S-B2-rule-B2 | public_outside_in | built_rule | rule:B2 | RULE-B2-v1 | schema-terms | measured | M | 1 | 3 | plausible | yes | record |
+| S-B2-unmeasured_half | needs_standard | none_known | unmeasured_half |  |  | measured | M | TBD | 3 | plausible | yes | record |
 | S-B3-rule-B3 | public_outside_in | built_rule | rule:B3 | RULE-B3-v4 | httpx | measured | M | 1 | 3 | plausible | TBD | record |
 | S-B4-rule-B4 | public_outside_in | built_rule | rule:B4 | RULE-B4-v2 | dcat-record-fields | no_standard | M | 1 | 3 | plausible | yes | record |
 | S-B4-unmeasured_half | needs_standard | none_known | unmeasured_half |  |  | no_standard | M | TBD | 3 | plausible | yes | record |
-| S-B5-rule-B5 | public_outside_in | built_rule | rule:B5 | RULE-B5-v1 | schema-terms | open_tooling | M | 1 | 3 | unevidenced | yes | record |
-| S-B5-second_cycle | public_outside_in | built_rule | second_cycle | RULE-B5-v1 |  | open_tooling | M | 1 | 3 | unevidenced | yes | record |
+| S-B5-rule-B5 | public_outside_in | built_rule | rule:B5 | RULE-B5-v1 | schema-terms | measured | M | 1 | 3 | unevidenced | yes | record |
+| S-B5-second_cycle | public_outside_in | built_rule | second_cycle | RULE-B5-v1 |  | measured | M | 1 | 3 | unevidenced | yes | record |
 | S-B6-wcag_reading_level | public_outside_in | roll_your_own | wcag_reading_level |  |  | no_standard | TBD | TBD | 3 | unevidenced | TBD | catalog_search |
 | S-C1-benchmark | needs_standard | roll_your_own | benchmark |  |  | no_standard | M | TBD | 4 | plausible | TBD | record |
 | S-C2-probe_protocol | needs_standard | roll_your_own | probe_protocol |  |  | no_standard | M | TBD | 4 | unevidenced | TBD | record |
@@ -43,12 +43,12 @@
 | S-C4-bing_ai_performance | agency_enabled | tool_commercial | bing_ai_performance |  | Bing Webmaster Tools, AI Performance report | no_standard | M | TBD | 3 | plausible | yes | record |
 | S-C4-engine_queries | needs_standard | tool_commercial | engine_queries |  | Perplexity.ai | no_standard | M | TBD | 3 | plausible | yes | record |
 | S-C5-aidrin | public_outside_in | tool_open_source | aidrin |  | AIDRIN (AI Data Readiness Inspector) PyPI package | open_tooling | O | TBD | 2 | plausible | TBD | record |
-| S-D1-rule-D1 | public_outside_in | built_rule | rule:D1 | RULE-D1-v4 | extruct + httpx | measured | M | 1 | 3 | established | yes | record |
-| S-D2-rule-D2 | public_outside_in | built_rule | rule:D2 | RULE-D2-v1 | content-signals | not_blocked | M | 1 | 2 | unevidenced | yes | record |
+| S-D1-rule-D1 | public_outside_in | built_rule | rule:D1 | RULE-D1-v4 | extruct + httpx | open_tooling | M | 1 | 3 | established | yes | record |
+| S-D2-rule-D2 | public_outside_in | built_rule | rule:D2 | RULE-D2-v1 | content-signals | measured | M | 1 | 2 | unevidenced | yes | record |
 | S-D3-rule-D3 | public_outside_in | built_rule | rule:D3 | RULE-D3-v2 | dcat-record-fields | open_tooling | M | 1 | 2 | plausible | yes | record |
 | S-D3-prov_walk | public_outside_in | roll_your_own | prov_walk |  |  | open_tooling | M | TBD | 2 | plausible | yes | record |
-| S-D4-rule-D4 | public_outside_in | built_rule | rule:D4 | RULE-D4-v4 | project-open-data-validator | measured | M | 1 | 4 | established | yes | record |
-| S-D4-federal_catalog | public_outside_in | roll_your_own | federal_catalog |  | catalog.data.gov CKAN action API | measured | M | TBD | 4 | established | yes | record |
+| S-D4-rule-D4 | public_outside_in | built_rule | rule:D4 | RULE-D4-v4 | project-open-data-validator | open_tooling | M | 1 | 4 | established | yes | record |
+| S-D4-federal_catalog | public_outside_in | roll_your_own | federal_catalog |  | catalog.data.gov CKAN action API | open_tooling | M | TBD | 4 | established | yes | record |
 | S-E1-agency_report | agency_records | roll_your_own | agency_report |  |  | agency_cooperation | M | TBD | 2 | plausible | TBD | record |
 | S-E2-agency_records | agency_records | roll_your_own | agency_records |  |  | agency_cooperation | D | TBD | 2 | plausible | TBD | record |
 | S-E3-agency_records | agency_records | roll_your_own | agency_records |  |  | agency_cooperation | M | TBD | 2 | unevidenced | TBD | record |
@@ -61,7 +61,7 @@
 | S-F1-agency_records | agency_records | roll_your_own | agency_records |  |  | agency_cooperation | D | TBD | 2 | plausible | TBD | record |
 | S-F2-oasdiff_two_releases | public_outside_in | tool_open_source | oasdiff_two_releases |  | oasdiff | open_tooling | O | TBD | 4 | plausible | TBD | record |
 | S-F3-wayback_cdx | public_outside_in | roll_your_own | wayback_cdx |  | Wayback Machine CDX Server API | open_tooling | O | TBD | 4 | unevidenced | TBD | record |
-| S-F4-rule-F4 | public_outside_in | built_rule | rule:F4 | RULE-F4-v4 | httpx | measured | M | 1 | 2 | plausible | yes | record |
+| S-F4-rule-F4 | public_outside_in | built_rule | rule:F4 | RULE-F4-v4 | httpx | open_tooling | M | 1 | 2 | plausible | yes | record |
 | S-F5-agency_records | agency_records | roll_your_own | agency_records |  |  | agency_cooperation | D | TBD | 2 | unevidenced | TBD | record |
 | S-F6-slsa_verifier | public_outside_in | tool_open_source | slsa_verifier |  | slsa-verifier | open_tooling | O | TBD | 2 | plausible | TBD | record |
 | S-G1-D-rule-G1-D | public_outside_in | built_rule | rule:G1-D | RULE-G1-D-v1 | g1_declared | measured | M | 1 | 3 | plausible | yes | record |

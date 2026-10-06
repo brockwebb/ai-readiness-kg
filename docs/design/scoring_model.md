@@ -14,10 +14,12 @@ Cycle `scan_2026-09-10_rj5`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 | level | measured | total |
 |---|---|---|
-| adopted harness legs scored (candidates excluded, DD-054) | 21 | 23 |
-| indicators measured, of the framework | 16 | 48 |
-| indicators measured, of `harness_leg` | 16 | 23 |
-| criteria with a measured construct | 4 | 7 |
+| adopted harness legs scored (candidates excluded, DD-054) | 20 | 23 |
+| indicators scored, of the framework | 11 | 48 |
+| indicators scored, of `harness_leg` | 11 | 23 |
+| criteria with a scored construct | 3 | 7 |
+
+An indicator is *scored* here when at least one of its scored legs has a judged row for at least one body on this cycle. That is not the record's `measured` (`measurement_status`, DD-055, which counts admitted surfaces and instruments other than the scan); the two are different quantities and carry different names (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3).
 | bodies scored | 13 | 16 |
 
 ## The steps, in the Handbook's order
@@ -30,13 +32,13 @@ Cycle `scan_2026-09-10_rj5`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 ### 2. Data selection
 
-**Choice.** The legs of the Tier M `harness_leg` indicators (read from `measurement_basis`) that the published matrices of the cycle of record judge. Candidate legs (DD-054), withdrawn legs and legs on no published matrix are structured and not scored; the table below names each with its reason.
+**Choice.** The legs of the Tier M `harness_leg` indicators (read from `measurement_basis`) that the published matrices of the cycle of record judge. Candidate legs (DD-054), frontier legs (`frontier: true` on the record), withdrawn legs and legs on no published matrix are structured and not scored; the table below names each with its reason. A cell read from a host that answers for an organization above the statistical unit is kept on the matrix, marked `parent_host`, and enters no score: the legs whose collector reads a host-root file (`/robots.txt`, a declared sitemap, `/data.json`) and the legs that consume them, on a surface whose host is the body's roster host, for a body the roster places on its parent's host (`scripts/parent_host.py`, which derives the bodies from the roster and names none; each matrix header lists them with the roster's reason).
 
-**Why.** Only cold, re-derivable data enters (DN-005 §2.2 Tier M). Tier O and D indicators are not scored, and every output says so.
+**Why.** Only cold, re-derivable data enters (DN-005 §2.2 Tier M). Tier O and D indicators are not scored, and every output says so. A frontier mechanism is a dated hypothesis about how machines orient and never enters a core score (the core/frontier firewall in `docs/design_decisions.md`, DN-012 d4). A verdict on a parent organization's `robots.txt` or inventory is not a finding about the unit (the roster's own words), so a rank built on it is not the unit's (DN-012 d5).
 
 ### 3. Imputation of missing data
 
-**Choice.** None. A leg with no judged row for a body is unmeasured for that body and leaves every mean it would have entered; `error`, `not_applicable` and any other verdict are out of the denominator and counted separately.
+**Choice.** None. A leg with no judged row for a body is unmeasured for that body and leaves every mean it would have entered; `error`, `not_applicable`, `parent_host` and any other verdict are out of the denominator and counted separately. A body left with no judged row on any scored leg has no score and no rank, and every output says why; it is never ranked last.
 
 **Why.** An imputed verdict is a verdict the instrument did not reach. Case deletion at the lowest level, with the count printed, is the option the Handbook lists that asserts nothing the data does not.
 
@@ -96,7 +98,7 @@ Cycle `scan_2026-09-10_rj5`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 | A | Discoverability surface | `ind:A5` | `A5` | yes | — |
 | A | Structured markup | `ind:A6` | `A6` | yes | — |
 | A | Timeliness of surface | `ind:A8` | `A8` | yes | — |
-| A | M2M agent surface | `ind:A9` | `A9` | yes | — |
+| A | M2M agent surface | `ind:A9` | `A9` | no | frontier indicator (as_of 2026-01): reported on the matrix, marked `frontier`, never in a core score (DN-012 d4) |
 | B | Variable-level semantics | `ind:B1` | `B1` | yes | — |
 | B | Definitions surface | `ind:B2` | `B2` | yes | — |
 | B | Methodology legibility | `ind:B3` | `B3` | yes | — |
@@ -122,7 +124,7 @@ Generated from the record by `cc_tasks/2026-09-18_scoring_levels.md` decisions 3
 | level | name | criterion | legs that must pass outright at this level |
 |---|---|---|---|
 | 0 | no scored criterion clear | — | — |
-| 1 | ACCESSIBLE | A | `A1`, `A10`, `A11-declared`, `A2`, `A3`, `A4`, `A5`, `A6`, `A8`, `A9` |
+| 1 | ACCESSIBLE | A | `A1`, `A10`, `A11-declared`, `A2`, `A3`, `A4`, `A5`, `A6`, `A8` |
 | 2 | UNDERSTANDABLE | B | `B1`, `B2`, `B3`, `B4`, `B5` |
 | 3 | OPEN | D | `D1`, `D2`, `D3`, `D4` |
 | 4 | release engineering | F | `F4` |
@@ -133,7 +135,7 @@ Generated from the record by `cc_tasks/2026-09-18_scoring_levels.md` decisions 3
 One sentence per level, from the record's legs and the prescription layer's actions (cheapest effort band per leg; bands notional).
 
 - Level 0: every body holds it. A body stays here while any scored leg of criterion A fails; one whose criterion A legs show no fail but an error or no row is reported as '0 (unobservable at 1)'.
-- Level 1, ACCESSIBLE (criterion A): a body holds it when all 10 scored legs of criterion A (A1, A10, A11-declared, A2, A3, A4, A5, A6, A8, A9) pass outright with no error row; a body at level 0 closes the gap through the 26 publisher actions on those legs, the cheapest per leg being A1: “Publish the product as a structured download beside the PDF” (days); A10: “Make the product's own deep link resolve” (weeks); A11-declared: “Permit, in robots.txt, the AI crawlers the product is meant to reach” (hours); A2: “Serve a parseable OpenAPI description where the API is documented” (days); A3: “Add a whole-product download beside the query builder” (days); A4: “Allow the product's data paths for the AI crawlers you intend to serve” (hours); A5: “List the product URL in the discovery file that is already served” (hours); A6: “Embed JSON-LD describing the product on the product page” (hours); A8: “Declare the product's vintage in the markup, not only in a file header” (hours); A9: “Publish a machine-first entry point for the product” (days).
+- Level 1, ACCESSIBLE (criterion A): a body holds it when all 9 scored legs of criterion A (A1, A10, A11-declared, A2, A3, A4, A5, A6, A8) pass outright with no error row; a body at level 0 closes the gap through the 24 publisher actions on those legs, the cheapest per leg being A1: “Publish the product as a structured download beside the PDF” (days); A10: “Make the product's own deep link resolve” (weeks); A11-declared: “Permit, in robots.txt, the AI crawlers the product is meant to reach” (hours); A2: “Serve a parseable OpenAPI description where the API is documented” (days); A3: “Add a whole-product download beside the query builder” (days); A4: “Allow the product's data paths for the AI crawlers you intend to serve” (hours); A5: “List the product URL in the discovery file that is already served” (hours); A6: “Embed JSON-LD describing the product on the product page” (hours); A8: “Declare the product's vintage in the markup, not only in a file header” (hours).
 - Level 2, UNDERSTANDABLE (criterion B): a body holds it when it holds level 1 (criterion A) and all 5 scored legs of criterion B (B1, B2, B3, B4, B5) pass outright with no error row; a body at level 1 closes the gap through the 16 publisher actions on those legs, the cheapest per leg being B1: “Link the data dictionary from the product's catalog record” (hours); B2: “Give each linked defined term a code, a term set and a definition” (hours); B3: “Link the methodology from the product page” (hours); B4: “Publish the product's quality measurements as catalog metadata” (hours); B5: “Name the term set each term code belongs to” (hours).
 - Level 3, OPEN (criterion D): a body holds it when it holds level 2 (criteria A, B) and all 4 scored legs of criterion D (D1, D2, D3, D4) pass outright with no error row; a body at level 2 closes the gap through the 9 publisher actions on those legs, the cheapest per leg being D1: “Publish a machine-readable licence for the product” (hours); D2: “Declare the terms for AI training and AI input in robots.txt” (hours); D3: “Name the activity that generated the product in its catalog record” (hours); D4: “Add the product to the public data inventory already published” (hours).
 - Level 4, release engineering (criterion F): a body holds it when it holds level 3 (criteria A, B, D) and the one scored leg of criterion F (F4) passes outright with no error row; a body at level 3 closes the gap through the 3 publisher actions on that leg, the cheapest per leg being F4: “Carry a revision class on every changelog entry” (hours).
@@ -144,6 +146,12 @@ One sentence per level, from the record's legs and the prescription layer's acti
 A candidate leg (DD-054) enters no level, as it enters no score. The record's promotion field for each candidate, quoted:
 
 - `ind:A12`: “Operator decision. The framework goes out under his name and an indicator the instrument invented about itself is exactly the kind that needs a human to accept it.”
+
+### Frontier indicators and the score
+
+A frontier leg (DN-012 d4) enters no level and no score; it is on the product matrix with its verdicts, marked `frontier` in each row's `marks` and listed in the matrix's `legs_frontier`. The record's frontier indicators:
+
+- `ind:A9`, leg `A9`: frontier indicator (as_of 2026-01): reported on the matrix, marked `frontier`, never in a core score (DN-012 d4).
 
 ## Re-deriving a score
 

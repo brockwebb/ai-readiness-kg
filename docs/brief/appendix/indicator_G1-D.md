@@ -104,6 +104,7 @@ No leg of this indicator is a column of the cycle of record's matrices.
 | field | value |
 |---|---|
 | construct_restated | uncertainty present for the human reader and absent from the markup |
+| measured_by | {"counts": {"error": 1, "fail": 19, "not_applicable": 0, "pass": 3}, "cycle": "scan_2026-09-10_rj5", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["G1-D"], "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222", "qualifying_findings": 22, "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md", "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"} |
 | measurement_level | product |
 | tier_note | A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`). |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |

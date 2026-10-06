@@ -11,7 +11,7 @@ Record node `ind:B2`. Every value below is a field of that node or of an edge or
 | access tier (`tier`) | agency_instrumented |
 | measurement tier | M |
 | measurement basis | harness_leg |
-| measurement status | harness_built |
+| measurement status | measured |
 | status | draft |
 | candidate (DD-054) | no |
 | current rule | B2: RULE-B2-v1 |
@@ -69,6 +69,7 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
+| measured_by | {"counts": {"error": 1, "fail": 22, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["B2"], "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222", "qualifying_findings": 22, "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2` |

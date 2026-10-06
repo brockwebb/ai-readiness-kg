@@ -7,7 +7,7 @@ No new fetch. This is the published cycle read back through `get_body`, `get_req
 
 ## Score
 
-Hierarchical score 0.222, rank 5 of 13. Flat score 0.400, rank 4. Both schemes use equal weights, and neither has a basis over the other, so both are printed. Coverage: 16 of 48 framework indicators and 4 of 7 criteria are measured. Tier O and D indicators are not scored.
+Hierarchical score 0.222, rank 5 of 13. Flat score 0.400, rank 5. Both schemes use equal weights, and neither has a basis over the other, so both are printed. The score covers 11 of 48 framework indicators (indicators scored) and 3 of 7 criteria. The record marks 13 of the 48 framework indicators measured (indicators measured, DD-055), 12 of them on the cycle of record; that is the count the progress page and figure 1 print. Tier O and D indicators are not scored.
 
 **The one-leg-criterion caveat.** The rank rests on a single leg: `D2` (0 pass of 2 judged). Were that verdict reversed, the body would rank 1. DN-007 §2 states this for every body on the cycle (`docs/design/2026-09-19_DN-007_operator_rulings_and_state.md:17`):
 
@@ -159,7 +159,6 @@ Unobserved with no requirement recorded:
 |  | error | no BLIND error class is recorded under the Finding |
 |  | error | no BLIND error class is recorded under the Finding |
 | B1 | unmeasured_half | The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds. |
-| B2 | unmeasured_half | The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant. |
 | B4 | unmeasured_half | The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant. |
 | B6 | indicator | cc_tasks/2026-09-17_unassigned_indicators.md decision 4: the G1 precedent does not carry it. G1's act is a preservation score — a pinned consumer restates a captured surface and the restatement is scored for what it kept (DD-036 §2). B6 asks two different questions about the surface itself: whether the summary is plain language, a readability property of the text and not of a restatement, and whether it is current, a freshness comparison against the product's own modified date. Neither is a preservation score, so B6 needs a different instrument and stays unassigned. The 'current' half is the closer of the two to a structured-field test: DCAT-US 3 `modified` on the dataset against the summary page's own date. |
 | D3 | unmeasured_half | Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's. |

@@ -1174,6 +1174,9 @@ def page_g(s: Sources) -> Page:
     sc = s.score
     bs = sc["bodies"][DOGFOOD_BODY]
     cov = sc["coverage"]
+    on_cycle = sum(1 for n in s.inds if n["id"] not in s.candidates
+                   and n["properties"].get("measurement_status") == "measured"
+                   and (n["properties"].get("measured_by") or {}).get("cycle") == sc["cycle"]["name"])
     conc = b["score"]["concentration"]
     pg.add(f"# G. census.gov on the cycle of record ({b['cycle']})", "",
            "No new fetch. This is the published cycle read back through `get_body`, "
@@ -1186,11 +1189,22 @@ def page_g(s: Sources) -> Page:
            f"{pg.n(b['score']['flat'], 'get_body score.flat')}, rank "
            f"{pg.n(b['score']['flat_rank'], 'get_body score.flat_rank')}. Both schemes use "
            "equal weights, and neither has a basis over the other, so both are printed. "
-           f"Coverage: {pg.n(cov['indicators']['measured'], 'score.py coverage.indicators.measured')} of "
+           # `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3 (audit
+           # C-07): this sentence said "measured" of score.py's coverage while the progress page
+           # said "measured" of the record's, two values under one name. Two quantities, two
+           # names: what the score covers is "scored"; "measured" is the record's count, the
+           # one the progress page and figure 1 print.
+           f"The score covers {pg.n(cov['indicators']['measured'], 'score.py coverage.indicators.measured (indicators scored)')} of "
            f"{pg.n(cov['indicators']['total'], 'score.py coverage.indicators.total')} framework "
-           f"indicators and {pg.n(cov['criteria']['measured'], 'score.py coverage.criteria.measured')} of "
-           f"{pg.n(cov['criteria']['total'], 'score.py coverage.criteria.total')} criteria are "
-           "measured. Tier O and D indicators are not scored.", "")
+           f"indicators (indicators scored) and {pg.n(cov['criteria']['measured'], 'score.py coverage.criteria.measured')} of "
+           f"{pg.n(cov['criteria']['total'], 'score.py coverage.criteria.total')} criteria. "
+           f"The record marks {pg.n(s.record['counts']['indicators_measured'], 'record counts.indicators_measured')} "
+           f"of the {pg.n(s.record['counts']['indicators'], 'record counts.indicators')} "
+           "framework indicators measured (indicators measured, DD-055), "
+           f"{pg.n(on_cycle, 'record indicators whose measured_by.cycle is the cycle of record')} "
+           "of them on the cycle of record; that is the count the progress page and figure 1 "
+           "print. "
+           "Tier O and D indicators are not scored.", "")
     n = line_of(DN007, "one-leg criterion")
     pg.add("**The one-leg-criterion caveat.** The rank rests on a single leg: "
            f"`{conc['leg']}` "
@@ -1337,15 +1351,17 @@ def page_h(s: Sources, c_located: int) -> Page:
     pg.add(*table(["status", "indicators"], sorted(ms.items())))
     pg.add("", "## Indicators the record does not mark measured, and why", "",
            "Every framework indicator whose record `measurement_status` is not `measured`, "
-           "with its `requirement_none_reason` or `tier_unassigned_reason` where the record "
-           "has one. The requirements that would unlock the rest are on each appendix sheet. "
-           "The last column is read from the cycle of record's matrices instead of the "
-           "record. Where it says `yes`, the record's `measurement_status` lags the cycle, "
-           "which judges the leg anyway. That is a recorded discrepancy, and this page does "
-           "not correct it.", "")
+           "with its `not_measured_reason` (the measured write-back's, against the cycle of "
+           "record), `requirement_none_reason` or `tier_unassigned_reason`, whichever the "
+           "record has. The requirements that would unlock the rest are on each appendix "
+           "sheet. The last column is read from the cycle of record's matrices instead of the "
+           "record. Where it says `yes`, the matrices judge the leg and the record still does "
+           "not count it measured, and the reason column says why (DD-055: only an admitted "
+           "surface counts; DD-069: `measured` follows the cycle of record).", "")
     judged = set(leg_counts(s))
     rows = [[p["code"], p["measurement_status"], p.get("measurement_tier") or "unassigned",
-             p.get("requirement_none_reason") or p.get("tier_unassigned_reason") or "",
+             (p.get("not_measured_reason") or {}).get("reason")
+             or p.get("requirement_none_reason") or p.get("tier_unassigned_reason") or "",
              "yes" if any(leg in judged for leg, _ in s.rule_for(p["code"])) else "no"]
             for p in fw if p["measurement_status"] != "measured"]
     pg.add(*table(["indicator", "status", "tier", "reason (record)",
@@ -1364,6 +1380,33 @@ def page_h(s: Sources, c_located: int) -> Page:
             if v.get("concentration")}
     one_pass = [b for b, c in conc.items()
                 if c["rank_if_reversed"] > c["rank"] and c["pass"] == 1]
+    # `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 2 (DN-012 d5, audit
+    # C-13): which bodies lost which cells, and why, generated from the roster through the
+    # matrices' own `parent_host` header (`scripts/parent_host.py`), never typed here.
+    ph = s.matrices()["tierA"][1].get("parent_host")
+    if not ph:
+        sys.exit("page H: the cycle of record's host matrix carries no `parent_host` header; "
+                 "rebuild the matrices (scripts/build_l0_matrices.py --cycle)")
+    unr = [(b, v["unranked_reason"]) for b, v in sorted(sc["bodies"].items())
+           if v.get("unranked_reason")]
+    pg.add("## Cells read from a parent organization's host", "",
+           f"{pg.n(len(ph['bodies']), 'bodies the roster places on a parent organization host (matrix parent_host header)')} "
+           "bodies publish on a host whose robots.txt, data.json inventory and well-known "
+           "files answer for an organization above the statistical unit. Their cells on the legs that "
+           "read those files, and on the legs that consume them, are kept on the matrices, "
+           "marked `parent_host`, and left out of the unit's score and rank (DN-012 d5): a "
+           "verdict on a parent's file is not a finding about the unit. The roster says which "
+           "bodies, and why; nothing below is typed. Legs: "
+           f"{', '.join(f'`{l}`' for l in ph['legs'])}.", "")
+    pg.add(*table(["body", "host", "whose host", "cells marked (count)", "why (roster)"],
+                  [[b["body"], f"`{b['host']}`", b["answers_for"],
+                    ", ".join(f"{l} ({n})" for l, n in b["cells"].items()) or "none judged",
+                    "; ".join(b["signals"])] for b in ph["bodies"]]))
+    if unr:
+        pg.add("", "Bodies with no scorable leg left are unranked, never ranked last "
+               "(`score.py` `unranked_reason`):", "")
+        pg.add(*table(["body", "why unranked"], [[b, w] for b, w in unr]))
+    pg.add("")
     pg.add("## Equal weights, and the ranks that rest on one pass", "",
            # `cc_tasks/2026-10-04_views_regenerate.md` decision 4: the Handbook never calls equal
            # weighting a default (`CL-083`, status unsupported); it says the choice is common,

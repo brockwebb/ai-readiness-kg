@@ -117,7 +117,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "rules_built": 24,
       "specs_with_recorded_decision": 3,
       "candidate_indicators": 1,
-      "indicators_measured": 16,
+      "indicators_measured": 13,
       "actions": 60,
       "actions_on_candidate_indicators": 3,
       "tools": 13,
@@ -283,21 +283,39 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "evidence_raw": "`llmstxt-proposal`; `sitemaps-protocol`",
     "gap": null,
     "measured_by": {
-      "cycle": "scan_2026-09-07",
+      "cycle": "scan_2026-09-10_rj5",
       "legs": [
         "A5"
       ],
-      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-      "qualifying_findings": 23,
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 21,
       "counts": {
-        "pass": 2,
-        "fail": 21,
+        "pass": 3,
+        "fail": 18,
         "not_applicable": 0,
-        "error": 3
+        "error": 2
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    },
+    "measured_previously": [
+      {
+        "cycle": "scan_2026-09-07",
+        "legs": [
+          "A5"
+        ],
+        "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+        "qualifying_findings": 23,
+        "counts": {
+          "pass": 2,
+          "fail": 21,
+          "not_applicable": 0,
+          "error": 3
+        },
+        "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+        "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+      }
+    ]
   },
   "spec": {
     "indicator_code": "A5",
@@ -411,21 +429,21 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
   "cycle": "scan_2026-09-10_rj5",
   "n_judged": 39,
   "n_failing": 15,
-  "summary": "15 failing of 39 judged on scan_2026-09-10_rj5; 16 bodies are on this cycle. NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 3.",
+  "summary": "15 failing of 39 judged on scan_2026-09-10_rj5; 16 bodies are on this cycle. NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is A10: 0 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 5.",
   "score": {
-    "score": 0.09523809523809523,
+    "score": 0.125,
     "rank": 13,
-    "flat": 0.18181818181818182,
+    "flat": 0.14285714285714285,
     "flat_rank": 13,
     "of": 13,
     "concentration": {
-      "leg": "D2",
+      "leg": "A10",
       "pass": 0,
-      "judged": 2,
+      "judged": 1,
       "rank": 13,
-      "rank_if_reversed": 3,
+      "rank_if_reversed": 5,
       "of": 13,
-      "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 3."
+      "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is A10: 0 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 5."
     }
   },
   "latest_measurement": {

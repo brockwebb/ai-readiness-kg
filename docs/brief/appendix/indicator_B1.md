@@ -67,6 +67,7 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
+| not_measured_reason | {"counts": {"error": 23, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "legs": ["B1"], "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count", "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['B1'] = RULE-B1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1` |

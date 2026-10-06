@@ -24,6 +24,145 @@
   }
  ],
  "tier": "A",
+ "parent_host": {
+  "decision": "DN-012 d5",
+  "task": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+  "legs": [
+   "A4",
+   "A5",
+   "A11-declared",
+   "D4",
+   "A12",
+   "B1",
+   "B4",
+   "D3",
+   "G4",
+   "D2"
+  ],
+  "bodies": [
+   {
+    "body": "DRSMSU",
+    "host": "www.federalreserve.gov",
+    "answers_for": "Board of Governors of the Federal Reserve System",
+    "signals": [
+     "the frame's home surface for the body is `https://www.federalreserve.gov/econres/rsmecs-staff.htm`, a section of `www.federalreserve.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NAHMSAPHIS",
+    "host": "www.aphis.usda.gov",
+    "answers_for": "Department of Agriculture",
+    "signals": [
+     "the frame's home surface for the body is `https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms`, a section of `www.aphis.usda.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NCHS",
+    "host": "www.cdc.gov",
+    "answers_for": "Centers for Disease Control and Prevention",
+    "signals": [
+     "the cycle-1 roster row carries `host_shared_with: Centers for Disease Control and Prevention` (assessment/harness/scan/targets.yaml)",
+     "the frame's home surface for the body is `https://www.cdc.gov/nchs/index.htm`, a section of `www.cdc.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   },
+   {
+    "body": "ORES",
+    "host": "www.ssa.gov",
+    "answers_for": "Social Security Administration",
+    "signals": [
+     "the .gov registry attributes `ssa.gov` to Social Security Administration, the roster's parent department, with no suborganization, and `www.ssa.gov` is that domain itself (state/fss_department_domains_2026-09.json)"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SAMHSACBHS",
+    "host": "www.samhsa.gov",
+    "answers_for": "Substance Abuse and Mental Health Services Administration",
+    "signals": [
+     "the frame's home surface for the body is `https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq`, a section of `www.samhsa.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SOI",
+    "host": "www.irs.gov",
+    "answers_for": "Internal Revenue Service",
+    "signals": [
+     "the frame's home surface for the body is `https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income`, a section of `www.irs.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   }
+  ]
+ },
  "legs": [
   "A4",
   "A5",
@@ -53,7 +192,8 @@
     "A12": "fnd_8b572508b5973c0c6b8ca0be"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 59
+   "probes_on_host_surface": 59,
+   "marks": {}
   },
   {
    "agency": "BJS",
@@ -76,7 +216,8 @@
     "A12": "fnd_8990e250ed060c215fbf0ec3"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 59
+   "probes_on_host_surface": 59,
+   "marks": {}
   },
   {
    "agency": "BLS",
@@ -99,7 +240,8 @@
     "A12": "fnd_26d567603fe0ad8f28d64f70"
    },
    "refused_identified_client": 33,
-   "probes_on_host_surface": 35
+   "probes_on_host_surface": 35,
+   "marks": {}
   },
   {
    "agency": "BTS",
@@ -122,7 +264,8 @@
     "A12": "fnd_d5f7df28894b8f604f936706"
    },
    "refused_identified_client": 32,
-   "probes_on_host_surface": 33
+   "probes_on_host_surface": 33,
+   "marks": {}
   },
   {
    "agency": "CENSUS",
@@ -145,7 +288,8 @@
     "A12": "fnd_882a10979cd85cf56ad31604"
    },
    "refused_identified_client": 4,
-   "probes_on_host_surface": 59
+   "probes_on_host_surface": 59,
+   "marks": {}
   },
   {
    "agency": "DRSMSU",
@@ -168,7 +312,13 @@
     "A12": "fnd_4f5ebfb554457dfea4ec4ae7"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 67
+   "probes_on_host_surface": 67,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   },
   {
    "agency": "EIA",
@@ -191,7 +341,8 @@
     "A12": "fnd_be056b29e5aa9dca55aa3ae4"
    },
    "refused_identified_client": 1,
-   "probes_on_host_surface": 64
+   "probes_on_host_surface": 64,
+   "marks": {}
   },
   {
    "agency": "ERS",
@@ -214,7 +365,8 @@
     "A12": "fnd_6b40fe38eed3209fb8ad43c9"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 60
+   "probes_on_host_surface": 60,
+   "marks": {}
   },
   {
    "agency": "NAHMSAPHIS",
@@ -237,7 +389,13 @@
     "A12": "fnd_2e3e5df4cfd765ecc82927d0"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 58
+   "probes_on_host_surface": 58,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   },
   {
    "agency": "NASS",
@@ -260,7 +418,8 @@
     "A12": "fnd_8f41dd61639bde86c9011c10"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 66
+   "probes_on_host_surface": 66,
+   "marks": {}
   },
   {
    "agency": "NCES",
@@ -283,7 +442,8 @@
     "A12": "fnd_ffaa281a4d90a8f087c53690"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 63
+   "probes_on_host_surface": 63,
+   "marks": {}
   },
   {
    "agency": "NCHS",
@@ -306,7 +466,13 @@
     "A12": "fnd_1cc5c2d3ca22b72114ebc617"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 34
+   "probes_on_host_surface": 34,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   },
   {
    "agency": "NCSES",
@@ -329,7 +495,8 @@
     "A12": "fnd_eb3f3af97a1167db21f01aaf"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 65
+   "probes_on_host_surface": 65,
+   "marks": {}
   },
   {
    "agency": "ORES",
@@ -352,7 +519,13 @@
     "A12": "fnd_67ab1e1377f9eb3fea61dcdf"
    },
    "refused_identified_client": 32,
-   "probes_on_host_surface": 33
+   "probes_on_host_surface": 33,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   },
   {
    "agency": "SAMHSACBHS",
@@ -375,7 +548,13 @@
     "A12": "fnd_d213f311a3f7eda5b28b47ae"
    },
    "refused_identified_client": 0,
-   "probes_on_host_surface": 62
+   "probes_on_host_surface": 62,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   },
   {
    "agency": "SOI",
@@ -398,7 +577,13 @@
     "A12": "fnd_f692b3d288bda52254bfaed6"
    },
    "refused_identified_client": 3,
-   "probes_on_host_surface": 59
+   "probes_on_host_surface": 59,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
   }
  ]
 }

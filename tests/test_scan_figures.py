@@ -553,7 +553,7 @@ def test_every_l0_matrix_row_re_derives_from_the_graph(session, stem):
         by_leg = dict(p.split("=", 1) for p in pairs)
         for col, cell in r.items():
             if col in ("agency", "tier", "host_surface", "host_url", "candidate_surface",
-                       "surface", "url", "declared", "finding_ids",
+                       "surface", "url", "declared", "finding_ids", "marks",
                        "refused_identified_client", "probes_on_host_surface"):
                 continue
             fid = by_leg.get(col)

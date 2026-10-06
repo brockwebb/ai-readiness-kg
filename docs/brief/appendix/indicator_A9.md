@@ -11,7 +11,7 @@ Record node `ind:A9`. Every value below is a field of that node or of an edge or
 | access tier (`tier`) | public |
 | measurement tier | M |
 | measurement basis | harness_leg |
-| measurement status | measured |
+| measurement status | harness_built |
 | status | draft; frontier_deep track, as_of 2026-01 |
 | candidate (DD-054) | no |
 | current rule | A9: RULE-A9-v2 |
@@ -69,6 +69,6 @@ No `REQUIRES` edge.
 |---|---|
 | as_of | 2026-01 |
 | frontier | True |
-| measured_by | {"counts": {"error": 3, "fail": 23, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-07", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["A9"], "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4", "qualifying_findings": 23, "recorded_by": "cc_tasks/2026-09-07_scan_run.md"} |
+| not_measured_reason | {"counts": {"error": 23, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "legs": ["A9"], "reason": "every Finding was `error` — the collector could not observe any admitted surface", "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9` |

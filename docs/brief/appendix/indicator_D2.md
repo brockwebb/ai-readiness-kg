@@ -11,7 +11,7 @@ Record node `ind:D2`. Every value below is a field of that node or of an edge or
 | access tier (`tier`) | agency_instrumented |
 | measurement tier | M |
 | measurement basis | harness_leg |
-| measurement status | harness_built |
+| measurement status | measured |
 | status | draft |
 | candidate (DD-054) | no |
 | current rule | D2: RULE-D2-v1 |
@@ -64,6 +64,7 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
+| measured_by | {"counts": {"error": 0, "fail": 23, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["D2"], "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222", "qualifying_findings": 23, "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2` |

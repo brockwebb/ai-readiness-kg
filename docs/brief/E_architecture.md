@@ -32,7 +32,7 @@ flowchart LR
 | rules.judge: versioned pure rule | `assessment/harness/scan/rules/__init__.py:421` |
 | Finding: verdict + reason + rule_id | `assessment/harness/scan/model.py:217` |
 | events/cycle-&lt;cycle&gt;.jsonl (append-only) | `assessment/harness/scan/publish.py:238` |
-| matrices + L0 Results | `scripts/build_l0_matrices.py:303` |
+| matrices + L0 Results | `scripts/build_l0_matrices.py:362` |
 | L0 report and PDF | `scripts/build_l0_report.py:354` |
 | site, CITATION.cff, zenodo | `scripts/build_l0_site.py:530` |
 | MCP server (10 read-only verbs, TOOL_ORDER) | `mcp/airkg_server.py:105` |
@@ -73,7 +73,7 @@ flowchart TB
 | event log shards events/*.jsonl | `kg/eventlog.py:100` |
 | build_projection.py: KG labels | `scripts/build_projection.py:587` |
 | publish.py --project: Observation/Finding/Rule | `assessment/harness/scan/publish.py:558` |
-| load_framework_graph.py: framework labels | `scripts/load_framework_graph.py:101` |
+| load_framework_graph.py: framework labels | `scripts/load_framework_graph.py:108` |
 | framework/ai_readiness_framework.json | `scripts/build_framework_graph.py:319` |
 | framework_writeback.save: the single writer | `scripts/framework_writeback.py:302` |
 | Neo4j seldon-ai-readiness-kg | `seldon.yaml:4` |

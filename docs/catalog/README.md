@@ -166,15 +166,15 @@ No inference is made about why any finding was a denial. A body with no vendor-n
 
 <!-- BEGIN GENERATED: summary -->
 
-Of the 32 framework indicators the record does not mark measured, the easiest route on any row needs:
+Of the 35 framework indicators the record does not mark measured, the easiest route on any row needs:
 
 | easiest route | n | indicators |
 |---|---|---|
-| `public_outside_in` | 10 | A7, B5, B6, C5, D3, F2, F3, F6, G3, G5 |
+| `public_outside_in` | 11 | A2, A7, B6, C5, D3, D4, F2, F3, F6, G3, G5 |
 | `needs_standard` | 9 | C1, C2, C3, C4, E6, E8, E9, G2, G6 |
 | `agency_enabled` | 0 |  |
 | `agency_records` | 7 | E1, E2, E3, E4, E7, F1, F5 |
-| `no_route_to_obtain` | 6 | B1, B2, B4, D2, E5, G4 |
+| `no_route_to_obtain` | 8 | A1, A9, B1, B4, D1, E5, F4, G4 |
 
 `no_route_to_obtain` means no row offers anything to obtain: the indicator has a built rule the record does not mark measured, and its unmeasured half has no known method (`none_known`) or nothing stands in its way but the definition of measured. It does not mean the indicator needs nothing.
 
@@ -194,33 +194,33 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 
 | code | criterion | status | indicator |
 |---|---|---|---|
-| A1 | A | measured | Product available as structured data (CSV/JSON/parquet), not PDF-only |
-| A2 | A | measured | Documented public API; auth model; rate limits stated |
+| A1 | A | harness_built | Product available as structured data (CSV/JSON/parquet), not PDF-only |
+| A2 | A | harness_built | Documented public API; auth model; rate limits stated |
 | A3 | A | measured | Full-product bulk download exists and is linked from product page |
 | A4 | A | measured | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths |
 | A5 | A | measured | llms.txt (or equivalent) present; sitemap covers data products |
 | A6 | A | measured | schema.org/Dataset (or DCAT/Croissant) markup valid on product pages |
 | A7 | A | specified | Persistent URLs/DOIs for products and vintages |
 | A8 | A | measured | Release date machine-readable; latest-vintage pointer resolvable |
-| A9 | A | measured | Product exposes a machine-first entry point (documented API plus MCP/A2A-class endpoint or equivalent agent protocol); human pages derivable from it |
+| A9 | A | harness_built | Product exposes a machine-first entry point (documented API plus MCP/A2A-class endpoint or equivalent agent protocol); human pages derivable from it |
 | A10 | A | measured | Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution |
 | A11 | A | measured | A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state |
 | A12 | A | specified | An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager) (candidate, DD-054) |
 | B1 | B | harness_built | Comprehensive variable-level metadata (labels, definitions, units, universes) |
-| B2 | B | harness_built | Concept/term definitions published, versioned, linked from variables |
+| B2 | B | measured | Concept/term definitions published, versioned, linked from variables |
 | B3 | B | measured | Methodology docs in structured text (not PDF-only); summarizable by retrieval |
 | B4 | B | harness_built | Data-quality attributes (error measures, suppression rules, revisions policy) published as metadata, not prose |
-| B5 | B | harness_built | Same concept ⇒ same identifier across products/vintages |
+| B5 | B | measured | Same concept ⇒ same identifier across products/vintages |
 | B6 | B | specified | Plain-language product summary present and current (the retrieval target) |
 | C1 | C | specified | Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values |
 | C2 | C | specified | Entailment-judged: do model statements about the product entail from product text? (probe protocol, re-aimed) |
 | C3 | C | specified | Version/vintage disambiguation: does retrieval return the vintage asked for? |
 | C4 | C | specified | Generative engines citing the product cite the authoritative page (not aggregators) |
 | C5 | C | specified | Product scored against published AI-data-readiness metrics |
-| D1 | D | measured | Explicit machine-readable license/terms on product and API |
-| D2 | D | harness_built | Terms address model training/retrieval use explicitly |
+| D1 | D | harness_built | Explicit machine-readable license/terms on product and API |
+| D2 | D | measured | Terms address model training/retrieval use explicitly |
 | D3 | D | harness_built | Source lineage published (collection → processing → product) |
-| D4 | D | measured | Statutory products enumerable from a public inventory (data.gov/agency inventory current) |
+| D4 | D | harness_built | Statutory products enumerable from a public inventory (data.gov/agency inventory current) |
 | E1 | E | specified | Product spec conformance (AUTO/DOC set) reported separately from fit-for-use evals (EVAL set); a product cannot pass validation while failing verification |
 | E2 | E | specified | Published pass/fail thresholds per eval, pre-registered before results; threshold changes are versioned events |
 | E3 | E | specified | Eval sets and rubrics carry versions; results never pooled across versions |
@@ -233,7 +233,7 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 | F1 | F | specified | New releases pass a published expectation suite (schema validity, row/total sanity, identifier persistence) before going live |
 | F2 | F | specified | API/schema changes are versioned; breaking changes announced with deprecation windows; compatibility checked mechanically |
 | F3 | F | specified | Time-series identifiers, geography codes, and endpoints survive a new vintage or a crosswalk is published; tested per release |
-| F4 | F | measured | Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products |
+| F4 | F | harness_built | Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products |
 | F5 | F | specified | Canary/staging surface for major product changes; AI-consumer regression run before promotion |
 | F6 | F | specified | Signed releases / provenance attestations so downstream copies are traceable to the authoritative artifact (SLSA-class, adapted) |
 | G1-D | G | measured | **G1-D (declared)** — error measures (MOEs, CVs, DP noise parameters) present as structured fields beside the estimates on the product surface, not as footnotes (`assessment/harness/probes/g1_declared.py`); unchanged. |
@@ -250,11 +250,11 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 
 <!-- BEGIN GENERATED: counts -->
 
-- Scan rows: 71, over 49 indicators (32 framework indicators are not measured).
+- Scan rows: 71, over 49 indicators (35 framework indicators are not measured).
 - By who can run it: `public_outside_in` 41, `agency_enabled` 9, `agency_records` 8, `needs_standard` 13.
 - By method kind: `built_rule` 26, `tool_open_source` 8, `tool_commercial` 10, `roll_your_own` 23, `none_known` 4.
 - By row source: `record` 62, `catalog_search` 2, `proposed_link` 7.
 - Action rows: 64 (63 from the record, 1 named).
-- Greedy set cover: 24 steps cover 26 of 32 unmeasured framework indicators; for 6, no row offers anything to obtain.
+- Greedy set cover: 25 steps cover 27 of 35 unmeasured framework indicators; for 8, no row offers anything to obtain.
 
 <!-- END GENERATED: counts -->

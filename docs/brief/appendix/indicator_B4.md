@@ -69,6 +69,7 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
+| not_measured_reason | {"counts": {"error": 23, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "legs": ["B4"], "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count", "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['B4'] = RULE-B4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4` |

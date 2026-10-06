@@ -8,8 +8,8 @@ claims:
 - id: CL-001
   key: q1.partition
   question: Q1
-  text: 'Of the framework''s indicators the record does not mark measured (32), what blocks each partitions
-    as: 8 `open_tooling`, 0 `funding`, 15 `no_standard`, 7 `agency_cooperation`, 2 `not_blocked`.'
+  text: 'Of the framework''s indicators the record does not mark measured (35), what blocks each partitions
+    as: 13 `open_tooling`, 0 `funding`, 14 `no_standard`, 7 `agency_cooperation`, 1 `not_blocked`.'
   status: record
   evidence:
   - kind: query
@@ -19,25 +19,29 @@ claims:
     id: mcp.get_requirements
     locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
   - kind: indicator
+    id: ind:A1
+    locator: framework/ai_readiness_framework.json#ind:A1
+    note: open_tooling
+  - kind: indicator
+    id: ind:A2
+    locator: framework/ai_readiness_framework.json#ind:A2
+    note: open_tooling
+  - kind: indicator
     id: ind:A7
     locator: framework/ai_readiness_framework.json#ind:A7
+    note: open_tooling
+  - kind: indicator
+    id: ind:A9
+    locator: framework/ai_readiness_framework.json#ind:A9
     note: open_tooling
   - kind: indicator
     id: ind:B1
     locator: framework/ai_readiness_framework.json#ind:B1
     note: no_standard
   - kind: indicator
-    id: ind:B2
-    locator: framework/ai_readiness_framework.json#ind:B2
-    note: no_standard
-  - kind: indicator
     id: ind:B4
     locator: framework/ai_readiness_framework.json#ind:B4
     note: no_standard
-  - kind: indicator
-    id: ind:B5
-    locator: framework/ai_readiness_framework.json#ind:B5
-    note: open_tooling
   - kind: indicator
     id: ind:B6
     locator: framework/ai_readiness_framework.json#ind:B6
@@ -63,12 +67,16 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:C5
     note: open_tooling
   - kind: indicator
-    id: ind:D2
-    locator: framework/ai_readiness_framework.json#ind:D2
-    note: not_blocked
+    id: ind:D1
+    locator: framework/ai_readiness_framework.json#ind:D1
+    note: open_tooling
   - kind: indicator
     id: ind:D3
     locator: framework/ai_readiness_framework.json#ind:D3
+    note: open_tooling
+  - kind: indicator
+    id: ind:D4
+    locator: framework/ai_readiness_framework.json#ind:D4
     note: open_tooling
   - kind: indicator
     id: ind:E1
@@ -119,6 +127,10 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:F3
     note: open_tooling
   - kind: indicator
+    id: ind:F4
+    locator: framework/ai_readiness_framework.json#ind:F4
+    note: open_tooling
+  - kind: indicator
     id: ind:F5
     locator: framework/ai_readiness_framework.json#ind:F5
     note: agency_cooperation
@@ -147,17 +159,17 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:G6
     note: no_standard
   numbers:
-  - value: '8'
+  - value: '13'
     source: Q1 rows classed open_tooling
   - value: '0'
     source: Q1 rows classed funding
-  - value: '15'
+  - value: '14'
     source: Q1 rows classed no_standard
   - value: '7'
     source: Q1 rows classed agency_cooperation
-  - value: '2'
+  - value: '1'
     source: Q1 rows classed not_blocked
-  - value: '32'
+  - value: '35'
     source: framework indicators whose measurement_status is not measured
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-002
@@ -202,25 +214,6 @@ claims:
     note: get_requirements(indicator='B1')
   numbers: []
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
-- id: CL-004
-  key: q1.B2
-  question: Q1
-  text: '`B2` (status `harness_built`) is not measured, and what blocks it is `no_standard`: the record''s
-    reason is quoted in this claim''s evidence.'
-  status: record
-  evidence:
-  - kind: indicator
-    id: ind:B2
-    locator: framework/ai_readiness_framework.json#ind:B2
-    note: 'record reason matches `What is missing is a standard`; record: The ''versioned'' clause has
-      no field in any admitted document. What is missing is a standard to test against, not a tool or
-      a grant.'
-  - kind: query
-    id: mcp.get_requirements
-    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
-    note: get_requirements(indicator='B2')
-  numbers: []
-  source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-005
   key: q1.B4
   question: Q1
@@ -238,30 +231,6 @@ claims:
     id: mcp.get_requirements
     locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
     note: get_requirements(indicator='B4')
-  numbers: []
-  source_task: cc_tasks/2026-10-02_evidence_map_record.md
-- id: CL-006
-  key: q1.B5
-  question: Q1
-  text: '`B5` has no measured verdict in the record and can be measured from outside with public tooling
-    and no agency action (route `second_cycle` needs `pre:second-scan-cycle`); it is to be measured before
-    the summary is drafted (`DN-009 decision 6`).'
-  status: needs_measurement
-  evidence:
-  - kind: indicator
-    id: ind:B5
-    locator: framework/ai_readiness_framework.json#ind:B5
-    note: 'routes; record: measured by this harness with RULE-B5-v1 (leg `B5`); no tool, account or record
-      stands between it and a verdict — for the clauses its rule reads; the tests below close what it
-      does not'
-  - kind: query
-    id: mcp.get_requirements
-    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
-    note: get_requirements(indicator='B5')
-  - kind: query
-    id: mcp.get_requirements
-    locator: framework/ai_readiness_framework.json#pre:second-scan-cycle
-    note: 'route second_cycle: second_cycle, provided by this_project'
   numbers: []
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-007
@@ -406,25 +375,6 @@ claims:
     id: mcp.get_requirements
     locator: framework/ai_readiness_framework.json#tool:aidrin
     note: 'route aidrin: open_source, provided by this_project'
-  numbers: []
-  source_task: cc_tasks/2026-10-02_evidence_map_record.md
-- id: CL-013
-  key: q1.D2
-  question: Q1
-  text: '`D2` (status `harness_built`) is not measured, and what blocks it is `not_blocked`: the record''s
-    reason is quoted in this claim''s evidence.'
-  status: record
-  evidence:
-  - kind: indicator
-    id: ind:D2
-    locator: framework/ai_readiness_framework.json#ind:D2
-    note: 'record reason matches `no tool, account or record stands between it and a verdict`; record:
-      measured by this harness with RULE-D2-v1 (leg `D2`); no tool, account or record stands between it
-      and a verdict'
-  - kind: query
-    id: mcp.get_requirements
-    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
-    note: get_requirements(indicator='D2')
   numbers: []
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-014
@@ -2177,7 +2127,7 @@ claims:
 - id: CL-049
   key: q5.measurement_status
   question: Q5
-  text: Of the framework's 48 indicators the record marks 16 measured, 8 with a harness built but not
+  text: Of the framework's 48 indicators the record marks 13 measured, 11 with a harness built but not
     marked measured, and 24 specified only.
   status: record
   evidence:
@@ -2187,9 +2137,9 @@ claims:
   numbers:
   - value: '48'
     source: indicators not held out as candidates
-  - value: '16'
+  - value: '13'
     source: measurement_status measured
-  - value: '8'
+  - value: '11'
     source: measurement_status harness_built
   - value: '24'
     source: measurement_status specified
@@ -3209,8 +3159,163 @@ claims:
   - value: '22'
     source: Q2 pass for BEA
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-088
+  key: q1.A1
+  question: Q1
+  text: '`A1` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says every Finding on an admitted surface of the cycle of record
+    was `error`, and the qualifying ones are on surfaces not yet admitted); it is to be measured before
+    the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:A1
+    locator: framework/ai_readiness_framework.json#ind:A1
+    note: 'record reason matches `every Finding on an admitted surface was `error``; record: every Finding
+      on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not
+      admitted to the corpus, which DD-055 does not count'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='A1')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-089
+  key: q1.A2
+  question: Q1
+  text: '`A2` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `openapi_spec_validator` needs `tool:openapi-spec-validator`; route `prance`
+    needs `tool:prance`); it is to be measured before the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:A2
+    locator: framework/ai_readiness_framework.json#ind:A2
+    note: 'routes; record: every Finding was `error` — the collector could not observe any admitted surface'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='A2')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:openapi-spec-validator
+    note: 'route openapi_spec_validator: open_source, provided by this_project'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:prance
+    note: 'route prance: open_source, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-090
+  key: q1.A9
+  question: Q1
+  text: '`A9` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says every Finding of the cycle of record was `error`: the collector
+    could not observe, and another cycle of this harness is what can); it is to be measured before the
+    summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:A9
+    locator: framework/ai_readiness_framework.json#ind:A9
+    note: 'record reason matches `every Finding was `error``; record: every Finding was `error` — the
+      collector could not observe any admitted surface'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='A9')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-091
+  key: q1.D1
+  question: Q1
+  text: '`D1` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says every Finding of the cycle of record was `error`: the collector
+    could not observe, and another cycle of this harness is what can); it is to be measured before the
+    summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:D1
+    locator: framework/ai_readiness_framework.json#ind:D1
+    note: 'record reason matches `every Finding was `error``; record: every Finding was `error` — the
+      collector could not observe any admitted surface'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='D1')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-092
+  key: q1.D4
+  question: Q1
+  text: '`D4` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `federal_catalog` needs `tool:catalog-data-gov-ckan-api`); it is to be
+    measured before the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:D4
+    locator: framework/ai_readiness_framework.json#ind:D4
+    note: 'routes; record: every Finding on an admitted surface was `error`; the 1 qualifying Finding(s)
+      of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='D4')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:catalog-data-gov-ckan-api
+    note: 'route federal_catalog: hosted_free, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-093
+  key: q1.F4
+  question: Q1
+  text: '`F4` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says every Finding of the cycle of record was `error`: the collector
+    could not observe, and another cycle of this harness is what can); it is to be measured before the
+    summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:F4
+    locator: framework/ai_readiness_framework.json#ind:F4
+    note: 'record reason matches `every Finding was `error``; record: every Finding was `error` — the
+      collector could not observe any admitted surface'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F4')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
 tables:
   q1_measurement_boundary:
+  - indicator: A1
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: record reason matches `every Finding on an admitted surface was `error``
+    judged_on_cycle: true
+    record_text: every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this
+      cycle are on surfaces not admitted to the corpus, which DD-055 does not count
+    routes: []
+  - indicator: A2
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: true
+    record_text: every Finding was `error` — the collector could not observe any admitted surface
+    routes:
+    - route: openapi_spec_validator
+      class: open_tooling
+      requires:
+      - tool:openapi-spec-validator (open_source, this_project)
+    - route: prance
+      class: open_tooling
+      requires:
+      - tool:prance (open_source, this_project)
   - indicator: A7
     status: specified
     tier: O
@@ -3223,6 +3328,14 @@ tables:
       class: open_tooling
       requires:
       - tool:wayback-cdx-server (hosted_free, this_project)
+  - indicator: A9
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: record reason matches `every Finding was `error``
+    judged_on_cycle: true
+    record_text: every Finding was `error` — the collector could not observe any admitted surface
+    routes: []
   - indicator: B1
     status: harness_built
     tier: M
@@ -3234,15 +3347,6 @@ tables:
       the way is an instrument this project has not specified — not a tool, an account or anything the
       body holds.
     routes: []
-  - indicator: B2
-    status: harness_built
-    tier: M
-    class: no_standard
-    basis: record reason matches `What is missing is a standard`
-    judged_on_cycle: true
-    record_text: The 'versioned' clause has no field in any admitted document. What is missing is a standard
-      to test against, not a tool or a grant.
-    routes: []
   - indicator: B4
     status: harness_built
     tier: M
@@ -3252,19 +3356,6 @@ tables:
     record_text: The suppression-rules clause has no field in any admitted document (the failed search
       is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant.
     routes: []
-  - indicator: B5
-    status: harness_built
-    tier: M
-    class: open_tooling
-    basis: routes
-    judged_on_cycle: true
-    record_text: measured by this harness with RULE-B5-v1 (leg `B5`); no tool, account or record stands
-      between it and a verdict — for the clauses its rule reads; the tests below close what it does not
-    routes:
-    - route: second_cycle
-      class: open_tooling
-      requires:
-      - pre:second-scan-cycle (second_cycle, this_project)
   - indicator: B6
     status: specified
     tier: unassigned
@@ -3346,14 +3437,13 @@ tables:
       class: open_tooling
       requires:
       - tool:aidrin (open_source, this_project)
-  - indicator: D2
+  - indicator: D1
     status: harness_built
     tier: M
-    class: not_blocked
-    basis: record reason matches `no tool, account or record stands between it and a verdict`
+    class: open_tooling
+    basis: record reason matches `every Finding was `error``
     judged_on_cycle: true
-    record_text: measured by this harness with RULE-D2-v1 (leg `D2`); no tool, account or record stands
-      between it and a verdict
+    record_text: every Finding was `error` — the collector could not observe any admitted surface
     routes: []
   - indicator: D3
     status: harness_built
@@ -3365,6 +3455,19 @@ tables:
       `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project
       would write, not a requirement of the body's.
     routes: []
+  - indicator: D4
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: true
+    record_text: every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this
+      cycle are on surfaces not admitted to the corpus, which DD-055 does not count
+    routes:
+    - route: federal_catalog
+      class: open_tooling
+      requires:
+      - tool:catalog-data-gov-ckan-api (hosted_free, this_project)
   - indicator: E1
     status: specified
     tier: M
@@ -3510,6 +3613,14 @@ tables:
       class: open_tooling
       requires:
       - tool:wayback-cdx-server (hosted_free, this_project)
+  - indicator: F4
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: record reason matches `every Finding was `error``
+    judged_on_cycle: true
+    record_text: every Finding was `error` — the collector could not observe any admitted surface
+    routes: []
   - indicator: F5
     status: specified
     tier: D

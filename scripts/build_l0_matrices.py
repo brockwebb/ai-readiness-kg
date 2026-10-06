@@ -156,6 +156,65 @@ def refusals(p: dict) -> dict:
     return out
 
 
+#: The framework of record, read for one property: which indicators are `frontier: true`.
+#: A module global read at call time, the repo's convention for paths a test redirects.
+RECORD = REPO / "framework" / "ai_readiness_framework.json"
+
+#: The two cell marks a matrix row can carry (`marks`, `{leg: mark}`). A marked cell keeps its
+#: verdict and its Finding; the mark says the cell enters no score
+#: (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decisions 1 and 2).
+FRONTIER_MARK = "frontier"
+
+
+def frontier_legs(record: dict | None = None) -> dict:
+    """`{leg: {indicator, as_of}}` for every current leg whose indicator the record marks
+    `frontier: true`. design_decisions.md (the core/frontier firewall, "carried forward
+    unchanged") and spec:A9 ("reported, never scored"): a frontier leg is on the matrix with its
+    verdicts and is marked, so a reader of the file alone can tell it from a scored column
+    (DN-012 d4). Read from the record and the rule ids, never from a list kept here."""
+    from scan import rules
+    g = record if record is not None else json.loads(RECORD.read_text(encoding="utf-8"))
+    front = {n["properties"]["code"]: n for n in g["nodes"]
+             if "AssessmentIndicator" in n["labels"] and n["properties"].get("frontier")}
+    out = {}
+    for leg, rid in rules.CURRENT.items():
+        code = rules.parse_rule_id(rid)["indicator_code"]
+        if code in front:
+            out[leg] = {"indicator": front[code]["id"],
+                        "as_of": front[code]["properties"].get("as_of")}
+    return out
+
+
+def mark_rows(rows: list, legs: list, kind: str, parent: dict, hf: frozenset,
+              frontier: dict) -> None:
+    """Give every row its `marks`. Frontier is a property of the column, so every row of a
+    matrix carrying a frontier leg marks it; parent-host is a property of the cell, so it is
+    marked only where the row's surface is on the body's parent host (`parent_host.py`). A cell
+    with both would mean two reasons for one exclusion and is refused, not resolved."""
+    import parent_host
+    for r in rows:
+        url = r.get("host_url") if kind == "host" else r.get("url")
+        m = {leg: FRONTIER_MARK for leg in legs if leg in frontier}
+        for leg, mk in parent_host.marks_for_row(r["agency"], url, legs, parent, hf).items():
+            if leg in m:
+                raise SystemExit(f"FATAL: {r['agency']} {leg} is both {m[leg]!r} and {mk!r}")
+            m[leg] = mk
+        r["marks"] = {leg: m[leg] for leg in legs if leg in m}
+
+
+def published_unmarked(cycle: str) -> bool:
+    """True when this cycle's host matrix is already published WITHOUT cell marks. A rebuild of
+    a published matrix reproduces the published file (`tests/test_rejudge_seven_legs.py`), so
+    such a cycle is built as it was published, as `FIELD_LEGS` keeps an earlier cycle's columns;
+    `scripts/score.py` derives the marks for it with the same function instead. A cycle not yet
+    published, or published with marks, is marked. Read from `OUT_DIR` at call time."""
+    path = OUT_DIR / f"scan_matrix_tierA_{cycle_results.cycle_suffix(cycle)}.json"
+    if not path.exists():
+        return False
+    rows = json.loads(path.read_text(encoding="utf-8")).get("rows") or []
+    return bool(rows) and not any("marks" in r for r in rows)
+
+
 def rows_for(p: dict, tiers: dict, tier: str, kind: str) -> list:
     return sorted((r for r in p["matrix"]
                    if tiers.get(r["doc_id"], "A") == tier and r["surface_kind"] == kind),
@@ -368,11 +427,15 @@ def write_pair(stem: str, header: dict, rows: list, legs: list, kind: str) -> tu
     jpath, cpath = OUT_DIR / f"{stem}.json", OUT_DIR / f"{stem}.csv"
     jpath.write_text(json.dumps({**header, "legs": legs, "rows": rows}, indent=1) + "\n",
                      encoding="utf-8")
+    # `marks` is a column only of a matrix that carries them (`published_unmarked`): an
+    # earlier cycle's CSV rebuilds as it was published.
+    mk = ["marks"] if any("marks" in r for r in rows) else []
     if kind == "host":
         cols = (["agency", "tier", "host_surface", "host_url", "candidate_surface"] + legs
-                + ["refused_identified_client", "probes_on_host_surface", "finding_ids"])
+                + ["refused_identified_client", "probes_on_host_surface"] + mk
+                + ["finding_ids"])
     else:
-        cols = ["agency", "declared", "surface", "url"] + legs + ["finding_ids"]
+        cols = ["agency", "declared", "surface", "url"] + legs + mk + ["finding_ids"]
     with cpath.open("w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(cols)
@@ -384,7 +447,10 @@ def write_pair(stem: str, header: dict, rows: list, legs: list, kind: str) -> tu
             # about nothing.
             fids = " ".join(f"{l}={r['finding_ids'][l]}" for l in legs
                             if r["finding_ids"].get(l))
-            w.writerow([fids if c == "finding_ids"
+            # The cell marks ride the same way, `leg=mark` pairs in one column, so a CSV reader
+            # sees which cells enter no score without the JSON beside it.
+            marks = " ".join(f"{l}={m}" for l, m in (r.get("marks") or {}).items())
+            w.writerow([fids if c == "finding_ids" else marks if c == "marks"
                         else r["verdicts"][c] if c in legs
                         else r.get(c) for c in cols])
     return jpath, cpath
@@ -444,6 +510,20 @@ def rules_fragment(p: dict) -> str:
     return "\n".join(out) + "\n"
 
 
+def parent_host_fragment(c: dict) -> str:
+    """Which bodies lost which cells to their parent organization's host, and why, generated
+    from the roster (`parent_host.py`) and the cycle's own marks. DN-012 d5 orders the report to
+    say it; a sentence typed into the section would be the first to go stale."""
+    ph = c["parent_host"]
+    out = ["| Body | Host | Whose host | Cells marked `parent_host` on this cycle | "
+           "Why the roster says so |", "|---|---|---|---|---|"]
+    for b in ph["bodies"]:
+        cells = ", ".join(f"{leg} ({n})" if n > 1 else leg for leg, n in b["cells"].items())
+        out.append(f"| {b['body']} | `{b['host']}` | {b['answers_for']} | "
+                   f"{cells or 'none judged'} | {'; '.join(b['signals'])} |")
+    return "\n".join(out) + "\n"
+
+
 def requests_fragment(p: dict) -> str:
     """Requests issued per netloc, counted at the socket, from the cycle's own counter."""
     per = p.get("requests_per_host") or {}
@@ -488,6 +568,30 @@ def compute(cycle: str, params: dict | None = None) -> dict:
     product = product_matrix(p, tiers, plegs)
     declared = sum(1 for r in product if r["declared"])
     declared_agencies = len({r["agency"] for r in product if r["declared"]})
+
+    # DN-012 d4 and d5: frontier columns and parent-host cells are marked on the rows. The
+    # verdicts and the per-leg counts below are untouched: a matrix rate is a rate over hosts
+    # and surfaces, and the marks say only which cells enter no BODY's score (`score.py`).
+    import parent_host
+    parent_head, frontier_head = None, None
+    if not published_unmarked(cycle):
+        parent = parent_host.bodies(targets(params, p.get("targets") if is_spot else None))
+        hf, frontier = parent_host.host_file_legs(), frontier_legs()
+        mark_rows(tier_a, tier0, "host", parent, hf, frontier)
+        mark_rows(tier_c, tier0, "host", {}, hf, frontier)
+        mark_rows(product, plegs, "product", parent, hf, frontier)
+        marked: dict = {}
+        for r in tier_a + product:
+            for leg, mk in r["marks"].items():
+                if mk == parent_host.MARK and r["verdicts"].get(leg) not in (None,
+                                                                            "not declared"):
+                    marked.setdefault(r["agency"], {}).setdefault(leg, 0)
+                    marked[r["agency"]][leg] += 1
+        parent_head = {"decision": parent_host.DECISION, "task": parent_host.TASK,
+                       "legs": parent_host.ordered(hf),
+                       "bodies": parent_host.statement(parent, marked)}
+        frontier_head = [{"leg": l, **frontier[l], "decision": "DN-012 d4"}
+                         for l in plegs if l in frontier]
 
     host_counts = leg_counts(tier_a, tier0)
     # A body leg is counted once per BODY, not once per declared surface: an agency with two
@@ -630,6 +734,7 @@ def compute(cycle: str, params: dict | None = None) -> dict:
             "params_hash": p["params_hash"], "tier0": tier0, "head": head,
             "product_head": product_head, "product_legs": plegs,
             "tier_a": tier_a, "tier_c": tier_c, "product": product,
+            "parent_host": parent_head, "legs_frontier": frontier_head,
             "declared": declared, "declared_agencies": declared_agencies,
             "host_counts": host_counts, "product_counts": prod_counts,
             "tierc_counts": tierc_counts, "surface_disagreements": dis,
@@ -657,7 +762,9 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
     try:
         suffix, head, tier0, p = c["suffix"], c["head"], c["tier0"], c["payload"]
         files = [
-            write_pair(f"scan_matrix_tierA_{suffix}", {**head, "tier": "A"},
+            write_pair(f"scan_matrix_tierA_{suffix}",
+                       {**head, "tier": "A",
+                        **({"parent_host": c["parent_host"]} if c["parent_host"] else {})},
                        c["tier_a"], tier0, "host"),
             write_pair(f"scan_matrix_tierC_{suffix}",
                        {**head, "tier": "C",
@@ -669,6 +776,8 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
                        {**c["product_head"], "tier": "A", "partial": True,
                         "declared_agencies": c["declared_agencies"],
                         "declared_surfaces": c["declared"],
+                        **({"legs_frontier": c["legs_frontier"],
+                            "parent_host": c["parent_host"]} if c["parent_host"] else {}),
                         "note": ("PARTIAL. Product-level legs over DECLARED flagship surfaces "
                                  "only. An agency with no declared flagship carries `not "
                                  "declared`, which is neither a fail nor an omission.")},
@@ -681,8 +790,13 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
                    write_fragment("matrix_product", c["product"], c["product_legs"],
                                   "product")]
         gen_dir.mkdir(parents=True, exist_ok=True)
+        # An unmarked cycle (`published_unmarked`) has no parent-host fragment, as it had none
+        # when it was published; the report's include of it then fails at build, loudly
+        # (`build_l0_report.expand_includes`), which is where a snapshot without marks belongs.
         for stem, text in (("rules_by_leg", rules_fragment(p)),
-                           ("requests_per_netloc", requests_fragment(evidence_payload(p)))):
+                           ("requests_per_netloc", requests_fragment(evidence_payload(p))),
+                           *((("parent_host", parent_host_fragment(c)),)
+                             if c["parent_host"] else ())):
             path = gen_dir / f"{stem}.md"
             path.write_text(text, encoding="utf-8")
             written.append(path)

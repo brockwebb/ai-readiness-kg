@@ -18,6 +18,153 @@
  "partial": true,
  "declared_agencies": 16,
  "declared_surfaces": 23,
+ "legs_frontier": [
+  {
+   "leg": "A9",
+   "indicator": "ind:A9",
+   "as_of": "2026-01",
+   "decision": "DN-012 d4"
+  }
+ ],
+ "parent_host": {
+  "decision": "DN-012 d5",
+  "task": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+  "legs": [
+   "A4",
+   "A5",
+   "A11-declared",
+   "D4",
+   "A12",
+   "B1",
+   "B4",
+   "D3",
+   "G4",
+   "D2"
+  ],
+  "bodies": [
+   {
+    "body": "DRSMSU",
+    "host": "www.federalreserve.gov",
+    "answers_for": "Board of Governors of the Federal Reserve System",
+    "signals": [
+     "the frame's home surface for the body is `https://www.federalreserve.gov/econres/rsmecs-staff.htm`, a section of `www.federalreserve.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NAHMSAPHIS",
+    "host": "www.aphis.usda.gov",
+    "answers_for": "Department of Agriculture",
+    "signals": [
+     "the frame's home surface for the body is `https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms`, a section of `www.aphis.usda.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NCHS",
+    "host": "www.cdc.gov",
+    "answers_for": "Centers for Disease Control and Prevention",
+    "signals": [
+     "the cycle-1 roster row carries `host_shared_with: Centers for Disease Control and Prevention` (assessment/harness/scan/targets.yaml)",
+     "the frame's home surface for the body is `https://www.cdc.gov/nchs/index.htm`, a section of `www.cdc.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   },
+   {
+    "body": "ORES",
+    "host": "www.ssa.gov",
+    "answers_for": "Social Security Administration",
+    "signals": [
+     "the .gov registry attributes `ssa.gov` to Social Security Administration, the roster's parent department, with no suborganization, and `www.ssa.gov` is that domain itself (state/fss_department_domains_2026-09.json)"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SAMHSACBHS",
+    "host": "www.samhsa.gov",
+    "answers_for": "Substance Abuse and Mental Health Services Administration",
+    "signals": [
+     "the frame's home surface for the body is `https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq`, a section of `www.samhsa.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SOI",
+    "host": "www.irs.gov",
+    "answers_for": "Internal Revenue Service",
+    "signals": [
+     "the frame's home surface for the body is `https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income`, a section of `www.irs.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   }
+  ]
+ },
  "legs": [
   "A1",
   "A2",
@@ -80,6 +227,9 @@
     "D2": "fnd_ec483b95e85efff43de58047",
     "D3": "fnd_3ec7a573668c600ffc91080e",
     "G4": "fnd_bd4c9df1fae057ab6a1299b9"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -124,6 +274,9 @@
     "D2": "fnd_768b2e9b6a7ab9486c8bdaf4",
     "D3": "fnd_055d157412cd0d951fae4def",
     "G4": "fnd_649703547b7f1d171498da1d"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -168,6 +321,9 @@
     "D2": "fnd_1b6bbd08506029c2b1c345fa",
     "D3": "fnd_90a9a1a152793921cbd17436",
     "G4": "fnd_ea3ee9448e09de0f3c6d3a49"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -212,6 +368,9 @@
     "D2": "fnd_a33359f22a7b0c668036ff0e",
     "D3": "fnd_2445c7c22eec00a001a228fb",
     "G4": "fnd_52175043ded1a96b9cf0d40f"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -256,6 +415,9 @@
     "D2": "fnd_587c86c00371646da81fb197",
     "D3": "fnd_8c4542609aee712cd40bb19f",
     "G4": "fnd_9e6e9a90557ad3ae9031ff09"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -300,6 +462,9 @@
     "D2": "fnd_ed35d04aff9d1f0a455d5eac",
     "D3": "fnd_73ae47c0d38b06d438286635",
     "G4": "fnd_a2a24dc9317a0ea779d07d27"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -344,6 +509,9 @@
     "D2": "fnd_09816b3b54c85fad35c17c65",
     "D3": "fnd_acaf9b5ad66154047e211315",
     "G4": "fnd_b0704a2560e99a54b124c9a1"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -388,6 +556,9 @@
     "D2": "fnd_49bfc82baef74f69b6da37bd",
     "D3": "fnd_6454062b724e9064b441c59f",
     "G4": "fnd_fc17966bf4aa2d41ee77955e"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -432,6 +603,15 @@
     "D2": "fnd_36d9926e54bea1294789a528",
     "D3": "fnd_2529a3e77477f9c2ad81a0e7",
     "G4": "fnd_67b6ca0b796ce8e76653d2c1"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -476,6 +656,9 @@
     "D2": "fnd_7d5a0b9036056419460c9f72",
     "D3": "fnd_6b41fe4d2517e5b506a9b5eb",
     "G4": "fnd_6c487da2a46ac3ec28b8f020"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -520,6 +703,9 @@
     "D2": "fnd_9cec87ab35cc5882df9a4dfe",
     "D3": "fnd_c840f93c5243de633b596f65",
     "G4": "fnd_adba831968d2c5bb9063a76d"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -564,6 +750,9 @@
     "D2": "fnd_b873d76d02873235030b1fa3",
     "D3": "fnd_4ebe2d41cfcb078897b9717b",
     "G4": "fnd_5d00ec42dd393a7fe5037e03"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -608,6 +797,15 @@
     "D2": "fnd_dcf7ad848e23ed2ff5a20a3d",
     "D3": "fnd_4ff9a215a3ede3f0348a2c21",
     "G4": "fnd_6801d8b8a253ee4029ecaf4d"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -652,6 +850,9 @@
     "D2": "fnd_bb02d859f6183f21e2336a08",
     "D3": "fnd_bf40e32588f32ab5e1369a50",
     "G4": "fnd_b40b6d55cb2e0a1a7418e91b"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -696,6 +897,9 @@
     "D2": "fnd_ed4421c7573207c4469e8bf5",
     "D3": "fnd_80715d8e5013947bce61632a",
     "G4": "fnd_2b93cb3f57cbc9c4c0662b4a"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -740,6 +944,9 @@
     "D2": "fnd_9cf7acf1b4b050942dfdc2d9",
     "D3": "fnd_12fcd7e6e92282e8905de8be",
     "G4": "fnd_796f840073a3d498be4108f0"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -784,6 +991,15 @@
     "D2": "fnd_8697fad20976319dc494f971",
     "D3": "fnd_99baca6a2e7d65a447e525ea",
     "G4": "fnd_138885b3c480a8cf14b19e07"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -828,6 +1044,15 @@
     "D2": "fnd_0e79d36bf09b3a945fcae98e",
     "D3": "fnd_4403af5892581d895119bf54",
     "G4": "fnd_d55281e0c8e2f1566c1c354e"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -872,6 +1097,9 @@
     "D2": "fnd_6c7c691adce78384b356def1",
     "D3": "fnd_55fef1e0a73c6b06db050444",
     "G4": "fnd_9be2e00e74613a024364211b"
+   },
+   "marks": {
+    "A9": "frontier"
    }
   },
   {
@@ -916,6 +1144,15 @@
     "D2": "fnd_df7a17f0be9e3d7c1fbd4729",
     "D3": "fnd_72be29b7343fa4b57acefe60",
     "G4": "fnd_dff0dc5687ec9dc1113c2f46"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -960,6 +1197,15 @@
     "D2": "fnd_30a615bc2098cb0452745f02",
     "D3": "fnd_d4648d966b3344754fd2b26d",
     "G4": "fnd_c44ebb4d88ff7380f9366c2a"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -1004,6 +1250,15 @@
     "D2": "fnd_e605bf97a7320e1342c028a8",
     "D3": "fnd_b7eefebb6929c186741c0a51",
     "G4": "fnd_0542b175f8166cbfb06d4dc0"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   },
   {
@@ -1048,6 +1303,15 @@
     "D2": "fnd_9fc251e28c9bab6bd6565b24",
     "D3": "fnd_0cee7b919e139c3d776f16ac",
     "G4": "fnd_5f6c2ff8f6e569915407f2a5"
+   },
+   "marks": {
+    "A9": "frontier",
+    "D4": "parent_host",
+    "B1": "parent_host",
+    "B4": "parent_host",
+    "D2": "parent_host",
+    "D3": "parent_host",
+    "G4": "parent_host"
    }
   }
  ]

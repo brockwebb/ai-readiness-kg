@@ -15,7 +15,7 @@
   "rules_built": 24,
   "specs_with_recorded_decision": 3,
   "candidate_indicators": 1,
-  "indicators_measured": 16,
+  "indicators_measured": 13,
   "actions": 60,
   "actions_on_candidate_indicators": 3,
   "tools": 13,
@@ -148,29 +148,45 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`w3c-dwbp-2017` (BP 12, use machine-readable standardized data formats: \"make data available in a machine-readable, standardized data format that is well suited to its intended or potential use\", implemented as \"CSV, XML, HDF5, JSON and RDF serialization syntaxes\" and tested by \"check if the data format conforms to a known machine-readable data format specification\"; and BP 14, provide data in multiple formats, the not-PDF-only half); `foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, amending 44 U.S.C. 3502: paragraph 18 defines machine-readable as \"data in a format that can be easily processed by a computer without human intervention while ensuring no semantic meaning is lost\", and paragraph 20 requires an open Government data asset to be machine-readable and available in an open format); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 5, attributes generally required for public data assets, i. Machine-Readable: \"agencies must make each of their public data assets machine-readable\", with the worked example that tabular data \"should not provide this data as a scanned image or image-based PDF document, but rather should provide that public data asset in an appropriate format e.g. in a character-delimited format such as a CSV file\"); the Commerce GenAI-Open-Data guidance named in this cell's earlier gap is still acquisition_blocked, batch-017, and is not what any of the three above stands in for",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "A1"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A1"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "A1"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -197,29 +213,45 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "A",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "A2"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A2'] = RULE-A2-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A2"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "A2"
+     ],
+     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -250,25 +282,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A3"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 4,
      "counts": {
       "pass": 4,
-      "fail": 19,
+      "fail": 0,
       "not_applicable": 0,
-      "error": 3
+      "error": 19
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A3"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 4,
+       "fail": 19,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -299,25 +349,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A4"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
      "qualifying_findings": 23,
      "counts": {
-      "pass": 19,
-      "fail": 4,
+      "pass": 22,
+      "fail": 1,
       "not_applicable": 0,
-      "error": 3
+      "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A4"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 19,
+       "fail": 4,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -348,25 +416,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A5"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 21,
      "counts": {
-      "pass": 2,
-      "fail": 21,
+      "pass": 3,
+      "fail": 18,
       "not_applicable": 0,
-      "error": 3
+      "error": 2
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A5"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 2,
+       "fail": 21,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -397,25 +483,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A6"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 22,
      "counts": {
       "pass": 0,
-      "fail": 23,
+      "fail": 22,
       "not_applicable": 0,
-      "error": 3
+      "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A6"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -480,25 +584,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A8"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 22,
      "counts": {
       "pass": 0,
-      "fail": 23,
+      "fail": 22,
       "not_applicable": 0,
-      "error": 3
+      "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A8"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -525,31 +647,47 @@
     "tier_raw": "`public`",
     "status": "draft; frontier_deep track, as_of 2026-01",
     "evidence_raw": "`wilkinson-2016-fair-guiding-principles`; internal existence proof: fss-policy-kg (MCP server)",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A",
     "frontier": true,
     "as_of": "2026-01",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "A9"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A9"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "A9"
+     ],
+     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -580,25 +718,43 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A10"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 19,
      "counts": {
-      "pass": 16,
-      "fail": 7,
+      "pass": 13,
+      "fail": 6,
       "not_applicable": 0,
-      "error": 3
+      "error": 4
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A10"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 16,
+       "fail": 7,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -629,26 +785,44 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "A11-declared"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
      "qualifying_findings": 23,
      "counts": {
-      "pass": 19,
-      "fail": 4,
+      "pass": 22,
+      "fail": 1,
       "not_applicable": 0,
-      "error": 3
+      "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A11-declared'] = RULE-A11-declared-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A11-declared`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the DECLARED layer only (leg `A11-declared`). The enforced and observed layers need edge or WAF logs and crawler request logs, which spec `spec:A11-declared` places at `agency_instrumented`."
+    "tier_note": "The rule measures the DECLARED layer only (leg `A11-declared`). The enforced and observed layers need edge or WAF logs and crawler request logs, which spec `spec:A11-declared` places at `agency_instrumented`.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "A11-declared"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 19,
+       "fail": 4,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -683,7 +857,21 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B1'] = RULE-B1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured."
+    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "B1"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -710,7 +898,7 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`schema-org-definedterm`; `w3c-dcat-3`; internal: this KG's Definition layer",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant.",
@@ -718,7 +906,23 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
+    "measured_by": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "B2"
+     ],
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 22,
+     "counts": {
+      "pass": 0,
+      "fail": 22,
+      "not_applicable": 0,
+      "error": 1
+     },
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -749,25 +953,43 @@
     "gap": null,
     "criterion_code": "B",
     "measured_by": {
-     "cycle": "scan_2026-09-07",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "B3"
      ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 22,
      "counts": {
       "pass": 4,
-      "fail": 19,
+      "fail": 18,
       "not_applicable": 0,
-      "error": 3
+      "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B3'] = RULE-B3-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "B3"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 4,
+       "fail": 19,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ]
    }
   },
   {
@@ -802,7 +1024,21 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B4'] = RULE-B4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured."
+    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "B4"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -829,14 +1065,31 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": "**gap**",
     "criterion_code": "B",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`."
+    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`.",
+    "measured_by": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "B5"
+     ],
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 8,
+     "counts": {
+      "pass": 0,
+      "fail": 8,
+      "not_applicable": 0,
+      "error": 1
+     },
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+     "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
+    }
    }
   },
   {
@@ -1064,29 +1317,45 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "D",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "D1"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D1'] = RULE-D1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "D1"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "D1"
+     ],
+     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -1113,14 +1382,30 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": "**gap**",
     "criterion_code": "D",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's."
+    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's.",
+    "measured_by": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "D2"
+     ],
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 23,
+     "counts": {
+      "pass": 0,
+      "fail": 23,
+      "not_applicable": 0,
+      "error": 0
+     },
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -1155,7 +1440,21 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D3'] = RULE-D3-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured."
+    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "D3"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -1182,29 +1481,45 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, enacting 44 U.S.C. 3511: subsection a paragraph 1 requires each agency to \"develop and maintain a comprehensive data inventory that accounts for all data assets created by, collected by, under the control or direction of, or maintained by the agency\"; subsection a paragraph 3 requires that inventory updated \"not later than 90 days\" after a data asset is created or identified; subsection b requires public data assets be submitted \"for inclusion in the Federal data catalogue\"; subsection c paragraph 1 makes that catalogue \"a single public interface online as a point of entry\"); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii, public dissemination: agencies \"must submit their comprehensive data inventory to the Federal Data Catalog as a data asset\" and \"host it publicly on the agency's website at the address: www.agency.gov/data.json\", repeated at section 5b ii with the OMB-approved metadata schema); `dcat-us-1-1-schema` (that metadata schema, which states the listing requirement on its face: \"guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces as hosted at agency.gov/data\", and \"the catalog file for each agency should list all of the agency's datasets that can be made public, regardless of whether they are distributed by a file download or a Web API\"; its Catalog fields section describes \"the entire Public Data Listing catalog file\")",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "D",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "D4"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D4'] = RULE-D4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "D4"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "D4"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -1370,7 +1685,7 @@
     "gap": null,
     "criterion_code": "E",
     "not_measured_reason": {
-     "cycle": "scan_2026-09-09",
+     "cycle": "scan_2026-09-10_rj5",
      "legs": [
       "E5"
      ],
@@ -1381,7 +1696,7 @@
       "not_applicable": 0,
       "error": 0
      },
-     "recorded_by": "cc_tasks/2026-09-08_scan_run_3b.md"
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
@@ -1652,29 +1967,45 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`usafacts-ai-ready-data-guide`",
-    "measurement_status": "measured",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "F",
-    "measured_by": {
-     "cycle": "scan_2026-09-07",
-     "legs": [
-      "F4"
-     ],
-     "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
-     "qualifying_findings": 23,
-     "counts": {
-      "pass": 0,
-      "fail": 23,
-      "not_applicable": 0,
-      "error": 3
-     },
-     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['F4'] = RULE-F4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-07",
+      "legs": [
+       "F4"
+      ],
+      "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 3
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     }
+    ],
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "F4"
+     ],
+     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {
@@ -1782,7 +2113,24 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`)."
+    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`).",
+    "measured_by": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "G1-D"
+     ],
+     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "qualifying_findings": 22,
+     "counts": {
+      "pass": 3,
+      "fail": 19,
+      "not_applicable": 0,
+      "error": 1
+     },
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+     "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
+    }
    }
   },
   {
@@ -1908,7 +2256,21 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['G4'] = RULE-G4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured."
+    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
+    "not_measured_reason": {
+     "cycle": "scan_2026-09-10_rj5",
+     "legs": [
+      "G4"
+     ],
+     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "counts": {
+      "pass": 0,
+      "fail": 0,
+      "not_applicable": 0,
+      "error": 23
+     },
+     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+    }
    }
   },
   {

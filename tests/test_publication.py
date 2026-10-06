@@ -946,8 +946,9 @@ MATRIX_SOURCES = [("tierA", "tier_a", "tier0"), ("tierC", "tier_c", "tier0"),
 #: walking these in order; they are listed here so a leg column can be told from a metadata
 #: column without assuming the legs are a contiguous slice.
 CSV_META = {"host": ["agency", "tier", "host_surface", "host_url", "candidate_surface",
-                     "refused_identified_client", "probes_on_host_surface", "finding_ids"],
-            "product": ["agency", "declared", "surface", "url", "finding_ids"]}
+                     "refused_identified_client", "probes_on_host_surface", "marks",
+                     "finding_ids"],
+            "product": ["agency", "declared", "surface", "url", "marks", "finding_ids"]}
 
 
 def _matrix_csv_drift(jdoc: dict, csv_text: str) -> list:

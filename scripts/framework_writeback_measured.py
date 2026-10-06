@@ -23,6 +23,19 @@ An indicator that does NOT meet the bar keeps `harness_built` and the reason is 
 the node, because "why is A2 not measured" is the first question a reader of the progress page
 will have and the answer should not require re-deriving the cycle.
 
+**`measured` follows the cycle of record** (`cc_tasks/2026-10-06_scoring_frontier_parent_host_
+counts.md` decision 3, DN-012 d7, DD-069). A run re-derives every indicator with a current
+scan leg against the cycle it is given, the already-`measured` ones included, so `measured_by`
+on every scan-measured node names that cycle. One the cycle no longer earns returns to
+`harness_built` with the reason, and the `measured_by` it held moves to `measured_previously`:
+nothing about the earlier measurement is lost, and the record stops saying the instrument of
+record measures what its cycle of record could not observe. Two refinements, each recorded in
+DD-069: a body-scoped leg (`rules.BODY_LEGS`, B5) qualifies on its one Finding per body when
+the body has an admitted product surface, because that Finding sits on the body's synthetic
+well-known row by construction; and an indicator measured at product level (`measurement_level:
+product`, G1-D under DD-066) is read from product surfaces only. G1-O, which no scan leg
+measures (DD-036), is untouched, as DD-055 §6 says.
+
     /opt/anaconda3/bin/python3 scripts/framework_writeback_measured.py [--dry-run]
 """
 from __future__ import annotations
@@ -41,7 +54,7 @@ import framework_writeback as fw                                    # noqa: E402
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from scan import load_params                                        # noqa: E402
-from scan.rules import CANDIDATE_LEGS, CURRENT                     # noqa: E402
+from scan.rules import BODY_LEGS, CANDIDATE_LEGS, CURRENT          # noqa: E402
 
 #: Which cycle the write-back reads is `params.cycle.name`, never typed — the same single
 #: source `run.py`, `publish.py`, `scan_report.py` and `figures.py` read. A promotion to
@@ -56,24 +69,63 @@ SCRIPT = "scripts/framework_writeback_measured.py"
 TASK = "cc_tasks/2026-09-07_scan_run.md"
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 COUNTS_AS_MEASURED = ("pass", "fail", "not_applicable")
+#: The surface kinds a host-level withdrawal (DD-066) takes a leg off, read from the same place
+#: the instrument reads it (`params.tier0.legs_withdrawn`); a `measurement_level: product`
+#: indicator is measured on every other kind.
+HOST_LEVEL_KINDS_KEY = ("tier0", "legs_withdrawn")
 
 
 def cycle_name(override: str | None = None) -> str:
     return override or load_params()["cycle"]["name"]
 
 
-def evidence(payload: dict) -> dict:
-    """Per leg: what this cycle actually produced on admitted product surfaces."""
+def host_level_kinds(params: dict | None = None) -> set:
+    params = params or load_params()
+    out = set()
+    for w in (params.get(HOST_LEVEL_KINDS_KEY[0]) or {}).get(HOST_LEVEL_KINDS_KEY[1]) or []:
+        out |= set(w.get("from_surfaces") or [])
+    return out
+
+
+def evidence(payload: dict, product_only: frozenset = frozenset(),
+             host_kinds: set | None = None) -> dict:
+    """Per leg: what this cycle actually produced on admitted surfaces.
+
+    A body-scoped leg's Finding is on the body's well-known row (`rules.scope` = body), so it is
+    read there, for the bodies with at least one admitted surface. A leg in `product_only` is
+    read off host-level surface kinds. `unadmitted_qualifying` counts what the same leg produced
+    on surfaces NOT admitted, so a reason can say a qualifying Finding exists and why it does
+    not count (DD-055 exclusion 2), instead of reporting the leg as blind."""
+    host_kinds = host_level_kinds() if host_kinds is None else host_kinds
     rows = [r for r in payload["matrix"]
             if r["surface_kind"] != "well_known" and r.get("admitted")]
+    admitted_bodies = {r["agency"] for r in rows}
+    body_rows = [r for r in payload["matrix"]
+                 if r["surface_kind"] == "well_known" and r["agency"] in admitted_bodies]
+    unadmitted = [r for r in payload["matrix"]
+                  if r["surface_kind"] != "well_known" and not r.get("admitted")]
     out = {}
     for leg in CURRENT:
-        v = [r["verdicts"][leg] for r in rows if leg in r["verdicts"]]
+        src = body_rows if leg in BODY_LEGS else rows
+        if leg in product_only:
+            src = [r for r in src if r["surface_kind"] not in host_kinds]
+        v = [r["verdicts"][leg] for r in src if leg in r["verdicts"]]
         c = collections.Counter(v)
         out[leg] = {"counts": {k: c[k] for k in ("pass", "fail", "not_applicable", "error")},
                     "qualifying": sum(c[k] for k in COUNTS_AS_MEASURED),
-                    "surfaces": len(v)}
+                    "surfaces": len(v),
+                    "unadmitted_qualifying": sum(
+                        1 for r in unadmitted
+                        if r["verdicts"].get(leg) in COUNTS_AS_MEASURED)}
     return out
+
+
+def product_only_legs(g: dict) -> frozenset:
+    """Legs of indicators the record measures at product level (DD-066, G1-D)."""
+    codes = {n["properties"]["code"] for n in g["nodes"]
+             if "AssessmentIndicator" in n["labels"]
+             and n["properties"].get("measurement_level") == "product"}
+    return frozenset(l for l in CURRENT if l in codes)
 
 
 def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) -> dict:
@@ -86,7 +138,7 @@ def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) ->
     for s in specs:
         if s.get("leg"):
             leg_of[s["indicator_code"]].append(s["leg"])
-    promoted, held = [], []
+    promoted, held, demoted, repointed = [], [], [], []
     for n in g["nodes"]:
         if "AssessmentIndicator" not in n["labels"]:
             continue
@@ -105,9 +157,16 @@ def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) ->
                    key=lambda e: e["qualifying"], default=None)
         if best is None:
             continue
-        if p.get("measurement_status") == "measured":
-            continue                                  # G1-D/G1-O under DD-036; not re-derived
+        # DD-069: re-derived against THIS cycle whatever the node said before. A `measured_by`
+        # from another cycle is kept, as history, under `measured_previously`.
+        prior = p.get("measured_by")
+        if prior and prior.get("cycle") != cycle:
+            p.setdefault("measured_previously", []).append(prior)
         if best["qualifying"] > 0:
+            if p.get("measurement_status") != "measured":
+                promoted.append(code)
+            elif not prior or prior.get("cycle") != cycle:
+                repointed.append(code)
             p["measurement_status"] = "measured"
             p["measured_by"] = {
                 "cycle": cycle, "legs": legs, "params_hash": payload["params_hash"],
@@ -116,8 +175,19 @@ def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) ->
                                "observable surface in a cycle with fired controls; `error` "
                                "does not count"),
                 "recorded_by": task}
-            promoted.append(code)
+            if p.get("measurement_level") == "product":
+                p["measured_by"]["surfaces"] = ("product surfaces only: the host-level leg is "
+                                                "withdrawn (DD-066)")
+            if any(l in BODY_LEGS for l in legs):
+                p["measured_by"]["surfaces"] = (
+                    "the body's one Finding, on its well-known row, for bodies with an admitted "
+                    "product surface (DD-069)")
+            p.pop("not_measured_reason", None)
         else:
+            if p.get("measurement_status") == "measured":
+                p["measurement_status"] = "harness_built"
+                p.pop("measured_by", None)
+                demoted.append(code)
             # E5's subject is the CYCLE, not a surface, so §0's definition — which requires a
             # Finding "on an admitted, observable surface" — can never be satisfied by it.
             # That is a limitation of the definition, not a gap in the measurement: E5 fired
@@ -129,6 +199,10 @@ def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) ->
                        "apply to it. Its control Finding fired in this cycle and every "
                        "other; the status is a limitation of the definition, not a gap in "
                        "the measurement.")
+            elif best["counts"]["error"] and best["unadmitted_qualifying"]:
+                why = (f"every Finding on an admitted surface was `error`; the "
+                       f"{best['unadmitted_qualifying']} qualifying Finding(s) of this cycle are "
+                       f"on surfaces not admitted to the corpus, which DD-055 does not count")
             elif best["counts"]["error"]:
                 why = ("every Finding was `error` — the collector could not observe any "
                        "admitted surface")
@@ -141,7 +215,8 @@ def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) ->
     # on every write-back (`cc_tasks/2026-09-07_scan_hygiene.md` §3). `indicators_measured` is
     # candidate-excluded there for the reason it was here — DD-054.
     fw.apply_counts(g)
-    return {"promoted": sorted(promoted), "held": sorted(held),
+    return {"promoted": sorted(promoted), "held": sorted(held), "demoted": sorted(demoted),
+            "repointed": sorted(repointed),
             "indicators_measured": g["counts"]["indicators_measured"]}
 
 
@@ -159,7 +234,7 @@ def main(argv=None) -> int:
     cycle = cycle_name(a.cycle)
     payload = json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
-    out = writeback(g, payload, evidence(payload), cycle, a.task or TASK)
+    out = writeback(g, payload, evidence(payload, product_only_legs(g)), cycle, a.task or TASK)
     print(json.dumps({**out, "cycle": cycle}, indent=1))
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.

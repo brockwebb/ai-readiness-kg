@@ -74,6 +74,7 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
+| not_measured_reason | {"counts": {"error": 23, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "legs": ["G4"], "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count", "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['G4'] = RULE-G4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4` |

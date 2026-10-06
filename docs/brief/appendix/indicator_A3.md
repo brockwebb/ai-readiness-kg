@@ -67,6 +67,6 @@ No `REQUIRES` edge.
 
 | field | value |
 |---|---|
-| measured_by | {"counts": {"error": 3, "fail": 19, "not_applicable": 0, "pass": 4}, "cycle": "scan_2026-09-07", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["A3"], "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4", "qualifying_findings": 23, "recorded_by": "cc_tasks/2026-09-07_scan_run.md"} |
+| measured_by | {"counts": {"error": 19, "fail": 0, "not_applicable": 0, "pass": 4}, "cycle": "scan_2026-09-10_rj5", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["A3"], "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222", "qualifying_findings": 4, "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3` |

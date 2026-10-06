@@ -108,6 +108,16 @@ REASON_CLASS = (
     (r"an instrument this project has not specified", "no_standard", ""),
     (r"needs a different instrument", "no_standard", ""),
     (r"no admitted document names a machine-readable", "no_standard", ""),
+    # The measured write-back's reasons against the cycle of record (DD-069): the collector
+    # could not observe, or observed only surfaces the corpus has not admitted. Either is lifted
+    # by another run of this harness (the recollection DN-012 d6 commissions), which is the
+    # `second_cycle` kind and so `open_tooling` (REQ_KIND_CLASS), or by admitting the surface.
+    (r"every Finding on an admitted surface was `error`", "open_tooling",
+     "the record says every Finding on an admitted surface of the cycle of record was "
+     "`error`, and the qualifying ones are on surfaces not yet admitted"),
+    (r"every Finding was `error`", "open_tooling",
+     "the record says every Finding of the cycle of record was `error`: the collector could "
+     "not observe, and another cycle of this harness is what can"),
     (r"definition of `measured`", Q1_NOT_BLOCKED, ""),
     (r"no tool, account or record stands between it and a verdict", Q1_NOT_BLOCKED, ""),
 )

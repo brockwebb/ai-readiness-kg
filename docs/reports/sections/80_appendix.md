@@ -22,6 +22,21 @@ worker, no forms, no logins, no query-string fuzzing. Retries only on 429 and 50
 and is excluded from every denominator; it is never a product failure. `n.a.` means there was
 nothing of that kind to check. `not declared` means no product has been named.
 
+**Cells read from a parent organization's host.** Some statistical units publish on a host
+whose root belongs to an organization above them, so that host's `robots.txt`, `/data.json` and
+well-known files answer for that organization, and a verdict on them is not a finding about the
+unit. The machine-readable matrices keep those cells, with their verdicts and Findings, and mark
+them `parent_host` in each row's `marks`. The per-check rates in this report still count them,
+because those rates describe hosts and surfaces. The project's scores and ranks, which this
+report does not print, leave them out. The bodies, the cells and the roster's reason for each,
+generated from the roster:
+
+<!-- include: parent_host -->
+
+**Frontier checks.** The machine-first entry point check (A9) is a frontier mechanism, dated by
+its indicator. It is on the product matrix with its verdicts and is marked `frontier`; a
+frontier mechanism enters no score.
+
 **Intervals.** Wilson score intervals, computed by the project's own rollup module and
 registered per check. Wilson (1927) for the interval. Brown, Cai and DasGupta (2001) and
 Newcombe (1998) for why a score interval rather than a normal approximation at proportions near

@@ -11,7 +11,7 @@ Record node `ind:B5`. Every value below is a field of that node or of an edge or
 | access tier (`tier`) | agency_instrumented |
 | measurement tier | M |
 | measurement basis | harness_leg |
-| measurement status | harness_built |
+| measurement status | measured |
 | status | draft |
 | candidate (DD-054) | no |
 | current rule | B5: RULE-B5-v1 |
@@ -67,6 +67,7 @@ Evidence cell, verbatim:
 
 | field | value |
 |---|---|
+| measured_by | {"counts": {"error": 1, "fail": 8, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count", "legs": ["B5"], "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222", "qualifying_findings": 8, "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md", "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"} |
 | tier_note | The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5` |

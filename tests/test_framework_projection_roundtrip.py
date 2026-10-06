@@ -33,7 +33,11 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: because no cycle has judged them yet.
 #: 5 -> 8 `harness_built` with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`):
 #: B2, B5 and D2 gained a rule and a spec.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 16, "harness_built": 8, "specified": 25}
+#: `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3 (DD-069): the measured
+#: write-back re-derived every scan-measured indicator against `scan_2026-09-10_rj5`. B2, B5 and
+#: D2 were promoted; A1, A2, A9, D1, D4 and F4, whose every Finding there is `error`, returned
+#: to `harness_built`. Was 16 / 8 / 25.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 13, "harness_built": 11, "specified": 25}
 
 
 def _loader():
@@ -208,8 +212,13 @@ def test_the_measured_indicators_carry_their_cycle(graph):
         "MATCH (i:AssessmentIndicator) WHERE i.measured_cycle IS NOT NULL "
         "RETURN i.code AS code, i.measured_cycle AS cyc, i.measured_params_hash AS ph, "
         "i.measured_legs AS legs"))
-    assert len(rows) == 14, "14 of the 16 measured are from this cycle; G1-D/G1-O predate it"
+    # DD-069: every scan-measured indicator names the cycle of record. 12 of the 13 measured;
+    # G1-O has no scan leg (DD-036) and carries no `measured_by`.
+    assert len(rows) == 12, "12 of the 13 measured are the cycle of record's; G1-O is not a scan's"
+    import yaml
+    snap = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "reports"
+                           / "publication.yaml").read_text(encoding="utf-8"))["snapshot_cycle"]
     for r in rows:
-        assert r["cyc"] == "scan_2026-09-07"
+        assert r["cyc"] == snap
         assert isinstance(r["ph"], str) and len(r["ph"]) == 64
         assert r["legs"] and all(isinstance(x, str) for x in r["legs"])

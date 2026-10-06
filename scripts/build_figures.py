@@ -212,11 +212,12 @@ def compute() -> dict:
 
     # Indicators with a current rule: the rule id parses to the indicator's code.
     rule_codes = {R.parse_rule_id(rid)["indicator_code"] for rid in R.CURRENT.values()}
-    # Indicators judged on the cycle of record: at least one scored leg of theirs has a judged
-    # row for at least one body (score.py's coverage.indicators.measured, by its own rule).
-    judged_legs = {leg for b in r["bodies"].values() for leg, x in b["legs"].items()
-                   if x["judged"]}
-    judged_inds = {l["indicator_id"] for l in r["structure"] if l["leg"] in judged_legs}
+    # `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3 (audit C-07): the
+    # figure's "measured" is the RECORD's, so it is the number the progress page and the brief
+    # print, under the same name. Measured on the cycle of record: `measured_by.cycle` names it
+    # (the write-back re-derives every scan-measured node against that cycle, DD-069). Measured
+    # outside the scan: `measured` with no scan cycle behind it (G1-O, DD-036). score.py's own
+    # coverage is "scored", a different quantity under a different name.
 
     crit_rows = []
     for code in r["framework"]["criteria"]:
@@ -226,14 +227,20 @@ def compute() -> dict:
         states = {s: [] for s in STATES}
         for n in inds:
             p = n["properties"]
-            if n["id"] in judged_inds:
+            measured = p.get("measurement_status") == "measured"
+            if measured and (p.get("measured_by") or {}).get("cycle") == cycle:
                 s = "measured_cycle"
+            elif measured and not p.get("measured_by"):
+                s = "measured_eval"
+            elif measured:
+                raise SystemExit(f"FATAL: {n['id']} is `measured` by "
+                                 f"{p['measured_by'].get('cycle')!r}, not by the cycle of "
+                                 f"record {cycle!r}; run the measured write-back against it "
+                                 "(scripts/framework_writeback_measured.py --cycle)")
             elif p["code"] in rule_codes:
                 s = "rule_not_cycle"
             elif p.get("measurement_status") == SPECIFIED:
                 s = "specified"
-            elif p.get("measurement_status") == "measured":
-                s = "measured_eval"
             else:
                 raise SystemExit(f"FATAL: {n['id']} has no rule, is not judged on the cycle and "
                                  f"its measurement_status is {p.get('measurement_status')!r}; "
@@ -246,6 +253,12 @@ def compute() -> dict:
             "states": states,
         })
     total = sum(c["indicators"] for c in crit_rows)
+    measured_n = sum(len(c["states"][k]) for c in crit_rows
+                     for k in ("measured_cycle", "measured_eval"))
+    if measured_n != record["counts"]["indicators_measured"]:
+        raise SystemExit(f"FATAL: figure 1 counts {measured_n} measured indicators and the "
+                         f"record's counts.indicators_measured is "
+                         f"{record['counts']['indicators_measured']}; one name, one value")
     if total != r["framework"]["indicators"] or total != record["counts"]["indicators"]:
         raise SystemExit(f"FATAL: figure 1 counts {total} framework indicators; score.py says "
                          f"{r['framework']['indicators']} and the record's counts say "
@@ -295,6 +308,7 @@ def compute() -> dict:
         "framework_indicators": total,
         "rule_indicators": sum(c["rule"] for c in crit_rows),
         "measured_cycle": sum(len(c["states"]["measured_cycle"]) for c in crit_rows),
+        "measured": measured_n,
         "specified": sum(len(c["states"]["specified"]) for c in crit_rows),
         "documents": admitted_documents(),
         "rules": len(set(R.CURRENT.values())),
@@ -381,7 +395,7 @@ def fig1(d: dict, L: dict, led: Ledger):
             f"What was built on USAFacts' {led.n(len(d['usafacts']), 'USAFacts criteria named in the skeleton Frame line')} "
             f"criteria: {led.n(sum(c['kept'] for c in rows), 'criteria kept from USAFacts')} kept, "
             f"{led.n(sum(not c['kept'] for c in rows), 'criteria added')} added, "
-            f"{led.n(d['measured_cycle'], 'framework indicators judged on the cycle of record (score.py coverage.indicators.measured)')} "
+            f"{led.n(d['measured'], 'framework indicators measured (record counts.indicators_measured)')} "
             f"of {led.n(total, 'framework indicators (record counts.indicators; candidate A12 excluded, DD-054)')} "
             f"indicators measured",
             fontsize=F["title_pt"], fontweight="bold", color=P["ink"], va="top")
@@ -451,7 +465,7 @@ def fig1(d: dict, L: dict, led: Ledger):
             fontsize=F["box_pt"], fontweight="bold", color=P["ink"], ha="right", va="center")
     for xx, val, src in zip(nx, (d["rule_indicators"], d["measured_cycle"], d["specified"]),
                             ("framework indicators with a current rule",
-                             "framework indicators judged on the cycle of record (score.py coverage.indicators.measured)",
+                             "framework indicators measured on the cycle of record (record measured_by.cycle)",
                              "framework indicators specified only (record measurement_status)")):
         ax.text(xx, y + rh * 0.3, led.n(val, src), fontsize=F["box_pt"], fontweight="bold",
                 color=P["ink"], ha="center", va="center")
@@ -648,12 +662,13 @@ def fig3(d: dict, L: dict, led: Ledger):
 CAPTIONS = {
     FIG1: ("USAFacts' criteria and the framework built on them",
            "{kept} of USAFacts' four criteria are kept and {added} added, {n_ind} indicators "
-           "in all, of which {rule} have a current rule and {measured} are measured on the "
-           "cycle of record; {specified} are specified only.",
+           "in all, of which {rule} have a current rule and {measured} are measured, "
+           "{measured_cycle} of them on the cycle of record; {specified} are specified only.",
            ["CL-047", "CL-046", "CL-048", "CL-049", "CL-050"],
-           "The measured-on-cycle count is `scripts/score.py` coverage.indicators.measured; "
-           "no claim in the evidence map states it, and the record's own `measurement_status` "
-           "marks fewer measured (CL-049)."),
+           "The measured count is the record's `counts.indicators_measured` (DD-055), the "
+           "number the progress page and the brief print under the same name; measured on the "
+           "cycle of record is the record's `measured_by.cycle` (DD-069). `scripts/score.py` "
+           "calls what it scores \"indicators scored\", a different quantity."),
     FIG2: ("The system at a glance",
            "Documents become a framework of indicators, the indicators become rules, the rules "
            "scan {bodies} statistical agencies' public websites as a visitor with no login, and "
@@ -676,8 +691,8 @@ def caption(name: str, d: dict) -> str:
         "kept": sum(c["kept"] for c in d["criteria"]),
         "added": sum(not c["kept"] for c in d["criteria"]),
         "n_ind": d["framework_indicators"], "rule": d["rule_indicators"],
-        "measured": d["measured_cycle"], "specified": d["specified"],
-        "bodies": d["bodies"], "findings": f"{d['findings']:,}", "ranked": d["ranked"],
+        "measured": d["measured"], "measured_cycle": d["measured_cycle"],
+        "specified": d["specified"], "bodies": d["bodies"], "findings": f"{d['findings']:,}", "ranked": d["ranked"],
         "unranked": d["bodies"] - d["ranked"],
     }
     missing = [i for i in ids if i not in d["claim_ids"]]

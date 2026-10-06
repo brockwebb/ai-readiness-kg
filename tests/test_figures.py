@@ -103,7 +103,14 @@ def _independent_counts() -> dict:
         "framework_indicators": len(fw),
         "rule_indicators": sum(n["properties"]["code"] in rule_codes for n in fw),
         "specified": sum(n["properties"].get("measurement_status") == "specified" for n in fw),
-        "measured_cycle": r["coverage"]["indicators"]["measured"],
+        # `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3: figure 1's
+        # "measured" is the record's, and "on the cycle of record" is the record's
+        # `measured_by.cycle` (DD-069), counted here from the nodes rather than through the
+        # figure's own classification.
+        "measured_cycle": sum(n["properties"].get("measurement_status") == "measured"
+                              and (n["properties"].get("measured_by") or {}).get("cycle")
+                              == r["cycle"]["name"] for n in fw),
+        "measured": rec["counts"]["indicators_measured"],
         "documents": sum(v["screening"]["decision"] == "included" for v in man.values()),
         "rules": len(set(R.CURRENT.values())),
         "bodies": len(r["bodies"]),
@@ -117,13 +124,13 @@ def test_figure_counts_equal_an_independent_computation(rendered):
     ind = _independent_counts()
     assert {c["code"]: c["indicators"] for c in d["criteria"]} == ind["per_criterion"]
     for k in ("framework_indicators", "rule_indicators", "specified", "measured_cycle",
-              "documents", "rules", "bodies", "ranked"):
+              "measured", "documents", "rules", "bodies", "ranked"):
         assert d[k] == ind[k], f"{k}: figure says {d[k]}, independent count {ind[k]}"
     for c in d["criteria"]:
         assert sum(len(v) for v in c["states"].values()) == c["indicators"], c["code"]
     # The counts are on the figures, not only in `compute`.
     t1 = " ".join(t.get_text() for t in figs[BF.FIG1].axes[0].texts)
-    assert f"{ind['measured_cycle']} of {ind['framework_indicators']} indicators measured" in t1
+    assert f"{ind['measured']} of {ind['framework_indicators']} indicators measured" in t1
     t2 = " ".join(t.get_text() for t in figs[BF.FIG2].axes[0].texts)
     for k in ("documents", "rules", "bodies", "ranked", "framework_indicators"):
         assert re.search(rf"(?<![\d,]){ind[k]:,}(?![\d,])", t2), f"figure 2 lacks {k}"
@@ -168,5 +175,6 @@ def test_every_caption_claim_id_exists():
 def test_caption_is_rendered_from_the_figure_data(rendered):
     files, _, d = rendered
     cap = files[f"{BF.FIG1}.caption.md"].decode("utf-8")
-    assert f"{d['measured_cycle']} are measured on the cycle of record" in cap
+    assert (f"{d['measured']} are measured, {d['measured_cycle']} of them on the cycle of "
+            f"record") in cap
     assert "**What this shows.**" in cap

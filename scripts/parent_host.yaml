@@ -1,0 +1,26 @@
+# Parent-host cells: which legs read a file that answers for a whole HOST, and where the roster
+# that says whose host it is lives. Read by `scripts/parent_host.py`; nothing here is a list of
+# bodies. `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 2, DN-012 d5.
+
+# The legs whose collector reads a host-root file (`/robots.txt`, a sitemap the host declares,
+# `/data.json`), so a verdict on them is a verdict about whoever controls the host. Read from
+# the collector dispatch in `assessment/harness/scan/runner.py`: A4, A11-declared and A12 call
+# `robots.fetch`, A5 calls `sitemap.fetch` after the robots read, D4 calls
+# `dcat.fetch_catalog`. `tests/test_parent_host.py` re-derives this list from `runner.py` and
+# fails if a leg starts or stops reading a host file without this list moving.
+#
+# The legs that read nothing of their own and CONSUME one of these (D2 reads A4's robots.txt;
+# B1, B4, D3 and G4 read D4's catalog) are added at run time from each current rule's
+# `CONSUMES`, so they are not listed here and cannot drift from the rules.
+host_file_legs: [A4, A5, A11-declared, A12, D4]
+
+# Where the roster is. All three are the frame's own records; none was written for this.
+roster:
+  # The cycle-1 roster. Its NCHS row carries `host_shared_with`, the roster's own statement
+  # that the host answers for a parent organization.
+  cycle_one: assessment/harness/scan/targets.yaml
+  # The CISA .gov registry, retained and attributed per frame host by
+  # `cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-03.md`: who owns each host's registrable domain.
+  registry_attribution: state/fss_department_domains_2026-09.json
+  # The frame DataFile (`params.cycle.targets`) is read through `build_l0_matrices.targets`,
+  # so it is the same file the matrices are built from and is not named here.

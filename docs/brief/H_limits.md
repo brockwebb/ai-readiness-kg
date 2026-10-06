@@ -19,34 +19,36 @@ Measurement status of the framework's indicators (record `measurement_status`):
 
 | status | indicators |
 |---|---|
-| harness_built | 8 |
-| measured | 16 |
+| harness_built | 11 |
+| measured | 13 |
 | specified | 24 |
 
 ## Indicators the record does not mark measured, and why
 
-Every framework indicator whose record `measurement_status` is not `measured`, with its `requirement_none_reason` or `tier_unassigned_reason` where the record has one. The requirements that would unlock the rest are on each appendix sheet. The last column is read from the cycle of record's matrices instead of the record. Where it says `yes`, the record's `measurement_status` lags the cycle, which judges the leg anyway. That is a recorded discrepancy, and this page does not correct it.
+Every framework indicator whose record `measurement_status` is not `measured`, with its `not_measured_reason` (the measured write-back's, against the cycle of record), `requirement_none_reason` or `tier_unassigned_reason`, whichever the record has. The requirements that would unlock the rest are on each appendix sheet. The last column is read from the cycle of record's matrices instead of the record. Where it says `yes`, the matrices judge the leg and the record still does not count it measured, and the reason column says why (DD-055: only an admitted surface counts; DD-069: `measured` follows the cycle of record).
 
 | indicator | status | tier | reason (record) | judged on the cycle of record |
 |---|---|---|---|---|
+| A1 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
+| A2 | harness_built | M | every Finding was `error` — the collector could not observe any admitted surface | yes |
 | A7 | specified | O |  | no |
-| B1 | harness_built | M | The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds. | yes |
-| B2 | harness_built | M | The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant. | yes |
-| B4 | harness_built | M | The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant. | yes |
-| B5 | harness_built | M |  | yes |
+| A9 | harness_built | M | every Finding was `error` — the collector could not observe any admitted surface | yes |
+| B1 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
+| B4 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
 | B6 | specified | unassigned | cc_tasks/2026-09-17_unassigned_indicators.md decision 4: the G1 precedent does not carry it. G1's act is a preservation score — a pinned consumer restates a captured surface and the restatement is scored for what it kept (DD-036 §2). B6 asks two different questions about the surface itself: whether the summary is plain language, a readability property of the text and not of a restatement, and whether it is current, a freshness comparison against the product's own modified date. Neither is a preservation score, so B6 needs a different instrument and stays unassigned. The 'current' half is the closer of the two to a structured-field test: DCAT-US 3 `modified` on the dataset against the summary page's own date. | no |
 | C1 | specified | M |  | no |
 | C2 | specified | M |  | no |
 | C3 | specified | M |  | no |
 | C4 | specified | M |  | no |
 | C5 | specified | O |  | no |
-| D2 | harness_built | M |  | yes |
-| D3 | harness_built | M | Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's. | yes |
+| D1 | harness_built | M | every Finding was `error` — the collector could not observe any admitted surface | yes |
+| D3 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
+| D4 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
 | E1 | specified | M |  | no |
 | E2 | specified | D |  | no |
 | E3 | specified | M |  | no |
 | E4 | specified | D |  | no |
-| E5 | harness_built | M |  | no |
+| E5 | harness_built | M | E5 judges the CYCLE, not a surface, so DD-055's definition of `measured` — a Finding on an admitted, observable surface — cannot apply to it. Its control Finding fired in this cycle and every other; the status is a limitation of the definition, not a gap in the measurement. | no |
 | E6 | specified | M |  | no |
 | E7 | specified | D |  | no |
 | E8 | specified | M |  | no |
@@ -54,11 +56,12 @@ Every framework indicator whose record `measurement_status` is not `measured`, w
 | F1 | specified | D |  | no |
 | F2 | specified | O |  | no |
 | F3 | specified | O |  | no |
+| F4 | harness_built | M | every Finding was `error` — the collector could not observe any admitted surface | yes |
 | F5 | specified | D |  | no |
 | F6 | specified | O |  | no |
 | G2 | specified | M |  | no |
 | G3 | specified | unassigned | cc_tasks/2026-09-17_unassigned_indicators.md decision 5: a corpus document names the artifact the crosswalk would be, and no collector reads it. corpus/kernel/sdmx-3-0-section-1-framework.pdf (doc_id `sdmx-3-0-section-1-framework`) defines the Structure Map — "Structure maps describes a mapping between data structure definitions or dataflows for the purpose of transforming a data set into a different structure" — and the representation maps that map value and code lists. No collector in docs/design/scan_tool_map.md §1 reads SDMX, so decision 2's second half fails and the tier stays undetermined. Candidate: M, harness_leg, once an SDMX collector exists; the stable-series-ID half would be DCAT-US 3 `previousVersion` and `hasCurrentVersion` through `dcat.fetch_catalog`. | no |
-| G4 | harness_built | M | The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant. | yes |
+| G4 | harness_built | M | every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count | yes |
 | G5 | specified | unassigned | cc_tasks/2026-09-17_unassigned_indicators.md decision 2: no admitted document names a machine-readable suppression or disclosure field. The search that failed: `suppress`, `confidential` and `disclosure` across corpus/kernel, corpus/crosswalk and corpus/components — the only hit is bing-webmaster-guidelines, on search-result suppression — and across the SDMX 3.0 §1 and DDI codebook texts. The indicator's own source, `usafacts-ai-ready-data-guide`, asks publishers to "Properly identify and document suppressed data (e.g., in very small counties) in plain language with unique identifiers": plain language is the prose this indicator says it strengthens, and the field that would replace it does not exist in any admitted document. Stays unassigned. | no |
 | G6 | specified | M |  | no |
 
@@ -66,25 +69,46 @@ Every framework indicator whose record `measurement_status` is not `measured`, w
 
 9 of 49 evidence cells carry a pinpoint locator (page C). ResearchTask `93d28c6e` holds the rest, and it is not scheduled.
 
+## Cells read from a parent organization's host
+
+6 bodies publish on a host whose robots.txt, data.json inventory and well-known files answer for an organization above the statistical unit. Their cells on the legs that read those files, and on the legs that consume them, are kept on the matrices, marked `parent_host`, and left out of the unit's score and rank (DN-012 d5): a verdict on a parent's file is not a finding about the unit. The roster says which bodies, and why; nothing below is typed. Legs: `A4`, `A5`, `A11-declared`, `D4`, `A12`, `B1`, `B4`, `D3`, `G4`, `D2`.
+
+| body | host | whose host | cells marked (count) | why (roster) |
+|---|---|---|---|---|
+| DRSMSU | `www.federalreserve.gov` | Board of Governors of the Federal Reserve System | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (1), B1 (1), B4 (1), D2 (1), D3 (1), G4 (1) | the frame's home surface for the body is `https://www.federalreserve.gov/econres/rsmecs-staff.htm`, a section of `www.federalreserve.gov` rather than its root |
+| NAHMSAPHIS | `www.aphis.usda.gov` | Department of Agriculture | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (1), B1 (1), B4 (1), D2 (1), D3 (1), G4 (1) | the frame's home surface for the body is `https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms`, a section of `www.aphis.usda.gov` rather than its root |
+| NCHS | `www.cdc.gov` | Centers for Disease Control and Prevention | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (2), B1 (2), B4 (2), D2 (2), D3 (2), G4 (2) | the cycle-1 roster row carries `host_shared_with: Centers for Disease Control and Prevention` (assessment/harness/scan/targets.yaml); the frame's home surface for the body is `https://www.cdc.gov/nchs/index.htm`, a section of `www.cdc.gov` rather than its root |
+| ORES | `www.ssa.gov` | Social Security Administration | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (1), B1 (1), B4 (1), D2 (1), D3 (1), G4 (1) | the .gov registry attributes `ssa.gov` to Social Security Administration, the roster's parent department, with no suborganization, and `www.ssa.gov` is that domain itself (state/fss_department_domains_2026-09.json) |
+| SAMHSACBHS | `www.samhsa.gov` | Substance Abuse and Mental Health Services Administration | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (1), B1 (1), B4 (1), D2 (1), D3 (1), G4 (1) | the frame's home surface for the body is `https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq`, a section of `www.samhsa.gov` rather than its root |
+| SOI | `www.irs.gov` | Internal Revenue Service | A4 (1), A5 (1), A11-declared (1), A12 (1), D4 (2), B1 (2), B4 (2), D2 (2), D3 (2), G4 (2) | the frame's home surface for the body is `https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income`, a section of `www.irs.gov` rather than its root |
+
+Bodies with no scorable leg left are unranked, never ranked last (`score.py` `unranked_reason`):
+
+| body | why unranked |
+|---|---|
+| BLS | no scored leg has a judged (pass or fail) row; its rows on scored legs are 20 error |
+| BTS | no scored leg has a judged (pass or fail) row; its rows on scored legs are 20 error |
+| ORES | no scored leg has a judged (pass or fail) row; its rows on scored legs are 11 error, 9 parent_host; the parent_host rows are read from `www.ssa.gov`, which answers for Social Security Administration (DN-012 d5), and on the matrix they are 9 error |
+
 ## Equal weights, and the ranks that rest on one pass
 
-Both scoring schemes weight equally because this project has no basis for other weights (`docs/design/scoring_model.md`). The OECD/JRC Handbook notes that equal weighting is itself a weighting, not the absence of one, and that it "could also disguise the absence of a statistical or an empirical basis" (`§1.6, printed p. 31`; `docs/evidence/claims.yaml`, `CL-083`). With equal weights and sparse passes, 3 of the 13 ranked bodies rest on one pass (`DRSMSU`, `EIA`, `NCES`): reversing that one verdict would drop the body's rank. The concentration sentence for every scored body:
+Both scoring schemes weight equally because this project has no basis for other weights (`docs/design/scoring_model.md`). The OECD/JRC Handbook notes that equal weighting is itself a weighting, not the absence of one, and that it "could also disguise the absence of a statistical or an empirical basis" (`§1.6, printed p. 31`; `docs/evidence/claims.yaml`, `CL-083`). With equal weights and sparse passes, 9 of the 13 ranked bodies rest on one pass (`BJS`, `DRSMSU`, `EIA`, `ERS`, `NAHMSAPHIS`, `NASS`, `NCES`, `SAMHSACBHS`, `SOI`): reversing that one verdict would drop the body's rank. The concentration sentence for every scored body:
 
 | body | leg | sentence (score.py) |
 |---|---|---|
 | BEA | D2 | BEA ranks 4 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
-| BJS | D2 | BJS ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
+| BJS | A10 | BJS ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
 | CENSUS | D2 | CENSUS ranks 5 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
-| DRSMSU | G4 | DRSMSU ranks 2 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on G4; were that leg's verdicts reversed it would rank 5. |
+| DRSMSU | A10 | DRSMSU ranks 1 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 2. |
 | EIA | A10 | EIA ranks 1 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 2. |
-| ERS | D2 | ERS ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
-| NAHMSAPHIS | D2 | NAHMSAPHIS ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 1 judged row on D2; were that leg's verdicts reversed it would rank 1. |
-| NASS | D2 | NASS ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
+| ERS | A10 | ERS ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
+| NAHMSAPHIS | A10 | NAHMSAPHIS ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
+| NASS | A10 | NASS ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
 | NCES | A10 | NCES ranks 6 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 12. |
-| NCHS | D2 | NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 3. |
+| NCHS | A10 | NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is A10: 0 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 5. |
 | NCSES | D2 | NCSES ranks 3 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 1 judged row on D2; were that leg's verdicts reversed it would rank 1. |
-| SAMHSACBHS | D2 | SAMHSACBHS ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 1 judged row on D2; were that leg's verdicts reversed it would rank 1. |
-| SOI | D2 | SOI ranks 7 of 13 (hierarchical), and the leg that would move it most is D2: 0 pass of 2 judged rows on D2; were that leg's verdicts reversed it would rank 1. |
+| SAMHSACBHS | A10 | SAMHSACBHS ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
+| SOI | A10 | SOI ranks 7 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 13. |
 
 ## Roadmap items already on the graph
 

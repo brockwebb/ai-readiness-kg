@@ -1,6 +1,6 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj5` · version `2026-09-10_rj5` · released `2026-10-06`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
+**Version.** Snapshot cycle `scan_2026-09-10_rj5` · version `2026-09-10_rj5` · released `2026-10-06`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Corrected `2026-10-06`** (audit finding `C-13`, `docs/audit/2026-10-04_full_audit.md`; `cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md`). The method appendix did not say that some bodies publish on a host whose `robots.txt`, `/data.json` and well-known files answer for a parent organization. It now names those bodies, the cells read from that host and the roster's reason for each, generated from the roster, and says that the machine-readable matrices mark those cells `parent_host` and the frontier check `frontier`. No number, verdict or matrix cell moved. The text as published before this correction is kept unchanged at `reports/snapshots/2026-09_fss_ai_readiness_L0.faffa362.md` and `reports/snapshots/2026-09_fss_ai_readiness_L0.faffa362.pdf`. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
@@ -482,6 +482,28 @@ worker, no forms, no logins, no query-string fuzzing. Retries only on 429 and 50
 **Verdicts.** `pass` and `fail` are measurements. `error` means the collector could not observe
 and is excluded from every denominator; it is never a product failure. `n.a.` means there was
 nothing of that kind to check. `not declared` means no product has been named.
+
+**Cells read from a parent organization's host.** Some statistical units publish on a host
+whose root belongs to an organization above them, so that host's `robots.txt`, `/data.json` and
+well-known files answer for that organization, and a verdict on them is not a finding about the
+unit. The machine-readable matrices keep those cells, with their verdicts and Findings, and mark
+them `parent_host` in each row's `marks`. The per-check rates in this report still count them,
+because those rates describe hosts and surfaces. The project's scores and ranks, which this
+report does not print, leave them out. The bodies, the cells and the roster's reason for each,
+generated from the roster:
+
+| Body | Host | Whose host | Cells marked `parent_host` on this cycle | Why the roster says so |
+|---|---|---|---|---|
+| DRSMSU | `www.federalreserve.gov` | Board of Governors of the Federal Reserve System | A4, A5, A11-declared, A12, D4, B1, B4, D2, D3, G4 | the frame's home surface for the body is `https://www.federalreserve.gov/econres/rsmecs-staff.htm`, a section of `www.federalreserve.gov` rather than its root |
+| NAHMSAPHIS | `www.aphis.usda.gov` | Department of Agriculture | A4, A5, A11-declared, A12, D4, B1, B4, D2, D3, G4 | the frame's home surface for the body is `https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms`, a section of `www.aphis.usda.gov` rather than its root |
+| NCHS | `www.cdc.gov` | Centers for Disease Control and Prevention | A4, A5, A11-declared, A12, D4 (2), B1 (2), B4 (2), D2 (2), D3 (2), G4 (2) | the cycle-1 roster row carries `host_shared_with: Centers for Disease Control and Prevention` (assessment/harness/scan/targets.yaml); the frame's home surface for the body is `https://www.cdc.gov/nchs/index.htm`, a section of `www.cdc.gov` rather than its root |
+| ORES | `www.ssa.gov` | Social Security Administration | A4, A5, A11-declared, A12, D4, B1, B4, D2, D3, G4 | the .gov registry attributes `ssa.gov` to Social Security Administration, the roster's parent department, with no suborganization, and `www.ssa.gov` is that domain itself (state/fss_department_domains_2026-09.json) |
+| SAMHSACBHS | `www.samhsa.gov` | Substance Abuse and Mental Health Services Administration | A4, A5, A11-declared, A12, D4, B1, B4, D2, D3, G4 | the frame's home surface for the body is `https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq`, a section of `www.samhsa.gov` rather than its root |
+| SOI | `www.irs.gov` | Internal Revenue Service | A4, A5, A11-declared, A12, D4 (2), B1 (2), B4 (2), D2 (2), D3 (2), G4 (2) | the frame's home surface for the body is `https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income`, a section of `www.irs.gov` rather than its root |
+
+**Frontier checks.** The machine-first entry point check (A9) is a frontier mechanism, dated by
+its indicator. It is on the product matrix with its verdicts and is marked `frontier`; a
+frontier mechanism enters no score.
 
 **Intervals.** Wilson score intervals, computed by the project's own rollup module and
 registered per check. Wilson (1927) for the interval. Brown, Cai and DasGupta (2001) and

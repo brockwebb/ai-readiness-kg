@@ -26,12 +26,19 @@ WCAG conformance levels (a gating shape rather than an additive one) and OpenSSF
 
 **The model, in one paragraph.** The scored legs are the Tier M `harness_leg` indicators' legs
 (read from the record's `measurement_basis`, so a new rule enters by being tagged) that the
-cycle of record's matrices judge, minus the candidate legs (DD-054: reported, never counted).
+cycle of record's matrices judge, minus the candidate legs (DD-054: reported, never counted)
+and the frontier legs (`frontier: true` on the record; the core/frontier firewall, DN-012 d4).
 A body's score at a leg is its pass share over its judged rows; `error`, `not_applicable` and
-any other verdict are out of the denominator and counted separately. Indicator = mean of its
-legs; construct = mean of its measured indicators; criterion = mean of its measured
+any other verdict are out of the denominator and counted separately, and so is a cell the
+matrix marks `parent_host`, read from a parent organization's host (DN-012 d5). Indicator =
+mean of its legs; construct = mean of its measured indicators; criterion = mean of its measured
 constructs; body = mean of the criteria with at least one measured construct. Every score is
 printed with its coverage — measured of total at its level — or it is not printed.
+
+**Parent-host marks are the matrices'.** `scripts/build_l0_matrices.py` writes them, with the
+roster's reason, through `scripts/parent_host.py`. A matrix built before the marks existed
+carries none, and for it alone this script derives them with the same function, so the
+prior-cycle sensitivity variant excludes the same cells the cycle of record does.
 
 **The second half** (`cc_tasks/2026-09-18_scoring_levels.md`). Beside the hierarchical score, a
 FLAT one: every judged leg weighs 1/n. Neither scheme has a basis over the other, so both are
@@ -56,6 +63,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 import prescriptions as P  # noqa: E402  the record, the cycle, the matrices: one reader of each
+import parent_host as PH   # noqa: E402  which cells were read from a parent organization's host
 
 DOC = REPO / "docs" / "design" / "scoring_model.md"
 TASK = "cc_tasks/2026-09-18_scoring_model.md"
@@ -70,6 +78,12 @@ JUDGED = ("pass", "fail")
 
 #: The basis value that makes an indicator's leg a candidate for scoring (decision 1).
 HARNESS_BASIS = "harness_leg"
+
+#: The cell mark that keeps a verdict out of a body's score: read from a host that answers for
+#: an organization above the unit (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md`
+#: decision 2). It stands in a body's cells as if it were a verdict, so every denominator rule
+#: below already excludes it and counts it by name.
+PARENT_HOST = PH.MARK
 
 
 # ------------------------------------------------------------------ inputs
@@ -101,15 +115,51 @@ def bodies_on(cycle: str) -> list:
     return P.bodies(cycle)
 
 
-def cells(cycle: str) -> dict:
-    """`{body: {leg: {verdict: n}}}` over both matrices of the cycle."""
-    out: dict = {}
+def row_marks(m: dict, r: dict, parent: dict | None, hf: frozenset | None) -> dict:
+    """The row's cell marks: as the matrix carries them, or, for a matrix built before marks
+    existed, as the matrix builder would have written them, by the same function
+    (`parent_host.marks_for_row`). The prior-cycle sensitivity variant reads such a matrix, and
+    without this it would score cells the cycle of record does not, so a rank would move on a
+    change of what was scored rather than of what was measured."""
+    if "marks" in r:
+        return r["marks"]
+    url = r.get("host_url") if m["_kind"] != "product" else r.get("url")
+    return PH.marks_for_row(r["agency"], url, m["legs"], parent or {}, hf or frozenset())
+
+
+def _derivation(ms: list) -> tuple:
+    """The roster derivation, read only when some row of these matrices carries no marks."""
+    if any("marks" not in r for m in ms for r in _rows(m)):
+        return PH.bodies(), PH.host_file_legs()
+    return None, None
+
+
+def parent_hosts(cycle: str) -> dict:
+    """`{body: {host, answers_for}}`: the host matrix's own `parent_host` header, or, for a
+    matrix built without one, the derivation that would have written it."""
     for m in matrices(cycle):
+        if m["_kind"] != "product" and m.get("parent_host"):
+            return {b["body"]: {"host": b["host"], "answers_for": b["answers_for"]}
+                    for b in m["parent_host"]["bodies"]}
+    return {b: {"host": x["host"], "answers_for": PH.answers_for(x)}
+            for b, x in PH.bodies().items()}
+
+
+def cells(cycle: str) -> dict:
+    """`{body: {leg: {verdict: n}}}` over both matrices of the cycle. A `parent_host` cell is
+    counted under that name instead of its verdict, so it is kept and enters no score."""
+    out: dict = {}
+    ms = matrices(cycle)
+    parent, hf = _derivation(ms)
+    for m in ms:
         for r in _rows(m):
+            marks = row_marks(m, r, parent, hf)
             for leg in m["legs"]:
                 v = r["verdicts"].get(leg)
                 if v is None:
                     continue
+                if marks.get(leg) == PARENT_HOST:
+                    v = PARENT_HOST
                 c = out.setdefault(r["agency"], {}).setdefault(leg, {})
                 c[v] = c.get(v, 0) + 1
     return out
@@ -176,6 +226,14 @@ def structure(g: dict, cycle: str) -> list:
             if leg in rules.CANDIDATE_LEGS:
                 scored, why = False, ("candidate rule (DD-054): its Findings are reported and "
                                       "enter no framework numerator")
+            elif nodes[ind]["properties"].get("frontier"):
+                # DN-012 d4, audit C-06: the core/frontier firewall (design_decisions.md,
+                # "carried forward unchanged") and spec:A9 ("reported, never scored"). Excluded
+                # as a candidate is: structured, on the matrix with its verdicts, in no score.
+                scored, why = False, (
+                    f"frontier indicator (as_of "
+                    f"{nodes[ind]['properties'].get('as_of', 'undated')}): reported on the "
+                    f"matrix, marked `frontier`, never in a core score (DN-012 d4)")
             elif leg in withdrawn:
                 w = withdrawn[leg]
                 scored, why = False, (f"withdrawn by {w['decision']}, effective "
@@ -379,6 +437,46 @@ def flip_delta(body_cells: dict, leg: str, struct: list, criteria: list) -> floa
     return (after or 0.0) - (before or 0.0)
 
 
+def unranked_reason(s: dict, parent: dict | None, body: str,
+                    under: dict | None = None) -> str | None:
+    """Why a body has no score, from its own cells: never ranked last for having nothing
+    scorable (decision 2). `None` for a scored body. `parent` is `parent_hosts`'s shape and
+    `under` the verdicts beneath the body's `parent_host` marks."""
+    if s["score"] is not None:
+        return None
+    ex = s["excluded"]
+    if not ex:
+        return "no row on any scored leg"
+    parts = ", ".join(f"{n} {v}" for v, n in sorted(ex.items(), key=lambda kv: (-kv[1], kv[0])))
+    why = f"no scored leg has a judged (pass or fail) row; its rows on scored legs are {parts}"
+    b = (parent or {}).get(body)
+    if ex.get(PARENT_HOST) and b:
+        u = ", ".join(f"{n} {v}" for v, n in sorted((under or {}).items(),
+                                                    key=lambda kv: (-kv[1], kv[0])))
+        why += (f"; the {PARENT_HOST} rows are read from `{b['host']}`, which answers for "
+                f"{b['answers_for']} (DN-012 d5)"
+                + (f", and on the matrix they are {u}" if u else ""))
+    return why
+
+
+def _scored_under(body: str, cycle: str, struct: list) -> dict:
+    """The verdicts one body's parent-host cells on SCORED legs carry on the matrix, so an
+    unranked body's reason can say what is underneath the mark."""
+    scored = {l["leg"] for l in struct if l["scored"]}
+    out: dict = {}
+    ms = matrices(cycle)
+    parent, hf = _derivation(ms)
+    for m in ms:
+        for r in _rows(m):
+            if r["agency"] != body:
+                continue
+            for leg, mk in row_marks(m, r, parent, hf).items():
+                v = r["verdicts"].get(leg)
+                if mk == PARENT_HOST and leg in scored and v is not None:
+                    out[v] = out.get(v, 0) + 1
+    return out
+
+
 def ranks(scores: dict) -> dict:
     """Standard competition ranking ("1224"), higher score first; unscored bodies unranked."""
     s = {k: v for k, v in scores.items() if v is not None}
@@ -471,6 +569,7 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
     scored_legs = {l["leg"] for l in struct if l["scored"]}
     acts = [a for a in P.actions(g) if a["applies_to_publisher"] and a["leg"] in scored_legs]
     order = ladder_order(struct, crit)
+    parent = parent_hosts(cycle)
 
     bodies = {}
     for b in names:
@@ -479,8 +578,16 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
         s["cells"] = bc
         s["gating"] = gating(s, struct)
         s["ladder"] = ladder(bc, struct, order)
+        s["unranked_reason"] = unranked_reason(
+            s, parent, b, _scored_under(b, cycle, struct)
+            if s["score"] is None and s["excluded"].get(PARENT_HOST) else None)
+        s["parent_host"] = ({**parent[b], "legs": PH.ordered(
+            l for l, c in bc.items() if c.get(PARENT_HOST))} if b in parent else None)
         pres = []
-        for a in acts:
+        # An action withdrawn for a body that declares the field it names is not prescribed to
+        # it (`prescriptions.applicable`; `cc_tasks/2026-10-06_absence_verdicts_rules_RESULT.md`
+        # §5 premise 8 left this join to this script).
+        for a in P.applicable(acts, b):
             if bc.get(a["leg"], {}).get("fail", 0):
                 pres.append({"action": a["id"], "title": a["title"], "leg": a["leg"],
                              "outcome": a["outcome"], "effort": a["effort_band"],
@@ -595,9 +702,9 @@ def header(r: dict) -> list:
     return [f"# scoring model — cycle {r['cycle']['name']}, {r['cycle']['n_bodies']} bodies",
             f"# {COVERAGE_SENTENCE}",
             f"# coverage: bodies scored {_cov(c['bodies'])}; legs scored "
-            f"{_cov(c['legs_on_cycle'])} adopted harness legs; indicators measured "
+            f"{_cov(c['legs_on_cycle'])} adopted harness legs; indicators scored "
             f"{_cov(c['indicators'])} in the framework ({_cov(c['harness_leg_indicators'])} "
-            f"harness_leg); criteria measured {_cov(c['criteria'])}",
+            f"harness_leg); criteria scored {_cov(c['criteria'])}",
             "# two equal-weight schemes, no basis to prefer either: hierarchical (leg to "
             "criterion, OECD/JRC 2008 default) and flat (1/n per judged leg); readiness level "
             "is a cumulative ladder, never an average; `scripts/score.py --explain` for every step"]
@@ -636,10 +743,25 @@ def print_grid(r: dict) -> None:
           "ladder over criteria " + " < ".join(order_l) + " (`--explain`); 'unobservable at k' "
           "means no leg of the k-th failed but one errored or had no row, so the body is placed "
           "below k and never rounded up. legs/ind/con/crit: measured of total at that level for "
-          "the body; err: rows excluded from every denominator (error, not_applicable); "
+          "the body; err: rows excluded from every denominator (error, not_applicable, "
+          "parent_host); "
           "outright: legs whose every judged row passed, of legs judged; clear/legs: legs that "
           "passed outright with no error row, per criterion — the counts the level is read "
           "from.")
+    unr = [(b, v["unranked_reason"]) for b, v in sorted(r["bodies"].items())
+           if v.get("unranked_reason")]
+    if unr:
+        print("\nunranked, and why (a body with nothing scorable is never ranked last):")
+        for b, why in unr:
+            print(f"   {b}: {why}")
+    ph = [(b, v["parent_host"]) for b, v in sorted(r["bodies"].items()) if v.get("parent_host")]
+    if ph:
+        print(f"\n{PARENT_HOST}: cells read from a host that answers for a parent organization "
+              f"are kept on the matrices and enter no score (DN-012 d5, "
+              f"`scripts/parent_host.py`):")
+        for b, x in ph:
+            print(f"   {b}: `{x['host']}` answers for {x['answers_for']}; legs "
+                  f"{', '.join(x['legs']) or 'none judged'}")
     print_concentration(r)
 
 
@@ -668,6 +790,13 @@ def print_body(r: dict, name: str) -> int:
           f"{_cov(cv['criteria'])}; excluded rows {v['excluded'] or 'none'}")
     if v["concentration"]:
         print(v["concentration"]["sentence"])
+    if v.get("unranked_reason"):
+        print(f"unranked: {v['unranked_reason']}")
+    if v.get("parent_host"):
+        x = v["parent_host"]
+        print(f"{PARENT_HOST}: `{x['host']}` answers for {x['answers_for']}; its cells on "
+              f"{', '.join(x['legs']) or 'no judged leg'} are kept on the matrices and enter no "
+              f"score (DN-012 d5)")
     print()
     print(f"{'crit':<4}  {'construct':<58} {'leg':<13} {'pass/judged':>11} {'score':>6}")
     for l in r["structure"]:
@@ -786,15 +915,27 @@ STEPS = [
      "exists as a graph object (DN-005 §2.1) and the model adds no structure to it."),
     ("2. Data selection",
      "The legs of the Tier M `harness_leg` indicators (read from `measurement_basis`) that the "
-     "published matrices of the cycle of record judge. Candidate legs (DD-054), withdrawn legs "
-     "and legs on no published matrix are structured and not scored; the table below names "
-     "each with its reason.",
+     "published matrices of the cycle of record judge. Candidate legs (DD-054), frontier legs "
+     "(`frontier: true` on the record), withdrawn legs and legs on no published matrix are "
+     "structured and not scored; the table below names each with its reason. A cell read from "
+     "a host that answers for an organization above the statistical unit is kept on the "
+     "matrix, marked `parent_host`, and enters no score: the legs whose collector reads a "
+     "host-root file (`/robots.txt`, a declared sitemap, `/data.json`) and the legs that consume "
+     "them, on a surface whose host is the body's roster host, for a body the roster places on "
+     "its parent's host (`scripts/parent_host.py`, which derives the bodies from the roster and "
+     "names none; each matrix header lists them with the roster's reason).",
      "Only cold, re-derivable data enters (DN-005 §2.2 Tier M). Tier O and D indicators are "
-     "not scored, and every output says so."),
+     "not scored, and every output says so. A frontier mechanism is a dated hypothesis about "
+     "how machines orient and never enters a core score (the core/frontier firewall in "
+     "`docs/design_decisions.md`, DN-012 d4). A verdict on a parent organization's "
+     "`robots.txt` or inventory is not a finding about the unit (the roster's own words), so "
+     "a rank built on it is not the unit's (DN-012 d5)."),
     ("3. Imputation of missing data",
      "None. A leg with no judged row for a body is unmeasured for that body and leaves every "
-     "mean it would have entered; `error`, `not_applicable` and any other verdict are out of "
-     "the denominator and counted separately.",
+     "mean it would have entered; `error`, `not_applicable`, `parent_host` and any other "
+     "verdict are out of the denominator and counted separately. A body left with no judged "
+     "row on any scored leg has no score and no rank, and every output says why; it is never "
+     "ranked last.",
      "An imputed verdict is a verdict the instrument did not reach. Case deletion at the "
      "lowest level, with the count printed, is the option the Handbook lists that asserts "
      "nothing the data does not."),
@@ -890,12 +1031,18 @@ def explain(r: dict) -> str:
         f"| adopted harness legs scored (candidates excluded, DD-054) | "
         f"{c['legs_on_cycle']['measured']} | "
         f"{c['legs_on_cycle']['total']} |",
-        f"| indicators measured, of the framework | {c['indicators']['measured']} | "
+        f"| indicators scored, of the framework | {c['indicators']['measured']} | "
         f"{c['indicators']['total']} |",
-        f"| indicators measured, of `harness_leg` | {c['harness_leg_indicators']['measured']} | "
+        f"| indicators scored, of `harness_leg` | {c['harness_leg_indicators']['measured']} | "
         f"{c['harness_leg_indicators']['total']} |",
-        f"| criteria with a measured construct | {c['criteria']['measured']} | "
+        f"| criteria with a scored construct | {c['criteria']['measured']} | "
         f"{c['criteria']['total']} |",
+        "",
+        "An indicator is *scored* here when at least one of its scored legs has a judged row "
+        "for at least one body on this cycle. That is not the record's `measured` "
+        "(`measurement_status`, DD-055, which counts admitted surfaces and instruments other "
+        "than the scan); the two are different quantities and carry different names "
+        "(`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3).",
         f"| bodies scored | {c['bodies']['measured']} | {c['bodies']['total']} |",
         "",
         "## The steps, in the Handbook's order",
@@ -946,6 +1093,13 @@ def explain(r: dict) -> str:
               "promotion field for each candidate, quoted:", ""]
     for n in r["candidates"]:
         lines.append(f"- `{n['id']}`: \u201c{n['promotion']}\u201d")
+    lines += ["", "### Frontier indicators and the score", "",
+              "A frontier leg (DN-012 d4) enters no level and no score; it is on the product "
+              "matrix with its verdicts, marked `frontier` in each row's `marks` and listed in "
+              "the matrix's `legs_frontier`. The record's frontier indicators:", ""]
+    for l in r["structure"]:
+        if "DN-012 d4" in l["reason"]:
+            lines.append(f"- `{l['indicator_id']}`, leg `{l['leg']}`: {l['reason']}.")
     lines += ["", "## Re-deriving a score", "",
               "`scripts/score.py --json` prints, for every body, the verdict counts per leg "
               "(`cells`) beside every score computed from them. `tests/test_score.py` "

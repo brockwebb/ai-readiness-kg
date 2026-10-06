@@ -85,15 +85,18 @@ def _rank_if_reversed(score, r: dict, body: str, leg: str) -> int:
     return 1 + sum(1 for w in others if w > new)
 
 
-def test_drsmsu_is_first_on_g4s_single_pass(scored):
-    """The case the decision was written for (`2026-09-18_rejudge_seven_legs_RESULT.md` §4)."""
+def test_drsmsu_no_longer_ranks_on_its_parents_g4_pass(scored):
+    """The case the concentration decision was written for (`2026-09-18_rejudge_seven_legs_
+    RESULT.md` §4): DRSMSU first on one G4 pass. That pass is a cell of the Federal Reserve's
+    data.json, read from a host that answers for the Board, and DN-012 d5 takes such cells out of
+    the unit's score (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 2).
+    The cell is kept, marked, and no longer decides the rank; this was `assert v["rank"] == 1`
+    on G4 before that decision."""
     v = scored["bodies"]["DRSMSU"]
-    assert v["rank"] == 1
-    c = v["concentration"]
-    assert c["leg"] == "G4"
-    assert (c["pass"], c["judged"]) == (1, 1)
-    assert c["rank_if_reversed"] > 1
-    assert "G4" in c["sentence"] and "one pass" in c["sentence"]
+    assert v["cells"]["G4"] == {"parent_host": 1}
+    assert v["legs"]["G4"]["judged"] == 0
+    assert v["rank"] != 1
+    assert v["concentration"]["leg"] != "G4"
 
 
 def test_every_ranked_body_has_the_leg_that_moves_its_rank_most(score, scored):

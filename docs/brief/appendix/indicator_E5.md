@@ -65,7 +65,7 @@ No leg of this indicator is a column of the cycle of record's matrices.
 
 | field | value |
 |---|---|
-| not_measured_reason | {"counts": {"error": 0, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-09", "legs": ["E5"], "reason": "E5 judges the CYCLE, not a surface, so DD-055's definition of `measured` — a Finding on an admitted, observable surface — cannot apply to it. Its control Finding fired in this cycle and every other; the status is a limitation of the definition, not a gap in the measurement.", "recorded_by": "cc_tasks/2026-09-08_scan_run_3b.md"} |
+| not_measured_reason | {"counts": {"error": 0, "fail": 0, "not_applicable": 0, "pass": 0}, "cycle": "scan_2026-09-10_rj5", "legs": ["E5"], "reason": "E5 judges the CYCLE, not a surface, so DD-055's definition of `measured` — a Finding on an admitted, observable surface — cannot apply to it. Its control Finding fired in this cycle and every other; the status is a limitation of the definition, not a gap in the measurement.", "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"} |
 | tier_note | The rule judges this instrument's own cycle (its control fixtures), not a publisher's; `not_measured_reason` on this node says why that is not `measured`. |
 | tier_rule | cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1 |
 | tier_source | rules.CURRENT['E5'] = RULE-E5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:E5` |
