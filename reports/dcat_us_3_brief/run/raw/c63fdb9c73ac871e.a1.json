@@ -1,0 +1,23 @@
+{
+ "unit_id": "c63fdb9c73ac871e",
+ "kind": "full_read",
+ "question_id": 308,
+ "attempt": 1,
+ "model_id": "claude-sonnet-5",
+ "prompt": "You are reading part of the public record of the federal statistical side, to find out whether it asks for one statistical need. The record is: the Federal Committee on Statistical Methodology (FCSM) papers, the FAIRness Project's wiki and conference slides (a project of the federal Chief Data Officers Council with FCSM), and the Chief Data Officers Council's data sharing report. Read every one of the 4 numbered passages below.\n\nTHE NEED: restricted-access terms: whether a dataset can be used only under conditions, and how to apply for access.\n\nA passage ASKS for the need when it shows FCSM, the FAIRness Project or the Chief Data Officers Council recommending, calling for, requiring or proposing this need: for metadata, for catalogs, or for what is reported to data users. A passage does not ask when it uses the same word for a different thing (a \"dimension\" of data quality is not a statistical dimension; a software \"version\" is not a data revision; access to a system or a building is not a condition on using a dataset).\n\nRULES\n1. Use ONLY the passages below.\n2. When in doubt, include the passage. Every passage you return is checked afterwards against its text; a passage you leave out is never looked at again.\n3. For each passage that asks, return its id; a quote of at most 40 words copied exactly, character for character, from that passage, carrying the ask; and one plain sentence of at most 30 words that names the document and says what it asks for. Do not mention passage ids in the sentence. Do not use the em dash character.\n4. If no passage asks, return an empty list.\n\nReturn ONLY a JSON object, with no prose before or after it and no code fence:\n{\"asks\": [{\"id\": \"E1\", \"quote\": \"...\", \"sentence\": \"...\"}]}\n\nPASSAGES\n[E280] FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality | FCSM | 2025-05 | passage 35 | passage\nOMB Statistical Policy Directive 4 and 44 USC 3563(1)(a) instructs agencies to strive for the widest, most accessible, and appropriate dissemination of its statistical products. In the age of AI assistants, this translates into making sure AI systems can find the appropriate data and use the data correctly . By carefully implementing improvements to metadata and APIs and benchmarking against the domains of the FCSM Framework, agencies can improve the data consumed through generative AI.\n\n[E281] FCSM 20-04: A Framework for Data Quality | FCSM | 2020-09 | passage 420 | recommendation (as extracted)\n'Private information about individual persons (including bodies corporate) compiled in the production of official statistics is confidential and should be used for statistical purposes only.'\n\n[E282] FCSM 20-04: A Framework for Data Quality | FCSM | 2020-09 | passage 505 | permission (as extracted)\nagencies may choose to use disclosure avoidance techniques or establish special user access provisions as highlighted under accessibility.\n\n[E283] FCSM 20-04: A Framework for Data Quality | FCSM | 2020-09 | passage 648 | recommendation (as extracted)\nany changes made to data files to ensure confidentiality and any impacts on inference should be described.\n",
+ "response_text": "{\"asks\": [{\"id\": \"E282\", \"quote\": \"agencies may choose to use disclosure avoidance techniques or establish special user access provisions as highlighted under accessibility.\", \"sentence\": \"The FCSM Framework for Data Quality notes agencies may establish special user access provisions for datasets under accessibility.\"}]}",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 1373,
+  "cacheReadInputTokens": 123609,
+  "cacheCreationInputTokens": 26597,
+  "webSearchRequests": 0,
+  "costUSD": 0.14485180000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1155,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

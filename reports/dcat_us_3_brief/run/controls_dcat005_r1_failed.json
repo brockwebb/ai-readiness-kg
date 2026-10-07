@@ -1,0 +1,183 @@
+{
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T15:47:53.810114+00:00",
+ "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+ "instrument": {
+  "revision": "r3",
+  "template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+  "rubric_version": "v1.3.0",
+  "panel": [
+   "primary_judge_model_id",
+   "secondary_judge_model_id"
+  ],
+  "aggregation": "keep only if every judge keeps"
+ },
+ "faq_item5_control": {
+  "passed": true,
+  "unit_ids": [
+   "7a62696c69339d69",
+   "b26b6ebf71787961"
+  ],
+  "tokens": 119968,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E6 states the base DCAT AP may in future be extended with additional roles (the surrounding text names these 'agent roles') useful across domains, and the question names a statistical application profile as an option.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "Passage supports the claim, but it describes future extension of agent roles in StatDCAT-AP, not a statistical application profile as a next-step option for DCAT-US.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "kept",
+    "got": "kept",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E21 (the Data.gov overview) supports programmatic JSON Schema 2020-12 validation and E56 (the 2025-05-04 Candidate Recommendation Snapshot) supports the profile being defined using SHACL, both bearing on conformance checking.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "Both cited passages directly support the JSON Schema and SHACL conformance-checking claims, and this squarely answers the conformance-checking example in the question.",
+      "cut_reason": null
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E19 verbatim supports the claim, but it is a background definition of what DCAT-US v3.0 is, not an answer to what options exist for next steps.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The sentence is accurately drawn from E19 but is a background description of what DCAT-US is, not an option for next steps.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   }
+  ],
+  "passed_strict": true,
+  "gate": "item 5 text: every plant expected cut is cut, every plant expected kept is kept"
+ },
+ "brief_control": {
+  "passed": false,
+  "unit_ids": [
+   "a73a7de2cbd0e41f",
+   "1cdacb4b1e044c8c"
+  ],
+  "tokens": 115774,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "kept",
+    "got": "cut_unsupported",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E15 states hasQualityMeasurement is Optional on the page as served 2026-10-05, and E19 describes QualityMeasurement as a quantifiable quality value with accuracy as an example metric.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "flag",
+      "responsive": "yes",
+      "reason": "E19 ties the 'accuracy' example to the Metric class, not to hasQualityMeasurement/QualityMeasurement itself, so pairing 'accuracy' with hasQualityMeasurement overstates what the cited passages say about that property.",
+      "cut_reason": "flag: relation_unlicensed"
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E32 supports the spatial-resolution-in-meters claim, but spatial resolution is not the uncertainty (margin of error / CI) the question asks how to carry.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The quote matches E32 exactly, but spatial resolution (meters) is not the uncertainty/margin-of-error concept Question 4 asks about.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_unsupported",
+    "got": "cut_unsupported",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 discusses accuracy, reliability, standard errors and precision measures but says nothing about requiring a margin of error in every federal dataset's catalog record.",
+      "cut_reason": "fail: surface_form_absent"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 only describes accuracy/reliability concepts descriptively and says nothing about a mandatory catalog-record requirement for every federal dataset or margin of error specifically.",
+      "cut_reason": "fail: surface_form_absent"
+     }
+    ]
+   }
+  ]
+ }
+}

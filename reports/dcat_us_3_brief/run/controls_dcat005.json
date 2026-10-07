@@ -1,0 +1,183 @@
+{
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T15:51:49.166126+00:00",
+ "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+ "instrument": {
+  "revision": "r3",
+  "template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+  "rubric_version": "v1.3.0",
+  "panel": [
+   "primary_judge_model_id",
+   "secondary_judge_model_id"
+  ],
+  "aggregation": "keep only if every judge keeps"
+ },
+ "faq_item5_control": {
+  "passed": true,
+  "unit_ids": [
+   "7a62696c69339d69",
+   "b26b6ebf71787961"
+  ],
+  "tokens": 119968,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E6 states the base DCAT AP may in future be extended with additional roles (the surrounding text names these 'agent roles') useful across domains, and the question names a statistical application profile as an option.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "Passage supports the claim, but it describes future extension of agent roles in StatDCAT-AP, not a statistical application profile as a next-step option for DCAT-US.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "kept",
+    "got": "kept",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E21 (the Data.gov overview) supports programmatic JSON Schema 2020-12 validation and E56 (the 2025-05-04 Candidate Recommendation Snapshot) supports the profile being defined using SHACL, both bearing on conformance checking.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "Both cited passages directly support the JSON Schema and SHACL conformance-checking claims, and this squarely answers the conformance-checking example in the question.",
+      "cut_reason": null
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E19 verbatim supports the claim, but it is a background definition of what DCAT-US v3.0 is, not an answer to what options exist for next steps.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The sentence is accurately drawn from E19 but is a background description of what DCAT-US is, not an option for next steps.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   }
+  ],
+  "passed_strict": true,
+  "gate": "item 5 text: every plant expected cut is cut, every plant expected kept is kept"
+ },
+ "brief_control": {
+  "passed": true,
+  "unit_ids": [
+   "948151b23534a0f7",
+   "721c10d8041cb05f"
+  ],
+  "tokens": 225421,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "kept",
+    "got": "kept",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E17 (page as served 2026-10-05) lists hasQualityMeasurement as Optional with accuracy as an example, and E15 confirms the 2026-10-05 Optional level.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E17 confirms hasQualityMeasurement is Optional on the Dataset page as served 2026-10-05 and lists accuracy as an example quality measurement.",
+      "cut_reason": null
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E32 states verbatim that DCAT v3 spatial resolution's range is a number in meters, but spatial resolution is a different property than the uncertainty the question asks about.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E32 verbatim supports the spatial-resolution-in-meters claim, but this is a background definitional fact about a different property, not an answer about how uncertainty/margin-of-error is carried.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_unsupported",
+    "got": "cut_unsupported",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 describes accuracy and precision measures but states no requirement that catalog records include a margin of error, so the claimed obligation is absent from the cited passage.",
+      "cut_reason": "fail: surface_form_absent"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 describes accuracy/reliability concepts but states no requirement that every federal dataset's catalog record include a margin of error.",
+      "cut_reason": "fail: surface_form_absent"
+     }
+    ]
+   }
+  ]
+ }
+}

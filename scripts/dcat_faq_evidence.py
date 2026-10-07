@@ -867,6 +867,115 @@ def brief_main(only: int | None = None) -> int:
     return 0
 
 
+
+# ------------------------------------------------- the uncapped read of the asked record (DCAT-005)
+#
+# `cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md` decision 1, under DN-012 d1:
+# an absence claim is never reached over a partial search. DCAT-004 v2's absence checks for
+# needs 1, 6 and 8 dropped passages by cap; here every passage of the eight asked documents that
+# matches the need's `asked` terms is kept, and the reader is shown all of them across as many
+# calls as the per-call budget needs. Nothing is ranked and nothing is cut.
+
+FULL_READ_GENERATOR = "scripts/dcat_faq_evidence.py --brief --full-read"
+
+
+def full_read_evidence(need: dict, bcfg: dict, drv, meta: dict, substrate_dir: Path) -> dict:
+    """Every passage of the asked scope that matches the need's `asked` terms. The documents'
+    own text (converted web pages, PDF page text) is read whole; a graph passage (an extracted
+    node's grounding span, an fss-policy-kg segment or obligation) is read as well unless its
+    text is already inside a document-text passage (`kg.extraction.grounding.normalize`, the
+    repo's one verbatim rule), so no matched text is skipped and none is read twice. Exact
+    repeats of a passage's text are dropped and counted. `dropped_by_cap` is 0 by construction."""
+    from kg.extraction.grounding import normalize
+    sc = bcfg["scopes"]["asked"]
+    docs_a, docs_f = list(sc.get("airkg") or []), list(sc.get("fss") or [])
+    missing = sorted({d for d in docs_a + docs_f if d not in meta})
+    if missing:
+        raise SystemExit(f"FATAL: need {need['id']} full read: no document in either graph for {missing}")
+    terms = [str(t).lower() for t in need["asked"]]
+    text = substrate_passages(docs_a, terms, substrate_dir)
+    text += pdf_passages(docs_a, terms, substrate_dir, bcfg["pdf_passage_chars"])
+    graph = airkg_node_passages(drv, bcfg["graphs"]["airkg_database"], bcfg["graphs"]["airkg_labels"],
+                                docs_a, terms)
+    graph += fss_passages(drv, bcfg["graphs"]["fss_database"], docs_f, terms)
+    entries = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    no_text = [d for d in docs_a if not (substrate_dir / f"{d}.md").is_file()
+               and not str(((entries.get(d) or {}).get("identity") or {}).get("canonical_path") or "").endswith(".pdf")]
+    if no_text:
+        raise SystemExit(f"FATAL: need {need['id']} full read: no document text for {no_text}; the read "
+                         "would rest on grounding spans alone")
+    n_text, n_graph = len(text), len(graph)
+    covered, items, seen, repeats = 0, [], set(), 0
+    texts = [normalize(t["text"]) for t in text]
+    for it in graph:
+        span = normalize(it["text"])
+        if span.strip() and any(span in t for t in texts):
+            covered += 1
+            continue
+        text.append(it)
+    for it in text:
+        n = norm(it["text"]).lower()
+        if n in seen:
+            repeats += 1
+            continue
+        seen.add(n)
+        items.append({**it, "part": "asked", "terms_matched": matched_terms(it["text"], terms)})
+    for i, it in enumerate(items, 1):
+        it["id"] = f"E{i}"
+    # The per-call budget an R6 answer call is shown: its three parts' character caps together.
+    budget = sum(int(bcfg["caps"][p]["max_chars"]) for p in PARTS)
+    batches, cur, chars = [], [], 0
+    for it in items:
+        if cur and chars + len(it["text"]) > budget:
+            batches.append(cur)
+            cur, chars = [], 0
+        cur.append(it["id"])
+        chars += len(it["text"])
+    if cur:
+        batches.append(cur)
+    question = (f"Statistical need {need['id']}, {need['name']}: {need['plain']}. "
+                f"{PART_QUESTION['asked']}")
+    return {"question_id": need["id"], "need": need["name"], "question": question,
+            "purpose": "full read of the asked record", "generated_by": FULL_READ_GENERATOR,
+            "generated_at": _now(), "terms": terms,
+            "documents_searched": {"ai-readiness-kg": docs_a, "fss-policy-kg": docs_f},
+            "matched": n_text + n_graph, "matched_document_text": n_text, "matched_graph": n_graph,
+            "graph_passages_inside_document_text": covered, "exact_repeats": repeats,
+            "read": len(items), "dropped_by_cap": 0, "per_call_chars": budget, "batches": batches,
+            "documents": {d: meta[d] for d in sorted({it["doc_id"] for it in items}) if d in meta},
+            "items": items}
+
+
+def full_read_main(needs: list) -> int:
+    bcfg = yaml.safe_load(BRIEF_CONFIG.read_text(encoding="utf-8"))
+    substrate_dir = REPO / bcfg["graphs"]["substrate_dir"]
+    drv = driver()
+    summary = {}
+    try:
+        meta = doc_meta(drv, bcfg)
+        for nid in needs:
+            need = next(n for n in bcfg["needs"] if n["id"] == nid)
+            ev = full_read_evidence(need, bcfg, drv, meta, substrate_dir)
+            ev["evidence_sha256"] = evidence_sha(ev)
+            p = BRIEF_EVIDENCE_DIR / f"need_{nid}_full_read.json"
+            if p.is_file():
+                old = json.loads(p.read_text(encoding="utf-8"))
+                if old.get("evidence_sha256") != ev["evidence_sha256"]:
+                    raise SystemExit(f"FATAL: {p} exists with different evidence; evidence files are new "
+                                     "files only, never rewritten")
+                summary[nid] = {"file": p.relative_to(REPO).as_posix(), "unchanged": True}
+                continue
+            p.write_text(json.dumps(ev, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+            summary[nid] = {k: ev[k] for k in ("matched", "graph_passages_inside_document_text",
+                                               "exact_repeats", "read", "dropped_by_cap")}
+            summary[nid].update(batches=len(ev["batches"]), chars=sum(len(i["text"]) for i in ev["items"]),
+                                file=p.relative_to(REPO).as_posix())
+    finally:
+        drv.close()
+    print(json.dumps(summary, indent=1))
+    return 0
+
+
 def evidence_sha(ev: dict) -> str:
     """Content hash of what a model call is shown: the question and the items. Generation time
     is excluded, so a rebuild that finds the same evidence is the same unit."""
@@ -889,7 +998,15 @@ def main(argv=None) -> int:
     ap.add_argument("--brief", action="store_true",
                     help="the DCAT-US 3.0 brief's per-need evidence (DCAT-004 v2 decision 2); "
                          "writes reports/dcat_us_3_brief/evidence/ only")
+    ap.add_argument("--full-read", action="store_true",
+                    help="with --brief: the uncapped read of the asked record for the needs named "
+                         "in the DCAT-005 amendment (or --only); writes evidence/need_<n>_full_read.json")
     a = ap.parse_args(argv)
+    if a.brief and a.full_read:
+        bcfg = yaml.safe_load(BRIEF_CONFIG.read_text(encoding="utf-8"))
+        return full_read_main([a.only] if a.only else bcfg["amendment_2026_10_07_dcat005"]["full_read"]["needs"])
+    if a.full_read:
+        raise SystemExit("FATAL: --full-read is a mode of --brief")
     if a.brief:
         return brief_main(a.only)
     cfg = load_config()

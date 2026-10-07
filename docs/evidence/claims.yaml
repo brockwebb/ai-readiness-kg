@@ -4315,6 +4315,427 @@ claims:
     locator: reports/dcat_us_3_brief/answers.json#rows.7
   numbers: []
   source_task: cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md
+- id: CL-109
+  key: dcat_brief_v3.r6.need_1
+  supersedes: CL-099
+  question: DCAT-005 R6
+  text: 'Statistical need `1` (`series`) is in outcome B, asked for, and left Optional, deferred, dropped
+    or left out: asked `asked`, landed `dropped` as served `2026-10-05`, literature `carries_3_0_does_not`
+    (`DN-011-R6`).'
+  status: record
+  evidence:
+  - kind: document
+    id: fcsm-20-04-a-framework-for-data-quality
+    locator: events/batch-001.jsonl:33
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf, page 54, block
+      3'
+    quote: the time frames for which it is available, and the expected periodicity
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-20-04-a-framework-for-data-quality
+    locator: events/batch-001.jsonl:33
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf, page 55, block
+      1'
+    quote: the time frames for which it is available, and the expected periodicity
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-20-04-a-framework-for-data-quality
+    locator: events/batch-001.jsonl:33
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf, page 55, block
+      1'
+    quote: the time frames for which it is available, and the expected periodicity
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_20_04
+    locator: reports/dcat_us_3_brief/evidence/need_1_full_read.json#E35
+    where: 'fss-policy-kg: segment fcsm_20_04#s646'
+    quote: the expected periodicity of its production
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-20-04-a-framework-for-data-quality
+    locator: events/batch-001.jsonl:33
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf, page 38, block
+      6'
+    quote: annually publish the release dates for regular and recurring reports for the upcoming year
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-20-04-a-framework-for-data-quality
+    locator: events/batch-001.jsonl:33
+    where: 'ai-readiness-kg: node fcsm-20-04-a-framework-for-data-quality::s_spd_3_4, location fcsm-20-04-a-framework-for-data-quality#c0021'
+    quote: annually publish the release dates for regular and recurring reports for the upcoming year
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element inSeries'
+    quote: Not listed on the DCAT-US 3.0 Dataset page as served 2026-10-05
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-candidate-recommendation-snapshot
+    locator: events/batch-001.jsonl:118
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md, line
+      2374'
+    quote: Not listed on the DCAT-US 3.0 Dataset page as served 2026-10-05
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: w3c-dcat-3
+    locator: events/batch-006.jsonl:8
+    where: 'ai-readiness-kg: file state/substrate_md/w3c-dcat-3.md, line 2689'
+    quote: DCAT makes dataset series first class citizens of data catalogs by minting a new class `dcat:DatasetSeries`,
+      defined as a subclass of `dcat:Dataset`. The datasets are linked to the dataset series by using
+      the property `dcat:inSeries`.
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: document
+    id: w3c-dcat-3
+    locator: events/batch-006.jsonl:8
+    where: 'ai-readiness-kg: node w3c-dcat-3::d4, location w3c-dcat-3#c0015'
+    quote: DCAT makes dataset series first class citizens of data catalogs by minting a new class `dcat:DatasetSeries`,
+      defined as a subclass of `dcat:Dataset`. The datasets are linked to the dataset series by using
+      the property `dcat:inSeries`.
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element inSeries'
+    quote: DCAT makes dataset series first class citizens of data catalogs by minting a new class `dcat:DatasetSeries`,
+      defined as a subclass of `dcat:Dataset`. The datasets are linked to the dataset series by using
+      the property `dcat:inSeries`.
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.1
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+- id: CL-110
+  key: dcat_brief_v3.r6.need_4
+  supersedes: CL-102
+  question: DCAT-005 R6
+  text: 'Statistical need `4` (`uncertainty`) is in outcome B, asked for, and left Optional, deferred,
+    dropped or left out: asked `asked`, landed `optional` as served `2026-10-05`, literature `matches`
+    (`DN-011-R6`).'
+  status: record
+  evidence:
+  - kind: document
+    id: fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator: events/batch-001.jsonl:34
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf,
+      page 113, block 2'
+    quote: sampling and nonsampling errors need to
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator: events/batch-001.jsonl:34
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf,
+      page 24, block 2'
+    quote: sampling and nonsampling errors need to
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md, line 63'
+    quote: '| [hasQualityMeasurement](#hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement)
+      null or array of classes | Optional | List of quality measurements for the dataset (for example,
+      completeness, accuracy, or timeliness) beyond spatial '
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md, line 683'
+    quote: '| [hasQualityMeasurement](#hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement)
+      null or array of classes | Optional | List of quality measurements for the dataset (for example,
+      completeness, accuracy, or timeliness) beyond spatial '
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element hasQualityMeasurement'
+    quote: '| [hasQualityMeasurement](#hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement)
+      null or array of classes | Optional | List of quality measurements for the dataset (for example,
+      completeness, accuracy, or timeliness) beyond spatial '
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: w3c-dqv
+    locator: events/batch-001.jsonl:120
+    where: 'ai-readiness-kg: file state/substrate_md/w3c-dqv.md, line 104'
+    quote: dqv:hasQualityMeasurement :myDatasetPrecision, :myDatasetAccuracy .
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: document
+    id: w3c-dqv
+    locator: events/batch-001.jsonl:120
+    where: 'ai-readiness-kg: file state/substrate_md/w3c-dqv.md, line 1195'
+    quote: dqv:hasQualityMeasurement :myDatasetPrecision, :myDatasetAccuracy .
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: document
+    id: w3c-dqv
+    locator: events/batch-001.jsonl:120
+    where: 'ai-readiness-kg: file state/substrate_md/w3c-dqv.md, line 526'
+    quote: dqv:hasQualityMeasurement :myDatasetPrecision, :myDatasetAccuracy .
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element hasQualityMeasurement'
+    quote: dqv:hasQualityMeasurement :myDatasetPrecision, :myDatasetAccuracy .
+    note: 'literature (validated: pass, responsive yes)'
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.4
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+- id: CL-111
+  key: dcat_brief_v3.r6.need_6
+  supersedes: CL-104
+  question: DCAT-005 R6
+  text: 'Statistical need `6` (`revisions and versions`) is in outcome B or D, the letters its validated
+    answers leave open: asked `asked`, landed `optional` as served `2026-10-05`, literature not confirmed
+    (`DN-011-R6`).'
+  status: record
+  evidence:
+  - kind: document
+    id: fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator: events/batch-001.jsonl:34
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf,
+      page 113, block 2'
+    quote: "sampling and nonsampling errors need to \nbe measured and documented and revisions regularly\
+      \ \nanalyzed in order to improve statistical processes"
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-25-03
+    locator: events/batch-001.jsonl:1
+    where: 'ai-readiness-kg: file corpus/pilot/fcsm-25-03.pdf, page 5, block 1'
+    quote: it returns comprehensive metadata (descriptions of variables, units, update timestamps, etc.)
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_25_03
+    locator: reports/dcat_us_3_brief/evidence/need_6_full_read.json#E125
+    where: 'fss-policy-kg: segment fcsm_25_03#s39'
+    quote: comprehensive metadata (descriptions of variables, units, update timestamps, etc.)
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_25_03
+    locator: reports/dcat_us_3_brief/evidence/need_6_full_read.json#E125
+    where: 'fss-policy-kg: segment fcsm_25_03#s39'
+    quote: comprehensive metadata (descriptions of variables, units, update timestamps, etc.)
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element version'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element versionNotes'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element hasVersion'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element hasCurrentVersion'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element previousVersion'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element replaces'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md, line 64'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md, line 73'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md, line 90'
+    quote: '| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or
+      array of classes | Optional | List of related Datasets that are a version, edition, or adaptation
+      of the described Dataset |'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.6
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+- id: CL-112
+  key: dcat_brief_v3.r6.need_8
+  supersedes: CL-106
+  question: DCAT-005 R6
+  text: 'Statistical need `8` (`restricted-access terms`) is in outcome A or D, the letters its validated
+    answers leave open: asked `asked`, landed `recommended` as served `2026-10-05`, literature not confirmed
+    (`DN-011-R6`).'
+  status: record
+  evidence:
+  - kind: document
+    id: cdoc-dswg-findings-and-recommendations-2022
+    locator: events/batch-001.jsonl:125
+    where: 'ai-readiness-kg: file corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf, page
+      6, block 3'
+    quote: the need for an expedited data use agreement
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: cdoc-dswg-findings-and-recommendations-2022
+    locator: events/batch-001.jsonl:125
+    where: 'ai-readiness-kg: file corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf, page
+      6, block 3'
+    quote: establishment of data use agreements (DUAs) between the owner and/or data custodian and the
+      party
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator: events/batch-001.jsonl:34
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf,
+      page 113, block 7'
+    quote: 'which users can obtain data: where to go, how to order'
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm-23-02-a-framework-for-data-quality-case-studies
+    locator: events/batch-001.jsonl:32
+    where: 'ai-readiness-kg: file corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf,
+      page 45, block 1'
+    quote: from application to receipt
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_20_04
+    locator: reports/dcat_us_3_brief/evidence/need_8_full_read.json#E246
+    where: 'fss-policy-kg: segment fcsm_20_04#s475'
+    quote: Data users may gain access to restricted data through special arrangements, such as those provided
+      by Federal Statistical Research Data Centers-facilities for access to restricted-use micro data
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_20_04
+    locator: reports/dcat_us_3_brief/evidence/need_8_full_read.json#E281
+    where: 'fss-policy-kg: segment fcsm_20_04#s420, obligation fb824afbb34a425c91e80a95c3630262'
+    quote: compiled in the production of official statistics is confidential and should be used for statistical
+      purposes only
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: fcsm_20_04
+    locator: reports/dcat_us_3_brief/evidence/need_8_full_read.json#E282
+    where: 'fss-policy-kg: segment fcsm_20_04#s505, obligation d2352b984b5f4f5cb7f5c038256753cd'
+    quote: agencies may choose to use disclosure avoidance techniques or establish special user access
+      provisions as highlighted under accessibility
+    note: 'asked (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element accessRestriction'
+    quote: 'DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction)
+      **Requirement:** Recommended'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element useRestriction'
+    quote: 'DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction)
+      **Requirement:** Recommended'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element cuiRestriction'
+    quote: 'DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction)
+      **Requirement:** Recommended'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-overview-2026-10-05
+    locator: events/batch-001.jsonl:127
+    where: 'ai-readiness-kg: file state/substrate_md/dcat-us-3-overview-2026-10-05.md, line 109'
+    quote: 'DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction)
+      **Requirement:** Recommended'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    where: 'computed from ai-readiness-kg documents: element rights'
+    quote: 'DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction)
+      **Requirement:** Recommended'
+    note: 'landed (validated: pass, responsive yes)'
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.8
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+- id: CL-113
+  key: dcat_brief_v3.r7.findability
+  supersedes: CL-107
+  question: DCAT-005 R7
+  text: 'For statistical uses, whether DCAT-US `3.0` delivers findability is `not decided` by the `DN-011-R7`
+    rule as written (neither of its two clauses holds for every placement), computed by the `DN-011-R7`
+    rule from table rows `1`, `2`, `3` (outcomes `1`: B, `2`: D, `3`: B or C or D or E).'
+  status: record
+  evidence:
+  - kind: query
+    id: dcat_brief.r7
+    locator: reports/dcat_us_3_brief/run/corrections.json#verdict
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.1
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.2
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.3
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+- id: CL-114
+  key: dcat_brief_v3.r7.fitness_for_use
+  supersedes: CL-108
+  question: DCAT-005 R7
+  text: 'For statistical uses, whether DCAT-US `3.0` delivers fitness-for-use assessment is `not decided`
+    by the `DN-011-R7` rule as written (neither of its two clauses holds for every placement), computed
+    by the `DN-011-R7` rule from table rows `4`, `7` (outcomes `4`: B, `7`: D).'
+  status: record
+  evidence:
+  - kind: query
+    id: dcat_brief.r7
+    locator: reports/dcat_us_3_brief/run/corrections.json#verdict
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.4
+  - kind: query
+    id: dcat_brief.r6
+    locator: reports/dcat_us_3_brief/run/corrections.json#rows.7
+  numbers: []
+  source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
 tables:
   q1_measurement_boundary:
   - indicator: A2

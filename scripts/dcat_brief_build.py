@@ -17,6 +17,15 @@ writes under `reports/dcat_us_3_brief/`:
 * `build_report.json`: what the code added, the plain-language gate (lint, Flesch-Kincaid grade
   with its implementation named, each acronym with the line of its expansion), page count.
 
+**DCAT-005** (`cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md`): the rows and the
+yes-or-no are read from the overlay `run/corrections.json` (`scripts/dcat_brief_correct.py`),
+never from DCAT-004 v2's `answers.json` alone; R7 is applied as written, so an answer may be
+"not decided", printed with what would decide it (decision 2); section 5 states the void as the
+rule's limit, not as a finding (decision 3); every table cell that says what 3.0 carries cites a
+published page, the 2025 working draft is named as such, and the build refuses otherwise
+(decision 4); and the body is held to the amendment's word limit, also refused over it
+(decision 5).
+
 Citations are the FAQ's form (`scripts/dcat_faq_build.py` `citation`, `canonical`), one
 numbered list at the end. The lint is DCAT-003 ADDENDUM 01's (`scripts/dcat_faq_lint.py`) and
 refuses the build on any finding, before any file is written.
@@ -43,6 +52,10 @@ import dcat_faq_lint as LINT  # noqa: E402
 
 OUT = EV.BRIEF_OUT
 ANSWERS = OUT / "answers.json"
+CORRECTIONS = OUT / "run" / "corrections.json"
+#: The published Overview as served 2026-10-05, which names DCAT-US (DCAT-005 decision 4).
+OVERVIEW = "dcat-us-3-overview-2026-10-05"
+AMEND = "amendment_2026_10_07_dcat005"
 BRIEF_MD, BRIEF_PDF, ROWS_MD = OUT / "BRIEF.md", OUT / "BRIEF.pdf", OUT / "ROWS.md"
 BUILD_REPORT = OUT / "build_report.json"
 PREPARED = "7 October 2026"
@@ -86,6 +99,8 @@ LIT_WORD = {"matches": "{s} {v} it, and 3.0 does too",
             "carries_differently_than_asked": "{s} {v} it differently from the ask",
             "not_at_catalog_layer": "Belongs in the data or its documentation ({s})"}
 REPORT: dict = {"added_by_code": [], "cut_by_build": []}
+#: The working draft's source line (DCAT-005 decision 4). Set from the amendment in `main`.
+DRAFT_TITLE = "The 2025 working draft of DCAT-US Version 3 (Candidate Recommendation Snapshot, not the published 3.0)"
 
 
 def short(doc_id: str) -> str:
@@ -126,6 +141,9 @@ class Cites:
                     "date": FB._plain_date(rec.get("date")), "url": ""}
             else:
                 key, meta = FB.canonical(it, FB.DOCS, self.cfg)
+                if it["doc_id"] == EV.DRAFT:
+                    # DCAT-005 decision 4: cited only as the working draft, never as 3.0.
+                    meta = {**meta, "title": DRAFT_TITLE}
             if key not in self.refs:
                 self.refs[key], self.metas[key], self.secs[key] = len(self.refs) + 1, meta, []
             sec = it.get("section") or ""
@@ -133,7 +151,14 @@ class Cites:
                                                                          "catalog record (not admitted)"):
                 self.secs[key].append(sec)
             nums.append(self.refs[key])
+            if it["kind"] == "element table row":
+                # The level a row is read for is the page as served on 5 October 2026; that
+                # published page is cited beside the table (DCAT-005 decision 4).
+                nums.append(self.mark_one({"doc_id": EV.LIVE, "kind": "document text", "section": ""}))
         return "".join(f"[{n}]" for n in sorted(set(nums)))
+
+    def mark_one(self, it: dict) -> int:
+        return int(self.mark([it]).strip("[]"))
 
     def lines(self) -> list:
         return [f"{n}. {FB.citation(self.metas[k], self.secs[k])}" for k, n in self.refs.items()]
@@ -150,11 +175,36 @@ def kept_section(sec: dict, ev: dict, cites: Cites) -> list:
 
 
 def row_cell_items(row: dict, ev: dict, part: str) -> list:
-    by = {it["id"]: it for it in ev["items"]}
+    """The passages a cell cites: its kept sentence's, from the evidence file the sentence was
+    checked against (the need's own, or its full-read file, DCAT-005 decision 1)."""
     for x in row["items"]:
         if x["part"] == part and x["kind"] == "SENTENCE" and x["kept"]:
+            src = load_ev(x["evidence_file"]) if x.get("evidence_file") else ev
+            by = {it["id"]: it for it in src["items"]}
             return [by[e] for e in x["evidence"]]
     return []
+
+
+def published_gate(rows: dict, bcfg: dict) -> list:
+    """DCAT-005 decision 4, mechanically: a landed cell (other than "dropped", a draft-versus-final
+    statement by definition, or "left out") and a literature cell that says what 3.0 carries
+    must each cite at least one published page, and neither may cite the working draft. Returns
+    the findings; the build refuses on any."""
+    pub = set(bcfg[AMEND]["published"]["pages"])
+    out = []
+    for nid in sorted(rows, key=int):
+        r = rows[nid]
+        ev = load_ev(f"need_{nid}.json")
+        for part, needs_pub in (("landed", r["landed"] not in (None, "dropped", "absent")),
+                                ("literature", r["literature"] in ("matches", "carries_3_0_does_not"))):
+            if not needs_pub:
+                continue
+            items = row_cell_items(r, ev, part)
+            if not any(it["kind"] == "element table row" or it["doc_id"] in pub for it in items):
+                out.append(f"row {nid} {part}: no published page cited")
+            if any(it["doc_id"] == EV.DRAFT and it["kind"] != "element table row" for it in items):
+                out.append(f"row {nid} {part}: cites the 2025 working draft for what 3.0 carries")
+    return out
 
 
 def outcome_cell(r: dict) -> str:
@@ -165,49 +215,79 @@ def outcome_cell(r: dict) -> str:
     return r["outcome"]
 
 
+def row_range(ids: list) -> str:
+    """The rows an answer rests on, as R7 asks them named: "rows 1 to 3", "rows 4 and 7"."""
+    return (f"rows {ids[0]} to {ids[-1]}" if len(ids) > 2 and ids == list(range(ids[0], ids[-1] + 1))
+            else "rows " + FB._join([str(i) for i in ids]))
+
+
+def _where(r: dict) -> str:
+    return "not placed" if r["outcome"] in ("unplaced", "unassigned") else f"now {r['outcome']}"
+
+
 def grounds(name: str, v: dict, rows: dict, bcfg: dict) -> str:
-    """R7's grounds, computed and in short sentences: which needs count, then where each is."""
-    what = ("The needs that help people find statistical data" if name == "findability"
-            else "The needs that let a user judge whether data are fit for a use")
-    names = FB._join([rows[str(i)]["need"] for i in v["rows"]])
-    out = [f"{what} are {names} (table rows {', '.join(str(i) for i in v['rows'])})."]
-    for i in v["rows"]:
-        r = rows[str(i)]
-        n = r["need"][:1].upper() + r["need"][1:]
-        if r["outcome"] == "unplaced":
-            still = [x for x in r["open"] if x != "outside_rule"]
-            out.append(f"{n} could not be placed; it could still be {', '.join(still[:-1])} or {still[-1]}."
-                       if len(still) > 2 else f"{n} could not be placed; it could still be {' or '.join(still)}.")
-        else:
-            out.append(f"{n} is in outcome {r['outcome']}.")
+    """R7's grounds, computed: which needs count, then, for an answer the rule decides, where
+    each is; for one it does not decide, what each row would need to become (DCAT-005
+    decision 2: `partly_if` and `no_needs` from `dcat_brief_run.verdict`)."""
+    ids = v["rows"]
+    out = []
+    if v["determined"]:
+        for i in ids:
+            r = rows[str(i)]
+            out.append(f"{r['need'][:1].upper() + r['need'][1:]} is in outcome {r['outcome']}.")
+        return " ".join(out)
+    no = [f"{rows[str(x['row'])]['need']} (row {x['row']}, {_where(rows[str(x['row'])])})" for x in v["no_needs"]]
+    each = "were each" if len(no) > 1 else "were"
+    if v["partly_if"]:
+        pa = FB._join([f"{rows[str(i)]['need']} (row {i})" for i in v["partly_if"]])
+        out.append(f"The rule would say \u201cpartly\u201d if {pa} were in A. It would say \u201cno\u201d if "
+                   f"{FB._join(no)} {each} in B, C or E.")
+    else:
+        out.append(f"The rule would say \u201cno\u201d only if {FB._join(no)} {each} in B, C or E. "
+                   "No row can be in A.")
     return " ".join(out)
 
 
-def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
-    rows = {str(k): v for k, v in answers["rows"].items()}
+def void_rows(rows: dict) -> list:
+    """The rows outcome C could still apply to if the unpublished plan showed the need was not
+    asked for (DCAT-005 decision 3): a row in E whose literature part is unconfirmed or says
+    the standards carry the need (`matches`, `carries_3_0_does_not`), and an unplaced row that
+    C is still open for."""
+    out = []
+    for nid in sorted(rows, key=int):
+        r = rows[nid]
+        if r["outcome"] == "E" and r["literature"] in (None, "matches", "carries_3_0_does_not"):
+            out.append(nid)
+        elif r["outcome"] == "unplaced" and "C" in (r["open"] or []):
+            out.append(nid)
+    return out
+
+
+def build(answers: dict, corr: dict, bcfg: dict, faq_cfg: dict) -> tuple:
+    rows = {str(k): v for k, v in corr["rows"].items()}
     cites = Cites(faq_cfg)
     secs = answers.get("sections") or {}
     def doc(d):
         return {"doc_id": d, "kind": "document text", "section": ""}
+    # DCAT-005 decision 4: the name is cited from the published Overview ("a U.S. application
+    # profile of the W3C Data Catalog Vocabulary (DCAT) version 3"), not from the working draft.
     out = [f"# {TITLE}", "",
-           "Names used. DCAT-US is the Data Catalog Application Profile for the United States of America "
-           f"{cites.mark([doc(EV.DRAFT)])}, a version of the Data Catalog Vocabulary (DCAT) of the World Wide "
-           f"Web Consortium (W3C) {cites.mark([doc('w3c-dcat-3')])}. AI is artificial intelligence. FCSM is the "
-           "Federal Committee on Statistical Methodology. FAIR stands for findable, accessible, interoperable "
-           "and reusable; the FAIRness Project is the federal Chief Data Officers Council's project with FCSM "
+           "Names used. DCAT-US is the United States version of the Data Catalog Vocabulary (DCAT) of the "
+           f"World Wide Web Consortium (W3C) {cites.mark([doc(OVERVIEW), doc('w3c-dcat-3')])}. FAIR stands for "
+           "findable, accessible, interoperable and reusable. The FAIRness Project is the federal Chief Data "
+           "Officers Council's project with the Federal Committee on Statistical Methodology (FCSM) "
            f"{cites.mark([doc('fairness-project-wiki-home')])}.", "",
-           f"Prepared {PREPARED} for a briefing to the Office of Management and Budget. Every sentence below "
-           "comes from the documents listed at the end. One AI model wrote each sentence from those "
-           "documents. Two other AI models checked it against them. A sentence they could not both confirm "
-           "was cut, not reworded. The table and the yes-or-no answers come from a fixed rule, not from a "
-           "model.", ""]
+           f"Prepared {PREPARED} for the Office of Management and Budget. One artificial intelligence model "
+           "wrote each sentence from the documents listed at the end. Two others checked it. A sentence "
+           "they did not both confirm was cut. The questions-and-answers paper of 5 October 2026 and the "
+           "companion rows file quote every passage.", ""]
     names_used = []
 
     def section(k: int, title: str):
         out.extend([f"## {k}. {title}", ""])
 
     # 1 and 2: model-written, checked.
-    for k, title in ((1, "What DCAT-US 3.0 is"), (2, "Who made it, and the statistical side's part")):
+    for k, title in ((1, "What DCAT-US 3.0 is"), (2, "Who made it")):
         section(k, title)
         s = secs.get(str(k)) or {}
         ev = load_ev(f"section_{k}.json")
@@ -215,22 +295,25 @@ def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
         out += [" ".join(lines) if lines else FB.NONE_KEPT, ""]
     # 3: computed (R7).
     section(3, "Does it deliver for statistics?")
-    v = answers["verdict"]
+    v = corr["verdict"]
     for name, label in (("findability", "Finding statistical data"),
                         ("fitness_for_use", "Judging whether data are fit for a use")):
-        out += [f"**{label}: {v[name]['answer']}.** {grounds(name, v[name], rows, bcfg)}", ""]
-    out += ["A fixed rule gives these answers from the table in section 4. The answer is “no” if none "
-            "of the needs is in outcome A, “partly” if at least one is, and “yes” if all are. When a need "
-            "could not be placed, the rule is run for each outcome it could still be in, and both answers "
-            "are shown when they differ.", ""]
+        out += [f"**{label} ({row_range(v[name]['rows'])}): {v[name]['answer']}.** "
+                f"{grounds(name, v[name], rows, bcfg)}", ""]
+    out += ["A rule fixed in advance, not a model, reads the table in section 4. It says \u201cno\u201d if "
+            "every need is in outcome B, C or E, and \u201cpartly\u201d if at least one is in A. Otherwise it does not "
+            "decide.", ""]
     REPORT["added_by_code"].append("section 3: both answers and their grounds, from the table")
     # 4: the table, computed.
-    section(4, "What the statistical side asked for, by outcome")
+    section(4, "The statistical needs, by outcome")
     table, used = [], set()
     for nid in sorted(rows, key=int):
         r = rows[nid]
         ev = load_ev(f"need_{nid}.json")
-        a_items = row_cell_items(r, ev, "asked")
+        # Every kept ask, not the first: the full read (DCAT-005 decision 1) can keep asks from
+        # several documents, and the cell names each.
+        a_items = [it for x in r["items"] if x["part"] == "asked" and x["kind"] == "SENTENCE" and x["kept"]
+                   for it in row_cell_items({"items": [x]}, ev, "asked")]
         l_items = row_cell_items(r, ev, "landed")
         t_items = row_cell_items(r, ev, "literature")
         if r["asked"] is None:
@@ -240,13 +323,15 @@ def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
             asked = f"Yes: {FB._join(who)} {cites.mark(a_items)}"
         elif r["asked"] == "publicly_not_asked":
             asked = f"No, on the record {cites.mark(a_items)}"
+        elif r.get("asked_read") == "not_found_in_full_read":
+            asked = "Not in public documents (read in full)"
         else:
             asked = "Not in the public record"
         if r["landed"] is None:
             landed = "Not confirmed"
         else:
             names = [e.split()[-1] for e in r.get("elements") or []] if r["landed"] != "absent" else []
-            els = ", ".join(names[:3]) + (f" and {len(names) - 3} more" if len(names) > 3 else "")
+            els = names[0] + (f" and {len(names) - 1} more" if len(names) > 1 else "") if names else ""
             landed = (LANDED_WORD[r["landed"]] + (f" ({els})" if els else "")
                       + (", put off to a later version" if r["deferred"] else ""))
             landed += f" {cites.mark(l_items)}" if l_items else ""
@@ -260,15 +345,16 @@ def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
            if any(re.search(rf"(?<![\w-]){re.escape(a)}(?![\w-])", u) for u in used | {"FCSM"})]
     acr = [a for a in acr if a not in ("FCSM", "W3C", "FAIR")]      # expanded in the opening names
     names_used = acr
-    out += (["Names used in the table: " + "; ".join(f"{a} is {EXPANSIONS[a]}" for a in acr) + ".", ""] if acr else []) + [
-            "Levels are read from the Dataset page as served on 5 October 2026.", "",
-            "| Need | Asked for in public? | Where it landed in 3.0 | What the standards say | Outcome |",
+    # The level's date is in the column head (DCAT-005 decision 5): the levels are the published
+    # Dataset page's, as served on 5 October 2026.
+    out += (["; ".join(f"{a} is {EXPANSIONS[a]}" for a in acr) + ".", ""] if acr else []) + [
+            "| Need | Asked for in public? | Where it landed in 3.0 (page of 5 October 2026) | What the standards say | Outcome |",
             "|:----|:------|:--------|:----------|:----|", *table, ""]
-    out += ["The five outcomes:", ""] + [f"- **{k}.** {t}" for k, t in bcfg["outcomes"].items()] + [""]
+    outcomes = bcfg[AMEND].get("outcomes") or bcfg["outcomes"]
+    out += ["The five outcomes:", ""] + [f"- **{k}.** {t}" for k, t in outcomes.items()] + [""]
     if any(r["outcome"] in ("unplaced", "unassigned") for r in rows.values()):
-        out += ["\u201cNot confirmed\u201d means the check could not confirm that part of the answer, in "
-                "two tries; \u201cnot placed\u201d means the rule needs that part, and the outcomes still "
-                "possible are shown.", ""]
+        out += ["\u201cNot confirmed\u201d: the check could not confirm it in two tries. \u201cNot "
+                "placed\u201d: the outcomes still possible are shown.", ""]
     REPORT["added_by_code"].append("section 4: the table and the outcome sentences (config)")
     # 5: model-written over the C and D rows' passages, or a computed line.
     section(5, "The void and the mismatch")
@@ -280,12 +366,21 @@ def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
         cd = {x: [rows[k]["need"] for k in sorted(rows, key=int) if rows[k]["outcome"] == x] for x in "CD"}
         lead = []
         if cd["D"]:
-            lead.append(f"Under the rule, {FB._join(cd['D'])} {'is' if len(cd['D']) == 1 else 'are'} in outcome D, "
-                        "the mismatch: the statistical side asked for them, and the standards carry them "
-                        "another way.")
-        lead.append(f"{FB._join(cd['C'])} {'is' if len(cd['C']) == 1 else 'are'} in outcome C, the void." if cd["C"]
-                    else "No need is in outcome C, the void.")
-        REPORT["added_by_code"].append("section 5: the lead sentence naming the C and D rows")
+            lead.append(f"{FB._join(cd['D'])[:1].upper() + FB._join(cd['D'])[1:]} "
+                        f"{'is' if len(cd['D']) == 1 else 'are'} in outcome D, the mismatch.")
+        if cd["C"]:
+            lead.append(f"{FB._join(cd['C'])} {'is' if len(cd['C']) == 1 else 'are'} in outcome C, the void.")
+        vr = void_rows(rows)
+        if vr:
+            # DCAT-005 decision 3: the void as the rule's limit. R6 question 1 records a need the
+            # unpublished plan may have asked for as not knowable, so no need can be shown not
+            # asked, and C cannot be reached from the public record.
+            lead.append("Whether the statistical side left out a need the standards call for (outcome C, the "
+                        "void) cannot be shown while the plan is unpublished. That is open for "
+                        f"{FB._join([rows[k]['need'] for k in vr])} "
+                        f"({'row' if len(vr) == 1 else 'rows'} {FB._join(vr)}).")
+        REPORT["added_by_code"].append("section 5: the lead sentences naming the D rows and the rows the void "
+                                       "cannot be ruled out for")
         lines = kept_section(s5, load_ev("section_5.json"), cites)
         out += [" ".join(lead), "", " ".join(lines) if lines else FB.NONE_KEPT, ""]
     # 6: model-written.
@@ -293,38 +388,48 @@ def build(answers: dict, bcfg: dict, faq_cfg: dict) -> tuple:
     lines = kept_section(secs.get("6") or {}, load_ev("section_6.json"), cites)
     out += [" ".join(lines) if lines else FB.NONE_KEPT, ""]
     # 7: the E rows by code, then the model-written sentences on the plan.
-    section(7, "What cannot be known from the public record")
+    section(7, "What the public record cannot show")
     e = [rows[k]["need"] for k in sorted(rows, key=int) if rows[k]["outcome"] == "E"]
     if e:
-        out += [f"Whether the statistical side asked for {FB._join(e)} cannot be told from the public "
-                f"record (outcome E in the table).", ""]
-        REPORT["added_by_code"].append("section 7: the outcome-E needs")
+        full = [rows[k]["need"] for k in sorted(rows, key=int)
+                if rows[k]["outcome"] == "E" and rows[k].get("asked_read") == "not_found_in_full_read"]
+        rest = [x for x in e if x not in full]
+        n_docs = len(bcfg["scopes"]["asked"]["airkg"])
+        words = {8: "eight"}.get(n_docs, str(n_docs))
+        if full:
+            n = FB._join(full)
+            out += [f"{n[:1].upper() + n[1:]} {'is' if len(full) == 1 else 'are'} in outcome E. The statistical "
+                    f"side's {words} public documents, read in full, do not ask for "
+                    f"{'it' if len(full) == 1 else 'them'}. The plan below may have."]
+        if rest:
+            out += [f"Whether the statistical side asked for {FB._join(rest)} cannot be told from the public "
+                    "record (outcome E in the table)."]
+        out += [""]
+        REPORT["added_by_code"].append("section 7: the outcome-E needs, and the full read behind them")
     lines = kept_section(secs.get("7") or {}, load_ev("section_7.json"), cites)
     out += [" ".join(lines) if lines else FB.NONE_KEPT, ""]
-    # 8: one line, code.
-    section(8, "Where the detail is")
-    out += ["The questions-and-answers paper of 5 October 2026 and its attachment give the detail, and "
-            "quote every passage the answers rest on; the row-by-row detail behind the table is in the "
-            "companion rows file.", ""]
+    # 8 (DCAT-004 v2's "Where the detail is") is folded into the opening paragraph: DCAT-005
+    # decision 5, two pages, cut repetition first.
     out += ["## Sources", ""] + cites.lines() + [""]
     return "\n".join(out), names_used, cites
 
 
-def rows_md(answers: dict, bcfg: dict, faq_cfg: dict) -> str:
+def rows_md(corr: dict, bcfg: dict, faq_cfg: dict) -> str:
     cites = Cites(faq_cfg)
     out = ["# The table's rows, in detail", "",
            f"Prepared {PREPARED}. For each statistical need: the answers the check confirmed, each "
            "with its sources, and the outcome the rule assigns.", ""]
-    for nid in sorted(answers["rows"], key=lambda x: int(x)):
-        r = answers["rows"][nid]
+    for nid in sorted(corr["rows"], key=lambda x: int(x)):
+        r = corr["rows"][nid]
         out += [f"## {nid}. {r['need']}: {outcome_cell(r).replace('Not placed', 'not placed') if r['outcome'] in ('unplaced', 'unassigned') else 'outcome ' + r['outcome']}", ""]
         if r.get("reason"):
             out += [f"Why it is not placed: {r['reason'].replace('by the panel', 'by the check')}.", ""]
         ev = load_ev(f"need_{nid}.json")
-        by = {it["id"]: it for it in ev["items"]}
         for x in r["items"]:
             if not x["kept"] or x["part"] == "not_known":
                 continue
+            src = load_ev(x["evidence_file"]) if x.get("evidence_file") else ev
+            by = {it["id"]: it for it in src["items"]}
             label = {"asked": "Asked for?", "landed": "Where it landed", "literature": "What the standards say"}[x["part"]]
             out += [f"- **{label}** {x['sentence']} {cites.mark([by[e] for e in x['evidence']])}".rstrip()]
         out += [""]
@@ -346,6 +451,17 @@ def body_text(md: str) -> str:
             continue
         keep.append(re.sub(r"\[\d+\]", "", line).replace("**", ""))
     return "\n".join(keep)
+
+
+def body_words(md: str) -> dict:
+    """DCAT-005 decision 5's count: everything above the source list (headings and the table
+    included), citation marks, table rules and bold marks removed, counted by
+    `textstat.lexicon_count`."""
+    import textstat
+    t = re.sub(r"\[\d+\]", "", md.split("## Sources")[0])
+    t = re.sub(r"\|:?-+:?", "", t).replace("|", " ").replace("**", "")
+    return {"words": textstat.lexicon_count(t),
+            "implementation": f"textstat {textstat.__version__}, textstat.lexicon_count, above the source list"}
 
 
 def fk_grade(text: str) -> dict:
@@ -422,11 +538,20 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-pdf", action="store_true")
     a = ap.parse_args(argv)
+    global DRAFT_TITLE
     answers = json.loads(ANSWERS.read_text(encoding="utf-8"))
     bcfg = yaml.safe_load(EV.BRIEF_CONFIG.read_text(encoding="utf-8"))
     faq_cfg = EV.load_config()
-    if not answers.get("verdict"):
-        raise SystemExit("FATAL: answers.json has no verdict; the table is not complete")
+    if not CORRECTIONS.is_file():
+        raise SystemExit(f"FATAL: {CORRECTIONS.relative_to(REPO)} missing; run scripts/dcat_brief_correct.py")
+    corr = json.loads(CORRECTIONS.read_text(encoding="utf-8"))
+    if not corr.get("verdict") or len(corr.get("rows") or {}) != len(bcfg["needs"]):
+        raise SystemExit("FATAL: the corrections overlay has no verdict; the table is not complete")
+    fr = {k: v.get("status") for k, v in (corr.get("full_read") or {}).items()}
+    if sorted(fr) != sorted(str(n) for n in bcfg[AMEND]["full_read"]["needs"]) or set(fr.values()) != {"done"}:
+        raise SystemExit(f"FATAL: the full read is not complete for every need it names: {fr}")
+    dn = bcfg[AMEND]["published"]["draft_name"]
+    DRAFT_TITLE = f"{dn[:1].upper() + dn[1:]} of DCAT-US Version 3 (Candidate Recommendation Snapshot, not the published 3.0)"
     bad = [k for k, s in (answers.get("sections") or {}).items() if s.get("status") not in ("done", "none")]
     if bad or not answers.get("sections"):
         raise SystemExit(f"FATAL: sections not answered and checked: {bad or 'none run'}")
@@ -434,18 +559,27 @@ def main(argv=None) -> int:
     for p in sorted(EV.BRIEF_EVIDENCE_DIR.glob("*.json")):
         docs.update(json.loads(p.read_text(encoding="utf-8")).get("documents") or {})
     FB.DOCS = {**FB.all_documents(), **docs}
-    brief, names, _ = build(answers, bcfg, faq_cfg)
-    rows = rows_md(answers, bcfg, faq_cfg)
+    gate = published_gate({str(k): v for k, v in corr["rows"].items()}, bcfg)
+    if gate:
+        raise SystemExit("FATAL: a 3.0 claim without a published page (DCAT-005 decision 4):\n  " + "\n  ".join(gate))
+    brief, names, _ = build(answers, corr, bcfg, faq_cfg)
+    rows = rows_md(corr, bcfg, faq_cfg)
     found = {n: LINT.lint(t) for n, t in (("BRIEF.md", brief), ("ROWS.md", rows))}
     if any(found.values()):
         raise SystemExit("FATAL: lint (scripts/dcat_faq_lint.py) refuses the build:\n" + "\n".join(
             f"  {n}:{f['line']} [{f['rule']}] {f['match']!r} in {f['context']!r}" for n, fs in found.items() for f in fs))
+    wc = body_words(brief)
+    if wc["words"] > bcfg[AMEND]["max_body_words"]:
+        raise SystemExit(f"FATAL: the body is {wc['words']} words, over the {bcfg[AMEND]['max_body_words']} "
+                         "the amendment allows (DCAT-005 decision 5)")
     BRIEF_MD.write_text(brief, encoding="utf-8")
     ROWS_MD.write_text(rows, encoding="utf-8")
     report = {"generated_by": "scripts/dcat_brief_build.py", **REPORT,
               "lint": {"BRIEF.md": 0, "ROWS.md": 0, "implementation": "scripts/dcat_faq_lint.py"},
               "readability": {**fk_grade(body_text(brief)), "target_grade": bcfg["readability"]["target_grade"],
                               "body": "lines of BRIEF.md that are not headings, table rows or sources; citation marks removed"},
+              "body_words": {**wc, "max": bcfg[AMEND]["max_body_words"]},
+              "published_gate": "passed: every landed and 3.0 literature cell cites a published page",
               "acronyms": acronyms(brief)}
     if not a.no_pdf:
         build_dir = OUT / "build"

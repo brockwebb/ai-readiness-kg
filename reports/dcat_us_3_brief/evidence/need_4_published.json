@@ -1,0 +1,974 @@
+{
+ "question_id": 4,
+ "need": "uncertainty",
+ "question": "Statistical need 4, uncertainty: how much an estimate could be off, such as margins of error, coefficients of variation and confidence intervals. (1) Did FCSM or the FAIRness Project publicly ask for it? (2) Where did it land in DCAT-US 3.0: Mandatory, Recommended, Optional, dropped, or absent, as served on 5 October 2026; and does the Implementation Guide or the Overview say it was deferred to a later version? (3) What does the literature say is the right way to carry it?",
+ "parts": {
+  "asked": {
+   "terms": [
+    "margin of error",
+    "margins of error",
+    "coefficient of variation",
+    "standard error",
+    "sampling error",
+    "confidence interval",
+    "uncertainty",
+    "variance",
+    "reliability",
+    "accuracy",
+    "nonsampling error"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "fairness-project-wiki-home",
+     "fairness-project-wiki-project-overview",
+     "fcsm-2024-b3-3-fairness-project",
+     "cdoc-dswg-findings-and-recommendations-2022",
+     "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+     "fcsm-20-04-a-framework-for-data-quality",
+     "fcsm-23-02-a-framework-for-data-quality-case-studies",
+     "fcsm-25-03"
+    ],
+    "fss-policy-kg": [
+     "fairness_project_wiki_overview",
+     "fcsm_20_04",
+     "fcsm_25_03"
+    ]
+   },
+   "matched": 586,
+   "kept": 14,
+   "dropped_by_cap": 545
+  },
+  "landed": {
+   "terms": [
+    "qualitymeasurement",
+    "hasqualitymeasurement",
+    "quality measurement",
+    "uncertainty",
+    "error",
+    "accuracy",
+    "precision",
+    "metric"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "dcat-us-3-dataset-schema-2026-10-05",
+     "dcat-us-3-overview-2026-10-05",
+     "dcat-us-3-implementation-guide",
+     "dcat-us-3-dataset-series",
+     "dcat-us-3-quality-governance",
+     "dcat-us-3-temporal-spatial-metrics",
+     "dcat-us-3-candidate-recommendation-snapshot"
+    ],
+    "fss-policy-kg": [
+     "dcat_us_3_implementation_guide"
+    ]
+   },
+   "matched": 252,
+   "kept": 14,
+   "dropped_by_cap": 208
+  },
+  "literature": {
+   "terms": [
+    "uncertainty",
+    "standard error",
+    "confidence interval",
+    "margin of error",
+    "coefficient of variation",
+    "accuracy",
+    "precision",
+    "observation status",
+    "obs_status",
+    "quality annotation",
+    "qualitymeasurement"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "statdcat-ap-1-0-1",
+     "sdmx-3-0-section-1-framework",
+     "sdmx-3-1-section-2-information-model",
+     "sdmx-standards-overview",
+     "ddi-codebook-specification",
+     "ddi-cdi-1-0-specification",
+     "w3c-rdf-data-cube",
+     "w3c-dqv",
+     "w3c-dwbp-2017",
+     "wilkinson-2016-fair-guiding-principles",
+     "jacobsen-2020-fair-principles-interpretations",
+     "dcat-ap-3-0-0-r5r-vocabulary",
+     "w3c-dcat-3"
+    ],
+    "fss-policy-kg": [
+     "w3c_dcat_3"
+    ]
+   },
+   "matched": 173,
+   "kept": 16,
+   "dropped_by_cap": 147
+  }
+ },
+ "matched": 1011,
+ "dropped_by_cap": 900,
+ "caps": {
+  "asked": {
+   "max_items": 14,
+   "max_chars": 14000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "landed": {
+   "max_items": 12,
+   "max_chars": 12000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "literature": {
+   "max_items": 16,
+   "max_chars": 16000,
+   "max_per_document": 3,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  }
+ },
+ "documents": {
+  "dcat-us-1-1-schema": {
+   "title": "DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-quality-governance": {
+   "title": "DCAT-US 3.0: Quality and Governance (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-23-02-a-framework-for-data-quality-case-studies": {
+   "title": "FCSM 23-02: A Framework for Data Quality: Case Studies",
+   "issuer": "Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_20_04": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "FCSM",
+   "date": "2020-09",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dcat-3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C Dataset Exchange Working Group",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dqv": {
+   "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2016-12-15",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dwbp-2017": {
+   "title": "Data on the Web Best Practices (W3C Recommendation, 31 January 2017)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2017-01-31",
+   "url": "https://www.w3.org/TR/dwbp/",
+   "graph": "ai-readiness-kg"
+  },
+  "s-015-readiness-crosswalk": {
+   "title": "S-015 readiness crosswalk: the presenter's own crosswalk of an AI-readiness framework's indicators to W3C and ISO/IEC 25012 quality terms (unpublished)",
+   "issuer": "",
+   "date": "2026-09-14",
+   "url": "",
+   "graph": "squiddy"
+  }
+ },
+ "generated_by": "scripts/dcat_brief_correct.py (decision 4: the need's evidence without the 2025 working draft)",
+ "generated_at": "2026-10-07T16:23:34.655540+00:00",
+ "derived_from": "need_4.json",
+ "removed": [
+  "E19",
+  "E21",
+  "E22",
+  "E23",
+  "E27",
+  "E28"
+ ],
+ "items": [
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s522"
+   },
+   "section": "passage 522",
+   "text": "Accuracy and reliability for outputs of survey and other statistical data are frequently reported using traditional measures like standard errors and response rates that capture statistical bias and precision. Statistical bias and precision are described in Appendix B. Briefly, statistical unbiasedness refers to a condition where 'the expected value of an estimate of a characteristic is equal to the true population value' (CNSTAT 2018, 40). The phrase 'expected value of an estimate' refers to a value that would emerge if the population were sampled and re-sampled many times, the estimate calculated for each sample, and an average (expected value) of all sample estimates calculated from all the possible samples. Statistical precision , defined as the inverse of the variance, indicates the variability of an estimate and is related to the errors, or threats, that affect variance and standard errors, including sampling error and modeling error. Estimates with high statistical precision have lower variance and are more accurate than those with low statistical precision.",
+   "terms_matched": [
+    "standard error",
+    "sampling error",
+    "variance",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E1",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 113,
+    "block": 2
+   },
+   "section": "page 113",
+   "text": "It refers to whether all \nstatistics that are needed are produced and the extent to \nwhich concepts (definitions, classifications, etc.) \nreflect user needs. Accuracy and Reliability. Statistics should \naccurately and reliably portray reality. The \ncombination of source data, intermediary data, and \nstatistical outputs should be regularly assessed. Additional, sampling and nonsampling errors need to \nbe measured and documented and revisions regularly \nanalyzed in order to improve statistical processes. Accuracy in the general statistical sense denotes the \ncloseness of computations or estimates to the \n(unknown) exact or true values.",
+   "terms_matched": [
+    "sampling error",
+    "reliability",
+    "accuracy",
+    "nonsampling error"
+   ],
+   "cut": false,
+   "id": "E2",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 40,
+    "block": 4
+   },
+   "section": "page 40",
+   "text": "Tis report considered several concepts of objectivity \nrelated to data quality but focused on the measurement and reporting of various error sources that afect data quali -\nty: sampling error, nonresponse error, coverage error, measurement error, and processing error. Accuracy\nand \nreliability\nAccuracy measures the closeness of an estimate, including direct and modeled estimates, to its true \nvalue (FCSM 2001, Eurostat 2020). Accuracy of an estimate is dependent on the accuracy of its com-\nponents. While some measures of accuracy apply to an entire data fle or data collection (e.g., response \nrate), standard errors and other measures of precision apply to estimates.",
+   "terms_matched": [
+    "standard error",
+    "sampling error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E3",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 24,
+    "block": 2
+   },
+   "section": "page 24",
+   "text": "Accuracy is an important and visible aspect of quality that has been of concern to statisticians and survey \nmethodologists for many years. It relates to the closeness between estimated and true (unknown) values. For \nmany, accuracy means the measurement and reporting of estimates of sampling error for sample survey \nprograms, but, in fact, the concept is much broader, taking in nonsampling error as well. Nonsampling error \nincludes coverage error, measurement error, nonresponse error, and processing error … [I] t is important to \nrecognize that the accuracy of any estimate is affected by both sampling and nonsampling error. Timeliness can refer to several concepts.",
+   "terms_matched": [
+    "sampling error",
+    "accuracy",
+    "nonsampling error"
+   ],
+   "cut": false,
+   "id": "E4",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 80,
+    "block": 4
+   },
+   "section": "page 80",
+   "text": "For example, \ndata swapping can affect the weighted distributions and multivariate relationships, as noted in the User’s Guide \nwhich also points out that the challenge of promoting use while protecting confidentiality is faced by all surveys. Accuracy can be considered in terms of sampling and non-sampling errors. Estimated variances are a measure of \nsampling error. As a survey based on a complex sample design, FoodAPS provides weights and variables for \nestimating variances using either Taylor series or jackknife repeated replication (Economic Research Service, 2016, \np. 13). The User’s Guide provides an appendix with code (in SAS, Stata, and R) for implementing variance \nestimation.",
+   "terms_matched": [
+    "sampling error",
+    "variance",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E5",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 28,
+    "block": 1
+   },
+   "section": "page 28",
+   "text": "FCSM: A Framework for Data Quality 24\n \n \n \n \n    \n \n \n  Accuracy and \nReliability \nAccuracy and\n reliability \nCoherenceCoherence\nAccuracy measures the closeness of an estimate from a data product to its true value. A \nrelated concept is reliability, which characterizes repeated estimates of accuracy over time. For an estimate to be accurate, all components of the data product need to be accurate. While \naccuracy can apply to an entire data fle or data collection, many common measures, includ -\ning standard errors and other measures of precision, apply to estimates.",
+   "terms_matched": [
+    "standard error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E6",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 40,
+    "block": 5
+   },
+   "section": "page 40",
+   "text": "Accuracy for outputs of in-\ntegrated data depends on the accuracy of source data and linkage or modeling errors that result from \nthe integration process. Reliability, a related concept, characterizes the consistency of results when the \nsame phenomenon is measured or estimated more than once under similar conditions. Treats to accuracy and reliability are briefy described below, drawn, in part, from the terminol -\nogy of the T otal Survey Error paradigm (e.g., Biemer et al. 2017, Groves et al. 2009) and building \nfrom FCSM (2001), including sampling error, coverage error, measurement error and nonresponse \nerror.",
+   "terms_matched": [
+    "sampling error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E7",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 41,
+    "block": 3
+   },
+   "section": "page 41",
+   "text": "However, when identifying and reporting quality for secondary-use data, over which \nagencies have less control, the needed information may not be available. Accuracy and reliability for outputs of survey and other statistical data are frequently reported using \ntraditional measures like standard errors and response rates that capture statistical bias and preci -\nsion. Statistical bias and precision are described in Appendix B. Briefy, statistical unbiasedness refers \nto a condition where “the expected value of an estimate of a characteristic is equal to the true popu-\nlation value” (CNST A T 2018, 40).",
+   "terms_matched": [
+    "standard error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E8",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "node": "fcsm-20-04-a-framework-for-data-quality::c_statistical_precision",
+    "location": "fcsm-20-04-a-framework-for-data-quality#c0022"
+   },
+   "section": "",
+   "text": "Statistical precision, defned as the inverse of the variance, indicates the variability of \nan estimate and is related to the errors, or threats, that afect variance and standard errors, including \nsampling error and modeling error.",
+   "terms_matched": [
+    "standard error",
+    "sampling error",
+    "variance"
+   ],
+   "cut": false,
+   "id": "E9",
+   "part": "asked"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s401"
+   },
+   "section": "passage 401",
+   "text": "Accuracy measures the closeness of an estimate from a data product to its true value. A related concept is reliability, which characterizes repeated estimates of accuracy over time. For an estimate to be accurate, all components of the data product need to be accurate. While accuracy can apply to an entire data file or data collection, many common measures, including standard errors and other measures of precision, apply to estimates. Accuracy for outputs of integrated data depends on the accuracy of source data and linkage or modeling errors that result from the integration process. Reliability, a related concept, characterizes the consistency of results when the same phenomenon is measured or estimated more than once under similar conditions.",
+   "terms_matched": [
+    "standard error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E10",
+   "part": "asked"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s513"
+   },
+   "section": "passage 513",
+   "text": "Accuracy measures the closeness of an estimate, including direct and modeled estimates, to its true value (FCSM 2001, Eurostat 2020). Accuracy of an estimate is dependent on the accuracy of its components. While some measures of accuracy apply to an entire data file or data collection ( e.g ., response rate), standard errors and other measures of precision apply to estimates. Accuracy for outputs of integrated data depends on the accuracy of source data and linkage or modeling errors that result from the integration process. Reliability, a related concept, characterizes the consistency of results when the same phenomenon is measured or estimated more than once under similar conditions.",
+   "terms_matched": [
+    "standard error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E11",
+   "part": "asked"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s514"
+   },
+   "section": "passage 514",
+   "text": "Threats to accuracy and reliability are briefly described below, drawn, in part, from the terminology of the T otal Survey Error paradigm ( e.g ., Biemer et al. 2017, Groves et al. 2009) and building from FCSM (2001), including sampling error, coverage error, measurement error and nonresponse error. Additional threats are modeling error, linkage error, and harmonization error that can affect a variety of data, but particularly integrated data.  More details and discussions about threats to accuracy and reliability for integrated data are provided in Appendix B.  Most threats to accuracy and reliability affect threats to many other dimensions, including relevance and granularity in the utility domain, coherence in objectivity domain objectivity, and credibility, confidentiality and scientific integrity in the integrity domain.",
+   "terms_matched": [
+    "sampling error",
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E12",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 7,
+    "block": 5
+   },
+   "section": "page 7",
+   "text": "To examine how documentation describes data quality, the project used a data quality framework that has been \nused at the BEA and elsewhere. The framework consists of eight dimensions of data quality:  relevance, accuracy, \nreliability, timeliness, punctuality, consistency, comparability, and access. This set of dimensions reflects the \ninfluence of various data quality frameworks, including those laid out by the Organization for Economic \nCooperation and Development, which in turn drew from the quality assurance framework of the European \nStatistical System.",
+   "terms_matched": [
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E13",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 6,
+    "block": 2
+   },
+   "section": "page 6",
+   "text": "While crowdsourcing data directly from retailers leads to efficiencies in both collection efforts and costs, \nthe method does introduce the potential for increased errors during collection. This case study \nhighlights how BLS mitigated threats to the accuracy and reliability of these crowdsourced data. The third case study describes a new tool, SafeSpect, to collect roadside inspection data at DOT, \nhighlighting the framework’s utility domain and, more specifically, the relevance and timeliness \ndimensions. With respect to relevance, the tool continues to provide highly relevant data that support \nthe Federal Motor Carrier Safety Administration’s (FMCSA) mission.",
+   "terms_matched": [
+    "reliability",
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E14",
+   "part": "asked"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "hasQualityMeasurement",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 669,
+     "dcat-us-3-dataset-schema": 911,
+     "dcat-us-3-candidate-recommendation-snapshot": 2703,
+     "dcat-us-3-dataset-schema-2026-10-05": 671
+    }
+   },
+   "section": "element hasQualityMeasurement",
+   "text": "Element hasQualityMeasurement. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > hasQualityMeasurement` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasQualityMeasurement) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: quality measurement | | Requirement level | Optional | | URI dqv:hasQualityMeasurement || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "qualitymeasurement",
+    "hasqualitymeasurement",
+    "quality measurement"
+   ],
+   "cut": false,
+   "id": "E15",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "dataQuality",
+    "lines": {
+     "dcat-us-1-1-schema": 259
+    }
+   },
+   "section": "element dataQuality",
+   "text": "Element dataQuality. Not listed on the DCAT-US 3.0 Dataset page as served 2026-10-05 || DCAT-US v1.1 schema: Field dataQuality | Required | No || Not listed in: DCAT-US 3.0 Dataset page (2026-09-15); DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025)",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E16",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 63
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [hasQualityMeasurement](#hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) null or array of classes | Optional | List of quality measurements for the dataset (for example, completeness, accuracy, or timeliness) beyond spatial or temporal resolution |",
+   "terms_matched": [
+    "qualitymeasurement",
+    "hasqualitymeasurement",
+    "quality measurement",
+    "accuracy",
+    "metric"
+   ],
+   "cut": false,
+   "id": "E17",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 877
+   },
+   "section": "[Class DataService #](#data-service)",
+   "text": "| [hasQualityMeasurement](#data-service--hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) null or array of classes | Optional | Quality measurements for the data service (for example, availability, response time, or reliability) |",
+   "terms_matched": [
+    "qualitymeasurement",
+    "hasqualitymeasurement",
+    "quality measurement",
+    "metric"
+   ],
+   "cut": false,
+   "id": "E18",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 133
+   },
+   "section": "Supporting classes",
+   "text": "| Temporal, Spatial, and Metrics | Location, PeriodOfTime, QualityMeasurement, Metric | ``` spatial ``` , ``` temporal ``` , ``` hasQualityMeasurement ``` | [Temporal, Spatial, and Metrics](/standards/catalog/dcat-us-3/temporal-spatial-metrics) |",
+   "terms_matched": [
+    "qualitymeasurement",
+    "hasqualitymeasurement",
+    "metric"
+   ],
+   "cut": false,
+   "id": "E20",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 679
+   },
+   "section": "[Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement)",
+   "text": "- **Type** : null or array of [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) classes",
+   "terms_matched": [
+    "qualitymeasurement",
+    "metric"
+   ],
+   "cut": false,
+   "id": "E24",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 683
+   },
+   "section": "[Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement)",
+   "text": "- [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) : A measurement of a resource against a specific quality metric",
+   "terms_matched": [
+    "qualitymeasurement",
+    "metric"
+   ],
+   "cut": false,
+   "id": "E25",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 163
+   },
+   "section": "Fields not in the v3.0 core schema",
+   "text": "| ``` dataQuality ``` | Not in v3.0 schema. Use ``` hasQualityMeasurement ``` for structured quality reporting going forward. |",
+   "terms_matched": [
+    "qualitymeasurement",
+    "hasqualitymeasurement"
+   ],
+   "cut": false,
+   "id": "E26",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 104
+   },
+   "section": "Table of Contents",
+   "text": "1. [1. Introduction](#intro)\n2. [2. Namespaces](#namespaces)\n3. [3. Vocabulary Overview](#model)\n4. [4. Vocabulary specification](#VocabularySpecification)\n    1. [4.1 Class: Quality Measurement](#dqv:QualityMeasurement)\n    2. [4.2 Class: Metric](#dqv:Metric)\n    3. [4.3 Class: Dimension](#dqv:Dimension)\n    4. [4.4 Class: Category](#dqv:Category)\n    5. [4.5 Class: Quality Measurement Dataset](#dqv:QualityMeasurementDataset)\n    6. [4.6 Class: Quality Policy](#dqv:QualityPolicy)\n    7. [4.7 Class: Quality Annotation](#dqv:QualityAnnotation)\n    8. [4.8 Class: Quality Certificate](#dqv:QualityCertificate)\n    9. [4.9 Class: User Quality Feedback](#dqv:UserQualityFeedback)\n    10. [4.10 Class: Quality Metadata](#dqv:QualityMetadata)\n    11. [4.11 Property: In Dimension](#dqv:inDimension)\n    12. [4.12 Property: Conforms To](#dcterms:conformsTo)\n    13. [4.13 Property: Has Quality Measurement](#dqv:hasQualityMeasurement)\n    14. [4.14 Property: Has Quality Metadata](#dqv:hasQualityMetadata)\n    15. [4.15 Property: Has Quality Annotation](#dqv:hasQualityAnnotation)\n    16. [4.16 Property: Was Derived From](#prov:wasDerivedFrom)\n    17. [4.17 Instance: Quality Assessment](#dqv:qualityAssessment)\n    18. [4.18 Instance: Precision](#dqv:precision)\n5. [5. Note on documenting resources expressed with DQV](#documentation)\n6. [6. Example Usage](#examples)\n    1. [6.1 Express a quality assessment with quality metrics](#ExpressAQualityAssessmentWithQualityMetrics)\n    2.",
+   "terms_matched": [
+    "accuracy",
+    "precision",
+    "quality annotation",
+    "qualitymeasurement"
+   ],
+   "cut": true,
+   "id": "E29",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 1195
+   },
+   "section": "6.13 Express dataset precision and accuracy",
+   "text": "```\n:myDataset a dcat:Dataset ;\n    dqv:hasQualityMeasurement :myDatasetPrecision, :myDatasetAccuracy .",
+   "terms_matched": [
+    "accuracy",
+    "precision",
+    "qualitymeasurement"
+   ],
+   "cut": false,
+   "id": "E30",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 526
+   },
+   "section": "4.18 Instance: Precision",
+   "text": "The section [\"Express dataset precision and accuracy\"](#ExpressDatasetAccuracyPrecision) shows an example of use of this instance.",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E31",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 1357
+   },
+   "section": "6.6.5 Property: spatial resolution",
+   "text": "The range of this property is a number representing a length in meters. This is intended to provide a summary indication of the spatial resolution of the data as a single number. More complex descriptions of various aspects of spatial precision, accuracy, resolution and other statistics can be provided using the Data Quality Vocabulary [VOCAB-DQV].",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E32",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 1385
+   },
+   "section": "6.6.7 Property: temporal resolution",
+   "text": "This is intended to provide a summary indication of the temporal resolution of the data distribution as a single value. More complex descriptions of various aspects of temporal precision, accuracy, resolution and other statistics can be provided using the Data Quality Vocabulary [VOCAB-DQV].",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E33",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 1635
+   },
+   "section": "6.8.13 Property: spatial resolution",
+   "text": "The range of this property is a number representing a length in meters. This is intended to provide a summary indication of the spatial resolution of the data distribution as a single number. More complex descriptions of various aspects of spatial precision, accuracy, resolution and other statistics can be provided using the Data Quality Vocabulary [VOCAB-DQV].",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E34",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "node": "w3c-dcat-3::c-quality-documentation",
+    "location": "w3c-dcat-3#c0036"
+   },
+   "section": "",
+   "text": "Other examples of quality documentation are available in [VOCAB-DQV], including examples about how to express dataset accuracy and precision.",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E35",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "node": "w3c-dqv::cl-precision-not-accuracy",
+    "location": "w3c-dqv#c0020"
+   },
+   "section": "",
+   "text": "Note that the precision (or resolution) of a dataset is not equivalent to its accuracy.",
+   "terms_matched": [
+    "accuracy",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E36",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted measure span",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "node": "w3c-dqv::m-spatres-angular",
+    "location": "w3c-dqv#c0020"
+   },
+   "section": "",
+   "text": ":myDatasetPrecisionAS a dqv:QualityMeasurement ;\n     dqv:isMeasurementOf :spatialResolutionAsAngularDistance ;\n     dqv:value \"3.5\"^^xsd:decimal ;\n     sdmx-attribute:unitMeasure <http://www.wurvoc.org/vocabularies/om-1.8/degree> .",
+   "terms_matched": [
+    "precision",
+    "qualitymeasurement"
+   ],
+   "cut": false,
+   "id": "E37",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted measure span",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "node": "w3c-dqv::m-spatres-distance",
+    "location": "w3c-dqv#c0020"
+   },
+   "section": "",
+   "text": ":myDatasetPrecision a dqv:QualityMeasurement ;\n   dqv:isMeasurementOf :spatialResolutionAsDistance ;\n   dqv:value \"1000\"^^xsd:decimal ;\n   sdmx-attribute:unitMeasure  <http://www.wurvoc.org/vocabularies/om-1.8/metre> \n   .",
+   "terms_matched": [
+    "precision",
+    "qualitymeasurement"
+   ],
+   "cut": false,
+   "id": "E38",
+   "part": "literature"
+  },
+  {
+   "graph": "S-015 crosswalk (squiddy)",
+   "kind": "crosswalk row",
+   "doc_id": "s-015-readiness-crosswalk",
+   "locator": {
+    "file": "squiddy/docs/S-015_readiness_crosswalk.tsv",
+    "line": 61
+   },
+   "section": "line 61",
+   "text": "Crosswalk row for the indicator 'Uncertainty legibility (two legs, scored as a vector)': matched quality dimensions Interpretability; Understandability; Precision; Understandability. Published definitions quoted: Interpretability refers to technical aspects of the data, that is, whether information is represented using an appropriate notation and whether the machine is able to process the data. | Understandability refers to the ease with which data can be comprehended without ambiguity and be used by a human information consumer. | The degree to which data has attributes that are exact or that provide discrimination in a specific context of use. | The degree to which data has attributes that enable it to be read and interpreted by users, and are expressed in appropriate languages, symbols and units in a specific context of use.",
+   "terms_matched": [
+    "uncertainty",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E39",
+   "part": "literature"
+  },
+  {
+   "graph": "S-015 crosswalk (squiddy)",
+   "kind": "crosswalk row",
+   "doc_id": "s-015-readiness-crosswalk",
+   "locator": {
+    "file": "squiddy/docs/S-015_readiness_crosswalk.tsv",
+    "line": 62
+   },
+   "section": "line 62",
+   "text": "Crosswalk row for the indicator 'Uncertainty legibility (two legs, scored as a vector)': matched quality dimensions Interpretability; Precision. Published definitions quoted: Interpretability refers to technical aspects of the data, that is, whether information is represented using an appropriate notation and whether the machine is able to process the data. | The degree to which data has attributes that are exact or that provide discrimination in a specific context of use.",
+   "terms_matched": [
+    "uncertainty",
+    "precision"
+   ],
+   "cut": false,
+   "id": "E40",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 118
+   },
+   "section": "2. Audience",
+   "text": "This document sets out Best Practices tailored primarily for those who publish data on the Web. The Best Practices are designed to meet the needs of information management staff, developers, and wider groups such as scientists interested in sharing and reusing research data on the Web. While data publishers are our primary audience, we encourage all those engaged in related activities to become familiar with it. Every attempt has been made to make the document as readable and usable as possible while still retaining the accuracy and clarity needed in a technical specification.",
+   "terms_matched": [
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E41",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 746
+   },
+   "section": "Machine-readable",
+   "text": "```\n  :stops-2015-05-05.csv\n      a dcat:Distribution ;\n      dcat:downloadURL <http://data.mycity.example.com/transport/dataset/bus/stops-2015-05-05.csv> ;\n      dct:title \"CSV distribution of stops-2015-05-05 dataset\" ;\n      dct:description \"CSV distribution of the bus stops dataset of MyCity\" ;\n      dcat:mediaType \"text/csv;charset=UTF-8\" ;\n      dct:license <http://creativecommons.org/licenses/by-sa/3.0/> ;\n      dqv:hasQualityMeasurement :measure1, :measure2\n      .\n  :measure1\n      a dqv:QualityMeasurement ;\n      dqv:computedOn :stops-2015-05-05.csv ;\n      dqv:isMeasurementOf :downloadURLAvailabilityMetric ;\n      dqv:value \"true\"^^xsd:boolean\n      .\n  :measure2\n      a dqv:QualityMeasurement ;\n      dqv:computedOn :stops-2015-05-05.csv ;\n      dqv:isMeasurementOf :csvCompletenessMetric ;\n      dqv:value \"0.5\"^^xsd:double\n      .",
+   "terms_matched": [
+    "qualitymeasurement"
+   ],
+   "cut": false,
+   "id": "E42",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 3,
+    "block": 1
+   },
+   "section": "page 3",
+   "text": " StatDCAT-AP – DCAT Application Profile for description of \nstatistical datasets Version 1.0.1  \n \n \n \n28/05/2019   P age 3 \n \nDisclaimer: The views expressed in this report are purely those of the Author(s) and may not, \nin any circumstances, be interpreted as stating an official position of the European \nCommission. The European Commission does not guarantee the accuracy of the information \nincluded in this study, nor does it accept any responsibility for any use thereof.",
+   "terms_matched": [
+    "accuracy"
+   ],
+   "cut": false,
+   "id": "E43",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 5,
+    "block": 5
+   },
+   "section": "page 5",
+   "text": "72 \nData Catalogue ................................ ................................ ............. 72 \nLinking to Categories using Categorisations ................................ .......... 73 \nDataset ................................ ................................ ....................... 74 \nDimension Property and Attribute Property................................ ........... 75 \nQuality Annotation ................................ ................................ ......... 75 \nDistribution ................................ ................................ .................. 76 \nAgent ................................ ................................ .........................",
+   "terms_matched": [
+    "quality annotation"
+   ],
+   "cut": false,
+   "id": "E44",
+   "part": "literature"
+  }
+ ],
+ "evidence_sha256": "bb1bcdd76c34c9fba1632a9b16c9e3d67a550427cc9a5227e39c7062755eec02"
+}

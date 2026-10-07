@@ -285,3 +285,120 @@ fresh_reader:
     6: "revision|\\bversion"
     7: "quality dimensions?|dimensions of quality|data quality|quality measure"
     8: "restrict|access terms|access conditions|\\baccess\\b"
+
+# ===============================================================================================
+# AMENDMENT, 2026-10-07: DCAT-005 (cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md)
+# Every line above is DCAT-004 v2's and is unchanged. Where this block names a key, it governs
+# every DCAT-005 run and build (scripts/dcat_brief_correct.py, scripts/dcat_brief_build.py);
+# DCAT-004 v2's record (answers.json) is read, never rewritten, and the corrections are an
+# overlay at run/corrections.json. Written before any DCAT-005 model call.
+amendment_2026_10_07_dcat005:
+  task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
+  # Decision 1 (DN-012 d1: no absence verdict over a partial search). Over the eight asked
+  # documents of `scopes.asked` (and their fss-policy-kg copies), every passage matching the
+  # need's `asked` terms, with no cap (scripts/dcat_faq_evidence.py `full_read_evidence`).
+  # A graph passage whose text is already inside a document-text passage is counted, not
+  # read twice. Batches are the per-call budget an R6 answer call is shown: the sum of
+  # caps.asked, caps.landed and caps.literature max_chars (42,000 characters). Two readers
+  # from different model families read every batch (dual independent screening, Cochrane
+  # Handbook ch. 4); any passage either returns is a candidate, and the r3 panel decides each
+  # candidate as it decides every sentence. `asked`: the panel keeps one, and the row is
+  # re-placed under `outcome_rule`. `not_found_in_full_read`: every matched passage was read by
+  # both readers and none was kept as an ask; under R6 question 1 that is still E (the
+  # unpublished plan may have asked), and the brief says the documents were read in full.
+  full_read:
+    needs: [1, 6, 8]
+    scope: scopes.asked
+    terms: asked
+    per_call_chars: [caps.asked.max_chars, caps.landed.max_chars, caps.literature.max_chars]
+    readers: [model_id, secondary_judge_model_id]
+  # Decision 2: R7's two clauses only (scripts/dcat_brief_run.py `r7_answer`). The `verdict`
+  # comment above ("yes completes it, and a D row counts as not A") is superseded: an answer
+  # neither clause reaches is "not decided", printed with the rows that leave it open and what
+  # each would need to become. The groups (`verdict:` above) are unchanged.
+  r7: as_written
+  # Decision 4. The published DCAT-US 3.0 pages. A table cell that states a level, what 3.0
+  # carries or does not carry, must cite at least one of them (an element-table row counts: it
+  # is read for the page as served 2026-10-05); the build refuses otherwise. The 2025 working
+  # draft is cited as such, and only beside a draft-versus-final statement.
+  published:
+    pages: [dcat-us-3-dataset-schema-2026-10-05, dcat-us-3-overview-2026-10-05, dcat-us-3-implementation-guide,
+            dcat_us_3_implementation_guide, dcat-us-3-dataset-series, dcat-us-3-quality-governance,
+            dcat-us-3-temporal-spatial-metrics]
+    draft: dcat-us-3-candidate-recommendation-snapshot
+    draft_name: the 2025 working draft
+    # Needs whose landed part no DCAT-004 round validated, answered once more over their
+    # evidence without the draft's prose (evidence/need_<n>_published.json).
+    new_round: [4]
+  # Decision 5: the body above the source list, citation marks and table rules removed,
+  # counted by textstat.lexicon_count; the build refuses a brief over it.
+  max_body_words: 900
+  run:
+    run_id: dcat_us_3_brief_dcat005_2026-10-07
+    # A new epoch in the controls' unit keys, so both positive controls are run fresh for this
+    # task and DCAT-004 v2's passing controls are not reused as this task's.
+    control_epoch: "DCAT-005 2026-10-07"
+    # Estimate before any call, from DCAT-004 v2's measured control calls (53,815 to 61,000
+    # tokens each; 61,000 used): controls 4; full read, both readers, about 7 batches each, 14;
+    # candidate checks, 2 per need with candidates, at most 6; draft re-checks, 2 per sentence,
+    # about 4; need 4's new round, answer and 2 checks, 3; a re-ask round if a part is cut, 3;
+    # fresh reader 1. 35 calls x 61,000 = 2,135,000. Ceiling 1.25 x, rounded up.
+    # Re-derived 2026-10-07 after the pilot (both control runs, 6 calls, 461,160 tokens: 76,860 per
+    # call measured), which projected 2,690,118 against 2,670,000. Calls left at most: full read
+    # 16 (8 batches x 2 readers, measured on the evidence files); candidate checks 6; draft
+    # re-checks 4 (2 sentences x 2 judges); need 4's new round 3; one re-ask round 3; fresh reader
+    # 1: 33 calls x 80,000 (reading calls carry up to 42,000 characters of passages) = 2,640,000,
+    # plus 461,160 spent = 3,101,160; x 1.25, rounded up. Raised from 2,670,000, this run's own
+    # declaration, as DCAT-004 v2 raised its own.
+    planned_calls: 39
+    ceiling_tokens: 3900000
+  # R8, the fresh reader, keyed before it runs. Q1 and Q3 as above. Q2: each stated answer
+  # (yes, no, partly or "not decided", the template's four options) equals the answer computed
+  # under R7 as written; where the computed answer is "not decided", the reader is right only
+  # when it says "not decided".
+  fresh_reader:
+    q2: equals_computed
+  # Decision 5 (two pages): the five outcomes as R6 states them, in the brief's plain words and
+  # shorter than the `outcomes` text above, which stays the rows file's and the claims' wording.
+  # Same five letters, same conditions; only the printed sentence is shorter.
+  outcomes:
+    A: Asked for, and Mandatory or Recommended.
+    B: Asked for, and left Optional, put off, dropped or left out.
+    C: Not asked for, though the standards say a catalog needs it (the void).
+    D: Asked for, but the standards carry it a better way (the mismatch).
+    E: Not knowable from the public record, because the plan is unpublished.
+  # ERRATUM, 2026-10-07 11:50 EDT, after this task's first control run (written after that run,
+  # and saying so). The brief's positive control FAILED on plant S1 (expected kept, cut by the
+  # second judge as "flag: relation_unlicensed"; run/controls_dcat005_r1_failed.json, units a73a7de2cbd0e41f
+  # and 1cdacb4b1e044c8c, the two judges). The FAQ item-5 control passed in the same run, and S2
+  # and S3 were cut as expected. Root cause, read against the passage, not the verdict: S1's
+  # only support for what DCAT-US 3.0 records was E19, a passage of the 2025 working draft,
+  # which decision 4 of this task bars from supporting a 3.0 claim; and E19 ties "accuracy" to
+  # the Metric class, not to the measurement, as the judge said. The plant was defective, so the
+  # run measured the plant, not the instrument. Laboratory quality control's rule for a
+  # rejected control (Westgard rules; CLSI C24): stop, find the cause, correct it, re-run the
+  # control, and report nothing measured before it passes. Correction: S1 rests on the
+  # published Dataset page as served on 5 October 2026 (E17, its table row, "for example,
+  # completeness, accuracy, or timeliness"; E15, the element-table row), with the same
+  # classification a real landed item for need 4 carries. S2 and S3 are unchanged. The control
+  # is re-run once; if either control fails again, the task stops and reports.
+  controls_plants:
+    - {text: "DCAT-US 3.0 records quality measurements for a dataset, for example accuracy, with hasQualityMeasurement, which the Dataset page as served on 5 October 2026 lists as Optional. [Classification this sentence must support: In DCAT-US 3.0, uncertainty is carried by hasQualityMeasurement, at the Optional level on the page as served on 5 October 2026.]",
+       evidence: [E17, E15], expect: kept}
+    - {text: "The W3C DCAT 3 standard says its spatial resolution property is a number representing a length in meters.",
+       evidence: [E32], expect: cut_non_responsive}
+    - {text: "FCSM 20-04 requires every federal dataset's catalog record to include a margin of error.",
+       evidence: [E10], expect: cut_unsupported}
+  # The readers' positive control, written before any reading call. A "none asks" from the
+  # full read is an absence claim, and an absence claim from an instrument never shown able to
+  # return a hit is not evidence (docs/research/kg_construction_methodology.md 7.5: no monitor
+  # is trusted until a seeded known-bad fires it). One planted ask is put in the middle of need
+  # 1's first batch, where recall in a long context is lowest (Liu et al. 2024); both readers
+  # must return it, its quote verbatim, before any need's "not found in the full read" is used.
+  reader_control:
+    need: 1
+    plant:
+      id: P1
+      doc_id: reader-control-plant
+      section: page 9
+      text: "Recommendation 4. Agencies should record, in each dataset's catalog entry, the series the dataset belongs to, such as a monthly or annual series, so that users can find every release of it."

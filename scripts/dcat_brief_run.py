@@ -396,26 +396,45 @@ def outcome(asked: str, landed: str, deferred: bool, literature: str) -> str:
     return "outside_rule"
 
 
-def r7_answer(letters: list) -> str:
-    n_a = sum(1 for x in letters if x == "A")
-    return "yes" if n_a == len(letters) else "partly" if n_a else "no"
+def r7_answer(letters: list) -> str | None:
+    """DN-011-R7's two clauses, as written: *no* if every need is in B, C or E; *partly* if at
+    least one is in A. When neither holds (a need in D, or outside the rule, and none in A) the
+    rule does not decide, and this returns None. DCAT-005 decision 2: DCAT-004 v2 had added
+    "yes if all are in A" and "a D row counts as not A", which R7 does not say; the two clauses
+    are mutually exclusive, so a row set is decided by at most one of them."""
+    if letters and all(x in ("B", "C", "E") for x in letters):
+        return "no"
+    if any(x == "A" for x in letters):
+        return "partly"
+    return None
+
+
+#: What the brief prints for an answer R7 does not reach.
+NOT_DECIDED = "not decided"
 
 
 def verdict(rows: dict, bcfg: dict) -> dict:
-    """DN-011-R7 over the letters (`brief_config.yaml` `verdict`): no if none of the group's
-    needs is in A, partly if at least one is, yes if all are. A row the rule could not place
-    carries the set of letters still open (`open`); the answer is computed for every
-    combination of them and is determined only when all give the same answer. Otherwise it is
-    reported as the set ("no or partly"), never as one of them."""
+    """DN-011-R7 over the letters (`brief_config.yaml` `verdict` names each answer's rows). A row
+    the rule could not place carries the set of letters still open (`open`); R7 is applied to
+    every combination of them, and the answer is decided only when every combination gives the
+    same decided answer. Otherwise it is `not decided`, with what would decide it: `partly_if`,
+    the rows that could be in A (any one of them in A gives "partly"), and `no_needs`, every
+    row not already certainly in B, C or E with the letters it has now (all of them in B, C or E
+    gives "no")."""
     import itertools
     out = {}
     for name, ids in bcfg["verdict"].items():
         sets = [rows[i].get("open") or [rows[i]["outcome"]] for i in ids]
-        answers = sorted({r7_answer(list(c)) for c in itertools.product(*sets)},
-                         key=["no", "partly", "yes"].index)
-        out[name] = {"answer": " or ".join(answers), "determined": len(answers) == 1,
+        answers = {r7_answer(list(c)) for c in itertools.product(*sets)}
+        decided = len(answers) == 1 and None not in answers
+        out[name] = {"answer": next(iter(answers)) if decided else NOT_DECIDED, "determined": decided,
+                     "rule": "DN-011-R7 as written: no if every need is in B, C or E; partly if at least one is in A",
                      "rows": ids, "letters": {i: rows[i]["outcome"] for i in ids},
-                     "open": {i: sets[k] for k, i in enumerate(ids)}}
+                     "open": {i: sets[k] for k, i in enumerate(ids)},
+                     "partly_if": [i for k, i in enumerate(ids) if "A" in sets[k]] if not decided else [],
+                     "no_needs": ([{"row": i, "now": [x for x in sets[k] if x != "outside_rule"] or sets[k]}
+                                   for k, i in enumerate(ids) if not set(sets[k]) <= {"B", "C", "E"}]
+                                  if not decided else [])}
     return out
 
 
@@ -680,12 +699,69 @@ def round_letters(r: dict, levels: dict) -> tuple:
     return letters, used
 
 
-def row_from_need(res: dict, levels: dict) -> dict:
+#: The plain statement a full read with no ask stands on (DCAT-005 decision 1), printed in the
+#: rows file under "Asked for?".
+FULL_READ_NONE = ("Every passage of the statistical side's eight public documents that uses the need's "
+                  "words was read in full, by two readers, and none asks for it.")
+
+
+def apply_overlay(res: dict, overlay: dict | None) -> dict:
+    """DCAT-005's corrections (`scripts/dcat_brief_correct.py`, `run/corrections.json`) applied
+    to a copy of one need's DCAT-004 rounds, which are never rewritten:
+
+    * `rounds_added`: rounds answered over the need's evidence without the 2025 working draft's
+      prose, appended after DCAT-004's.
+    * `rechecks`: a validated landed or literature sentence that cited the draft, checked again
+      without it. Kept: its citations become the published ones. Cut: that part of that round
+      is no longer validated.
+    * `full_read`: the uncapped read of the asked record. Its verdict replaces every round's
+      asked part (`asked`, or `not_found_in_public_record` when no passage asks), since it read
+      everything the earlier absence checks read part of."""
+    import copy
+    if not overlay:
+        return res
+    res = copy.deepcopy(res)
+    rounds = res["rounds"] + copy.deepcopy(overlay.get("rounds_added") or [])
+    for t in overlay.get("rechecks") or []:
+        r = rounds[t["round"] - 1]
+        for x in r["items"]:
+            if x["part"] != t["part"] or x["kind"] != "SENTENCE":
+                continue
+            if t["kept"]:
+                x.update(evidence=t["evidence_published"], support_span=t.get("support_span"),
+                         panel=t.get("panel"), published_recheck=True)
+            else:
+                x.update(kept=False, cut_reason=f"published re-check: {t.get('cut_reason')}")
+        if not t["kept"]:
+            r["parts_validated"] = {**r["parts_validated"], t["part"]: False}
+    fr = overlay.get("full_read")
+    if fr and fr.get("verdict") in ("asked", "not_found_in_full_read"):
+        asked = fr["verdict"] == "asked"
+        items = ([{**{k: x[k] for k in ("item_id", "kind", "part", "sentence", "evidence", "evidence_file",
+                                        "kept", "verdict", "responsive", "support_span", "reason",
+                                        "cut_reason", "panel")}} for x in fr["kept"]] if asked else
+                 [{"item_id": "F1", "kind": "FULL_READ", "part": "asked", "sentence": FULL_READ_NONE,
+                   "evidence": [], "evidence_file": fr["evidence_file"], "kept": True}])
+        for r in rounds:
+            if r.get("status") != "done":
+                continue
+            r["answer"] = {**r["answer"], "asked": {**r["answer"]["asked"],
+                                                    "code": "asked" if asked else "not_found_in_public_record"}}
+            r["parts_validated"] = {**r["parts_validated"], "asked": True}
+            r["items"] = [x for x in r["items"] if x["part"] != "asked"] + items
+    res["rounds"] = rounds
+    return res
+
+
+def row_from_need(res: dict, levels: dict, overlay: dict | None = None) -> dict:
     """The table row. Each round constrains the letter by its validated parts; the rounds'
     letter sets are intersected (both rounds' validated parts are evidence). One letter left:
     the row is placed. More: `outcome` is `unplaced` and `open` names the letters still
     possible. None: the rounds validated conflicting codes, and the row says so. For each part
-    the row keeps the latest round's validated sentence, which the brief and the claims cite."""
+    the row keeps the latest round's validated sentence, which the brief and the claims cite.
+    `overlay`: DCAT-005's corrections for this need (`apply_overlay`)."""
+    fr = (overlay or {}).get("full_read")
+    res = apply_overlay(res, overlay)
     base = {"need_id": res["need_id"], "need": res["need"], "rounds": len(res["rounds"])}
     letters, per_round = set("ABCDE") | {"outside_rule"}, []
     for r in res["rounds"]:
@@ -720,7 +796,12 @@ def row_from_need(res: dict, levels: dict) -> dict:
             "deferred": (parts.get("landed") or {}).get("deferred"),
             "elements": (parts.get("landed") or {}).get("elements") or [],
             "literature": (parts.get("literature") or {}).get("code"),
-            "part_round": {p: v["round"] for p, v in parts.items()}, "items": items}
+            "part_round": {p: ("full_read" if p == "asked" and fr and fr.get("verdict") else v["round"])
+                           for p, v in parts.items()},
+            "asked_read": (fr or {}).get("verdict"),
+            "full_read": ({k: fr.get(k) for k in ("evidence_file", "matched", "read", "batches", "readers",
+                                                  "dropped_by_cap", "status")} if fr else None),
+            "items": items}
 
 
 # ------------------------------------------------------------------------ section evidence

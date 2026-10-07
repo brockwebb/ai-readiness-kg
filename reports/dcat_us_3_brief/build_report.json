@@ -3,8 +3,7 @@
  "added_by_code": [
   "section 3: both answers and their grounds, from the table",
   "section 4: the table and the outcome sentences (config)",
-  "section 5: the lead sentence naming the C and D rows",
-  "section 7: the outcome-E needs"
+  "section 5: the lead sentences naming the D rows and the rows the void cannot be ruled out for"
  ],
  "cut_by_build": [],
  "lint": {
@@ -14,12 +13,18 @@
  },
  "readability": {
   "implementation": "textstat (0, 7, 13), textstat.flesch_kincaid_grade",
-  "grade": 9.43,
-  "words": 776,
-  "sentences": 49,
+  "grade": 9.48,
+  "words": 604,
+  "sentences": 41,
   "target_grade": 10,
   "body": "lines of BRIEF.md that are not headings, table rows or sources; citation marks removed"
  },
+ "body_words": {
+  "words": 842,
+  "implementation": "textstat (0, 7, 13), textstat.lexicon_count, above the source list",
+  "max": 900
+ },
+ "published_gate": "passed: every landed and 3.0 literature cell cites a published page",
  "acronyms": [
   {
    "acronym": "DCAT-US",
@@ -29,18 +34,6 @@
   },
   {
    "acronym": "DCAT",
-   "first_line": 3,
-   "expansion_line": 3,
-   "ok": true
-  },
-  {
-   "acronym": "AI",
-   "first_line": 3,
-   "expansion_line": 3,
-   "ok": true
-  },
-  {
-   "acronym": "FCSM",
    "first_line": 3,
    "expansion_line": 3,
    "ok": true
@@ -58,9 +51,21 @@
    "ok": true
   },
   {
+   "acronym": "FCSM",
+   "first_line": 3,
+   "expansion_line": 3,
+   "ok": true
+  },
+  {
    "acronym": "OMB",
    "first_line": 9,
    "expansion_line": 9,
+   "ok": true
+  },
+  {
+   "acronym": "CDO",
+   "first_line": 25,
+   "expansion_line": 25,
    "ok": true
   },
   {
