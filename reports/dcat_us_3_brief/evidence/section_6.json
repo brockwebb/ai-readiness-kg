@@ -1,0 +1,101 @@
+{
+ "question_id": 6,
+ "question": "What options for next steps the sources support: a statistical application profile; raising requirement levels through guidance; conformance checking. Report what each source says; recommend nothing beyond the sources.",
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T14:00:09.650790+00:00",
+ "documents": {
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_implementation_guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide",
+   "issuer": "Federal CDO Council",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us-3-implementation/",
+   "graph": "fss-policy-kg"
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::con-statistical-datasets",
+    "location": "statdcat-ap-1-0-1#c0003"
+   },
+   "section": "",
+   "text": "EXECUTIVE SUMMARY \nThis document contains the specification and the work that was carried out for \nStatDCAT-AP, an extension of the DCAT  Application Profile for data portals in \nEurope1 for describing statistical datasets, dataset series and services.",
+   "cut": false,
+   "faq_question": 13,
+   "id": "E1"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::cl-profile-impact",
+    "location": "statdcat-ap-1-0-1#c0008"
+   },
+   "section": "",
+   "text": "So, improving the metadata quality by establishing a dedicated extended profile of \nDCAT-AP, StatDCAT-AP, for statistical data has an important impact on the already \npublished dataset records.",
+   "cut": false,
+   "faq_question": 13,
+   "id": "E2"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s59"
+   },
+   "section": "passage 59",
+   "text": "This guide reflects the recommendations that reached sufficient consensus and were feasible to incorporate during the current development cycle. Several additional recommendations proposed by the tiger team were not included in this version due to considerations such as implementation timing, the need for additional policy or technical clarification, or current system and platform constraints. To ensure these recommendations remain available for future consideration, the tiger team consolidated all outstanding recommendations and formally elevated them to OMB and the Federal Chief Data Officers Council (CDOC) for review and potential incorporation into future updates of this guide.",
+   "cut": false,
+   "faq_question": 13,
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 107
+   },
+   "section": "What's new in v3.0",
+   "text": "**JSON Schema validation.** DCAT-US v3.0 is a valid JSON Schema (2020-12). Agencies can programmatically validate their metadata files against the schema. See [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema) for tooling.",
+   "cut": false,
+   "faq_question": 13,
+   "id": "E4"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 169
+   },
+   "section": "Validation",
+   "text": "Validate your metadata against the v3.0 schema in data.gov's [online validator](https://harvest.data.gov/validate/) , or build your own using the following resources:",
+   "cut": false,
+   "faq_question": 13,
+   "id": "E5"
+  }
+ ],
+ "evidence_sha256": "1b0e1b22fb3c5201396a8ee717c60f1c29c160af71be23aff80eac550f9099a1"
+}

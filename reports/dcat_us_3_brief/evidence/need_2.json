@@ -1,0 +1,1155 @@
+{
+ "question_id": 2,
+ "need": "dimensions",
+ "question": "Statistical need 2, dimensions: the breakdowns a statistical table is cut by, such as age, sex, place or year. (1) Did FCSM or the FAIRness Project publicly ask for it? (2) Where did it land in DCAT-US 3.0: Mandatory, Recommended, Optional, dropped, or absent, as served on 5 October 2026; and does the Implementation Guide or the Overview say it was deferred to a later version? (3) What does the literature say is the right way to carry it?",
+ "generated_by": "scripts/dcat_faq_evidence.py --brief",
+ "generated_at": "2026-10-07T13:21:15.582391+00:00",
+ "parts": {
+  "asked": {
+   "terms": [
+    "dimension",
+    "variable",
+    "breakdown",
+    "disaggregat",
+    "data dictionary",
+    "data element",
+    "classification"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "fairness-project-wiki-home",
+     "fairness-project-wiki-project-overview",
+     "fcsm-2024-b3-3-fairness-project",
+     "cdoc-dswg-findings-and-recommendations-2022",
+     "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+     "fcsm-20-04-a-framework-for-data-quality",
+     "fcsm-23-02-a-framework-for-data-quality-case-studies",
+     "fcsm-25-03"
+    ],
+    "fss-policy-kg": [
+     "fairness_project_wiki_overview",
+     "fcsm_20_04",
+     "fcsm_25_03"
+    ]
+   },
+   "matched": 641,
+   "kept": 14,
+   "dropped_by_cap": 599
+  },
+  "landed": {
+   "terms": [
+    "dimension",
+    "variable",
+    "data dictionary",
+    "describedby",
+    "statistical"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "dcat-us-3-dataset-schema-2026-10-05",
+     "dcat-us-3-overview-2026-10-05",
+     "dcat-us-3-implementation-guide",
+     "dcat-us-3-dataset-series",
+     "dcat-us-3-quality-governance",
+     "dcat-us-3-temporal-spatial-metrics",
+     "dcat-us-3-candidate-recommendation-snapshot"
+    ],
+    "fss-policy-kg": [
+     "dcat_us_3_implementation_guide"
+    ]
+   },
+   "matched": 175,
+   "kept": 16,
+   "dropped_by_cap": 143
+  },
+  "literature": {
+   "terms": [
+    "dimension",
+    "stat:dimension",
+    "dimensionproperty",
+    "dimension property",
+    "component",
+    "data structure definition",
+    "variable",
+    "attribute"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "statdcat-ap-1-0-1",
+     "sdmx-3-0-section-1-framework",
+     "sdmx-3-1-section-2-information-model",
+     "sdmx-standards-overview",
+     "ddi-codebook-specification",
+     "ddi-cdi-1-0-specification",
+     "w3c-rdf-data-cube",
+     "w3c-dqv",
+     "w3c-dwbp-2017",
+     "wilkinson-2016-fair-guiding-principles",
+     "jacobsen-2020-fair-principles-interpretations",
+     "dcat-ap-3-0-0-r5r-vocabulary",
+     "w3c-dcat-3"
+    ],
+    "fss-policy-kg": [
+     "w3c_dcat_3"
+    ]
+   },
+   "matched": 1251,
+   "kept": 16,
+   "dropped_by_cap": 1226
+  }
+ },
+ "matched": 2067,
+ "dropped_by_cap": 1968,
+ "caps": {
+  "asked": {
+   "max_items": 14,
+   "max_chars": 14000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "landed": {
+   "max_items": 12,
+   "max_chars": 12000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "literature": {
+   "max_items": 16,
+   "max_chars": 16000,
+   "max_per_document": 3,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  }
+ },
+ "documents": {
+  "cdoc-dswg-findings-and-recommendations-2022": {
+   "title": "Data Sharing Working Group: Findings & Recommendations (Federal CDO Council)",
+   "issuer": "Federal Chief Data Officers Council, Data Sharing Working Group",
+   "date": "2022-03-30",
+   "url": "https://resources.data.gov/assets/documents/2021_DSWG_Recommendations_and_Findings_508.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-1-1-schema": {
+   "title": "DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-implementation-guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-09",
+   "url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_implementation_guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide",
+   "issuer": "Federal CDO Council",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us-3-implementation/",
+   "graph": "fss-policy-kg"
+  },
+  "ddi-cdi-1-0-specification": {
+   "title": "DDI - Cross Domain Integration (DDI-CDI): Specification Overview, Version 1.0",
+   "issuer": "DDI Alliance",
+   "date": "2025-01-24",
+   "url": "https://ddialliance.org/hubfs/Specification/DDI-CDI/1.0/DDI-CDI_Model_Specification.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-23-02-a-framework-for-data-quality-case-studies": {
+   "title": "FCSM 23-02: A Framework for Data Quality: Case Studies",
+   "issuer": "Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-25-03": {
+   "title": "FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality",
+   "issuer": "Federal Committee on Statistical Methodology (FCSM)",
+   "date": "2025",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "sdmx-3-0-section-1-framework": {
+   "title": "SDMX 3.0 Technical Specifications, Section 1: Framework for SDMX Technical Standards",
+   "issuer": "SDMX Technical Working Group",
+   "date": "2021-09-13",
+   "url": "https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "sdmx-3-1-section-2-information-model": {
+   "title": "SDMX Standards, Section 2: Information Model: UML Conceptual Design, Version 3.1",
+   "issuer": "SDMX Technical Working Group",
+   "date": "2025-05",
+   "url": "https://sdmx.org/wp-content/uploads/SDMX_3-1-0_SECTION_2_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dqv": {
+   "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2016-12-15",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-rdf-data-cube": {
+   "title": "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)",
+   "issuer": "W3C Government Linked Data Working Group",
+   "date": "2014-01-16",
+   "url": "https://www.w3.org/TR/vocab-data-cube/",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
+   "locator": {
+    "file": "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf",
+    "page": 23,
+    "block": 1
+   },
+   "section": "page 23",
+   "text": " \n \n20 \nSticky note 13 Searchable ROCIS database (ICRs, regulations) \nSticky note 14 Expand upon Data Maturity Assessments to include documentation \nSticky note 15 Digital linkages embedded in metadata \nIssue 4 Create data classifications \nSticky note 16 Data Inventory includes meta-data about sharing for all agency data elements \nSticky note 17 Semantic mappings of data sets descriptions/contents \nSticky note 18 Link data sets to the analyses and reports that they are used for \nSticky note 19 Topic-based mini catalogs of data \nSticky note 20 Easily digestible data inventory catalog information (i.e., data.gov) \n ",
+   "terms_matched": [
+    "data element",
+    "classification"
+   ],
+   "cut": false,
+   "id": "E1",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 33,
+    "block": 1
+   },
+   "section": "page 33",
+   "text": "18 \n \nnumerical means further disaggregated by user type and by statistical product. In this section we consider the \naggregate results. Among the 44 users who responded to the item about relevance, 41 of them answered with either a 4 (Somewhat \nsatisfied) or a 5 (Very Satisfied) on the 5-point Likert scale, that is, 93 percent of users (who responded to the item) \nhad a positive rating, reflecting that 20 percent had a rating of Somewhat Satisfied (or Confident) and 73 had a \nrating of Very Satisfied (or Confident). The percentages of users who had a positive rating for the various \ndimensions of data quality are shown in Figure 1.1. Figure. 1.1.",
+   "terms_matched": [
+    "dimension",
+    "disaggregat"
+   ],
+   "cut": false,
+   "id": "E2",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 42,
+    "block": 3
+   },
+   "section": "page 42",
+   "text": "BEA documentation on NIPA begins by noting that, in part, “relevance refers to the ability of the accounts to \nprovide summary and detailed estimates in analytical frameworks that help answer the questions being asked about \nthe economy” (Bureau of Economic Analysis, 2017a, p. 1-8, emphasis added). Disaggregating PCE beyond the broad distinction between goods (which are often subdivided between durable and \nnondurable) and services, PCE provides a “functional” classification composed of 13 more detailed categories such \nas “Clothing, footwear, and related services,” “Transportation” and “Financial services and insurance” (Bureau of \nEconomic Analysis, 2017b, p. 5-5).",
+   "terms_matched": [
+    "disaggregat",
+    "classification"
+   ],
+   "cut": false,
+   "id": "E3",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 52,
+    "block": 3
+   },
+   "section": "page 52",
+   "text": "To improve the accuracy and reliability of \ninformation generated from NPSAS, missing values within derived variables are stochastically imputed with the \ngoal of achieving nationally representative estimates from the resulting data. Work undertaken to improve accuracy and reliability creates trade-offs between those dimensions and timeliness. The sheer volume of derived variables and the need to ensure that all imputations produce internally consistent \ninformation requires an extensive set of logic and range checks against other information available for each student \nin NPSAS.",
+   "terms_matched": [
+    "dimension",
+    "variable"
+   ],
+   "cut": false,
+   "id": "E4",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 61,
+    "block": 4
+   },
+   "section": "page 61",
+   "text": "To aid researchers in evaluating whether the linked 2014 NHCS-2014/2015 NDI data will meet their analytic needs \nand for developing RDC proposals, data dictionaries are made available online; these documents were sent to users \nas part of the Transparency Reporting Project. Figure 3.2 replicates a portion of the documentation. In addition to \nbasic fields such as Name, Label, and Description, the documentation includes other key pieces of information \ncaptured in the Notes field. Figure 3.2  Extract from Mortality Variables Data Dictionary, 2014 NHCS-2014/15 NDI Data File  \n \nNHCS Linked to NDIMortality Variables \nDate Created: 18JAN 2019 \nNumber of Variables;",
+   "terms_matched": [
+    "variable",
+    "data dictionary"
+   ],
+   "cut": false,
+   "id": "E5",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 8,
+    "block": 2
+   },
+   "section": "page 8",
+   "text": "Timeliness Timeliness is the length of time between the event or phenomenon the data \ndescribe and their availability. Punctuality Punctuality is measured as the time lag between the actual release of the data and \nthe planned target date for data release. Granularity \nGranularity refers to the amount of disaggregation available for key data elements. Granularity can be expressed in units of time, level of geographic detail available, \nor the amount of detail available on any of a number of characteristics (e.g. (demographic, socio-economic). Objectivity\n Accuracy and \nreliability \nAccuracy measures the closeness of an estimate from a data product to its true \nvalue.",
+   "terms_matched": [
+    "disaggregat",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E6",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 27,
+    "block": 1
+   },
+   "section": "page 27",
+   "text": "FCSM: A Framework for Data Quality 23\n \n \nGranularity refers to the amount of disaggregation available for key data elements. Granu-\nlarity can be expressed in units of time; level of geographic detail available; or the amount \nof detail available on any of a number of characteristics.",
+   "terms_matched": [
+    "disaggregat",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E7",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 42,
+    "block": 4
+   },
+   "section": "page 42",
+   "text": "Harmonization errors arise when data elements have been defned,\ncollected, or processed diferently. For single source data products, harmonization errors afect\nconsistency of the data over time. For integrated data products, diferences in data elements\nacross input sources can lead to harmonization error. 7. Modeling error. For modeled data products and outputs, modeling errors arise from\ninaccuracies in statistical model assumptions and from the efects of modeling decisions\nrelated to missing data, calibration variables and other constants, infuential observations, and\nother factors.",
+   "terms_matched": [
+    "variable",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E8",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 48,
+    "block": 4
+   },
+   "section": "page 48",
+   "text": "Data products, including data\nfles and outputs that provide information for small population groups, small population\ngeographic units, and narrow time intervals increase disclosure risks. Tis threat to\nconfdentiality is mitigated by reducing the granularity with which data are released,\nwhich increases the threat to data quality in the utility domain through the granularity\ndimension. 2. Large number of data elements in microdata. Disclosure risks for microdata fles increase\nwith the number of available data elements and the resulting likelihood of unique or\nnear-unique records.",
+   "terms_matched": [
+    "dimension",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E9",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 47,
+    "block": 2
+   },
+   "section": "page 47",
+   "text": "Granularity refers to the amount of disaggregation available for key data elements. Granularity can be expressed in units of time, level of geographic detail available, or the amount \nof detail available on any of the number of characteristics (e.g., demographic, socio-economic). Objectivity \nAccuracy and reliability: Accuracy measures the extent to which an estimate from a data \nproduct reflects the data’s true value. Reliability, a related concept, characterizes the \nconsistency of results when the same phenomenon is measured or estimated more than once \nunder similar conditions. Coherence:",
+   "terms_matched": [
+    "disaggregat",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E10",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-25-03",
+   "locator": {
+    "file": "corpus/pilot/fcsm-25-03.pdf",
+    "page": 4,
+    "block": 1
+   },
+   "section": "page 4",
+   "text": "4 \n \n \nmetadata for machine understandability” – in other words, giving AI detailed context about each data \nelement. The FCSM framework provides three domains to evaluate these metadata improvements: Utility, Objectivity, and Integrity. Each data element should be assessed for data quality across these \nthree domains and corresponding dimensions including accessibility, timeliness, and accuracy. Creating AI-ready data builds on established open-data principles. Title II of Public Law No:",
+   "terms_matched": [
+    "dimension",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E11",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-25-03",
+   "locator": {
+    "file": "corpus/pilot/fcsm-25-03.pdf",
+    "page": 5,
+    "block": 1
+   },
+   "section": "page 5",
+   "text": "5 \n \n \n2. Implement API & Metadata Enhancements: Next, select one or two high-value data products \nto improve. This might involve adopting or upgrading it to ensure that it returns \ncomprehensive metadata (descriptions of variables, units, update timestamps, etc.). Use \ncommon schemas or standards like the DCAT metadata standard used in data.gov catalogs or \nSDMX so that AI developers have a consistent experience. Consider the domains and \ndimensions as outlined in the FCSM Framework for Data Quality to inform enhancements.",
+   "terms_matched": [
+    "dimension",
+    "variable"
+   ],
+   "cut": false,
+   "id": "E12",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted measure span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::m-describe-categorical",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0207"
+   },
+   "section": "",
+   "text": "Categorical variables are often \nreferred to as “dimensions.”  \n Describe the categorical variables present in the data, listing any notable exclusions  \no Location (geographic area, store specific, etc.) \no Item (product or category codes and descriptions, unique item identifiers, etc.) \no Time (dates, months, years, etc.) \n Note categorical variables with hierarchical relationships.",
+   "terms_matched": [
+    "dimension",
+    "variable"
+   ],
+   "cut": false,
+   "id": "E13",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted measure span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::m-equivalence-criteria",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050"
+   },
+   "section": "",
+   "text": "b.  Assessment criteria - The degree to which a set of data is equivalent in redundant or distributed  \n         databases and data element values are in line with the acceptable values defined in the USVETS  \n         data dictionary.",
+   "terms_matched": [
+    "data dictionary",
+    "data element"
+   ],
+   "cut": false,
+   "id": "E14",
+   "part": "asked"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "describedBy",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 193,
+     "dcat-us-3-dataset-schema": 342,
+     "dcat-us-3-candidate-recommendation-snapshot": 2665,
+     "dcat-us-1-1-schema": 266,
+     "dcat-us-3-dataset-schema-2026-10-05": 195
+    }
+   },
+   "section": "element describedBy",
+   "text": "Element describedBy. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; describedBy #](#describedBy) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; describedBy #](#describedBy) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > describedBy` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#describedBy) **Requirement:** Recommended || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: data dictionary | | Requirement level | Recommended | | URI dcat-us:describedBy || DCAT-US v1.1 schema: Field describedBy | Required | No",
+   "pinned": true,
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E15",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "conformsTo",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 579,
+     "dcat-us-3-dataset-schema": 483,
+     "dcat-us-3-candidate-recommendation-snapshot": 2623,
+     "dcat-us-1-1-schema": 215,
+     "dcat-us-3-dataset-schema-2026-10-05": 581
+    }
+   },
+   "section": "element conformsTo",
+   "text": "Element conformsTo. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; conformsTo #](#conformsTo) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; conformsTo #](#conformsTo) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > conformsTo` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#conformsTo) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: conforms to | | Requirement level | Optional | | URI dcterms:conformsTo || DCAT-US v1.1 schema: Field conformsTo | Required | No",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E16",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "temporalResolution",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 1070,
+     "dcat-us-3-dataset-schema": 316,
+     "dcat-us-3-candidate-recommendation-snapshot": 2949,
+     "dcat-us-3-dataset-schema-2026-10-05": 1072
+    }
+   },
+   "section": "element temporalResolution",
+   "text": "Element temporalResolution. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; temporalResolution #](#temporalResolution) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; temporalResolution #](#temporalResolution) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > temporalResolution` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#temporalResolution) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: temporal resolution | | Requirement level | Optional | | URI dcat:temporalResolution || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E17",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "spatialResolutionInMeters",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 1024,
+     "dcat-us-3-dataset-schema": 306,
+     "dcat-us-3-candidate-recommendation-snapshot": 2935,
+     "dcat-us-3-dataset-schema-2026-10-05": 1026
+    }
+   },
+   "section": "element spatialResolutionInMeters",
+   "text": "Element spatialResolutionInMeters. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; spatialResolutionInMeters #](#spatialResolutionInMeters) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; spatialResolutionInMeters #](#spatialResolutionInMeters) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > spatialResolutionInMeters` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#spatialResolutionInMeters) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: spatial resolution in meters | | Requirement level | Optional | | URI dcat:spatialResolutionInMeters || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E18",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 2673
+   },
+   "section": "Property: data dictionary",
+   "text": "| Usage note | This is used to specify a data dictionary or schema that defines fields (variables, dimensions, measures, attributes) in the dataset. |",
+   "terms_matched": [
+    "dimension",
+    "variable",
+    "data dictionary"
+   ],
+   "cut": false,
+   "id": "E19",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 3411
+   },
+   "section": "Property: data dictionary",
+   "text": "| Usage note | This is used to specify a data dictionary or schema that defines fields (variables, dimensions, measures, attributes) in the distribution. |",
+   "terms_matched": [
+    "dimension",
+    "variable",
+    "data dictionary"
+   ],
+   "cut": false,
+   "id": "E20",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 25
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "```\n{ \"@type\" : \"Dataset\" , \"title\" : \"Daily Climate Observations 2024\" , \"description\" : \"Daily temperature, precipitation, and wind measurements from monitoring stations across the United States.\" , \"identifier\" : \"https://example.gov/datasets/climate-observations-2024\" , \"contactPoint\" : { \"fn\" : \"Climate Data Support\" , \"hasEmail\" : \"mailto:climate@example.gov\" }, \"publisher\" : { \"name\" : \"National Climate Data Center\" }, \"keyword\" : [ \"climate\" , \"weather\" , \"temperature\" , \"precipitation\" ], \"issued\" : \"2024-01-15\" , \"modified\" : \"2024-06-01\" , \"accrualPeriodicity\" : \"daily\" , \"accessRights\" : \"public\" , \"landingPage\" : { \"@id\" : \"https://example.gov/climate-data\" , \"@type\" : \"Document\" , \"title\" : \"Climate Data Landing Page\" }, \"describedBy\" : { \"@id\" : \"https://example.gov/climate-data/data-dictionary\" , \"@type\" : \"Distribution\" , \"title\" : \"Data Dictionary\" , \"mediaType\" : \"application/pdf\" }, \"spatial\" : { \"@type\" : \"Location\" , \"bbox\" : { \"type\" : \"Polygon\" , \"coordinates\" : [ [ [ -125.0 , 24.0 ], [ -66.0 , 24.0 ], [ -66.0 , 50.0 ], [ -125.0 , 50.0 ], [ -125.0 , 24.0 ] ] ] } }, \"theme\" : [ \"Climate Science\" ], \"distribution\" : [ { \"title\" : \"Climate Data CSV\" , \"downloadURL\" : \"https://example.gov/downloads/climate-2024.csv\" , \"mediaType\" : \"text/csv\" } ], \"rights\" : [ \"Data is provided as-is without warranty. Please cite the National Climate Data Center when using this data.\" ], \"temporal\" : [ { \"@type\" : \"PeriodOfTime\" , \"startDate\" : \"2024-01-01\" , \"endDate\" :",
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": true,
+   "id": "E21",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 38
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [describedBy](#describedBy) | [Distribution](/standards/catalog/dcat-us-3/distribution/#root) null or | Recommended | A distribution describing the Data Dictionary for this dataset |",
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E22",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 187
+   },
+   "section": "Gaps with DCAT-US 1.1",
+   "text": "- **Increased expressiveness** : DCAT 3 offers a richer set of classes and properties, enabling more detailed descriptions of datasets and their relationships.\n- **Improved support for geospatial data** : DCAT 3 provides better support for describing geospatial datasets, including coordinate reference systems and geometry.\n- **Enhanced handling of statistical data** : DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively.\n- **Refined vocabularies** : DCAT 3 benefits from updated reference controlled vocabularies to ensure better interoperability between agencies and systems.",
+   "terms_matched": [
+    "dimension",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E23",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 2355
+   },
+   "section": "Dataset",
+   "text": "| [data dictionary](#dataset-describedBy) | [`dcat-us:describedBy`](#dataset-describedBy) | ``` dcat:Distribution ``` | R | 0..1 | Fixed |",
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E24",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 21,
+    "block": 1
+   },
+   "section": "page 21",
+   "text": " \nmetadata  requirements  of  M-25-05. Table  2  below  outlines  how  agencies  can  use  the  \nDCAT-US\n \nv3.0\n \nschema\n \nto\n \naddress\n \neach\n \nM-25-05\n \nmetadata\n \nrequirement,\n \nindicating\n \nthe\n \nclasses\n \nand\n \nproperties\n \nthat\n \ncan\n \nsatisfy\n \neach\n \nrequirement. Table  2: DCAT-US  v3.0  Mapped  to  M-25-05  \nM-25-05  Requirement  \nDCAT-US  v3.0  Class  \nRelevant  Properties  \nA. Description  of  the  data  asset  Dataset description B. Names  &  deﬁnitions  of  variables  \nDataset\n63 , 64\n describedBy \nC. Name  or  title  of  the  data  asset  Dataset title \nD.",
+   "terms_matched": [
+    "variable",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E25",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 21,
+    "block": 4
+   },
+   "section": "page 21",
+   "text": "65\n \nThe\n \naccessRestriction\n \nproperty\n \ncan\n \nbe\n \ndeﬁned\n \nin\n \nthe\n \nDataset\n \nor\n \nDistribution\n \nclass\n \ndepending\n \non\n \nthe\n \ncircumstances\n \n(see\n \nsections\n \nbelow\n \nfor\n \nfurther\n \nguidance). 64 \n In  some  cases,  a  data  dictionary  may  be  deﬁned  in  the  Distribution  class  using  the  describedBy\n \nproperty. 63 \n As  appropriate,  variable  deﬁnitions  could  be  deﬁned  in  the  Distribution  class,  particularly  if  a  distribution  has  \na\n \nunique\n \ndata\n \ndictionary\n \nassociated\n \nwith\n \nit. DCAT-US  v3.0  Implementation  Guide    21  ",
+   "terms_matched": [
+    "variable",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E26",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 30,
+    "block": 3
+   },
+   "section": "page 30",
+   "text": "Align  the  level  of  detail  in  variable  \ndeﬁnitions\n \nwith\n \nasset\n \nsensitivity. For\n \npublic\n \ndata\n \nassets,\n \nagencies\n \nshould\n \nuse\n \nthe\n describedBy property  to  reference  variable  deﬁnitions. For  restricted  and  non-public  data  assets,  agencies  should  carefully  assess  whether  variable  deﬁnitions  can  be  disclosed. In  some  cases,  the  describedBy property  may  be  set  to  NULL  or  may  reference  a  distribution  that  is  restricted  to  authorized  audiences.",
+   "terms_matched": [
+    "variable",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E27",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s1040"
+   },
+   "section": "passage 1040",
+   "text": "For feature catalogs : Use the describedBy property to link feature catalog or data dictionary files to the DCAT record",
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E28",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s281"
+   },
+   "section": "passage 281",
+   "text": "63 As appropriate, variable definitions could be defined in the Distribution class, particularly if a distribution has a unique data dictionary associated with it.",
+   "terms_matched": [
+    "variable",
+    "data dictionary"
+   ],
+   "cut": false,
+   "id": "E29",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s282"
+   },
+   "section": "passage 282",
+   "text": "64 In some cases, a data dictionary may be defined in the Distribution class using the describedBy property.",
+   "terms_matched": [
+    "data dictionary",
+    "describedby"
+   ],
+   "cut": false,
+   "id": "E30",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 31,
+    "block": 4
+   },
+   "section": "page 31",
+   "text": "P roperty A ttribute \nURI stat:attribute  \nRange qb:A ttributeProperty, expressed as a URI. Definition A  component used to qualify and interpret observed values \nComment A ttributes enable specification of the units of measure, any scaling factors and metadata such as the \nstatus of the observation (e.g. estimated, provisional). P roperty Dimension  \nURI stat:dimension  \nRange qb:DimensionProperty, expressed as a URI. Definition A  component that identifies observations \nComment Examples of dimensions include the time to which the observation refers, or a geographic region \nwhich the observation covers.  \n ",
+   "terms_matched": [
+    "dimension",
+    "stat:dimension",
+    "dimensionproperty",
+    "component",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E31",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 74
+   },
+   "section": "1.1 Vocabulary index",
+   "text": "**Classes:** qb:Attachable qb:AttributeProperty qb:CodedProperty qb:ComponentProperty qb:ComponentSet qb:ComponentSpecification qb:DataSet qb:DataStructureDefinition qb:DimensionProperty qb:HierarchicalCodeList qb:MeasureProperty qb:Observation qb:Slice qb:ObservationGroup qb:SliceKey",
+   "terms_matched": [
+    "dimension",
+    "dimensionproperty",
+    "component",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E32",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 251
+   },
+   "section": "6.1 Dimensions, attributes and measures",
+   "text": "The Data Cube vocabulary represents the dimensions, attributes and measures as RDF properties. Each is an instance of the abstract `qb:ComponentProperty` class, which in turn has sub-classes `qb:DimensionProperty`, `qb:AttributeProperty` and `qb:MeasureProperty`.",
+   "terms_matched": [
+    "dimension",
+    "dimensionproperty",
+    "component",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E33",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 870
+   },
+   "section": "10.1 Normalization algorithm",
+   "text": "| PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX qb: <http://purl.org/linked-data/cube#> INSERT { ?o rdf:type qb:Observation . } WHERE { [] qb:observation ?o . }; INSERT { ?o rdf:type qb:Observation . ?ds rdf:type qb:DataSet . } WHERE { ?o qb:dataSet ?ds . }; INSERT { ?s rdf:type qb:Slice . } WHERE { [] qb:slice ?s. }; INSERT { ?cs qb:componentProperty ?p . ?p rdf:type qb:DimensionProperty . } WHERE { ?cs qb:dimension ?p . }; INSERT { ?cs qb:componentProperty ?p . ?p rdf:type qb:MeasureProperty . } WHERE { ?cs qb:measure ?p . }; INSERT { ?cs qb:componentProperty ?p . ?p rdf:type qb:AttributeProperty . } WHERE { ?cs qb:attribute ?p . } |",
+   "terms_matched": [
+    "dimension",
+    "dimensionproperty",
+    "component",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E34",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 39,
+    "block": 3
+   },
+   "section": "page 39",
+   "text": "In this \nprofile, used for statements related to \nquality of the Dataset, including \nrating, quality certificate, feedback \nthat can be associated to datasets or \ndistributions. \noa:A nnotation \nhttps://www.w3.org/TR/2016/WD-\nannotation -vocab-\n20160331/#annotation \nA ttribute \nP roperty \nA  component property which \nrepresents an attribute of \nobservations in the Dataset, e.g. unit \nof measurement \nqb:A ttributeProperty https://www.w3.org/TR/vocab-data-\ncube/#ref_qb_AttributeProperty   \nDimension \nP roperty \nA component property which \nrepresents a dimension in the Dataset qb:DimensionProperty https://www.w3.org/TR/vocab-data-\ncube/#ref_qb_DimensionProperty  \nSize or \nduration  \nA  dimension or extent, e.g. the \nnumber of data series in a Dataset dct:SizeOrDuration http://dublincore.org/documents/dc\nmi-terms/#terms-SizeOrDuration  \n \n6.7.",
+   "terms_matched": [
+    "dimension",
+    "dimensionproperty",
+    "component",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E35",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 43,
+    "block": 4
+   },
+   "section": "page 43",
+   "text": "0..n \ndimension stat:dimension  qb:DimensionProperty This property links to a \ncomponent that \nidentifies observations, \ne.g. the time to whi ch \nthe observation \napplies, or a \ngeographic region \nwhich the observation \ncovers. Dimension is a  \n‘conceptual’ entity that \napplies to all \ndistribution f ormats, \ne.g. in case a da taset \nis provided both in \nSDMX and in Data \nC ube.",
+   "terms_matched": [
+    "dimension",
+    "stat:dimension",
+    "dimensionproperty",
+    "component"
+   ],
+   "cut": false,
+   "id": "E36",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-1-section-2-information-model",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-1-section-2-information-model.pdf",
+    "page": 9,
+    "block": 3
+   },
+   "section": "page 9",
+   "text": "Added association to Representation. 170  171 Data Structure Definition 172  173 1. Added Measure Dimension to support structure-specific renderings of the DSD. The 174 Measure Dimension is associated to a Concept Scheme that specifies the individual 175 measures that are valid. 176  177 2. The three types of “Dimension”, - Dimension, Measure Dimension, Time Dimension – 178 have a super class – Dimension Component 179  180 3. Added association to a Concept that defines the role that the component (Dimension, 181 Data Attribute, Measure Dimension) plays in the DSD. This replaces the Boolean 182 attributes on the components. 183  184 4.",
+   "terms_matched": [
+    "dimension",
+    "component",
+    "data structure definition",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E37",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-1-section-2-information-model",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-1-section-2-information-model.pdf",
+    "page": 42,
+    "block": 2
+   },
+   "section": "page 42",
+   "text": "DimensionDescriptor GroupDimensionDescriptor MeasureDescriptor AttributeDescriptor MetadataAttributeDescriptor \nAn abstract definition of a list of components. A concrete example is a Dimension Descriptor, which defines the list of Dimensions in a Data Structure Definition.   \n components An aggregate association to one or more components which make up the list. Component Inherits from: IdentifiableArtefact Sub classes are: Measure AttributeComponent DimensionComponent \nA Component is an abstract super class used to define qualitative and quantitative data and metadata items that belong to a Component List and hence a Structure.",
+   "terms_matched": [
+    "dimension",
+    "component",
+    "data structure definition",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E38",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-1-section-2-information-model",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-1-section-2-information-model.pdf",
+    "page": 74,
+    "block": 2
+   },
+   "section": "page 74",
+   "text": "1290  1291 Measure 1292 DimensionComponent and thereby its sub classes of Dimension and TimeDimension 1293 Attribute and thereby its sub classes of DataAttribute and MetadataAttribute 1294 The concrete classes identified above are the majority of the classes required to define the 1295 metamodel for the DataStructureDefinition. The diagrams and explanations in the rest 1296 of this section show how these concrete classes are related in order to support the functionality 1297 required. 1298 5.3 Data Structure Definition – Relationship View 1299 5.3.1 Class Diagram  1300 \n 1301  1302 Figure 28 Relationship class diagram of the Data Structure Definition excluding representation \n",
+   "terms_matched": [
+    "dimension",
+    "component",
+    "data structure definition",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E39",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "ddi-cdi-1-0-specification",
+   "locator": {
+    "file": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+    "page": 42,
+    "block": 1
+   },
+   "section": "page 42",
+   "text": "  DDI - CDI: Integrating Data for Better Science \n \n42 \n \n \nFigure 9: Core Data Structures and Related Classes \n3. Data Structure Components \nA third important feature of the model are DataStructureComponents, allowing the \nRepresentedVariables to take different roles. Each data structure type - Wide, Long, Multi-Dimensional \nand Key-Value - has its own set of DataStructureComponents, with some being common across data \nstructure types. The components which reflect roles are the IdentifierComponent, AttributeComponent \nand MeasureComponent.",
+   "terms_matched": [
+    "dimension",
+    "component",
+    "variable",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E40",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "ddi-cdi-1-0-specification",
+   "locator": {
+    "file": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+    "page": 58,
+    "block": 2
+   },
+   "section": "page 58",
+   "text": "Similarly, Units and \nPopulations may be identified using DimensionComponents, providing a compound key structure like \nthat found for multi-dimensional data. If more than one approach to composing keys is used, each may \nbe established as a “context”, and this can be added to the keys using the ContextualComponent. TimeKeyMembers are made up of TimeComponents, which may be anything with a temporal \nassociation (this can be an enumerated value such as “Valid”, a timestamp, or any other time-related \nvalue.) \nDescriptors use the VariableDescriptorComponent, which brings together AttributeComponents and \nMeasureComponents (as for the Long Data structure).",
+   "terms_matched": [
+    "dimension",
+    "component",
+    "variable",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E41",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 1768
+   },
+   "section": "E. Compatibility with RDF Data Cube",
+   "text": "Allowing data publishers to use the properties [dqv:isMeasurementOf](#dqv:isMeasurementOf) and [dqv:computedOn](#dqv:computedOn) in such data structures is actually the reason why they have been defined as instances of [qb:DimensionProperty](http://purl.org/linked-data/cube#DimensionProperty) &gt;. The following statements represent the linking of actual measurements in Section 6.10 to the dataset specified by the Data Structure Definition:",
+   "terms_matched": [
+    "dimension",
+    "dimensionproperty",
+    "data structure definition"
+   ],
+   "cut": false,
+   "id": "E42",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-0-section-1-framework.pdf",
+    "page": 15,
+    "block": 3
+   },
+   "section": "page 15",
+   "text": "These descriptions are referred to in SDMX 452 \nas Data Structure Definitions, which include information about how concepts are 453 \nassociated with the measures, dimensions, and attributes of a data “cube,” along with 454 \ninformation about the representation of data and related identifying and descriptive 455 \n(structural) metadata. In Version 2.1, the term \"Key Family\" was replaced by \"Data 456 \nStructure Definition\" (DSD) both in XML Schemas and the Information Model . The 457 \nDSD has been modified in version 3.0 to better support microdata by providing the 458 \noption to define multiple measures and for attributes and measures to take arrays of 459 \nvalues.",
+   "terms_matched": [
+    "dimension",
+    "data structure definition",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E43",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-0-section-1-framework.pdf",
+    "page": 15,
+    "block": 4
+   },
+   "section": "page 15",
+   "text": "An optional reference to a Metadata Structure Definition has also been added 460 \nfor describing the reference metadata associated with the data. When reported, these 461 \nreference metadata are included as part of the dataset. 462 \n• Code list: Code lists enumerate a set of codes to be used in the representation of 463 \ndimensions, attributes, and other structural parts of SDMX. Codes can be organised 464 \ninto simple hierarchies within a code list, and more complex hierarchies potentially 465 \ninvolving multiple code lists using hierarchy and hierarchy association structures. 466 \n• Value list:",
+   "terms_matched": [
+    "dimension",
+    "data structure definition",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E44",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "ddi-cdi-1-0-specification",
+   "locator": {
+    "file": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+    "page": 43,
+    "block": 1
+   },
+   "section": "page 43",
+   "text": "  DDI - CDI: Integrating Data for Better Science \n \n43 \n \n \nCommon Components: • Identifier - An identifier role that serves to identify a unit. More than one variable may \nbe used in combination to produce a compound identifier for the unit of a particular \nobservation. • Measure – Variables tagged with the measure role represent the values of interest. • Attribute – The attribute role serves to provide information about the measures of \ninterest. Variables might, for example, describe the conditions of a measurement. This \nway attributes can be used to link metadata or paradata to the Measure of interest. Additional Comnponents:",
+   "terms_matched": [
+    "component",
+    "variable",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E45",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::c-dsd",
+    "location": "statdcat-ap-1-0-1#c0023"
+   },
+   "section": "",
+   "text": "Use dct:conformsTo to link to \nqb:DataStructureDefinition \ninstead of stat:dimension and \nstat:attribute for RDF \nDistributions  \n Rejected  proposed \nresolution.",
+   "terms_matched": [
+    "dimension",
+    "stat:dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E46",
+   "part": "literature"
+  }
+ ],
+ "evidence_sha256": "58176d27fffebfdc1e1e981dae79febd96b48634d71b34384cc7d26090ec5c75"
+}

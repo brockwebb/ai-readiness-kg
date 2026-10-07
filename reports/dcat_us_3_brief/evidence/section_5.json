@@ -1,0 +1,255 @@
+{
+ "question_id": 5,
+ "question": "In plain words, for each statistical need listed here, what the standards say a catalog should carry that DCAT-US 3.0 does not (the void), or how the standards say a need is better carried than the way the statistical side asked (the mismatch), each with the document that says so. Needs: dimensions (outcome D); methodology and provenance (outcome D); quality dimensions (outcome D).",
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T13:56:12.716758+00:00",
+ "documents": {
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-rdf-data-cube": {
+   "title": "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)",
+   "issuer": "W3C Government Linked Data Working Group",
+   "date": "2014-01-16",
+   "url": "https://www.w3.org/TR/vocab-data-cube/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dwbp-2017": {
+   "title": "Data on the Web Best Practices (W3C Recommendation, 31 January 2017)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2017-01-31",
+   "url": "https://www.w3.org/TR/dwbp/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-25-03": {
+   "title": "FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality",
+   "issuer": "Federal Committee on Statistical Methodology (FCSM)",
+   "date": "2025",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dqv": {
+   "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2016-12-15",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dcat-3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C Dataset Exchange Working Group",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted measure span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::m-describe-categorical",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0207"
+   },
+   "section": "",
+   "text": "Categorical variables are often \nreferred to as “dimensions.”  \n Describe the categorical variables present in the data, listing any notable exclusions  \no Location (geographic area, store specific, etc.) \no Item (product or category codes and descriptions, unique item identifiers, etc.) \no Time (dates, months, years, etc.) \n Note categorical variables with hierarchical relationships.",
+   "cut": false,
+   "part": "asked",
+   "id": "E1"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 31,
+    "block": 4
+   },
+   "section": "page 31",
+   "text": "P roperty A ttribute \nURI stat:attribute  \nRange qb:A ttributeProperty, expressed as a URI. Definition A  component used to qualify and interpret observed values \nComment A ttributes enable specification of the units of measure, any scaling factors and metadata such as the \nstatus of the observation (e.g. estimated, provisional). P roperty Dimension  \nURI stat:dimension  \nRange qb:DimensionProperty, expressed as a URI. Definition A  component that identifies observations \nComment Examples of dimensions include the time to which the observation refers, or a geographic region \nwhich the observation covers.  \n ",
+   "cut": false,
+   "part": "literature",
+   "id": "E2"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 43,
+    "block": 4
+   },
+   "section": "page 43",
+   "text": "0..n \ndimension stat:dimension  qb:DimensionProperty This property links to a \ncomponent that \nidentifies observations, \ne.g. the time to whi ch \nthe observation \napplies, or a \ngeographic region \nwhich the observation \ncovers. Dimension is a  \n‘conceptual’ entity that \napplies to all \ndistribution f ormats, \ne.g. in case a da taset \nis provided both in \nSDMX and in Data \nC ube.",
+   "cut": false,
+   "part": "literature",
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 251
+   },
+   "section": "6.1 Dimensions, attributes and measures",
+   "text": "The Data Cube vocabulary represents the dimensions, attributes and measures as RDF properties. Each is an instance of the abstract `qb:ComponentProperty` class, which in turn has sub-classes `qb:DimensionProperty`, `qb:AttributeProperty` and `qb:MeasureProperty`.",
+   "cut": false,
+   "part": "literature",
+   "id": "E4"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 54,
+    "block": 5
+   },
+   "section": "page 54",
+   "text": "3 \nConsider the quality of each input data source and all processing steps when documenting integrat-\ned data. Documentation should include the methods used for additional processing of source data \nneeded for integration, including imputations and editing, if needed, and relevant methodological \ninformation about integration methods. It should include detailed evaluations of identifed threats \nto the integrated quality of the data, particularly threats most relevant for the integrated data.",
+   "cut": false,
+   "part": "asked",
+   "id": "E5"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 54,
+    "block": 3
+   },
+   "section": "page 54",
+   "text": "Documentation should de -\nscribe the main features of the data product, including its purpose, principal uses, population and \nsub-population coverage, the time frames for which it is available, and the expected periodicity \nof its production. It should include technical operations and production details, methods used in \nprocessing, including imputations and weighting, editing, integration methods and evaluations, \nand data dictionaries. In addition, any changes made to data fles to ensure confdentiality and any \nimpacts on inference should be described. For ongoing data products, changes to key constructs, \nmethods, outputs, and their impacts on data quality should be described.",
+   "cut": false,
+   "part": "asked",
+   "id": "E6"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::k8",
+    "location": "8. Conclusions"
+   },
+   "section": "8. Conclusions",
+   "text": "There is room for agencies to improve on the \ntransparency—that is, the clarity and completeness —of their documentation, by providing more detail on \nsource data, data integration, and how to use the statistical product.",
+   "cut": false,
+   "part": "asked",
+   "id": "E7"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 653
+   },
+   "section": "Intended Outcome",
+   "text": "Humans will know the origin and history of the dataset and software agents will be able to automatically process provenance information.",
+   "cut": false,
+   "part": "literature",
+   "id": "E8"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 700
+   },
+   "section": "How to Test",
+   "text": "Check if a computer application can automatically process the provenance information about the dataset.",
+   "cut": false,
+   "part": "literature",
+   "id": "E9"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-25-03",
+   "locator": {
+    "file": "corpus/pilot/fcsm-25-03.pdf",
+    "page": 4,
+    "block": 1
+   },
+   "section": "page 4",
+   "text": "4 \n \n \nmetadata for machine understandability” – in other words, giving AI detailed context about each data \nelement. The FCSM framework provides three domains to evaluate these metadata improvements: Utility, Objectivity, and Integrity. Each data element should be assessed for data quality across these \nthree domains and corresponding dimensions including accessibility, timeliness, and accuracy. Creating AI-ready data builds on established open-data principles. Title II of Public Law No:",
+   "cut": false,
+   "part": "asked",
+   "id": "E10"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 209
+   },
+   "section": "3. Vocabulary Overview",
+   "text": "- A Quality Dimension ( [dqv:Dimension](#dqv:Dimension) ) is a quality-related characteristic of a dataset relevant to the consumer (e.g., the availability of a dataset).\n- A Quality Metric ( [dqv:Metric](#dqv:Metric) ) gives a procedure for measuring a data quality dimension, which is abstract, by observing a concrete quality indicator. There are usually multiple metrics per dimension; e.g., availability can be indicated by the accessibility of a SPARQL endpoint, or that of an RDF dump. The value of a metric can be numeric (e.g., for the metric \"human-readable labeling of classes, properties and entities\", the percentage of entities having an `rdfs:label` or `rdfs:comment` ) or boolean (e.g., whether or not a SPARQL endpoint is accessible).",
+   "cut": false,
+   "part": "literature",
+   "id": "E11"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 2952
+   },
+   "section": "14. Quality information",
+   "text": "Each type of quality information can pertain to one or more quality dimensions, namely, quality characteristics relevant to the consumer. The practice to see the quality as a multi-dimensional space is consolidated in the field of quality management to split the quality management into addressable chunks. DQV does not define a normative list of quality dimensions. It offers the quality dimensions proposed in ISO/IEC 25012 [ISO-IEC-25012] and [ZaveriEtAl] as two possible starting points. It also provides an RDF representation for the quality dimensions and categories defined in the latter. Ultimately, implementers will need to choose themselves the collection of quality dimensions that best fits their needs. The following section shows how DCAT and DQV can be coupled to describe the quality of datasets and distributions. For a comprehensive introduction and further examples of use, please refer to [VOCAB-DQV].",
+   "cut": false,
+   "part": "literature",
+   "id": "E12"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 8,
+    "block": 1
+   },
+   "section": "page 8",
+   "text": "FCSM: A Framework for Data Quality 4 \n \n \n \n  \n          \n  \n  \n  Relevance\n  Accessibility\n  Timeliness\n  Punctuality\n  Granularity\n  Scientifc \n  integrity  \nCredibility\n  Computer and\n  physical security\n  Confdentiality\nTable ES 1. Dimensions of Data Quality \nDomain Dimension Defnition \nUtility\n Relevance Relevance refers to whether the data product is targeted to meet current and \nprospective user needs. Accessibility \nAccessibility relates to the ease with which data users can obtain an agency’s \nproducts and documentation in forms and formats that are understandable to \ndata users.",
+   "cut": false,
+   "part": "asked",
+   "id": "E13"
+  }
+ ],
+ "evidence_sha256": "025f4e930d8875a3ba2a0aafc08e8cd61b614605317d2615988edcfbd1dad60b"
+}

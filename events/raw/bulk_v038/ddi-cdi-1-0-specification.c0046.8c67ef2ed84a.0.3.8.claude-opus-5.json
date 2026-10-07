@@ -1,0 +1,33 @@
+{
+ "doc_id": "ddi-cdi-1-0-specification",
+ "chunk_id": "ddi-cdi-1-0-specification#c0046",
+ "chunk_index": 46,
+ "chunk_start": 165179,
+ "chunk_end": 165295,
+ "chunk_tokens": 24,
+ "heading_path": [
+  "1 Is in orbit around a star"
+ ],
+ "oversize": false,
+ "doc_sha256": "8c67ef2ed84a3602248e52d437aadbfaf48888071afdf7fb7c53545f5b07009c",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2941,
+  "cacheReadInputTokens": 12916,
+  "cacheCreationInputTokens": 29566,
+  "webSearchRequests": 0,
+  "costUSD": 0.375653,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1788,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.375653,
+ "duration_ms": 35610,
+ "session_id": "2e0f5c03-96ea-4d8e-b87d-a3203bcca69b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"The chunk gives the document's definition of a planet — a celestial body meeting four essential characteristics, of which two are listed here (orbits a star; sufficient mass for a nearly spherical shape under its own gravity).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_planet\",\n      \"name\": \"planet\",\n      \"aliases\": [\"Planet\"],\n      \"description\": \"The celestial body class the document defines by four essential characteristics.\",\n      \"anchor\": \"concept of a planet\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_planet\",\n      \"term\": \"planet\",\n      \"verbatim_text\": \"A planet is a celestial body that\",\n      \"normative_status\": \"academic\",\n      \"as_of_date\": null,\n      \"anchor\": \"four essential characteristics\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_planet_def\",\n      \"claim_text\": \"The concept of a planet is now defined by these four essential characteristics\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"is now defined by\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"d_planet\",\n      \"anchor\": \"defined by these four\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_planet\",\n      \"anchor\": \"concept of a planet\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"cl_planet_def\",\n      \"anchor\": \"is now defined by\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_planet_def\",\n      \"to_id\": \"c_planet\",\n      \"anchor\": \"these four essential\",\n      \"location\": \"ddi-cdi-1-0-specification#c0046\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"celestial body\",\n      \"anchor\": \"celestial\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"2 Contains sufficient mass\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Contains sufficient mass to maintain a nearly spherical shape due to its own gravity\", \"type\": \"Concept\"},\n    {\"name\": \"Is in orbit around a star\", \"type\": \"Concept\"},\n    {\"name\": \"gravity\", \"type\": \"Concept\"},\n    {\"name\": \"star\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

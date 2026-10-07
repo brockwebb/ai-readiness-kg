@@ -1,0 +1,1226 @@
+{
+ "question_id": 8,
+ "need": "restricted-access terms",
+ "question": "Statistical need 8, restricted-access terms: whether a dataset can be used only under conditions, and how to apply for access. (1) Did FCSM or the FAIRness Project publicly ask for it? (2) Where did it land in DCAT-US 3.0: Mandatory, Recommended, Optional, dropped, or absent, as served on 5 October 2026; and does the Implementation Guide or the Overview say it was deferred to a later version? (3) What does the literature say is the right way to carry it?",
+ "generated_by": "scripts/dcat_faq_evidence.py --brief",
+ "generated_at": "2026-10-07T13:21:17.456860+00:00",
+ "parts": {
+  "asked": {
+   "terms": [
+    "restricted",
+    "restricted access",
+    "access",
+    "confidential",
+    "cipsea",
+    "standard application process",
+    "access level",
+    "protected",
+    "tiered access"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "fairness-project-wiki-home",
+     "fairness-project-wiki-project-overview",
+     "fcsm-2024-b3-3-fairness-project",
+     "cdoc-dswg-findings-and-recommendations-2022",
+     "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+     "fcsm-20-04-a-framework-for-data-quality",
+     "fcsm-23-02-a-framework-for-data-quality-case-studies",
+     "fcsm-25-03"
+    ],
+    "fss-policy-kg": [
+     "fairness_project_wiki_overview",
+     "fcsm_20_04",
+     "fcsm_25_03"
+    ]
+   },
+   "matched": 566,
+   "kept": 14,
+   "dropped_by_cap": 519
+  },
+  "landed": {
+   "terms": [
+    "accessrights",
+    "access rights",
+    "accessrestriction",
+    "access restriction",
+    "cuirestriction",
+    "restricted",
+    "non-public",
+    "accesslevel",
+    "standard application process",
+    "use restriction"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "dcat-us-3-dataset-schema-2026-10-05",
+     "dcat-us-3-overview-2026-10-05",
+     "dcat-us-3-implementation-guide",
+     "dcat-us-3-dataset-series",
+     "dcat-us-3-quality-governance",
+     "dcat-us-3-temporal-spatial-metrics",
+     "dcat-us-3-candidate-recommendation-snapshot"
+    ],
+    "fss-policy-kg": [
+     "dcat_us_3_implementation_guide"
+    ]
+   },
+   "matched": 430,
+   "kept": 19,
+   "dropped_by_cap": 367
+  },
+  "literature": {
+   "terms": [
+    "access rights",
+    "accessrights",
+    "restricted",
+    "confidential",
+    "access restriction",
+    "license",
+    "sensitive",
+    "access conditions"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "statdcat-ap-1-0-1",
+     "sdmx-3-0-section-1-framework",
+     "sdmx-3-1-section-2-information-model",
+     "sdmx-standards-overview",
+     "ddi-codebook-specification",
+     "ddi-cdi-1-0-specification",
+     "w3c-rdf-data-cube",
+     "w3c-dqv",
+     "w3c-dwbp-2017",
+     "wilkinson-2016-fair-guiding-principles",
+     "jacobsen-2020-fair-principles-interpretations",
+     "dcat-ap-3-0-0-r5r-vocabulary",
+     "w3c-dcat-3"
+    ],
+    "fss-policy-kg": [
+     "w3c_dcat_3"
+    ]
+   },
+   "matched": 284,
+   "kept": 16,
+   "dropped_by_cap": 246
+  }
+ },
+ "matched": 1280,
+ "dropped_by_cap": 1132,
+ "caps": {
+  "asked": {
+   "max_items": 14,
+   "max_chars": 14000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "landed": {
+   "max_items": 12,
+   "max_chars": 12000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "literature": {
+   "max_items": 16,
+   "max_chars": 16000,
+   "max_per_document": 3,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  }
+ },
+ "documents": {
+  "cdoc-dswg-findings-and-recommendations-2022": {
+   "title": "Data Sharing Working Group: Findings & Recommendations (Federal CDO Council)",
+   "issuer": "Federal Chief Data Officers Council, Data Sharing Working Group",
+   "date": "2022-03-30",
+   "url": "https://resources.data.gov/assets/documents/2021_DSWG_Recommendations_and_Findings_508.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-1-1-schema": {
+   "title": "DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-implementation-guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-09",
+   "url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_implementation_guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide",
+   "issuer": "Federal CDO Council",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us-3-implementation/",
+   "graph": "fss-policy-kg"
+  },
+  "ddi-codebook-specification": {
+   "title": "DDI-Codebook (DDI-C) — DDI Alliance product specification page",
+   "issuer": "DDI Alliance",
+   "date": "2026",
+   "url": "https://ddialliance.org/ddi-codebook",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-2024-b3-3-fairness-project": {
+   "title": "The FAIRness Project: Building Trust and FAIRness into Finding and Using Government Data (FCSM 2024 Research and Policy Conference, session B3.3)",
+   "issuer": "Thomas Dabolt (DOI); Michael Ratcliffe (U.S. Census Bureau)",
+   "date": "2024-10-30",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/2024-conference-docs/B/B3.3_Dabolt.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-23-02-a-framework-for-data-quality-case-studies": {
+   "title": "FCSM 23-02: A Framework for Data Quality: Case Studies",
+   "issuer": "Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_20_04": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "FCSM",
+   "date": "2020-09",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dcat-3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C Dataset Exchange Working Group",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dqv": {
+   "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2016-12-15",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dwbp-2017": {
+   "title": "Data on the Web Best Practices (W3C Recommendation, 31 January 2017)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2017-01-31",
+   "url": "https://www.w3.org/TR/dwbp/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-rdf-data-cube": {
+   "title": "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)",
+   "issuer": "W3C Government Linked Data Working Group",
+   "date": "2014-01-16",
+   "url": "https://www.w3.org/TR/vocab-data-cube/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c_dcat_3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "fss-policy-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 80,
+    "block": 2
+   },
+   "section": "page 80",
+   "text": "The relevance of the proprietary data for their use in FoodAPS and for other food-related research is explained in \nMuth, et al. (2016). The authors review the ERS acquisition data from IRI, a market research company, and the \nintended purposes of the data for food policy research (Muth et al., 2016, pp. 1-3). FoodAPS is released as a set of public-use files (PUFs) and a set of restricted-use files (RUFs). The RUFs are \navailable for approved researchers who sign a pledge in accordance with the Confidential Information Protection \nand Statistical Efficiency Act of 2002 (CIPSEA) and are subject to penalties for non-compliance. (Economic \nResearch Service, 2016, p. 2).",
+   "terms_matched": [
+    "restricted",
+    "confidential",
+    "cipsea"
+   ],
+   "cut": false,
+   "id": "E1",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 11,
+    "block": 3
+   },
+   "section": "page 11",
+   "text": "Granularity – Once merged with the survey files, the LMFs provide access to granular linked \ndemographic, socioeconomic, and health information, as well as mortality status, cause of death, and \nsurvival time. The restricted-use LMFs provide the most granular data, including date of survey \ninterview, date of death, and detailed causes of death. Researchers utilizing the NCHS RDC network can \nincorporate other external data sources along with the restricted-use LMFs by utilizing geocodes. The \npublic-use LMFs provide more granularity than many premade tabulations but limits access to variables \nthat pose a greater risk to confidentiality.",
+   "terms_matched": [
+    "restricted",
+    "access",
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E2",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 13,
+    "block": 3
+   },
+   "section": "page 13",
+   "text": "The NCHS data linkage \nteam applies statistically valid disclosure limitation techniques to the data, resulting in a partially \nsynthetic public-use LMF.14,15  Before the public-use LMF is released, the NCHS disclosure review board \nevaluates the risk of disclosure present in the data and the data perturbation techniques applied to the \ndata. The restricted-use file is accessible only through the RDCs, which are staffed by statisticians \ntrained to address confidentiality concerns before summary statistics are released for public use. Lessons learned/sustainability:",
+   "terms_matched": [
+    "restricted",
+    "access",
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E3",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 35,
+    "block": 2
+   },
+   "section": "page 35",
+   "text": "A formal \noutput review process is in place to ensure that only information that does not pose an identification \nrisk is removed from the secure network. BLS staff complete annual security and privacy training and \nsign a nondisclosure agreement with Census to have access to and to protect the integrity of the \nadministrative trade data. Confidentiality – Processes are in place to ensure the confidentiality of administrative trade data. Before \nthe UVIs are publicly released, the BLS evaluates the risk of disclosure present in the data. The \nadministrative trade data reside on restricted-use files only accessible to staff on a “need-to-know” \nbasis. Lessons learned/sustainability:",
+   "terms_matched": [
+    "restricted",
+    "access",
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E4",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 48,
+    "block": 1
+   },
+   "section": "page 48",
+   "text": "48 \n \nCredibility: Credibility characterizes the confidence that users place in data products based \nsimply on the qualifications and past performance of the data producer. Computer and physical security: Computer and physical security of data refers to the protection \nof information throughout the collection, production, analysis, and development process from \nunauthorized access or revision to ensure that the information is not compromised through \ncorruption or falsification. Confidentiality: Confidentiality refers to a quality or condition of information that is protected \nby an obligation not to disclose that information to an unauthorized party.  ",
+   "terms_matched": [
+    "access",
+    "confidential",
+    "protected"
+   ],
+   "cut": false,
+   "id": "E5",
+   "part": "asked"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s566"
+   },
+   "section": "passage 566",
+   "text": "Ensuring that data systems and electronic products are protected from unauthorized access storage systems that include confidential information, which are protected from unauthorized access (Guideline 3.4.2.2, 19)",
+   "terms_matched": [
+    "access",
+    "confidential",
+    "protected"
+   ],
+   "cut": false,
+   "id": "E6",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-2024-b3-3-fairness-project",
+   "locator": {
+    "file": "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf",
+    "page": 2,
+    "block": 2
+   },
+   "section": "page 2",
+   "text": "• Data.gov\n• GeoPlatform.gov\n• The Standard Application Process portal \n• Agencies Enterprise Data Inventories \n• Supports the Zero Trust Data Pillar and Open Science\n• Builds on FAIR principles (Findable, Accessible, Interoperable, and Reusable)\nFAIRness Project\n2\nFAIRness Project Purpose and Basic Information",
+   "terms_matched": [
+    "access",
+    "standard application process"
+   ],
+   "cut": false,
+   "id": "E7",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
+   "locator": {
+    "file": "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf",
+    "page": 11,
+    "block": 1
+   },
+   "section": "page 11",
+   "text": " \n \n8 \nAppendix A: Literature Review \n \n \nIn recent years much has happened to aid in the increase of data-sharing culminating with the Report of \nthe Commission on Evidence-Based Policymaking (Sept 2017)1 resulting in the passage of the \nEvidence Act of 2018. The report included twenty-two recommendations to improve secure data access \nfor evidence building activities involving population-level government files. These recommendations \nencourage: 1) Systematic Planning for Evidence-Building. 2) High Quality Data Governance. 3) Coordinated Support for Privacy-Protected Data-sharing.",
+   "terms_matched": [
+    "access",
+    "protected"
+   ],
+   "cut": false,
+   "id": "E8",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
+   "locator": {
+    "file": "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf",
+    "page": 11,
+    "block": 4
+   },
+   "section": "page 11",
+   "text": "Guidance for Providing and Using Administrative Data for Statistical Purpose. OMB Memorandum M-\n14-06. 4   When data are used for statistical purposes, it can be used by statistical agencies to generate \nnew reports or to improve the accuracy of existing reports. Generally, this guidance has been enacted \ninto law in the evidence act Title 3 section 3581 entitled “Presumption of Accessibility for Statistical \nAgencies and Units” which says, “Unless prohibited by a statute that leaves no discretion, agency heads \nshall make any data asset available to statistical agencies covered by CIPSEA to the extent practicable \nfor the purpose of developing evidence.” \n \n3.",
+   "terms_matched": [
+    "access",
+    "cipsea"
+   ],
+   "cut": false,
+   "id": "E9",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 25,
+    "block": 6
+   },
+   "section": "page 25",
+   "text": "22, emphasis added)  Whether granularity is treated as a stand-alone \ndimension or subsumed within relevance or another dimension, transparent reporting calls for granularity and other \nsalient aspects of quality to be addressed in agency documentation. The ICSP has developed a set of Principles for \nModernizing Production of Federal Statistics, which state, “While fully complying with confidentiality and privacy \nrequirements, agencies should continue to make statistical information created in support of mission activities as \ngranular and timely as practicable and widely accessible” (Interagency Council on Statistical Policy, 2018, p. 3). ",
+   "terms_matched": [
+    "access",
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E10",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 53,
+    "block": 1
+   },
+   "section": "page 53",
+   "text": "38 \n \nperturbing the data before they are entered into DataLab. While these features maintain the confidentiality of the \ndata, they can impinge on data quality, such as the granularity of the available estimates. The second form of data released is a restricted-use file (RUF), which requires users to apply for a license through \nNCES. Applications must include a plan to maintain data security per NCES standards. These data are far more \nextensive than the public-facing versions in DataLab. They give advanced researchers with approval the added \nflexibility to analyze sophisticated statistical models and procedures to generate their own estimates.",
+   "terms_matched": [
+    "restricted",
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E11",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 59,
+    "block": 4
+   },
+   "section": "page 59",
+   "text": "The users who received the Transparent Reporting \nProject’s customer survey also received three documents on the 2014 NHCS- 2014/2015 linked NDI data:  the \nmethodology report (National Center for Health Statistics, 2018a) and two codebooks (National Center for Health \nStatistics, 2018b and 2018c). It should be noted that the linked NHCS-NDI data are only available as restricted-use \nfiles accessible through the NCHS Research Data Center (National Center for Health Statistics, 2019a). Information regarding the NHCS data is provided in data file dictionaries published on the NHCS website (National \nCenter for Health Statistics, 2019). Assessing and Describing Quality.",
+   "terms_matched": [
+    "restricted",
+    "access"
+   ],
+   "cut": false,
+   "id": "E12",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 31,
+    "block": 1
+   },
+   "section": "page 31",
+   "text": "FCSM: A Framework for Data Quality 27 \nConfidentiality \nConfdentiality refers to a quality or condition of information as an obligation not to \ndisclose that information to an unauthorized party. Tis defnition is from the Evidence \nAct (Pub. L. No. 115-435, 132 Stat. 5529, 2018, codifed at 44 USC 3563(d)(4)) and is con-\nsistent with requirements that individually-identifable data be protected from unauthorized \ndisclosure in order to uphold its confdentiality (OMB 2006), in which individually-identi-\nfable data are those that permit the identity of the respondent or entity to which the infor -\nmation apply to be reasonably inferred by either direct or indirect means.",
+   "terms_matched": [
+    "confidential",
+    "protected"
+   ],
+   "cut": false,
+   "id": "E13",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 36,
+    "block": 5
+   },
+   "section": "page 36",
+   "text": "Open data requirements of the Evidence Act require that all government \ndata be made available for little or no cost. However, an agency’s promise of confdentiality \nplaces restrictions on how data are accessed that can include costs associated with access. Data \nusers may gain access to restricted data through special arrangements, such as those provided by \nFederal Statistical Research Data Centers—facilities for access to restricted-use micro data (Cen-\nsus Bureau 2020)—but such arrangements typically require time and expense to utilize.",
+   "terms_matched": [
+    "restricted",
+    "access"
+   ],
+   "cut": false,
+   "id": "E14",
+   "part": "asked"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "rights",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 337,
+     "dcat-us-3-dataset-schema": 816,
+     "dcat-us-3-candidate-recommendation-snapshot": 2868,
+     "dcat-us-1-1-schema": 529,
+     "dcat-us-3-dataset-schema-2026-10-05": 339
+    }
+   },
+   "section": "element rights",
+   "text": "Element rights. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; rights #](#rights) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; rights #](#rights) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > rights` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#rights) **Requirement:** Recommended || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: rights | | Requirement level | Recommended | | URI dcterms:rights || DCAT-US v1.1 schema: Field rights | Required | Yes, if `accessLevel` is “restricted public” or “non-public”",
+   "pinned": true,
+   "terms_matched": [
+    "restricted",
+    "non-public",
+    "accesslevel"
+   ],
+   "cut": false,
+   "id": "E15",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "accessRights",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 464,
+     "dcat-us-3-dataset-schema": 396,
+     "dcat-us-3-candidate-recommendation-snapshot": 2613,
+     "dcat-us-3-dataset-schema-2026-10-05": 466
+    }
+   },
+   "section": "element accessRights",
+   "text": "Element accessRights. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRights #](#accessRights) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; accessRights #](#accessRights) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > accessRights` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#accessRights) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: access rights | | Requirement level | Optional | | URI dcterms:accessRights || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "accessrights",
+    "access rights"
+   ],
+   "cut": false,
+   "id": "E16",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "accessRestriction",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 173,
+     "dcat-us-3-dataset-schema-2026-10-05": 175
+    }
+   },
+   "section": "element accessRestriction",
+   "text": "Element accessRestriction. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; accessRestriction #](#accessRestriction) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; accessRestriction #](#accessRestriction) **Requirement:** Recommended || Not listed in: DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "accessrestriction"
+   ],
+   "cut": false,
+   "id": "E17",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "cuiRestriction",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 185,
+     "dcat-us-3-dataset-schema-2026-10-05": 187
+    }
+   },
+   "section": "element cuiRestriction",
+   "text": "Element cuiRestriction. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; cuiRestriction #](#cuiRestriction) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; cuiRestriction #](#cuiRestriction) **Requirement:** Recommended || Not listed in: DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "cuirestriction"
+   ],
+   "cut": false,
+   "id": "E18",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "accessLevel",
+    "lines": {
+     "dcat-us-1-1-schema": 194
+    }
+   },
+   "section": "element accessLevel",
+   "text": "Element accessLevel. Not listed on the DCAT-US 3.0 Dataset page as served 2026-10-05 || DCAT-US v1.1 schema: Field accessLevel | Required | Yes, always || Not listed in: DCAT-US 3.0 Dataset page (2026-09-15); DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025)",
+   "pinned": true,
+   "terms_matched": [
+    "accesslevel"
+   ],
+   "cut": false,
+   "id": "E19",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "useRestriction",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 432,
+     "dcat-us-3-dataset-schema-2026-10-05": 434
+    }
+   },
+   "section": "element useRestriction",
+   "text": "Element useRestriction. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; useRestriction #](#useRestriction) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; useRestriction #](#useRestriction) **Requirement:** Recommended || Not listed in: DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E20",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "license",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 287,
+     "dcat-us-1-1-schema": 446,
+     "dcat-us-3-dataset-schema-2026-10-05": 289
+    }
+   },
+   "section": "element license",
+   "text": "Element license. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; license #](#license) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; license #](#license) **Requirement:** Recommended || DCAT-US v1.1 schema: Field license | Required | Yes, if applicable || Not listed in: DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US 3 working draft (Candidate Recommendation, 2025)",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E21",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s695"
+   },
+   "section": "passage 695",
+   "text": "JSON { \"@type\": \"Dataset\", \"@id\": \"https://www.gsa.gov/datasets/federal-bldg-energy-usage-2026\", \"title\": \"GSA Federal Building Energy Usage Data 2026\", \"description\": \"Annual energy usage for selected GSA-managed federal buildings during FY26, including aggregate information on electricity, natural gas, steam, and chilled water. The data supports the federal real property portfolio.\", \"contactPoint\": { \"@type\": \"Kind\", \"fn\": \"GSA Public Buildings Service Data Support\", \"hasEmail\": \"mailto:public-inquiries@gsa.gov\" }, \"identifier\": \"https://www.gsa.gov/datasets/federal-bldg-energy-usage-2026\", \"describedBy\": { \"@type\": \"Distribution\", \"title\": \"JSON Data Dictionary\", \"accessURL\": \"https://www.gsa.gov/datasets/energy/dictionary.json\" }, \"license\": \"https://creativecommons.org/publicdomain/zero/1.0/\", \"inventoried\": \"2026-02-01\", \"modified\": \"2026-07-15\", \"spatial\": { \"@type\": \"Location\", \"label\": \"United States\" }, \"accessRights\": \"Public\", \"rights\": [\"This data asset is an open government data asset. It is not exempt from disclosure under FOIA. It is a public data asset eligible for disclosure in the Federal Data Catalog. It is available at no cost to the public in open, machine-readable formats and under an open license.\"], \"accessRestriction\": { \"@type\": \"AccessRestriction\", \"restrictionStatus\": \"Unrestricted\", \"specificRestriction\": null, \"restrictionNote\": \"Publicly available without access restrictions.\" }, \"useRestriction\": null, \"cuiRestriction\": null, \"rightsHolder\":",
+   "terms_matched": [
+    "accessrights",
+    "accessrestriction",
+    "access restriction",
+    "cuirestriction",
+    "restricted"
+   ],
+   "cut": true,
+   "id": "E22",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s707"
+   },
+   "section": "passage 707",
+   "text": "\"description\": \"Non-public operational data containing system access audit log records for selected internal GSA information systems. The dataset includes technical security event information.\", \"contactPoint\": { \"@type\": \"Kind\", \"fn\": \"GSA Data Support\", \"hasEmail\": \"mailto:public-inquiries@gsa.gov\" }, \"identifier\": \"https://www.gsa.gov/datasets/internal-system-access-audit-logs\", \"describedBy\": null, \"license\": \"Not licensed for public reuse.\", \"inventoried\": \"2026-03-15\", \"modified\": \"2026-07-15\", \"spatial\": { \"@type\": \"Location\", \"label\": \"Washington, DC\" }, \"accessRights\": \"Non-Public\", \"rights\": [\"This data asset is a non-public data asset. It is not an open government data asset. It is not eligible for public release in the Federal Data Catalog beyond permitted metadata. The underlying data is exempt from public disclosure under FOIA.\"], \"accessRestriction\": { \"@type\": \"AccessRestriction\", \"restrictionStatus\": \"Restricted - Fully\", \"specificRestriction\": \"FOIA (b)(7)(E)\", \"restrictionNote\": \"Access to this dataset is limited to authorized GSA personnel and approved support staff with a documented operational, cybersecurity, audit, or oversight need.\" }, \"useRestriction\": { \"@type\": \"UseRestriction\", \"specificRestriction\": \"Restricted - Fully\" }, \"cuiRestriction\": { \"@type\": \"CUIRestriction\", \"cuiBannerMarking\": \"CUI\", \"designationIndicator\": { \"@type\": \"Organization\", \"name\": \"U.S. General Services Administration\" }, \"requiredIndicatorPerAuthority\":",
+   "terms_matched": [
+    "accessrights",
+    "accessrestriction",
+    "cuirestriction",
+    "restricted",
+    "non-public"
+   ],
+   "cut": true,
+   "id": "E23",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 109
+   },
+   "section": "What's new in v3.0",
+   "text": "**Federal access and use restrictions.** Three new structured classes - AccessRestriction, UseRestriction, and CUIRestriction - replace the v1.1 pattern of expressing restrictions as free text in `rights` or using the three-value `accessLevel` field. These are documented on the [Constraints and Restrictions](/standards/catalog/dcat-us-3/constraints-and-restrictions) reference page.",
+   "terms_matched": [
+    "accessrestriction",
+    "cuirestriction",
+    "accesslevel",
+    "use restriction"
+   ],
+   "cut": false,
+   "id": "E24",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 27,
+    "block": 2
+   },
+   "section": "page 27",
+   "text": "Legal  metadata  properties,  including  license,  accessRestriction,  useRestriction,  and  \ncuiRestriction,\n \ncan\n \nbe\n \npopulated\n \nin\n \neither\n \nthe\n \nDataset\n \nor\n \nDistribution\n \nclass\n. Agencies\n \nshould\n \npopulate\n \nthem\n \nin\n \nthe\n \nDataset\n \nclass\n \nwhen\n \nany\n \nof\n \nthe\n \nfollowing\n \noccurs: 1. The  dataset  is  non-public  or  restricted  public  and/or  has  no  distributions. 2. All  distributions  of  the  dataset  have  the  same  circumstances  (e.g.,  same  access  \nrestrictions\n \nand/or\n \naccess\n \nmethods). Otherwise,  agencies  are  recommended  to  populate  these  properties  in  the  Distribution  class.",
+   "terms_matched": [
+    "accessrestriction",
+    "cuirestriction",
+    "restricted",
+    "non-public"
+   ],
+   "cut": false,
+   "id": "E25",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 6542
+   },
+   "section": "Legal Metadata",
+   "text": "- **Access Restrictions:** Detailing who can access NARA-governed digital assets and under what conditions, in accordance with the federal records legal framework. This includes guidelines on public access and accessing restricted records.\n- **Use Restrictions:** Outlining the rights and limitations associated with the use of NARA-governed assets, focusing on specific legal constraints.\n- **Controlled Unclassified Information (CUI) Restrictions:** Specifying the handling and dissemination controls for NARA assets that involve CUI, as mandated by law.",
+   "terms_matched": [
+    "access restriction",
+    "restricted",
+    "use restriction"
+   ],
+   "cut": false,
+   "id": "E26",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 13,
+    "block": 5
+   },
+   "section": "page 13",
+   "text": "Within  accessRights,  agencies  can  mark  a  data  asset  as  \nNon-public,\n \nRestricted,\n \nor\n \nPublic,\n \nand\n \nthey\n \ncan\n \nindicate\n \nwhether\n \nthe\n \nasset\n \nis\n \nan\n \nopen\n \ngovernment\n \ndata\n \nasset\n \nusing\n \na\n \nplain-language\n \nexplanation\n \nwithin\n \nthe\n \nrights\n \nproperty\n \n(see\n Step  4 for  more  details).",
+   "terms_matched": [
+    "accessrights",
+    "restricted",
+    "non-public"
+   ],
+   "cut": false,
+   "id": "E27",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 14,
+    "block": 4
+   },
+   "section": "page 14",
+   "text": "Open  Government  Data  Assets : Public  data  assets  should  be  maintained  as  open  \ngovernment\n \ndata\n \nassets\n \n—stored\n \nin\n \nopen\n \nformats\n \nand\n \naccessible\n \nunder\n \nan\n \nopen\n \n43\n https://www.whitehouse.gov/wp-content/uploads/2025/01/M-25-05  \n42\n \nAdditional\n \nrequirements\n \nregarding\n \nopen\n \ndata\n \nplans\n \nand\n \nengagement\n \nwith\n \nthe\n \npublic\n \nare\n \noutlined\n \nin\n \nM-25-05,\n \nbut\n \nthose\n \nwill\n \nnot\n \nbe\n \naddressed\n \nin\n \nthis\n \nguide. 41\n DCAT-US  v1.1  included  the  accessLevel property  to  communicate  the  categorization  (e.g.,  public,  restricted  \npublic,\n \nnon-public)\n \nand\n \nthe\n rights property  to  communicate  supplemental  information.",
+   "terms_matched": [
+    "restricted",
+    "non-public",
+    "accesslevel"
+   ],
+   "cut": false,
+   "id": "E28",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 14,
+    "block": 5
+   },
+   "section": "page 14",
+   "text": "In  DCAT-US  v3.0,  \nagencies\n \ncan\n \nfollow\n \nthe\n \nsame\n \napproach\n \nswapping\n \nout\n \naccessLevel\n \nwith\n \naccessRights. They\n \nmay\n \nchoose\n \nto\n \ninclude\n \nsupplemental\n \ninformation\n \nrelated\n \nto\n \nM-25-05\n \nrequirements,\n \nsuch\n \nas\n \npublic\n \nrelease\n \ndeterminations\n \nand\n \nopen\n \nformat\n \nstatus,\n \nin\n accessRights or  rights since  both  properties  allow  free-text  responses. In  most  cases,  rights\n \nis\n \nlikely\n \nbetter-suited\n \nfor\n \nthe\n \nsupplemental\n \ninformation. 40 \n In  Figure  3,  agencies  should  note  the  terminology  change  from  “Restricted  Public”  to  “Restricted”  between  \nthe\n \ntwo\n \nDCAT-US\n \nschema\n \nversions.",
+   "terms_matched": [
+    "accessrights",
+    "restricted",
+    "accesslevel"
+   ],
+   "cut": false,
+   "id": "E29",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c-rightsholder",
+    "location": "dcat-us-3-implementation-guide#c0041"
+   },
+   "section": "",
+   "text": "license.\"],        \"accessRestriction\":  {          \"@type\":  \"AccessRestriction\",          \"restrictionStatus\":  \"Unrestricted\",          \"specificRestriction\":  null,          \"restrictionNote\":  \"This  dataset  is  publicly  available  without  access  \nrestrictions.\"\n       },        \"useRestriction\":  null,        \"cuiRestriction\":  null,        \"rightsHolder\":  [          {            \"@type\":  \"Organization\",            \"name\":  \"U.S.",
+   "terms_matched": [
+    "accessrestriction",
+    "cuirestriction",
+    "restricted"
+   ],
+   "cut": false,
+   "id": "E30",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::d5",
+    "location": "dcat-us-3-implementation-guide#c0027"
+   },
+   "section": "",
+   "text": "accessRights \nPartially  satisﬁes  M-25-05  (D-F,  L)  \nStates  whether  the  data  asset  is  non-public,  restricted,  or  public.",
+   "terms_matched": [
+    "accessrights",
+    "restricted",
+    "non-public"
+   ],
+   "cut": false,
+   "id": "E31",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s178"
+   },
+   "section": "passage 178",
+   "text": "A data asset's categorization can be captured in the DCAT-US v3.0 schema using a combination of the newly created accessRights property and the rights property carried over from DCAT-US v1.1. Within accessRights, agencies can mark a data asset as Non-public, Restricted, or Public, and they can indicate whether the asset is an open government data asset using a plain-language explanation within the rights property (see Step 4 for more details).",
+   "terms_matched": [
+    "accessrights",
+    "restricted",
+    "non-public"
+   ],
+   "cut": false,
+   "id": "E32",
+   "part": "landed"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s698"
+   },
+   "section": "passage 698",
+   "text": "JSON { \"@type\": \"Dataset\", \"@id\": \"https://www.gsa.gov/datasets/public-building-prospectus\", \"title\": \"GSA Public Building Prospectus Documents\", \"description\": \"GSA Public Buildings Service prospectus documents describing proposed federal building construction, alteration, lease, repair, and acquisition projects. The documents support federal real property actions and decisions.\", \"contactPoint\": { \"@type\": \"Kind\", \"fn\": \"GSA Public Buildings Service Data Support\", \"hasEmail\": \"mailto:public-inquiries@gsa.gov\" }, \"identifier\": \"https://www.gsa.gov/datasets/public-building-prospectus\", \"describedBy\": { \"@type\": \"Distribution\", \"title\": \"JSON Data Dictionary\", \"accessURL\": \"https://www.gsa.gov/datasets/public-bldg/dictionary.json\" }, \"license\": \"Publicly accessible for viewing and download.\", \"inventoried\": \"2026-02-15\", \"modified\": \"2026-07-15\", \"spatial\": { \"@type\": \"Location\", \"label\": \"United States\" }, \"accessRights\": \"Public\", \"rights\": [\"This data asset is a public data asset eligible for disclosure in the Federal Data Catalog. It is not exempt from disclosure under FOIA. It is not categorized as an open government data asset because it is not stored in an open format.\"], \"accessRestriction\": { \"@type\": \"AccessRestriction\", \"restrictionStatus\": \"Unrestricted\", \"specificRestriction\": null, \"restrictionNote\": \"The public document collection is available for general public access.\"",
+   "terms_matched": [
+    "accessrights",
+    "accessrestriction",
+    "restricted"
+   ],
+   "cut": false,
+   "id": "E33",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 2187
+   },
+   "section": "9. License and rights statements",
+   "text": "1. use `dcterms:license` to refer to licenses; Note For interoperability, it is recommended to use canonical IRIs of well-known licenses such as those defined by Creative Commons.\n2. use `dcterms:accessRights` to express statements concerning only access rights (e.g., whether data can be accessed by anyone or just by authorized parties); Note Access rights can also be expressed as code lists / taxonomies. Examples include the access rights code list [EUV-AR] used in [DCAT-AP] and the Eprints Access Rights Vocabulary Encoding Scheme.\n3. use `dcterms:rights` for all the other types of rights statements - those which are not covered by `dcterms:license` and `dcterms:accessRights`, such as copyright statements. Note A more sophisticated approach to express rights, based on and extending [DCTERMS], is provided by the Open Data Rights Statement Vocabulary (ODRS) [ODRS], which defines properties for specifying, among others, copyright statements and copyright notices.",
+   "terms_matched": [
+    "access rights",
+    "accessrights",
+    "license"
+   ],
+   "cut": false,
+   "id": "E34",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 2191
+   },
+   "section": "9. License and rights statements",
+   "text": "Example\n19\n: License, access rights, and copyright statement\nThe following example is about a dataset publicly available (with no access restriction) and whose distribution is released by using a standard license - namely, the Creative Commons Attribution (CC-BY) 4.0 license. Access rights are specified by using the [EUV-AR] code list. Property `dcterms:rights` is used for the copyright statement, which is specified with a textual description, by using property `rdfs:label` (following the Dublin Core™ User Guide).",
+   "terms_matched": [
+    "access rights",
+    "access restriction",
+    "license"
+   ],
+   "cut": false,
+   "id": "E35",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s891"
+   },
+   "section": "passage 891",
+   "text": "The following example is about a dataset publicly available (with no access restriction) and whose distribution is released by using a standard license - namely, the Creative Commons Attribution (CC-BY) 4.0 license. Access rights are specified by using the [EUV-AR] code list. Property dcterms:rights is used for the copyright statement, which is specified with a textual description, by using property rdfs:label (following the Dublin Core™ User Guide).",
+   "terms_matched": [
+    "access rights",
+    "access restriction",
+    "license"
+   ],
+   "cut": false,
+   "id": "E36",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 102
+   },
+   "section": "1. Introduction",
+   "text": "Depending on circumstances, sensitive information about individuals might include full name, home address, email address, national identification number, IP address, vehicle registration plate number, driver's license number, face, fingerprints, or handwriting, credit card numbers, digital identity, date of birth, birthplace, genetic information, telephone number, login name, screen name, nickname, health records etc. Although it is likely to be safe to share some of that information openly, and even more within a controlled environment, publishers should bear in mind that combining data from multiple sources may allow inadvertent identification of individuals.",
+   "terms_matched": [
+    "license",
+    "sensitive"
+   ],
+   "cut": false,
+   "id": "E37",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 2626
+   },
+   "section": "9. Glossary",
+   "text": "**Citation**\n: A Citation may be either direct and explicit (as in the reference list of a journal article), indirect (e.g. a citation to a more recent paper by the same research group on the same topic), or implicit (e.g. as in artistic quotations or parodies, or in cases of plagiarism).  From: CiTO, the Citation Typing Ontology.\n**Data archiving**\n: Data Archiving is the set of practices around the storage and monitoring of the state of digital material over the years.  These tasks are the responsibility of a Trusted Digital Repository (TDR), also sometimes referred to as Long-Term Archive Service (LTA). Often such services follow the Open Archival Information System [OAIS] which defines the archival process in terms of ingest, monitoring and reuse of data.\n**Data consumer**\n: For the purposes of this WG, a Data Consumer is a person or group accessing, using, and potentially performing post-processing steps on data. From: Strong, Diane M., Yang W. Lee, and Richard Y. Wang. \"Data quality in context.\" Communications of the ACM 40.5 (1997): 103-110.\n**Data format**\n: Data Format defined as a specific convention for data representation i.e. the way that information is encoded and stored for use in a computer system, possibly constrained by a formal data type or set of standards.\" From: Digital Humanities Curation Guide\n**Data preservation**\n:",
+   "terms_matched": [
+    "license",
+    "sensitive"
+   ],
+   "cut": true,
+   "id": "E38",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 584
+   },
+   "section": "6.3 Class: Catalog",
+   "text": "- access rights\n- conforms to\n- contact point\n- creator\n- description\n- has policy\n- identifier\n- is referenced by\n- keyword/tag\n- landing page\n- license\n- language\n- relation\n- rights\n- qualified relation\n- publisher\n- release date\n- theme/category\n- title\n- type/genre\n- update/modification date\n- qualified attribution\n- has current version\n- has version\n- previous version\n- replaces\n- status\n- version\n- version notes\n- first\n- last\n- previous",
+   "terms_matched": [
+    "access rights",
+    "license"
+   ],
+   "cut": false,
+   "id": "E39",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 42,
+    "block": 2
+   },
+   "section": "page 42",
+   "text": "0..n \n \nOptional properties for Dataset \nProperty URI Range Usage note Card. \naccess rights dct:accessRights dct:RightsStatement \nThis property specifies whether the \nDataset is open data, has access \nrestrictions or is not public. 0..1  \nconforms to dct:conformsTo dct:Standard  This property refers to an implementing \nrule or other specification. 0..n \ndocumentati\non foaf:page  foaf:Document  This property refers to a page or \ndocument about this Dataset. 0..n \nfrequency dct:accrualPeriodicity dct:Frequency This property refers to the frequency at \nwhich the Dataset is updated.",
+   "terms_matched": [
+    "access rights",
+    "accessrights"
+   ],
+   "cut": false,
+   "id": "E40",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 60,
+    "block": 2
+   },
+   "section": "page 60",
+   "text": "QUICK REFERENCE OF CLASSES AND \nPROPERTIES \nClass Class URI Mandatory \nproperties \nRecommended \nproperties \nOptional \nproperties \nAdditional \noptional \nproperties  \nAgent  foaf:Agent  foaf:name  dct:type      \nAnnotation  oa:Annotation      Attribute \nProperty  \nqb:AttributePr\noperty      \nCatalogue  dcat:Catalog  \ndcat:dataset  \ndct:description  \ndct:publisher  \ndct:title  \nfoaf:homepage  \ndct:language  \ndct:license  \ndct:issued  \ndcat:themeTaxo\nnomy  \ndct:modified  \ndct:hasPart  \ndct:isPartOf  \ndcat:record  \ndct:rights  \ndct:spatial  \n  \n  \nCatalogue \nRecord  \ndcat:CatalogR\necord  \ndct:modified  \nfoaf:primaryTo\npic \n  \ndct:conformsTo  \nadms:status  \ndct:issued  \ndct:description  \ndct:language  \ndct:source  \ndct:title  \n  \n  \nCategory  skos:Concept  skos:prefLabel       \nCategory \nScheme  \nskos:ConceptS\ncheme  dct:title        \nChecksum  spdx:Checksu\nm \nspdx:algorith\nm \nspdx:checksu\nmValue  \n      \nDataset  dcat:Dataset  dct:description  \ndct:title  \ndcat:contactP oi\nnt  \ndcat:distribution  \ndcat:keyword  \ndct:publisher  \ndcat:theme  \n  \n  \ndct:accessRights \ndct:conformsTo  \nfoaf:page  \ndct:accrualPerio\ndicity \ndct:hasVersion  \ndct:identifier  \ndct:isVersionOf  \ndcat:landingPag\ne \ndct:language  \nadms:identifier  \ndct:provenance  \ndct:relation  \ndct:issued  \nadms:sample  \ndct:source  \ndct:spatial  \ndct:temporal  \ndct:type  \ndct:modified  \nowl:versionInfo  \nadms:versionNo\ntes  \nstat:attribute  \nstat:dimensio\nn \nstat:numSerie\ns \ndqv:hasQualit\nyAnnotation  \nstat:statUnitM\neasure",
+   "terms_matched": [
+    "accessrights",
+    "license"
+   ],
+   "cut": true,
+   "id": "E41",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "node": "w3c-dcat-3::cl-dwbp-compliance",
+    "location": "w3c-dcat-3#c0023"
+   },
+   "section": "",
+   "text": "Note\nThe provision of licensing conditions and access rights complies with the Best Practices 4 (\"Provide data license information\") and 22 (\"Provide an explanation for data that is not available\"), respectively, from [DWBP].",
+   "terms_matched": [
+    "access rights",
+    "license"
+   ],
+   "cut": false,
+   "id": "E42",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted practice span",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "node": "w3c-dcat-3::p-use-dcterms-rights",
+    "location": "w3c-dcat-3#c0023"
+   },
+   "section": "",
+   "text": "To address these scenarios, it is recommended to use the property `dcterms:rights`, and its sub-properties `dcterms:license` and `dcterms:accessRights`.",
+   "terms_matched": [
+    "accessrights",
+    "license"
+   ],
+   "cut": false,
+   "id": "E43",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1231"
+   },
+   "section": "passage 1231",
+   "text": "ex:EEA-CSW-Endpoint\n  rdf:type dcat:DataService ;\n  dcterms:type <http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService> ;\n  dcterms:accessRights <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;\n  dcterms:conformsTo <http://www.opengis.net/def/serviceType/ogc/csw> ;\n  dcterms:description \"The EEA public catalogue of spatial datasets references\n    the spatial datasets used by the European Environment Agency as well as\n    the spatial datasets produced by or for the EEA. In the latter case,\n    when datasets are publicly available, a link to the location from where\n    they can be downloaded is included in the dataset's metadata. The\n    catalogue has been initially populated with the most important spatial\n    datasets already available on the data&maps section of the EEA website\n    and is currently updated with any newly published spatial dataset.\"@en ;\n  dcterms:identifier \"eea-sdi-public-catalogue\" ;\n  dcterms:issued \"2012-01-01\"^^xsd:date ;\n  dcterms:license <https://creativecommons.org/licenses/by/2.5/dk/> ;\n  dcterms:spatial [\n    rdf:type dcterms:Location ;\n    dcat:bbox \"POLYGON((-180 90,180 90,180 -90,-180 -90,-180 90))\"^^gsp:wktLiteral ;\n  ] ;\n  dcterms:title \"European Environment Agency's public catalogue of spatial datasets.\"@en ;\n  dcterms:type <http://inspire.ec.europa.eu/metadata-codelist/ResourceType/service> ;",
+   "terms_matched": [
+    "accessrights",
+    "license"
+   ],
+   "cut": true,
+   "id": "E44",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s340"
+   },
+   "section": "passage 340",
+   "text": "Definition: | A statement that concerns all rights not addressed with dcterms:license or dcterms:accessRights, such as copyright statements.",
+   "terms_matched": [
+    "accessrights",
+    "license"
+   ],
+   "cut": false,
+   "id": "E45",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "ddi-codebook-specification",
+   "locator": {
+    "file": "state/substrate_md/ddi-codebook-specification.md",
+    "line": 352
+   },
+   "section": "overview/tree",
+   "text": "`0            codeBook [version, codeBookAgency] 1               docDscr (0-n) 1.1                citation (0-1) [MARCURI] 1.1.1                 titlStmt (1-1) 1.1.1.1                  titl (1-1) 1.1.1.2                  subTitl (0-n) 1.1.1.3                  altTitl (0-n) 1.1.1.4                  parTitl (0-n) 1.1.1.5                  IDNo (0-n) [agency, isPersistentIdentifier, level] 1.1.2                 rspStmt (0-1) 1.1.2.1                  AuthEnty (0-n) [affiliation, abbr, agentIdentifier, typeOfAgentIdentifer, isPersistentIdentifier, agentType] 1.1.2.2                  othId (0-n) [type, role, abbr, affiliation, agentIdentifier, typeOfAgentIdentifer, isPersistentIdentifier, agentType] 1.1.3                 prodStmt (0-1) 1.1.3.1                  language (0-n) [typeOfLanguageCode, languageCode] 1.1.3.2                  producer (0-n) [abbr, affiliation, agentIdentifier, typeOfAgentIdentifer, isPersistentIdentifier, agentType] 1.1.3.3                  copyright (0-n) 1.1.3.4                  license (0-n) [URI, type, scope] 1.1.3.5                  prodDate (0-n) 1.1.3.6                  prodPlac (0-n) 1.1.3.7                  software (0-n) [version, date] 1.1.3.8                  fundAg (0-n) [abbr, affiliation, agentIdentifier, typeOfAgentIdentifer, isPersistentIdentifier, agentType] 1.1.3.9                  grantNo (0-n) [agency, fundingProgram, grantName, role] 1.1.4                 distStmt (0-1) 1.1.4.1                  distrbtr (0-n) [abbr, affiliation, agentId",
+   "terms_matched": [
+    "license"
+   ],
+   "cut": true,
+   "id": "E46",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 798
+   },
+   "section": "9. DataSet metadata",
+   "text": "- `dct:title`\n- `rdfs:label` - may be same as `dct:title`\n- `dct:description`\n- `rdfs:comment` - may be same as `dct:description`\n- `dct:issued`\n- `dct:modified`\n- `dct:subject`\n- `dct:publisher`\n- `dct:license`",
+   "terms_matched": [
+    "license"
+   ],
+   "cut": false,
+   "id": "E47",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 1114
+   },
+   "section": "12.3 Slices",
+   "text": "***Class:* `qb:ObservationGroup`**\n: A, possibly arbitrary, group of observations.\n***Class:* `qb:Slice` *Sub class of: * `qb:Attachable`, `qb:ObservationGroup`**\n: Denotes a subset of a DataSet defined by fixing a subset of the dimensional values, component properties on the Slice.\n***Property:* `qb:slice` ( *Domain:* `qb:DataSet` -> *Range:* `qb:Slice`; *sub property of:* `qb:observationGroup` )**\n: Indicates a subset of a DataSet defined by fixing a subset of the dimensional values.\n***Property:* `qb:observationGroup` ( *Domain:* -> *Range:* `qb:ObservationGroup` )**\n: Indicates a group of observations. The domain of this property is left open so that a group may be attached to different resources and need not be restricted to a single DataSet.",
+   "terms_matched": [
+    "restricted"
+   ],
+   "cut": false,
+   "id": "E48",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 1312
+   },
+   "section": "7.2 Quality dimensions defined in ISO/IEC 25012",
+   "text": "| Inherent and System-Dependent Data Quality | Confidentiality | The degree to which data has attributes that ensure that it is only accessible and interpretable by authorized users in a specific context of use. Confidentiality is an aspect of information security (together with availability, integrity) as defined in ISO/IEC 13335-1:2004. |",
+   "terms_matched": [
+    "confidential"
+   ],
+   "cut": false,
+   "id": "E49",
+   "part": "literature"
+  }
+ ],
+ "evidence_sha256": "46a4e8de8795ad20d7c5da30cfdc1e159fc87226a48e598e786d7d5221382396"
+}

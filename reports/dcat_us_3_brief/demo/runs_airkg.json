@@ -1,0 +1,42 @@
+{
+ "server": "ai-readiness-kg (local MCP server, database seldon-ai-readiness-kg)",
+ "ran_at": "2026-10-07T14:57Z to 15:26Z",
+ "ran_from": "the DCAT-004 v2 Claude Code session, one call each, after the second projection of the day (projection gate green, 228 nodes, 0 mismatches); results copied from the tool output, rows the sheet cites",
+ "runs": [
+  {"tool": "get_document", "args": {"doc_id": "ddi-cdi-1-0-specification"},
+   "rows": [{"title": "DDI - Cross Domain Integration (DDI-CDI): Specification Overview, Version 1.0", "pub_date": "2025-01-24",
+             "content_hash": "8c67ef2ed84a3602248e52d437aadbfaf48888071afdf7fb7c53545f5b07009c",
+             "counts": {"definitions": 79, "claims": 227, "standards": 56, "concepts": 388, "frameworks": 14, "practices": 2},
+             "evidences_indicators": [], "locator": {"kind": "graph", "label": "Document", "id": "ddi-cdi-1-0-specification"}}]},
+  {"tool": "get_document", "args": {"doc_id": "dcat-us-3-implementation-guide"},
+   "rows": [{"title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)", "pub_date": "2026-09-09",
+             "content_hash": "26e4c3baecb2aa0e2f486ae65a2f0404da32fdbb402baf4f71239ab4c31d268c",
+             "primary_url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+             "locator": {"kind": "graph", "label": "Document", "id": "dcat-us-3-implementation-guide"}}]},
+  {"tool": "search_text", "args": {"q": "fitness for use", "limit": 8}, "n_hits": 6,
+   "rows": [
+    {"kind": "definition", "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+     "text": "As seen from a user’s perspective, data quality refers to the data’s “fitness for use” for a user’s own needs.",
+     "locator": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::d_data_quality"},
+    {"kind": "definition", "doc_id": "fcsm-25-03",
+     "text": "The Federal Committee on Statistical Methodology (FCSM) developed the Framework for Data Quality to help analysts and the public assess fitness for use of data sets.",
+     "locator": "fcsm-25-03::def-fcsm-framework"},
+    {"kind": "definition", "doc_id": "w3c-dwbp-2017",
+     "text": "Data quality is commonly defined as “fitness for use” for a specific application or use case.",
+     "locator": "w3c-dwbp-2017::def-data-quality"}]},
+  {"tool": "search_text", "args": {"q": "margin of error", "limit": 8}, "n_hits": 4,
+   "rows": [
+    {"kind": "action", "code": "G1-D", "text": "Publish the error measure as a structured field beside the estimate",
+     "locator": "framework/ai_readiness_framework.json#act:g1d-publish-the-error-measure-as-a-structured-field"},
+    {"kind": "definition", "doc_id": "census-acs-general-handbook-2020",
+     "text": "The margin of error is the measure of the magnitude of sampling error provided with all published ACS estimates.",
+     "locator": "census-acs-general-handbook-2020::d_margin_of_error"}]},
+  {"tool": "search_text", "args": {"q": "sequencing plan", "limit": 8}, "n_hits": 0, "rows": []},
+  {"tool": "get_indicator", "args": {"code": "G4"},
+   "rows": [{"indicator": "The issuing authority of a data product is carried as machine-readable metadata on the product's catalog record: in `publisher`, the field DCAT-US 3.0 defines for it (Recommended), or in the agency codes DCAT-US 1.1 requires of federal datasets (`bureauCode`, `programCode`), which DCAT-US 3.0 does not define and does not reject",
+             "rule": "RULE-G4-v2", "cycle_of_record": "scan_2026-10-06_composite_b", "measured_counts": {"pass": 0, "fail": 8, "not_applicable": 0, "error": 15},
+             "locator": "framework/ai_readiness_framework.json#ind:G4"}]},
+  {"tool": "get_overview", "args": {},
+   "rows": [{"projection_gate": "green", "nodes_compared": 228, "mismatches": [], "cycle_of_record": "scan_2026-10-06_composite_b", "n_bodies": 16}]}
+ ]
+}

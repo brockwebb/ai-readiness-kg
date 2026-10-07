@@ -1,0 +1,31 @@
+{
+ "doc_id": "sdmx-3-1-section-2-information-model",
+ "chunk_id": "sdmx-3-1-section-2-information-model#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 9613,
+ "chunk_tokens": 1380,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "a662bc89af776e8f2e3cab15bd849a8bbe51cbb09fdb4e57418953858ec00fe9",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6450,
+  "cacheReadInputTokens": 10065,
+  "cacheCreationInputTokens": 36971,
+  "webSearchRequests": 0,
+  "costUSD": 0.5360024999999999,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4558,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5360024999999999,
+ "duration_ms": 74524,
+ "session_id": "3c45827e-4b0b-4bea-9415-ed415deb9f66",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Title page and table of contents for SDMX Standards Section 2 (Information Model: UML Conceptual Design), version 3.1, May 2025, plus revision history; the body is navigation listing the model's packages and classes, so almost everything here is mention-only.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_information_model\",\n      \"name\": \"Information Model\",\n      \"aliases\": [\"SDMX Information Model\", \"UML conceptual design\"],\n      \"description\": \"The conceptual model that this document specifies in UML; the table of contents organises it into packages, base structures, item schemes, data and metadata structures, hierarchy and mapping.\",\n      \"anchor\": \"Support for the Cube in the Information Model\",\n      \"location\": \"sdmx-3-1-section-2-information-model#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_draft_release\",\n      \"claim_text\": \"Draft release updated for SDMX 3.1 for public consultation\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Draft release updated\",\n      \"location\": \"sdmx-3-1-section-2-information-model#c0001\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_sdmx_section2\",\n      \"name\": \"SDMX STANDARDS: SECTION 2\",\n      \"version\": \"3.1\",\n      \"steward\": \"SDMX\",\n      \"as_of_date\": \"2025-05\",\n      \"anchor\": \"SDMX STANDARDS: SECTION 2\",\n      \"location\": \"sdmx-3-1-section-2-information-model#c0001\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sdmx-3-1-section-2-information-model\",\n      \"to_id\": \"cl_draft_release\",\n      \"anchor\": \"Draft release updated\",\n      \"location\": \"sdmx-3-1-section-2-information-model#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"sdmx-3-1-section-2-information-model\",\n      \"to_id\": \"c_information_model\",\n      \"anchor\": \"Support for the Cube in the Information Model\",\n      \"location\": \"sdmx-3-1-section-2-information-model#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"SDMX Base Package\", \"anchor\": \"SDMX Base Package\"},\n    {\"name\": \"Item Scheme Pattern\", \"anchor\": \"Item Scheme Pattern\"},\n    {\"name\": \"The Structure Pattern\", \"anchor\": \"The Structure Pattern\"},\n    {\"name\": \"Codelist\", \"anchor\": \"Geospatial Codelist\"},\n    {\"name\": \"ValueList\", \"anchor\": \"4.4 ValueList\"},\n    {\"name\": \"Concept Scheme and Concepts\", \"anchor\": \"Concept Scheme and Concepts\"},\n    {\"name\": \"Category Scheme\", \"anchor\": \"Category Scheme\"},\n    {\"name\": \"Organisation Scheme\", \"anchor\": \"Organisation Scheme\"},\n    {\"name\": \"Reporting Taxonomy\", \"anchor\": \"Reporting Taxonomy\"},\n    {\"name\": \"Data Structure Definition\", \"anchor\": \"Data Structure Definition – Relationship View\"},\n    {\"name\": \"Data Set\", \"anchor\": \"Data Set – Relationship View\"},\n    {\"name\": \"Cube\", \"anchor\": \"Support for the Cube\"},\n    {\"name\": \"Metadata Structure Definition\", \"anchor\": \"7.3 Metadata Structure Definition\"},\n    {\"name\": \"Metadata Set\", \"anchor\": \"7.4 Metadata Set\"},\n    {\"name\": \"Hierarchy\", \"anchor\": \"8 Hierarchy\"},\n    {\"name\": \"Structure Map\", \"anchor\": \"9 Structure Map\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Model Packages\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Information Model\",\n      \"to_name\": \"Information Model Packages\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"1.3.5 Version 3.1\",\n      \"suggested_edge\": \"supersedes\",\n      \"from_name\": \"Version 3.1\",\n      \"to_name\": \"Version 3.0\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Actors and Use Cases\", \"type\": \"Concept\"},\n    {\"name\": \"Data Types\", \"type\": \"Concept\"},\n    {\"name\": \"Basic Inheritance\", \"type\": \"Concept\"},\n    {\"name\": \"Base Structures - Identification, Versioning, and Maintenance\", \"type\": \"Concept\"},\n    {\"name\": \"Maintenance of Structural and Provisioning Definitions\", \"type\": \"Concept\"},\n    {\"name\": \"Publishing and Using Data and Reference Metadata\", \"type\": \"Concept\"},\n    {\"name\": \"Codelist Extension\", \"type\": \"Concept\"},\n    {\"name\": \"Geospatial Codelist\", \"type\": \"Concept\"},\n    {\"name\": \"Epoch Mapping\", \"type\": \"Concept\"},\n    {\"name\": \"Date Pattern Mapping\", \"type\": \"Concept\"},\n    {\"name\": \"Reference Metadata\", \"type\": \"Concept\"}\n  ]\n}"
+}

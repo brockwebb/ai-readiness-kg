@@ -626,6 +626,247 @@ def absence_evidence(qcfg: dict, cfg: dict, drv, meta: dict, statements: list, s
             "items": kept}
 
 
+# ------------------------------------------------------------------- the brief's needs (R6)
+#
+# `cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md` decision 2: for each of
+# the eight statistical needs of DN-011-R6, the passages that answer its three questions (did
+# the statistical side publicly ask for it; where did it land in DCAT-US 3.0; how does the
+# literature carry it), each part retrieved and capped on its own, written to
+# `reports/dcat_us_3_brief/evidence/need_<n>.json`. Extended here, not forked: the same graph
+# readers, ranking and caps as the FAQ's questions, plus two sources the FAQ did not need.
+
+BRIEF_OUT = REPO / "reports" / "dcat_us_3_brief"
+BRIEF_CONFIG = BRIEF_OUT / "brief_config.yaml"
+BRIEF_EVIDENCE_DIR = BRIEF_OUT / "evidence"
+BRIEF_GENERATOR = "scripts/dcat_faq_evidence.py --brief"
+PARTS = ("asked", "landed", "literature")
+#: The question each part answers, DN-011-R6's own words, shown to the answer and check calls.
+PART_QUESTION = {
+    "asked": "Did FCSM or the FAIRness Project publicly ask for it?",
+    "landed": ("Where did it land in DCAT-US 3.0: Mandatory, Recommended, Optional, dropped, or "
+               "absent, as served on 5 October 2026; and does the Implementation Guide or the "
+               "Overview say it was deferred to a later version?"),
+    "literature": "What does the literature say is the right way to carry it?",
+}
+
+_PDF_PAGES: dict = {}
+
+
+def pdf_pages(doc: str, path: Path) -> list:
+    """The page texts of an admitted PDF, read with the reader the extractor uses
+    (`scripts/run_bulk_extraction.doc_text`: pypdf, `extract_text()` per page), so a passage
+    is text the extraction itself read."""
+    if doc not in _PDF_PAGES:
+        from pypdf import PdfReader
+        logging.getLogger("pypdf").setLevel(logging.ERROR)
+        _PDF_PAGES[doc] = [p.extract_text() or "" for p in PdfReader(str(path)).pages]
+    return _PDF_PAGES[doc]
+
+
+def pdf_blocks(text: str, limit: int) -> list:
+    """A page cut into passages at sentence ends, each at most `limit` characters unless one
+    sentence is longer. The text of each passage is the page's own, unaltered."""
+    sents = [s for s in re.split(r"(?<=[.;:!?])\s+(?=[A-Z0-9•(\"“])", text) if s.strip()]
+    out, cur = [], ""
+    for s in sents:
+        if cur and len(cur) + 1 + len(s) > limit:
+            out.append(cur)
+            cur = s
+        else:
+            cur = f"{cur} {s}" if cur else s
+    if cur:
+        out.append(cur)
+    return out
+
+
+def pdf_passages(docs: list, terms: list, substrate_dir: Path, limit: int) -> list:
+    """Passages from the page text of each admitted PDF in `docs` that has no converted text
+    (`state/substrate_md/<doc>.md` covers web pages; PDFs are delegated to the extractor's
+    reader by design, DD-030). Locator: the corpus file and page."""
+    entries = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    out = []
+    for doc in docs:
+        if (substrate_dir / f"{doc}.md").is_file():
+            continue
+        path = ((entries.get(doc) or {}).get("identity") or {}).get("canonical_path")
+        if not path or not path.endswith(".pdf"):
+            continue
+        for n, page in enumerate(pdf_pages(doc, REPO / path), 1):
+            for k, block in enumerate(pdf_blocks(page, limit), 1):
+                if matched_terms(block, terms):
+                    out.append({"graph": "ai-readiness-kg", "kind": "document text (PDF page)",
+                                "doc_id": doc, "locator": {"file": path, "page": n, "block": k},
+                                "section": f"page {n}", "text": block})
+    return out
+
+
+def crosswalk_passages(tsv: Path, terms: list) -> list:
+    """Rows of S-015 Part A (the presenter's own crosswalk, squiddy) whose text matches. A row
+    is offered for the published definitions it quotes ("Matched definition: ..."), so the
+    passage is the indicator's label and those quoted definitions, nothing else."""
+    if not tsv.is_file():
+        raise SystemExit(f"FATAL: the S-015 crosswalk is not at {tsv}")
+    lines = tsv.read_text(encoding="utf-8").splitlines()
+    head_i = next(i for i, l in enumerate(lines) if l.startswith("indicator_id\t"))
+    head = lines[head_i].split("\t")
+    out = []
+    for i in range(head_i + 1, len(lines)):
+        row = dict(zip(head, lines[i].split("\t")))
+        defs = re.findall(r'Matched definition: "([^"]+)"', lines[i])
+        if not defs:
+            continue
+        labels = "; ".join(x for x in (row.get("ldqd_label"), row.get("iso25012_label")) if x)
+        text = (f"Crosswalk row for the indicator '{row.get('construct')}': matched quality "
+                f"dimensions {labels}. Published definitions quoted: " + " | ".join(defs))
+        if matched_terms(text, terms):
+            out.append({"graph": "S-015 crosswalk (squiddy)", "kind": "crosswalk row",
+                        "doc_id": "s-015-readiness-crosswalk",
+                        "locator": {"file": "squiddy/docs/S-015_readiness_crosswalk.tsv", "line": i + 1},
+                        "section": f"line {i + 1}", "text": text})
+    return out
+
+
+def brief_row_text(r: dict) -> str:
+    """An element-table row for the brief: the FAQ's four-version text with the page as served
+    on 2026-10-05 first, since R6 question 2 reads the level from that page. The FAQ's own
+    `row_text` is unchanged (its checked units cite four-version rows)."""
+    live = r["sources"].get(LIVE)
+    head = (f"DCAT-US 3.0 Dataset page (as served 2026-10-05): {live['text']}" if live
+            else "Not listed on the DCAT-US 3.0 Dataset page as served 2026-10-05")
+    return row_text(r).replace(f"Element {r['element']}. ", f"Element {r['element']}. {head} || ", 1)
+
+
+def brief_table_items(rows: list, elements: list) -> list:
+    by = {r["element"]: r for r in rows}
+    missing = [e for e in elements if e not in by]
+    if missing:
+        raise SystemExit(f"FATAL: brief config names elements the table does not hold: {missing}")
+    return [{"graph": "computed from ai-readiness-kg documents", "kind": "element table row",
+             "doc_id": FINAL, "locator": {"element": e, "lines": {d: s["line"] for d, s in by[e]["sources"].items()}},
+             "section": f"element {e}", "text": brief_row_text(by[e]), "pinned": True}
+            for e in elements]
+
+
+def build_need(need: dict, bcfg: dict, drv, meta: dict, table: list, substrate_dir: Path) -> dict:
+    """One need's evidence: three parts, each retrieved over its own scope with its own terms
+    and selected under its own caps, then numbered E1... in part order. Every item carries its
+    `part`."""
+    sc, plim = bcfg["scopes"], bcfg["pdf_passage_chars"]
+    items, per_part = [], {}
+    for part in PARTS:
+        terms = [str(t).lower() for t in need[part]]
+        docs_a, docs_f = list(sc[part].get("airkg") or []), list(sc[part].get("fss") or [])
+        missing = sorted({d for d in docs_a + docs_f if d not in meta})
+        if missing:
+            raise SystemExit(f"FATAL: need {need['id']} {part}: no document in either graph for {missing}")
+        found = []
+        if part == "landed":
+            found += brief_table_items(table, need.get("elements") or [])
+        found += substrate_passages(docs_a, terms, substrate_dir)
+        found += pdf_passages(docs_a, terms, substrate_dir, plim)
+        found += airkg_node_passages(drv, bcfg["graphs"]["airkg_database"], bcfg["graphs"]["airkg_labels"],
+                                     docs_a, terms)
+        found += fss_passages(drv, bcfg["graphs"]["fss_database"], docs_f, terms)
+        if part == "literature" and sc[part].get("crosswalk_tsv"):
+            found += crosswalk_passages((REPO / sc[part]["crosswalk_tsv"]).resolve(), terms)
+        kept, dropped = select(found, terms, bcfg["caps"][part])
+        for it in kept:
+            it["part"] = part
+        per_part[part] = {"terms": terms, "documents_searched": {"ai-readiness-kg": docs_a, "fss-policy-kg": docs_f},
+                          "matched": len(found), "kept": len(kept), "dropped_by_cap": dropped}
+        items += kept
+    for i, it in enumerate(items, 1):
+        it["id"] = f"E{i}"
+    question = (f"Statistical need {need['id']}, {need['name']}: {need['plain']}. "
+                + " ".join(f"({i}) {PART_QUESTION[p]}" for i, p in enumerate(PARTS, 1)))
+    used = sorted({it["doc_id"] for it in items if it["doc_id"] in meta}
+                  | ({FINAL, EARLIER, DRAFT, V11, LIVE} if any(it["kind"] == "element table row" for it in items) else set()))
+    xw = [it for it in items if it["kind"] == "crosswalk row"]
+    docs = {d: meta[d] for d in used if d in meta}
+    if xw:
+        docs["s-015-readiness-crosswalk"] = {
+            "title": "S-015 readiness crosswalk: the presenter's own crosswalk of an AI-readiness "
+                     "framework's indicators to W3C and ISO/IEC 25012 quality terms (unpublished)",
+            "issuer": "", "date": "2026-09-14", "url": "", "graph": "squiddy"}
+    return {"question_id": need["id"], "need": need["name"], "question": question,
+            "generated_by": BRIEF_GENERATOR, "generated_at": _now(), "parts": per_part,
+            "matched": sum(p["matched"] for p in per_part.values()),
+            "dropped_by_cap": sum(p["dropped_by_cap"] for p in per_part.values()),
+            "caps": bcfg["caps"], "documents": docs, "items": items}
+
+
+def brief_absence_evidence(statements: list, bcfg: dict, drv, meta: dict, substrate_dir: Path,
+                           ab: dict) -> dict:
+    """`absence_evidence` for a need's negative statements ("the public record does not ask
+    for it", "no element carries it"), over every scope of the brief and, unlike the FAQ's,
+    over the page text of admitted PDFs too: most of the statistical side's record is PDF, and
+    an absence searched only through grounding spans is the Q10 failure DCAT-003 §3 item 4
+    records. `ab` is the FAQ config's `absence` block (stopwords, per_document, min_terms,
+    max_chars), read, not copied."""
+    sc = bcfg["scopes"]
+    docs_a = list(dict.fromkeys(d for p in PARTS for d in sc[p].get("airkg") or []))
+    docs_f = list(dict.fromkeys(d for p in PARTS for d in sc[p].get("fss") or []))
+    stop = set(ab["stopwords"])
+    pool, per_statement = [], []
+    for st in statements:
+        terms = content_terms(st, stop)
+        cands = substrate_passages(docs_a, terms, substrate_dir)
+        cands += pdf_passages(docs_a, terms, substrate_dir, bcfg["pdf_passage_chars"])
+        cands += airkg_node_passages(drv, bcfg["graphs"]["airkg_database"], bcfg["graphs"]["airkg_labels"],
+                                     docs_a, terms)
+        cands += fss_passages(drv, bcfg["graphs"]["fss_database"], docs_f, terms)
+        for c in cands:
+            c["terms_matched"] = matched_terms(c["text"], terms)
+        cands = [c for c in cands if len(c["terms_matched"]) >= ab["min_terms"]]
+        cands.sort(key=lambda c: -len(c["terms_matched"]))
+        top, per = [], {}
+        for c in cands:
+            if per.get(c["doc_id"], 0) < ab["per_document"]:
+                per[c["doc_id"]] = per.get(c["doc_id"], 0) + 1
+                top.append(c)
+        per_statement.append({"statement": st, "terms": terms, "candidates": len(cands)})
+        for c in top:
+            c["pinned"] = True
+            pool.append(c)
+    caps = dict(bcfg["caps"]["literature"], max_chars=ab["max_chars"], max_items=10 ** 6,
+                max_per_document=10 ** 6)
+    union = list(dict.fromkeys(t for x in per_statement for t in x["terms"]))
+    kept, dropped = select(pool, union, caps)
+    return {"purpose": "absence check", "statements": per_statement, "generated_by": BRIEF_GENERATOR,
+            "generated_at": _now(), "question": "absence check: " + " | ".join(statements),
+            "documents_searched": {"ai-readiness-kg": docs_a, "fss-policy-kg": docs_f},
+            "matched": len(pool), "dropped_by_cap": dropped,
+            "documents": {it["doc_id"]: meta[it["doc_id"]] for it in kept if it["doc_id"] in meta},
+            "items": kept}
+
+
+def brief_main(only: int | None = None) -> int:
+    bcfg = yaml.safe_load(BRIEF_CONFIG.read_text(encoding="utf-8"))
+    substrate_dir = REPO / bcfg["graphs"]["substrate_dir"]
+    drv = driver()
+    try:
+        meta = doc_meta(drv, bcfg)
+        table = element_table(substrate_dir)
+        summary = {}
+        BRIEF_EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+        for need in bcfg["needs"]:
+            if only and need["id"] != only:
+                continue
+            ev = build_need(need, bcfg, drv, meta, table, substrate_dir)
+            ev["evidence_sha256"] = evidence_sha(ev)
+            p = BRIEF_EVIDENCE_DIR / f"need_{need['id']}.json"
+            p.write_text(json.dumps(ev, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+            summary[need["id"]] = {"need": need["name"], "items": len(ev["items"]),
+                                   "by_part": {k: (v["kept"], v["matched"], v["dropped_by_cap"])
+                                               for k, v in ev["parts"].items()},
+                                   "chars": sum(len(i["text"]) for i in ev["items"]),
+                                   "file": p.relative_to(REPO).as_posix()}
+    finally:
+        drv.close()
+    print(json.dumps(summary, indent=1))
+    return 0
+
+
 def evidence_sha(ev: dict) -> str:
     """Content hash of what a model call is shown: the question and the items. Generation time
     is excluded, so a rebuild that finds the same evidence is the same unit."""
@@ -645,7 +886,12 @@ def write(ev: dict) -> Path:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--only", type=int, default=None)
+    ap.add_argument("--brief", action="store_true",
+                    help="the DCAT-US 3.0 brief's per-need evidence (DCAT-004 v2 decision 2); "
+                         "writes reports/dcat_us_3_brief/evidence/ only")
     a = ap.parse_args(argv)
+    if a.brief:
+        return brief_main(a.only)
     cfg = load_config()
     substrate_dir = REPO / cfg["graphs"]["substrate_dir"]
     drv = driver()

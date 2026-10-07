@@ -1,12 +1,12 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-05T18:49:06.904305+00:00",
+ "generated_at": "2026-10-07T12:00:29.826255+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 280,
-  "excluded": 72,
+  "included": 282,
+  "excluded": 73,
   "pending_refetch": 42,
   "pending_review": 1
  },
@@ -10570,6 +10570,107 @@
      }
     },
     "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
+  "ddi-cdi-1-0-specification": {
+   "doc_id": "ddi-cdi-1-0-specification",
+   "identity": {
+    "sha256": "8c67ef2ed84a3602248e52d437aadbfaf48888071afdf7fb7c53545f5b07009c",
+    "canonical_path": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+    "title": "DDI - Cross Domain Integration (DDI-CDI): Specification Overview, Version 1.0",
+    "authors_or_org": [
+     "DDI Alliance"
+    ],
+    "pub_year": "2025",
+    "doc_type": "standard",
+    "source_url": "https://ddialliance.org/hubfs/Specification/DDI-CDI/1.0/DDI-CDI_Model_Specification.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-07T12:00:29.213249+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3873383 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "92 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-07T12:00:29.338105+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md decision 1 (DN-011-R4): the statistical side's own information models, so that 'how the literature carries it' (DN-011-R6 question 3) can be read for series, dimensions, units, uncertainty, methodology, revisions, quality and access terms. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-07T12:00:29.058610+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_004_2026-10-07"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-07_DCAT-004_fetch.jsonl). 92 pages. Title page: 'DDI - Cross Domain Integration: Specification Overview | Version 1.0 Release', 'DDI Alliance 2025'; PDF created 2025-01-24. The task's URL answered 301 to the /hubfs/ path on the same host (fetch log)."
+    ],
+    "observed_files": {
+     "corpus/kernel/ddi-cdi-1-0-specification.pdf": {
+      "sha256": "8c67ef2ed84a3602248e52d437aadbfaf48888071afdf7fb7c53545f5b07009c",
+      "size": 3873383,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/ddi-cdi-1-0-specification.pdf": {
+      "path": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3873383 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "92 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-07T12:00:29.338105+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-brief-2026-10-07"
    }
   },
   "ddi-codebook-specification": {
@@ -29892,6 +29993,107 @@
     "added_in": "kernel-v03"
    }
   },
+  "sdmx-3-1-section-2-information-model": {
+   "doc_id": "sdmx-3-1-section-2-information-model",
+   "identity": {
+    "sha256": "a662bc89af776e8f2e3cab15bd849a8bbe51cbb09fdb4e57418953858ec00fe9",
+    "canonical_path": "corpus/kernel/sdmx-3-1-section-2-information-model.pdf",
+    "title": "SDMX Standards, Section 2: Information Model: UML Conceptual Design, Version 3.1",
+    "authors_or_org": [
+     "SDMX Technical Working Group"
+    ],
+    "pub_year": "2025",
+    "doc_type": "standard",
+    "source_url": "https://sdmx.org/wp-content/uploads/SDMX_3-1-0_SECTION_2_FINAL.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-07T12:00:29.358514+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "6499370 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "163 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-07T12:00:29.378286+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md decision 1 (DN-011-R4): the statistical side's own information models, so that 'how the literature carries it' (DN-011-R6 question 3) can be read for series, dimensions, units, uncertainty, methodology, revisions, quality and access terms. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-07T12:00:29.058610+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_004_2026-10-07"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-07_DCAT-004_fetch.jsonl). 163 pages. Title page: 'Version 3.1 | May 2025'; revision history: '1.0 May 2025 Public Release for SDMX 3.1' (it also lists 'DRAFT 1.0 December 2025 Draft release updated for SDMX 3.1 for public consultation', as printed). VERSION MISMATCH, recorded and not reconciled: the corpus holds SDMX 3.0 Section 1 (sdmx-3-0-section-1-framework, 2021); Section 2 is admitted at its current version 3.1, which superseded 3.0, rather than a superseded 3.0 Section 2 to match it (DCAT-004 v2 decision 1)."
+    ],
+    "observed_files": {
+     "corpus/kernel/sdmx-3-1-section-2-information-model.pdf": {
+      "sha256": "a662bc89af776e8f2e3cab15bd849a8bbe51cbb09fdb4e57418953858ec00fe9",
+      "size": 6499370,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/sdmx-3-1-section-2-information-model.pdf": {
+      "path": "corpus/kernel/sdmx-3-1-section-2-information-model.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "6499370 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "163 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-07T12:00:29.378286+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-brief-2026-10-07"
+   }
+  },
   "sdmx-standards-overview": {
    "doc_id": "sdmx-standards-overview",
    "identity": {
@@ -33880,6 +34082,53 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "unece-gsim": {
+   "doc_id": "unece-gsim",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Generic Statistical Information Model (GSIM), UNECE",
+    "authors_or_org": [
+     "UNECE High-Level Group for the Modernisation of Official Statistics"
+    ],
+    "pub_year": null,
+    "doc_type": "intergovernmental",
+    "source_url": "https://unece.org/statistics/modernstats/gsim",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Declined, not fetchable from an allowlisted host: on 2026-10-07 both UNECE hosts on the task's allowlist answered HTTP 403 to every request from the identified client, robots.txt included (unece.org/robots.txt, unece.org/statistics/modernstats/gsim, statswiki.unece.org/robots.txt, statswiki.unece.org/display/gsim, statswiki.unece.org/). The current version could not be read from the publisher's page, so none is recorded. cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md decision 1: a document that cannot be fetched from an allowlisted host is declined with the reason in the manifest, never a to-do.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-07T12:00:29.058610+00:00",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_004_2026-10-07"
+   ],
+   "extra": {
+    "notes": [
+     "attempts (fetch log logs/2026-10-07_DCAT-004_fetch.jsonl): https://unece.org/statistics/modernstats/gsim -> 403 at 2026-10-07T11:58:00.381214+00:00; https://statswiki.unece.org/display/gsim -> 403 at 2026-10-07T11:58:07.265990+00:00; https://statswiki.unece.org/ -> 403 at 2026-10-07T11:58:08.327333+00:00"
+    ]
    }
   },
   "unesco-ai-readiness-assessment-methodology-ram": {

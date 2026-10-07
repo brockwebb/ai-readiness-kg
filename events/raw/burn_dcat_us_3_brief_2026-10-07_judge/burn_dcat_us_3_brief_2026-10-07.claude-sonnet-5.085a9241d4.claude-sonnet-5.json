@@ -1,0 +1,24 @@
+{
+ "batch_id": "burn_dcat_us_3_brief_2026-10-07.claude-sonnet-5.085a9241d4",
+ "run": "burn_dcat_us_3_brief_2026-10-07",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 2326,
+  "cacheReadInputTokens": 80631,
+  "cacheCreationInputTokens": 37192,
+  "webSearchRequests": 0,
+  "costUSD": 0.1881622,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1482,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.1881622,
+ "duration_ms": 32146,
+ "wall_s": 34.5,
+ "session_id": "901636e2-5dac-4bf4-8765-73dffba4a978",
+ "raw_result": "The task's own prompt is a fully-specified, versioned judge instrument (`probe_judge_version: 1.1.0`) built for this exact fact-checking format — that's the correct instrument here, not the general adversarial-review rubric. Producing the required output directly:\n\n```json\n{\"judgments\": [\n{\"fact_id\": \"f_c76db4eed434\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_16347ff2a4ae\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_8aeb754618d2\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.85},\n{\"fact_id\": \"f_5d5f2da3947d\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_f2f8ad4ad142\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n{\"fact_id\": \"f_3ff2a5d15d39\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_44c433d7e19b\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.75},\n{\"fact_id\": \"f_c539d15d5e84\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n{\"fact_id\": \"f_0fcdbed614a4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_db894d2fb7ae\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}\n]}\n```\n\nNotes on the two `not_entailed` calls:\n- `f_8aeb754618d2`: the span (`\"These are known as 'sentinel values'...\"`) only carries the predicate; the subject \"Concepts associated with missing data\" appears only in the window's preceding sentence, not in the span itself.\n- `f_44c433d7e19b`: span/window show \"the concept expressing this commonality\" and the taxonomy (Marital status, Conceptual Variable, etc.) but never attach an alias \"Concept level\" to anything — unsupported by span or window."
+}

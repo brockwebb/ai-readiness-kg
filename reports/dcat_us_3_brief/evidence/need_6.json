@@ -1,0 +1,1238 @@
+{
+ "question_id": 6,
+ "need": "revisions and versions",
+ "question": "Statistical need 6, revisions and versions: whether numbers were revised after first release, and which version a user has. (1) Did FCSM or the FAIRness Project publicly ask for it? (2) Where did it land in DCAT-US 3.0: Mandatory, Recommended, Optional, dropped, or absent, as served on 5 October 2026; and does the Implementation Guide or the Overview say it was deferred to a later version? (3) What does the literature say is the right way to carry it?",
+ "generated_by": "scripts/dcat_faq_evidence.py --brief",
+ "generated_at": "2026-10-07T13:21:16.822919+00:00",
+ "parts": {
+  "asked": {
+   "terms": [
+    "revision",
+    "revised",
+    "revise",
+    "version",
+    "vintage",
+    "correction",
+    "errata",
+    "update"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "fairness-project-wiki-home",
+     "fairness-project-wiki-project-overview",
+     "fcsm-2024-b3-3-fairness-project",
+     "cdoc-dswg-findings-and-recommendations-2022",
+     "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+     "fcsm-20-04-a-framework-for-data-quality",
+     "fcsm-23-02-a-framework-for-data-quality-case-studies",
+     "fcsm-25-03"
+    ],
+    "fss-policy-kg": [
+     "fairness_project_wiki_overview",
+     "fcsm_20_04",
+     "fcsm_25_03"
+    ]
+   },
+   "matched": 228,
+   "kept": 14,
+   "dropped_by_cap": 193
+  },
+  "landed": {
+   "terms": [
+    "version",
+    "hasversion",
+    "versionnotes",
+    "previousversion",
+    "revision",
+    "revised",
+    "replaces",
+    "versioning"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "dcat-us-3-dataset-schema-2026-10-05",
+     "dcat-us-3-overview-2026-10-05",
+     "dcat-us-3-implementation-guide",
+     "dcat-us-3-dataset-series",
+     "dcat-us-3-quality-governance",
+     "dcat-us-3-temporal-spatial-metrics",
+     "dcat-us-3-candidate-recommendation-snapshot"
+    ],
+    "fss-policy-kg": [
+     "dcat_us_3_implementation_guide"
+    ]
+   },
+   "matched": 295,
+   "kept": 19,
+   "dropped_by_cap": 252
+  },
+  "literature": {
+   "terms": [
+    "revision",
+    "revised",
+    "version",
+    "versioning",
+    "vintage",
+    "previous version",
+    "versionnotes",
+    "version notes"
+   ],
+   "documents_searched": {
+    "ai-readiness-kg": [
+     "statdcat-ap-1-0-1",
+     "sdmx-3-0-section-1-framework",
+     "sdmx-3-1-section-2-information-model",
+     "sdmx-standards-overview",
+     "ddi-codebook-specification",
+     "ddi-cdi-1-0-specification",
+     "w3c-rdf-data-cube",
+     "w3c-dqv",
+     "w3c-dwbp-2017",
+     "wilkinson-2016-fair-guiding-principles",
+     "jacobsen-2020-fair-principles-interpretations",
+     "dcat-ap-3-0-0-r5r-vocabulary",
+     "w3c-dcat-3"
+    ],
+    "fss-policy-kg": [
+     "w3c_dcat_3"
+    ]
+   },
+   "matched": 859,
+   "kept": 16,
+   "dropped_by_cap": 815
+  }
+ },
+ "matched": 1382,
+ "dropped_by_cap": 1260,
+ "caps": {
+  "asked": {
+   "max_items": 14,
+   "max_chars": 14000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "landed": {
+   "max_items": 12,
+   "max_chars": 12000,
+   "max_per_document": 4,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  },
+  "literature": {
+   "max_items": 16,
+   "max_chars": 16000,
+   "max_per_document": 3,
+   "min_passage_chars": 25,
+   "max_passage_chars": 1500
+  }
+ },
+ "documents": {
+  "dcat-us-1-1-schema": {
+   "title": "DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-implementation-guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-09",
+   "url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "ddi-cdi-1-0-specification": {
+   "title": "DDI - Cross Domain Integration (DDI-CDI): Specification Overview, Version 1.0",
+   "issuer": "DDI Alliance",
+   "date": "2025-01-24",
+   "url": "https://ddialliance.org/hubfs/Specification/DDI-CDI/1.0/DDI-CDI_Model_Specification.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "ddi-codebook-specification": {
+   "title": "DDI-Codebook (DDI-C) — DDI Alliance product specification page",
+   "issuer": "DDI Alliance",
+   "date": "2026",
+   "url": "https://ddialliance.org/ddi-codebook",
+   "graph": "ai-readiness-kg"
+  },
+  "fairness-project-wiki-project-overview": {
+   "title": "FAIRness Project: Project Overview (DCAT-US 3 project wiki)",
+   "issuer": "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)",
+   "date": "2023-09-12",
+   "url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Project-Overview.md",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-2024-b3-3-fairness-project": {
+   "title": "The FAIRness Project: Building Trust and FAIRness into Finding and Using Government Data (FCSM 2024 Research and Policy Conference, session B3.3)",
+   "issuer": "Thomas Dabolt (DOI); Michael Ratcliffe (U.S. Census Bureau)",
+   "date": "2024-10-30",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/2024-conference-docs/B/B3.3_Dabolt.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-23-02-a-framework-for-data-quality-case-studies": {
+   "title": "FCSM 23-02: A Framework for Data Quality: Case Studies",
+   "issuer": "Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_20_04": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "FCSM",
+   "date": "2020-09",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  },
+  "sdmx-3-0-section-1-framework": {
+   "title": "SDMX 3.0 Technical Specifications, Section 1: Framework for SDMX Technical Standards",
+   "issuer": "SDMX Technical Working Group",
+   "date": "2021-09-13",
+   "url": "https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "sdmx-standards-overview": {
+   "title": "SDMX Standards (sdmx.org standards page)",
+   "issuer": "SDMX Sponsors (BIS, ECB, Eurostat, IMF, OECD, UN, World Bank)",
+   "date": "n.d.",
+   "url": "https://sdmx.org/standards-2/",
+   "graph": "ai-readiness-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dcat-3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C Dataset Exchange Working Group",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dwbp-2017": {
+   "title": "Data on the Web Best Practices (W3C Recommendation, 31 January 2017)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2017-01-31",
+   "url": "https://www.w3.org/TR/dwbp/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-rdf-data-cube": {
+   "title": "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)",
+   "issuer": "W3C Government Linked Data Working Group",
+   "date": "2014-01-16",
+   "url": "https://www.w3.org/TR/vocab-data-cube/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c_dcat_3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "fss-policy-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 45,
+    "block": 3
+   },
+   "section": "page 45",
+   "text": "In statistical terms, reliability concerns the repeated estimation of an event. At BEA, “Reliability refers to the size \nand frequency of revision to the NIPA estimates. An important indicator of reliability is the effectiveness of the \ninitial estimates of GDP in providing a useful picture of U.S. economic activity” (Bureau of Economic Analysis, \n2017a, p. 1-8, emphasis added). The reliability of the estimates is assessed by examining the performance of the \nsuccessive vintage estimates; for example, an examination of the closeness of estimates as they are revised when \nmore complete data become available.",
+   "terms_matched": [
+    "revision",
+    "revised",
+    "revise",
+    "vintage"
+   ],
+   "cut": false,
+   "id": "E1",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 44,
+    "block": 2
+   },
+   "section": "page 44",
+   "text": "BEA produces \nsuccessive vintages of so-called “current” estimates for quarter that are known as “advance,” “second,” and “third” \nestimates, which are available, respectively, about one, two, and three months after the end of the quarter (Fixler, et \nal., 2018). Following the set of current estimates, subsequent revisions are made that constitute successive “annual \nupdate” estimates and one or more “comprehensive update” estimates. Current quarterly estimates of PCE and the other NIPA estimates are available most quickly. However, they use \npartial and preliminary data that are not as comprehensive as the annual source data, which impinges on accuracy.",
+   "terms_matched": [
+    "revision",
+    "vintage",
+    "update"
+   ],
+   "cut": false,
+   "id": "E2",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 63,
+    "block": 3
+   },
+   "section": "page 63",
+   "text": "In the OMB guidance, information quality is described as an overarching concept that includes Objectivity, Utility, and \nIntegrity of information. Objectivity refers to presenting accurate, reliable, and unbiased information in an accurate, clear, \ncomplete and unbiased manner. Utility refers to the usefulness of the information to the intended users. Integrity refers to \nproviding the data security required to protect information from unauthorized access or revision through corruption or \nfalsifcation (OMB 2002a). During 2002, OMB issued several additional policies that revised, clarifed, and expanded its initial guidance.",
+   "terms_matched": [
+    "revision",
+    "revised",
+    "revise"
+   ],
+   "cut": false,
+   "id": "E3",
+   "part": "asked"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s725"
+   },
+   "section": "passage 725",
+   "text": "OMB Circular A-130, (2016) 'Managing Information as a Strategic Resource,' which establishes general policy for information governance, acquisitions, records management, open data, workforce, security, and privacy, was revised in 2016 to ensure consistency with these policy memoranda. In particular, these revisions clarified agencies' information security responsibilities to align with the open data policy outlined in OMB M-13-13.",
+   "terms_matched": [
+    "revision",
+    "revised",
+    "revise"
+   ],
+   "cut": false,
+   "id": "E4",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "fairness-project-wiki-project-overview",
+   "locator": {
+    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
+    "line": 20
+   },
+   "section": "Introduction",
+   "text": "2. An updated DCAT-US Schema v1.1 (Project Open Data Metadata Schema) to a United States profile of the [W3C DCAT version 3 standard](https://www.w3.org/TR/vocab-dcat-3/), aligning the schema with international standards, metadata for geospatial data and statistical data catalogs, and improving adoption by software vendors and open-source technologies.",
+   "terms_matched": [
+    "version",
+    "update"
+   ],
+   "cut": false,
+   "id": "E5",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-2024-b3-3-fairness-project",
+   "locator": {
+    "file": "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf",
+    "page": 4,
+    "block": 1
+   },
+   "section": "page 4",
+   "text": "• Three deliverables: • Updated DCAT-US Schema to a US profile of DCAT version 3, aligning the \nschema with international standards and geospatial metadata in the \nGeoPlatform, and improving adoption by software vendors and open-source \ntechnologies. • A strategic two-year sequencing (i.e., transition) plan to improve and \nintegrate government-wide metadata cataloging to facilitate data users being \nable to easily find, access, assess for fitness-for-use, and use federal data. • A proposed governance model for updating and maintaining the federal \nmetadata schema profiles in accordance with data inventory and data \ncataloging standards. FAIRness Project 4\nFAIRness Project Deliverables",
+   "terms_matched": [
+    "version",
+    "update"
+   ],
+   "cut": false,
+   "id": "E6",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 43,
+    "block": 2
+   },
+   "section": "page 43",
+   "text": "To construct estimates of the NIPAs, GDP, and PCE, BEA adopts the conceptual framework laid out in the System \nof National Accounts (SNA), an international standard maintained and intermittently revised by the United Nations \nand others (European Commission et al., 2008). The SNA is the guiding framework that statistical agencies around \nthe world follow, resulting in statistics that are coherent by being based on transparent and agreed-upon concepts, \nprinciples and approaches to combine and report information. In addition, GDP estimates from different countries \nachieve comparability when they are produced using the same framework.",
+   "terms_matched": [
+    "revised",
+    "revise"
+   ],
+   "cut": false,
+   "id": "E7",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
+    "page": 43,
+    "block": 3
+   },
+   "section": "page 43",
+   "text": "Following the revision to SNA in 2008, \nBEA developed a comprehensive update of the NIPAs, which included changes to PCE measurement, thus \n“improving consistency with international standards.”  (Bureau of Economic Analysis, 2017b, p. 5-4). BEA documentation states that, “Accuracy may be described in terms of how close the estimates come to \nmeasuring the concepts that are designed to measure. In the case of GDP, the estimate is accurate when it captures \nall production for final use but does not include production for intermediate use” (Bureau of Economic Analysis, \n2017a, p. 1-7, emphasis added).",
+   "terms_matched": [
+    "revision",
+    "update"
+   ],
+   "cut": false,
+   "id": "E8",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 37,
+    "block": 5
+   },
+   "section": "page 37",
+   "text": "Successively updated vintages of GDP \nestimates exemplify increasing accuracy as timeliness decreases (see the discussion in Prell et al. 2019, \n29). Another approach that some agencies are considering is the use of forecasting models to generate \npredicted values of measures whose true values are only known with a lag. Such “nowcasting” models \nmay exploit auxiliary information to anticipate movements in the ofcial measure (see, e.g., Cajner et \nal. 2019, Glaeser et al. 2019, and NCHS 2020a).",
+   "terms_matched": [
+    "vintage",
+    "update"
+   ],
+   "cut": false,
+   "id": "E9",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 64,
+    "block": 3
+   },
+   "section": "page 64",
+   "text": "• OMB M-11-02, “Sharing Data While Protecting Privacy, ” (OMB 2011) directs “agencies to fnd solutions that allow \ndata sharing to move forward in a manner that complies with applicable privacy laws, regulations, and polices.” Tis \nincludes “seeking ways to facilitate responsible data sharing for the purpose of conducting rigorous studies that promote \ninformed public policy decisions.” \n• OMB M-13-13, “Open Data Policy—Managing Information as an Asset, ” (OMB 2013) was issued “to help\ninstitutionalize the principles of efective information management at each stage of the information’s life cycle to\npromote interoperability and openness.”\n• OMB M-14-06, “Guidance for Providing and Using Administrative Data for Statistical Purposes, ” (OMB 2014)\n“encourages Federal departments and agencies to promote the use of administrative data for statistical purposes and\nprovides guidance in addressing legal and policy requirements for such uses, including the need to continue to fully\nprotect the privacy and Confdentiality aforded to the individuals, businesses, and institutions providing the data.”\n• OMB M-15-15, “Improving Statistical Activities through Interagency Collaboration, ” (OMB 2015) “strongly\nencourages the Federal statistical agencies and units, and their parent Departments, to build interagency collaboration\nthat will help the Federal statistical community more efectively meet the information needs of the 21st century.”\n• OMB Circular A-130, (2016) “Managing Information as ",
+   "terms_matched": [
+    "revised",
+    "revise"
+   ],
+   "cut": true,
+   "id": "E10",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 73,
+    "block": 1
+   },
+   "section": "page 73",
+   "text": "FCSM: A Framework for Data Quality 69\n \n    \n    \n    \n    \n \n \n \n   \n \n \nAgencies employ a variety of approaches to identify and address possible sources of measurement error before an instrument \ngoes into the feld. For example, an agency may test the data collection instrument using cognitive interviewing to identify \npossible interpretations of questions and evaluate question-response patterns (e.g., NCHS 2020), which allows the instru -\nment to be revised and perhaps re-tested before implementation. Similar factors can contribute to measurement error in nonsurvey data.",
+   "terms_matched": [
+    "revised",
+    "revise"
+   ],
+   "cut": false,
+   "id": "E11",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 9,
+    "block": 4
+   },
+   "section": "page 9",
+   "text": "These NCHS \nLMFs have been cited in more than 1,000 peer-reviewed publications since their initial release 2. The \nNCHS LMFs have recently been updated with mortality data collected through December 31, 2019. A \npartially synthetic public-use version of the LMFs can be downloaded from the NCHS website3, and a \nrestricted-use version is available through the NCHS Research Data Center (RDC)4,5. The public-use LMFs \ninclude data perturbation to reduce disclosure risk and limit the amount of detail available for specific \nmortality variables (e.g., cause of death information is summarized as the leading causes of death at the \nnational level).",
+   "terms_matched": [
+    "version",
+    "update"
+   ],
+   "cut": false,
+   "id": "E12",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 12,
+    "block": 2
+   },
+   "section": "page 12",
+   "text": "Coherence – The 2019 LMFs maintain coherence by using many of the same definitions as the previous \nversions of the 2015 LMFs, so much so, that minimal coding is needed to update the analyses, even with \n4 additional years of mortality data. The 2019 LMFs also demonstrate considerable agreement with \nnational mortality estimates generated using the national vital records file, as opposed to records for \nsurvey participants only.11 This alignment with external statistical standards bolsters the coherence of \nanalyses performed with the 2019 LMFs. Finally, a potential threat to coherence of the NCHS LMFs is linkage bias.",
+   "terms_matched": [
+    "version",
+    "update"
+   ],
+   "cut": false,
+   "id": "E13",
+   "part": "asked"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 28,
+    "block": 5
+   },
+   "section": "page 28",
+   "text": "About 2% of the participants with PAM data wear it for less than 7 \ndays.27 For those with complete data, the measurement accuracy/reliability is very high. Coherence – The 2013–2014 NHANES PAM maintained coherence by using many of the same definitions \nas the previous version (2011–2012) of NHANES PAM data. As a result, minimal coding was needed to \nupdate the 2011–2012 analyses by adding the 2013–2014 PAM data. In addition, the PAM data uses \nsimilar standard and vocabulary as other types of physical activity monitoring data sources outside of \n \n26 John D, Tang Q, Albinali F, Intille S.",
+   "terms_matched": [
+    "version",
+    "update"
+   ],
+   "cut": false,
+   "id": "E14",
+   "part": "asked"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "hasVersion",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 683,
+     "dcat-us-3-dataset-schema": 228,
+     "dcat-us-3-candidate-recommendation-snapshot": 2714,
+     "dcat-us-3-dataset-schema-2026-10-05": 685
+    }
+   },
+   "section": "element hasVersion",
+   "text": "Element hasVersion. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; hasVersion #](#hasVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; hasVersion #](#hasVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > hasVersion` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasVersion) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: has version | no Requirement level row | URI dcat:hasVersion || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "version",
+    "hasversion"
+   ],
+   "cut": false,
+   "id": "E15",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "versionNotes",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 1098,
+     "dcat-us-3-dataset-schema": 153,
+     "dcat-us-3-candidate-recommendation-snapshot": 2983,
+     "dcat-us-3-dataset-schema-2026-10-05": 1100
+    }
+   },
+   "section": "element versionNotes",
+   "text": "Element versionNotes. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; versionNotes #](#versionNotes) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; versionNotes #](#versionNotes) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > versionNotes` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#versionNotes) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: version notes | | Requirement level | Optional | | URI adms:versionNotes || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "version",
+    "versionnotes"
+   ],
+   "cut": false,
+   "id": "E16",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "previousVersion",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 859,
+     "dcat-us-3-dataset-schema": 281,
+     "dcat-us-3-dataset-schema-2026-10-05": 861
+    }
+   },
+   "section": "element previousVersion",
+   "text": "Element previousVersion. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; previousVersion #](#previousVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; previousVersion #](#previousVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > previousVersion` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#previousVersion) **Requirement:** Optional || Not listed in: DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "version",
+    "previousversion"
+   ],
+   "cut": false,
+   "id": "E17",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "version",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 1084,
+     "dcat-us-3-dataset-schema": 333,
+     "dcat-us-3-candidate-recommendation-snapshot": 2973,
+     "dcat-us-3-dataset-schema-2026-10-05": 1086
+    }
+   },
+   "section": "element version",
+   "text": "Element version. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; version #](#version) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; version #](#version) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > version` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#version) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: version | | Requirement level | Optional | | URI dcat:version || Not listed in: DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "version"
+   ],
+   "cut": false,
+   "id": "E18",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "hasCurrentVersion",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 647,
+     "dcat-us-3-dataset-schema": 209,
+     "dcat-us-3-dataset-schema-2026-10-05": 649
+    }
+   },
+   "section": "element hasCurrentVersion",
+   "text": "Element hasCurrentVersion. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; hasCurrentVersion #](#hasCurrentVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; hasCurrentVersion #](#hasCurrentVersion) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > hasCurrentVersion` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasCurrentVersion) **Requirement:** Optional || Not listed in: DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "version"
+   ],
+   "cut": false,
+   "id": "E19",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "replaces",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 958,
+     "dcat-us-3-dataset-schema": 809,
+     "dcat-us-3-dataset-schema-2026-10-05": 960
+    }
+   },
+   "section": "element replaces",
+   "text": "Element replaces. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; replaces #](#replaces) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; replaces #](#replaces) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > replaces` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#replaces) **Requirement:** Optional || Not listed in: DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+   "pinned": true,
+   "terms_matched": [
+    "replaces"
+   ],
+   "cut": false,
+   "id": "E20",
+   "part": "landed"
+  },
+  {
+   "graph": "computed from ai-readiness-kg documents",
+   "kind": "element table row",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "element": "modified",
+    "lines": {
+     "dcat-us-3-dataset-schema-2026-09-15": 301,
+     "dcat-us-3-dataset-schema": 713,
+     "dcat-us-3-candidate-recommendation-snapshot": 2540,
+     "dcat-us-1-1-schema": 453,
+     "dcat-us-3-dataset-schema-2026-10-05": 303
+    }
+   },
+   "section": "element modified",
+   "text": "Element modified. DCAT-US 3.0 Dataset page (as served 2026-10-05): ## [Dataset &gt; modified #](#modified) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; modified #](#modified) **Requirement:** Recommended || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > modified` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#modified) **Requirement:** Recommended || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: update/modification date | | Requirement level | Recommended | | URI dcterms:modified || DCAT-US v1.1 schema: Field modified | Required | Yes, always",
+   "pinned": true,
+   "terms_matched": [],
+   "cut": false,
+   "id": "E21",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 4791
+   },
+   "section": "Relationship",
+   "text": "| Usage note | [`dcterms:hasPart`](http://purl.org/dc/terms/hasPart) [`dcterms:isPartOf`](http://purl.org/dc/terms/isPartOf) [`dcterms:conformsTo`](http://purl.org/dc/terms/conformsTo) [`dcterms:isFormatOf`](http://purl.org/dc/terms/isFormatOf) [`dcterms:hasFormat`](http://purl.org/dc/terms/hasFormat) [`dcterms:isVersionOf`](http://purl.org/dc/terms/isVersionOf) [`dcterms:hasVersion`](http://purl.org/dc/terms/hasVersion) [`dcterms:replaces`](http://purl.org/dc/terms/replaces) [`dcterms:isReplacedBy`](http://purl.org/dc/terms/isReplacedBy) [`dcterms:references`](http://purl.org/dc/terms/references) [`dcterms:isReferencedBy`](http://purl.org/dc/terms/isReferencedBy) [`dcterms:requires`](http://purl.org/dc/terms/requires) [`dcterms:isRequiredBy`](http://purl.org/dc/terms/isRequiredBy) ``` prov:wasDerivedFrom ``` ``` prov:wasInfluencedBy ``` ``` prov:wasQuotedFrom ``` ``` prov:wasRevisionOf ``` ``` prov:hadPrimarySource ``` ``` prov:alternateOf ``` ``` prov:specializationOf ``` Use to characterize a relationship between datasets, and potentially other resources, where the nature of the relationship is known but is not adequately characterized by the standard [[?DCTERMS]] properties ( , , , , , , , , , , , , ) or [[PROV-O]] properties ( , , , , , , ) |",
+   "terms_matched": [
+    "version",
+    "hasversion",
+    "revision",
+    "replaces"
+   ],
+   "cut": false,
+   "id": "E22",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7367
+   },
+   "section": "Dataset Versions",
+   "text": "- `dcterms:hasVersion` - Links to a more recent version of the dataset.\n- `dcterms:isVersionOf` - Indicates the dataset is a version of another dataset.\n- `dcterms:version` - Provides the version number or identifier of the dataset.\n- `dcterms:versionNotes` - Describes changes between this version and the previous version of the dataset.",
+   "terms_matched": [
+    "version",
+    "hasversion",
+    "versionnotes"
+   ],
+   "cut": false,
+   "id": "E23",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7392
+   },
+   "section": "Version Chains and Hierarchies",
+   "text": "- `dcat:previousVersion` - This property creates a backward navigable chain from a given version to the first one, allowing for the tracking of a dataset's version history.\n- `dcat:hasVersion` - Utilized for outlining a version hierarchy by linking an abstract resource to its different versions.\n- `dcat:hasCurrentVersion` - a subproperty of `dcat:hasVersion` ) - This property is used to connect an abstract resource to the snapshot representing the current version of its content.",
+   "terms_matched": [
+    "version",
+    "hasversion",
+    "previousversion"
+   ],
+   "cut": false,
+   "id": "E24",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7402
+   },
+   "section": "Version Chains and Hierarchies",
+   "text": "It's important to note that the essential properties for specifying a version chain and hierarchy are `dcat:previousVersion` and `dcat:hasVersion` . The choice to use additional properties is",
+   "terms_matched": [
+    "version",
+    "hasversion",
+    "previousversion"
+   ],
+   "cut": false,
+   "id": "E25",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 64
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [hasVersion](#hasVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or array of classes | Optional | List of related Datasets that are a version, edition, or adaptation of the described Dataset |",
+   "terms_matched": [
+    "version",
+    "hasversion"
+   ],
+   "cut": false,
+   "id": "E26",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 73
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [previousVersion](#previousVersion) | [Dataset](/standards/catalog/dcat-us-3/dataset/#root) null or | Optional | reference to the previous dataset version |",
+   "terms_matched": [
+    "version",
+    "previousversion"
+   ],
+   "cut": false,
+   "id": "E27",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 90
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [versionNotes](#versionNotes) | null or string | Optional | Notes describing how this version differs from earlier versions of the dataset |",
+   "terms_matched": [
+    "version",
+    "versionnotes"
+   ],
+   "cut": false,
+   "id": "E28",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 60,
+    "block": 4
+   },
+   "section": "page 60",
+   "text": "The  DCAT-US  v3.0  schema  includes  properties  that  allow  agencies  to  identify  alternative  \nversions\n \nof\n \na\n \ndata\n \nasset\n \n. 94\n \n94\n See  the  hasVersion  and  hasCurrentVersion  properties  here:  https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasVersion                                                                                                                                                                                          DCAT-US  v3.0  Implementation  Guide    60  ",
+   "terms_matched": [
+    "version",
+    "hasversion"
+   ],
+   "cut": false,
+   "id": "E29",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "file": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "page": 62,
+    "block": 1
+   },
+   "section": "page 62",
+   "text": "JSON\n \n2. Dataset  class : Modify  dataset-level  properties  as  appropriate. Upon  completion,  \nconduct\n \na\n \ncross-class\n \nreview\n \nto\n \nassess\n \nnecessary\n \nrevisions\n \nto\n \nthe\n \nassociated\n \ndistributions. 3. Distribution  class : Update  distribution-level  properties  as  needed,  including  access  \nURLs,\n \nformats,\n \nlicences,\n \nand\n \nrestrictions. 4. Submission  and  Validation : Revise  DatasetSeries  and  DataService  classes  as  \nneeded,\n \nalong\n \nwith\n \nany\n \nsupporting\n \nclasses. Submit\n \nthe\n \nrevised\n \nmetadata\n \nto\n \nthe\n Data.gov  harvester and  adjudicate  issues  identiﬁed  during  the  validation  process.",
+   "terms_matched": [
+    "revision",
+    "revised"
+   ],
+   "cut": false,
+   "id": "E30",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "node": "dcat-us-3-candidate-recommendation-snapshot::c_dataset_versioning",
+    "location": "dcat-us-3-candidate-recommendation-snapshot#c0085"
+   },
+   "section": "",
+   "text": "In DCAT-US 3.0, dataset versioning is primarily managed through the use of properties that",
+   "terms_matched": [
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E31",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "node": "dcat-us-3-candidate-recommendation-snapshot::c_lifecycle_resource",
+    "location": "dcat-us-3-candidate-recommendation-snapshot#c0086"
+   },
+   "section": "",
+   "text": "The life-cycle of a resource, while distinct from versioning, is often closely related to it.",
+   "terms_matched": [
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E32",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "node": "dcat-us-3-candidate-recommendation-snapshot::c_semantic_versioning",
+    "location": "dcat-us-3-candidate-recommendation-snapshot#c0085"
+   },
+   "section": "",
+   "text": "Semantic versioning provides explicit indications of the nature of changes: major changes (like new",
+   "terms_matched": [
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E33",
+   "part": "landed"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 121
+   },
+   "section": "1. Introduction",
+   "text": "DCAT 3 has extended the previous version to support further use cases and requirements [DCAT-UCR]. These include the possibility of cataloging other resources in addition to datasets, such as dataset series. The revision also supports describing versioning of resources. Guidance on how to use inverse properties is provided.",
+   "terms_matched": [
+    "revision",
+    "version",
+    "versioning",
+    "previous version"
+   ],
+   "cut": false,
+   "id": "E34",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "file": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "page": 43,
+    "block": 2
+   },
+   "section": "page 43",
+   "text": "0..1  \nupdate/ \nmodification \ndate  \ndct:modified rdfs:Literal typed as \nxsd:date or xsd:dateTime \nThis property contains the most recent \ndate on which the Dataset was changed \nor modified. 0..1  \nversion  owl:versionInfo rdfs:Literal  \nThis property contains a version number \nor other version designation of the \nDataset. 0..1  \nversion  \nnotes  adms:versionNotes rdfs:Literal  \nThis property contains a description of \nthe differences between this version and \na previous version of the Dataset. This \nproperty can be repeated for parallel \nlanguage versions of the version notes.",
+   "terms_matched": [
+    "version",
+    "previous version",
+    "versionnotes",
+    "version notes"
+   ],
+   "cut": false,
+   "id": "E35",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1283"
+   },
+   "section": "passage 1283",
+   "text": "11. Versioning has been revised to focus specifically on versions derived from the revision of a resource, and by following the [PAV] approach for the specification of version chains and hierarchies - previous, next, current, last version. In particular: The other sections include only editorial changes.",
+   "terms_matched": [
+    "revision",
+    "revised",
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E36",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "sdmx-standards-overview",
+   "locator": {
+    "file": "state/substrate_md/sdmx-standards-overview.md",
+    "line": 16
+   },
+   "section": "",
+   "text": "[Skip to content](https://sdmx.org/standards-2/#content)\nThe SDMx initiative sets standards to facilitate the exchange of statistical data and metadata using modern information technology. Several versions of the technical specifications have been released since 2004. SDMx has also been published as an ISO International Standard (ISO 17369).\n**SDMx 3.1 Technical Specifications**\nThe SDMx 3.1 Technical Specifications were released in May 2025.\n**[Summary of Changes and New Functionalities.](https://sdmx.org/wp-content/uploads/SDMx_3-1-0_Major_Changes_FINAL-1_0.pdf)** Summary of the major changes between version 3.0 and version 3.1.\n[Section 1 – Framework.](https://sdmx.org/wp-content/uploads/SDMx_3-1-0_SECTION_1_FINAL.pdf) Introduces the documents and the content of version 3.1.\n[Section 2 – Information Model.](https://sdmx.org/wp-content/uploads/SDMx_3-1-0_SECTION_2_FINAL.pdf) UML model and functional description, definition of classes, associations and attributes.\n[Section 5 – Registry Specification – Logical Interfaces.](https://sdmx.org/wp-content/uploads/SDMx_3-1-0_SECTION_5_FINAL.pdf) Provides the specification for the logical registry interfaces, including subscription/notification and registration of data.\n[Section 6 – Technical Notes.](https://sdmx.org/wp-content/uploads/SDMx_3-1-0_SECTION_6_FINAL.pdf). Provides technical information for implementors.",
+   "terms_matched": [
+    "revised",
+    "version",
+    "previous version"
+   ],
+   "cut": true,
+   "id": "E37",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 839
+   },
+   "section": "Why",
+   "text": "Version information makes a revision of a dataset uniquely identifiable. Uniqueness can be used by data consumers to determine whether and how data has changed over time and to determine specifically which version of a dataset they are working with. Good data versioning enables consumers to understand if a newer version of a dataset is available. Explicit versioning allows for repeatability in research, enables comparisons, and prevents confusion. Using unique version numbers that follow a standardized approach can also set consumer expectations about how the versions differ.",
+   "terms_matched": [
+    "revision",
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E38",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dwbp-2017",
+   "locator": {
+    "file": "state/substrate_md/w3c-dwbp-2017.md",
+    "line": 2056
+   },
+   "section": "Possible Approach to Implementation",
+   "text": "If using an architectural style that does not allow you to make moderately significant changes without breaking client code, use versioning. Indicate the version in the response header. Version numbers should be reflected in your URIs or in request \"accept\" headers (using content negotiation). When versioning in URIs, include the version number as far to the left as possible. Keep the previous version available for developers whose code has not yet been adapted to the new version.",
+   "terms_matched": [
+    "version",
+    "versioning",
+    "previous version"
+   ],
+   "cut": false,
+   "id": "E39",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 584
+   },
+   "section": "6.3 Class: Catalog",
+   "text": "- access rights\n- conforms to\n- contact point\n- creator\n- description\n- has policy\n- identifier\n- is referenced by\n- keyword/tag\n- landing page\n- license\n- language\n- relation\n- rights\n- qualified relation\n- publisher\n- release date\n- theme/category\n- title\n- type/genre\n- update/modification date\n- qualified attribution\n- has current version\n- has version\n- previous version\n- replaces\n- status\n- version\n- version notes\n- first\n- last\n- previous",
+   "terms_matched": [
+    "version",
+    "previous version",
+    "version notes"
+   ],
+   "cut": false,
+   "id": "E40",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 704
+   },
+   "section": "6.4 Class: Cataloged Resource",
+   "text": "- access rights\n- conforms to\n- contact point\n- creator\n- description\n- has part\n- has policy\n- identifier\n- is referenced by\n- keyword/tag\n- landing page\n- license\n- language\n- relation\n- rights\n- qualified relation\n- publisher\n- release date\n- theme/category\n- title\n- type/genre\n- update/modification date\n- qualified attribution\n- has current version\n- has version\n- previous version\n- replaces\n- status\n- version\n- version notes\n- first\n- last\n- previous",
+   "terms_matched": [
+    "version",
+    "previous version",
+    "version notes"
+   ],
+   "cut": false,
+   "id": "E41",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "file": "corpus/kernel/sdmx-3-0-section-1-framework.pdf",
+    "page": 5,
+    "block": 1
+   },
+   "section": "page 5",
+   "text": "  \n  \n  \n  \n5  \n  \nVTL 49 \nIn July 2020 the SDMX 2.1 specifications were revised to add support for the  Validation and 50 \nTransformation Language (VTL). For 3.0, the VTL specification has been updated to align with 51 \nchanges to the information model and other modifications to the Standard such as the 52 \nintroduction of Semantic Versioning for the versioning of structural metadata artefacts. Section 53 \n2 (Informati on Model) sets out details of the ‘Transformation and Expressions’ package for 54 \ndefining and managing VTL 2.0 programs and Section 6 (Technical Notes) provides detailed 55 \nguidance on implementing and using VTL with SDMX.",
+   "terms_matched": [
+    "revised",
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E42",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "ddi-cdi-1-0-specification",
+   "locator": {
+    "file": "corpus/kernel/ddi-cdi-1-0-specification.pdf",
+    "page": 54,
+    "block": 4
+   },
+   "section": "page 54",
+   "text": "The attributes in this case indicate revised data in \nthe cells of the cube, identified by vintage, and with an indication of what revision process took place. \n",
+   "terms_matched": [
+    "revision",
+    "revised",
+    "vintage"
+   ],
+   "cut": false,
+   "id": "E43",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "node": "w3c-dcat-3::c-versioning",
+    "location": "w3c-dcat-3#c0030"
+   },
+   "section": "",
+   "text": "The life-cycle of a resource is an aspect orthogonal to versioning, and sometimes strictly related. The evolution of a resource along its life-cycle (from its conception, to its creation and publication) may result in new versions, although this is not always the case (e.g., in case an approval workflow is in place, the resource may not undergo any change if no revision is needed).",
+   "terms_matched": [
+    "revision",
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E44",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "node": "w3c-dcat-3::d-versionnotes",
+    "location": "w3c-dcat-3#c0029"
+   },
+   "section": "",
+   "text": "- `adms:versionNotes` [VOCAB-ADMS], for a textual description of the changes, including backward compatibility issues with the previous version of the resource.",
+   "terms_matched": [
+    "version",
+    "previous version",
+    "versionnotes"
+   ],
+   "cut": false,
+   "id": "E45",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1004"
+   },
+   "section": "passage 1004",
+   "text": "Note that correspondence does not imply equivalence. These properties have different scopes and semantics, and therefore they can complement but not replace each other. In particular, OWL properties are meant to be used on resources that can be typed as owl:Ontology's, whereas the [DCTERMS] ones use a very broad notion of version (including editions and adaptations). On the other hand, DCAT versioning properties are meant to be used on any resource in a catalog, and they use a very specific notion of version, as explained in the introduction to 11. Versioning. Finally, the [PROV-O] property prov:wasRevisionOf, although semantically similar to dcat:previousVersion, is not explicitly meant to be used to build a version chain, whereas prov:generalizationOf and prov:specializationOf are semantically broader than their sub-properties dcat:hasVersion and dcat:isVersionOf, respectively.",
+   "terms_matched": [
+    "revision",
+    "version",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E46",
+   "part": "literature"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s379"
+   },
+   "section": "passage 379",
+   "text": "See also: | 6.4.26 Property: current version, 6.4.24 Property: previous version, 6.4.7 Property: release date, 6.4.27 Property: replaces, 6.4.30 Property: status, 6.4.28 Property: version, 6.4.29 Property: version notes.",
+   "terms_matched": [
+    "version",
+    "previous version",
+    "version notes"
+   ],
+   "cut": false,
+   "id": "E47",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "ddi-codebook-specification",
+   "locator": {
+    "file": "state/substrate_md/ddi-codebook-specification.md",
+    "line": 302
+   },
+   "section": "Overview",
+   "text": "- The Field Level documentation (<https://docs.ddialliance.org/DDI-Codebook/2.6/xmlschema/index.html>) is primarily aimed at developers or advanced users of the standard.\n- The Change Log is aimed at those migrating content or systems from previous versions of DDI-Codebook.\n- Examples - code fragments illustrating specific content usage.",
+   "terms_matched": [
+    "version",
+    "previous version"
+   ],
+   "cut": false,
+   "id": "E48",
+   "part": "literature"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 20
+   },
+   "section": "W3C Recommendation 16 January 2014",
+   "text": "**This version:**\n: http://www.w3.org/TR/2014/REC-vocab-data-cube-20140116/\n**Latest published version:**\n: http://www.w3.org/TR/vocab-data-cube/\n**Implementation report:**\n: http://www.w3.org/2011/gld/wiki/Data_Cube_Implementations\n**Previous version:**\n: http://www.w3.org/TR/2013/PR-vocab-data-cube-20131217/\n**Editors:**\n: Richard Cyganiak, DERI, NUI Galway\n: Dave Reynolds, Epimorphics Ltd\n**Contributors:**\n: Jeni Tennison",
+   "terms_matched": [
+    "version",
+    "previous version"
+   ],
+   "cut": false,
+   "id": "E49",
+   "part": "literature"
+  }
+ ],
+ "evidence_sha256": "3b05813a7fe30e7fa117b36b0dfc499c595a53d4c3a383c9ed35296ab27624df"
+}

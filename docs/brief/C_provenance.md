@@ -19,8 +19,8 @@ Admitted means `screening.decision: included`. Cited means cited by at least one
 | intergovernmental | 16 | 0 |
 | platform | 1 | 0 |
 | practitioner | 10 | 2 |
-| standard | 43 | 17 |
-| all | 280 | 84 |
+| standard | 45 | 17 |
+| all | 282 | 84 |
 
 ## Federal policy instruments
 

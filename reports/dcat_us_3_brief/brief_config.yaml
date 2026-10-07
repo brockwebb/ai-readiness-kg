@@ -1,0 +1,287 @@
+# DCAT-US 3.0 plain-language brief: the eight statistical needs, where each need's evidence is
+# looked for, the outcome and yes-or-no rules as code reads them, and the run's dials.
+#
+# cc_tasks/2026-10-07_DCAT-004_v2_plain_language_brief_and_verdict.md, implementing DN-011
+# ADDENDUM 01 R6 to R9 (docs/design/2026-10-04_DN-011_dcat_us_3_intake_ADDENDUM_01.md).
+# Read by scripts/dcat_faq_evidence.py (--brief: needs, scopes, terms, caps),
+# scripts/dcat_brief_run.py (models, ceilings, the rule) and scripts/dcat_brief_build.py.
+# Written before any model call; the RESULT quotes it. Nothing here is a threshold on a finding:
+# caps bound how much text one call is shown, and every passage a cap drops is counted in that
+# need's evidence file (`dropped_by_cap`).
+
+graphs:
+  airkg_database: seldon-ai-readiness-kg
+  fss_database: fss-policy-kg
+  substrate_dir: state/substrate_md
+  airkg_labels: [Definition, Claim, Practice, Standard, Concept, Framework, Measure, Instrument, Tool]
+
+# Per part of a need's evidence. Each part is selected on its own (scripts/dcat_faq_evidence.py
+# `select`) so one part cannot crowd out another: the asked part reads the statistical side's
+# record, the landed part the DCAT-US 3.0 pages, the literature part the standards.
+caps:
+  asked:      {max_items: 14, max_chars: 14000, max_per_document: 4, min_passage_chars: 25, max_passage_chars: 1500}
+  landed:     {max_items: 12, max_chars: 12000, max_per_document: 4, min_passage_chars: 25, max_passage_chars: 1500}
+  literature: {max_items: 16, max_chars: 16000, max_per_document: 3, min_passage_chars: 25, max_passage_chars: 1500}
+# Page text of an admitted PDF that has no converted text (the extractor's own reader,
+# scripts/run_bulk_extraction.doc_text, page by page) is cut into passages of at most this many
+# characters at sentence ends. Most of the statistical side's record (FCSM papers, the B3.3
+# slides, the CDO Council report) and most standards (StatDCAT-AP, SDMX, DDI-CDI, FAIR) are PDFs,
+# whose graph presence is otherwise only the extraction's grounding spans.
+pdf_passage_chars: 700
+
+# Where each part looks (DN-011-R6 questions 1 to 3, the documents each names).
+scopes:
+  asked:
+    # R6 q1: "the project wiki, the B3.3 slides, the CDOC Data Sharing report, FCSM 19-01,
+    # 20-04, 23-02, 25-03". The sequencing plan is not public.
+    airkg: [fairness-project-wiki-home, fairness-project-wiki-project-overview,
+            fcsm-2024-b3-3-fairness-project, cdoc-dswg-findings-and-recommendations-2022,
+            fcsm-19-01-transparent-reporting-for-integrated-data-quality,
+            fcsm-20-04-a-framework-for-data-quality,
+            fcsm-23-02-a-framework-for-data-quality-case-studies, fcsm-25-03]
+    fss: [fairness_project_wiki_overview, fcsm_20_04, fcsm_25_03]
+  landed:
+    # R6 q2: "the Dataset page as served 2026-10-05 and the working draft; and whether the
+    # Implementation Guide or the Overview says it was deferred". The 2026-09-15 capture and the
+    # supporting-class pages (Dataset Series, Quality and Governance, Temporal/Spatial/Metrics)
+    # carry the classes a need may land on outside the Dataset page.
+    airkg: [dcat-us-3-dataset-schema-2026-10-05, dcat-us-3-overview-2026-10-05,
+            dcat-us-3-implementation-guide, dcat-us-3-dataset-series,
+            dcat-us-3-quality-governance, dcat-us-3-temporal-spatial-metrics,
+            dcat-us-3-candidate-recommendation-snapshot]
+    fss: [dcat_us_3_implementation_guide]
+  literature:
+    # R6 q3: "StatDCAT-AP, SDMX, DDI, the W3C Data Cube and DQV, DWBP, the FAIR principles and
+    # their interpretations, ISO/IEC 25012 as already crosswalked in S-015", plus the two models
+    # this task admitted.
+    airkg: [statdcat-ap-1-0-1, sdmx-3-0-section-1-framework, sdmx-3-1-section-2-information-model,
+            sdmx-standards-overview, ddi-codebook-specification, ddi-cdi-1-0-specification,
+            w3c-rdf-data-cube, w3c-dqv, w3c-dwbp-2017, wilkinson-2016-fair-guiding-principles,
+            jacobsen-2020-fair-principles-interpretations, dcat-ap-3-0-0-r5r-vocabulary, w3c-dcat-3]
+    fss: [w3c_dcat_3]
+    # S-015 Part A (squiddy): the presenter's own crosswalk of the framework's indicators to
+    # W3C's encoding of the Zaveri quality dimensions and ISO/IEC 25012, each row quoting the
+    # published definition it matched. Read as a file; its rows are offered as literature only
+    # for what the quoted definitions say.
+    crosswalk_tsv: ../squiddy/docs/S-015_readiness_crosswalk.tsv
+
+# The eight needs (DN-011-R6). `elements`: Dataset properties whose rows of the element table
+# (the requirement level read from each version's text) are pinned into the landed part. An
+# element is listed when its published definition names the need; the answer call may name
+# others, and the code reads a Dataset property's level from the table whatever was named.
+needs:
+  - id: 1
+    name: series
+    plain: whether a dataset is one release in a series, such as a monthly or yearly series
+    group: findability
+    elements: [inSeries, hasCurrentVersion, first, previousVersion, accrualPeriodicity]
+    asked: [series, time series, dataset series, periodic, recurring, collection of datasets]
+    landed: [dataset series, datasetseries, inseries, in series, series]
+    literature: [dataset series, datasetseries, numseries, number of series, time series, timeseries,
+                 series key, serieskey, inseries, slice]
+  - id: 2
+    name: dimensions
+    plain: the breakdowns a statistical table is cut by, such as age, sex, place or year
+    group: findability
+    elements: [describedBy, conformsTo, temporalResolution, spatialResolutionInMeters]
+    asked: [dimension, variable, breakdown, disaggregat, data dictionary, data element, classification]
+    landed: [dimension, variable, data dictionary, describedby, statistical]
+    literature: [dimension, stat:dimension, dimensionproperty, dimension property, component,
+                 data structure definition, variable, attribute]
+  - id: 3
+    name: units of measure
+    plain: the unit each number is counted in, such as dollars, persons or percent
+    group: findability
+    elements: []
+    asked: [unit of measure, units of measure, unit, measurement unit]
+    landed: [unit of measure, units of measure, unitmeasure, unit measure, measurement unit, unit]
+    literature: [unit of measure, units of measure, statunitmeasure, unitmeasure, unit_measure,
+                 unit measure, unit mult]
+  - id: 4
+    name: uncertainty
+    plain: how much an estimate could be off, such as margins of error, coefficients of variation and confidence intervals
+    group: fitness_for_use
+    elements: [hasQualityMeasurement, dataQuality]
+    asked: [margin of error, margins of error, coefficient of variation, standard error, sampling error,
+            confidence interval, uncertainty, variance, reliability, accuracy, nonsampling error]
+    landed: [qualitymeasurement, hasqualitymeasurement, quality measurement, uncertainty, error,
+             accuracy, precision, metric]
+    literature: [uncertainty, standard error, confidence interval, margin of error, coefficient of variation,
+                 accuracy, precision, observation status, obs_status, quality annotation, qualitymeasurement]
+  - id: 5
+    name: methodology and provenance
+    plain: how the data were made, and where they came from
+    group: other
+    elements: [provenance, wasGeneratedBy, conformsTo, describedBy, page, source]
+    asked: [methodology, methods, provenance, lineage, source data, documentation, transparen,
+            processing, how the data were]
+    landed: [provenance, wasgeneratedby, methodology, conformsto, describedby, lineage, documentation]
+    literature: [provenance, methodology, lineage, wasgeneratedby, prov:, reference metadata,
+                 metadata structure, process, methodological]
+  - id: 6
+    name: revisions and versions
+    plain: whether numbers were revised after first release, and which version a user has
+    group: other
+    elements: [version, hasVersion, versionNotes, previousVersion, hasCurrentVersion, replaces, modified]
+    asked: [revision, revised, revise, version, vintage, correction, errata, update]
+    landed: [version, hasversion, versionnotes, previousversion, revision, revised, replaces, versioning]
+    literature: [revision, revised, version, versioning, vintage, previous version, versionnotes, version notes]
+  - id: 7
+    name: quality dimensions
+    plain: how good the data are for a use, in the terms of the federal statistical system's Framework for Data Quality
+    group: fitness_for_use
+    elements: [hasQualityMeasurement, dataQuality, conformsTo]
+    asked: [quality dimension, dimensions of quality, data quality, utility, objectivity, integrity,
+            relevance, timeliness, punctuality, granularity, coherence, credibility, fitness for use,
+            fitness-for-use]
+    landed: [quality, qualitymeasurement, dataquality, quality dimension, dqv, metric, fitness]
+    literature: [quality dimension, dqv:dimension, quality measurement, qualitymeasurement, quality annotation,
+                 25012, quality policy, dimension, metric, fitness for use]
+  - id: 8
+    name: restricted-access terms
+    plain: whether a dataset can be used only under conditions, and how to apply for access
+    group: other
+    elements: [accessRights, accessRestriction, cuiRestriction, useRestriction, rights, license, accessLevel]
+    asked: [restricted, restricted access, access, confidential, cipsea, standard application process,
+            access level, protected, tiered access]
+    landed: [accessrights, access rights, accessrestriction, access restriction, cuirestriction, restricted,
+             non-public, accesslevel, standard application process, use restriction]
+    literature: [access rights, accessrights, restricted, confidential, access restriction, license,
+                 sensitive, access conditions]
+
+# DN-011-R6, as code reads it (scripts/dcat_brief_run.py `outcome`). The answer call returns one
+# code per question, each carried by a sentence the validator must pass, classification
+# included; the letter is assigned here, never by a model.
+#
+# Q1, asked: `asked` (a passage of the public record asks for it: the statistical side
+# recommends, calls for, or proposes it); `publicly_not_asked` (a passage shows the public
+# record considered it and did not ask for it, or asked against it); `not_found_in_public_record`
+# (no passage asks for it). R6: "The sequencing plan is not public; a need it may have asked for
+# is recorded as not knowable from the public record, never as asked or not asked", and the
+# task's decision 3: "Where the sequencing plan would be the only source of 'asked', the row is
+# E". The plan's stated scope is users being able to "find, access, assess for
+# fitness-for-use, and use federal data" (B3.3 slide 4), which every one of the eight needs falls
+# under, so `not_found_in_public_record` is E for every need. C is reached only on a public
+# statement that the need was not asked.
+#
+# Q2, landed: the level, as served 2026-10-05, of the strongest element that carries the need
+# (`mandatory`, `recommended`, `optional`), or `dropped` (in v1.1 or the working draft, not on the
+# page as served), or `absent`; and `deferred` when a cited passage says it was deferred. A
+# Dataset property's level is read from the element table, not from the model.
+#
+# Q3, literature: `matches` (the literature carries it this way and 3.0 matches);
+# `carries_3_0_does_not`; `carries_differently_than_asked` (the difference named);
+# `not_at_catalog_layer` (it belongs in the data or in documentation, not in metadata).
+outcome_rule:
+  - {letter: E, when: "asked == not_found_in_public_record"}
+  - {letter: D, when: "asked == asked and literature in (carries_differently_than_asked, not_at_catalog_layer)"}
+  - {letter: A, when: "asked == asked and landed in (mandatory, recommended) and not deferred"}
+  - {letter: B, when: "asked == asked (left optional, deferred, dropped, or absent)"}
+  - {letter: C, when: "asked == publicly_not_asked and literature in (matches, carries_3_0_does_not)"}
+  # Not covered by R6's five outcomes: publicly not asked, and the literature says it does not
+  # belong at the catalog layer. Reported as `outside_rule`, never forced into a letter.
+outcomes:
+  A: Asked for, and included as Mandatory or Recommended.
+  B: Asked for, and left Optional, put off to a later version, dropped, or left out.
+  C: Not asked for, though the standards say a catalog needs it. This is the void.
+  D: Asked for, but the standards say there is a better way to carry it than what was asked. This is the mismatch.
+  E: Cannot be told from the public record, because the plan that held the project's recommendations is not public.
+
+# DN-011-R7. Fitness-for-use: R7's own rule over "every quality and uncertainty need" (needs 4
+# and 7): no if none is in A; partly if at least one is in A; yes if all are. R7 states the
+# first two; "yes" completes it, and a D row (which R7's "no" clause does not name) counts as not
+# A. Findability: R7 names no needs. The ones that count are the needs StatDCAT-AP adds to
+# DCAT-AP for discovery (its principle: "focus primarily on metadata elements that contribute
+# to data discovery", StatDCAT-AP 1.0.1 p. 28): series, dimensions and units of measure (needs 1
+# to 3), under the same rule. Needs 5, 6 and 8 are reported in the table and enter neither answer.
+verdict:
+  findability: [1, 2, 3]
+  fitness_for_use: [4, 7]
+
+run:
+  answer_model_key: model_id                    # kg/extraction/model_config.yaml
+  validator_model_key: primary_judge_model_id   # a different model from the writer, by design
+  call_class: judge
+  timeout_seconds: 900
+  workers: 4
+  max_attempts: 2
+  max_words: 30
+  run_id: dcat_us_3_brief_2026-10-07
+  # Estimate before any call, from DCAT-003's measured rates on the same CLI and models: answer
+  # 63,542 per call, a v2 check with absence passages up to 179,555, a plain check 75,754.
+  # R6: 8 answers x 65,000 + 8 checks x 110,000 = 1,400,000. Sections 1, 2, 5, 6, 7: 5 x
+  # (55,000 + 75,000) = 650,000. Controls: 2 x 60,000. Fresh reader: 2 rounds x 2 calls x
+  # 40,000 = 160,000. One readability pass, if the grade is over target: 130,000. Re-asks
+  # of cut R6 answers, at most 8 pairs: 1,400,000. Total 3,860,000; without re-asks 2,460,000.
+  # Ceiling: 1.25 x the total, rounded up.
+  # Re-derived 2026-10-07 after the controls, when the validator became a two-judge panel (r3,
+  # INSTRUMENT in scripts/dcat_brief_run.py) and every check became two calls. Measured: the
+  # control calls settled 53,815 to 61,000 tokens each. Calls left at most: 8 R6 answers + 16
+  # checks; 8 re-asks x 3 calls; 5 sections x 3 calls; 4 fresh-reader calls: 67 calls x 75,000
+  # (checks carry absence passages) = 5,025,000, plus 289,283 already spent on the controls;
+  # x 1.1, rounded up. Raised from 4,850,000, the run's own declaration, as DCAT-003 raised its.
+  ceiling_tokens: 5850000
+  max_wall_seconds: 14400
+  progress_every_units: 2
+  progress_every_seconds: 60
+
+# The positive controls run first; no validator verdict is used unless both pass.
+controls:
+  # DCAT-003 ADDENDUM 01 item 5's own control, re-run unchanged on its frozen evidence (the
+  # validator and template are the same; the day and the run are not).
+  faq_item5: reports/dcat_us_3_faq/faq_config.yaml
+  # This task's: three plants on need 4's evidence, written after the evidence file is built and
+  # before any R6 answer call (scripts/dcat_brief_run.py `brief_control`).
+  need: 4
+  # Written 2026-10-07 after need_4.json was built and before any R6 call, against its ids.
+  # History. The first S1, "On the DCAT-US 3.0 Dataset page as served on 5 October 2026,
+  # hasQualityMeasurement is Optional." [E15], expected kept, was cut non-responsive on
+  # 2026-10-07 (unit e2fc13fea608c218, run/controls_r2_single_judge.json), and the validator's
+  # reason was right: the plant named a property and never said it carries uncertainty, so it
+  # did not answer the need's question. A real landed item is the sentence with its
+  # classification appended (dcat_brief_run.need_items); S1 is now in that form. S2 and S3 are
+  # unchanged. In the same run DCAT-003 ADDENDUM 01's own control failed on its plant (see
+  # INSTRUMENT in scripts/dcat_brief_run.py), and the validator became a two-judge panel (r3).
+  plants:
+    # Responsive and supported: the element that carries a measured quality value such as
+    # accuracy, and its level, in the form a landed item takes.
+    - {text: "DCAT-US 3.0 records a measured quality value, such as accuracy, with hasQualityMeasurement, which the Dataset page as served on 5 October 2026 lists as Optional. [Classification this sentence must support: In DCAT-US 3.0, uncertainty is carried by hasQualityMeasurement, at the Optional level on the page as served on 5 October 2026.]",
+       evidence: [E15, E19], expect: kept}
+    # Supported, off subject: true of its passage (W3C DCAT 3 on spatial resolution), and not an
+    # answer about uncertainty, though the passage names precision and accuracy.
+    - {text: "The W3C DCAT 3 standard says its spatial resolution property is a number representing a length in meters.",
+       evidence: [E32], expect: cut_non_responsive}
+    # Unsupported: FCSM 20-04 defines accuracy; it does not require a margin of error in a catalog record.
+    - {text: "FCSM 20-04 requires every federal dataset's catalog record to include a margin of error.",
+       evidence: [E10], expect: cut_unsupported}
+
+# R8 (plain-language bar).
+readability:
+  target_grade: 10
+  implementation: textstat.flesch_kincaid_grade
+fresh_reader:
+  questions:
+    - What is DCAT-US 3.0?
+    - Does DCAT-US 3.0 deliver for statistics? Answer separately for finding statistical data and for judging whether data are fit for a given use, each as yes, no, or partly.
+    - What did the Federal Committee on Statistical Methodology (FCSM) ask for that DCAT-US 3.0 does not carry?
+  # Graded by code, pre-registered here before the reader runs. Q1 is right when the answer names
+  # a catalog or metadata standard for government data; Q2 when both stated answers equal the
+  # computed ones; Q3 when the answer names every need in outcome B and no need outside B, C
+  # and D (a need in E named as asked-and-missing is wrong).
+  q1_terms_all_of: [[catalog, metadata, catalogue], [standard, schema, format, profile], [government, federal, agencies]]
+  # Written 2026-10-07 after the table and before the reader's first call. The table left
+  # needs 3 and 4 unplaced (open letters), which the Q2/Q3 rules above did not foresee; they
+  # are applied to the open letters as R7 is (scripts/dcat_brief_run.py `verdict`):
+  # Q2 is right when each stated answer is one the brief's computed answer allows ("no or
+  # partly" allows either). Q3 is right when the answer names at least one need that can be in
+  # B, C or D (placed there, or open with one of them), names every placed B need, and names
+  # no need in A or E. A need is "named" when the answer matches its pattern (case-insensitive).
+  need_patterns:
+    1: "\\bseries\\b"
+    2: "(?<!quality )\\bdimensions?\\b|breakdowns?"
+    3: "\\bunits?\\b"
+    4: "uncertaint|margins? of error|coefficients? of variation|confidence intervals?|standard errors?|\\baccuracy|\\bprecision"
+    5: "methodolog|provenance|\\bmethods?\\b|lineage"
+    6: "revision|\\bversion"
+    7: "quality dimensions?|dimensions of quality|data quality|quality measure"
+    8: "restrict|access terms|access conditions|\\baccess\\b"

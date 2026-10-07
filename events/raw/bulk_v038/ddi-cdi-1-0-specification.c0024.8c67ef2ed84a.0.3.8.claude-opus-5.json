@@ -1,0 +1,33 @@
+{
+ "doc_id": "ddi-cdi-1-0-specification",
+ "chunk_id": "ddi-cdi-1-0-specification#c0024",
+ "chunk_index": 24,
+ "chunk_start": 118353,
+ "chunk_end": 118850,
+ "chunk_tokens": 119,
+ "heading_path": [
+  "2. Discussion of Structure and Diagrams – Dimensional"
+ ],
+ "oversize": false,
+ "doc_sha256": "8c67ef2ed84a3602248e52d437aadbfaf48888071afdf7fb7c53545f5b07009c",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3961,
+  "cacheReadInputTokens": 12916,
+  "cacheCreationInputTokens": 29760,
+  "webSearchRequests": 0,
+  "costUSD": 0.40309300000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1774,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40309300000000003,
+ "duration_ms": 42927,
+ "session_id": "e07fb0dd-24eb-41bc-abf7-68581c65331f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Worked KeyValue example: an InstanceKey (\\\"Marie-Born\\\") describes a date cell that is the DataPoint identified by the Key; combining differently-keyed data adds a Contextual component to the key, and the KeyValue structure is said to suit data lakes, NoSQL and other big data.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_instancekey\",\n      \"name\": \"InstanceKey\",\n      \"aliases\": [],\n      \"description\": \"The identifier that describes a particular data value in the KeyValue structure; the date 3.3.1932 is described by the InstanceKey \\\"Marie-Born\\\".\",\n      \"anchor\": \"InstanceKey\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"id\": \"c_datapoint\",\n      \"name\": \"DataPoint\",\n      \"aliases\": [],\n      \"description\": \"The cell containing a value, identified by the Key.\",\n      \"anchor\": \"DataPoint\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"id\": \"c_key\",\n      \"name\": \"Key\",\n      \"aliases\": [],\n      \"description\": \"The identifier by which a DataPoint is identified; context can be added to it when data are composed in different ways.\",\n      \"anchor\": \"identified by the Key\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"id\": \"c_contextual_component\",\n      \"name\": \"Contextual component\",\n      \"aliases\": [\n        \"context component\"\n      ],\n      \"description\": \"A context added to the key to distinguish between the different ways in which data are being composed within the repository.\",\n      \"anchor\": \"Contextual component\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"id\": \"c_keyvalue_structure\",\n      \"name\": \"KeyValue structure\",\n      \"aliases\": [\n        \"KeyValue\"\n      ],\n      \"description\": \"A data structure usable for data in data lakes, NoSQL systems, and other forms of big data.\",\n      \"anchor\": \"KeyValue structure\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_keyvalue_bigdata\",\n      \"claim_text\": \"The KeyValue structure can be used for data in data lakes, No SQL systems, and other forms of big data.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"other forms of big data\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_instancekey\",\n      \"anchor\": \"InstanceKey\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_datapoint\",\n      \"anchor\": \"DataPoint\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_key\",\n      \"anchor\": \"identified by the Key\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_contextual_component\",\n      \"anchor\": \"Contextual component\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"c_keyvalue_structure\",\n      \"anchor\": \"KeyValue structure\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"ddi-cdi-1-0-specification\",\n      \"to_id\": \"cl_keyvalue_bigdata\",\n      \"anchor\": \"other forms of big data\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_keyvalue_bigdata\",\n      \"to_id\": \"c_keyvalue_structure\",\n      \"anchor\": \"KeyValue structure\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_key\",\n      \"to_id\": \"c_contextual_component\",\n      \"anchor\": \"add a context\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"data lakes\",\n      \"anchor\": \"data lakes\"\n    },\n    {\n      \"name\": \"No SQL systems\",\n      \"anchor\": \"No SQL systems\"\n    },\n    {\n      \"name\": \"repository\",\n      \"anchor\": \"within the repository\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"described by the InstanceKey\",\n      \"suggested_edge\": \"identifies\",\n      \"diversion_reason\": \"other:no_schema_edge_for_identifies\",\n      \"from_name\": \"InstanceKey\",\n      \"to_name\": \"DataPoint\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    },\n    {\n      \"anchor\": \"KeyValue structure\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"from_name\": \"KeyValue structure\",\n      \"to_name\": \"Key\",\n      \"location\": \"ddi-cdi-1-0-specification#c0024\"\n    }\n  ],\n  \"gleaned\": [\n    {\n      \"name\": \"big data\",\n      \"type\": \"Concept\"\n    },\n    {\n      \"name\": \"Marie-Born\",\n      \"type\": \"Concept\"\n    },\n    {\n      \"name\": \"table\",\n      \"type\": \"Concept\"\n    }\n  ]\n}\n```"
+}

@@ -1,0 +1,35 @@
+{
+ "server": "fss-policy-kg (claude.ai connector fsskg)",
+ "ran_at": "2026-10-07T12:20Z",
+ "ran_from": "the DCAT-004 v2 Claude Code session, one call each, results copied from the tool output (rows the sheet cites; totals as returned)",
+ "runs": [
+  {"tool": "fss_policy_kg_search_text", "args": {"phrase": "DCAT-US", "limit": 10}, "total": 120,
+   "rows": [
+    {"label": "Obligation", "id": "3ad0b08443e74e6fb4c9191d0e957c5d", "source_doc": "dcat_us_3_implementation_guide", "force": "obligation",
+     "text": "OMB requires metadata submitted to Data.gov to conform to the DCAT-US v3.0 schema"},
+    {"label": "Obligation", "id": "c9d8dc5eb8fd4e4abd69ee44e712e7e9", "source_doc": "dcat_us_3_implementation_guide", "force": "recommendation",
+     "text": "Agencies should be aware that successfully submitting a data catalog entry to Data.gov that conforms to the DCAT-US v3.0 schema does not, by itself, guarantee compliance with the metadata requirements of M-25-05."},
+    {"label": "Obligation", "id": "52452e89c1814e21a7a5b726ba799e5f", "source_doc": "dcat_us_3_implementation_guide", "force": "recommendation",
+     "text": "Agencies should document specific access restrictions using the Dataset or Distribution class within the DCAT-US v3.0 schema (refer to Step 4 for details)."}]},
+  {"tool": "fss_policy_kg_search_text", "args": {"phrase": "September 30, 2026", "limit": 8}, "total": 8,
+   "rows": [
+    {"label": "Segment", "id": "dcat_us_3_implementation_guide#s70", "source_doc": "dcat_us_3_implementation_guide",
+     "text": "Through the passage of Title II of the Foundations for Evidence-Based Policymaking Act of 2018 (also known as the OPEN Government Data Act), and the release of OMB M-25-05, 2 each federal agency has been directed to 'develop and maintain a comprehensive data inventory' and submit metadata for agency… (snippet as returned)"},
+    {"label": "Segment", "id": "m_25_05#s468", "source_doc": "m_25_05", "text": "September 30, 2026"}]},
+  {"tool": "fss_policy_kg_search_text", "args": {"phrase": "margin of error", "limit": 10}, "total": 2,
+   "rows": [
+    {"label": "Segment", "id": "fcsm_25_02#s173", "source_doc": "fcsm_25_02",
+     "text": "Another issue with census tracts, and to a lesser degree with counties, is the error of the estimates, often measured in terms of margin of error (when using survey data). Poverty estimates for smaller geographies have higher margins of error. … (snippet as returned)"},
+    {"label": "Segment", "id": "webb_nist_fcsm_crosswalk#s276", "source_doc": "webb_nist_fcsm_crosswalk",
+     "text": "Pragmatics significantly outperformed both control and RAG across a five-dimension Consultation Quality Score rubric … (snippet as returned; matched 'margin of error' only beyond the snippet)"}]},
+  {"tool": "fss_policy_kg_get_document", "args": {"doc_id": "dcat_us_3_implementation_guide"},
+   "rows": [{"title": "DCAT-US v3.0 Schema Implementation Guide", "agency": "Federal CDO Council", "baseline_date": "2026-08-21",
+             "source_url": "https://resources.data.gov/resources/dcat-us-3-implementation/", "segment_count": 1299, "obligation_count": 171}]},
+  {"tool": "fss_policy_kg_search_text", "args": {"phrase": "sequencing plan", "limit": 10}, "total": 2,
+   "rows": [
+    {"label": "Segment", "id": "dcat_us_3_implementation_guide#s91", "source_doc": "dcat_us_3_implementation_guide",
+     "text": "5). Building Trust and FAIRness into the Process for Finding and Using Government Data Project (FAIRness Project): Implementing DCAT-US 3.0 Sequencing Plan ."},
+    {"label": "Segment", "id": "fairness_project_wiki_overview#s5", "source_doc": "fairness_project_wiki_overview",
+     "text": "A strategic two-year sequencing plan to improve and integrate government-wide metadata cataloging to facilitate data users' ability to easily find, access, assess for fitness-for-use, and use federal data."}]}
+ ]
+}

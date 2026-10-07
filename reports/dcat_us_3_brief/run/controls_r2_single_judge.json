@@ -1,0 +1,71 @@
+{
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T13:23:33.756242+00:00",
+ "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+ "faq_item5_control": {
+  "passed": false,
+  "unit_id": "dcfdd8601dc80360",
+  "tokens": 53815,
+  "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+  "model_id": "claude-opus-4-8",
+  "evidence": "reports/dcat_us_3_faq/control/Q13_evidence_1a5e6cc.json",
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "cut_non_responsive",
+    "got": "kept",
+    "verdict": "pass",
+    "responsive": "yes",
+    "reason": "E6 states the base DCAT Application Profile may in future be extended with additional (agent) roles proven useful across domains, matching the sentence, and it bears on the statistical-profile extension option."
+   },
+   {
+    "item_id": "S2",
+    "expect": "kept",
+    "got": "kept",
+    "verdict": "pass",
+    "responsive": "yes",
+    "reason": "E21 supports programmatic validation against the JSON Schema (2020-12) and E56 states the 2025 Candidate Recommendation Snapshot defines the profile using SHACL, directly addressing conformance checking."
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "verdict": "pass",
+    "responsive": "no",
+    "reason": "The sentence is a background definition of what DCAT-US v3.0 is, not an option for next steps, which is what the question asks for."
+   }
+  ]
+ },
+ "brief_control": {
+  "passed": false,
+  "unit_id": "e2fc13fea608c218",
+  "tokens": 54656,
+  "model_id": "claude-opus-4-8",
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "kept",
+    "got": "cut_non_responsive",
+    "verdict": "pass",
+    "responsive": "no",
+    "reason": "E15 states hasQualityMeasurement is Optional as served 2026-10-05, but the sentence's subject is the generic quality-measurement property, not uncertainty/margin of error, which the question asks about."
+   },
+   {
+    "item_id": "S2",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "verdict": "pass",
+    "responsive": "no",
+    "reason": "E32 supports the claim about the DCAT v3 spatial resolution property, but the sentence is about spatial resolution, not about carrying uncertainty, which the question asks about."
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_unsupported",
+    "got": "cut_unsupported",
+    "verdict": "fail",
+    "responsive": "yes",
+    "reason": "E10 only describes accuracy and precision measures conceptually and states nothing about any requirement, catalog records, margins of error, or every federal dataset."
+   }
+  ]
+ }
+}

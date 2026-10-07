@@ -1,0 +1,262 @@
+{
+ "purpose": "absence check",
+ "statements": [
+  {
+   "statement": "The sources do not state whether any DCAT-US 3.0 element is named for margins of error, coefficients of variation or confidence intervals.",
+   "terms": [
+    "element",
+    "margin",
+    "error",
+    "coefficient",
+    "variation",
+    "confidence",
+    "interval"
+   ],
+   "candidates": 41
+  }
+ ],
+ "generated_by": "scripts/dcat_faq_evidence.py --brief",
+ "generated_at": "2026-10-07T13:35:04.027771+00:00",
+ "question": "absence check: The sources do not state whether any DCAT-US 3.0 element is named for margins of error, coefficients of variation or confidence intervals.",
+ "documents_searched": {
+  "ai-readiness-kg": [
+   "fairness-project-wiki-home",
+   "fairness-project-wiki-project-overview",
+   "fcsm-2024-b3-3-fairness-project",
+   "cdoc-dswg-findings-and-recommendations-2022",
+   "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "fcsm-20-04-a-framework-for-data-quality",
+   "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "fcsm-25-03",
+   "dcat-us-3-dataset-schema-2026-10-05",
+   "dcat-us-3-overview-2026-10-05",
+   "dcat-us-3-implementation-guide",
+   "dcat-us-3-dataset-series",
+   "dcat-us-3-quality-governance",
+   "dcat-us-3-temporal-spatial-metrics",
+   "dcat-us-3-candidate-recommendation-snapshot",
+   "statdcat-ap-1-0-1",
+   "sdmx-3-0-section-1-framework",
+   "sdmx-3-1-section-2-information-model",
+   "sdmx-standards-overview",
+   "ddi-codebook-specification",
+   "ddi-cdi-1-0-specification",
+   "w3c-rdf-data-cube",
+   "w3c-dqv",
+   "w3c-dwbp-2017",
+   "wilkinson-2016-fair-guiding-principles",
+   "jacobsen-2020-fair-principles-interpretations",
+   "dcat-ap-3-0-0-r5r-vocabulary",
+   "w3c-dcat-3"
+  ],
+  "fss-policy-kg": [
+   "fairness_project_wiki_overview",
+   "fcsm_20_04",
+   "fcsm_25_03",
+   "dcat_us_3_implementation_guide",
+   "w3c_dcat_3"
+  ]
+ },
+ "matched": 12,
+ "dropped_by_cap": 0,
+ "documents": {
+  "fcsm-23-02-a-framework-for-data-quality-case-studies": {
+   "title": "FCSM 23-02: A Framework for Data Quality: Case Studies",
+   "issuer": "Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_20_04": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "FCSM",
+   "date": "2020-09",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 33,
+    "block": 4
+   },
+   "section": "page 33",
+   "text": "Several different statistics, such as ranking homogeneity of product categories by the coefficient of \nvariation and comparing monthly and yearly trends (using root-mean-square error, t-tests, and \nregressions) were used to compare the fit between the two indexes over a historic 10-year period \n(2012–2021). A decision tree was used to classify the UVIs as either high quality, marginal quality, or \npoor quality. Those deemed as high quality showed consistent results for the same target population \nover the 10-year period; the impact of the change to the trends in the top-level MXPIs when replacing \nofficial price indexes with the high quality UVIs was minimal.",
+   "terms_matched": [
+    "margin",
+    "error",
+    "coefficient",
+    "variation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E1"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 74,
+    "block": 6
+   },
+   "section": "page 74",
+   "text": "Alternative-\nly, if sampling errors are not reported, statistical tools, such as replicate weights in microdata fles, by which researchers can \ngenerate their own estimates of sampling error, can be provided. By either method, users are enabled to conduct research, use \nthe estimates, and make inferences appropriately. Sampling errors can be reported using coefcients of variation, standard \nerrors, or confdence intervals. Te suitability of each concept depends on the type of variable. Based on the defnitions above, it may seem at frst that sampling error has no bearing on census data or, for that matter, on \nany data covering a population universe, or 100 percent of the population.",
+   "terms_matched": [
+    "error",
+    "variation",
+    "interval"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E2"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 100
+   },
+   "section": "Background",
+   "text": "- DCAT-US 3.0 represents a \"profile\" of the W3C DCAT standard, specifically aligned with [[VOCAB-DCAT-3]], rather than a new standard. It aims to tailor the DCAT specification to meet specific use cases and requirements within the United States.\n- It ensures backward compatibility with DCAT v1.1 metadata, facilitating seamless integration. While DCAT-US 3.0 introduces additional metadata elements to address emerging needs, it preserves the integrity of existing elements (with the exception of addressing errors introduced in DCAT-US 1.1), negating the necessity for metadata translation.\n- The schema extends support for enriched and updated controlled vocabularies, enhancing the precision in naming conventions for federal agencies, file formats, and units of measurement, thereby promoting uniformity across datasets.\n- DCAT-US 3.0 addresses and resolves the constraints encountered with DCAT v1.1 in documenting geospatial data. This advancement obviates the requirement for a distinct federal standard dedicated to geospatial datasets, streamlining documentation processes.\n- Aligning with practices akin to the European Data Catalogue Application Profile (DCAT-AP), DCAT-US 3.0 has garnered vendor support, with ongoing efforts to broaden this support base, indicating a commitment to interoperability and standard adoption.",
+   "terms_matched": [
+    "element",
+    "error"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "file": "corpus/bulk/fcsm-20-04-a-framework-for-data-quality.pdf",
+    "page": 42,
+    "block": 4
+   },
+   "section": "page 42",
+   "text": "Harmonization errors arise when data elements have been defned,\ncollected, or processed diferently. For single source data products, harmonization errors afect\nconsistency of the data over time. For integrated data products, diferences in data elements\nacross input sources can lead to harmonization error. 7. Modeling error. For modeled data products and outputs, modeling errors arise from\ninaccuracies in statistical model assumptions and from the efects of modeling decisions\nrelated to missing data, calibration variables and other constants, infuential observations, and\nother factors.",
+   "terms_matched": [
+    "element",
+    "error"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E4"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 25,
+    "block": 2
+   },
+   "section": "page 25",
+   "text": "In addition, the inspection record is evaluated for completeness, i.e., \ncertain elements of driver information and vehicle information are compared against validation criteria. Credibility – All inspections are conducted by inspectors who are federal or state law enforcement \nofficers. They undergo rigorous training and are certified to conduct inspections at one or more levels \nspecified in the North American Standard Inspection Program. Therefore, there is a high level of \nconfidence in the ability of the personnel engaged in data capture and processing.",
+   "terms_matched": [
+    "element",
+    "confidence"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E5"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (PDF page)",
+   "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "locator": {
+    "file": "corpus/bulk/fcsm-23-02-a-framework-for-data-quality-case-studies.pdf",
+    "page": 35,
+    "block": 3
+   },
+   "section": "page 35",
+   "text": "BLS has greatly improved the methodology for calculating price indexes \ndirectly from administrative trade data since research began in earnest in 2018. It has calculated UVIs \nfor all BEA five-digit indexes from the period of 2012–2022, selected the high and marginal quality to \ncontinue testing in a parallel test environment to simulate official price indexes in July 2023. The target \ngoal for moving the UVIs deemed worthy of implementation into production is February 2025. The \nframework for data quality has offered a tool to assess elements of data quality for this project. \n  \n  ",
+   "terms_matched": [
+    "element",
+    "margin"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E6"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s398"
+   },
+   "section": "passage 398",
+   "text": "Granularity refers to the amount of disaggregation available for key data elements. Granularity can be expressed in units of time; level of geographic detail available; or the amount of detail available on any of a number of characteristics . This definition builds on CNSTAT (2018) where granularity is defined as 'the degree to which estimates can be obtained for small subdivisions of the population, such as spatial subdivisions or different socioeconomic status categories.' Granularity is valuable to users when variations over space ( e.g. ,  block level, town or city, county, state), time ( e.g. ,  monthly, quarterly or annual), and other characteristics ( e.g ., categories of race and ethnicity, gender identity, and socio-economic status of individuals; size and industry of establishments) are meaningful.",
+   "terms_matched": [
+    "element",
+    "variation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E7"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s530"
+   },
+   "section": "passage 530",
+   "text": "Harmonization error. Harmonization errors arise when data elements have been defined, collected, or processed differently. For single source data products, harmonization errors affect consistency of the data over time. For integrated data products, differences in data elements across input sources can lead to harmonization error.",
+   "terms_matched": [
+    "element",
+    "error"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E8"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s558"
+   },
+   "section": "passage 558",
+   "text": "Dissemination of inaccurate data products. Inaccuracies and errors impact the confidence that data users place in the data product and can affect their trust in other data products released by the agency. Users assign greater credibility to polls and other data products that have a history of accuracy (see, e.g ., Kennedy et al. 2018).  All threats to accuracy and reliability, a dimension in the objectivity domain, affect the credibility of an agency and its data products.",
+   "terms_matched": [
+    "error",
+    "confidence"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E9"
+  }
+ ],
+ "evidence_sha256": "fa1cd580fd5e1e09430b9ab429f094c51da10ec046243e2e18f82813ca7a107c"
+}

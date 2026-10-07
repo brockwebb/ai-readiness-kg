@@ -1,0 +1,94 @@
+{
+ "question_id": 2,
+ "question": "Who made DCAT-US 3.0, and what part the Federal Committee on Statistical Methodology (FCSM) and its FAIRness Project played.",
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T13:53:30.306570+00:00",
+ "documents": {
+  "dcat-us-3-overview": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_schema": {
+   "title": "DCAT-US Schema v3.0 (overview and reference)",
+   "issuer": "GSA",
+   "date": "2026-05",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "fss-policy-kg"
+  },
+  "fairness-project-wiki-home": {
+   "title": "Welcome to the CDOC/FCSM FAIRness Project (DCAT-US 3 project wiki, Home)",
+   "issuer": "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)",
+   "date": "2023-10-26",
+   "url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Home.md",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-2024-b3-3-fairness-project": {
+   "title": "The FAIRness Project: Building Trust and FAIRness into Finding and Using Government Data (FCSM 2024 Research and Policy Conference, session B3.3)",
+   "issuer": "Thomas Dabolt (DOI); Michael Ratcliffe (U.S. Census Bureau)",
+   "date": "2024-10-30",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/2024-conference-docs/B/B3.3_Dabolt.pdf",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 48
+   },
+   "section": "What is DCAT-US v3.0?",
+   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) — not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.\nDCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA, drawing on more than a decade of implementation experience with v1.1 and feedback from agencies, data providers, and data users across government. The schema is maintained in a [public GitHub repository](https://github.com/GSA/dcat-us) and governed through a CDO Tiger Team review process to ensure ongoing accuracy and responsiveness to agency needs.",
+   "cut": false,
+   "faq_question": 2,
+   "id": "E1"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s8"
+   },
+   "section": "passage 8",
+   "text": "DCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA, drawing on more than a decade of implementation experience with v1.1 and feedback from agencies, data providers, and data users across government. The schema is maintained in a public GitHub repository and governed through a CDO Tiger Team review process to ensure ongoing accuracy and responsiveness to agency needs.",
+   "cut": false,
+   "faq_question": 2,
+   "id": "E2"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "fairness-project-wiki-home",
+   "locator": {
+    "file": "state/substrate_md/fairness-project-wiki-home.md",
+    "line": 16
+   },
+   "section": "Welcome to the CDOC/FCSM _FAIRness_ Project",
+   "text": "The [Federal Chief Data Officer Council (CDOC)](https://www.cdo.gov/index.html) in partnership with the Federal Committee on Statistical Methodology (FCSM) is leading a project to build trust and FAIRness into the Process for Finding and Using Government Data. The outcome will be an updated federal metadata standard for agencies’ data inventories. The FAIRness Project aims to improve and enhance data users' ability to find and assess federal data, reduce complexity for metadata producers, and standardize metadata requirements for geospatial, statistical, and other open data.",
+   "cut": false,
+   "faq_question": 2,
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-2024-b3-3-fairness-project",
+   "locator": {
+    "node": "fcsm-2024-b3-3-fairness-project::c-fairness-project",
+    "location": "fcsm-2024-b3-3-fairness-project#c0001"
+   },
+   "section": "",
+   "text": "The FAIRness Project\nBuilding Trust and FAIRness into Finding and Using Government Data\nChief Data Officers Council and Federal Committee on Statistical Methodology\nProject Co-Chairs\nThomas Dabolt Michael Ratcliffe\nThomas_dabolt@ios.doi.gov michael.r.ratcliffe@census.gov",
+   "cut": false,
+   "faq_question": 2,
+   "id": "E4"
+  }
+ ],
+ "evidence_sha256": "6897cd53035e6d128e306f6978de241fae4452621c99b7f1ddac0b6941d8f19c"
+}

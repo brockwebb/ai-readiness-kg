@@ -1,0 +1,183 @@
+{
+ "generated_by": "scripts/dcat_brief_run.py",
+ "generated_at": "2026-10-07T13:28:52.586336+00:00",
+ "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+ "instrument": {
+  "revision": "r3",
+  "template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+  "rubric_version": "v1.3.0",
+  "panel": [
+   "primary_judge_model_id",
+   "secondary_judge_model_id"
+  ],
+  "aggregation": "keep only if every judge keeps"
+ },
+ "faq_item5_control": {
+  "passed": true,
+  "unit_ids": [
+   "dcfdd8601dc80360",
+   "cba8a169789c5c5b"
+  ],
+  "tokens": 117658,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "cut_non_responsive",
+    "got": "cut_unsupported",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E6 states the base DCAT Application Profile may in future be extended with additional (agent) roles proven useful across domains, matching the sentence, and it bears on the statistical-profile extension option.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "flag",
+      "responsive": "yes",
+      "reason": "The passage's extension clause refers to 'additional roles' generally, not explicitly 'additional agent roles' as the sentence states.",
+      "cut_reason": "flag: boundary_imprecision"
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "kept",
+    "got": "kept",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E21 supports programmatic validation against the JSON Schema (2020-12) and E56 states the 2025 Candidate Recommendation Snapshot defines the profile using SHACL, directly addressing conformance checking.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "Both cited passages directly support the JSON Schema validation and SHACL definition claims, matching the conformance-checking option named in the question.",
+      "cut_reason": null
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The sentence is a background definition of what DCAT-US v3.0 is, not an option for next steps, which is what the question asks for.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The sentence accurately restates E19 but is a general description of DCAT-US v3.0, not an option for next steps as the question asks.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   }
+  ],
+  "passed_strict": false,
+  "gate": "item 5 text: every plant expected cut is cut, every plant expected kept is kept"
+ },
+ "brief_control": {
+  "passed": true,
+  "unit_ids": [
+   "8d3b8c9803e36ec5",
+   "0efbfc2b9cacfb24"
+  ],
+  "tokens": 116969,
+  "models": [
+   "claude-opus-4-8",
+   "claude-sonnet-5"
+  ],
+  "rows": [
+   {
+    "item_id": "S1",
+    "expect": "kept",
+    "got": "kept",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E15 gives the Optional requirement on the 2026-10-05 serving and E19 establishes hasQualityMeasurement records a quantifiable quality value such as accuracy, matching the classification.",
+      "cut_reason": null
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": true,
+      "verdict": "pass",
+      "responsive": "yes",
+      "reason": "E15 confirms Optional status for hasQualityMeasurement and E19 describes it as carrying a quantifiable quality value exemplified by accuracy, matching the claim.",
+      "cut_reason": null
+     }
+    ]
+   },
+   {
+    "item_id": "S2",
+    "expect": "cut_non_responsive",
+    "got": "cut_non_responsive",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "E32 states verbatim that the spatial resolution property's range is a number representing a length in meters, but this is a background fact that does not address how to carry uncertainty, which is what question part 3 asks.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "pass",
+      "responsive": "no",
+      "reason": "The claim is accurately grounded in E32 but describes the spatial resolution property, not a method for carrying statistical uncertainty (margin of error/CV/CI), so it does not answer the question asked.",
+      "cut_reason": "non-responsive: supported, but does not answer the question"
+     }
+    ]
+   },
+   {
+    "item_id": "S3",
+    "expect": "cut_unsupported",
+    "got": "cut_unsupported",
+    "panel": [
+     {
+      "model": "claude-opus-4-8",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 describes accuracy and precision measures but states no requirement, no catalog record, and no mandate to include a margin of error, so the claimed obligation is absent from the cited passage.",
+      "cut_reason": "fail: surface_form_absent"
+     },
+     {
+      "model": "claude-sonnet-5",
+      "kept": false,
+      "verdict": "fail",
+      "responsive": "yes",
+      "reason": "E10 only discusses the concepts of accuracy and reliability and never states any requirement that federal dataset catalog records include a margin of error.",
+      "cut_reason": "fail: surface_form_absent"
+     }
+    ]
+   }
+  ]
+ }
+}
