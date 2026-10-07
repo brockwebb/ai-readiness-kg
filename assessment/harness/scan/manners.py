@@ -21,6 +21,7 @@ so every fetch to that netloc but `/robots.txt` itself is refused for the cycle
 from __future__ import annotations
 
 import collections
+import threading
 import urllib.parse
 from pathlib import Path
 
@@ -66,7 +67,32 @@ def robots_access(status, error_class: str | None = None) -> tuple:
 
 
 class Fetcher:
-    """A rate-limited, robots-respecting HTTP client. One per run."""
+    """A rate-limited, robots-respecting HTTP client. One per run, shared by every worker.
+
+    **Thread-safe, with politeness per netloc and nothing across netlocs** (DN-013-R2,
+    `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 1). `run.run_cycle` runs one
+    worker per surface netloc, and two workers can still reach ONE netloc: an off-roster host
+    several bodies declare (`www.usda.gov`), or a sibling a collector follows. So every netloc
+    has its own re-entrant lock, held from the robots gate through the request and its
+    backoff, and that lock is the only thing that netloc's clock, robots cache and request
+    count are read or written under. Two workers on one netloc therefore wait on one clock
+    and never have two requests in flight to it, which is what the serial runner guaranteed
+    by construction. Workers on different netlocs share no lock but the bookkeeping one, which
+    is never held across I/O.
+
+    Prior art, adopted: Heritrix's per-host frontier queues with a politeness delay between
+    requests to one host, and Scrapy's `CONCURRENT_REQUESTS_PER_DOMAIN` with `DOWNLOAD_DELAY`.
+    Ours is the stricter Heritrix setting, one request in flight per host. The rate, the UA,
+    robots-first and the refusal rules are unchanged.
+
+    Re-entrant because the gate fetches: `raw_get` on a netloc reads that netloc's
+    `robots.txt` through `raw_get` again, and `raw_head`'s GET fallback is a `raw_get` on the
+    same URL. No path takes a second netloc's lock while holding one (a redirect is followed
+    inside the HTTP client, under the requested netloc's lock), so the locks cannot deadlock.
+    The HTTP client is shared: httpx's sync transport is httpcore's `ConnectionPool`, which
+    guards its pool state with a thread lock (`_optional_thread_lock`, httpcore 1.0.9), and
+    `tests/test_parallel_hosts.py` drives one client from several workers.
+    """
 
     def __init__(self, params: dict, client=None, clock=None) -> None:
         """`clock` defaults to the real one. A caller that wants virtual time passes it here
@@ -79,6 +105,13 @@ class Fetcher:
         self.clock = clock or REAL
         self._last: dict = {}
         self._robots: dict = {}
+        #: netloc -> its lock (see the class docstring). Created on first contact under
+        #: `_locks_guard`, so two workers reaching a new netloc at once get the same lock.
+        self._host_locks: dict = {}
+        self._locks_guard = threading.Lock()
+        #: Guards the containers every netloc appends to (`request_times`, `requests`,
+        #: `robots_log`). Held for one append, never across I/O or a sleep.
+        self._book = threading.Lock()
         #: Per netloc, the times at which a request was issued, on THIS fetcher's clock. The
         #: limiter's contract is a minimum gap between consecutive requests to one host, and
         #: under a virtual clock that contract is assertable instead of merely slept through
@@ -107,8 +140,19 @@ class Fetcher:
                                   pool=self.p["read_timeout_seconds"]),
             headers={"User-Agent": self.p["user_agent"]})
 
+    # ---------------------------------------------------------------- locks
+    def host_lock(self, netloc: str):
+        """The one lock for `netloc`: its clock, its robots cache and its in-flight request."""
+        with self._locks_guard:
+            lock = self._host_locks.get(netloc)
+            if lock is None:
+                lock = self._host_locks[netloc] = threading.RLock()
+            return lock
+
     # ---------------------------------------------------------------- rate
     def _wait(self, host: str) -> None:
+        """Hold `host` to its gap. Called with `host`'s lock held, so the read of the last
+        stamp, the sleep and the new stamp are one step for that netloc."""
         gap = 1.0 / float(self.p["requests_per_second_per_host"])
         last = self._last.get(host)
         if last is not None:
@@ -117,7 +161,9 @@ class Fetcher:
                 self.clock.sleep(gap - delta)
         stamp = self.clock.now()
         self._last[host] = stamp
-        self.request_times.setdefault(host, []).append(stamp)
+        with self._book:
+            self.request_times.setdefault(host, []).append(stamp)
+            self.requests[host] += 1
 
     # ---------------------------------------------------------------- robots
     def _robots_for(self, base: str):
@@ -133,6 +179,12 @@ class Fetcher:
         §2.3.1.4 allowance to treat a LONG-standing 5xx as unavailable never applies), and one
         line on `robots_log` per read, which is what the cycle's manners gate replays.
         """
+        with self.host_lock(urllib.parse.urlsplit(base).netloc):
+            return self._robots_for_locked(base)
+
+    def _robots_for_locked(self, base: str):
+        """`_robots_for`, with the netloc's lock held: the cache test and the read are one
+        step, so two workers asking at once read `robots.txt` once."""
         if base in self._robots:
             return self._robots[base]
         from protego import Protego
@@ -152,18 +204,22 @@ class Fetcher:
             self._robots[base] = DISALLOW_ALL
         else:
             self._robots[base] = None
-        self.robots_log.append({
+        line = {
             "netloc": urllib.parse.urlsplit(base).netloc, "url": url, "status": status,
             "final_url": final_url, "error_class": error_class,
             "robots_status": robots_status, "decision": decision, "rfc9309": clause,
-            "read_at": self.clock.now()})
+            "read_at": self.clock.now()}
+        with self._book:
+            self.robots_log.append(line)
         return self._robots[base]
 
     def robots_status(self, url: str) -> str | None:
         """`successful`, `unavailable` or `unreachable` for this URL's netloc, or `None` when
         its robots.txt has not been read by this fetcher."""
         netloc = urllib.parse.urlsplit(url).netloc
-        return next((r["robots_status"] for r in reversed(self.robots_log)
+        with self._book:
+            log = list(self.robots_log)
+        return next((r["robots_status"] for r in reversed(log)
                      if r["netloc"] == netloc), None)
 
     def ensure_robots(self, url: str) -> None:
@@ -204,7 +260,8 @@ class Fetcher:
 
     def _robots_unreachable(self, url: str) -> bool:
         parts = urllib.parse.urlsplit(url)
-        return self._robots.get(f"{parts.scheme}://{parts.netloc}") is DISALLOW_ALL
+        with self.host_lock(parts.netloc):
+            return self._robots.get(f"{parts.scheme}://{parts.netloc}") is DISALLOW_ALL
 
     def allowed(self, url: str) -> bool:
         parts = urllib.parse.urlsplit(url)
@@ -238,25 +295,28 @@ class Fetcher:
         caller must remember is an obligation some caller will forget, and the one that forgot
         reached federal hosts.
         """
-        self._gate(url)
         host = urllib.parse.urlsplit(url).netloc
-        attempts = 0
-        while True:
-            self._wait(host)
-            self.requests[host] += 1
-            t0 = self.clock.now()
-            resp = self.client.get(url)
-            elapsed = int((self.clock.now() - t0) * 1000)
-            if resp.status_code in self.p["backoff_on_status"] and attempts < self.p["max_retries"]:
-                self.clock.sleep(float(self.p["backoff_base_seconds"]) ** (attempts + 1))
-                attempts += 1
-                continue
-            body = resp.content
-            cap = self.p.get("max_body_bytes")
-            if cap is not None:
-                body = body[:int(cap)]
-            return {"status": resp.status_code, "headers": dict(resp.headers), "body": body,
-                    "elapsed_ms": elapsed, "final_url": str(resp.url)}
+        # The netloc's lock, from the robots gate to the last retry: a 429's backoff is the
+        # host asking EVERY worker to slow down, not only the one it answered.
+        with self.host_lock(host):
+            self._gate(url)
+            attempts = 0
+            while True:
+                self._wait(host)
+                t0 = self.clock.now()
+                resp = self.client.get(url)
+                elapsed = int((self.clock.now() - t0) * 1000)
+                if (resp.status_code in self.p["backoff_on_status"]
+                        and attempts < self.p["max_retries"]):
+                    self.clock.sleep(float(self.p["backoff_base_seconds"]) ** (attempts + 1))
+                    attempts += 1
+                    continue
+                body = resp.content
+                cap = self.p.get("max_body_bytes")
+                if cap is not None:
+                    body = body[:int(cap)]
+                return {"status": resp.status_code, "headers": dict(resp.headers),
+                        "body": body, "elapsed_ms": elapsed, "final_url": str(resp.url)}
 
 
     def raw_head(self, url: str) -> dict:
@@ -271,19 +331,19 @@ class Fetcher:
 
         Robots-first applies here too (DD-062); see `raw_get`.
         """
-        self._gate(url)
         host = urllib.parse.urlsplit(url).netloc
-        self._wait(host)
-        self.requests[host] += 1
-        t0 = self.clock.now()
-        resp = self.client.head(url)
-        elapsed = int((self.clock.now() - t0) * 1000)
-        if resp.status_code in self.params.get("link_probe", {}).get(
-                "fallback_get_on_status", []):
-            got = self.raw_get(url)
-            return {**got, "method": "GET", "head_refused_status": resp.status_code}
-        return {"status": resp.status_code, "headers": dict(resp.headers), "body": b"",
-                "elapsed_ms": elapsed, "final_url": str(resp.url), "method": "HEAD"}
+        with self.host_lock(host):
+            self._gate(url)
+            self._wait(host)
+            t0 = self.clock.now()
+            resp = self.client.head(url)
+            elapsed = int((self.clock.now() - t0) * 1000)
+            if resp.status_code in self.params.get("link_probe", {}).get(
+                    "fallback_get_on_status", []):
+                got = self.raw_get(url)
+                return {**got, "method": "GET", "head_refused_status": resp.status_code}
+            return {"status": resp.status_code, "headers": dict(resp.headers), "body": b"",
+                    "elapsed_ms": elapsed, "final_url": str(resp.url), "method": "HEAD"}
 
 
 #: The two spellings of the one same-host policy. `probes.same_host_only` is the key; the

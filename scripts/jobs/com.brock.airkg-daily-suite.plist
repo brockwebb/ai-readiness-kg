@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  airkg-daily-suite — launchd job for the whole suite, once a day, on `main`.
+  Task: cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md decision 6 (DN-013-R4).
+
+  Written like com.brock.airkg-dispatch.plist and installed the same way. The wrapper
+  (scripts/jobs/airkg_daily_suite.sh) keeps its own git worktree outside the checkout, moves it
+  to main's commit, seeds the gitignored inputs and runs `make suite` there; a red run writes
+  .seldon/DISPATCH_STOP and opens a Seldon Issue.
+
+  04:30 local has NO MEASURED BASIS beyond being outside the hours sessions are usually
+  dispatched: the suite takes about half an hour under xdist (the RESULT quotes it), and a run
+  that overlaps a dispatched session's own gate costs both of them CPU and nothing else, since
+  the two never share a working tree. Change it here; nothing else holds it.
+
+  RunAtLoad is false: loading the job should not start a half-hour run.
+
+  Installed by SYMLINK, never a copy (the dispatch plist's reason: one file, not two in step):
+    ln -s /Users/brock/GitHub/ai-readiness-kg/scripts/jobs/com.brock.airkg-daily-suite.plist \
+          ~/Library/LaunchAgents/com.brock.airkg-daily-suite.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.brock.airkg-daily-suite.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.brock.airkg-daily-suite</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/brock/GitHub/ai-readiness-kg/scripts/jobs/airkg_daily_suite.sh</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>4</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>WorkingDirectory</key>
+    <string>/Users/brock/GitHub/ai-readiness-kg</string>
+</dict>
+</plist>

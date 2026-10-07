@@ -33,6 +33,7 @@ cycle against real hosts is structurally incapable of running unthrottled.
 """
 from __future__ import annotations
 
+import threading
 import time
 
 
@@ -68,20 +69,31 @@ class VirtualClock:
         self._now = float(start)
         #: Every wait this clock was asked for, in order, in seconds.
         self.waits: list = []
+        #: One clock, several workers (`run.run_cycle` runs one per netloc, DN-013-R2). `+=` on
+        #: a float is a read, an add and a write, and two workers interleaving them would
+        #: lose one wait or move time BACKWARDS, which is exactly the clock that would let the
+        #: per-host gap guard pass a limiter that broke it. Under the lock a wait is atomic and
+        #: time only moves forward. Parallel waits ADD here rather than overlap, so virtual
+        #: time over-counts a parallel cycle: sound for a gap guard (a gap can only look
+        #: longer), and the reason a parallel cycle's wall clock is measured on the real one.
+        self._lock = threading.Lock()
 
     def now(self) -> float:
-        return self._now
+        with self._lock:
+            return self._now
 
     def sleep(self, seconds: float) -> None:
         if seconds <= 0:
             return
-        self.waits.append(float(seconds))
-        self._now += float(seconds)
+        with self._lock:
+            self.waits.append(float(seconds))
+            self._now += float(seconds)
 
     def advance(self, seconds: float) -> None:
         """Move time forward without recording a wait — for a test that wants to simulate
         elapsed real time between calls rather than a scheduled pause."""
-        self._now += float(seconds)
+        with self._lock:
+            self._now += float(seconds)
 
     @property
     def slept(self) -> float:

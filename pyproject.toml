@@ -83,6 +83,9 @@ research = [
 dev = [
     "pytest==9.0.2",
     "pytest-cov==7.0.0",
+    # Every suite tier runs `-n auto --dist loadgroup` (Makefile, DN-013-R4,
+    # cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md decision 5).
+    "pytest-xdist==3.8.0",
 ]
 # The whole suite imports from every extra above.
 all = [

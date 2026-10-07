@@ -22,6 +22,7 @@ import hashlib
 import json
 import os
 import sys
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -70,11 +71,24 @@ def sha256_bytes(b: bytes) -> str:
 #: stored before the key existed lacks it, so excluding it changes no recorded hash.
 UNHASHED_KEYS = ("schedule",)
 
+#: `(section, key)` pairs one level down that are outside the hash for the same reason.
+#: `manners.max_parallel_hosts` (`cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md`
+#: decision 2) says how many netlocs a cycle works on at once; the per-host rate, the UA and
+#: robots-first are untouched by it, and the equivalence guard
+#: (`tests/test_parallel_hosts.py`) asserts the serial and parallel payloads are equal but for
+#: timing. A key that shapes no recorded byte must not re-identify every Observation and
+#: Finding, and no stored parameter set carries it, so no recorded hash moves.
+UNHASHED_NESTED_KEYS = (("manners", "max_parallel_hosts"),)
+
 
 def params_hash(params: dict) -> str:
-    """Stable hash of the parameter set, less `UNHASHED_KEYS`. Rides on every Observation and
-    every Finding, so a record always names the constants that shaped it."""
+    """Stable hash of the parameter set, less `UNHASHED_KEYS` and `UNHASHED_NESTED_KEYS`.
+    Rides on every Observation and every Finding, so a record always names the constants that
+    shaped it."""
     shaped = {k: v for k, v in params.items() if k not in UNHASHED_KEYS}
+    for section, key in UNHASHED_NESTED_KEYS:
+        if isinstance(shaped.get(section), dict) and key in shaped[section]:
+            shaped[section] = {k: v for k, v in shaped[section].items() if k != key}
     return sha256_bytes(json.dumps(shaped, sort_keys=True, separators=(",", ":")).encode())
 
 
@@ -160,7 +174,14 @@ def store_evidence(body: bytes, root: Path | None = None) -> tuple:
     path = root / digest[:2] / digest
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
-        path.write_bytes(body)
+        # Written to a private name and RENAMED into place (POSIX rename(2) is atomic within a
+        # filesystem), so the path either does not exist or holds the whole body. Hosts run in
+        # parallel (DN-013-R2), two of them can serve identical bytes, and `runner._body` reads
+        # a stored body back mid-cycle: a plain `write_bytes` let one worker read the file
+        # another had just truncated. Identical content makes the second rename harmless.
+        tmp = path.with_name(f".{digest}.{os.getpid()}.{threading.get_ident()}.tmp")
+        tmp.write_bytes(body)
+        os.replace(tmp, path)
     try:
         return digest, str(path.relative_to(REPO))
     except ValueError:

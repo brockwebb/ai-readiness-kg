@@ -24,13 +24,13 @@ flowchart LR
 
 | box | code |
 |---|---|
-| Agency site home, well-known, flagship surfaces | `assessment/harness/scan/run.py:368` |
-| Fetcher: identified UA, robots.txt first, 1 req/s per host (params.yaml) | `assessment/harness/scan/manners.py:68` |
-| robots_access: RFC 9309 decision per netloc | `assessment/harness/scan/manners.py:35` |
+| Agency site home, well-known, flagship surfaces | `assessment/harness/scan/run.py:465` |
+| Fetcher: identified UA, robots.txt first, 1 req/s per host (params.yaml) | `assessment/harness/scan/manners.py:69` |
+| robots_access: RFC 9309 decision per netloc | `assessment/harness/scan/manners.py:36` |
 | one declared User-Agent | `assessment/harness/scan/params.yaml:140` |
-| Observation + body sha256 in corpus/evidence/scan | `assessment/harness/scan/model.py:171` |
+| Observation + body sha256 in corpus/evidence/scan | `assessment/harness/scan/model.py:192` |
 | rules.judge: versioned pure rule | `assessment/harness/scan/rules/__init__.py:421` |
-| Finding: verdict + reason + rule_id | `assessment/harness/scan/model.py:217` |
+| Finding: verdict + reason + rule_id | `assessment/harness/scan/model.py:238` |
 | events/cycle-&lt;cycle&gt;.jsonl (append-only) | `assessment/harness/scan/publish.py:238` |
 | matrices + L0 Results | `scripts/build_l0_matrices.py:376` |
 | L0 report and PDF | `scripts/build_l0_report.py:354` |
@@ -69,7 +69,7 @@ flowchart TB
 
 | box | code |
 |---|---|
-| scan harness (run.py) | `assessment/harness/scan/run.py:543` |
+| scan harness (run.py) | `assessment/harness/scan/run.py:640` |
 | event log shards events/*.jsonl | `kg/eventlog.py:100` |
 | build_projection.py: KG labels | `scripts/build_projection.py:587` |
 | publish.py --project: Observation/Finding/Rule | `assessment/harness/scan/publish.py:558` |

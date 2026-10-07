@@ -87,7 +87,7 @@ Rules for CC when dispatched this way: read every addendum before any step (a ta
 
 ### The RESULT waits for the suite (operator-ordered, 2026-09-09)
 
-**No RESULT file is created until the full suite, `seldon verify` and the protected-paths diff have run to completion and their output is on disk.** The RESULT is then written from that output.
+**No RESULT file is created until the task's gate tier, `seldon verify` and the protected-paths diff have run to completion and their output is on disk.** The RESULT is then written from that output.
 
 **A placeholder is never written into a RESULT.** Not `<SUITE>`, not `<VERIFY>`, not `<PROTECTED>`, not any other. A RESULT is the execution record; a placeholder in one is a claim nobody has checked, sitting in the place a reader looks for the check. Three consecutive tasks shipped a RESULT with unfilled placeholders and each needed a following task to close it out, which is how `cc_tasks/2026-09-09_manners_closeout.md` came to exist. There is no RESULT template in this repo, so there was no template to fix: the habit was the defect.
 
@@ -122,16 +122,19 @@ Three rules that are the point of it:
 
 The suite is split by MARKER, never by deletion. `@pytest.mark.slow` means "runs the loopback control fixtures at the standing 1 req/s, or re-derives a payload older than the two most recent cycles". Nothing is removed and nothing is weakened; what changes is which of them a short gate waits for.
 
+Every tier runs under pytest-xdist, `-n auto --dist loadgroup` (DN-013-R4, `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 5). A test that shares a mutable resource with another (the Neo4j database today) carries an `xdist_group` assigned at collection by `tests/conftest.py`, and a group runs on one worker; it is never skipped and never weakened. `make <tier> XDIST=` runs a tier in one process.
+
 | target | what it is | when |
 |---|---|---|
-| `make gate-fast` | everything except `slow` | the per-task gate |
-| `make gate-task` | fast tier **plus** re-derivation of every stored payload | when a rule module, the registry or the re-derivation engine changed — which is most scan tasks |
+| `make gate-fast` | everything except `slow` | the per-task gate when the write set touches no scan, scoring or record code (rule below) |
+| `make gate-task` | fast tier **plus** re-derivation of every stored payload | the per-task gate otherwise |
 | `make guards` | every guard against the incident it was built for | any change to a guard |
-| `make gate-full` | the whole suite, detached and logged | **before every push** |
+| `make gate-full` | the whole suite, detached and logged | **once a day on `main`**, from its own `git worktree`, by the launchd job `scripts/jobs/com.brock.airkg-daily-suite.plist`; by hand when wanted |
 
-Two rules:
+Three rules:
 
-* **A task's gate is `gate-task`, not `gate-fast`,** whenever the task could have touched a stored payload. A rule change that stops an old cycle re-deriving is exactly the failure the re-derivation gate exists for, and deferring it to the pre-push run defeats it.
+* **A task's gate is `make gate-fast` when its write set touches nothing under `assessment/harness/scan/rules/`, `collectors/`, `runner.py`, `run.py`, `manners.py`, `rederive.py`, `scripts/score.py` or the framework record, and `make gate-task` otherwise.** A rule change that stops an old cycle re-deriving is exactly the failure the re-derivation gate exists for, and deferring it to the daily run defeats it.
+* **`make gate-full` runs once a day on `main`, from its own worktree, never the working checkout** (`scripts/jobs/airkg_daily_suite.sh`; a gate must not run in a tree another process commits to, DN-013 ADDENDUM 01 A2). A red daily run writes `.seldon/DISPATCH_STOP` with the log path and opens a Seldon Issue, so nothing is dispatched onto a red main; the next green run removes a STOP file that job wrote, and only that one.
 * **A green fast tier is never reported as a green suite.** The RESULT says which tier it ran and quotes both wall-clocks when it has them.
 
 ## Desktop session protocol (operator-ordered, 2026-09-07)

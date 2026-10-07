@@ -8,25 +8,35 @@
 #   gate-task  what a task's gate actually is: the fast tier PLUS the re-derivation of every
 #              payload the task could have touched. If a rule or the engine changed, that is
 #              all of them, and `RECENT=` is how you say so.
-#   gate-full  the pre-push check, under the long-running protocol (CLAUDE.md): detached,
-#              logged to logs/, polled to EXIT.
+#   gate-full  the whole suite, under the long-running protocol (CLAUDE.md): detached,
+#              logged to logs/, polled to EXIT. Once a day on `main`, from its own worktree,
+#              by the launchd job `scripts/jobs/airkg_daily_suite.sh`; by hand when wanted.
+#   suite      the whole suite in the FOREGROUND: what gate-full detaches and what the daily
+#              job runs inside its worktree. One command line, so the two cannot drift.
 #
-# The point of the split is that a two-minute gate exists at all. The full suite still runs
-# before every push, and a green fast tier is never reported as a green suite.
+# The point of the split is that a two-minute gate exists at all. Which tier a task's gate is
+# depends on its write set (CLAUDE.md "Suite tiers", DN-013-R4), and a green fast tier is never
+# reported as a green suite.
+#
+# Every tier runs under pytest-xdist (DN-013-R4, `cc_tasks/2026-10-07_parallel_hosts_and_fast_
+# gate.md` decision 5): `--dist loadgroup`, so tests that share a mutable resource carry one
+# `xdist_group` and run on one worker (`tests/conftest.py`). `make <tier> XDIST=` runs it in one
+# process, which is how the serial and parallel runs of one commit are compared node by node.
 
 # `?=` so an adopter can say `PY=python3` (or export PY); this machine's python is the default.
 PY ?= /opt/anaconda3/bin/python3
 LOGS := logs
+XDIST ?= -n auto --dist loadgroup
 
-.PHONY: gate-fast gate-task gate-stranger gate-full guards report-pdf scan-now install-schedule project
+.PHONY: gate-fast gate-task gate-stranger gate-full suite guards report-pdf scan-now install-schedule project
 
 gate-fast:
-	$(PY) -m pytest tests/ assessment/ -q -rs -m "not slow"
+	$(PY) -m pytest tests/ assessment/ $(XDIST) -q -rs -m "not slow"
 
 ## Re-derivation of every stored payload, whatever its age. Run this whenever a rule module,
 ## the rule registry, or the re-derivation engine changed.
 gate-task: gate-fast
-	$(PY) -m pytest tests/test_scan_harness_v4.py -q -rs -k re_derives
+	$(PY) -m pytest tests/test_scan_harness_v4.py $(XDIST) -q -rs -k re_derives
 
 ## Every guard against the incident it was built for, and every control fixture that replays
 ## one. `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 5 adds the
@@ -37,11 +47,18 @@ gate-task: gate-fast
 ## fourteen judgements of record that lived in `state/` and on no shard of the log for four
 ## days with every gate green (DN-003 decision 6), and a published report whose snapshot had a
 ## successor on the graph that nothing compared it against (DN-004 decisions 2 and 3).
+## `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` adds two. Decision 3: hosts scanned in
+## parallel give the serial payload but for timing, and no two requests to one netloc are ever
+## closer than the standing gap, with a positive control for each. Decision 6: the daily suite
+## runs in its own worktree and a red run stops dispatch, the guard for the full-suite run that
+## died at 35% when a session committed in the checkout it ran in (2026-10-07T02:17:51Z).
 guards:
 	$(PY) -m pytest tests/test_guards_replay_their_incidents.py \
 		tests/test_control_fixture_robots_forbids_product.py \
 		tests/test_standing_guards.py \
-		tests/test_snapshot_successor.py -q
+		tests/test_snapshot_successor.py \
+		tests/test_parallel_hosts.py \
+		tests/test_daily_suite_job.py -q
 
 ## The stranger gate alone: `git archive` of HEAD, `pip install .` into a fresh venv, scratch HOME,
 ## then the runbook (`cc_tasks/2026-10-07_install_closure_v2.md` decision 3). It is `slow`, so
@@ -52,10 +69,16 @@ gate-stranger:
 	AIRKG_STRANGER_PYTHON="$(AIRKG_STRANGER_PYTHON)" $(PY) -m pytest tests/test_adopter_path.py \
 		-q -rs -k test_a_stranger_installs_and_runs_the_runbook
 
+## A variable rather than `$(MAKE) suite` inside gate-full: make runs any recipe line naming
+## `$(MAKE)` even under `make -n`, so a dry run of gate-full would have started a detached job.
+SUITE_CMD = $(PY) -m pytest tests/ assessment/ $(XDIST) -q -rs $(SUITE_ARGS)
+
+suite:
+	$(SUITE_CMD)
+
 gate-full:
 	@mkdir -p $(LOGS)
-	nohup sh -c '$(PY) -m pytest tests/ assessment/ -q -rs; echo EXIT=$$? >> $(LOGS)/suite.log' \
-		> $(LOGS)/suite.log 2>&1 & \
+	nohup sh -c '$(SUITE_CMD); echo EXIT=$$?' > $(LOGS)/suite.log 2>&1 & \
 	echo "started; poll with: tail -5 $(LOGS)/suite.log"
 
 # ---------------------------------------------------------------- the L0 report as a PDF

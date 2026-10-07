@@ -11,8 +11,10 @@ and the instrument's own E5 made operational: *a cycle with zero fired controls 
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import sys
+import threading
 import urllib.parse
 from pathlib import Path
 
@@ -165,6 +167,91 @@ def _collect(leg: str, spec: dict, target: dict, params: dict, fetcher) -> list:
                                  error_class="collector_unavailable")]
 
 
+#: The ceiling on how many netlocs a cycle works on at once (`manners.max_parallel_hosts`),
+#: the task's own number (`cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 2).
+#: It bounds threads and sockets on the machine running the scan; it is not a politeness
+#: parameter, because politeness is per host and the Fetcher enforces it whatever this is.
+MAX_PARALLEL_HOSTS = 16
+
+
+def parallel_hosts(params: dict, groups: int) -> int:
+    """Workers for a cycle with `groups` netlocs: `manners.max_parallel_hosts`, or one per
+    netloc when it is null, never more than `MAX_PARALLEL_HOSTS` and never more than there are
+    netlocs. A configured value outside 1..16 is refused rather than clamped: a cap that is
+    silently not the cap someone wrote is a config file that lies."""
+    v = (params.get("manners") or {}).get("max_parallel_hosts")
+    if v is None:
+        return max(1, min(groups, MAX_PARALLEL_HOSTS))
+    if isinstance(v, bool) or not isinstance(v, int) or not 1 <= v <= MAX_PARALLEL_HOSTS:
+        raise SystemExit(f"REFUSING: params manners.max_parallel_hosts is {v!r}; it is null "
+                         f"(one worker per netloc) or an integer 1..{MAX_PARALLEL_HOSTS}")
+    return max(1, min(v, groups))
+
+
+def surface_netloc(t: dict) -> str:
+    """The netloc a target's surface is collected against: its `probe_url` when it has one
+    (a well-known row is collected against its home), else its `url`. The key the Fetcher
+    rate-limits on, so a group is exactly the set of surfaces that share one clock."""
+    return urllib.parse.urlsplit(t.get("probe_url", t["url"])).netloc
+
+
+def map_by_host(items: list, key, fn, params: dict, on_done=None) -> list:
+    """`[fn(item) for item in items]`, with items that share `key(item)` run IN ORDER on one
+    worker and different keys on different workers. Results come back in INPUT order, so a
+    caller that assembles them sees the serial result whatever order the workers finished in.
+
+    DN-013-R2: politeness per host, parallelism across hosts. With one worker this IS the
+    serial loop, item by item in input order, which is what `max_parallel_hosts: 1` promises.
+    With several, groups are submitted largest first, Graham's longest-processing-time rule
+    (Graham 1969, "Bounds on multiprocessing timing anomalies"), because when there are more
+    netlocs than workers the cycle is bounded by whichever worker draws the largest host last.
+
+    `on_done(i, result)` runs on the worker as each item finishes (the cycle's progress line).
+    The first exception stops every worker before its next item and is re-raised here; an
+    item already in flight finishes, because a request half made is not ours to abandon.
+    """
+    groups: dict = {}
+    for i, it in enumerate(items):
+        groups.setdefault(key(it), []).append(i)
+    workers = parallel_hosts(params, len(groups))
+    results: list = [None] * len(items)
+    if workers == 1:
+        for i, it in enumerate(items):
+            results[i] = fn(it)
+            if on_done:
+                on_done(i, results[i])
+        return results
+    stop = threading.Event()
+
+    def work(idxs: list) -> None:
+        for i in idxs:
+            if stop.is_set():
+                return
+            # Each index belongs to exactly one group, so each slot has exactly one writer.
+            results[i] = fn(items[i])
+            if on_done:
+                on_done(i, results[i])
+
+    order = sorted(groups.values(), key=len, reverse=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers,
+                                               thread_name_prefix="scan-host") as ex:
+        futures = [ex.submit(work, idxs) for idxs in order]
+        try:
+            for fut in concurrent.futures.as_completed(futures):
+                fut.result()
+        except BaseException:
+            stop.set()
+            for fut in futures:
+                fut.cancel()
+            raise
+    return results
+
+
+#: One progress line at a time. Workers finish surfaces in any order and each prints its own
+#: line; this keeps two lines from interleaving into one.
+_PRINT = threading.Lock()
+
+
 def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) -> tuple:
     """Observe every leg of one surface, then judge each with the rule its leg is CURRENTLY on.
 
@@ -282,7 +369,9 @@ def run_controls(params: dict, clock=None) -> tuple:
     from scan.manners import Fetcher
     sp = specs()
     all_findings, control_obs, fixture_obs = [], [], []
-    for fixture, table in params["e5_control"]["expected_verdicts"].items():
+    expected = params["e5_control"]["expected_verdicts"]
+
+    def scan_fixture(fixture: str) -> tuple:
         # A fixture that declares `products` is a BODY: each product is scanned as its own
         # surface, then the body legs are judged over all of them (`judge_bodies`, the same
         # function a cycle uses). `cc_tasks/2026-09-18_manners_status_and_b5_control.md`
@@ -304,6 +393,14 @@ def run_controls(params: dict, clock=None) -> tuple:
                 findings += f
         if products:
             findings += judge_bodies(sp, params, obs)
+        return products, obs, findings
+
+    # Each fixture is its own server on its own port, so its own netloc and its own Fetcher:
+    # the fixtures are hosts, and they run in parallel exactly as hosts do (DN-013-R2). The
+    # gate below reads them back in the pre-registered table's order.
+    scanned = map_by_host(list(expected), lambda fx: fx, scan_fixture, params)
+    for fixture, (products, obs, findings) in zip(expected, scanned):
+        table = expected[fixture]
         # Retained, not discarded. The re-derivation gate can only check a Finding whose
         # evidence it still holds, and the control Findings are the ones whose determinism
         # matters most — they are what licenses the cycle.
@@ -560,22 +657,34 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
     cf, e5, control_obs = controls
     sp = specs()
     rows, all_obs, all_find = [], [], []
-    for t in tgts:
+
+    def measure(t: dict) -> tuple:
         # A12 compares the declared and enforced layers against the same path, so a host
         # surface is collected against its agency's flagship URL rather than /robots.txt.
         tgt = dict(t, url=t.get("probe_url", t["url"]))
-        obs, findings = run_surface(sp, tgt, params, t["legs"], fetcher)
+        return tgt, run_surface(sp, tgt, params, t["legs"], fetcher)
+
+    def progress(i: int, done: tuple) -> None:
+        t, (_tgt, (_obs, findings)) = tgts[i], done
+        marks = (" ".join(f"{f.leg}={f.verdict[0].upper()}" for f in findings)
+                 if t["surface_kind"] == "well_known"
+                 else " ".join(f.verdict[0].upper() for f in findings))
+        with _PRINT:
+            print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
+                  flush=True)
+
+    # One worker per surface netloc, the surfaces of one netloc in frame order (DN-013-R2,
+    # `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 2), then reassembled in
+    # TARGET order below, so everything the payload derives from the order — the matrix rows,
+    # `observations_detail`, `findings_detail`, the body groups — is the serial cycle's.
+    measured = map_by_host(tgts, surface_netloc, measure, params, on_done=progress)
+    for t, (tgt, (obs, findings)) in zip(tgts, measured):
         all_obs += obs
         all_find += findings
         rows.append({"doc_id": t["doc_id"], "url": tgt["url"],
                      "surface_kind": t["surface_kind"], "agency": t["agency"],
                      "admitted": t["admitted"],
                      "verdicts": {f.leg: f.verdict for f in findings}})
-        marks = (" ".join(f"{f.leg}={f.verdict[0].upper()}" for f in findings)
-                 if t["surface_kind"] == "well_known"
-                 else " ".join(f.verdict[0].upper() for f in findings))
-        print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
-              flush=True)
 
     # Body legs, judged once every surface is in (`judge_bodies`). Each Finding's target is the
     # body's well-known row, so its verdict is recorded on that row of the matrix; a Finding

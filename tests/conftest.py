@@ -219,3 +219,123 @@ def no_writes_to_the_real_evidence_store(monkeypatch, tmp_path_factory):
     # patching the model alone does not reach them.
     for mod in _EVIDENCE_WRITERS:
         monkeypatch.setattr(mod, "store_evidence", guarded)
+
+
+# ------------------------------------------------------------------ xdist groups (DN-013-R4)
+#
+# `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 5. The suite runs under
+# pytest-xdist with `--dist loadgroup`: every test that shares a mutable resource with another
+# carries `xdist_group(<resource>)`, so all of them run on ONE worker, in order, and never
+# beside each other. A grouped test is never skipped and never weakened; it only loses
+# parallelism with its own kind.
+#
+# Applied here, at collection, rather than as a `pytestmark` line in each module, so a test
+# written tomorrow that opens the database is grouped without anyone remembering this file.
+# Two sources:
+#
+# * `_AUTO_GROUPS`, a static scan of the CODE (comments and docstrings stripped) each test
+#   reaches inside its own module: its body, the module helpers it calls and the module
+#   fixtures it requests, transitively. A test reaching the live Neo4j database is `neo4j`:
+#   the spot scan projects scratch labels into it, and a test reading the database while
+#   another holds scratch nodes there would read a graph no serial run shows it. PER TEST, not
+#   per module: `test_scan_run_2.py` holds the suite's longest test (1,153 s, Neo4j) and two
+#   more of 324 s and 247 s that never open it, and a module-wide group serialized all three
+#   (the first xdist run, 1,867 s, was that group's length).
+# * `_DECLARED_GROUPS`, modules a static scan cannot see sharing, found by a run that failed
+#   under `-n` and passed serially, each with the resource and the reason.
+#
+# A test the scan puts in one group and the table in another is a collection error: one
+# test, one resource group, or the group stops meaning "these never run together".
+import ast as _ast  # noqa: E402
+import re as _re  # noqa: E402
+import textwrap as _textwrap  # noqa: E402
+
+_AUTO_GROUPS = {
+    "neo4j": _re.compile(r"get_neo4j_driver|GraphDatabase\.driver|\.session\(database"
+                         r"|publish\.project\(|run_cypher|neo4j_driver"),
+}
+
+#: module path (repo-relative) -> (group, why). Empty until a run says otherwise.
+_DECLARED_GROUPS: dict = {}
+
+_MODULE_SCANS: dict = {}
+
+
+def _code(segment: str) -> str:
+    """A source segment less comments and docstrings, so a test that only TALKS about the
+    database (a docstring citing DD-057) is not grouped with the ones that open it. Literals
+    are kept: `client_call("run_cypher", ...)` reaches the database through a string."""
+    from support.sourcescan import strip_prose
+    return strip_prose(_textwrap.dedent(segment), literals=False)
+
+
+def _scan_module(path: Path) -> dict:
+    """`{"module": set(groups), "functions": {name: set(groups)}}` for one test module.
+
+    `functions` is closed over the module's own call and fixture graph: a function is in a
+    group if its code matches, or if it names (calls, or takes as a fixture argument) a
+    module-level function or method that is. Module-level code outside any function that
+    matches puts the whole module in the group."""
+    path = Path(path).resolve()
+    if path in _MODULE_SCANS:
+        return _MODULE_SCANS[path]
+    src = path.read_text(encoding="utf-8")
+    tree = _ast.parse(src)
+    funcs: dict = {}
+    for node in _ast.walk(tree):
+        if isinstance(node, (_ast.FunctionDef, _ast.AsyncFunctionDef)):
+            seg = _ast.get_source_segment(src, node) or ""
+            names = {n.id for n in _ast.walk(node) if isinstance(n, _ast.Name)}
+            names |= {n.attr for n in _ast.walk(node) if isinstance(n, _ast.Attribute)}
+            names |= {a.arg for a in node.args.args + node.args.kwonlyargs}
+            hits = {g for g, rx in _AUTO_GROUPS.items() if rx.search(_code(seg))}
+            prior = funcs.get(node.name, (set(), set()))
+            funcs[node.name] = (prior[0] | hits, prior[1] | (names - {node.name}))
+    groups = {name: set(h) for name, (h, _n) in funcs.items()}
+    changed = True
+    while changed:
+        changed = False
+        for name, (_h, names) in funcs.items():
+            for other in names & groups.keys():
+                if not groups[other] <= groups[name]:
+                    groups[name] |= groups[other]
+                    changed = True
+    top = [n for n in tree.body
+           if not isinstance(n, (_ast.FunctionDef, _ast.AsyncFunctionDef, _ast.ClassDef))]
+    top_src = "\n".join(_ast.get_source_segment(src, n) or "" for n in top)
+    module = {g for g, rx in _AUTO_GROUPS.items() if rx.search(_code(top_src))}
+    out = {"module": module, "functions": groups}
+    _MODULE_SCANS[path] = out
+    return out
+
+
+def xdist_group_of(item):
+    """The resource group of one collected test, or None."""
+    path = Path(item.path).resolve()
+    root = Path(__file__).resolve().parents[1]
+    rel = str(path.relative_to(root)) if path.is_relative_to(root) else str(path)
+    scan = _scan_module(path)
+    fn = getattr(item, "originalname", None) or item.name.split("[")[0]
+    reached = {fn} | set(getattr(item, "fixturenames", ()) or ())
+    auto = set(scan["module"])
+    for name in reached:
+        auto |= scan["functions"].get(name, set())
+    auto = sorted(auto)
+    declared = _DECLARED_GROUPS.get(rel, (None, None))[0]
+    if len(auto) > 1 or (auto and declared and declared != auto[0]):
+        raise pytest.UsageError(
+            f"{item.nodeid} belongs to more than one xdist group ({auto} by scan, "
+            f"{declared!r} declared); one test, one resource group (tests/conftest.py)")
+    return declared or (auto[0] if auto else None)
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_collection_modifyitems(config, items):
+    """Mark every item with its group BEFORE xdist reads the marker (xdist's own hook turns
+    it into the `@group` suffix of the node id under `--dist loadgroup`)."""
+    for item in items:
+        if Path(item.path).suffix != ".py":
+            continue
+        group = xdist_group_of(item)
+        if group:
+            item.add_marker(pytest.mark.xdist_group(group))
