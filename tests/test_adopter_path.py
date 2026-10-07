@@ -5,6 +5,12 @@ fixtures with a virtual clock; decision 5, the runbook, is run as written — ev
 of `docs/adopt/run_on_your_site.md`, in order, in a copy of the working tree, at the standing
 rate limit — and logged to `logs/adopt_runbook.log`, which is where its RESULT quotes it from.
 
+`cc_tasks/2026-10-07_install_closure_v2.md` (audit F-05, F-20) adds the stranger: the same
+runbook from a `git archive` of HEAD, installed by `pip install .` into a fresh virtual
+environment, with a scratch `HOME` and a `PATH` that holds nothing of the author's
+(`test_a_stranger_installs_and_runs_the_runbook`, log `logs/adopt_stranger_py<version>.log`), and a static
+check that every third-party import in the repository is declared in `pyproject.toml`.
+
 Nothing here writes to `state/`, `corpus/`, `events/` or `docs/reports/`: every run goes to a
 throwaway `out/`, and `scripts/check_protected_adopt.sh` asserts the tree afterwards.
 """
@@ -13,6 +19,7 @@ from __future__ import annotations
 import ast
 import datetime as dt
 import importlib.metadata
+import io
 import json
 import os
 import plistlib
@@ -20,6 +27,8 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -496,37 +505,28 @@ def _tree_state(root: Path) -> dict:
             if p.is_file()}
 
 
-@pytest.mark.slow
-def test_the_runbook_runs_as_written(tmp_path):
-    """Decision 5. Every `bash` block of the runbook, verbatim and in order, in one shell, in a
-    copy of the working tree, against the `body_two_products` fixture as "your site", at the
-    standing 1 request/s. The log is the RESULT's §0."""
-    from scan.fixtures.server import FixtureServer
-    blocks = [b for i, b in _blocks(RUNBOOK.read_text(encoding="utf-8")) if i == "bash"]
-    clone = tmp_path / "ai-readiness-kg"
-    _copy_tree(clone)
-    before = _tree_state(clone)
-    script = ["set -euo pipefail"]
+def _script(blocks: list, prelude: tuple = ()) -> str:
+    """One `bash` script: each block echoed with a header, then run, in order."""
+    script = ["set -euo pipefail", *prelude]
     for n, b in enumerate(blocks, 1):
         shown = "\n".join(f"$ {ln}" for ln in b.rstrip("\n").split("\n"))
         script += [f"echo '=== runbook block {n} ==='", f"cat <<'__AIRKG_SHOWN__'\n{shown}\n"
                    f"__AIRKG_SHOWN__", b.rstrip("\n")]
-    env = {k: v for k, v in os.environ.items() if k not in ("PY", CYCLE_TOKEN_ENV)}
-    env["PATH"] = f"/opt/anaconda3/bin:{env.get('PATH', '')}"
-    started = dt.datetime.now(dt.timezone.utc)
-    with FixtureServer("body_two_products") as base:
-        env["SITE_PORT"] = base.rsplit(":", 1)[1]
-        done = subprocess.run(["bash", "-c", "\n".join(script)], cwd=clone, env=env,
-                              capture_output=True, text=True, timeout=3000)
-    finished = dt.datetime.now(dt.timezone.utc)
-    LOG.parent.mkdir(exist_ok=True)
-    LOG.write_text(
-        f"# {RUNBOOK.relative_to(REPO)} run as written by "
-        f"tests/test_adopter_path.py::test_the_runbook_runs_as_written\n"
+    return "\n".join(script)
+
+
+def _write_log(log: Path, test: str, started, finished, where: str, port: str, done) -> None:
+    log.parent.mkdir(exist_ok=True)
+    log.write_text(
+        f"# {RUNBOOK.relative_to(REPO)} run as written by tests/test_adopter_path.py::{test}\n"
         f"# started {started.isoformat()} finished {finished.isoformat()} "
-        f"({(finished - started).total_seconds():.1f} s); copy of the tree at {clone}; "
-        f"SITE_PORT={env['SITE_PORT']}\n# exit {done.returncode}\n"
+        f"({(finished - started).total_seconds():.1f} s); {where}; SITE_PORT={port}\n"
+        f"# exit {done.returncode}\n"
         f"# ---- stdout\n{done.stdout}\n# ---- stderr\n{done.stderr}\n", encoding="utf-8")
+
+
+def _assert_the_runbook_ran(done, clone: Path, port: str, before: dict) -> None:
+    """What every run of the runbook must show, whoever's machine it ran on."""
     assert done.returncode == 0, done.stdout[-3000:] + done.stderr[-3000:]
     o = done.stdout
     assert "requirements OK" in o
@@ -541,8 +541,171 @@ def test_the_runbook_runs_as_written(tmp_path):
     assert report in o, "the runbook's `cat` of the report is the report"
     assert "## MYSITE" in report and f"robots.txt permits {ADOPTER_UA}" in report
     payload = json.loads((clone / "out" / "my-site" / "state" / f"{cycle}.json").read_text())
-    assert set(payload["requests_per_host"]) == {f"127.0.0.1:{env['SITE_PORT']}"}
+    assert set(payload["requests_per_host"]) == {f"127.0.0.1:{port}"}
     assert payload["control_verdict"] == "pass"
     assert f"judged on {cycle}" in o and "MYSITE: score" in o
     # The run wrote nothing into the copy's own record.
     assert _tree_state(clone) == before
+
+
+@pytest.mark.slow
+def test_the_runbook_runs_as_written(tmp_path):
+    """Decision 5. Every `bash` block of the runbook, verbatim and in order, in one shell, in a
+    copy of the working tree, against the `body_two_products` fixture as "your site", at the
+    standing 1 request/s. The log is the RESULT's §0. This is the author's interpreter and
+    `HOME`; `test_a_stranger_installs_and_runs_the_runbook` is the run that is not."""
+    from scan.fixtures.server import FixtureServer
+    blocks = [b for i, b in _blocks(RUNBOOK.read_text(encoding="utf-8")) if i == "bash"]
+    clone = tmp_path / "ai-readiness-kg"
+    _copy_tree(clone)
+    before = _tree_state(clone)
+    env = {k: v for k, v in os.environ.items() if k not in ("PY", CYCLE_TOKEN_ENV)}
+    env["PATH"] = f"/opt/anaconda3/bin:{env.get('PATH', '')}"
+    started = dt.datetime.now(dt.timezone.utc)
+    with FixtureServer("body_two_products") as base:
+        env["SITE_PORT"] = base.rsplit(":", 1)[1]
+        done = subprocess.run(["bash", "-c", _script(blocks)], cwd=clone, env=env,
+                              capture_output=True, text=True, timeout=3000)
+    finished = dt.datetime.now(dt.timezone.utc)
+    _write_log(LOG, "test_the_runbook_runs_as_written", started, finished,
+               f"copy of the tree at {clone}", env["SITE_PORT"], done)
+    _assert_the_runbook_ran(done, clone, env["SITE_PORT"], before)
+
+
+# ============================================================ install closure: the stranger
+#
+# `cc_tasks/2026-10-07_install_closure_v2.md` decisions 1 to 3 (audit F-05, F-20).
+
+PYPROJECT = tomllib.loads((REPO / "pyproject.toml").read_text(encoding="utf-8"))
+#: The interpreter the stranger's `python3` is. Any CPython inside `requires-python` will do;
+#: the default is the one running the suite, so the gate runs wherever the suite does.
+STRANGER_PYTHON_ENV = "AIRKG_STRANGER_PYTHON"
+#: pip's download cache, kept outside the scratch `HOME` so a gate run does not re-download
+#: every wheel. A cache changes how fast a requirement arrives, never which requirement is
+#: resolved: pip resolves from `pyproject.toml` against the index on every run.
+STRANGER_PIP_CACHE_ENV = "AIRKG_STRANGER_PIP_CACHE"
+#: The roots decision 1 scans, and `mcp/`, which the adopter path also imports.
+SCANNED_ROOTS = ("assessment", "kg", "scripts", "tests", "mcp")
+
+
+def _norm(dist: str) -> str:
+    """PEP 503 normalisation, so `PyYAML` and `pyyaml` are one distribution."""
+    return re.sub(r"[-_.]+", "-", dist).lower()
+
+
+def _declared() -> set:
+    reqs = list(PYPROJECT["project"]["dependencies"])
+    for name, extra in PYPROJECT["project"]["optional-dependencies"].items():
+        reqs += [r for r in extra if not r.startswith(PYPROJECT["project"]["name"] + "[")]
+    return {_norm(re.split(r"[=<>!~ @\[;]", r.strip(), 1)[0]) for r in reqs}
+
+
+def test_every_third_party_import_is_declared():
+    """Decision 1, by static scan: every top-level module any tracked file under the scanned
+    roots imports is the standard library, the repository's own, a distribution declared in
+    `pyproject.toml`, or one of `[tool.airkg.install] undeclarable`, each named as a limit."""
+    # Tracked files and new ones not yet committed; never what the repository ignores.
+    tracked = subprocess.run(["git", "ls-files", "-co", "--exclude-standard", "-z"], cwd=REPO,
+                             capture_output=True, check=True).stdout.decode().split("\0")
+    local = set()
+    for f in filter(None, tracked):
+        parts = Path(f).parts
+        local |= set(parts[:-1]) | ({Path(f).stem} if f.endswith(".py") else set())
+    found: dict = {}
+    for f in filter(None, tracked):
+        if not f.endswith(".py") or Path(f).parts[0] not in SCANNED_ROOTS:
+            continue
+        for n in ast.walk(ast.parse((REPO / f).read_text(encoding="utf-8"))):
+            if isinstance(n, ast.Import):
+                mods = [a.name.split(".")[0] for a in n.names]
+            elif isinstance(n, ast.ImportFrom) and n.level == 0 and n.module:
+                mods = [n.module.split(".")[0]]
+            else:
+                continue
+            for m in mods:
+                if m not in sys.stdlib_module_names and m not in local and m != "__future__":
+                    found.setdefault(m, set()).add(f)
+    undeclarable = PYPROJECT["tool"]["airkg"]["install"]["undeclarable"]
+    dists = importlib.metadata.packages_distributions()
+    declared = _declared()
+    missing = {m: sorted(fs)[:3] for m, fs in found.items() if m not in undeclarable
+               and not ({_norm(d) for d in dists.get(m, [])} & declared)}
+    assert not missing, f"imported and not declared in pyproject.toml: {missing}"
+    # The exception list names only modules that are still imported.
+    assert set(undeclarable) <= set(found)
+
+
+def test_the_runbooks_install_section_is_generated_from_pyproject():
+    """Decision 4: `scripts/build_adopt_requirements.py --check` regenerates the section from
+    `pyproject.toml` and `seldon.yaml` and finds no drift."""
+    import build_adopt_requirements as B
+    assert B.main(["--check"]) == 0
+
+
+def test_the_runtime_dependencies_are_every_one_pinned():
+    for r in PYPROJECT["project"]["dependencies"]:
+        assert re.fullmatch(r"[A-Za-z0-9._-]+==[0-9][^\s;]*", r), r
+    assert PYPROJECT["build-system"]["build-backend"] == "setuptools.build_meta"
+    assert PYPROJECT["tool"]["setuptools"]["packages"] == []
+
+
+def _archive_head(dst: Path) -> str:
+    """The committed HEAD, by `git archive`: no untracked file, no ignored file, nothing the
+    author's checkout holds beyond the commit."""
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True,
+                          text=True, check=True).stdout.strip()
+    tar = subprocess.run(["git", "archive", "--format=tar", head], cwd=REPO,
+                         capture_output=True, check=True).stdout
+    dst.mkdir(parents=True)
+    with tarfile.open(fileobj=io.BytesIO(tar)) as tf:
+        tf.extractall(dst, filter="data")
+    return head
+
+
+@pytest.mark.slow
+def test_a_stranger_installs_and_runs_the_runbook(tmp_path):
+    """Decisions 2 and 3. The runbook's install lines, word for word, in a `git archive` of
+    HEAD, then every `bash` block, in one shell whose environment holds a scratch `HOME`, a
+    `PATH` of one `python3` plus `/usr/bin:/bin:/usr/sbin:/sbin`, and nothing else of the
+    author's. An import `pyproject.toml` does not declare is a `ModuleNotFoundError` here, and
+    `pip check` fails on a declared set that does not hold together. The log is the RESULT's
+    evidence for audit F-20."""
+    from scan.fixtures.server import FixtureServer
+    blocks = _blocks(RUNBOOK.read_text(encoding="utf-8"))
+    install = [b for i, b in blocks if i == "bash not-run-by-gate"][0].rstrip("\n").split("\n")
+    # The two lines a stranger types that the gate replaces with the archive itself.
+    assert install[:2] == ["git clone https://github.com/brockwebb/ai-readiness-kg.git",
+                           "cd ai-readiness-kg"]
+    clone, home, bindir = tmp_path / "ai-readiness-kg", tmp_path / "home", tmp_path / "bin"
+    head = _archive_head(clone)
+    before = _tree_state(clone)
+    home.mkdir()
+    bindir.mkdir()
+    python = os.environ.get(STRANGER_PYTHON_ENV) or sys.executable
+    version = subprocess.run([python, "-c", "import platform; print(platform.python_version())"],
+                             capture_output=True, text=True, check=True).stdout.strip()
+    # One log per interpreter, so runs on two interpreters can stand side by side.
+    log = REPO / "logs" / f"adopt_stranger_py{version}.log"
+    (bindir / "python3").symlink_to(python)
+    cache = os.environ.get(STRANGER_PIP_CACHE_ENV) or str(
+        Path(os.environ.get("TMPDIR", "/tmp")) / "airkg_stranger_pip_cache")
+    prelude = ("echo '=== install (runbook step 1, after the clone) ==='", *install[2:],
+               "python3 -m pip check", "python3 -m pip freeze --all")
+    started = dt.datetime.now(dt.timezone.utc)
+    with FixtureServer("body_two_products") as base:
+        port = base.rsplit(":", 1)[1]
+        env = {"HOME": str(home), "PATH": f"{bindir}:/usr/bin:/bin:/usr/sbin:/sbin",
+               "SITE_PORT": port, "LANG": "en_US.UTF-8", "PIP_CACHE_DIR": cache,
+               "PIP_DISABLE_PIP_VERSION_CHECK": "1"}
+        done = subprocess.run(
+            ["bash", "-c", _script([b for i, b in blocks if i == "bash"], prelude)],
+            cwd=clone, env=env, capture_output=True, text=True, timeout=3000)
+    finished = dt.datetime.now(dt.timezone.utc)
+    _write_log(log, "test_a_stranger_installs_and_runs_the_runbook", started,
+               finished, f"git archive of {head} at {clone}; python3 -> {python}; HOME={home}",
+               port, done)
+    assert "No broken requirements found." in done.stdout, done.stdout[-3000:] + done.stderr[
+        -3000:]
+    # The runbook's `PY` is the virtual environment's interpreter, not one of the author's.
+    assert f"{clone}/.venv/bin/python3 assessment/harness/scan/run.py" in done.stdout
+    _assert_the_runbook_ran(done, clone, port, before)

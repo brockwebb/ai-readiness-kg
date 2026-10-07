@@ -1,32 +1,108 @@
+# `cc_tasks/2026-10-07_install_closure_v2.md` (audit F-05, F-20). Rewritten end to end because
+# every dependency line changed: the list below is the static import scan of `assessment/`,
+# `kg/`, `scripts/`, `tests/` and `mcp/` (every third-party top-level module any tracked file
+# imports, found by `ast`, not by what happens to be installed), each pinned to the version the
+# author's interpreter (/opt/anaconda3/bin/python3, CPython 3.12.4) runs. The RESULT lists the
+# scan. `docs/adopt/run_on_your_site.md`'s requirements and install line are generated from this
+# file by `scripts/build_adopt_requirements.py`, and `--check` fails on drift.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "ai-readiness-kg"
 version = "0.1.0"
 description = "Validity-layer knowledge graph under the FSS AI readiness survey and definitions work."
-requires-python = ">=3.10"
-# Runtime deps. pyyaml reads kg/schema.yaml's nested node/edge catalogue in the extraction
-# module (eventlog/manifest stay stdlib-only). The Anthropic client is NOT a hard dependency:
-# the extraction model runs on Claude Max OAuth and is imported lazily only at pilot runtime.
+# 3.11: eight repository modules import `tomllib` or `datetime.UTC` (standard library from 3.11),
+# and the `kg` extra's dixie declares >=3.11. The adopter path alone also ran on 3.10.17; the
+# RESULT names every interpreter the stranger gate was measured on.
+requires-python = ">=3.11"
+# Runtime: what the adopter path imports (scan, render, report, score, the MCP verbs over a
+# run, the schedule installer). `pip install .` is enough for `docs/adopt/run_on_your_site.md`
+# steps 2 to 6, and `tests/test_adopter_path.py::test_a_stranger_installs_and_runs_the_runbook`
+# proves it from a `git archive` of HEAD in a fresh venv.
 dependencies = [
-    "pyyaml>=6.0",
+    "beautifulsoup4==4.12.3",          # bs4: collectors/http.py
+    "extruct==0.18.0",                 # collectors/structured_data.py
+    "httpx==0.28.1",                   # manners.py: every request the scan makes
+    "jsonschema==4.26.0",              # collectors/v2clauses.py
+    "Protego==0.1.16",                 # robots.txt (RFC 9309): manners.py, collectors/robots.py
+    "pyshacl==0.40.1",                 # collectors/v2clauses.py
+    "rdflib==7.6.0",                   # collectors/v2clauses.py
+    "ultimate-sitemap-parser==1.8.1",  # usp: collectors/sitemap.py
+    "PyYAML==6.0.1",                   # yaml: params, frames, schema, every config file
 ]
 
 [project.optional-dependencies]
-dev = [
-    "pytest>=8",
-    "pytest-cov",
+# The graph: `make project` (scripts/build_projection.py) and `run_cypher`. The scan layer of the
+# projection (assessment/harness/scan/publish.py::project) imports `seldon.config` (audit F-13),
+# so Seldon is a dependency of the graph, declared at the commit this repository runs against.
+graph = [
+    "neo4j==6.0.3",
+    "seldon @ git+https://github.com/brockwebb/seldon.git@a694322e3bf0fa6a8ba99947532adff20cc979f6",
 ]
-# The read-only MCP server over the graph (`mcp/`, cc_tasks/2026-09-17_mcp_over_the_graph.md).
-# OPTIONAL, not a runtime dependency: the extraction pipeline, the projection and the whole
-# test suite run without either package, and `mcp/airkg_server.py` is the only code that
-# imports fastmcp. Both are already installed in /opt/anaconda3/bin/python3, which is the
-# interpreter `.mcp.json` names and the one CLAUDE.md names for projection.
-#   fastmcp  the server framework the fss-policy-kg server already uses here (Standard 7:
-#            adopted, not rebuilt). Pinned to 3.x: 4.0 is out and untested against this.
-#   neo4j    the driver. `Graph` is the only place it is imported in this directory.
+# The read-only MCP server (`mcp/airkg_server.py`, cc_tasks/2026-09-17_mcp_over_the_graph.md).
 mcp = [
-    "fastmcp>=3,<4",
-    "neo4j>=5",
+    "fastmcp==3.2.3",
+    "neo4j==6.0.3",
 ]
+# The validity layer's corpus and extraction: kg/manifest.py and the admission scripts (dixie),
+# kg/extraction (tiktoken, nltk), kg/ingest/convert.py (docling), every PDF reader (pypdf).
+# LIMIT: github.com/brockwebb/dixie is not readable without the author's credentials (an
+# anonymous `git ls-remote` is refused, 2026-10-07), so this extra installs only on the author's
+# machine. Two more modules the extraction runner imports are not packages at all and are not
+# declared: `control_plane` (~/.wintermute/scripts/lib) and `harvester` (~/.wintermute/harvester).
+kg = [
+    "dixie @ git+https://github.com/brockwebb/dixie.git@eeac6c4e79dc0f5e3313dc4c11cafab91d6dbc6e",
+    "pypdf==6.7.0",
+    "tiktoken==0.12.0",
+    "nltk==3.9.3",
+    "docling==2.72.0",
+]
+# Figures, decks and the brief: scripts/build_figures.py, build_brief_deck.py,
+# build_framework_deck.py, dcat_brief_build.py.
+publishing = [
+    "matplotlib==3.8.4",
+    "numpy==1.26.4",
+    "pillow==12.1.1",
+    "python-pptx==1.0.2",
+    "pypdf==6.7.0",
+    "textstat==0.7.13",
+]
+# One-off research scripts: probe_aggregate.py (pandas, crowd-kit), homograph_split.py and
+# link_vocabulary.py and t1_build_index.py (sentence-transformers, numpy), g1_prior_art_search.py
+# and t0_biblio_harvest.py (requests).
+research = [
+    "pandas==2.2.2",
+    "crowd-kit==1.4.2",
+    "requests==2.34.2",
+    "sentence-transformers==4.1.0",
+    "numpy==1.26.4",
+]
+dev = [
+    "pytest==9.0.2",
+    "pytest-cov==7.0.0",
+]
+# The whole suite imports from every extra above.
+all = [
+    "ai-readiness-kg[graph,mcp,kg,publishing,research,dev]",
+]
+
+[tool.setuptools]
+# The checkout is the tool: every script finds the repository from its own `__file__` and runs
+# from there (`make scan-now`, `"$PY" assessment/harness/scan/run.py`). `pip install .` installs
+# the dependencies above and no code, so there is never a second, stale copy of `kg` in
+# site-packages. An explicit empty list also turns off setuptools' flat-layout discovery, which
+# finds eleven top-level packages here and refuses to build (audit F-05).
+packages = []
+
+[tool.airkg.install]
+# Third-party modules a tracked file imports that no index or public URL serves, so nothing above
+# can declare them. `tests/test_adopter_path.py::test_every_third_party_import_is_declared`
+# accepts exactly these and fails on any other undeclared import. Each is a limit of the
+# repository off this machine (RESULT, and `docs/adopt/run_on_your_site.md`).
+undeclarable = { control_plane = "Wintermute's control plane, ~/.wintermute/scripts/lib/control_plane.py: scripts/run_bulk_extraction.py, batch_repair.py, repair_relocate.py", harvester = "Wintermute's harvester, ~/.wintermute/harvester: scripts/accept_two_acts.py" }
 
 [tool.pytest.ini_options]
 markers = ["live_plan: reads the real frozen burn plan and event log",

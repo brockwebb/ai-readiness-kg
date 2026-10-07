@@ -18,7 +18,7 @@
 PY ?= /opt/anaconda3/bin/python3
 LOGS := logs
 
-.PHONY: gate-fast gate-task gate-full guards report-pdf scan-now install-schedule project
+.PHONY: gate-fast gate-task gate-stranger gate-full guards report-pdf scan-now install-schedule project
 
 gate-fast:
 	$(PY) -m pytest tests/ assessment/ -q -rs -m "not slow"
@@ -42,6 +42,15 @@ guards:
 		tests/test_control_fixture_robots_forbids_product.py \
 		tests/test_standing_guards.py \
 		tests/test_snapshot_successor.py -q
+
+## The stranger gate alone: `git archive` of HEAD, `pip install .` into a fresh venv, scratch HOME,
+## then the runbook (`cc_tasks/2026-10-07_install_closure_v2.md` decision 3). It is `slow`, so
+## gate-full runs it too; this target is for running it by itself, or on another interpreter:
+## `make gate-stranger AIRKG_STRANGER_PYTHON=/path/to/python3.11`. Needs the package index. It
+## runs longer than two minutes: start it detached and poll it (CLAUDE.md).
+gate-stranger:
+	AIRKG_STRANGER_PYTHON="$(AIRKG_STRANGER_PYTHON)" $(PY) -m pytest tests/test_adopter_path.py \
+		-q -rs -k test_a_stranger_installs_and_runs_the_runbook
 
 gate-full:
 	@mkdir -p $(LOGS)
