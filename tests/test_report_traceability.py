@@ -126,9 +126,14 @@ def test_the_report_measures_exactly_these_legs():
     quotes G4's single pass (the only pass on any check generation 12 added), so G4 is read off
     the prose and pinned here; its two admitted sources were made citable by
     `scripts/backfill_g4_source_metadata.py` in the same task.
+
+    **Fifteen since `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`.** The composite
+    snapshot's product section quotes the machine-first entry point (A9) and the changelog (F4),
+    the two legs the recollection gave verdicts to that the prose now counts; both reach an
+    admitted source (the parametrized test below).
     """
     assert RT.LEGS == ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3",
-                       "A1", "A6", "A8", "B3", "D4", "G4"]
+                       "A1", "A6", "A8", "A9", "B3", "D4", "F4", "G4"]
     assert RT.LEGS == RT.appendix_legs(), (
         "the measured legs and the appendix's legs have come apart; the appendix would then "
         "print a row for a check no test pins")

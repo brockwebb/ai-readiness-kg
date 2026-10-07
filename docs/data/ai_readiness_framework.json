@@ -15,7 +15,7 @@
   "rules_built": 24,
   "specs_with_recorded_decision": 3,
   "candidate_indicators": 1,
-  "indicators_measured": 13,
+  "indicators_measured": 21,
   "actions": 60,
   "actions_on_candidate_indicators": 3,
   "tools": 13,
@@ -148,13 +148,9 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`w3c-dwbp-2017` (BP 12, use machine-readable standardized data formats: \"make data available in a machine-readable, standardized data format that is well suited to its intended or potential use\", implemented as \"CSV, XML, HDF5, JSON and RDF serialization syntaxes\" and tested by \"check if the data format conforms to a known machine-readable data format specification\"; and BP 14, provide data in multiple formats, the not-PDF-only half); `foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, amending 44 U.S.C. 3502: paragraph 18 defines machine-readable as \"data in a format that can be easily processed by a computer without human intervention while ensuring no semantic meaning is lost\", and paragraph 20 requires an open Government data asset to be machine-readable and available in an open format); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 5, attributes generally required for public data assets, i. Machine-Readable: \"agencies must make each of their public data assets machine-readable\", with the worked example that tabular data \"should not provide this data as a scanned image or image-based PDF document, but rather should provide that public data asset in an appropriate format e.g. in a character-delimited format such as a CSV file\"); the Commerce GenAI-Open-Data guidance named in this cell's earlier gap is still acquisition_blocked, batch-017, and is not what any of the three above stands in for",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "A",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -173,19 +169,25 @@
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
      }
     ],
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A1"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 4,
      "counts": {
-      "pass": 0,
+      "pass": 4,
       "fail": 0,
       "not_applicable": 0,
-      "error": 23
+      "error": 19
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -216,10 +218,6 @@
     "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "A",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -239,7 +237,7 @@
      }
     ],
     "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A2"
      ],
@@ -250,8 +248,12 @@
       "not_applicable": 0,
       "error": 23
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -282,25 +284,21 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A3"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
-     "qualifying_findings": 4,
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 8,
      "counts": {
-      "pass": 4,
+      "pass": 8,
       "fail": 0,
       "not_applicable": 0,
-      "error": 19
+      "error": 15
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -317,8 +315,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A3"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 4,
+      "counts": {
+       "pass": 4,
+       "fail": 0,
+       "not_applicable": 0,
+       "error": 19
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -349,11 +367,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A4"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 23,
      "counts": {
       "pass": 22,
@@ -362,12 +380,8 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -384,8 +398,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A4"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 22,
+       "fail": 1,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -416,11 +450,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A5"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 21,
      "counts": {
       "pass": 3,
@@ -429,12 +463,8 @@
       "error": 2
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -451,8 +481,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A5"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 21,
+      "counts": {
+       "pass": 3,
+       "fail": 18,
+       "not_applicable": 0,
+       "error": 2
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -483,11 +533,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A6"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -496,12 +546,8 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -518,8 +564,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A6"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -584,11 +650,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A8"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -597,12 +663,8 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -619,8 +681,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A8"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -647,15 +729,11 @@
     "tier_raw": "`public`",
     "status": "draft; frontier_deep track, as_of 2026-01",
     "evidence_raw": "`wilkinson-2016-fair-guiding-principles`; internal existence proof: fss-policy-kg (MCP server)",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "A",
     "frontier": true,
     "as_of": "2026-01",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -674,19 +752,25 @@
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
      }
     ],
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A9"
      ],
-     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 5,
      "counts": {
-      "pass": 0,
-      "fail": 0,
+      "pass": 3,
+      "fail": 2,
       "not_applicable": 0,
-      "error": 23
+      "error": 18
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -718,11 +802,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A10"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 19,
      "counts": {
       "pass": 13,
@@ -731,12 +815,8 @@
       "error": 4
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -753,8 +833,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A10"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 19,
+      "counts": {
+       "pass": 13,
+       "fail": 6,
+       "not_applicable": 0,
+       "error": 4
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -785,11 +885,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "A11-declared"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 23,
      "counts": {
       "pass": 22,
@@ -798,13 +898,8 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A11-declared'] = RULE-A11-declared-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A11-declared`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the DECLARED layer only (leg `A11-declared`). The enforced and observed layers need edge or WAF logs and crawler request logs, which spec `spec:A11-declared` places at `agency_instrumented`.",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -821,8 +916,29 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "A11-declared"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 22,
+       "fail": 1,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A11-declared'] = RULE-A11-declared-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A11-declared`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the DECLARED layer only (leg `A11-declared`). The enforced and observed layers need edge or WAF logs and crawler request logs, which spec `spec:A11-declared` places at `agency_instrumented`."
    }
   },
   {
@@ -849,7 +965,7 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`fcsm-25-03`",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds.",
@@ -858,19 +974,21 @@
     "tier_source": "rules.CURRENT['B1'] = RULE-B1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "B1"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 7,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 7,
       "not_applicable": 0,
-      "error": 23
+      "error": 16
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -902,17 +1020,12 @@
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "B2"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -921,8 +1034,31 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "B2"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     }
+    ]
    }
   },
   {
@@ -953,11 +1089,11 @@
     "gap": null,
     "criterion_code": "B",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "B3"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 22,
      "counts": {
       "pass": 4,
@@ -966,12 +1102,8 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B3'] = RULE-B3-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -988,8 +1120,28 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "B3"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 4,
+       "fail": 18,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B3'] = RULE-B3-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1016,7 +1168,7 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`fcsm-23-02-a-framework-for-data-quality-case-studies`; `fcsm-20-04-a-framework-for-data-quality`",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant.",
@@ -1025,19 +1177,21 @@
     "tier_source": "rules.CURRENT['B4'] = RULE-B4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "B4"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 8,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 8,
       "not_applicable": 0,
-      "error": 23
+      "error": 15
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -1068,17 +1222,12 @@
     "measurement_status": "measured",
     "gap": "**gap**",
     "criterion_code": "B",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`.",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "B5"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -1087,9 +1236,33 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
      "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "B5"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+      "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
+     }
+    ]
    }
   },
   {
@@ -1320,10 +1493,6 @@
     "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "D",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -1343,7 +1512,7 @@
      }
     ],
     "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "D1"
      ],
@@ -1354,8 +1523,12 @@
       "not_applicable": 0,
       "error": 23
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1385,17 +1558,12 @@
     "measurement_status": "measured",
     "gap": "**gap**",
     "criterion_code": "D",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's.",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "D2"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 23,
      "counts": {
       "pass": 0,
@@ -1404,8 +1572,31 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "D2"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     }
+    ]
    }
   },
   {
@@ -1432,7 +1623,7 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`w3c-prov-dm-data-model` (the PROV data model: \"Generation is the completion of production of a new entity by an activity.\"); `w3c-prov-o-ontology` (its OWL encoding, whose starting-point terms include prov:wasGeneratedBy and prov:wasDerivedFrom: \"By expressing usage and generation, one can construct provenance chains comprising both Activities and Entities.\"). Both admitted after this cell first read \"gap — no PROV-O/W3C-PROV document is admitted\"; corrected by cc_tasks/2026-09-18_dcat_field_rules.md decision 6",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "D",
     "requirement_none_reason": "Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's.",
@@ -1441,19 +1632,21 @@
     "tier_source": "rules.CURRENT['D3'] = RULE-D3-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "D3"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 8,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 8,
       "not_applicable": 0,
-      "error": 23
+      "error": 15
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -1481,13 +1674,9 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, enacting 44 U.S.C. 3511: subsection a paragraph 1 requires each agency to \"develop and maintain a comprehensive data inventory that accounts for all data assets created by, collected by, under the control or direction of, or maintained by the agency\"; subsection a paragraph 3 requires that inventory updated \"not later than 90 days\" after a data asset is created or identified; subsection b requires public data assets be submitted \"for inclusion in the Federal data catalogue\"; subsection c paragraph 1 makes that catalogue \"a single public interface online as a point of entry\"); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii, public dissemination: agencies \"must submit their comprehensive data inventory to the Federal Data Catalog as a data asset\" and \"host it publicly on the agency's website at the address: www.agency.gov/data.json\", repeated at section 5b ii with the OMB-approved metadata schema); `dcat-us-1-1-schema` (that metadata schema, which states the listing requirement on its face: \"guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces as hosted at agency.gov/data\", and \"the catalog file for each agency should list all of the agency's datasets that can be made public, regardless of whether they are distributed by a file download or a Web API\"; its Catalog fields section describes \"the entire Public Data Listing catalog file\")",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "D",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -1506,19 +1695,25 @@
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
      }
     ],
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "D4"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 8,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 8,
       "not_applicable": 0,
-      "error": 23
+      "error": 15
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -1685,7 +1880,7 @@
     "gap": null,
     "criterion_code": "E",
     "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "E5"
      ],
@@ -1696,7 +1891,7 @@
       "not_applicable": 0,
       "error": 0
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
@@ -1967,13 +2162,9 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`usafacts-ai-ready-data-guide`",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "F",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-07",
@@ -1992,19 +2183,25 @@
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
      }
     ],
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "F4"
      ],
-     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 9,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 9,
       "not_applicable": 0,
-      "error": 23
+      "error": 14
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -2109,17 +2306,12 @@
     "withdrawn_from_source": "DD-066 (cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md), effective cycle 5 (this params_hash forward). `params.tier0.legs_withdrawn` withdraws G1-D from surfaces ['home', 'well_known'], which is what this instrument calls host-level (`scripts/withdrawn_legs.py`). Why: the host-level surface is a home page, which carries no estimate, so the leg cannot hold the property it measures and every verdict on it is structural",
     "measurement_level": "product",
     "measurement_level_source": "DD-066 (cc_tasks/2026-09-15_g1d_leaves_l0.md). The host-level leg was withdrawn after the census in that task's RESULT §0: on host-level surfaces (`home`, `well_known`) across every body, every reference host and every cycle the rule returned 126 `fail`, 28 `error` and 0 `pass`; on product surfaces the same rule returned 104 `pass`. The construct is carryable and the home page is not where it is carried. Standards a product-tier rule would bind to: SDMX observation-status and confidence attributes; W3C Data Quality Vocabulary (DQV); schema.org Dataset variable metadata. None has yet been evaluated against a federal data product by this project.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`).",
     "measured_by": {
-     "cycle": "scan_2026-09-10_rj5",
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "G1-D"
      ],
-     "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
      "qualifying_findings": 22,
      "counts": {
       "pass": 3,
@@ -2128,9 +2320,33 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
      "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`).",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-09-10_rj5",
+      "legs": [
+       "G1-D"
+      ],
+      "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 3,
+       "fail": 19,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+      "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
+     }
+    ]
    }
   },
   {
@@ -2248,7 +2464,7 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`dcat-us-1-1-schema` (Dataset Required Fields and the field definitions, which support the issuing-authority clause and define the fields RULE-G4-v1 tests: Publisher, \"The publishing entity and optionally their parent organization(s).\"; bureauCode, required \"Yes, for United States Federal Government agencies\", \"Represent each bureau responsible for the dataset according to the codes found in OMB Circular A-11, Appendix C\"; programCode, \"Provide an array of programs related to this data asset\"); `dcat-us-3-dataset-schema-2026-09-15` (Dataset > publisher, Requirement: Recommended, on the page as rewritten in September 2026 and served at https://resources.data.gov/standards/catalog/dcat-us-3/dataset/ on 2026-10-05, where the Mandatory properties are contactPoint, description, identifier and title; the field DCAT-US 3.0 defines for the issuing-authority clause: \"Organization responsible for publishing and making the dataset available\"); `dcat-us-3-dataset-schema` (Dataset, publisher, as the corpus captured the page on 2026-08-21, when it was marked Mandatory; superseded by the September 2026 rewrite and kept because RULE-B4-v1 and RULE-D3-v1 cite this capture: \"Organization responsible for publishing and making the dataset available\"); `dcat-us-3-m-25-05-crosswalk` (M-25-05 element O, mapped to Dataset publisher or contributor, the federal metadata requirement the field serves: \"The name of each agency responsible for maintaining and updating the data asset\"; \"publisher: Must be an org:Organization and should include the agency's name.\"); `dcat-us-3-overview` (Changes from v1.1, Fields not in the v3.0 core schema, on the bureau and program codes RULE-G4-v1 tests: \"The following fields were introduced in v1.1 specifically for U.S. federal agencies. They are not defined in the v3.0 core schema however the v3.0 schema will not reject records that include them.\"); `w3c-dcat-3` (§6.4.10 Property: publisher, dcterms:publisher, for the issuing-authority clause: \"The entity responsible for making the resource available.\"); `w3c-prov-o-ontology` (prov:wasAttributedTo, the issuing-authority clause as a provenance relation: \"Attribution is the ascribing of an entity to an agent.\"); `schema-org-dataset` (sourceOrganization, for the issuing-authority clause: \"The Organization on whose behalf the creator was working.\")",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": null,
     "criterion_code": "G",
     "requirement_none_reason": "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant.",
@@ -2257,19 +2473,21 @@
     "tier_source": "rules.CURRENT['G4'] = RULE-G4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
-    "not_measured_reason": {
-     "cycle": "scan_2026-09-10_rj5",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_b",
      "legs": [
       "G4"
      ],
-     "reason": "every Finding on an admitted surface was `error`; the 1 qualifying Finding(s) of this cycle are on surfaces not admitted to the corpus, which DD-055 does not count",
+     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "qualifying_findings": 8,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 8,
       "not_applicable": 0,
-      "error": 23
+      "error": 15
      },
-     "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
     }
    }
   },
@@ -2813,7 +3031,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -2852,7 +3070,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -2892,7 +3110,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -2933,7 +3151,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -2972,7 +3190,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3010,7 +3228,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3048,7 +3266,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3087,7 +3305,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -3130,7 +3348,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -3172,7 +3390,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -3211,7 +3429,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -3250,7 +3468,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3289,7 +3507,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3329,7 +3547,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3367,7 +3585,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3406,7 +3624,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3444,7 +3662,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3484,7 +3702,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3521,9 +3739,9 @@
     "outcome": "machine_path_answers_html",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3560,9 +3778,9 @@
     "outcome": "no_machine_first_path",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3600,7 +3818,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3638,7 +3856,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3677,7 +3895,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3716,7 +3934,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3757,7 +3975,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3797,7 +4015,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3837,7 +4055,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3878,7 +4096,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3920,7 +4138,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -3958,9 +4176,9 @@
     "outcome": "methodology_requires_js",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 9,
+     "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -3997,9 +4215,9 @@
     "outcome": "methodology_pdf_only",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 9,
+     "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4035,9 +4253,9 @@
     "outcome": "no_methodology_link",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 9,
+     "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4073,9 +4291,9 @@
     "outcome": "no_structured_text_methodology",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 9,
+     "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 9 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4113,7 +4331,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -4151,7 +4369,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -4189,9 +4407,9 @@
     "outcome": "catalog_schema_violation",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4227,9 +4445,9 @@
     "outcome": "product_absent_from_catalog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4265,9 +4483,9 @@
     "outcome": "no_catalog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4305,7 +4523,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4345,7 +4563,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4385,7 +4603,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4422,9 +4640,9 @@
     "outcome": "changelog_entries_lack_revision_class",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4460,9 +4678,9 @@
     "outcome": "changelog_not_machine_readable",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4498,9 +4716,9 @@
     "outcome": "no_changelog",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4538,7 +4756,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-09-10_rj5` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Uncertainty legibility (two legs, scored as a vector)"
      ],
@@ -4644,9 +4862,9 @@
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4683,9 +4901,9 @@
     "outcome": "no_data_dictionary",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4721,9 +4939,9 @@
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4760,9 +4978,9 @@
     "outcome": "quality_measurement_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4799,9 +5017,9 @@
     "outcome": "revision_metadata_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4837,9 +5055,9 @@
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -4876,9 +5094,9 @@
     "outcome": "no_lineage_field",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -4914,9 +5132,9 @@
     "outcome": "no_product_record",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -4954,9 +5172,9 @@
     "outcome": "authority_codes_absent",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -5046,9 +5264,9 @@
     "outcome": "no_variable_measured",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 1,
+     "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -5086,7 +5304,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5124,7 +5342,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5162,7 +5380,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5201,7 +5419,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5240,7 +5458,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5278,7 +5496,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5317,7 +5535,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],
@@ -5355,7 +5573,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj5.json (cycle `scan_2026-09-10_rj5`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],

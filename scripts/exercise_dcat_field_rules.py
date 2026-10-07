@@ -56,6 +56,20 @@ def cycle_of_record() -> str:
     return pub["snapshot_cycle"]
 
 
+def source_cycle() -> str:
+    """The measured cycle whose retained catalogs these exercises read: the cycle of record's
+    `derived_from`, or, for a COMPOSITE cycle of record (`scan.composite`), its base part's
+    collection. The pinned distributions reproduce RESULTs about cycle 4's retained evidence
+    (`cc_tasks/2026-09-18_dcat_field_rules_RESULT.md` §1 and the schema task's), and the
+    composite (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`) leaves that evidence
+    where it was: the recollection is a second collection, not a re-reading of the first."""
+    cor = _payload(cycle_of_record())
+    if cor.get("cycle_kind") == "composite":
+        base = cor["composed_of"]["base"]
+        return base.get("collection") or base["cycle"]
+    return cor.get("derived_from") or cor["cycle"]
+
+
 def _payload(name: str) -> dict:
     return json.loads((REPO / "state" / f"{name}.json").read_text(encoding="utf-8"))
 
@@ -66,7 +80,7 @@ def enriched_groups(params: dict) -> tuple:
     from scan.collectors import v2clauses
     from scan.model import Observation
     cor = _payload(cycle_of_record())
-    source = cor.get("derived_from") or cor["cycle"]
+    source = source_cycle()
     src = _payload(source)
     urls = {r["doc_id"]: r["url"] for r in cor["matrix"]}
     groups: dict = {}
@@ -103,7 +117,7 @@ def d4_membership(params: dict) -> list:
     retained bodies `enriched_groups` reads; nothing is judged or published."""
     from scan.collectors.dcat import product_records
     cor = _payload(cycle_of_record())
-    src = _payload(cor.get("derived_from") or cor["cycle"])
+    src = _payload(source_cycle())
     urls = {r["doc_id"]: r["url"] for r in cor["matrix"]}
     out = []
     for row in src["observations_detail"]:

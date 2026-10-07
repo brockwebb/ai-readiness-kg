@@ -168,6 +168,18 @@ compare_to_by_cycle:
       D1: "v3 → v4"
       D4: "v2 → v4"
       F4: "v3 → v4"
+  # The composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
+  # decision 4) against `_rj5`, the judgement it replaces. Both sides are generation 14 and no
+  # rule differs, so `rule_changed` is empty: on the ten overlaid legs a difference is the
+  # 2026-10-06 recollection, which searched the locations each body declares, and the hosts in
+  # the four weeks between; on every other leg, A2 and D1 included (withheld), both sides are
+  # cycle 4's own Findings.
+  scan_2026-10-06_composite_b:
+    cycle: scan_2026-09-10_rj5
+    suffix: "2026-09-10_rj5"
+    label: "cycle 4 · 2026-09-10, re-judged (generation 14)"
+    note: "both judged under generation 14; ten legs were measured again on 2026-10-06 over the locations each body declares, every other leg is cycle 4 on both sides"
+    rule_changed: {}
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

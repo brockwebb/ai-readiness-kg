@@ -15,7 +15,6 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | enabler:bing-webmaster-tools | agency_enabled | tool_commercial | 1 | C4 | 2 | A11;C4 |
 | enabler:web-analytics | agency_enabled | tool_commercial | 1 | C4 | 1 | C4 |
 | method:B6:wcag_reading_level | public_outside_in | roll_your_own | 1 | B6 | 1 | B6 |
-| method:D3:prov_walk | public_outside_in | roll_your_own | 1 | D3 | 1 | D3 |
 | method:G3:sdmx_structure_map | public_outside_in | roll_your_own | 1 | G3 | 1 | G3 |
 | method:G5:sdmx_conf_status | public_outside_in | roll_your_own | 1 | G5 | 1 | G5 |
 | pre:adversarial-bank | needs_standard | roll_your_own | 1 | E9 | 1 | E9 |
@@ -34,7 +33,6 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | pre:staging-regression-records | agency_records | roll_your_own | 1 | F5 | 1 | F5 |
 | pre:threshold-preregistration-records | agency_records | roll_your_own | 1 | E2 | 1 | E2 |
 | tool:aidrin | public_outside_in | tool_open_source | 1 | C5 | 1 | C5 |
-| tool:catalog-data-gov-ckan-api | public_outside_in | roll_your_own | 1 | D4 | 1 | D4 |
 | tool:openapi-spec-validator | public_outside_in | tool_open_source | 1 | A2 | 1 | A2 |
 | tool:prance | public_outside_in | tool_open_source | 1 | A2 | 1 | A2 |
 | tool:slsa-verifier | public_outside_in | tool_open_source | 1 | F6 | 1 | F6 |
@@ -42,55 +40,49 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | enabler:cloudflare-ai-crawl-control | agency_enabled | tool_commercial | 0 |  | 2 | A11;A12 |
 | enabler:akamai-datastream-2 | agency_enabled | tool_commercial | 0 |  | 1 | A11 |
 | enabler:server-logs | agency_records | roll_your_own | 0 |  | 1 | A11 |
+| method:D3:prov_walk | public_outside_in | roll_your_own | 0 |  | 1 | D3 |
 | pre:second-scan-cycle | public_outside_in | built_rule | 0 |  | 1 | B5 |
+| tool:catalog-data-gov-ckan-api | public_outside_in | roll_your_own | 0 |  | 1 | D4 |
 | tool:extruct | public_outside_in | tool_open_source | 0 |  | 1 | A6 |
 | tool:scrapy | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 | tool:ultimate-sitemap-parser | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 
-## (a) Greedy set cover over the 35 unmeasured framework indicators
+## (a) Greedy set cover over the 27 unmeasured framework indicators
 
 Greedy set cover (Chvátal 1979): at each step, the unlocker that covers the most indicators not yet covered; ties break on its name.
 
 | step | unlocked_by | who_can_run | n_new | newly_covered | cumulative | of_unmeasured |
 |---|---|---|---|---|---|---|
-| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 35 |
-| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 35 |
-| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 35 |
-| 4 | method:D3:prov_walk | public_outside_in | 1 | D3 | 6 | 35 |
-| 5 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 7 | 35 |
-| 6 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 8 | 35 |
-| 7 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 9 | 35 |
-| 8 | tool:aidrin | public_outside_in | 1 | C5 | 10 | 35 |
-| 9 | tool:catalog-data-gov-ckan-api | public_outside_in | 1 | D4 | 11 | 35 |
-| 10 | tool:openapi-spec-validator | public_outside_in | 1 | A2 | 12 | 35 |
-| 11 | tool:slsa-verifier | public_outside_in | 1 | F6 | 13 | 35 |
-| 12 | pre:adversarial-bank | needs_standard | 1 | E9 | 14 | 35 |
-| 13 | pre:entailment-probe-set | needs_standard | 1 | C2 | 15 | 35 |
-| 14 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 16 | 35 |
-| 15 | pre:product-question-benchmark | needs_standard | 1 | C1 | 17 | 35 |
-| 16 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 18 | 35 |
-| 17 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 19 | 35 |
-| 18 | pre:series-break-cases | needs_standard | 1 | G6 | 20 | 35 |
-| 19 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 21 | 35 |
-| 20 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 22 | 35 |
-| 21 | pre:held-out-rotation-records | agency_records | 1 | E4 | 23 | 35 |
-| 22 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 24 | 35 |
-| 23 | pre:release-validation-records | agency_records | 1 | F1 | 25 | 35 |
-| 24 | pre:staging-regression-records | agency_records | 1 | F5 | 26 | 35 |
-| 25 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 27 | 35 |
+| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 27 |
+| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 27 |
+| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 27 |
+| 4 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 6 | 27 |
+| 5 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 7 | 27 |
+| 6 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 8 | 27 |
+| 7 | tool:aidrin | public_outside_in | 1 | C5 | 9 | 27 |
+| 8 | tool:openapi-spec-validator | public_outside_in | 1 | A2 | 10 | 27 |
+| 9 | tool:slsa-verifier | public_outside_in | 1 | F6 | 11 | 27 |
+| 10 | pre:adversarial-bank | needs_standard | 1 | E9 | 12 | 27 |
+| 11 | pre:entailment-probe-set | needs_standard | 1 | C2 | 13 | 27 |
+| 12 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 14 | 27 |
+| 13 | pre:product-question-benchmark | needs_standard | 1 | C1 | 15 | 27 |
+| 14 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 16 | 27 |
+| 15 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 17 | 27 |
+| 16 | pre:series-break-cases | needs_standard | 1 | G6 | 18 | 27 |
+| 17 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 19 | 27 |
+| 18 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 20 | 27 |
+| 19 | pre:held-out-rotation-records | agency_records | 1 | E4 | 21 | 27 |
+| 20 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 22 | 27 |
+| 21 | pre:release-validation-records | agency_records | 1 | F1 | 23 | 27 |
+| 22 | pre:staging-regression-records | agency_records | 1 | F5 | 24 | 27 |
+| 23 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 25 | 27 |
 
 No row offers anything to obtain for these (built rule only, or no known method):
 
 | indicator | reason |
 |---|---|
-| A1 | no row offers anything to obtain: method kinds built_rule |
-| A9 | no row offers anything to obtain: method kinds built_rule |
-| B1 | no row offers anything to obtain: method kinds built_rule, none_known |
-| B4 | no row offers anything to obtain: method kinds built_rule, none_known |
 | D1 | no row offers anything to obtain: method kinds built_rule |
 | E5 | no row offers anything to obtain: method kinds built_rule |
-| F4 | no row offers anything to obtain: method kinds built_rule |
-| G4 | no row offers anything to obtain: method kinds built_rule, none_known |
 
 ## (b) Criterion by who can run it (rows)
 

@@ -73,6 +73,11 @@ EXPECTED_BLANKS = {
     # blank on `_rj5`'s, because generation 14 left every one of their Findings `error` and a
     # rate over no measured verdict does not exist.
     "scan_2026-09-10_rj5": {"B1", "B2", "B4", "D2", "D3", "G4", "A2", "A9", "D1", "F4"},
+    # The composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`),
+    # drawn against `_rj5`, the judgement it replaces. A2, A9, D1 and F4 are blank on `_rj5`'s
+    # side as above; A2 and D1 are blank on the composite's too, because it withholds them and
+    # shows `_rj5`'s all-`error` cells. Every other rated leg has a rate on both sides.
+    "scan_2026-10-06_composite_b": {"A2", "A9", "D1", "F4"},
 }
 
 #: The cycles whose F5 is a figure that can be drawn and therefore checked.

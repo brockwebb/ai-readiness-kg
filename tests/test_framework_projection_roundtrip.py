@@ -37,7 +37,12 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: write-back re-derived every scan-measured indicator against `scan_2026-09-10_rj5`. B2, B5 and
 #: D2 were promoted; A1, A2, A9, D1, D4 and F4, whose every Finding there is `error`, returned
 #: to `harness_built`. Was 16 / 8 / 25.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 13, "harness_built": 11, "specified": 25}
+#: `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`: the measured write-back against the
+#: composite `scan_2026-10-06_composite_b` moved A1, A9, B1, B4, D3, D4, F4 and G4 back from
+#: `harness_built` to `measured`. The recollection searched the locations each body declares, and
+#: those legs now have `pass` or `fail` cells where rj5 had only `error`. A2 and D1 stay
+#: `harness_built`: the composite withholds them. Was 13 / 11 / 25.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 21, "harness_built": 3, "specified": 25}
 
 
 def _loader():
@@ -212,9 +217,9 @@ def test_the_measured_indicators_carry_their_cycle(graph):
         "MATCH (i:AssessmentIndicator) WHERE i.measured_cycle IS NOT NULL "
         "RETURN i.code AS code, i.measured_cycle AS cyc, i.measured_params_hash AS ph, "
         "i.measured_legs AS legs"))
-    # DD-069: every scan-measured indicator names the cycle of record. 12 of the 13 measured;
+    # DD-069: every scan-measured indicator names the cycle of record. 20 of the 21 measured;
     # G1-O has no scan leg (DD-036) and carries no `measured_by`.
-    assert len(rows) == 12, "12 of the 13 measured are the cycle of record's; G1-O is not a scan's"
+    assert len(rows) == 20, "20 of the 21 measured are the cycle of record's; G1-O is not a scan's"
     import yaml
     snap = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "reports"
                            / "publication.yaml").read_text(encoding="utf-8"))["snapshot_cycle"]

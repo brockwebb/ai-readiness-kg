@@ -196,7 +196,13 @@ CATALOG_ABSENCE = (r"holds no catalog record for the product among its (\d+) rec
 #: Census catalog evidence, judged `error` because the inventories ind:D4 names were not all
 #: searched. The sentence names each inventory not observed, and quotes no record count, so the
 #: count is read from the catalog Observation the Finding cites.
-INVENTORY_REMAINDER = r"declared inventory not observed: (https://\S+?) \("
+#:
+#: The recollection (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`) searched the
+#: declared inventories, and an inventory it could not read is named with the class that stopped
+#: it: "declared inventory not observed (refused): <url>". The pattern takes both forms, and the
+#: class, where present, is what the claim says about the inventory.
+INVENTORY_REMAINDER = (r"declared inventory not observed(?: \(([a-z0-9_]+)\))?: "
+                       r"(https://\S+?)(?=\.\s|\.$|;|\s\(|$)")
 
 #: Named queries: the `id` of every `query` evidence entry is a key here, and the test resolves
 #: it against this table. The value says what was computed and from what.
@@ -300,6 +306,17 @@ class Map:
         self.graph = graph
         self.cycle = self.s.cycle
         self.shard = REPO / "events" / f"cycle-{self.cycle}.jsonl"
+        # A COMPOSITE cycle of record (`scan.composite`, `cc_tasks/2026-10-06_absence_verdicts_
+        # recollection_v2.md` decision 4) has no shard and no projected Finding of its own: each
+        # of its Findings is on its part's shard, under its part's cycle, and is selected by leg.
+        # `parts` is `[(cycle, shard, legs or None)]`; a plain cycle is its own single part.
+        from scan import composite
+        payload = json.loads((REPO / "state" / f"{self.cycle}.json").read_text(encoding="utf-8"))
+        self.composite = composite.is_composite(payload)
+        self.parts = ([(c, REPO / "events" / f"cycle-{c}.jsonl", legs)
+                       for c, legs in composite.parts(payload)] if self.composite
+                      else [(self.cycle, self.shard, None)])
+        self.payload_ids = {f["finding_id"] for f in payload.get("findings_detail") or []}
         self._findings = None
         self._obs = None
 
@@ -308,33 +325,51 @@ class Map:
     def findings(self) -> dict:
         """`{finding_id: event}` from the cycle's shard, each with its 1-based `_line`."""
         if self._findings is None:
-            if not self.shard.is_file():
-                raise SystemExit(f"FATAL: {BP.rel(self.shard)} is missing; the cycle of record "
-                                 "has no event shard to read its Findings from")
             out = {}
-            for i, line in enumerate(self.shard.read_text(encoding="utf-8").splitlines(), 1):
-                if not line.strip():
-                    continue
-                e = json.loads(line)
-                if e.get("event_type") == "finding_derived" and e.get("cycle") == self.cycle:
+            taken = {l for _, _, legs in self.parts if legs for l in legs}
+            for cyc, shard, legs in self.parts:
+                if not shard.is_file():
+                    raise SystemExit(f"FATAL: {BP.rel(shard)} is missing; the cycle of record "
+                                     "has no event shard to read its Findings from")
+                for i, line in enumerate(shard.read_text(encoding="utf-8").splitlines(), 1):
+                    if not line.strip():
+                        continue
+                    e = json.loads(line)
+                    if e.get("event_type") != "finding_derived" or e.get("cycle") != cyc:
+                        continue
+                    # A measured part's shard carries its control fixtures' Findings too; they
+                    # license the cycle and are no Finding about a body.
+                    if self.composite and str(e.get("target_doc_id", "")).startswith("control:"):
+                        continue
+                    if (legs is not None and e.get("leg") not in legs) or \
+                            (legs is None and e.get("leg") in taken):
+                        continue
                     if e["finding_id"] in out:
                         raise SystemExit(f"FATAL: {e['finding_id']} derived twice in "
-                                         f"{BP.rel(self.shard)}")
-                    out[e["finding_id"]] = {**e, "_line": i}
+                                         f"{BP.rel(shard)}")
+                    out[e["finding_id"]] = {**e, "_line": i, "_shard": shard}
+            if self.composite and set(out) != self.payload_ids:
+                raise SystemExit(f"FATAL: the parts' shards and state/{self.cycle}.json disagree "
+                                 f"on the composite's Findings: {len(set(out) - self.payload_ids)}"
+                                 f" only on the shards, {len(self.payload_ids - set(out))} only "
+                                 f"on the payload")
             self._findings = out
         return self._findings
 
     def floc(self, fid: str) -> str:
-        return f"{BP.rel(self.shard)}:{self.findings[fid]['_line']}"
+        f = self.findings[fid]
+        return f"{BP.rel(f['_shard'])}:{f['_line']}"
 
     @property
     def obs_classes(self) -> dict:
         """`{finding_id: sorted error classes}` of the Observations supporting each Finding."""
         if self._obs is None:
             rows, truncated = self.graph.read(
-                "MATCH (f:Finding {cycle: $c}) OPTIONAL MATCH (o:Observation)-[:SUPPORTS]->(f) "
+                "MATCH (f:Finding) WHERE f.cycle IN $cs AND f.finding_id IN $ids "
+                "OPTIONAL MATCH (o:Observation)-[:SUPPORTS]->(f) "
                 "RETURN f.finding_id AS f, collect(o.error_class) AS ec",
-                limit=10 * len(self.findings) + 10, c=self.cycle)
+                limit=10 * len(self.findings) + 10, cs=[c for c, _, _ in self.parts],
+                ids=sorted(self.findings))
             if truncated:
                 raise SystemExit("FATAL: the Observation-class read was truncated")
             out = {r["f"]: sorted({x for x in r["ec"] if x}) for r in rows}
@@ -743,9 +778,11 @@ def _census_probed(M: Map, hits: list, urls: dict) -> tuple:
 def _catalog_record_counts(M: Map, hits: list, url: str) -> set:
     """`dataset_count` of the catalog Observation at `url` that the `hits` cite, read from the
     payload the cycle's Findings were judged over (`derived_from` for a re-judgement)."""
+    import build_l0_matrices
     payload = json.loads((REPO / "state" / f"{M.cycle}.json").read_text(encoding="utf-8"))
-    src = payload.get("derived_from") or M.cycle
-    rows = json.loads((REPO / "state" / f"{src}.json").read_text(encoding="utf-8"))
+    # The collection the Findings rest on: the payload, a re-judgement's source, or a
+    # composite's two parts (`build_l0_matrices.evidence_payload`, the one place that says so).
+    rows = build_l0_matrices.evidence_payload(payload)
     obs = {o["obs_id"]: o for o in rows["observations_detail"]}
     out = set()
     for fid in hits:
@@ -759,8 +796,10 @@ def _catalog_record_counts(M: Map, hits: list, url: str) -> set:
 def q4_claims_unsearched(M: Map, where: dict) -> list:
     """Q4's Census record under generation 14: the host's catalog is served and the product is
     not in it, and every Census finding on the D4 family is `error`, because the department's
-    inventory and data.gov's, which ind:D4 names, were not searched (DN-012 d1)."""
-    hits, remainder = [], set()
+    inventory and data.gov's, which ind:D4 names, were not searched (DN-012 d1). Under the
+    recollection they were searched, and the department's could not be read: its host refused
+    this client, which the finding names, so the claim names it too."""
+    hits, remainder, classes = [], set(), set()
     for fid, f in sorted(M.findings.items()):
         if where[f["target_doc_id"]][0] != CENSUS or f["verdict"] != "error":
             continue
@@ -768,7 +807,8 @@ def q4_claims_unsearched(M: Map, where: dict) -> list:
         if not found:
             continue
         hits.append(fid)
-        remainder.update(found)
+        remainder.update(u for _cls, u in found)
+        classes.update(cls for cls, _u in found)
     if not hits:
         raise SystemExit("FATAL: no Census finding names a catalog record or an unsearched "
                          "inventory; Q4's Census record has nothing to stand on")
@@ -788,11 +828,16 @@ def q4_claims_unsearched(M: Map, where: dict) -> list:
               f"records, and {c.n(len(hits), 'Census findings that name an inventory not searched')} "
               f"Census findings on legs {', '.join(f'`{x}`' for x in legs)} "
               f"({c.n(len(legs), 'distinct legs among them')} legs) are `error`, not `fail`: "
-              f"no record in that catalog names the probed product, and the inventories the "
-              f"indicator also names were not searched "
-              f"({', '.join(f'`{u}`' for u in sorted(remainder))}, and the body's "
-              f"catalog.data.gov organization), so absence is not established; the surfaces "
-              f"probed were {'; '.join(probed)}.")
+              f"no record in that catalog names the probed product, and "
+              + (f"the inventories the indicator also names were not searched "
+                 f"({', '.join(f'`{u}`' for u in sorted(remainder))}, and the body's "
+                 f"catalog.data.gov organization)" if classes <= {""} else
+                 f"the department inventory the indicator also names could not be read "
+                 f"({', '.join(f'`{u}`' for u in sorted(remainder))}: "
+                 f"{', '.join(f'`{x}`' for x in sorted(classes - {''}))}), though the body's "
+                 f"catalog.data.gov organization was read")
+              + f", so absence is not established; the surfaces probed were "
+              f"{'; '.join(probed)}.")
     c.q("cycle.findings")
     for fid in hits:
         f = M.findings[fid]
@@ -900,7 +945,7 @@ def q5_claims(M: Map) -> tuple:
     c = Claim("q5.legs_findings", "Q5", "record")
     c.text = (f"Cycle `{M.cycle}` judged {c.n(len(legs), 'distinct legs on the cycle')} legs and "
               f"holds {c.n(len(M.findings), 'finding_derived events on the cycle')} findings.")
-    c.q("cycle.legs").q("cycle.findings", BP.rel(M.shard))
+    c.q("cycle.legs").q("cycle.findings", ", ".join(BP.rel(sh) for _, sh, _ in M.parts))
     for r in res:
         if int(r["v"]) != len(M.findings):
             diffs.append({"number": "findings on the cycle", "pack": r["v"],

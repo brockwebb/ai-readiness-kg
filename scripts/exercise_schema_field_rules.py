@@ -80,8 +80,7 @@ def exercise() -> dict:
     from scan.model import Observation
     from scan.rules import body_groups, judge as judge_rule
     params = load_params()
-    cor = _payload(dx.cycle_of_record())
-    source_name = cor.get("derived_from") or cor["cycle"]
+    source_name = dx.source_cycle()
     source = _payload(source_name)
     surfaces = tier_a_surfaces(params, source)
     d4_groups, d4_missing, _ = dx.enriched_groups(params)

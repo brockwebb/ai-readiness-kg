@@ -144,7 +144,26 @@ def successor_info(session, snapshot: str) -> dict:
 
     Returns `{}` when the snapshot has no successor, which is the ordinary state of a report
     published on the newest judgement, and is reported as such rather than as an error.
+
+    A COMPOSITE snapshot (`scan.composite`, `cc_tasks/2026-10-06_absence_verdicts_recollection_
+    v2.md` decision 4) has no Finding under its own name; each part's chain is walked instead.
+    It has no successor while neither part does. A part with one is refused, not compared: the
+    composite was declared over two named judgements, and comparing it with a successor of one
+    of them is a new declaration, which is a new composite.
     """
+    payload_file = REPO / "state" / f"{snapshot}.json"
+    if payload_file.is_file():
+        from scan import composite
+        p = json.loads(payload_file.read_text(encoding="utf-8"))
+        if composite.is_composite(p):
+            moved = {c: supersession_chain(session, c) for c, _ in composite.parts(p)}
+            moved = {c: h[-1]["cycle"] for c, h in moved.items() if h}
+            if moved:
+                stale = ", ".join(f"{c} (superseded by {head})" for c, head in moved.items())
+                raise SystemExit(
+                    f"FATAL: composite snapshot {snapshot} rests on {stale}; declare a new "
+                    f"composite over the newest judgement (decision 4)")
+            return {}
     hops = supersession_chain(session, snapshot)
     if not hops:
         return {}

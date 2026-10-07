@@ -7,4 +7,4 @@
 
 **Note.** CL-083 is `unsupported`: no source calls equal weights defensible, so the footnote says no weighting is asserted and claims nothing stronger.
 
-Cycle of record `scan_2026-09-10_rj5`.
+Cycle of record `scan_2026-10-06_composite_b`.

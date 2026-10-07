@@ -173,3 +173,62 @@ def test_restrict_legs_refuses_an_unknown_leg():
 def test_the_recollected_legs_are_the_generation_fourteen_twelve():
     from scan.rules import V14
     assert sorted(RECOLLECTED) == sorted(m.LEG for m in V14)
+
+
+# --------------------------------------------------------------------------- the composite
+
+def _f(doc, leg, v, fid):
+    return {"finding_id": fid, "target_doc_id": doc, "leg": leg, "verdict": v,
+            "rule_id": f"RULE-{leg}-v1"}
+
+
+def _parts():
+    base = {"cycle": "scan_x_rj1", "cycle_kind": "rejudged", "params_hash": "b" * 64,
+            "legs_judged": ["A1", "A4", "D1"], "control_verdict": "pass",
+            "control_gate": {"verdicts": {"A1": {"control:passes_all": "pass"},
+                                          "A4": {"control:passes_all": "pass"},
+                                          "D1": {"control:passes_all": "pass"}}},
+            "matrix": [{"doc_id": "s1", "verdicts": {"A1": "error", "A4": "pass", "D1": "error"}},
+                       {"doc_id": "host:h", "verdicts": {"A12": "pass"}}],
+            "findings_detail": [_f("s1", "A1", "error", "b1"), _f("s1", "A4", "pass", "b2"),
+                                _f("s1", "D1", "error", "b3"), _f("host:h", "A12", "pass", "b4")]}
+    over = {"cycle": "scan_y", "scope": "legs", "legs_collected": ["A1", "D1"],
+            "params_hash": "o" * 64, "control_verdict": "pass",
+            "control_findings_detail": [{"leg": "A1", "target_doc_id": "control:passes_all",
+                                         "verdict": "pass"}],
+            "matrix": [{"doc_id": "s1", "verdicts": {"A1": "fail", "D1": "pass"}}],
+            "findings_detail": [_f("s1", "A1", "fail", "o1"), _f("s1", "D1", "pass", "o2")]}
+    return base, over
+
+
+def test_a_composite_takes_the_overlay_legs_and_keeps_every_other_base_cell():
+    from scan import composite
+    base, over = _parts()
+    c = composite.build(base, over, "scan_z_composite", "t", lambda leg: ())
+    assert c["matrix"][0]["verdicts"] == {"A1": "fail", "A4": "pass", "D1": "pass"}
+    assert sorted(f["finding_id"] for f in c["findings_detail"]) == ["b2", "b4", "o1", "o2"]
+    assert composite.part_of_leg(c, "A1") == "scan_y"
+    assert composite.part_of_leg(c, "A4") == "scan_x_rj1"
+
+
+def test_a_withheld_leg_keeps_the_base_cell_and_says_why():
+    from scan import composite
+    base, over = _parts()
+    c = composite.build(base, over, "scan_z_composite", "t", lambda leg: (),
+                        withhold={"D1": "a false pass"})
+    assert c["matrix"][0]["verdicts"]["D1"] == "error"
+    assert sorted(f["finding_id"] for f in c["findings_detail"]) == ["b2", "b3", "b4", "o1"]
+    assert c["composed_of"]["overlay"]["withheld"] == {"D1": "a false pass"}
+    assert c["composed_of"]["overlay"]["legs"] == ["A1"]
+    with pytest.raises(SystemExit, match="reason"):
+        composite.build(base, over, "z", "t", lambda leg: (), withhold={"D1": " "})
+
+
+def test_a_composite_refuses_an_overlay_that_is_not_targeted_or_drops_a_cell():
+    from scan import composite
+    base, over = _parts()
+    with pytest.raises(SystemExit, match="targeted"):
+        composite.build(base, dict(over, scope="frame"), "z", "t", lambda leg: ())
+    short = dict(over, findings_detail=[_f("s1", "A1", "fail", "o1")])
+    with pytest.raises(SystemExit, match="drop"):
+        composite.build(base, short, "z", "t", lambda leg: ())

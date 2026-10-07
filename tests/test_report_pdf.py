@@ -96,8 +96,28 @@ def built():
     pypdf = pytest.importorskip("pypdf")
     md = md_path.read_text(encoding="utf-8")
     reader = pypdf.PdfReader(str(pdf_path))
-    pdf = "\n".join(p.extract_text() for p in reader.pages)
+    pdf = "\n".join(_footer_on_its_own_line(p.extract_text(), i)
+                    for i, p in enumerate(reader.pages, 1))
     return md, pdf, len(reader.pages)
+
+
+def _footer_on_its_own_line(text: str, page: int) -> str:
+    """The page's footer number as the line `PAGE_FURNITURE` drops, even when the extractor glued
+    it to the page's last text.
+
+    typst sets the page number last on the page, and pypdf usually extracts it as its own line.
+    When the page ends inside a table cell it can come out joined to that cell instead: the
+    composite re-snapshot (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`) ended page
+    17 on the sources table's `usafacts-ai-ready-data-guide` cell and extracted `guide17`, and the
+    gate read a seventeen the markdown never wrote. Only the page's OWN number, only at the very
+    end of the page's text, and only after a non-digit is split off, so no content numeral can be
+    taken for it."""
+    body = text.rstrip()
+    tail = str(page)
+    if body.endswith(tail) and not body[:-len(tail)].endswith(("\n",)) \
+            and not body[:-len(tail)][-1:].isdigit():
+        return body[:-len(tail)] + "\n" + tail
+    return text
 
 
 def test_the_pdf_carries_exactly_the_markdowns_numbers(built):

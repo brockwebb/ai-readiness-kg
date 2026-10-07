@@ -137,7 +137,7 @@ def rows(cycle: str) -> list:
             ctrl[leg].update(per_fixture)
     where = (f"the control gate recorded on cycle {CYCLE} ({gate.get('rule')}: "
              f"{gate.get('verdict')})" if gate.get("verdicts") and cyc.get("cycle_kind")
-             == "rejudged" else f"cycle {CYCLE}")
+             in ("rejudged", "composite") else f"cycle {CYCLE}")
     for leg in mx["legs"]:
         got = ctrl.get(leg, {})
         fired = int(got.get("control:passes_all") == "pass"

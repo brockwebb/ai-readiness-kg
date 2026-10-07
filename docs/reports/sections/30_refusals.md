@@ -10,7 +10,7 @@ above read `error` throughout, which is the correct
 reading: this instrument did not find those sites wanting, it was not allowed to look.
 
 The behaviour is neither a transient nor a sampling accident. It has now been recorded in
-{{result:scan_refusal_consecutive_measurements_2026-09-10_rj5:value}} separate measurements,
+{{result:scan_refusal_consecutive_measurements_2026-10-06_composite_b:value}} separate measurements,
 taken on four different days under two different user-agent strings. The count survives a change in how this project names errors: the earliest
 filed the refusal under a general client-error class, because the closed set of names had no
 member for a refusal until later. The number of bodies refusing has not moved, standing at

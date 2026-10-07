@@ -7,4 +7,4 @@
 
 **Note.** The MCP box rests on no claim id; the evidence map has no claim about the interface.
 
-Cycle of record `scan_2026-09-10_rj5`.
+Cycle of record `scan_2026-10-06_composite_b`.

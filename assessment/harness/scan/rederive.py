@@ -149,9 +149,20 @@ def rederive(payload: dict, params: dict) -> dict:
     # never recorded, for every surface of the body.
     surface_rules = sorted(r for r in wanted
                            if REGISTRY.get(r) is not None and scope(r) == "surface")
+    #
+    # A TARGETED cycle (`run.restrict_legs`, `scope: legs`) judged a body leg only if it named
+    # it (`run.judge_bodies(legs=…)`), even where the shared leg the body rule reads was
+    # collected for another leg (A6, which B1 consumes). Its control fixtures were judged on
+    # every leg, so their body groups are re-derived regardless; a real body's group is
+    # re-derived only on a collected leg. `cc_tasks/2026-10-06_absence_verdicts_recollection_
+    # v2.md`: without this the gate minted one B5 Finding per body the cycle never recorded.
+    collected = payload.get("legs_collected") if payload.get("scope") == "legs" else None
     for rule_id in sorted(r for r in wanted
                           if REGISTRY.get(r) is not None and scope(r) == "body"):
         for _body, group in body_groups(rule_id, obs, params).items():
+            if collected is not None and REGISTRY[rule_id].LEG not in collected and not all(
+                    str(o.target_doc_id).startswith("control:") for o in group):
+                continue
             f = judge_rule(rule_id, group, params)
             rederived[f.finding_id] = f.to_dict()
     # WHICH legs each surface carries, when the payload recorded it (`surface_legs`, from the

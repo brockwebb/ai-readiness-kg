@@ -123,10 +123,14 @@ def test_every_record_claims_evidence_resolves(graph, on_disk):
                 rids.add(i)
             elif k == "query":
                 assert i in E.QUERIES, f"{c['id']}: query {i} is not named in QUERIES"
-    rows, _ = graph.read("MATCH (f:Finding {cycle: $c}) WHERE f.finding_id IN $ids "
-                         "RETURN f.finding_id AS id", limit=len(fids) + 1, c=m.cycle,
-                         ids=sorted(fids))
+    # The cycle of record's Findings are under its own cycle, or, for a composite cycle of record,
+    # under its parts' (`m.parts`), and then they must also be the ones its payload selects.
+    rows, _ = graph.read("MATCH (f:Finding) WHERE f.cycle IN $cs AND f.finding_id IN $ids "
+                         "RETURN f.finding_id AS id", limit=len(fids) + 1,
+                         cs=[c for c, _, _ in m.parts], ids=sorted(fids))
     assert {r["id"] for r in rows} == fids, "a cited Finding is not on the cycle of record"
+    if m.composite:
+        assert fids <= m.payload_ids, "a cited Finding is not one the composite selects"
     rows, _ = graph.read("MATCH (r:Artifact:Result) WHERE r.artifact_id IN $ids "
                          "RETURN r.artifact_id AS id", limit=len(rids) + 1, ids=sorted(rids))
     assert {r["id"] for r in rows} == rids, "a cited Result is not on the graph"

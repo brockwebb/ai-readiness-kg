@@ -132,6 +132,12 @@ PRIOR_CYCLES = {
     # accounting and the `declared` blocks, with the declarations COPIED onto the payload, so a
     # later edit to `targets.yaml` cannot move it.
     "scan_2026-09-10_rj5": 1009,
+    # The recollection (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`): a TARGETED
+    # measurement (`scope: legs`) of the twelve generation-14 legs on the 16 bodies' 46 surfaces.
+    # 841 = 552 surface Findings + 289 control Findings. Its body legs are re-derived only on
+    # the legs it collected (`rederive.rederive`, `legs_collected`), as `run.judge_bodies`
+    # judged them.
+    "scan_2026-10-06_recollect": 841,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -688,10 +694,13 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: The two most recent cycles. Their re-derivation stays in the FAST tier, because a rule or
 #: engine change is most likely to break the payloads closest to it and a gate that cannot see
 #: that quickly is not a gate. `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 4.
-#: Cycle 4's newest judgement and the measurement it derives from. `_rj1` moves to the slow tier
+#: The recollection and cycle 4's newest judgement, the two parts of the composite cycle of
+#: record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`); cycle 4's measurement
+#: moves to the slow tier. Before it: cycle 4's newest judgement and the measurement it derives
+#: from. `_rj1` moves to the slow tier
 #: as `_rj2` supersedes it: "the two most recent" is a rolling window, not a list that grows, and
 #: a window that grew by two every re-judgement would make the fast tier the full tier.
-RECENT_CYCLES = ("scan_2026-09-10_rj5", "scan_2026-09-10")
+RECENT_CYCLES = ("scan_2026-10-06_recollect", "scan_2026-09-10_rj5")
 
 
 def _tier(cycle: str):

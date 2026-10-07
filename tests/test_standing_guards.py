@@ -88,6 +88,11 @@ CONTROLS_ONLY = frozenset({"scan_controls_2026-09-06", "scan_2026-09-07_controls
 def kind_of(name: str, payload: dict) -> str:
     if pub.is_rejudgement(payload):
         return "rejudged"
+    # A composite cycle of record (`scan.composite`) selects Findings its parts put on the log;
+    # it creates none and carries no Observation, so the guard asks only that every Finding it
+    # shows is on the log (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`).
+    if payload.get("cycle_kind") == "composite":
+        return "composite"
     if payload.get("cycle_kind") == "controls_only" or payload.get("cycle") == "controls_only":
         return "controls_only"
     return "measured"
@@ -157,6 +162,10 @@ def audit(payloads: dict, on_log_find: set, on_log_obs: set, paired: set) -> dic
             if missing_pairs:
                 unpaired.append(f"{name}: {missing_pairs} of {len(owed)} Findings have no "
                                 f"supersession event naming the judgement they replace")
+        elif kind == "composite":
+            if row["findings_on_log"] != row["findings"]:
+                unpublished.append(f"{name}: {row['findings'] - row['findings_on_log']} of "
+                                   f"{row['findings']} Findings are not on the log")
         elif kind == "measured":
             if row["findings_on_log"] != row["findings"]:
                 unpublished.append(f"{name}: {row['findings'] - row['findings_on_log']} of "
@@ -167,7 +176,7 @@ def audit(payloads: dict, on_log_find: set, on_log_obs: set, paired: set) -> dic
         rows.append(row)
     return {"rows": rows, "unpublished": unpublished, "unpaired": unpaired,
             "by_kind": {k: sum(1 for r in rows if r["kind"] == k)
-                        for k in ("rejudged", "measured", "controls_only")}}
+                        for k in ("rejudged", "measured", "controls_only", "composite")}}
 
 
 def _log_sets():
@@ -245,14 +254,17 @@ def test_the_guard_reports_a_rejudgement_published_without_its_supersession(live
 # ================================================================== green: what ships today
 
 def test_every_stored_judgement_is_on_the_log(live):
-    """DN-003 decision 6, standing. Green at 16 re-judged and 6 measured (the fifteenth is
-    `scan_2026-09-10_rj4`, `cc_tasks/2026-09-18_rejudge_seven_legs.md`; the sixteenth
-    `scan_2026-09-10_rj5`, `cc_tasks/2026-10-06_absence_verdicts_rules.md`, whose every Finding
-    pairs with one of `_rj4`'s, so the new-leg count below does not move)."""
+    """DN-003 decision 6, standing. Green at 16 re-judged, 7 measured and 1 composite (the
+    fifteenth re-judgement is `scan_2026-09-10_rj4`, `cc_tasks/2026-09-18_rejudge_seven_legs.md`;
+    the sixteenth `scan_2026-09-10_rj5`, `cc_tasks/2026-10-06_absence_verdicts_rules.md`, whose
+    every Finding pairs with one of `_rj4`'s, so the new-leg count below does not move; the
+    seventh measurement is `scan_2026-10-06_recollect` and the composite
+    `scan_2026-10-06_composite`, `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`)."""
     _payloads, a = live
     assert a["unpublished"] == [], json.dumps(a["unpublished"], indent=1)
     assert a["unpaired"] == [], json.dumps(a["unpaired"], indent=1)
-    assert a["by_kind"] == {"rejudged": 16, "measured": 6, "controls_only": 3}, a["by_kind"]
+    assert a["by_kind"] == {"rejudged": 16, "measured": 7, "controls_only": 3,
+                            "composite": 1}, a["by_kind"]
     # The one cycle with Findings on legs its predecessor never judged, and how many.
     new_legs = {r["cycle"]: r["findings_on_new_legs"] for r in a["rows"]
                 if r.get("findings_on_new_legs")}

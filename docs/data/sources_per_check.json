@@ -11,8 +11,10 @@
   "A1",
   "A6",
   "A8",
+  "A9",
   "B3",
   "D4",
+  "F4",
   "G4"
  ],
  "rows": [
@@ -767,6 +769,16 @@
    "acquired_at": "2026-08-21T21:49:15.787812+00:00"
   },
   {
+   "check": "A9",
+   "indicator": "A9 · M2M agent surface",
+   "citation": "Mark D. Wilkinson; et al. *The FAIR Guiding Principles for scientific data management and stewardship*. 2019. <https://www.nature.com/articles/sdata201618>.",
+   "doc_id": "wilkinson-2016-fair-guiding-principles",
+   "locator": null,
+   "source_url": "https://www.nature.com/articles/sdata201618",
+   "content_hash": "cdddd9f4808f7e3e1f013139c3915ef4d7cdccb008fa947ef5f72b4c7b6ffde7",
+   "acquired_at": "2026-08-21T21:49:15.789884+00:00"
+  },
+  {
    "check": "B3",
    "indicator": "B3 · Methodology legibility",
    "citation": "Microsoft Bing. *Bing Webmaster Guidelines*. <https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a>.",
@@ -825,6 +837,16 @@
    "source_url": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf",
    "content_hash": "1ccecff6ecfacf690df0263dafe4a0ed7da0d67a192309533351a060a2af42c1",
    "acquired_at": "2026-07-05T08:05:43.690092+00:00"
+  },
+  {
+   "check": "F4",
+   "indicator": "F4 · Change legibility",
+   "citation": "USAFacts. *AI-Ready Data: Ensuring Public Data Meets the Needs of AI and the American Public — The USAFacts Guide to AI-Ready Data for Government Agencies*. 2026. <https://media.usafacts.org/m/634ac133d72ded81/original/USAFacts_AIReadinessForGovernment.pdf>.",
+   "doc_id": "usafacts-ai-ready-data-guide",
+   "locator": null,
+   "source_url": "https://media.usafacts.org/m/634ac133d72ded81/original/USAFacts_AIReadinessForGovernment.pdf",
+   "content_hash": "02ceecd47c8f4d377f2bc3177ce584c46a16d29243a609956321b025dbc2980e",
+   "acquired_at": "2026-08-29T12:08:24.261711+00:00"
   },
   {
    "check": "G4",
@@ -918,8 +940,10 @@
   "A1": 3,
   "A6": 4,
   "A8": 3,
+  "A9": 1,
   "B3": 3,
   "D4": 3,
+  "F4": 1,
   "G4": 8
  },
  "legs_without_source": [],
@@ -953,10 +977,10 @@
     "Crawler/agent access"
    ],
    "source_ids": [
-    "anthropic-crawler-support-article",
-    "cloudflare-ai-crawl-control-manage-crawlers",
     "google-robots-txt-intro",
-    "openai-crawlers-bots"
+    "openai-crawlers-bots",
+    "perplexity-crawlers",
+    "rfc-9309-robots-exclusion-protocol"
    ]
   },
   "A5": {
@@ -1012,8 +1036,8 @@
     "Effective crawler access (declared / enforced / observed)"
    ],
    "source_ids": [
-    "cloudflare-ai-crawl-control-manage-crawlers",
-    "rfc-9309-robots-exclusion-protocol"
+    "rfc-9309-robots-exclusion-protocol",
+    "cloudflare-ai-crawl-control-manage-crawlers"
    ]
   },
   "A12": {
@@ -1031,8 +1055,8 @@
     "Access policy coherence"
    ],
    "source_ids": [
-    "cloudflare-ai-crawl-control-manage-crawlers",
-    "rfc-9309-robots-exclusion-protocol"
+    "rfc-9309-robots-exclusion-protocol",
+    "cloudflare-ai-crawl-control-manage-crawlers"
    ]
   },
   "G1-D": {
@@ -1050,10 +1074,10 @@
     "Uncertainty legibility (two legs, scored as a vector)"
    ],
    "source_ids": [
-    "bls-employment-situation-2026-05-news-release-archive",
-    "bls-employment-situation-2026-08-news-release",
-    "cao-2024-multimodal-long-form-summarization-financial-reports",
-    "census-2020-disclosure-avoidance-handbook-2021"
+    "fcsm-23-02-a-framework-for-data-quality-case-studies",
+    "lee-2026-when-summaries-distort-decisions",
+    "manski-2015-communicating-uncertainty-official-economic-statistics",
+    "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics"
    ]
   },
   "A3": {
@@ -1071,9 +1095,9 @@
     "Bulk access"
    ],
    "source_ids": [
-    "dcat-us-1-1-schema",
     "w3c-dwbp-2017",
-    "wilkinson-2016-fair-guiding-principles"
+    "wilkinson-2016-fair-guiding-principles",
+    "dcat-us-1-1-schema"
    ]
   },
   "A1": {
@@ -1111,10 +1135,10 @@
     "Structured markup"
    ],
    "source_ids": [
-    "croissant-akhtar-2024-paper",
     "mlcommons-croissant-spec",
     "schema-org-dataset",
-    "w3c-dcat-3"
+    "w3c-dcat-3",
+    "croissant-akhtar-2024-paper"
    ]
   },
   "A8": {
@@ -1132,9 +1156,27 @@
     "Timeliness of surface"
    ],
    "source_ids": [
-    "dcat-us-1-1-schema",
     "omb-m-23-22-digital-first-public-experience",
-    "w3c-dwbp-2017"
+    "w3c-dwbp-2017",
+    "dcat-us-1-1-schema"
+   ]
+  },
+  "A9": {
+   "framework_code": "A9",
+   "indicator_node": true,
+   "construct_property": "M2M agent surface",
+   "constructs": 1,
+   "criteria": 1,
+   "definitions": 25,
+   "sources": 1,
+   "specs": 1,
+   "rules": 2,
+   "internal_refs": 0,
+   "construct_names": [
+    "M2M agent surface"
+   ],
+   "source_ids": [
+    "wilkinson-2016-fair-guiding-principles"
    ]
   },
   "B3": {
@@ -1152,9 +1194,9 @@
     "Methodology legibility"
    ],
    "source_ids": [
-    "bing-webmaster-guidelines",
     "omb-m-23-22-digital-first-public-experience",
-    "w3c-dwbp-2017"
+    "w3c-dwbp-2017",
+    "bing-webmaster-guidelines"
    ]
   },
   "D4": {
@@ -1172,9 +1214,27 @@
     "No dark data"
    ],
    "source_ids": [
-    "dcat-us-1-1-schema",
     "foundations-for-evidence-based-policymaking-act-of-2018-evid",
-    "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+    "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+    "dcat-us-1-1-schema"
+   ]
+  },
+  "F4": {
+   "framework_code": "F4",
+   "indicator_node": true,
+   "construct_property": "Change legibility",
+   "constructs": 1,
+   "criteria": 1,
+   "definitions": 1,
+   "sources": 1,
+   "specs": 1,
+   "rules": 3,
+   "internal_refs": 0,
+   "construct_names": [
+    "Change legibility"
+   ],
+   "source_ids": [
+    "usafacts-ai-ready-data-guide"
    ]
   },
   "G4": {
@@ -1192,10 +1252,10 @@
     "Authority metadata"
    ],
    "source_ids": [
-    "dcat-us-1-1-schema",
-    "dcat-us-3-dataset-schema",
-    "dcat-us-3-dataset-schema-2026-09-15",
-    "dcat-us-3-m-25-05-crosswalk"
+    "schema-org-dataset",
+    "w3c-dcat-3",
+    "w3c-prov-o-ontology",
+    "dcat-us-1-1-schema"
    ]
   }
  },

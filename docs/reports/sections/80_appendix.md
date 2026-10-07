@@ -55,7 +55,9 @@ hand-written expectation was wrong once.
 
 <!-- include: rules_by_leg -->
 
-**Requests issued, per netloc.**
+**Requests issued, per netloc.** Summed over the two collections the snapshot rests on: the
+first cycle, which measured every check, and the recollection, which measured the twelve checks
+listed in the frame section.
 
 <!-- include: requests_per_netloc -->
 
@@ -63,15 +65,25 @@ hand-written expectation was wrong once.
 
 <!-- include: sources_per_check -->
 
-**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj5.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-09-10_rj5.*`, the reference hosts;
-`scan_matrix_product_2026-09-10_rj5.*`, the product matrix. Every row carries its Finding
-identities.
+**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_b.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-10-06_composite_b.*`, the reference hosts;
+`scan_matrix_product_2026-10-06_composite_b.*`, the product matrix. Every row carries its Finding
+identities, and each JSON file names the two cycles under `composed_of`.
 
-**Provenance.** Cycle `scan_2026-09-10`, parameter hash
+**Provenance.** A declared composite, `scan_2026-10-06_composite_b`
+(`state/scan_2026-10-06_composite_b.json`, `composed_of`). The host checks and every product
+check but ten are cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
-`scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06, with
-every superseded judgement still registered under its own name. The event log is the source of
+`scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06. The
+ten (`A1`, `A3`, `A9`, `B1`, `B3`, `B4`, `D3`, `D4`, `F4`, `G4`) are cycle
+`scan_2026-10-06_recollect`, parameter hash
+`2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9`, collected on 2026-10-06 over
+the API, changelog and inventory locations each body declares (`targets.yaml`
+`declared_locations`, every entry citing the page it was read from) and judged under the same
+rules. `A2` and `D1` were recollected and are withheld from the composite with the reason on its
+face: on the declared locations their current rules return a pass for a data catalogue served
+where an API description was looked for, and for licence names matched inside other words. Every
+superseded judgement stays registered under its own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061
 (control tables derived from collector dispatch) and DD-064 (forbidden to look is blindness,

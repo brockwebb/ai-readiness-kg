@@ -147,7 +147,30 @@ def admitted_documents() -> int:
 
 
 def cycle_findings(cycle: str) -> int:
-    """`finding_derived` events of the cycle in its shard: CL-051's count, by its rule."""
+    """`finding_derived` events of the cycle in its shard: CL-051's count, by its rule.
+
+    A COMPOSITE cycle of record (`scan.composite`) has no shard of its own: its count is the
+    Findings its payload selects, each of which must be on its part's shard under its part's
+    cycle (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision 4)."""
+    payload_file = REPO / "state" / f"{cycle}.json"
+    if payload_file.is_file():
+        from scan import composite
+        p = load_json(payload_file)
+        if composite.is_composite(p):
+            on_log: set = set()
+            for part, _legs in composite.parts(p):
+                shard = REPO / "events" / f"cycle-{part}.jsonl"
+                for line in shard.read_text(encoding="utf-8").splitlines():
+                    if '"finding_derived"' in line:
+                        e = json.loads(line)
+                        if e.get("cycle") == part:
+                            on_log.add(e["finding_id"])
+            ids = [f["finding_id"] for f in p["findings_detail"]]
+            missing = [i for i in ids if i not in on_log]
+            if missing or len(set(ids)) != len(ids):
+                raise SystemExit(f"FATAL: {len(missing)} of the composite's Findings are on no "
+                                 f"part's shard, or one is listed twice")
+            return len(ids)
     shard = REPO / "events" / f"cycle-{cycle}.jsonl"
     if not shard.is_file():
         raise SystemExit(f"FATAL: {shard.relative_to(REPO)} is missing; the cycle of record "

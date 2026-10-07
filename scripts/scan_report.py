@@ -263,11 +263,25 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
     #: cycle's and are not re-registered under this cycle's name. Registering them at 0 would
     #: publish "this cycle issued 0 requests to www.census.gov" as a fact about a scan, which
     #: reads as a measurement of a host that was never asked.
-    rejudged = payload.get("cycle_kind") == "rejudged"
-    tag = (f"Cycle {cycle}, params_hash {ph}…. RE-JUDGED from the stored Observations of "
-           f"{payload.get('derived_from')} under the rules current at "
-           f"{payload.get('task')}; nothing was re-fetched."
-           if rejudged else f"Cycle {cycle}, params_hash {ph}….")
+    #: A COMPOSITE cycle of record (`scan.composite`) made no measurement either: it selects,
+    #: leg by leg, Findings two cycles already registered, so the measurement Results are its
+    #: parts' and the same family stops here (`cc_tasks/2026-10-06_absence_verdicts_
+    #: recollection_v2.md` decision 4).
+    composed = payload.get("cycle_kind") == "composite"
+    rejudged = payload.get("cycle_kind") == "rejudged" or composed
+    if composed:
+        c = payload["composed_of"]
+        tag = (f"Cycle {cycle}, a COMPOSITE cycle of record: legs "
+               f"{', '.join(c['overlay']['legs'])} from {c['overlay']['cycle']} (params_hash "
+               f"{c['overlay']['params_hash'][:12]}…), every other leg from {c['base']['cycle']} "
+               f"(params_hash {c['base']['params_hash'][:12]}…); no Finding re-judged and "
+               f"nothing re-fetched.")
+    elif rejudged:
+        tag = (f"Cycle {cycle}, params_hash {ph}…. RE-JUDGED from the stored Observations of "
+               f"{payload.get('derived_from')} under the rules current at "
+               f"{payload.get('task')}; nothing was re-fetched.")
+    else:
+        tag = f"Cycle {cycle}, params_hash {ph}…."
     out = []
     for leg, s in legs.items():
         key = leg.replace("-", "_").lower()

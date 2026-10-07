@@ -459,6 +459,17 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
          "WHERE f.params_hash = $ph AND NOT f.target_doc_id STARTS WITH 'control:' "
          "AND ((f.cycle IS NULL AND $measured) OR f.cycle = $cycle) "
          "RETURN f.verdict AS v, f.target_doc_id AS d, count(*) AS c")
+    # A COMPOSITE cycle of record (`scan.composite`) has no Finding of its own: its population
+    # is exactly the Findings its payload selects from its two parts, each on the graph under
+    # its part's cycle and hash, so it is selected by id.
+    from scan import composite
+    if composite.is_composite(payload):
+        ids = [f["finding_id"] for f in payload["findings_detail"]]
+        q = ("MATCH (f:Finding)-[:RULED_BY]->(:Rule)-[:MEASURES]->"
+             "(:AssessmentIndicator {code: $code}) "
+             "WHERE f.finding_id IN $ids AND $ph IS NOT NULL AND $cycle IS NOT NULL "
+             "AND $measured IS NOT NULL "
+             "RETURN f.verdict AS v, f.target_doc_id AS d, count(*) AS c")
     bad = []
     # The legs with a per-surface family (`figures.rated_legs`). A body leg (B5) has none: it is
     # judged on the `host:` rows `scan_report.per_leg` excludes, and its counts are the L0
@@ -466,7 +477,8 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
     from scan.figures import rated_legs
     for leg in rated_legs(mx):
         code = parse_rule_id(CURRENT[leg])["indicator_code"]
-        rows = list(session.run(q, code=code, ph=ph, cycle=cycle, measured=measured))
+        rows = list(session.run(q, code=code, ph=ph, cycle=cycle, measured=measured,
+                                **({"ids": ids} if composite.is_composite(payload) else {})))
         got: dict = {}
         got_c: dict = {}
         for r in rows:

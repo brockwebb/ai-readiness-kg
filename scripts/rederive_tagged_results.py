@@ -400,6 +400,25 @@ def rederive_preflight(captured: Captured) -> None:
 
 # ---------------------------------------------------------------------------
 
+def measured_collections(snapshot: str) -> list:
+    """The MEASURED cycles the snapshot's evidence comes from, oldest first.
+
+    A re-judgement rests on its `derived_from`; a composite cycle of record
+    (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision 4) on the collection of
+    each part. Read from the payload, never from `params.cycle.name`, which names the cycle the
+    harness RUNS: until the recollection moved it, the no-argument registrar run below happened
+    to land on the snapshot's measured cycle, and a facts-about-the-collection Result such as
+    `fss_scan_netlocs_contacted_2026-09-10` was re-derived by that coincidence.
+    """
+    p = json.loads((REPO / "state" / f"{snapshot}.json").read_text(encoding="utf-8"))
+    if p.get("cycle_kind") == "composite":
+        c = p["composed_of"]
+        return [c["base"].get("collection") or c["base"]["cycle"], c["overlay"]["cycle"]]
+    if p.get("cycle_kind") == "rejudged":
+        return [p["derived_from"]]
+    return [snapshot]
+
+
 def rederive_all(earlier=(CYCLE_RJ1,)) -> tuple:
     captured = Captured()
     # Earlier judgements FIRST and into a temp tree, so the shipped fragments end the run at the
@@ -411,6 +430,16 @@ def rederive_all(earlier=(CYCLE_RJ1,)) -> tuple:
     ephemeral = rederive_ephemeral(captured)
     drive("register_l0_report_results", ["--cycle", SNAPSHOT], captured)
     drive("register_l0_report_results", [], captured)
+    # Each measured collection's own facts (requests, observations, netlocs contacted), driven
+    # by name. `scan_report`'s matrix goes to a temporary tree: the recollection's is already
+    # materialised, and a re-derivation does not rewrite a file it is checking.
+    for m in measured_collections(SNAPSHOT):
+        if m == SNAPSHOT:
+            continue
+        drive("register_l0_report_results", ["--cycle", m], captured)
+        if m not in [e["derivable_from"].rsplit("/", 1)[-1][:-5] for e in ephemeral]:
+            with temporary_output_root("scan_report"):
+                drive("scan_report", ["--cycle", m], captured)
     drive("register_frame_v5_results", [], captured)
     drive("register_esip_crosswalk_results", [], captured)
     rederive_roster(captured)

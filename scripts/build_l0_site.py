@@ -171,8 +171,19 @@ def release_date(pub: dict) -> str:
     day = str(day)
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", day):
         raise SystemExit(f"FATAL: released[{pub['version']!r}] = {day!r} is not an ISO date")
-    shard = REPO / CYCLE_SHARD.format(cycle=pub["snapshot_cycle"])
-    if shard.is_file():
+    # A composite cycle of record (`scan.composite`) has no shard of its own: its Findings are
+    # its parts', so each part's shard bounds the release.
+    cycles = [pub["snapshot_cycle"]]
+    payload_file = REPO / "state" / f"{pub['snapshot_cycle']}.json"
+    if payload_file.is_file():
+        from scan import composite
+        p = json.loads(payload_file.read_text(encoding="utf-8"))
+        if composite.is_composite(p):
+            cycles = [c for c, _ in composite.parts(p)]
+    for cyc in cycles:
+        shard = REPO / CYCLE_SHARD.format(cycle=cyc)
+        if not shard.is_file():
+            continue
         last = max((json.loads(l).get("timestamp") or "")[:10]
                    for l in shard.read_text(encoding="utf-8").splitlines() if l.strip())
         if day < last:

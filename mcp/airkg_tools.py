@@ -411,13 +411,20 @@ class Tools:
             },
             "cycle_of_record": {
                 "cycle": cycle,
-                "measured": (payload.get("derived_from") or cycle).replace("scan_", ""),
+                "measured": (" + ".join(
+                    (payload["composed_of"][k].get("collection") or payload["composed_of"][k]["cycle"])
+                    .replace("scan_", "") for k in ("base", "overlay"))
+                    if payload.get("cycle_kind") == "composite"
+                    else (payload.get("derived_from") or cycle).replace("scan_", "")),
                 "kind": payload.get("cycle_kind"),
                 "bodies": bodies,
                 "n_bodies": len(bodies),
                 "matrices": [{"kind": m["_kind"], "path": m["_path"], "legs": m["legs"],
                               "rows": len(m["rows"])} for m in mats],
-                "locators": [config_loc("snapshot_cycle"), payload_loc(cycle, "derived_from")]
+                "locators": [config_loc("snapshot_cycle"),
+                             payload_loc(cycle, "composed_of"
+                                         if payload.get("cycle_kind") == "composite"
+                                         else "derived_from")]
                             + [matrix_loc(m["_path"], f"{bodies[0]}/{m['legs'][0]}")
                                for m in mats],
             },
@@ -582,6 +589,21 @@ class Tools:
             return {**base, "verdicts": {},
                     "reason": "Neo4j unreachable: Findings are a graph answer and this "
                               "server did not guess one"}
+        from scan import composite
+        p = self._payload(cycle)
+        if composite.is_composite(p):
+            # A composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_
+            # v2.md` decision 4) has no projected Finding under its own name: each of its
+            # Findings is its part's. The payload lists exactly which.
+            ids = [f["finding_id"] for f in p["findings_detail"] if f.get("spec_code") == code]
+            part = next((composite.finding_part(p, f) for f in p["findings_detail"]
+                         if f.get("spec_code") == code), None)
+            rows, _ = self.graph.read(
+                "MATCH (f:Finding) WHERE f.finding_id IN $ids "
+                "RETURN f.verdict AS v, count(*) AS n", limit=50, ids=ids)
+            return {**base, "verdicts": {r["v"]: r["n"] for r in rows}, "part": part,
+                    "locators": base["locators"] + [payload_loc(cycle, "composed_of")]
+                                + ([graph_loc("Finding", "cycle", part)] if part else [])}
         rows, _ = self.graph.read(
             "MATCH (f:Finding {cycle: $c, indicator_code: $code}) "
             "RETURN f.verdict AS v, count(*) AS n", limit=50, c=cycle, code=code)
@@ -1248,13 +1270,18 @@ class Tools:
                             "judgement of it. A re-judgement re-reads stored observations and "
                             "fetches nothing."),
             "rejudged_note": payload.get("rejudged_note"),
+            # A composite cycle of record names its parts and the leg each verdict comes from
+            # (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision 4).
+            "composed_of": payload.get("composed_of"),
             "rules": payload.get("rules"),
             "legs_judged": payload.get("legs_judged"),
             "legs_not_judged": payload.get("legs_not_judged"),
             "verdict_counts": payload.get("verdict_counts"),
             "matrices": mats,
             "locators": [config_loc("snapshot_cycle"),
-                         payload_loc(cycle, "derived_from_params_hash"),
+                         payload_loc(cycle, "composed_of"
+                                     if payload.get("cycle_kind") == "composite"
+                                     else "derived_from_params_hash"),
                          payload_loc(cycle, "params_hash")],
         }
         out["supersession"] = self._supersession(cycle)

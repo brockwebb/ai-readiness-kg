@@ -1,0 +1,614 @@
+{
+ "task": "cc_tasks/2026-09-09_report_draft.md",
+ "cycle": "scan_2026-10-06_composite",
+ "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+ "composed_of": {
+  "overlay": {
+   "cycle": "scan_2026-10-06_recollect",
+   "legs": [
+    "A1",
+    "A2",
+    "A3",
+    "A9",
+    "B1",
+    "B3",
+    "B4",
+    "D1",
+    "D3",
+    "D4",
+    "F4",
+    "G4"
+   ],
+   "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9"
+  },
+  "base": {
+   "cycle": "scan_2026-09-10_rj5",
+   "legs": "every leg the overlay does not carry",
+   "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222"
+  }
+ },
+ "note": "Every cell names the Finding it came from. The five surface-judged tier-0 legs are read from the body's `home:` surface and A12 from its `host:` well-known surface; this cycle's home and flagship surfaces disagree on 12 of those cells across 6 bodies, so the surface is named on every row.",
+ "surface_disagreements": {
+  "cells": 12,
+  "bodies": 6,
+  "comparable_bodies": 16,
+  "compared_legs": [
+   "A4",
+   "A5",
+   "A10",
+   "A11-declared"
+  ]
+ },
+ "legs_withdrawn": [
+  {
+   "leg": "G1-D",
+   "effective": "cycle 5 (this params_hash forward)",
+   "decision": "DD-066",
+   "construct": "uncertainty present for the human reader and absent from the markup",
+   "why": "the host-level surface is a home page, which carries no estimate, so the leg cannot hold the property it measures and every verdict on it is structural"
+  }
+ ],
+ "tier": "A",
+ "parent_host": {
+  "decision": "DN-012 d5",
+  "task": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
+  "legs": [
+   "A4",
+   "A5",
+   "A11-declared",
+   "D4",
+   "A12",
+   "B1",
+   "B4",
+   "D3",
+   "G4",
+   "D2"
+  ],
+  "bodies": [
+   {
+    "body": "DRSMSU",
+    "host": "www.federalreserve.gov",
+    "answers_for": "Board of Governors of the Federal Reserve System",
+    "signals": [
+     "the frame's home surface for the body is `https://www.federalreserve.gov/econres/rsmecs-staff.htm`, a section of `www.federalreserve.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NAHMSAPHIS",
+    "host": "www.aphis.usda.gov",
+    "answers_for": "Department of Agriculture",
+    "signals": [
+     "the frame's home surface for the body is `https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms`, a section of `www.aphis.usda.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "NCHS",
+    "host": "www.cdc.gov",
+    "answers_for": "Centers for Disease Control and Prevention",
+    "signals": [
+     "the cycle-1 roster row carries `host_shared_with: Centers for Disease Control and Prevention` (assessment/harness/scan/targets.yaml)",
+     "the frame's home surface for the body is `https://www.cdc.gov/nchs/index.htm`, a section of `www.cdc.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   },
+   {
+    "body": "ORES",
+    "host": "www.ssa.gov",
+    "answers_for": "Social Security Administration",
+    "signals": [
+     "the .gov registry attributes `ssa.gov` to Social Security Administration, the roster's parent department, with no suborganization, and `www.ssa.gov` is that domain itself (state/fss_department_domains_2026-09.json)"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SAMHSACBHS",
+    "host": "www.samhsa.gov",
+    "answers_for": "Substance Abuse and Mental Health Services Administration",
+    "signals": [
+     "the frame's home surface for the body is `https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq`, a section of `www.samhsa.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 1,
+     "B1": 1,
+     "B4": 1,
+     "D2": 1,
+     "D3": 1,
+     "G4": 1
+    }
+   },
+   {
+    "body": "SOI",
+    "host": "www.irs.gov",
+    "answers_for": "Internal Revenue Service",
+    "signals": [
+     "the frame's home surface for the body is `https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income`, a section of `www.irs.gov` rather than its root"
+    ],
+    "cells": {
+     "A4": 1,
+     "A5": 1,
+     "A11-declared": 1,
+     "A12": 1,
+     "D4": 2,
+     "B1": 2,
+     "B4": 2,
+     "D2": 2,
+     "D3": 2,
+     "G4": 2
+    }
+   }
+  ]
+ },
+ "legs": [
+  "A4",
+  "A5",
+  "A10",
+  "A11-declared",
+  "A12"
+ ],
+ "rows": [
+  {
+   "agency": "BEA",
+   "tier": "A",
+   "host_surface": "home:www.bea.gov",
+   "host_url": "https://www.bea.gov/",
+   "candidate_surface": "host:www.bea.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_26988b4a3068f74726f4b8d4",
+    "A5": "fnd_4a6719a24063a4068a4ebe99",
+    "A10": "fnd_4af2db556ec0976ad986ed4f",
+    "A11-declared": "fnd_ce8cd95300a0c2126d91f080",
+    "A12": "fnd_8b572508b5973c0c6b8ca0be"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 129,
+   "marks": {}
+  },
+  {
+   "agency": "BJS",
+   "tier": "A",
+   "host_surface": "home:bjs.ojp.gov",
+   "host_url": "https://bjs.ojp.gov/",
+   "candidate_surface": "host:bjs.ojp.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_2b84d247eb30aed7c5143739",
+    "A5": "fnd_5c1085de638e456b4f986344",
+    "A10": "fnd_651f4f27cd08453bb126e3dc",
+    "A11-declared": "fnd_511845831c54e34fe8ddd2b7",
+    "A12": "fnd_8990e250ed060c215fbf0ec3"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 151,
+   "marks": {}
+  },
+  {
+   "agency": "BLS",
+   "tier": "A",
+   "host_surface": "home:www.bls.gov",
+   "host_url": "https://www.bls.gov/",
+   "candidate_surface": "host:www.bls.gov",
+   "verdicts": {
+    "A4": "error",
+    "A5": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "A12": "fail"
+   },
+   "finding_ids": {
+    "A4": "fnd_ba67b20dfe48f8899ce8d20f",
+    "A5": "fnd_16e1fb22478848fb9f96fa90",
+    "A10": "fnd_a5ec0af93c3cc7e4ba16e1c4",
+    "A11-declared": "fnd_d0c253546b425716a004a662",
+    "A12": "fnd_26d567603fe0ad8f28d64f70"
+   },
+   "refused_identified_client": 34,
+   "probes_on_host_surface": 38,
+   "marks": {}
+  },
+  {
+   "agency": "BTS",
+   "tier": "A",
+   "host_surface": "home:www.bts.gov",
+   "host_url": "https://www.bts.gov/",
+   "candidate_surface": "host:www.bts.gov",
+   "verdicts": {
+    "A4": "error",
+    "A5": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "A12": "fail"
+   },
+   "finding_ids": {
+    "A4": "fnd_123a1b8d434f1df6c3f99912",
+    "A5": "fnd_c5c10e8f0252a072b94fda0c",
+    "A10": "fnd_d12fbdb6dad0dc9f59c4b5c2",
+    "A11-declared": "fnd_abb8fc77ca038edf03beac8e",
+    "A12": "fnd_d5f7df28894b8f604f936706"
+   },
+   "refused_identified_client": 33,
+   "probes_on_host_surface": 35,
+   "marks": {}
+  },
+  {
+   "agency": "CENSUS",
+   "tier": "A",
+   "host_surface": "home:www.census.gov",
+   "host_url": "https://www.census.gov/",
+   "candidate_surface": "host:www.census.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "pass",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_90449d6d7f6d49e0dd6dc8f2",
+    "A5": "fnd_4e6fa006a833421dde9a0a1b",
+    "A10": "fnd_24c273ff32be2ea3a46daeb3",
+    "A11-declared": "fnd_f568dff0d11edec2da4e255c",
+    "A12": "fnd_882a10979cd85cf56ad31604"
+   },
+   "refused_identified_client": 6,
+   "probes_on_host_surface": 166,
+   "marks": {}
+  },
+  {
+   "agency": "DRSMSU",
+   "tier": "A",
+   "host_surface": "home:www.federalreserve.gov",
+   "host_url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+   "candidate_surface": "host:www.federalreserve.gov",
+   "verdicts": {
+    "A4": "fail",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "fail",
+    "A12": "fail"
+   },
+   "finding_ids": {
+    "A4": "fnd_90ffb21e98e3e9a2cf1d357b",
+    "A5": "fnd_aa43ffa7ac324033de9bbdc3",
+    "A10": "fnd_f03d5290041efaf7390d3eeb",
+    "A11-declared": "fnd_0e1d3e80c07c56693527fff2",
+    "A12": "fnd_4f5ebfb554457dfea4ec4ae7"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 267,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  },
+  {
+   "agency": "EIA",
+   "tier": "A",
+   "host_surface": "home:www.eia.gov",
+   "host_url": "https://www.eia.gov/",
+   "candidate_surface": "host:www.eia.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "pass",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_30d78580930819068515387b",
+    "A5": "fnd_611ee10b09b40031aafcea0a",
+    "A10": "fnd_a184edfbde19b9636cbcdf02",
+    "A11-declared": "fnd_b0adee96ee8d9c6be9dc04a0",
+    "A12": "fnd_be056b29e5aa9dca55aa3ae4"
+   },
+   "refused_identified_client": 3,
+   "probes_on_host_surface": 158,
+   "marks": {}
+  },
+  {
+   "agency": "ERS",
+   "tier": "A",
+   "host_surface": "home:www.ers.usda.gov",
+   "host_url": "https://www.ers.usda.gov/",
+   "candidate_surface": "host:www.ers.usda.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_0b2fe5ac48493c8a22de4dad",
+    "A5": "fnd_10d50470b3e4370e77c86e72",
+    "A10": "fnd_9dcefa7e3fbb35b38ebb86c7",
+    "A11-declared": "fnd_22ff8b161f3f1b8c89a747e5",
+    "A12": "fnd_6b40fe38eed3209fb8ad43c9"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 112,
+   "marks": {}
+  },
+  {
+   "agency": "NAHMSAPHIS",
+   "tier": "A",
+   "host_surface": "home:www.aphis.usda.gov",
+   "host_url": "https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+   "candidate_surface": "host:www.aphis.usda.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_8a5cc8c2df620107bfcc42f8",
+    "A5": "fnd_84d2dada8c099a1d05941993",
+    "A10": "fnd_1a38983592039a1a465b3b20",
+    "A11-declared": "fnd_2fb3b28518e6f29ff03a3671",
+    "A12": "fnd_2e3e5df4cfd765ecc82927d0"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 202,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  },
+  {
+   "agency": "NASS",
+   "tier": "A",
+   "host_surface": "home:www.nass.usda.gov",
+   "host_url": "https://www.nass.usda.gov/",
+   "candidate_surface": "host:www.nass.usda.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_878a4c4a775609da51254e93",
+    "A5": "fnd_3f0f9009cbf9a92868d96dea",
+    "A10": "fnd_7d1fb0a8720958d871bd15e8",
+    "A11-declared": "fnd_832118ee79d3c94428cbbbde",
+    "A12": "fnd_8f41dd61639bde86c9011c10"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 195,
+   "marks": {}
+  },
+  {
+   "agency": "NCES",
+   "tier": "A",
+   "host_surface": "home:nces.ed.gov",
+   "host_url": "https://nces.ed.gov/",
+   "candidate_surface": "host:nces.ed.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_df0525c01a21171544caa243",
+    "A5": "fnd_5b893473ec705882daa36d2d",
+    "A10": "fnd_44cbd90820645cca4f430dea",
+    "A11-declared": "fnd_d80643feb26bb6206011e07a",
+    "A12": "fnd_ffaa281a4d90a8f087c53690"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 81,
+   "marks": {}
+  },
+  {
+   "agency": "NCHS",
+   "tier": "A",
+   "host_surface": "home:www.cdc.gov",
+   "host_url": "https://www.cdc.gov/nchs/index.htm",
+   "candidate_surface": "host:www.cdc.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "fail",
+    "A11-declared": "fail",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_4eb20b9e5c92d2c1797f659c",
+    "A5": "fnd_e2a6776d8d69f942e186817b",
+    "A10": "fnd_8096fb77a7520f43a9c515d3",
+    "A11-declared": "fnd_ce56218195caf9274c3f9622",
+    "A12": "fnd_1cc5c2d3ca22b72114ebc617"
+   },
+   "refused_identified_client": 1,
+   "probes_on_host_surface": 37,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  },
+  {
+   "agency": "NCSES",
+   "tier": "A",
+   "host_surface": "home:ncses.nsf.gov",
+   "host_url": "https://ncses.nsf.gov/",
+   "candidate_surface": "host:ncses.nsf.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "pass",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_b458e7cb483811d4b81e0505",
+    "A5": "fnd_f2ea6ba09f279acef0182d07",
+    "A10": "fnd_aee693c90412a56d2e3276ab",
+    "A11-declared": "fnd_bff7307ea9a86a99c2d919ac",
+    "A12": "fnd_eb3f3af97a1167db21f01aaf"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 97,
+   "marks": {}
+  },
+  {
+   "agency": "ORES",
+   "tier": "A",
+   "host_surface": "home:www.ssa.gov",
+   "host_url": "https://www.ssa.gov",
+   "candidate_surface": "host:www.ssa.gov",
+   "verdicts": {
+    "A4": "error",
+    "A5": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "A12": "fail"
+   },
+   "finding_ids": {
+    "A4": "fnd_958f76284b965163b4ca6ed2",
+    "A5": "fnd_10d0398eef55502e71020da6",
+    "A10": "fnd_8888093b92f65d5a5b81832b",
+    "A11-declared": "fnd_1e558479adb93a5cb82b084d",
+    "A12": "fnd_67ab1e1377f9eb3fea61dcdf"
+   },
+   "refused_identified_client": 33,
+   "probes_on_host_surface": 35,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  },
+  {
+   "agency": "SAMHSACBHS",
+   "tier": "A",
+   "host_surface": "home:www.samhsa.gov",
+   "host_url": "https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq",
+   "candidate_surface": "host:www.samhsa.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_0851fe0fe1af62968b6c2875",
+    "A5": "fnd_a024684c511812eb88c9553a",
+    "A10": "fnd_0ffcd2cc522011c24e8b014d",
+    "A11-declared": "fnd_7ca507ca8effb95d1aced232",
+    "A12": "fnd_d213f311a3f7eda5b28b47ae"
+   },
+   "refused_identified_client": 2,
+   "probes_on_host_surface": 927,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  },
+  {
+   "agency": "SOI",
+   "tier": "A",
+   "host_surface": "home:www.irs.gov",
+   "host_url": "https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
+   "candidate_surface": "host:www.irs.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_3a72a0e5af48cbb804a6613b",
+    "A5": "fnd_61ac9581753d92b1edcc3138",
+    "A10": "fnd_8ac7181f1d35d97ce0a049d9",
+    "A11-declared": "fnd_79288a3810919865e6d28fa8",
+    "A12": "fnd_f692b3d288bda52254bfaed6"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 161,
+   "marks": {
+    "A4": "parent_host",
+    "A5": "parent_host",
+    "A11-declared": "parent_host",
+    "A12": "parent_host"
+   }
+  }
+ ]
+}

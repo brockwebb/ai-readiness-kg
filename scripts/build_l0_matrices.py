@@ -110,9 +110,23 @@ def evidence_payload(p: dict) -> dict:
 
     Neither is what the cycle did; both are what re-judging it did. The evidence is the measured
     cycle's, and the payload names it.
+
+    A COMPOSITE (`scan.composite`, `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
+    decision 4) rests on two collections, one per part, and its evidence is assembled from both
+    by the rule the payload states (`composed_of`).
     """
+    from scan import composite
+    if composite.is_composite(p):
+        return _composite_evidence(p["cycle"])
     src = p.get("derived_from") if p.get("cycle_kind") == "rejudged" else None
     return _cached_payload(src) if src else p
+
+
+@functools.lru_cache(maxsize=2)
+def _composite_evidence(cycle: str) -> dict:
+    """Read-only, like `_cached_payload`: both parts' collections are 12 MB each."""
+    from scan import composite
+    return composite.evidence(_cached_payload(cycle), STATE)
 
 
 def targets(params: dict, name: str | None = None) -> dict:
@@ -622,7 +636,15 @@ def compute(cycle: str, params: dict | None = None) -> dict:
         f"the {len(tier_c)} Tier C reference host(s) of spot cycle {cycle}, host-level "
         f"surfaces, which enter no Tier A denominator (DD-059)")
 
+    from scan import composite as _composite
     head = {"task": TASK, "cycle": cycle, "params_hash": p["params_hash"],
+            # A composite cycle of record names both parts and which legs each supplies, on the
+            # matrix itself (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision
+            # 4). Absent on any other cycle's header, so no published matrix changes.
+            **({"composed_of": {k: {"cycle": v["cycle"], "legs": v["legs"],
+                                    "params_hash": v["params_hash"]}
+                                for k, v in p["composed_of"].items() if isinstance(v, dict)}}
+               if _composite.is_composite(p) else {}),
             # A spot matrix says it is one ON the matrix, so a reader of the file alone — and
             # every view that lists cycles (`scripts/prescriptions.py`) — can tell it from the
             # frame's. Absent on a frame cycle's header, so no published matrix changes.
