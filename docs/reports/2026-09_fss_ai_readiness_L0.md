@@ -430,19 +430,17 @@ and still says `error` where a host refused to be searched.
 
 **The bulk-download check shows both halves.** Under the first re-judgement of the first cycle it
 was answered over 19 declared
-flagship surfaces. The fourth correction cut that to
-4: on some surfaces the scanner was
+flagship surfaces. The fourth correction cut that sharply: on some surfaces the scanner was
 forbidden to look, and on the others the page's links ran past the request bound before the
 download could be reached, and both kinds had been counted as products that offer none. The
 recollection ranks a page's links by how much each looks like data before the bound applies, and
 the question is now answered over
 9. The upper bound of the
 ninety-five percent interval on the rate went from
-0.433343 to
-1 and is now
-1. A larger denominator
-is a stronger claim only because the search behind it reached further, and an instrument that
-stops scoring what it did not look at has to earn every surface it adds back.
+0.433343 under the first
+re-judgement to 1 now.
+A larger denominator is a stronger claim only because the search behind it reached further, and
+an instrument that stops scoring what it did not look at has to earn every surface it adds back.
 
 ## What this cannot answer, and what would
 

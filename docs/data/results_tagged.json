@@ -9,7 +9,7 @@
  },
  "successor_moves_no_published_number": null,
  "successor_comparison": null,
- "count": 68,
+ "count": 66,
  "results": [
   {
    "name": "esip_checklist_items_2026-09-10",
@@ -316,7 +316,7 @@
   {
    "name": "scan_a5_fail_offroster_sitemap_2026-10-06_composite_b",
    "value": 0.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "78ea3b79-bf98-4775-9dae-11c70c5f33f5",
    "description": "Of cycle scan_2026-10-06_composite_b's A5 `fail` verdicts, how many belong to a host whose robots.txt declares a sitemap on a netloc OUTSIDE the frame that the scanner then did not fetch. MEASURED from cycle scan_2026-10-06_composite_b's retained robots.txt bodies re-parsed for Sitemap: lines (15 distinct declarations from 13 of the frame's hosts, 2 of them naming an off-frame netloc), compared against the set of URLs the cycle actually requested. The scanner followed every declaration it found, off-frame ones included, so no A5 failure is attributable to an unfollowed declaration and this caveat is empty for this cycle. It is registered at its measured value rather than omitted, because a caveat that is absent and a caveat that is zero read the same in prose and are not the same claim. Task cc_tasks/2026-09-09_report_draft.md §0.4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -365,7 +365,7 @@
   {
    "name": "scan_findings_2026-10-06_composite_b",
    "value": 1009.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "733c01ea-d403-4650-acfd-2e71727e1f03",
    "description": "Cycle scan_2026-10-06_composite_b, a COMPOSITE cycle of record: legs A1, A3, A9, B1, B3, B4, D3, D4, F4, G4 from scan_2026-10-06_recollect (params_hash 2e56a8815bc2…), every other leg from scan_2026-09-10_rj5 (params_hash 36bc3246d927…); no Finding re-judged and nothing re-fetched. Findings produced: {'pass': 175, 'fail': 365, 'not_applicable': 0, 'error': 469}. (cc_tasks/2026-09-07_scan_run_2.md)",
    "computed_from": [
@@ -388,7 +388,7 @@
   {
    "name": "scan_l0_a10_applicable_n_2026-10-06_composite_b",
    "value": 13.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "f1f070b7-facd-4670-a85f-7d23b922b985",
    "description": "Cycle scan_2026-10-06_composite_b, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -411,7 +411,7 @@
   {
    "name": "scan_l0_a10_pass_2026-10-06_composite_b",
    "value": 12.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "9f255261-fef8-445e-a481-2fdc8f353318",
    "description": "Cycle scan_2026-10-06_composite_b, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -434,7 +434,7 @@
   {
    "name": "scan_l0_a11_declared_applicable_n_2026-10-06_composite_b",
    "value": 13.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "7469f28a-7d49-4190-a709-d74bb896077e",
    "description": "Cycle scan_2026-10-06_composite_b, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -457,7 +457,7 @@
   {
    "name": "scan_l0_a11_declared_pass_2026-10-06_composite_b",
    "value": 11.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "24905b55-61bd-4c5e-bd02-bca44513b0ad",
    "description": "Cycle scan_2026-10-06_composite_b, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 11. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -480,7 +480,7 @@
   {
    "name": "scan_l0_a12_applicable_n_2026-10-06_composite_b",
    "value": 16.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "d0461ebd-0565-43fe-a850-f4c670f01216",
    "description": "Cycle scan_2026-10-06_composite_b, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 16. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -503,7 +503,7 @@
   {
    "name": "scan_l0_a12_fail_2026-10-06_composite_b",
    "value": 4.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "d2c19aab-e348-4208-8c3b-c249e5fc1a20",
    "description": "Cycle scan_2026-10-06_composite_b, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -526,7 +526,7 @@
   {
    "name": "scan_l0_a12_pass_2026-10-06_composite_b",
    "value": 12.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "90698915-65d6-494a-a30c-1bbcbf3a1054",
    "description": "Cycle scan_2026-10-06_composite_b, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -549,7 +549,7 @@
   {
    "name": "scan_l0_a4_applicable_n_2026-10-06_composite_b",
    "value": 13.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "0c40ad5e-bbe5-469d-9fe5-2d0997393530",
    "description": "Cycle scan_2026-10-06_composite_b, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -572,7 +572,7 @@
   {
    "name": "scan_l0_a4_error_2026-10-06_composite_b",
    "value": 3.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "a3d8e2e4-689b-4565-9950-197ee04b001e",
    "description": "Cycle scan_2026-10-06_composite_b, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -595,7 +595,7 @@
   {
    "name": "scan_l0_a4_pass_2026-10-06_composite_b",
    "value": 12.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "df337d79-1efc-40e2-9e89-ffb8ce84d24b",
    "description": "Cycle scan_2026-10-06_composite_b, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -618,7 +618,7 @@
   {
    "name": "scan_l0_a5_applicable_n_2026-10-06_composite_b",
    "value": 13.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "4c6aa373-e54b-439b-b383-4770a49c21cf",
    "description": "Cycle scan_2026-10-06_composite_b, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -641,7 +641,7 @@
   {
    "name": "scan_l0_a5_fail_2026-10-06_composite_b",
    "value": 10.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "03ec9944-2ea9-49c5-aaba-06af8b717e7c",
    "description": "Cycle scan_2026-10-06_composite_b, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 10. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -664,7 +664,7 @@
   {
    "name": "scan_l0_a5_pass_2026-10-06_composite_b",
    "value": 3.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "bd39e5bc-2387-475f-98f1-b3ee56623eba",
    "description": "Cycle scan_2026-10-06_composite_b, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -687,7 +687,7 @@
   {
    "name": "scan_l0_declared_flagship_agencies_2026-10-06_composite_b",
    "value": 16.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "f0a439a2-3297-4072-94b3-4558f489c61a",
    "description": "Tier A agencies with at least one operator-DECLARED flagship surface in cycle scan_2026-10-06_composite_b, of the 16 in the frame. The product-level matrix is denominated by these and is labelled PARTIAL for that reason: the remaining agencies carry a host row and its probes and nothing else, and a product leg cannot be asked of a product nobody has named. `not declared` is not `fail`. docs/design/fss_flagship_shortlist.md is where the declaration gets made. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
    "computed_from": [
@@ -710,7 +710,7 @@
   {
    "name": "scan_l0_declared_flagship_surfaces_2026-10-06_composite_b",
    "value": 23.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "e67119a2-c372-4d08-af54-ad99a11a3086",
    "description": "Declared flagship SURFACES in cycle scan_2026-10-06_composite_b, across 16 agencies: some agencies declare more than one, and the product matrix has one row per surface so two flagships of one agency that disagree are visible as two rows rather than averaged into one. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
    "computed_from": [
@@ -733,7 +733,7 @@
   {
    "name": "scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-10-06_composite_b",
    "value": 6.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "13103c84-769a-47e2-8d48-00749f8f87d7",
    "description": "Distinct Tier A bodies carrying at least one of those disagreements, of the 16 with both a home and a flagship surface. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -756,7 +756,7 @@
   {
    "name": "scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-10-06_composite_b",
    "value": 12.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "24c9e158-a4c9-4405-9de4-152013d7552c",
    "description": "Cells in cycle scan_2026-10-06_composite_b where a Tier A body's HOME surface and one of its FLAGSHIP surfaces answer the SAME host-level check differently, over the 16 bodies that have both. A `robots.txt` permitting the front door can disallow a particular product, so these checks are judged per surface and not per host. This is why the L0 matrix names the surface each cell was measured on: a single combined host cell would have to pick a winner for these and would not say which. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -779,7 +779,7 @@
   {
    "name": "scan_l0_product_a1_applicable_n_2026-10-06_composite_b",
    "value": 4.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "1266e60f-3596-4512-9a9e-7f8a51ae432d",
    "description": "Cycle scan_2026-10-06_composite_b, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -802,7 +802,7 @@
   {
    "name": "scan_l0_product_a1_error_2026-10-06_composite_b",
    "value": 19.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "22b279ba-8c68-4db2-b4a8-dbdafd20cb5f",
    "description": "Cycle scan_2026-10-06_composite_b, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -825,7 +825,7 @@
   {
    "name": "scan_l0_product_a1_pass_2026-10-06_composite_b",
    "value": 4.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "ede1839e-ed42-4d19-8718-9f37c73cc2bc",
    "description": "Cycle scan_2026-10-06_composite_b, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -869,32 +869,9 @@
    ]
   },
   {
-   "name": "scan_l0_product_a3_applicable_n_2026-09-10_rj5",
-   "value": 4.0,
-   "state": "published",
-   "artifact_id": "f318a952-52b2-4e02-b2e1-1dbceba05a80",
-   "description": "Cycle scan_2026-09-10_rj5, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 4. (cc_tasks/2026-09-09_report_draft.md)",
-   "computed_from": [
-    {
-     "name": "scan_matrix_tierA_2026-09-10_rj5",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ],
-   "generated_by": [
-    {
-     "name": "build_l0_matrices",
-     "path": "scripts/build_l0_matrices.py",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ]
-  },
-  {
    "name": "scan_l0_product_a3_applicable_n_2026-10-06_composite_b",
    "value": 9.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "a999d8cb-f87c-4659-8372-fa4b8f8a476c",
    "description": "Cycle scan_2026-10-06_composite_b, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 9. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -917,7 +894,7 @@
   {
    "name": "scan_l0_product_a3_error_2026-10-06_composite_b",
    "value": 14.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "d90823e7-9bbe-4ec6-b20b-11ccbf6909f4",
    "description": "Cycle scan_2026-10-06_composite_b, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 14. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -940,7 +917,7 @@
   {
    "name": "scan_l0_product_a3_pass_2026-10-06_composite_b",
    "value": 9.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "e03db5f2-9d5e-4f74-80b9-1c0e7594b2d3",
    "description": "Cycle scan_2026-10-06_composite_b, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 9. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -963,7 +940,7 @@
   {
    "name": "scan_l0_product_a6_applicable_n_2026-10-06_composite_b",
    "value": 19.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "9014d8af-1989-4846-8c6d-8b530179e7d1",
    "description": "Cycle scan_2026-10-06_composite_b, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -986,7 +963,7 @@
   {
    "name": "scan_l0_product_a6_error_2026-10-06_composite_b",
    "value": 4.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "c9ee4abc-16ad-4e97-bd79-77aad7a22bc5",
    "description": "Cycle scan_2026-10-06_composite_b, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1009,7 +986,7 @@
   {
    "name": "scan_l0_product_a6_pass_2026-10-06_composite_b",
    "value": 1.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "fba47caf-6ad1-4bf9-a895-31b41c3f4f41",
    "description": "Cycle scan_2026-10-06_composite_b, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1032,7 +1009,7 @@
   {
    "name": "scan_l0_product_a8_applicable_n_2026-10-06_composite_b",
    "value": 19.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "3f722b1f-ade2-4011-9abd-0c221e02f3a1",
    "description": "Cycle scan_2026-10-06_composite_b, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1055,7 +1032,7 @@
   {
    "name": "scan_l0_product_a8_pass_2026-10-06_composite_b",
    "value": 1.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "9cdada21-a7c3-4d28-bb35-7f81db9a72b9",
    "description": "Cycle scan_2026-10-06_composite_b, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1078,7 +1055,7 @@
   {
    "name": "scan_l0_product_a9_fail_2026-10-06_composite_b",
    "value": 2.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "48eb23ba-7f8d-45a3-9256-c4068351562e",
    "description": "Cycle scan_2026-10-06_composite_b, leg A9, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 2. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1101,7 +1078,7 @@
   {
    "name": "scan_l0_product_a9_pass_2026-10-06_composite_b",
    "value": 2.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "89a43fce-2373-4e6d-b02d-b1a7b30e94a4",
    "description": "Cycle scan_2026-10-06_composite_b, leg A9, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 2. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1124,7 +1101,7 @@
   {
    "name": "scan_l0_product_b3_applicable_n_2026-10-06_composite_b",
    "value": 19.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "fb923189-4ccb-4700-9152-65c4dd8d63d1",
    "description": "Cycle scan_2026-10-06_composite_b, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1147,7 +1124,7 @@
   {
    "name": "scan_l0_product_b3_pass_2026-10-06_composite_b",
    "value": 3.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "a35592ab-9bd2-49ed-b382-dee06bda6a82",
    "description": "Cycle scan_2026-10-06_composite_b, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1170,7 +1147,7 @@
   {
    "name": "scan_l0_product_d4_error_2026-10-06_composite_b",
    "value": 16.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "cdd3f303-0ed5-4878-bb9c-83487623b34a",
    "description": "Cycle scan_2026-10-06_composite_b, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 16. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1193,7 +1170,7 @@
   {
    "name": "scan_l0_product_d4_fail_2026-10-06_composite_b",
    "value": 7.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "7a1dcbe6-dd92-4523-83c6-ee9b593e0629",
    "description": "Cycle scan_2026-10-06_composite_b, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 7. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1216,7 +1193,7 @@
   {
    "name": "scan_l0_product_f4_error_2026-10-06_composite_b",
    "value": 15.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "2c86b003-addd-4cbc-b3c1-5ff48523710f",
    "description": "Cycle scan_2026-10-06_composite_b, leg F4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 15. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1239,7 +1216,7 @@
   {
    "name": "scan_l0_product_f4_fail_2026-10-06_composite_b",
    "value": 8.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "4af2d264-fadf-4a78-9831-0597f3c34736",
    "description": "Cycle scan_2026-10-06_composite_b, leg F4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 8. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1262,7 +1239,7 @@
   {
    "name": "scan_l0_product_g4_applicable_n_2026-10-06_composite_b",
    "value": 7.0,
-   "state": "proposed",
+   "state": "published",
    "artifact_id": "16ffc9a8-08e8-4402-96e7-18f4c605f8be",
    "description": "Cycle scan_2026-10-06_composite_b, leg G4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 7. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1285,7 +1262,7 @@
   {
    "name": "scan_l0_product_g4_pass_2026-10-06_composite_b",
    "value": 0.0,
-   "state": "proposed",
+   "state": "published",
    "artifact_id": "36fb1a76-5c0e-4de1-b6fb-46862e1b84b6",
    "description": "Cycle scan_2026-10-06_composite_b, leg G4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 0. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1329,32 +1306,9 @@
    ]
   },
   {
-   "name": "scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj5",
-   "value": 1.0,
-   "state": "published",
-   "artifact_id": "85d0ad52-a64e-4fbb-8c0f-4f60dc3b76dc",
-   "description": "Cycle scan_2026-09-10_rj5, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 4/4, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 4 and 4 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. (cc_tasks/2026-09-09_report_draft.md)",
-   "computed_from": [
-    {
-     "name": "scan_matrix_tierA_2026-09-10_rj5",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj5.json",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ],
-   "generated_by": [
-    {
-     "name": "build_l0_matrices",
-     "path": "scripts/build_l0_matrices.py",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ]
-  },
-  {
    "name": "scan_l0_product_leg_rate_a3_upper95_2026-10-06_composite_b",
    "value": 1.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "66b95995-d90f-43ba-94e9-ead137139b0a",
    "description": "Cycle scan_2026-10-06_composite_b, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 9/9, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 9 and 9 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1377,7 +1331,7 @@
   {
    "name": "scan_l0_product_leg_rate_a6_upper95_2026-10-06_composite_b",
    "value": 0.246387,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "4300cd81-01ac-4688-9802-fbc1b0eb2bbd",
    "description": "Cycle scan_2026-10-06_composite_b, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 1/19, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 19 and 1 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1400,7 +1354,7 @@
   {
    "name": "scan_l0_product_legs_2026-10-06_composite_b",
    "value": 17.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "c3ed31ef-baa0-4652-9009-cf1538eb20d6",
    "description": "Product-level checks asked of every declared flagship surface in cycle scan_2026-10-06_composite_b: A1, A2, A3, A6, A8, A9, B3, D1, D4, F4, B1, B2, B4, B5, D2, D3, G4. What a PRODUCT offers a machine, as against what a HOST declares. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1423,7 +1377,7 @@
   {
    "name": "scan_l0_product_legs_at_zero_2026-10-06_composite_b",
    "value": 9.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "c750eff6-9564-461c-9b26-d294d2672f89",
    "description": "Product-level checks on which NO declared flagship surface passed in cycle scan_2026-10-06_composite_b: B1, B2, B4, B5, D2, D3, D4, F4, G4. Counted over the 23 declared surfaces, which is a PARTIAL population; each of these has its own registered upper bound (`scan_leg_rate_<check>_upper95_...`), and a zero at this denominator is not evidence of universal absence. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1446,7 +1400,7 @@
   {
    "name": "scan_l0_tierc_a12_pass_2026-10-06_composite_b",
    "value": 3.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "4d20ab2b-f346-44cc-bb72-9de4e2ad0160",
    "description": "Cycle scan_2026-10-06_composite_b, leg A12, over the 3 Tier C reference hosts' host-level surfaces, which enter no Tier A denominator (DD-059). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1495,7 +1449,7 @@
   {
    "name": "scan_observations_2026-10-06_recollect",
    "value": 6512.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "c0ae39b2-81b6-4f85-949f-5d5fd6b7272d",
    "description": "Cycle scan_2026-10-06_recollect, params_hash 2e56a8815bc2…. Observations captured, each with its whole response body stored content-addressed. (cc_tasks/2026-09-07_scan_run_2.md)",
    "computed_from": [
@@ -1518,7 +1472,7 @@
   {
    "name": "scan_refusal_consecutive_measurements_2026-10-06_composite_b",
    "value": 6.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "99704aba-6ba8-4f4f-b8a6-edf4e40953d2",
    "description": "Separate measurement artifacts in state/ that record ALL THREE of www.bls.gov, www.bts.gov, www.ssa.gov declining an identified, robots-compliant client: state/scan_preflight_2026-09.json, state/scan_2026-09-07.json, state/scan_2026-09-07b.json, state/fss_preflight_2026-09.json, state/scan_2026-09-09.json, state/scan_2026-09-10.json. Counted by re-reading each artifact rather than by trusting a prior report, and the count spans two error conventions: cycle 1 filed those refusals under `http_4xx` because the closed error set had no member for a refusal until harness-v3 added one. Two of the 6 are pre-flights that record bodies rather than observations, and one of those names them by agency code. This is the persistence behind the report's accessibility finding: not a transient, and not a sampling accident. Task cc_tasks/2026-09-09_report_draft.md §2. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
@@ -1567,7 +1521,7 @@
   {
    "name": "scan_requests_total_2026-10-06_recollect",
    "value": 2074.0,
-   "state": "verified",
+   "state": "published",
    "artifact_id": "82f0e6e0-2dab-439a-ae29-b8d9588054d2",
    "description": "Cycle scan_2026-10-06_recollect, params_hash 2e56a8815bc2…. HTTP requests issued to all 42 federal hosts in this cycle. Control fixtures are excluded: the fixture server is us. (cc_tasks/2026-09-07_scan_run_2.md)",
    "computed_from": [
