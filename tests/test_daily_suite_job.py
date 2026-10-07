@@ -54,12 +54,14 @@ def scratch(tmp_path):
     (repo / "data").mkdir()
     (repo / "data" / "seed.txt").write_text("an ignored input the suite reads\n")
     (repo / ".seldon").mkdir()
-    fake = tmp_path / "seldon"
+    fake = tmp_path / "fake_seldon_cli"
     calls = tmp_path / "seldon_calls"
     fake.write_text(f'#!/bin/bash\necho "$@" >> "{calls}"\n', encoding="utf-8")
     fake.chmod(0o755)
     rc = tmp_path / "rc"
-    env = {**os.environ, "AIRKG_DAILY_WORKTREE": str(tmp_path / "wt"),
+    # The worktree under its OWN parent, as the installed job's is (~/.cache/airkg/), so a
+    # sibling of the repository is not trivially a sibling of the worktree too.
+    env = {**os.environ, "AIRKG_DAILY_WORKTREE": str(tmp_path / "cache" / "wt"),
            "AIRKG_DAILY_LOG_DIR": str(tmp_path / "logs"), "AIRKG_SELDON": str(fake),
            "RAN_IN": str(tmp_path / "ran_in"), "RC_FILE": str(rc),
            "NEO4J_USER": "unused", "NEO4J_PASS": "unused"}
@@ -77,7 +79,7 @@ def test_green_runs_in_its_own_worktree_at_main_with_the_ignored_inputs_copied(s
     done = _run(scratch, 0)
     assert done.returncode == 0, done.stderr
     ran_in = (scratch["tmp"] / "ran_in").read_text().split()
-    wt = (scratch["tmp"] / "wt").resolve()
+    wt = (scratch["tmp"] / "cache" / "wt").resolve()
     assert Path(ran_in[0]).resolve() == wt, "the suite ran outside the job's worktree"
     assert Path(ran_in[0]).resolve() != scratch["repo"].resolve()
     assert ran_in[1:] == ["seeded"], "the ignored input was not copied in as a file"
@@ -100,6 +102,15 @@ def test_red_writes_the_stop_file_with_the_log_and_opens_an_issue(scratch):
     assert "issue create" in issue and "--type merge_blocked" in issue and str(log) in issue
 
 
+def test_a_sibling_checkout_is_linked_beside_the_worktree(scratch, tmp_path):
+    """`tests/test_dispatch_config.py` reads `REPO/../seldon`; from the worktree, `../seldon`
+    must resolve to the same checkout or two tests skip that the checkout runs."""
+    (tmp_path / "seldon").mkdir()
+    assert _run(scratch, 0).returncode == 0
+    link = scratch["tmp"] / "cache" / "seldon"
+    assert link.is_symlink() and link.resolve() == (tmp_path / "seldon").resolve()
+
+
 def test_the_next_green_run_lifts_its_own_stop_and_moves_to_the_new_main(scratch):
     _run(scratch, 1)
     assert scratch["stop"].exists()
@@ -108,7 +119,7 @@ def test_the_next_green_run_lifts_its_own_stop_and_moves_to_the_new_main(scratch
     _git(scratch["repo"], "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "-m", "fix")
     assert _run(scratch, 0).returncode == 0
     assert not scratch["stop"].exists()
-    wt = scratch["tmp"] / "wt"
+    wt = scratch["tmp"] / "cache" / "wt"
     assert _git(wt, "rev-parse", "HEAD") == _git(scratch["repo"], "rev-parse", "main")
 
 

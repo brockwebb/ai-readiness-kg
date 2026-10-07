@@ -86,10 +86,10 @@ SHA="$(git -C "$REPO" rev-parse --verify --quiet "$BRANCH^{commit}")" \
 if [ ! -e "$WT/.git" ]; then
   mkdir -p "$(dirname "$WT")"
   git -C "$REPO" worktree prune
-  git -C "$REPO" worktree add --detach "$WT" "$SHA" >> "$JOBLOG" 2>&1 \
+  git -C "$REPO" worktree add --quiet --detach "$WT" "$SHA" >> "$JOBLOG" 2>&1 \
     || { say "FAILED: git worktree add $WT $SHA"; exit 2; }
 else
-  git -C "$WT" checkout --detach --force "$SHA" >> "$JOBLOG" 2>&1 \
+  git -C "$WT" checkout --quiet --detach --force "$SHA" >> "$JOBLOG" 2>&1 \
     || { say "FAILED: checkout $SHA in $WT"; exit 2; }
   git -C "$WT" clean -fd >> "$JOBLOG" 2>&1
 fi
@@ -109,6 +109,18 @@ while IFS= read -r rel; do
   fi
   seeded=$((seeded + 1))
 done < <(git -C "$REPO" ls-files --others --ignored --exclude-standard --directory)
+
+# Sibling checkouts the suite reaches by RELATIVE path, linked beside the worktree so `../<name>`
+# resolves from it as it does from the checkout. One today: `tests/test_dispatch_config.py`
+# reads `REPO/../seldon`, and without the link the first installed run skipped two tests the
+# checkout runs (2026-10-07T20:36Z). A link and not a copy: it is another repository, read-only
+# to the suite, and a copy of it would be a second Seldon to keep current.
+SIBLINGS="seldon"
+for name in $SIBLINGS; do
+  if [ -d "$(dirname "$REPO")/$name" ] && [ ! -e "$(dirname "$WT")/$name" ]; then
+    ln -s "$(dirname "$REPO")/$name" "$(dirname "$WT")/$name"
+  fi
+done
 
 say "start $BRANCH@${SHA:0:12} in $WT ($seeded ignored path(s) seeded) -> $LOG"
 ( cd "$WT" && make --no-print-directory "$SUITE_TARGET" PY="$PY"; echo "EXIT=$?" ) > "$LOG" 2>&1
