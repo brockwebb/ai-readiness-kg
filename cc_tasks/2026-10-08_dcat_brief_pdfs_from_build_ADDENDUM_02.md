@@ -1,0 +1,7 @@
+# ADDENDUM 02 to `2026-10-08_dcat_brief_pdfs_from_build.md`: ROWS follows the brief, and units of measure is "No field"
+
+**Date:** 2026-10-08. Desktop session, from the operator's review of ROWS.pdf. Amends the base task and ADDENDUM 01; supersedes nothing.
+
+1. **ROWS.md is built in the shape of `reports/dcat_us_3_brief/ROWS_v2_2026-10-08.md`:** a "How to use this file" paragraph and the brief's result key at the top; one section per need, headed with the brief's need name and its plain result label; under each, the three questions in the table's column order, with "Not confirmed by the source check." where a part did not validate; no letter codes; the FCSM 26-01 AI-use statement at the end; source numbers taken from the brief's list. Repeated statements of one finding are cut to one (series kept 2 of 6 asks, revisions 2 of 4, restricted-access terms 5 of 7); the build applies the same rule by exact and near-duplicate detection and reports what it cut.
+2. **Units of measure is "No field", not "Optional".** The validated landed sentence says `unitMeasure` sits on the QualityMeasurement class and gives the unit of a quality score, not of the data. The brief's table and legend now say so (`BRIEF_v2_2026-10-08.md`, legend gains "No field"); the build's level mapping must not print "Optional" for a property that exists only on a different class than the need. Add a test.
+3. The gate in ADDENDUM 01 item 5 applies to ROWS.md against `ROWS_v2_2026-10-08.md` as well.
