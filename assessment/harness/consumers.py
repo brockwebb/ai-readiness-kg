@@ -42,7 +42,8 @@ class Completion:
     cost_usd: Optional[float] = None
     spend_run_id: Optional[str] = None
     spend_reservation_id: Optional[str] = None
-    #: Seldon AD-035 R6: `{requested, served, side_models, ok}` for this call.
+    #: Seldon AD-035 R6: `{requested, served, side_models, ok, effort}` for this call (the
+    #: effort the launch passed, AD-036-R8).
     receipt: Optional[dict] = None
 
 
@@ -53,8 +54,10 @@ class Consumer(Protocol):
 
 
 #: Keys a consumer config may no longer carry (seldon AD-035 R3, R4): the id is the lock's for
-#: the role, and the CLI is the lock's. Refused at load, never ignored.
-_REFUSED_KEYS = ("model_id", "cli")
+#: the role, the CLI is the lock's, and the effort is the registry role's (AD-036-R8, task
+#: PA-001: the launch always passes it). Refused at load, never ignored, because an ignored
+#: setting reads as an obeyed one.
+_REFUSED_KEYS = ("model_id", "cli", "effort")
 
 
 def _resolve_role(role: str) -> str:
@@ -105,8 +108,8 @@ def load_consumer_config(path, table: str = "consumer") -> ConsumerConfig:
     named = [k for k in _REFUSED_KEYS if k in c]
     if named:
         raise ConfigError(f"{path}: [{table}] names {named}; a consumer config names a registry "
-                          f"`role`, and the lock supplies the model id and the CLI "
-                          f"(seldon AD-035 R3, R4)")
+                          f"`role`, the lock supplies the model id and the CLI, and the registry "
+                          f"role supplies the effort (seldon AD-035 R3, R4; AD-036-R8)")
     for key in ("role", "provider", "timeout_seconds", "call_class"):
         if key not in c or c[key] in ("", None):
             raise ConfigError(f"{path}: [{table}] missing {key!r}")

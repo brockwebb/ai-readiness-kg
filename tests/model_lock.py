@@ -44,8 +44,9 @@ def write_cli(path: Path, body: str) -> Path:
 
 def fake_cli_serving(path: Path, served: str, result: str = '{"ok": 1}') -> Path:
     """A stand-in for `claude -p --output-format json` whose envelope says `served` answered,
-    whatever `--model` asked for. It also writes its argv and the four family variables beside
-    itself, so a test can read what the launcher passed."""
+    whatever `--model` asked for. It also writes its argv, the four family variables and the
+    effort variable (`CLAUDE_CODE_EFFORT_LEVEL`, seldon AD-036-R8) beside itself, so a test can
+    read what the launcher passed."""
     envelope = json.dumps({"type": "result", "is_error": False, "result": result,
                            "session_id": "fixture-session",
                            "usage": {"output_tokens": 7},
@@ -53,7 +54,7 @@ def fake_cli_serving(path: Path, served: str, result: str = '{"ok": 1}') -> Path
     seen = path.with_suffix(".seen")
     body = ("#!/bin/sh\n"
             f"printf '%s\\n' \"$@\" > '{seen}.argv'\n"
-            f"env | grep '^ANTHROPIC_DEFAULT_' | sort > '{seen}.env'\n"
+            f"env | grep -E '^(ANTHROPIC_DEFAULT_|{models.EFFORT_ENV}=)' | sort > '{seen}.env'\n"
             "cat > /dev/null\n"
             f"cat <<'ENVELOPE'\n{envelope}\nENVELOPE\n")
     return write_cli(path, body)
@@ -76,7 +77,7 @@ def build_models_home(home: Path, cli_path: Path | None = None,
 
 
 def env_lines(seen_cli: Path) -> dict:
-    """The `ANTHROPIC_DEFAULT_*` variables a fake CLI saw."""
+    """The `ANTHROPIC_DEFAULT_*` variables and `CLAUDE_CODE_EFFORT_LEVEL` a fake CLI saw."""
     text = seen_cli.with_suffix(".seen.env").read_text(encoding="utf-8")
     return dict(line.split("=", 1) for line in text.splitlines() if "=" in line)
 

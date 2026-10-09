@@ -42,9 +42,13 @@ dependencies = [
 # `seldon.models`, which kg/extraction/model_stub.py and assessment/harness/consumers.py import to
 # resolve every model role. `seldon.models` reads the lock from a seldon checkout or
 # $SELDON_MODELS_HOME; a non-editable install needs the variable set.
+# 2026-10-09 (PA-001 Part E, seldon AD-036-R8): bumped to seldon 3500b54 (branch feat/PA-001,
+# merged to seldon main by PA-001), where every registry role names an effort level, `effort:
+# default` is refused, `launch_spec` always passes `--effort` and CLAUDE_CODE_EFFORT_LEVEL, and
+# `receipt` records the effort. model_stub.invoke passes the receipt's effort.
 graph = [
     "neo4j==6.0.3",
-    "seldon @ git+https://github.com/brockwebb/seldon.git@a11e041005d63c2b24283ef274fcbc6d647c7c4a",
+    "seldon @ git+https://github.com/brockwebb/seldon.git@3500b540a293b629414a5ac47c4ebeec24aa7303",
 ]
 # The read-only MCP server (`mcp/airkg_server.py`, cc_tasks/2026-09-17_mcp_over_the_graph.md).
 mcp = [
