@@ -63,6 +63,28 @@ def no_writes_to_the_real_event_log(monkeypatch):
     monkeypatch.setattr(eventlog, "append", guarded)
 
 
+@pytest.fixture(scope="session")
+def fixture_models_home(tmp_path_factory):
+    """One fixture model lock per test session (per xdist worker): a copy of seldon's
+    registry, the fixture ids, and a CLI that refuses to run. Built once, because the guard
+    below runs on every test."""
+    from model_lock import build_models_home
+    return build_models_home(tmp_path_factory.mktemp("models_home"))
+
+
+@pytest.fixture(autouse=True)
+def no_live_model_lock(monkeypatch, fixture_models_home):
+    """Seldon AD-035 (task MODEL-001): every launcher resolves its model through
+    `seldon.models`, which reads the live lock unless `SELDON_MODELS_HOME` says otherwise.
+    A test that read the live lock would change meaning on every `seldon models refresh`,
+    and one that reached the live lock's CLI would make a PAID call. Autouse, so no test can
+    opt out by forgetting: the accessor sees the fixture lock, whose CLI exits 97 without
+    calling anything. A test that means to launch writes its own fake CLI and lock
+    (`tests/model_lock.py`) and repoints the variable itself."""
+    from model_lock import MODELS_HOME_ENV
+    monkeypatch.setenv(MODELS_HOME_ENV, str(fixture_models_home))
+
+
 @pytest.fixture(autouse=True)
 def restore_the_pinned_prompt_path(monkeypatch):
     """`apply_arm`/`apply_profile` rebind `model_stub._PROMPT_PATH` as arm-scoped state. A
@@ -93,7 +115,7 @@ def restore_chunked_pilot_run_state(monkeypatch):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
     import chunked_pilot as cp
     for name in ("PROFILE", "PROFILE_CLASS", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG",
-                 "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_MODEL", "DOCS", "DOC_PATHS",
+                 "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_ROLE", "DOCS", "DOC_PATHS",
                  "PURPOSE", "CHUNK_FILTER", "BATCH_ID"):
         monkeypatch.setattr(cp, name, getattr(cp, name))
 

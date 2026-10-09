@@ -183,7 +183,8 @@ def main() -> int:
     spend.set_current_run(run_id)
     model_stub.guard_no_api_key()
     cfg = model_stub.load_model_config()
-    cfg = {**cfg, "model_id": cfg["cleanup_model_id"]}
+    # The cleanup-class ROLE, resolved through the seldon lock (AD-035, task MODEL-001).
+    cfg = model_stub.config_for_role(cfg["cleanup_role"], cfg)
     tv = template_version(); tpl = TEMPLATE.read_text(encoding="utf-8")
     tasks = build_worklist(a.redo_unrepairable)
     if a.kinds != "both":

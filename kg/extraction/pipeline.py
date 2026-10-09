@@ -93,6 +93,8 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None,
             {"event_type": "model_call", "doc_id": doc_id,
              "extraction_event_id": extraction_event_id,
              "model_id": model_meta.get("model_id"), "usage": model_meta.get("usage"),
+             # Seldon AD-035 R6 (task MODEL-001): requested vs served model for this call.
+             "role": model_meta.get("role"), "model_receipt": model_meta.get("model_receipt"),
              "cost_usd": model_meta.get("cost_usd"), "duration_ms": model_meta.get("duration_ms"),
              # Spend-guard correlation (DD-022): the event points at the ledger reservation
              # (the settle happened at the choke point, before this event id existed);

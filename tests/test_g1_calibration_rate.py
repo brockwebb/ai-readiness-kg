@@ -215,13 +215,18 @@ def test_filled_sheet_is_readable_by_the_agreement_script():
 # ---------------------------------------------------------------------------
 
 def test_the_reviewers_own_model_is_refused_as_rater():
+    # MODEL-001 (seldon AD-035): the rater is named by role, and the refusal follows the
+    # pinned consumer's role to whatever id the lock gives it.
     with pytest.raises(SystemExit) as e:
-        rate.main(["--model", rate.REVIEWER_MODEL, "--ceiling-tokens", "1000"])
+        rate.main(["--role", "consumer", "--ceiling-tokens", "1000"])
     assert "independent" in str(e.value)
 
 
-def test_reviewer_model_constant_matches_the_pinned_consumer():
-    """If the pinned consumer ever changes, this refusal has to move with it."""
+def test_reviewer_roles_cover_the_pinned_consumer():
+    """If the pinned consumer ever changes, this refusal has to move with it. MODEL-001: the
+    consumer is pinned by ROLE now, so the check is that its role is among the refused ones;
+    the sealed reviewer id stays refused as history."""
     import tomllib
     with (REPO / "assessment/config/g1_consumer.toml").open("rb") as fh:
-        assert tomllib.load(fh)["consumer"]["model_id"] == rate.REVIEWER_MODEL
+        assert tomllib.load(fh)["consumer"]["role"] in rate.REVIEWER_ROLES
+    assert rate.REVIEWER_MODEL == "claude-opus-5"

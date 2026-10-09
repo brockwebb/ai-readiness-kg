@@ -924,7 +924,8 @@ def consumers(bcfg: dict, scripted: str | None):
     spend.set_current_run(rc["run_id"])
 
     def mk(m):
-        return ClaudeCLIConsumer(ConsumerConfig(model_id=m, provider=FR.PROVIDER, cli=FR.CLI,
+        # The ROLE behind the model_config key that named `m` (seldon AD-035 R4, MODEL-001).
+        return ClaudeCLIConsumer(ConsumerConfig(role=model_stub.role_for_model(m, mc), provider=FR.PROVIDER,
                                                 timeout_seconds=rc["timeout_seconds"], call_class=rc["call_class"]))
     return mk(am), mk(cm), am, cm, mk(rm), rm
 

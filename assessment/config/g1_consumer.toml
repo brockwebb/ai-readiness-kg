@@ -7,11 +7,19 @@
 # extra calls under the ceiling; the strongest available consumer is the informative one for a
 # preservation measurement (memo §4.7: newer models are not better at keeping qualifiers — a
 # pre-registered expectation this pin lets a later run test against a second pin).
+#
+# 2026-10-09, seldon AD-035 (task MODEL-001 Part C): each table names a registry ROLE, never a
+# model id or a CLI (R4); the lock supplies both (R3), and model_stub records a served-model
+# receipt on every call (R6). FROZEN-INSTRUMENT NOTE: this consumer was frozen for the January
+# pilot by DD-036 as `model_id = "claude-opus-5"`. Under the lock the `consumer` role (opus
+# family) resolves to the lock's opus, claude-opus-5-5 on 2026-10-09: a different model. Per
+# AD-035 R7 (and H-006 R-30) the G1 instrument RE-PILOTS before its next scored use; results
+# registered under claude-opus-5 stay as they are (history, never re-labelled), and no run
+# under the new id is pooled with them.
 [consumer]
-model_id = "claude-opus-5"
+role = "consumer"               # was model_id = "claude-opus-5" (DD-036 freeze); opus family
 provider = "claude_max_oauth"   # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY (DD-007)
-cli = "claude"
-timeout_seconds = 600
+timeout_seconds = 600           # `cli = "claude"` removed 2026-10-09: the CLI is the lock's
 # Spend-guard call class (controls.yaml spend.call_class_floors) the run is declared under.
 call_class = "g1_eval"
 
@@ -20,10 +28,12 @@ call_class = "g1_eval"
 # choke point, same three gates; `claude -p --model` selects it under Max OAuth (never the API
 # key, DD-007). If the CLI cannot serve this model under OAuth the run stops at the identity
 # gate and the RESULT reports it.
+# 2026-10-09 (MODEL-001): the control was `model_id = "claude-haiku-4-5-20251001"`; it is now
+# the haiku-family `background` role (the registry names this control among its uses), which
+# the lock resolves to claude-haiku-5-5 on 2026-10-09. Same re-pilot rule as the consumer.
 [control]
-model_id = "claude-haiku-4-5-20251001"
+role = "background"
 provider = "claude_max_oauth"
-cli = "claude"
 timeout_seconds = 600
 call_class = "g1_eval"
 

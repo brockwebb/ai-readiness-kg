@@ -118,8 +118,7 @@ STATUSES = ("judged", "unparsed", "unjudged")
 
 RUBRIC_VERSION = "v1.3.0"
 OVERLAY = "definition-conflict (project-local, ai-readiness-kg)"
-PROVIDER = "claude_max_oauth"
-CLI = "claude"
+PROVIDER = "claude_max_oauth"      # the CLI is the seldon lock's (AD-035 R3, task MODEL-001)
 CALL_CLASS = "judge"
 RUN_ID_DEFAULT = "definition_pairs_2026-10-04"
 
@@ -499,7 +498,9 @@ def judge_unit(consumer, unit: dict, attempt: int, model: str, run_id: str, raw_
         except spend.SpendRefusalStop as exc:
             raise StopRun(f"spend_refusal: {exc}") from exc
         except model_stub.ModelSubstitutionError as exc:
-            raise StopRun(f"model_substitution: {exc}") from exc
+            # The unit's named failure is the exception's reason: `model_substituted`, or
+            # `model_side_call` under invariant 5 (seldon AD-035 R6, task MODEL-001).
+            raise StopRun(f"{exc.reason}: {exc}") from exc
         except model_stub.ModelRateLimitError as exc:
             waits += 1
             if waits > RATE_LIMIT_MAX_WAITS:
@@ -512,12 +513,12 @@ def judge_unit(consumer, unit: dict, attempt: int, model: str, run_id: str, raw_
                     "kind": None, "confidence": None, "reason": None, "reason_check": None,
                     "usage": {}, "tokens": 0, "ts": _now()}
     if comp.model_id != model:
-        raise StopRun(f"model_substitution: envelope {comp.model_id!r}, expected {model!r}")
+        raise StopRun(f"model_substituted: envelope {comp.model_id!r}, expected {model!r}")
     parsed = parse_answer(comp.text)
     rec = {**base, **parsed, "error": None,
            "reason_check": reason_check(parsed["reason"], unit["span_a"], unit["span_b"]),
            "usage": comp.usage, "tokens": _tokens(comp.usage),
-           "duration_ms": comp.duration_ms,
+           "duration_ms": comp.duration_ms, "model_receipt": comp.receipt,
            "wall_s": round(time.time() - t0, 2), "ts": _now()}
     raw_dir.mkdir(parents=True, exist_ok=True)
     (raw_dir / f"{unit['unit_id']}.a{attempt}.json").write_text(
@@ -1109,7 +1110,9 @@ def main(argv=None) -> int:
     g.add_argument("--emit-edges", action="store_true")
     g.add_argument("--render", action="store_true")
     g.add_argument("--check", action="store_true")
-    ap.add_argument("--model", default=None, help="default: model_config primary_judge_model_id")
+    ap.add_argument("--role", default=None,
+                    help="the judge's registry role (seldon AD-035, task MODEL-001); default: "
+                         "model_config.yaml primary_judge_role")
     ap.add_argument("--ceiling-tokens", type=int, default=None)
     ap.add_argument("--run-id", default=RUN_ID_DEFAULT)
     ap.add_argument("--workers", type=int, default=WORKERS)
@@ -1158,7 +1161,8 @@ def main(argv=None) -> int:
         return 0
 
     from kg.extraction import model_stub
-    model = a.model or model_stub.load_model_config()["primary_judge_model_id"]
+    role = a.role or model_stub.load_model_config()["primary_judge_role"]
+    model = model_stub.resolve(role)              # the lock id; every record below names it
     rows, epoch = load_q1()
     validate_controls(rows)
     keys = [r["node_key"] for r in rows]
@@ -1193,7 +1197,7 @@ def main(argv=None) -> int:
         ledger.declare(a.run_id, a.ceiling_tokens, declared_by=f"{GENERATOR} ({TASK})",
                        call_class=CALL_CLASS)
         spend.set_current_run(a.run_id)
-        consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=model, provider=PROVIDER, cli=CLI,
+        consumer = ClaudeCLIConsumer(ConsumerConfig(role=role, provider=PROVIDER,
                                                     timeout_seconds=600, call_class=CALL_CLASS))
     rc = run(rows, defs, consumer, model, a.run_id, Path(a.checkpoint or CHECKPOINT),
              Path(a.raw_dir or RAW_DIR), a.workers,

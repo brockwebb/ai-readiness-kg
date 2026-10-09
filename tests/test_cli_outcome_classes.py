@@ -17,8 +17,13 @@ import pytest
 
 from kg import spend
 from kg.extraction import model_stub
+from model_lock import FIXTURE_IDS
 
-CFG = {"model_id": "m", "cli": "claude"}
+# MODEL-001 (seldon AD-035): a stub config names a registry ROLE and the fixture lock
+# (tests/model_lock.py) resolves it; the envelope must report that role's lock id.
+ROLE = "document_extractor"
+M = FIXTURE_IDS["opus"]
+CFG = {"role": ROLE}
 SCHEDULE = [7, 11, 13]        # deliberately not the production values, so a test that
 MAX_RETRIES = 3               # reads the schedule from code instead of config fails
 
@@ -64,7 +69,7 @@ class Proc:
 
 
 OK_STDOUT = json.dumps({"result": '{"ok": 1}',
-                        "modelUsage": {"m": {"inputTokens": 10, "outputTokens": 5}}})
+                        "modelUsage": {M: {"inputTokens": 10, "outputTokens": 5}}})
 
 
 class Script:

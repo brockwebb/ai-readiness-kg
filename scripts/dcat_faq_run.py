@@ -93,7 +93,7 @@ CONTROL_OUT = OUT / "control" / "control_result.json"
 CONTROL_QID = 0
 RUBRIC_VERSION = "v1.3.0"
 OVERLAY = "faq-claim-attribution (project-local, ai-readiness-kg)"
-PROVIDER, CLI = "claude_max_oauth", "claude"
+PROVIDER = "claude_max_oauth"   # the CLI is the seldon lock's (AD-035 R3, task MODEL-001)
 DEFECT_CLASSES = ("relation_unlicensed", "boundary_imprecision", "surface_form_absent",
                   "mention_context_invalid", "granularity_dispute")
 VERDICTS = ("pass", "flag", "fail")
@@ -507,11 +507,13 @@ def call(consumer, model: str, prompt: str, call_id: str) -> tuple:
     except spend.SpendRefusalStop as exc:
         raise StopRun(f"spend_refusal: {exc}") from exc
     except model_stub.ModelSubstitutionError as exc:
-        raise StopRun(f"model_substitution: {exc}") from exc
+        # Named by the exception's reason: `model_substituted` (seldon AD-035 R6), or
+        # `model_side_call` under this repo's invariant 5 (task MODEL-001).
+        raise StopRun(f"{exc.reason}: {exc}") from exc
     except (model_stub.ModelRateLimitError, model_stub.ModelInvocationError) as exc:
         return None, str(exc)[:500]
     if comp.model_id != model:
-        raise StopRun(f"model_substitution: envelope {comp.model_id!r}, expected {model!r}")
+        raise StopRun(f"model_substituted: envelope {comp.model_id!r}, expected {model!r}")
     return comp, None
 
 
@@ -581,6 +583,7 @@ class Runner:
             self.raw.mkdir(parents=True, exist_ok=True)
             (self.raw / f"{uid}.a{attempt}.json").write_text(json.dumps(
                 {"unit_id": uid, "kind": kind, "question_id": qid, "attempt": attempt, "model_id": model,
+                 "model_receipt": comp.receipt,
                  "prompt": prompt, "response_text": comp.text, "usage": comp.usage}, indent=1,
                 ensure_ascii=False), encoding="utf-8")
             try:
@@ -982,9 +985,11 @@ def main(argv=None) -> int:
             led.declare(run_id, ceiling, declared_by=f"{GENERATOR} ({task})",
                         call_class=rc["call_class"], **({"supersede": True} if st else {}))
         spend.set_current_run(run_id)
-        ac = ClaudeCLIConsumer(ConsumerConfig(model_id=am, provider=PROVIDER, cli=CLI,
+        # Each consumer launches the ROLE behind its model_config key (seldon AD-035 R4);
+        # `am`/`cm` are that role's lock id, which every record names.
+        ac = ClaudeCLIConsumer(ConsumerConfig(role=model_stub.role_for_model(am, mc), provider=PROVIDER,
                                               timeout_seconds=rc["timeout_seconds"], call_class=rc["call_class"]))
-        cc = ClaudeCLIConsumer(ConsumerConfig(model_id=cm, provider=PROVIDER, cli=CLI,
+        cc = ClaudeCLIConsumer(ConsumerConfig(role=model_stub.role_for_model(cm, mc), provider=PROVIDER,
                                               timeout_seconds=rc["timeout_seconds"], call_class=rc["call_class"]))
 
     runner = Runner(cfg, evidence_dir, run_dir, ac, cc, am, cm, rc["workers"], log)

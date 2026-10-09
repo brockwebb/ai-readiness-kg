@@ -1474,6 +1474,8 @@ class PreservationProbe(EvalProbe):
             "qualifier_class": qualifier_class, "compression_level": compression if mode == "indirect" else None,
             "prompt_epoch": self.prompts.prompt_epoch,
             "model_id": completion.model_id, "timestamp": ts, "prompt": prompt,
+            # Seldon AD-035 R6 (task MODEL-001): the served-model receipt of this call.
+            "model_receipt": completion.receipt,
             "response_text": completion.text, "usage": completion.usage,
             "duration_ms": completion.duration_ms, "cost_usd": completion.cost_usd,
             "spend_run_id": completion.spend_run_id,

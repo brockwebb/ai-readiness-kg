@@ -32,7 +32,7 @@ python -m pytest tests/test_framework_projection_roundtrip.py  # the gate that m
 python scripts/run_baseline_gates.py [--profiles v1,kernel_v03 --report PATH]  # pre-registered checks
 ```
 
-Extraction and projection need the anaconda python (`/opt/anaconda3/bin/python3`) for `dixie`, `pypdf`, `neo4j`, and the `claude` CLI on PATH; the launchd wrapper `scripts/jobs/airkg_extraction_burn.sh` shows the exact environment. Neo4j creds come from `NEO4J_USER`/`NEO4J_PASS` (fallback: `~/.wintermute/.env`). **Never set `ANTHROPIC_API_KEY`** — the model gate refuses it (DD-007); all model calls go through `claude -p` under Max OAuth.
+Extraction and projection need the anaconda python (`/opt/anaconda3/bin/python3`) for `dixie`, `pypdf`, `neo4j` and `seldon.models`; the launchd wrapper `scripts/jobs/airkg_extraction_burn.sh` shows the exact environment. **Models are roles** (seldon AD-035, MODEL-001, 2026-10-09): `kg/extraction/model_config.yaml` and `assessment/config/g1_consumer.toml` name roles from seldon's `models/registry.yaml`, scripts take `--role`, and `model_stub.invoke` execs the seldon lock's CLI with the lock's id, never `claude` on PATH and never a typed model id. Every call's served-model receipt lands in the spend ledger's settle record; a substitution stops the unit as `model_substituted`. Tests run under a fixture lock (`tests/model_lock.py`, autouse in `tests/conftest.py`). Neo4j creds come from `NEO4J_USER`/`NEO4J_PASS` (fallback: `~/.wintermute/.env`). **Never set `ANTHROPIC_API_KEY`** — the model gate refuses it (DD-007); all model calls go through `claude -p` under Max OAuth.
 
 
 ## Architecture — the invariants you must not break

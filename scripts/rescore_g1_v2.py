@@ -89,6 +89,9 @@ def main(argv=None) -> int:
     ap.add_argument("--evidence", action="append", required=True, help="evidence directory (repeatable)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--split", choices=["dev", "holdout", "all"], default="all")
+    # History, not a launch (seldon AD-035 R5, R7; task MODEL-001, 2026-10-09): this script
+    # makes no model call; these ids select, in SEALED evidence, the records the frozen
+    # consumer and control produced. They name what that evidence was made with and stay.
     ap.add_argument("--consumer-model", default="claude-opus-5")
     ap.add_argument("--control-model", default="claude-haiku-4-5-20251001")
     ap.add_argument("--v2-only", action="store_true", help="only propositions from the v2 (product-surface) fixtures")

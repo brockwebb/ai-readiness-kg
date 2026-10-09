@@ -268,6 +268,8 @@ def persist_raw(doc_id: str, doc_sha: str, meta: dict, error: str | None = None)
         "schema_version": eventlog.schema_version(),
         "corpus_epoch": CORPUS_EPOCH,
         "model_id": meta.get("model_id"),
+        # Seldon AD-035 R6 (task MODEL-001): requested vs served model for this call.
+        "role": meta.get("role"), "model_receipt": meta.get("model_receipt"),
         "usage": meta.get("usage"), "cost_usd": meta.get("cost_usd"),
         "duration_ms": meta.get("duration_ms"), "session_id": meta.get("session_id"),
         "ts": _now(), "error": error,
@@ -463,10 +465,14 @@ def run(max_docs: int | None = None, dry_run: bool = False,
                                 f"(scope {exc.refusal.scope})")
                 break
             except model_stub.ModelSubstitutionError as exc:
-                persist_raw(doc_id, doc_sha, {"raw_result": None}, error=str(exc))
-                write_stop("model_substitution", {"doc_id": doc_id,
-                                                  "expected": exc.expected,
-                                                  "observed": exc.observed})
+                persist_raw(doc_id, doc_sha, {"raw_result": None, "model_receipt": exc.receipt},
+                            error=str(exc))
+                # Named by the exception's reason: `model_substituted` (seldon AD-035 R6) or
+                # `model_side_call` (invariant 5), with the receipt (task MODEL-001).
+                write_stop(exc.reason, {"doc_id": doc_id,
+                                        "expected": exc.expected,
+                                        "observed": exc.observed,
+                                        "receipt": exc.receipt})
                 progress.append(f"- STOP: model substitution on {doc_id} "
                                 f"({exc.observed} != {exc.expected})")
                 return 2

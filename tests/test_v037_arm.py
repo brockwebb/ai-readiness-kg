@@ -27,6 +27,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from kg.extraction import anchors, merge  # noqa: E402
+from model_lock import FIXTURE_IDS  # noqa: E402  (the fixture lock, MODEL-001)
 
 CHUNK = ("AIDRIN is a data readiness tool.\n"
          "It scores six dimensions on a 0-1 scale. The tool was released in 2024.\n"
@@ -42,7 +43,7 @@ def cp():
     from kg.extraction import model_stub
     keep = {k: getattr(mod, k) for k in
             ("PROFILE", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG", "RAW_DIR",
-             "CORPUS_EPOCH", "EMISSION", "ARM_MODEL", "DOCS", "DOC_PATHS", "PURPOSE",
+             "CORPUS_EPOCH", "EMISSION", "ARM_ROLE", "DOCS", "DOC_PATHS", "PURPOSE",
              "CHUNK_FILTER")}
     prompt = model_stub._PROMPT_PATH
     yield mod
@@ -57,13 +58,17 @@ def test_apply_arm_binds_every_arm_scoped_global_from_the_profile(cp):
     """A second arm on a second shard must not inherit the first arm's shard, raw dir or
     emission contract: two experiments interleaved on one append-only log cannot be
     separated afterwards."""
-    cp.apply_arm("v0_3_7", "claude-haiku-4-5-20251001", "pilot_v037_arm_a_haiku")
+    # MODEL-001 (seldon AD-035): an arm names a registry ROLE, resolved through the (fixture)
+    # lock; the arm's id was claude-haiku-4-5-20251001, and the haiku-family role is now
+    # `background`.
+    cp.apply_arm("v0_3_7", "background", "pilot_v037_arm_a_haiku")
     assert (cp.SHARD_NO, cp.TAG) == (17, "v0_3_7")
     assert cp.RAW_DIR == REPO / "events/raw/v0_3_7"
     assert cp.EMISSION == "anchor"
     assert cp.RUN_ID == "pilot_v037_arm_a_haiku"
     assert cp.JUDGE_RUN_ID == "pilot_v037_arm_a_haiku_judge"
-    assert cp.model_cfg()["model_id"] == "claude-haiku-4-5-20251001"
+    assert cp.model_cfg()["model_id"] == FIXTURE_IDS["haiku"]
+    assert cp.model_cfg()["role"] == "background"
 
 
 def test_banked_arm_still_binds_to_its_own_shard(cp):
@@ -71,7 +76,7 @@ def test_banked_arm_still_binds_to_its_own_shard(cp):
     it was or the comparison silently changes."""
     cp.apply_arm("chunked_v035", None, None)
     assert (cp.SHARD_NO, cp.TAG, cp.EMISSION) == (16, "chunked_v035", "verbatim")
-    assert cp.ARM_MODEL is None
+    assert cp.ARM_ROLE is None
 
 
 def test_unknown_profile_and_unknown_emission_contract_are_refused(cp, tmp_path, monkeypatch):

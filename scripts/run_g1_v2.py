@@ -216,8 +216,8 @@ def main(argv=None) -> int:
             print(f"  [{i + 1}/{len(plan)}] STOP — {exc}")
             break
         except model_stub.ModelSubstitutionError as exc:
-            stop_reason = f"model_substitution: {exc}"
-            report["walk"].append({**s, "status": "model_substitution", "detail": str(exc)})
+            stop_reason = f"{exc.reason}: {exc}"   # model_substituted / model_side_call (AD-035 R6)
+            report["walk"].append({**s, "status": exc.reason, "detail": str(exc), "receipt": exc.receipt})
             print(f"  [{i + 1}/{len(plan)}] STOP — {exc}")
             break
         except (model_stub.ModelInvocationError, model_stub.ModelRateLimitError) as exc:

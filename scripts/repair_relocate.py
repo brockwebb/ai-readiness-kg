@@ -162,9 +162,10 @@ def main() -> int:
             "".join(json.dumps(w, ensure_ascii=False) + "\n" for w in forwarded), encoding="utf-8")
     else:
         cfg = model_stub.load_model_config()
-        if not cfg.get("cleanup_model_id"):
-            raise SystemExit("FATAL: model_config.yaml has no cleanup_model_id (DD-006 cleanup-class model)")
-        cfg = {**cfg, "model_id": cfg["cleanup_model_id"]}
+        if not cfg.get("cleanup_role"):
+            raise SystemExit("FATAL: model_config.yaml has no cleanup_role (DD-006 cleanup-class model)")
+        # The cleanup-class ROLE, resolved through the seldon lock (AD-035, task MODEL-001).
+        cfg = model_stub.config_for_role(cfg["cleanup_role"], cfg)
         model_stub.guard_no_api_key()
         tpl = TEMPLATE.read_text(encoding="utf-8")
         RAW_DIR.mkdir(parents=True, exist_ok=True)

@@ -19,9 +19,13 @@ quoting the bare word, because a bare word is not evidence and pretending otherw
 confident answer with nothing behind it.
 
     /opt/anaconda3/bin/python3 scripts/homograph_judge.py --dry-run
-    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --model claude-opus-5 --limit 10 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --model claude-opus-5 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --model claude-fable-5-1 --sample 50 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --role adjudicator --limit 10 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --role adjudicator --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/homograph_judge.py --role judge --sample 50 --ceiling-tokens N
+
+The model is a registry ROLE (seldon AD-035, task MODEL-001, 2026-10-09). The first pass ran
+on `claude-opus-5` (now the opus-family `adjudicator` role) and the independent sample on
+`claude-fable-5-1` (the `judge` role); the lock gives each role its id.
 """
 from __future__ import annotations
 
@@ -53,7 +57,7 @@ POP = REPO / "state" / "homograph_population_2026-09-06.json"
 EVIDENCE = REPO / "assessment" / "evidence" / "homograph_judge"
 RESULTS = REPO / "assessment" / "results"
 
-PROVIDER, CLI, CALL_CLASS = "claude_max_oauth", "claude", "judge"
+PROVIDER, CALL_CLASS = "claude_max_oauth", "judge"   # the CLI is the seldon lock's (AD-035 R3)
 ACCEPT_CONFIDENCE = 0.80
 SAMPLE_SEED = 20260906
 SPANS_PER_ARM = 3
@@ -192,7 +196,9 @@ def read_decisions(label: str) -> dict:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--model", default="claude-opus-5")
+    ap.add_argument("--role", default="adjudicator",
+                    help="the judge's registry role (seldon AD-035, task MODEL-001); the "
+                         "independent second rater is `--role judge`")
     ap.add_argument("--ceiling-tokens", type=int, default=None)
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--limit", type=int, default=0)
@@ -203,6 +209,7 @@ def main(argv=None) -> int:
     ap.add_argument("--timeout", type=int, default=300)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
+    a.model = model_stub.resolve(a.role)          # the lock id; every record below names it
 
     homo = json.loads(HOMO.read_text(encoding="utf-8"))
     pop = population(homo)
@@ -269,7 +276,7 @@ def main(argv=None) -> int:
     ledger.declare(run_id, a.ceiling_tokens,
                    declared_by=f"scripts/homograph_judge.py ({TASK})", call_class=CALL_CLASS)
     spend.set_current_run(run_id)
-    consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=a.model, provider=PROVIDER, cli=CLI,
+    consumer = ClaudeCLIConsumer(ConsumerConfig(role=a.role, provider=PROVIDER,
                                                 timeout_seconds=a.timeout, call_class=CALL_CLASS))
     ev_dir = EVIDENCE / label
     ev_dir.mkdir(parents=True, exist_ok=True)
@@ -292,7 +299,8 @@ def main(argv=None) -> int:
             verdict, conf, reason = parse_answer(completion.text)
             rec = {"term_id": tid, "pref_label": terms[tid]["pref_label"],
                    "klass": homo["terms"][tid]["klass"], "arms": homo["terms"][tid]["arms"],
-                   "rater": a.model, "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY,
+                   "rater": a.model, "rater_role": a.role, "model_receipt": completion.receipt,
+                   "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY,
                    "verdict": verdict, "confidence": conf, "reason": reason,
                    "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
                    "usage": completion.usage, "ts": _now()}
