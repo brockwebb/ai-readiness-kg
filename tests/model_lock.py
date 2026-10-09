@@ -89,5 +89,19 @@ def argv_lines(seen_cli: Path) -> list:
 #: The variable the accessor reads; re-exported so tests name it once.
 MODELS_HOME_ENV = models.MODELS_HOME_ENV
 
-__all__ = ["FIXTURE_IDS", "FIXTURE_CLI_VERSION", "MODELS_HOME_ENV", "build_models_home",
+#: Seldon AD-036-R9 (task PA-001 Part E): the opt-in for a test that calls a real model. A
+#: `live_model` test is skipped (`tests/conftest.py`) unless this is exactly "1", and the skip
+#: reason names it.
+LIVE_MODEL_ENV = "LIVE_MODEL_CALLS"
+LIVE_MODEL_REASON = (f"calls a real model; set {LIVE_MODEL_ENV}=1 to run "
+                     f"(seldon AD-036-R9: a test never spends unasked)")
+
+#: The CLI the fixture lock names, when set (`tests/conftest.py` `fixture_models_home`): the
+#: zero-call proof (`tests/test_no_model_calls_by_default.py`) points it at a recording shim, so
+#: a test that reaches the lock's CLI is COUNTED rather than only refused. Unset, the lock names
+#: the refusing CLI above. Either way nothing reaches a real model.
+FIXTURE_CLI_ENV = "AIRKG_TEST_MODEL_CLI"
+
+__all__ = ["FIXTURE_IDS", "FIXTURE_CLI_VERSION", "MODELS_HOME_ENV", "LIVE_MODEL_ENV",
+           "LIVE_MODEL_REASON", "FIXTURE_CLI_ENV", "build_models_home",
            "fake_cli_serving", "write_cli", "env_lines", "argv_lines", "seldon_registry"]

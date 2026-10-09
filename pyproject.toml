@@ -117,5 +117,6 @@ undeclarable = { control_plane = "Wintermute's control plane, ~/.wintermute/scri
 
 [tool.pytest.ini_options]
 markers = ["live_plan: reads the real frozen burn plan and event log",
+           "live_model: calls a real model; skipped unless LIVE_MODEL_CALLS=1 (seldon AD-036-R9, tests/conftest.py)",
            "slow: runs a control fixture at the REAL standing rate, or replays the whole event log"]
 testpaths = ["tests"]
