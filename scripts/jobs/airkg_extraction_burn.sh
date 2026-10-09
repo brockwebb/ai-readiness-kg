@@ -5,6 +5,8 @@
 # STOP file present, or run complete. Cap-tripping is normal operation.
 set -u
 # anaconda python carries the deps (dixie, pypdf); claude CLI lives in ~/.bun/bin
+# 2026-10-09 (seldon AD-035, task MODEL-001): model calls no longer exec `claude` from PATH;
+# kg/extraction/model_stub.py execs the seldon model lock's CLI for the configured role.
 export PATH="/opt/anaconda3/bin:$HOME/.bun/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 LOG_DIR="$REPO/logs"

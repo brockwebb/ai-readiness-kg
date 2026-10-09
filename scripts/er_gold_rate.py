@@ -12,8 +12,11 @@ ground truth.
 **The independence conditions, enforced in code rather than in prose** — the same three
 `g1_calibration_rate.py` enforces, for the same reason (DD-037):
 
-1. **A different model from every decision under test.** `--model` is required and
-   `claude-opus-5` is refused by name.
+1. **A different model from every decision under test.** `--role` names the rater's registry
+   role (default `judge`, the fable family). The decisions under test were made by
+   `claude-opus-5` (history, refused by name), and the lock ids of the roles that make such
+   decisions now (`document_extractor`, `adjudicator`) are refused too (seldon AD-035, task
+   MODEL-001, 2026-10-09: the refusal follows the role, so a lock bump cannot void it).
 2. **No repo context.** Calls go through `kg/extraction/model_stub.invoke`, which runs
    `claude -p` from a hermetic empty cwd (root-caused 2026-07-09), so no CLAUDE.md, no design
    decisions, no results files reach the rater.
@@ -26,9 +29,9 @@ answers the question the sheet asks. Only the response format is added, because 
 a person to write in a blank.
 
     /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --dry-run
-    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --model claude-fable-5-1 --limit 10 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --model claude-fable-5-1 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --model claude-fable-5-1 --retest 30 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --role judge --limit 10 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --role judge --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/er_gold_rate.py --role judge --retest 30 --ceiling-tokens N
 """
 from __future__ import annotations
 
@@ -56,12 +59,15 @@ EVIDENCE = REPO / "assessment" / "evidence" / "er_gold"
 RESULTS = REPO / "assessment" / "results"
 
 PROVIDER = "claude_max_oauth"
-CLI = "claude"
 CALL_CLASS = "judge"
 
 #: Every pipeline decision on these pairs came from this model or from deterministic code. A
 #: rater on it would be grading its own work, so the refusal lives in code and not only here.
+#: History (what the sealed decisions were made with): it stays, and stays refused.
 PIPELINE_MODEL = "claude-opus-5"
+#: The roles whose models make such decisions now (seldon AD-035): extraction and the
+#: link / homograph judges. Their lock ids are refused, whatever the lock resolves them to.
+PIPELINE_ROLES = ("document_extractor", "adjudicator")
 
 #: §2's seeded re-rate draw. Fixed so the retest set is reproducible.
 RETEST_SEED = 20260905
@@ -152,7 +158,8 @@ def read_decisions(pass_name: str) -> dict:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--model", default="claude-fable-5-1")
+    ap.add_argument("--role", default="judge",
+                    help="the rater's registry role (seldon AD-035); its lock id is the rater")
     ap.add_argument("--ceiling-tokens", type=int, default=None)
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--limit", type=int, default=0, help="rate only the first N unrated pairs")
@@ -161,6 +168,12 @@ def main(argv=None) -> int:
     ap.add_argument("--timeout", type=int, default=300)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
+    a.model = model_stub.resolve(a.role)          # the lock id; every record below names it
+    refused = {PIPELINE_MODEL, *(model_stub.resolve(r) for r in PIPELINE_ROLES)}
+    if a.model in refused:
+        raise SystemExit(f"FATAL: {a.model} (role {a.role}) is the model of the decisions under "
+                         f"test; the gold rater must be independent of them (DD-037, DD-045 "
+                         f"addendum-01, seldon AD-035)")
 
     sheet_text = SHEET.read_text(encoding="utf-8")
     instructions = instruction_block(sheet_text)
@@ -182,9 +195,6 @@ def main(argv=None) -> int:
         return 0
 
     model_stub.guard_no_api_key()
-    if a.model == PIPELINE_MODEL:
-        raise SystemExit(f"FATAL: {a.model} produced the decisions under test; the gold rater "
-                         f"must be independent of them (DD-037, and DD-045 addendum-01)")
     if not a.ceiling_tokens:
         raise SystemExit("FATAL: --ceiling-tokens required before any model call (DD-022)")
 
@@ -193,7 +203,7 @@ def main(argv=None) -> int:
     ledger.declare(run_id, a.ceiling_tokens,
                    declared_by=f"scripts/er_gold_rate.py ({TASK})", call_class=CALL_CLASS)
     spend.set_current_run(run_id)
-    consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=a.model, provider=PROVIDER, cli=CLI,
+    consumer = ClaudeCLIConsumer(ConsumerConfig(role=a.role, provider=PROVIDER,
                                                 timeout_seconds=a.timeout, call_class=CALL_CLASS))
     ev_dir = EVIDENCE / pass_name
     ev_dir.mkdir(parents=True, exist_ok=True)
@@ -215,7 +225,8 @@ def main(argv=None) -> int:
                 raise SystemExit(f"FATAL: envelope reports {completion.model_id!r}, "
                                  f"expected {a.model!r}")
             verdict, conf, reason = parse_answer(completion.text)
-            rec = {"pair_id": pid, "pass": pass_name, "rater": a.model,
+            rec = {"pair_id": pid, "pass": pass_name, "rater": a.model, "rater_role": a.role,
+                   "model_receipt": completion.receipt,
                    "verdict": verdict, "confidence": conf, "reason": reason,
                    "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
                    "usage": completion.usage, "ts": _now()}

@@ -2,10 +2,18 @@
 import json
 import textwrap
 
+from pathlib import Path
+
 import pytest
 
 from kg import spend
 from kg.extraction import model_stub
+from model_lock import FIXTURE_IDS, MODELS_HOME_ENV, build_models_home
+
+# MODEL-001 (seldon AD-035): a stub config names a registry ROLE and the fixture lock
+# (tests/model_lock.py) resolves it; the envelope must report that role's lock id.
+ROLE = "document_extractor"
+M = FIXTURE_IDS["opus"]
 
 
 @pytest.fixture
@@ -85,10 +93,13 @@ def test_extract_json_tolerates_fences():
         model_stub._extract_json("no json here")
 
 
-def test_missing_cli_is_a_transient_invocation_error(monkeypatch, declared_run):
+def test_missing_cli_is_a_transient_invocation_error(monkeypatch, declared_run, tmp_path):
     # CLI auto-update window (2026-08-22): `claude` briefly unresolvable -> ModelInvocationError
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    cfg = {"model_id": "m", "cli": "/nonexistent/claude-binary"}
+    # MODEL-001: the CLI is the lock's, so the missing binary is a lock whose cli.path is gone.
+    monkeypatch.setenv(MODELS_HOME_ENV, str(build_models_home(
+        tmp_path / "models_home", cli_path=Path("/nonexistent/claude-binary"))))
+    cfg = {"role": ROLE}
     with pytest.raises(model_stub.ModelInvocationError):
         model_stub.invoke("d", "text", prompt="p", config=cfg)
     # never-dispatched call released its reservation (DD-022): capacity fully restored
@@ -102,13 +113,13 @@ def test_resume_session_id_adds_resume_flag(monkeypatch, declared_run):
     captured = {}
     def fake_run(cmd, **kw):
         captured["cmd"] = cmd
-        class R: returncode = 0; stdout = json.dumps({"result": '{"ok": 1}', "modelUsage": {"m": {}}}); stderr = ""
+        class R: returncode = 0; stdout = json.dumps({"result": '{"ok": 1}', "modelUsage": {M: {}}}); stderr = ""
         return R()
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.setattr(model_stub.subprocess, "run", fake_run)
-    model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"}, resume_session_id="sess-1")
+    model_stub.invoke("d", "", prompt="p", config={"role": ROLE}, resume_session_id="sess-1")
     assert "--resume" in captured["cmd"] and "sess-1" in captured["cmd"]
-    model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"})
+    model_stub.invoke("d", "", prompt="p", config={"role": ROLE})
     assert "--resume" not in captured["cmd"]
 
 
@@ -135,7 +146,7 @@ def test_parse_json_false_returns_prose_through_the_same_gates(monkeypatch, decl
         class R:
             returncode = 0
             stdout = json.dumps({"result": "Colorado had 564,757 one-person households, ±10,127.",
-                                 "modelUsage": {"m": {"inputTokens": 50, "outputTokens": 20}},
+                                 "modelUsage": {M: {"inputTokens": 50, "outputTokens": 20}},
                                  "session_id": "s1"})
             stderr = ""
         return R()
@@ -143,11 +154,11 @@ def test_parse_json_false_returns_prose_through_the_same_gates(monkeypatch, decl
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.setattr(model_stub.subprocess, "run", fake_run)
     meta = model_stub.invoke("g1-acs-moe-001.indirect", "", prompt="Restate the following …",
-                             config={"model_id": "m", "cli": "claude"}, parse_json=False)
+                             config={"role": ROLE}, parse_json=False)
     assert meta["output"] == "Colorado had 564,757 one-person households, ±10,127."
-    assert meta["model_id"] == "m" and meta["usage"]["outputTokens"] == 20
+    assert meta["model_id"] == M and meta["usage"]["outputTokens"] == 20
     assert captured["cwd"] and "hermetic" in captured["cwd"]      # 2026-07-09 finding kept
-    assert "--model" in captured["cmd"] and "m" in captured["cmd"]
+    assert captured["cmd"][captured["cmd"].index("--model") + 1] == M
     ledger = spend.SpendLedger()
     assert ledger.committed(declared_run) == 70                    # settled at measured usage
 
@@ -160,4 +171,4 @@ def test_parse_json_false_returns_prose_through_the_same_gates(monkeypatch, decl
 
     monkeypatch.setattr(model_stub.subprocess, "run", substituted)
     with pytest.raises(model_stub.ModelSubstitutionError):
-        model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"}, parse_json=False)
+        model_stub.invoke("d", "", prompt="p", config={"role": ROLE}, parse_json=False)

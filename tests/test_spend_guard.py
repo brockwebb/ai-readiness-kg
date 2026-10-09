@@ -23,6 +23,12 @@ import pytest
 
 from kg import eventlog, spend
 from kg.extraction import model_stub
+from model_lock import FIXTURE_IDS
+
+# MODEL-001 (seldon AD-035): a stub config names a registry ROLE and the fixture lock
+# (tests/model_lock.py) resolves it; the envelope must report that role's lock id.
+ROLE = "document_extractor"
+M = FIXTURE_IDS["opus"]
 
 FLOOR = 36000          # cleanup-class floor written into the tmp controls below
 
@@ -69,7 +75,7 @@ class CountingStub:
         class R:
             returncode = 0
             stdout = json.dumps({"result": '{"ok": 1}',
-                                 "modelUsage": {"m": {"inputTokens": 10, "outputTokens": 5}}})
+                                 "modelUsage": {M: {"inputTokens": 10, "outputTokens": 5}}})
             stderr = ""
         return R()
 
@@ -91,7 +97,7 @@ def test_seeded_near_ceiling_refuses_before_dispatch(guard, monkeypatch):
     monkeypatch.setattr(model_stub.subprocess, "run", stub)
     monkeypatch.setenv(spend.RUN_ENV, "r1")
     with pytest.raises(spend.SpendRefusalStop) as exc:
-        model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"})
+        model_stub.invoke("d", "", prompt="p", config={"role": ROLE})
     assert stub.calls == 0, "stub model must never be invoked on refusal"
     assert exc.value.refusal.scope == "run"
     refuses = [r for r in _records(ledger) if r["record"] == "refuse"]
@@ -170,7 +176,7 @@ def test_undeclared_run_refuses(guard, monkeypatch):
     monkeypatch.setattr(model_stub.subprocess, "run", stub)
     # no RUN_ENV set at all — the choke point must refuse, not dispatch unmetered
     with pytest.raises(spend.SpendRefusalStop) as exc:
-        model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"})
+        model_stub.invoke("d", "", prompt="p", config={"role": ROLE})
     assert stub.calls == 0
     assert exc.value.refusal.reason == "undeclared_run"
 

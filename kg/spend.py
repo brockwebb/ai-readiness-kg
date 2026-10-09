@@ -385,7 +385,7 @@ class SpendLedger:
 
     def settle(self, reservation: Reservation, actual_tokens: int,
                model_call_event_id: str | None = None, outcome_class: str | None = None,
-               **flags) -> None:
+               model_receipt: dict | None = None, **flags) -> None:
         """Replace the reservation's estimate with the actual cost. `model_call_event_id`
         is nullable at the choke point (the event does not exist yet when the stub settles);
         runners that write model_call events stamp reservation_id/run_id ON the event, and
@@ -395,7 +395,11 @@ class SpendLedger:
         2026-09-02_spend_guard_exit1_and_state_merge): `success` for a measured envelope,
         or the CLI outcome class / failure mode that forced a settle at the estimate. Status
         and reconcile break the booked tokens down by it. Records written before the field
-        existed report as `unclassified`."""
+        existed report as `unclassified`.
+
+        `model_receipt` is seldon AD-035 R6's per-call record, `{requested, served,
+        side_models, ok}` (task MODEL-001): the settle is the one durable record every call
+        through the choke point writes, so the receipt lives here whatever the caller keeps."""
         with self._open_locked() as fh:
             rec = {"record": "settle", "run_id": reservation.run_id,
                    "reservation_id": reservation.reservation_id,
@@ -406,6 +410,8 @@ class SpendLedger:
                     rec[key] = True
             if outcome_class:
                 rec["outcome_class"] = outcome_class
+            if model_receipt is not None:
+                rec["model_receipt"] = dict(model_receipt)
             self._append(fh, rec)
 
     def release(self, reservation: Reservation, reason: str,

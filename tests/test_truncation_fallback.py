@@ -8,6 +8,7 @@ import pytest
 
 from kg import spend
 from kg.extraction import model_stub, parser
+from model_lock import FIXTURE_IDS
 
 
 @pytest.fixture
@@ -28,7 +29,11 @@ def declared_run(tmp_path, monkeypatch):
     monkeypatch.setenv(spend.RUN_ENV, "trunc-test")
 
 
-CFG = {"model_id": "m", "cli": "claude", "provider": "claude_max_oauth",
+# MODEL-001 (seldon AD-035): a stub config names a registry ROLE and the fixture lock
+# (tests/model_lock.py) resolves it; the envelope must report that role's lock id.
+ROLE = "document_extractor"
+M = FIXTURE_IDS["opus"]
+CFG = {"role": ROLE, "provider": "claude_max_oauth",
        "truncation_suspect_tokens": 40000}
 
 TURN_PAYLOADS = [
@@ -58,7 +63,7 @@ class StubCLI:
         class R:
             returncode = 0
             stdout = json.dumps({"result": result, "session_id": f"sess-{min(n,1)}",
-                                 "modelUsage": {"m": {"inputTokens": 10,
+                                 "modelUsage": {M: {"inputTokens": 10,
                                                       "outputTokens": out_tokens}}})
             stderr = ""
         return R()
@@ -95,7 +100,7 @@ def test_small_layerless_output_is_not_treated_as_truncation(declared_run, monke
             class R:
                 returncode = 0
                 stdout = json.dumps({"result": '{"concepts": []}', "session_id": "s",
-                                     "modelUsage": {"m": {"outputTokens": 900}}})
+                                     "modelUsage": {M: {"outputTokens": 900}}})
                 stderr = ""
             return R()
     stub = SmallStub()

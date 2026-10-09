@@ -246,7 +246,8 @@ def stage2(a, cfg, ledger, run_id) -> int:
         return 0
     tpl = ENTAIL_TEMPLATE.read_text(encoding="utf-8")
     counts = Counter()
-    s2_cfg = {**cfg, "model_id": cfg["secondary_judge_model_id"]}
+    # The secondary judge's ROLE, resolved through the seldon lock (AD-035, task MODEL-001).
+    s2_cfg = model_stub.config_for_role(cfg["secondary_judge_role"], cfg)
     for b in range(0, len(proposals), STAGE2_BATCH):
         batch = proposals[b:b + STAGE2_BATCH]
         payload = [{"id": f"p{j}", "attribute": p["attribute"], "value": p["value"],
@@ -327,11 +328,11 @@ def main() -> int:
     spend.set_current_run(run_id)
     cfg = model_stub.load_model_config()
     if a.stage == "1":
-        if not cfg.get("cleanup_model_id"):
-            raise SystemExit("FATAL: no cleanup_model_id in model_config.yaml (DD-006)")
-        return stage1(a, {**cfg, "model_id": cfg["cleanup_model_id"]}, ledger, run_id)
-    if not cfg.get("secondary_judge_model_id"):
-        raise SystemExit("FATAL: no secondary_judge_model_id in model_config.yaml (DD-015)")
+        if not cfg.get("cleanup_role"):
+            raise SystemExit("FATAL: no cleanup_role in model_config.yaml (DD-006)")
+        return stage1(a, model_stub.config_for_role(cfg["cleanup_role"], cfg), ledger, run_id)
+    if not cfg.get("secondary_judge_role"):
+        raise SystemExit("FATAL: no secondary_judge_role in model_config.yaml (DD-015)")
     return stage2(a, cfg, ledger, run_id)
 
 

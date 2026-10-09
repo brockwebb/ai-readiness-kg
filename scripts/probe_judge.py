@@ -8,6 +8,12 @@ events/batch-009_probe_judge.jsonl (`purpose: probe`), raw envelopes in events/r
 Agents are software agents (PROV-O prov:SoftwareAgent) identified by model id + version string
 from the CLI envelope + the sha256 of the judge template. Resume keyed on (fact_id, agent id,
 run label).
+
+The judge is a registry ROLE (seldon AD-035, task MODEL-001, 2026-10-09): `--role`, default the
+extraction config's `role` (what `--model` defaulted to before). `--model` is kept for the
+dispatchers that pass the rater ids model_config.yaml resolves (`primary_judge_model_id`,
+`secondary_judge_model_id`): it must be the lock id of a role that config names, and the call
+launches that role. Any other id is refused.
 """
 from __future__ import annotations
 
@@ -111,7 +117,8 @@ def judge_batch(batch: list[dict], cfg: dict, jv: str, sha: str, batch_id: str, 
     meta = model_stub.invoke(f"probe:{batch_id}", "", prompt=prompt, timeout=PER_CALL_TIMEOUT_S, config=cfg)
     wall = round(time.time() - t0, 1)
     (RAW_DIR / f"{batch_id}.{cfg['model_id']}.json").write_text(
-        json.dumps({"batch_id": batch_id, "run": run, "model_id": cfg["model_id"], "usage": meta["usage"],
+        json.dumps({"batch_id": batch_id, "run": run, "model_id": cfg["model_id"], "role": cfg["role"],
+                    "model_receipt": meta["model_receipt"], "usage": meta["usage"],
                     "cost_usd": meta["cost_usd"], "duration_ms": meta["duration_ms"], "wall_s": wall,
                     "session_id": meta.get("session_id"), "raw_result": meta["raw_result"]},
                    ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
@@ -141,7 +148,10 @@ def judge_batch(batch: list[dict], cfg: dict, jv: str, sha: str, batch_id: str, 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=None, help="model id (default: model_config model_id)")
+    ap.add_argument("--role", default=None,
+                    help="the judge's registry role (default: model_config.yaml `role`)")
+    ap.add_argument("--model", default=None,
+                    help="a lock id of a role model_config.yaml names (validated; prefer --role)")
     ap.add_argument("--batch", type=int, required=True)
     ap.add_argument("--run", required=True, help="run label: calib_single | calib_batch | main | selfcheck")
     ap.add_argument("--fact-ids-file", default=None, help="JSON list of fact_ids to judge (default all)")
@@ -151,8 +161,12 @@ def main() -> int:
     a = ap.parse_args(); set_prefix(a.prefix)
     model_stub.guard_no_api_key()
     cfg = model_stub.load_model_config()
+    if a.role and a.model:
+        raise SystemExit("FATAL: name the judge by --role or by --model, not both")
     if a.model:
-        cfg = {**cfg, "model_id": a.model}
+        cfg = model_stub.config_for_role(model_stub.role_for_model(a.model, cfg), cfg)
+    elif a.role:
+        cfg = model_stub.config_for_role(a.role, cfg)
     jv, sha = judge_version(), template_sha()
     ids = set(json.loads(Path(a.fact_ids_file).read_text())) if a.fact_ids_file else None
     facts = load_facts(ids)

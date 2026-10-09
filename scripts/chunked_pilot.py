@@ -74,8 +74,9 @@ CORPUS_EPOCH = "chunked-2026-08-27"
 #: "verbatim" = the model types the grounding span (v0.3.5). "anchor" = the model emits a
 #: pointer and the HARNESS cuts the span from the source (v0.3.7). Read from the profile.
 EMISSION = "verbatim"
-#: Extractor model for this arm, overriding `model_config.yaml`. None = the pinned model.
-ARM_MODEL = None
+#: Extractor ROLE for this arm (seldon AD-035, task MODEL-001: was ARM_MODEL, a model id),
+#: overriding `model_config.yaml`'s `role`. None = the configured extraction role.
+ARM_ROLE = None
 
 
 def profile_block(profile: str) -> dict:
@@ -87,12 +88,12 @@ def profile_block(profile: str) -> dict:
     return prof
 
 
-def apply_arm(profile: str | None = None, model: str | None = None,
+def apply_arm(profile: str | None = None, role: str | None = None,
               run_id: str | None = None) -> dict:
     """Bind every arm-scoped global from the named profile. Loud on a missing key: a shard
     number or raw dir silently defaulting to another arm's would cross-contaminate two
     experiments on an append-only log, which no later correction can fully undo."""
-    global PROFILE, RUN_ID, SHARD_NO, TAG, RAW_DIR, CORPUS_EPOCH, EMISSION, ARM_MODEL
+    global PROFILE, RUN_ID, SHARD_NO, TAG, RAW_DIR, CORPUS_EPOCH, EMISSION, ARM_ROLE
     global PROFILE_CLASS
     if profile:
         PROFILE = profile
@@ -118,7 +119,7 @@ def apply_arm(profile: str | None = None, model: str | None = None,
     # model_stub) disagree about which prompt the run used. `rbe.apply_profile` is what both
     # binds it and VERIFIES the template/chunker sha pins, so it belongs in exactly one place.
     rbe.apply_profile(PROFILE, chunk_unit_ok=True)
-    ARM_MODEL = model
+    ARM_ROLE = role
     if run_id:
         RUN_ID = run_id
         JUDGE_RUN_ID_ = f"{run_id}_judge"
@@ -127,10 +128,11 @@ def apply_arm(profile: str | None = None, model: str | None = None,
 
 
 def model_cfg() -> dict:
-    """The extraction model config for THIS arm. The identity gate in `model_stub.invoke`
-    still applies unchanged: an envelope reporting any other model is a hard stop."""
+    """The extraction model config for THIS arm: the arm's role, resolved through the seldon
+    lock (AD-035). The identity gate in `model_stub.invoke` still applies unchanged: an
+    envelope reporting any other model is a hard stop."""
     cfg = model_stub.load_model_config()
-    return {**cfg, "model_id": ARM_MODEL} if ARM_MODEL else cfg
+    return model_stub.config_for_role(ARM_ROLE, cfg) if ARM_ROLE else cfg
 
 
 def arm_prefix() -> str:
@@ -1543,7 +1545,7 @@ def instrument_recall(baseline_tag: str = "chunked_v035") -> dict:
     substring of the other) is loose in the other direction, so BOTH are reported and the
     truth is bracketed."""
     keep = {k: globals()[k] for k in ("PROFILE", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG",
-                                      "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_MODEL")}
+                                      "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_ROLE")}
     try:
         shared = set(chunk_yield(TAG)) & set(chunk_yield(baseline_tag))
         arm = _proposed_nodes(shared)
@@ -1581,7 +1583,7 @@ def phase_yield(a) -> int:
     base_hist, base_quar, base_emitted = quarantine_by_reason("chunked_v035")
     per_doc = per_doc_settled_chunked()
     print(f"\n=== arm {RUN_ID} (profile {PROFILE}, emission {EMISSION}, "
-          f"model {ARM_MODEL or model_cfg()['model_id']}) ===")
+          f"model {model_cfg()['model_id']}) ===")
     print(f"chunks with events: {y['arm_chunks']} (baseline v0.3.5: {y['baseline_chunks']}; "
           f"shared: {y['shared_chunks']})")
     print(f"admitted/chunk on shared chunks: arm {y['arm_density']} vs "
@@ -1606,7 +1608,7 @@ def phase_yield(a) -> int:
     print(f"total settled: {sum(per_doc.values()):,}")
     (METRICS / f"{TAG}_yield.json").write_text(json.dumps(
         {"arm": RUN_ID, "profile": PROFILE, "emission": EMISSION,
-         "model": ARM_MODEL or model_cfg()["model_id"], "yield": y,
+         "model": model_cfg()["model_id"], "role": model_cfg()["role"], "yield": y,
          "quarantine": {"histogram": hist, "quarantined": quar, "emitted": emitted},
          "baseline_quarantine": {"histogram": base_hist, "quarantined": base_quar,
                                  "emitted": base_emitted},
@@ -1776,8 +1778,9 @@ def main() -> int:
     ap.add_argument("--instrument-item-cap", type=int, default=0,
                     help="judge at most N Instrument items per arm (0 = all). Spend bound "
                          "declared before labels are bought; seeded and reported.")
-    ap.add_argument("--model", default=None,
-                    help="extractor model for this arm, overriding model_config.yaml. The "
+    ap.add_argument("--role", default=None,
+                    help="extractor registry role for this arm (seldon AD-035; it replaced "
+                         "--model on 2026-10-09), overriding model_config.yaml `role`. The "
                          "identity gate still applies: an envelope reporting any other "
                          "model is a hard stop.")
     ap.add_argument("--run-id", default=None,
@@ -1787,7 +1790,7 @@ def main() -> int:
     model_stub.guard_no_api_key()
     if a.phase not in PHASES:
         raise SystemExit(f"unknown phase {a.phase!r}; known: {sorted(PHASES)}")
-    apply_arm(a.profile, a.model, a.run_id)
+    apply_arm(a.profile, a.role, a.run_id)
     # A second arm on a second shard MUST NOT be dispatched under the first arm's run id:
     # the ledger would bill it to the wrong ceiling and the RESULT would report a cost that
     # belongs to another experiment. Refuse rather than default.

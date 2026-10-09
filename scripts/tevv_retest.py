@@ -106,7 +106,15 @@ def run(only: str | None, max_docs: int | None) -> int:
         assert model_stub.prompt_version() == pv and eventlog.schema_version() == prov["schema_version"]
         cfg = model_stub.load_model_config()
         if cfg["model_id"] != prov["model_id"]:
-            cfg = {**cfg, "model_id": prov["model_id"]}   # original model, not the current pin
+            # Test-retest needs the ORIGINAL model. Seldon AD-035 R3 launches only the lock's
+            # ids, by role (task MODEL-001, 2026-10-09): an original model the lock no longer
+            # resolves cannot be re-run here, and substituting the current one would measure
+            # a model change, not stability. Stop loudly; a retest under the lock is a new
+            # pilot of a new instrument (AD-035 R7), authored as such.
+            raise SystemExit(
+                f"FATAL: {doc_id} was extracted by {prov['model_id']!r}, which the model lock "
+                f"does not resolve (role {cfg['role']!r} is {cfg['model_id']!r}); a test-retest "
+                f"under another model is not a retest (seldon AD-035 R3, R7)")
         rbe.apply_profile({"v1": "v1", "kernel-v03": "kernel_v03"}[prov["corpus_epoch"]])
         path = rbe.corpus_members()[doc_id]
         text = rbe.doc_text(path)

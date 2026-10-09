@@ -12,9 +12,11 @@ disagreement list (step 3). Desktop decision 2026-09-03; DD-037.
 **The independence conditions this script enforces**, each one a way the rating could
 otherwise be contaminated by the instrument it is meant to check:
 
-1. **A different model.** `--model` is required and is compared against every envelope;
-   the pinned reviewer's model (`claude-opus-5`) is refused by name — an Opus rater would
-   be the reviewer's own model and measures nothing.
+1. **A different model.** `--role` is required; its lock id is compared against every
+   envelope. The reviewer's model is refused: by name for the sealed reviewer
+   (`claude-opus-5`), and by role for the reviewer now (seldon AD-035, task MODEL-001,
+   2026-10-09): the lock ids of the pinned consumer's role and of `primary` (the CC session
+   the reviewer was) are refused, so an Opus rater is refused whatever the lock calls Opus.
 2. **No repo context.** The call goes through `kg/extraction/model_stub.invoke`, which runs
    `claude -p` from a hermetic empty cwd (root cause 2026-07-09), so no CLAUDE.md, no
    design decisions, no results files are in the rater's context.
@@ -35,7 +37,7 @@ Evidence is written per record BEFORE the filled sheet exists, so a stop mid-run
 raw exchanges on disk and the sheet can be rebuilt from them without re-spending.
 
     /opt/anaconda3/bin/python3 scripts/g1_calibration_rate.py \
-        --model claude-fable-5-1 --ceiling-tokens 2500000 \
+        --role judge --ceiling-tokens 2500000 \
         --run-id g1_calibration_fable_2026-09-03 [--dry-run] [--max-calls N]
 """
 from __future__ import annotations
@@ -61,14 +63,18 @@ SHEET = RESULTS / "g1_calibration_sheet_2026-09-03.md"
 EVIDENCE = REPO / "assessment" / "evidence" / "g1" / "calibration"
 
 # The reviewer under test. A rater on this model is not independent of it, whatever the
-# task file says, so the refusal lives in code and not only in prose.
+# task file says, so the refusal lives in code and not only in prose. History: the sealed
+# reviewer verdicts were made with this id, so it stays, and stays refused.
 REVIEWER_MODEL = "claude-opus-5"
+# The roles the reviewer is now (seldon AD-035): the pinned G1 consumer and the CC session
+# (`primary`). Their lock ids are refused; if the pinned consumer's role changes, this moves
+# with it (tests/test_g1_calibration_rate.py checks the consumer's role is listed here).
+REVIEWER_ROLES = ("consumer", "primary")
 
-# `provider` and `cli` are not tunables: DD-007 fixes the transport to `claude -p` under
-# subscription OAuth, and `model_stub.load_model_config` refuses any other provider. The
-# tunables (model, timeout, call class, ceiling) are all CLI arguments.
+# `provider` is not a tunable: DD-007 fixes the transport to `claude -p` under subscription
+# OAuth, and `model_stub.load_model_config` refuses any other provider. The CLI is the seldon
+# lock's (AD-035 R3). The tunables (role, timeout, call class, ceiling) are CLI arguments.
 PROVIDER = "claude_max_oauth"
-CLI = "claude"
 
 _BLOCK_RE = re.compile(r"^## (C\d{3})\n(.*?)\n\*\*C\d{3} — Level ", re.M | re.S)
 _LEVEL_RE = re.compile(r"^\s*LEVEL\s*:\s*\**\s*(L[0-4]|U)\b", re.M | re.I)
@@ -151,7 +157,8 @@ def fill_sheet(sheet_text: str, answers: dict, model_id: str, run_id: str) -> st
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--model", required=True, help="the rater model id, selected with `claude -p --model`")
+    ap.add_argument("--role", required=True,
+                    help="the rater's registry role (seldon AD-035); its lock id is the rater")
     ap.add_argument("--ceiling-tokens", type=int, required=True,
                     help="per-run ceiling declared on the spend ledger (the task file's stated ceiling)")
     ap.add_argument("--run-id", default=None)
@@ -160,7 +167,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=None, help="filled sheet (default: <sheet>_filled_<label>.md)")
     ap.add_argument("--label", default=None,
                     help="short name for the rater in the output filename (default: the model id's "
-                         "family word, e.g. claude-fable-5-1 -> fable)")
+                         "family word, e.g. an id claude-fable-N -> fable)")
     ap.add_argument("--timeout", type=int, default=600)
     ap.add_argument("--call-class", default="g1_eval", help="controls.yaml spend.call_class_floors key")
     ap.add_argument("--max-calls", type=int, default=0, help="0 = rate every unrated record")
@@ -168,8 +175,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
 
     model_stub.guard_no_api_key()
-    if a.model == REVIEWER_MODEL:
-        raise SystemExit(f"FATAL: {a.model} is the reviewer's own model; the rater must be independent (DD-037)")
+    a.model = model_stub.resolve(a.role)          # the lock id; every record below names it
+    if a.model in {REVIEWER_MODEL, *(model_stub.resolve(r) for r in REVIEWER_ROLES)}:
+        raise SystemExit(f"FATAL: {a.model} (role {a.role}) is the reviewer's own model; the "
+                         f"rater must be independent (DD-037, seldon AD-035)")
 
     sheet_text = Path(a.sheet).read_text(encoding="utf-8")
     instructions = instruction_block(sheet_text)
@@ -212,7 +221,7 @@ def main(argv=None) -> int:
     ledger.declare(run_id, a.ceiling_tokens, declared_by=f"scripts/g1_calibration_rate.py ({TASK})",
                    call_class=a.call_class)
     spend.set_current_run(run_id)
-    consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=a.model, provider=PROVIDER, cli=CLI,
+    consumer = ClaudeCLIConsumer(ConsumerConfig(role=a.role, provider=PROVIDER,
                                                 timeout_seconds=a.timeout, call_class=a.call_class))
     ev_dir.mkdir(parents=True, exist_ok=True)
 
@@ -233,6 +242,7 @@ def main(argv=None) -> int:
                                  "usage": completion.usage, "duration_ms": completion.duration_ms,
                                  "cost_usd": completion.cost_usd,
                                  "spend_reservation_id": completion.spend_reservation_id,
+                                 "model_receipt": completion.receipt,
                                  "level": level, "note": note, "timestamp": _now()})
                 if level:
                     break
@@ -249,6 +259,7 @@ def main(argv=None) -> int:
         made += 1
         last = attempts[-1]
         record = {"task": TASK, "run_id": run_id, "sample_id": sid, "model_id": a.model,
+                  "role": a.role, "model_receipt": last["model_receipt"],
                   "rater_role": "independent calibration rater (DD-037)",
                   "sheet": str(Path(a.sheet).relative_to(REPO)), "prompt": prompt,
                   "response_text": last["response_text"], "level": last["level"], "note": last["note"],

@@ -11,17 +11,37 @@
 # 4.8 remains the PRIMARY JUDGE RATER below, so extractor and rater no longer share a
 # model. A model change is a new extraction instrument: events carry model_id per §4 and
 # the probe stratifies by epoch, so 4.8-era and opus5-era items are never pooled.
-model_id: claude-opus-5         # whole-document extraction (schema §5, model-agnostic)
+#
+# 2026-10-09, seldon AD-035 (task MODEL-001 Part C): this file names ROLES from seldon's
+# models/registry.yaml, never a model id, an alias, a CLI or an effort (R4). The ids come from
+# the lock (seldon models/models.lock.yaml) through `seldon.models`, and model_stub.invoke
+# launches the lock's CLI with `--model <id>`, `switchModelsOnFlag: false`, the role's effort,
+# and all four ANTHROPIC_DEFAULT_*_MODEL ids (R3). `load_model_config` refuses the old keys
+# (model_id, *_model_id, cli, effort) and derives model_id / *_model_id from the roles, so
+# callers that read cfg["primary_judge_model_id"] get the lock's id. What each key ran before
+# this change is recorded beside it. A family move is a new extraction instrument (AD-035 R7,
+# H-006 R-30): the next extraction run under these roles is a new pilot.
+#
+# Whole-document extraction. Was `model_id: claude-opus-5`, `effort: high` (the effort key was
+# never passed to the CLI before 2026-10-09; the role's `effort: high` now is, which states the
+# intent the key recorded). document_extractor = opus family, effort high.
+role: document_extractor
 provider: claude_max_oauth      # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY/AUTH_TOKEN (DD-007)
-cli: claude                     # headless invocation path: `claude -p` (Agent SDK credit, no key)
-effort: high                    # thinking depth via effort
+# Was `cli: claude` (whatever `claude` on PATH resolved). The CLI is now the lock's.
 # Probe raters (unchanged by ADDENDUM-04): primary claude-opus-4-8, secondary
 # claude-sonnet-5 — neither shares a model with the opus-5 extractor.
-primary_judge_model_id: claude-opus-4-8
-secondary_judge_model_id: claude-sonnet-5
+# 2026-10-09 (MODEL-001): under a family lock every opus role resolves to ONE id, so the
+# primary judge (was claude-opus-4-8) on any opus role would BE the extractor's model and break
+# the constraint above. It moves to `judge` (fable family, the registry's independent judge),
+# which keeps all three models distinct; tests/test_model001_launch.py checks it. The probe's
+# primary rater changes model family with this: a new judge instrument, re-piloted before its
+# next scored use. The secondary (was claude-sonnet-5) stays in its family: secondary_rater.
+primary_judge_role: judge
+secondary_judge_role: secondary_rater
 # Cleanup-class model (DD-006: cheap models for cleanup/validation, never primary extraction).
 # Used by the whole-graph repair's model-assisted span relocation (task 2026-08-23).
-cleanup_model_id: claude-haiku-4-5-20251001
+# Was `cleanup_model_id: claude-haiku-4-5-20251001`; 2026-10-09: the haiku-family role.
+cleanup_role: background
 # Truncation suspicion floor (overnight burn ADDENDUM-01 §3): an envelope whose result
 # yields no extraction layers with outputTokens above this is `parse_failed_truncated`
 # and retried once in per-layer emission mode. Set from the 67,057-token observation

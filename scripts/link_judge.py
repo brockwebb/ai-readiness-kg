@@ -32,10 +32,14 @@ rater, a hermetic empty cwd so no repo context reaches it (`model_stub` root cau
 2026-07-09), and one pair per call so the rater cannot infer a distribution and rate to it.
 
     /opt/anaconda3/bin/python3 scripts/link_judge.py --dry-run
-    /opt/anaconda3/bin/python3 scripts/link_judge.py --model claude-opus-5 --calibrate 50 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/link_judge.py --model claude-opus-5 --ceiling-tokens N
-    /opt/anaconda3/bin/python3 scripts/link_judge.py --model claude-fable-5-1 --sample 100 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/link_judge.py --role adjudicator --calibrate 50 --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/link_judge.py --role adjudicator --ceiling-tokens N
+    /opt/anaconda3/bin/python3 scripts/link_judge.py --role judge --sample 100 --ceiling-tokens N
     /opt/anaconda3/bin/python3 scripts/link_judge.py --emit          # write term_link_judged events
+
+The model is a registry ROLE (seldon AD-035, task MODEL-001, 2026-10-09). The clerk ran on
+`claude-opus-5` (now the opus-family `adjudicator` role) and the independent kappa sample on
+`claude-fable-5-1` (the `judge` role); the lock gives each role its id.
 """
 from __future__ import annotations
 
@@ -63,8 +67,7 @@ BAND = REPO / "state" / "vocab_candidates_2026-09-05.jsonl"
 EVIDENCE = REPO / "assessment" / "evidence" / "vocab_linking"
 RESULTS = REPO / "assessment" / "results"
 
-PROVIDER = "claude_max_oauth"
-CLI = "claude"
+PROVIDER = "claude_max_oauth"      # the CLI is the seldon lock's (AD-035 R3)
 CALL_CLASS = "judge"
 
 #: §2.2's auto-accept threshold, pre-registered in the task and not tuned here.
@@ -186,7 +189,9 @@ def read_decisions(label: str) -> dict:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--model", default="claude-opus-5")
+    ap.add_argument("--role", default="adjudicator",
+                    help="the judge's registry role (seldon AD-035, task MODEL-001); the "
+                         "independent second rater is `--role judge`")
     ap.add_argument("--ceiling-tokens", type=int, default=None)
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--calibrate", type=int, default=0, help="run only N stratified pairs (§2.1)")
@@ -196,6 +201,7 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--emit", action="store_true", help="write term_link_judged events, no spend")
     a = ap.parse_args(argv)
+    a.model = model_stub.resolve(a.role)          # the lock id; every record below names it
 
     rows = load_band()
     parts = re.split(r"[^a-z0-9]+", a.model.lower())
@@ -226,7 +232,7 @@ def main(argv=None) -> int:
     ledger.declare(run_id, a.ceiling_tokens,
                    declared_by=f"scripts/link_judge.py ({TASK})", call_class=CALL_CLASS)
     spend.set_current_run(run_id)
-    consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=a.model, provider=PROVIDER, cli=CLI,
+    consumer = ClaudeCLIConsumer(ConsumerConfig(role=a.role, provider=PROVIDER,
                                                 timeout_seconds=a.timeout, call_class=CALL_CLASS))
     ev_dir = EVIDENCE / label
     ev_dir.mkdir(parents=True, exist_ok=True)
@@ -249,7 +255,8 @@ def main(argv=None) -> int:
             rec = {"pair_id": pid, "node_key": row["node_key"], "label": row["label"],
                    "name": row.get("name"), "doc_id": row.get("doc_id"),
                    "term_id": row["term_id"], "term_label": row["term_label"],
-                   "cosine": row["cosine"], "rater": a.model,
+                   "cosine": row["cosine"], "rater": a.model, "rater_role": a.role,
+                   "model_receipt": completion.receipt,
                    "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY,
                    "verdict": verdict, "confidence": conf, "reason": reason,
                    "usage": completion.usage, "ts": _now()}

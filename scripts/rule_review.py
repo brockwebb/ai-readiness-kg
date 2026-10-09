@@ -35,6 +35,9 @@ every `deviates` against the fixtures, not an inherited agreement rate.
     /opt/anaconda3/bin/python3 scripts/rule_review.py --dry-run
     /opt/anaconda3/bin/python3 scripts/rule_review.py --calibrate 3 --ceiling-tokens N
     /opt/anaconda3/bin/python3 scripts/rule_review.py --ceiling-tokens N
+
+The reviewer is a registry ROLE (seldon AD-035, task MODEL-001, 2026-10-09): `adjudicator`, the
+opus family the review ran on (`claude-opus-5`); the lock gives the role its id.
 """
 from __future__ import annotations
 
@@ -62,8 +65,7 @@ RULES_DIR = REPO / "assessment" / "harness" / "scan" / "rules"
 EVIDENCE = REPO / "assessment" / "evidence" / "rule_review"
 DECISIONS = REPO / "assessment" / "results" / "rule_review_2026-09-06.jsonl"
 
-PROVIDER = "claude_max_oauth"
-CLI = "claude"
+PROVIDER = "claude_max_oauth"      # the CLI is the seldon lock's (AD-035 R3)
 CALL_CLASS = "judge"
 VERDICTS = ("conforms", "deviates", "spec_underspecified")
 
@@ -195,7 +197,8 @@ def read_decisions() -> dict:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--model", default="claude-opus-5")
+    ap.add_argument("--role", default="adjudicator",
+                    help="the reviewer's registry role (seldon AD-035, task MODEL-001)")
     ap.add_argument("--ceiling-tokens", type=int, default=0)
     ap.add_argument("--run-id", default=None)
     ap.add_argument("--calibrate", type=int, default=0,
@@ -204,6 +207,7 @@ def main(argv=None) -> int:
     ap.add_argument("--timeout", type=int, default=600)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
+    a.model = model_stub.resolve(a.role)          # the lock id; every record below names it
 
     items = review_items()
     if a.calibrate:
@@ -224,7 +228,7 @@ def main(argv=None) -> int:
     ledger.declare(run_id, a.ceiling_tokens,
                    declared_by=f"scripts/rule_review.py ({TASK})", call_class=CALL_CLASS)
     spend.set_current_run(run_id)
-    consumer = ClaudeCLIConsumer(ConsumerConfig(model_id=a.model, provider=PROVIDER, cli=CLI,
+    consumer = ClaudeCLIConsumer(ConsumerConfig(role=a.role, provider=PROVIDER,
                                                 timeout_seconds=a.timeout,
                                                 call_class=CALL_CLASS))
     EVIDENCE.mkdir(parents=True, exist_ok=True)
@@ -247,6 +251,7 @@ def main(argv=None) -> int:
                                  f"expected {a.model!r}")
             obj = parse_answer(completion.text)
             rec = {"leg": leg, "rule_id": item["rule_id"], "rater": a.model,
+                   "rater_role": a.role, "model_receipt": completion.receipt,
                    "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY,
                    "verdict": obj["verdict"], "spec_clause": obj.get("spec_clause"),
                    "rule_evidence": obj.get("rule_evidence"), "finding": obj.get("finding"),

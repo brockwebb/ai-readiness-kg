@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""Model invocation stub — Claude Max OAuth only, never ANTHROPIC_API_KEY (DD-007).
+"""The model choke point: every model call in this repository goes through ``invoke``.
 
-This task makes ZERO LLM calls: ``invoke`` deliberately raises. What the stub *does* provide
-now is (a) the provenance stamp every extracted item must carry (§4: model_id, schema_version,
-extraction_event_id, timestamp) and (b) a hard guard that refuses to run under an API key.
+``invoke`` runs ``claude -p`` under Claude Max OAuth, never ``ANTHROPIC_API_KEY`` (DD-007), and
+carries (a) the provenance stamp every extracted item must have (§4: model_id, schema_version,
+extraction_event_id, timestamp), (b) the API-key guard, (c) the reserve-before-dispatch spend
+guard (DD-022) and (d) the model-identity gate (invariant 5).
 
-The pilot run (a separate, operator-gated task) will implement ``invoke`` against a bare
-``anthropic.Anthropic()`` client, which resolves the Claude Max OAuth profile from
-``ant auth login`` when no ANTHROPIC_API_KEY is set. Fable (``claude-fable-5``) has thinking
-always on; extraction depth is controlled by ``effort`` (see model_config.yaml).
+**Which model, and how it is launched (seldon AD-035, task MODEL-001, 2026-10-09).** A config
+names a ROLE from seldon's ``models/registry.yaml`` (``model_config.yaml`` ``role:``; the G1
+consumer config ``role =``), never a model id or an alias (R4). ``seldon.models`` resolves the
+role to the id the lock holds for its family (R1), and ``invoke`` launches the LOCK's CLI with
+``--model <id>``, ``--settings {"switchModelsOnFlag": false}``, ``--effort`` when the role has
+one, and the four ``ANTHROPIC_DEFAULT_*_MODEL`` lock ids laid over the child's environment (R3).
+Every call's served-model receipt goes into the spend ledger's settle record, and a served
+model other than the requested one stops the unit as ``model_substituted`` (R6).
 """
 from __future__ import annotations
 
@@ -40,6 +45,12 @@ try:
 except ImportError:  # fail loud (standard 4)
     raise SystemExit("FATAL: 'pyyaml' is required to load model_config.yaml (pip install pyyaml)")
 
+try:
+    from seldon import models  # the model registry, lock and receipt (seldon AD-035)
+except ImportError as _exc:  # fail loud (standard 4): there is no model id without it
+    raise SystemExit("FATAL: `seldon.models` is required to resolve a model role (seldon AD-035); "
+                     "install the seldon checkout editable into this interpreter") from _exc
+
 from kg import eventlog
 from kg import spend  # preemptive shared spend guard (DD-022) — lives beside the DD-007 gate
 
@@ -58,21 +69,105 @@ class ModelConfigError(RuntimeError):
     """Config or credential misconfiguration — fail loud, never fall through (standard 4)."""
 
 
+#: model_config.yaml names ROLES (seldon AD-035 R4). Each role key derives the id key the
+#: callers have always read (`cfg["primary_judge_model_id"]` etc.): the id is an OUTPUT of
+#: the lock, resolved at load, and never an input a config can set.
+ROLE_KEYS = {"role": "model_id",
+             "primary_judge_role": "primary_judge_model_id",
+             "secondary_judge_role": "secondary_judge_model_id",
+             "cleanup_role": "cleanup_model_id"}
+#: Keys a model config may no longer carry. The ids are derived (above); the CLI is the lock's
+#: (R3); the effort is the registry role's (R1). A config that still names one is refused at
+#: load rather than silently ignored, because an ignored pin reads as an obeyed one.
+_REFUSED_KEYS = (*ROLE_KEYS.values(), "cli", "effort")
+
+
+def role_key(id_key: str) -> str:
+    """The role key behind an id key: `model_id` -> `role`, `primary_judge_model_id` ->
+    `primary_judge_role`. Report configs (`answer_model_key: model_id`) name id keys."""
+    for rk, ik in ROLE_KEYS.items():
+        if ik == id_key:
+            return rk
+    raise ModelConfigError(f"{id_key!r} is not a model_config id key; known: {sorted(ROLE_KEYS.values())}")
+
+
+def check_role_name(role, where: str) -> str:
+    """A role name, or a loud refusal naming why it is not one (AD-035 R1, R4)."""
+    if not isinstance(role, str) or not role:
+        raise ModelConfigError(f"{where}: no role named (AD-035 R4: configs name registry roles)")
+    if role in models.ALIASES or models.MODEL_ID_RE.search(role):
+        raise ModelConfigError(f"{where}: {role!r} is a model alias or id, not a role; name a role "
+                               f"from seldon models/registry.yaml (AD-035 R4)")
+    try:
+        models.resolve(role)
+    except models.ModelsError as exc:
+        raise ModelConfigError(f"{where}: {exc} (AD-035 R1)") from exc
+    return role
+
+
+def resolve(role: str) -> str:
+    """The lock id for a registry role, validated: the one call a script's `--role` argument
+    makes (seldon AD-035 R1). An alias, an id or an unknown role is refused loudly."""
+    return models.resolve(check_role_name(role, "role"))
+
+
 def load_model_config(path: Path | None = None) -> dict:
-    """Load model_config.yaml. Fail loud on missing keys or a non-OAuth provider."""
+    """Load model_config.yaml and resolve its roles through the seldon lock.
+
+    Fails loud on a missing key, a non-OAuth provider, a key that names a model id, a CLI or
+    an effort (AD-035 R4), or a role the registry does not hold (R1)."""
     path = path or _CONFIG_PATH
     if not path.is_file():
         raise ModelConfigError(f"model config not found: {path}")
     with path.open(encoding="utf-8") as fh:
-        cfg = yaml.safe_load(fh)
-    for key in ("model_id", "provider"):
+        cfg = yaml.safe_load(fh) or {}
+    named = [k for k in _REFUSED_KEYS if k in cfg]
+    if named:
+        raise ModelConfigError(
+            f"{path}: {named} name a model, a CLI or an effort; a model config names registry "
+            f"roles only ({sorted(ROLE_KEYS)}), and the lock supplies the id, the CLI and the "
+            f"effort (seldon AD-035 R3, R4)")
+    for key in ("role", "provider"):
         if not cfg.get(key):
             raise ModelConfigError(f"model_config.yaml missing '{key}'")
     if cfg["provider"] != "claude_max_oauth":
         raise ModelConfigError(
             f"provider must be 'claude_max_oauth' (OAuth only, DD-007); got {cfg['provider']!r}"
         )
+    for rk, ik in ROLE_KEYS.items():
+        if rk in cfg:
+            cfg[ik] = models.resolve(check_role_name(cfg[rk], f"{path.name} `{rk}`"))
     return cfg
+
+
+def config_for_role(role: str, base: dict | None = None) -> dict:
+    """A stub config that launches `role`: the base config (default model_config.yaml) with
+    its `role` and `model_id` replaced. The ONLY way a caller retargets a call to another
+    model; setting `model_id` by hand is refused at `invoke` (AD-035 R3)."""
+    base = dict(base if base is not None else load_model_config())
+    role = check_role_name(role, "config_for_role")
+    return {**base, "role": role, "model_id": models.resolve(role)}
+
+
+def role_for_model(model_id: str, config: dict | None = None) -> str:
+    """The role, among those `config` names, whose lock id is `model_id`.
+
+    For the `--model` arguments kept for compatibility (AD-035 R3 allows a `--model` that is
+    validated to be a lock id): an id that is not the lock's id for one of this config's roles
+    is refused, and so is an id two roles of different effort share, because the launch would
+    have to guess the effort."""
+    config = config if config is not None else load_model_config()
+    roles = sorted({config[rk] for rk in ROLE_KEYS if config.get(rk)})
+    hits = [r for r in roles if models.resolve(r) == model_id]
+    if not hits:
+        raise ModelConfigError(
+            f"{model_id!r} is not the lock id of any role this config names ({roles}); the "
+            f"lock: {models.lock_quote()} (AD-035 R3: launch from the lock, never a free id)")
+    efforts = {models.resolve_role(r).effort for r in hits}
+    if len(efforts) > 1:
+        raise ModelConfigError(f"{model_id!r} is the lock id of roles {hits} with different "
+                               f"efforts; name the role (`--role`), not the id")
+    return hits[0]
 
 
 def guard_no_api_key(env: dict | None = None) -> None:
@@ -202,11 +297,14 @@ class ModelInvocationError(RuntimeError):
 
 class ModelParseError(ModelInvocationError):
     """The envelope arrived but its result yielded no parseable JSON. Carries the call's
-    usage and session id so the truncation fallback (ADDENDUM-01 §3) can decide and resume."""
+    usage and session id so the truncation fallback (ADDENDUM-01 §3) can decide and resume,
+    and the call's served-model receipt (seldon AD-035 R6), which the gate had already passed."""
 
-    def __init__(self, msg: str, usage: dict | None = None, session_id: str | None = None):
+    def __init__(self, msg: str, usage: dict | None = None, session_id: str | None = None,
+                 receipt: dict | None = None):
         self.usage = usage or {}
         self.session_id = session_id
+        self.receipt = receipt
         super().__init__(msg)
 
 
@@ -258,15 +356,56 @@ def classify_cli_outcome(returncode: int, stdout: str | None, stderr: str | None
 _sleep = time.sleep
 
 
-class ModelSubstitutionError(ModelConfigError):
-    """The envelope reports a model other than the pinned one (e.g. a classifier reroute).
-    Load-bearing gate: the driver records the substitution as an event and STOPs — the
-    document's output is discarded unparsed, never substituted."""
+#: Outcome classes a parsed envelope can still fail on (seldon AD-035 R6, task MODEL-001). They
+#: extend the CLI classes above at the same point in the flow: the envelope is classified
+#: BEFORE its reservation is settled, so the ledger says what each booked token was booked for.
+#: Both are measured spends (the call ran), so both settle at the envelope's tokens.
+CLI_MODEL_SUBSTITUTED = models.SUBSTITUTED       # "model_substituted": served != requested
+CLI_MODEL_SIDE_CALL = "model_side_call"          # served == requested, but other models too
 
-    def __init__(self, expected: str, observed: list):
+
+class ModelSubstitutionError(ModelConfigError, models.ModelSubstituted):
+    """The envelope reports a model other than the pinned one (e.g. a classifier reroute).
+    The driver records the substitution and STOPs; the unit's output is discarded unparsed,
+    never substituted.
+
+    It is also seldon's ``ModelSubstituted`` (AD-035 R6), so a caller written against the
+    accessor catches it too. ``reason`` is ``model_substituted`` when the served model is not
+    the requested one, and ``model_side_call`` when the requested model answered but the
+    envelope lists other models beside it: this repo's invariant 5 ("exactly the pinned
+    model") is stricter than R6's minimum, and R6 does not repeal it. ``receipt`` is R6's
+    ``{requested, served, side_models, ok}``."""
+
+    def __init__(self, expected: str, observed: list, receipt: dict | None = None,
+                 reason: str = CLI_MODEL_SUBSTITUTED):
         self.expected = expected
         self.observed = observed
-        super().__init__(f"expected {expected} but envelope reports models {observed}")
+        self.reason = reason
+        self.receipt = dict(receipt) if receipt is not None else {
+            "requested": expected, "served": None, "side_models": list(observed), "ok": False}
+        RuntimeError.__init__(self, f"{reason}: expected {expected} but envelope reports "
+                                    f"models {observed} (seldon AD-035 R6)")
+
+
+def launch_spec(config: dict) -> dict:
+    """The seldon launch spec for a stub config's role, refusing a config that has no role or
+    whose `model_id` is not that role's lock id (a caller still setting ids by hand)."""
+    role = config.get("role")
+    if not role:
+        raise ModelConfigError(
+            "stub config names no `role`; build it with load_model_config() or "
+            "config_for_role(role) (seldon AD-035 R1, R4)")
+    try:
+        spec = models.launch_spec(role)
+    except models.ModelsError as exc:
+        raise ModelConfigError(f"{exc} (seldon AD-035 R1)") from exc
+    configured = config.get("model_id")
+    if configured is not None and configured != spec["model"]:
+        raise ModelConfigError(
+            f"config model_id {configured!r} is not role {role!r}'s lock id {spec['model']!r}: "
+            f"retarget with config_for_role(role), never by setting a model id (seldon AD-035 "
+            f"R3, R4); the lock: {models.lock_quote()}")
+    return spec
 
 
 def invoke(doc_id: str, source_text: str, prompt: str | None = None,
@@ -292,10 +431,17 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     # failure (task 2026-09-02_spend_guard_exit1_and_state_merge).
     backoff, max_retries = spend.empty_failure_policy()
 
-    model_id = config["model_id"]
+    # Seldon AD-035 R3: the role's lock id, the lock's CLI (never `claude` on PATH, whose
+    # auto-updated alias table is what pinned a model generation unrecorded), the
+    # switchModelsOnFlag settings, the role's effort, and all four family ids in the child's
+    # environment so the CLI's own background work follows the lock too. Resolved before the
+    # first reservation: a config fault refuses without booking anything.
+    spec = launch_spec(config)
+    model_id = spec["model"]
+    child_env = {**os.environ, **spec["env"]}
     prompt = prompt if prompt is not None else build_prompt(doc_id, source_text, config)
 
-    cmd = [config.get("cli", "claude"), "-p", "--model", model_id,
+    cmd = [spec["cli_path"], "-p", *spec["args"],
            "--output-format", _OUTPUT_FORMAT, "--allowed-tools", _EMPTY_ALLOWLIST]
     if resume_session_id:
         # Continue an existing headless session (task 2026-08-23_batched_repair_resume,
@@ -317,7 +463,7 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
             raise spend.SpendRefusalStop(granted)
         try:
             proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
-                                  timeout=timeout, cwd=_hermetic_cwd())
+                                  timeout=timeout, cwd=_hermetic_cwd(), env=child_env)
         except subprocess.TimeoutExpired as exc:
             # The CLI DID dispatch; tokens may have been consumed server-side with no
             # envelope to measure them. Settle at the estimate (conservative: capacity stays
@@ -381,30 +527,48 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
                       outcome_class="unparseable_envelope")
         raise ModelInvocationError(f"unparseable claude -p envelope for {doc_id}: {exc}") from exc
 
+    # The served-model receipt (seldon AD-035 R6), taken from the envelope before anything
+    # else reads it, and classified with the CLI outcome classes: an error envelope keeps its
+    # old class (the receipt is still recorded), a served model other than the requested one
+    # is `model_substituted`, and a side model beside the requested one is `model_side_call`.
+    receipt = models.receipt(model_id, envelope)
+    model_usage = envelope.get("modelUsage") or {}
+    if envelope.get("is_error"):
+        envelope_class = CLI_SUCCESS
+    elif not receipt["ok"]:
+        envelope_class = CLI_MODEL_SUBSTITUTED
+    elif receipt["side_models"] or len(model_usage) != 1:
+        envelope_class = CLI_MODEL_SIDE_CALL
+    else:
+        envelope_class = CLI_SUCCESS
+
     # Settle at the envelope's measured token count the moment it is parseable, before any
-    # content gate can raise — a substituted or error envelope still spent real tokens.
-    usage = ((envelope.get("modelUsage") or {}).get(model_id)
-             or next(iter((envelope.get("modelUsage") or {}).values()), {}))
+    # content gate can raise — a substituted or error envelope still spent real tokens. The
+    # settle record is the call's durable record, so the receipt goes into it.
+    usage = (model_usage.get(model_id) or next(iter(model_usage.values()), {}))
     actual = sum(int(usage.get(k, 0) or 0) for k in
                  ("inputTokens", "outputTokens", "cacheCreationInputTokens",
                   "cacheReadInputTokens"))
     if actual:
-        ledger.settle(granted, actual, outcome_class=CLI_SUCCESS)
+        ledger.settle(granted, actual, outcome_class=envelope_class, model_receipt=receipt)
     else:
         # Envelope lacks the fields the stub records as tokens: settle at the estimate and
         # flag it — never estimate from content (task rule), never book zero for a real call.
         ledger.settle(granted, granted.estimate_tokens,
                       settled_as_estimate=True, usage_fields_missing=True,
-                      outcome_class="usage_fields_missing")
+                      outcome_class=("usage_fields_missing" if envelope_class == CLI_SUCCESS
+                                     else envelope_class),
+                      model_receipt=receipt)
 
     if envelope.get("is_error"):
         raise ModelInvocationError(f"claude -p reported error for {doc_id}: {envelope}")
 
-    model_usage = envelope.get("modelUsage", {})
-    if model_id not in model_usage or len(model_usage) != 1:
-        # A different/extra model served the call (classifier reroute / fallback). Raise the
-        # substitution gate so the driver records it as an event and STOPs — never substitute.
-        raise ModelSubstitutionError(expected=model_id, observed=list(model_usage))
+    if envelope_class != CLI_SUCCESS:
+        # A different or extra model served the call (classifier reroute / fallback / side
+        # call). Raise the substitution gate so the driver records it and STOPs: the output is
+        # never parsed and never used.
+        raise ModelSubstitutionError(expected=model_id, observed=list(model_usage),
+                                     receipt=receipt, reason=envelope_class)
 
     if parse_json:
         try:
@@ -412,12 +576,15 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         except ModelInvocationError as exc:
             # carry usage + session so the truncation fallback can decide and resume (§3)
             raise ModelParseError(str(exc), usage=model_usage.get(model_id, {}),
-                                  session_id=envelope.get("session_id")) from exc
+                                  session_id=envelope.get("session_id"),
+                                  receipt=receipt) from exc
     else:
         output = envelope.get("result", "")
     return {
         "output": output,
         "model_id": model_id,
+        "role": spec["role"],
+        "model_receipt": receipt,
         "usage": model_usage.get(model_id, {}),
         "cost_usd": envelope.get("total_cost_usd"),
         "duration_ms": envelope.get("duration_ms"),
@@ -480,16 +647,19 @@ def invoke_with_layer_fallback(doc_id: str, source_text: str, timeout: int = 180
         truncated = _out_tokens(meta.get("usage")) > suspect_floor
         session_id, base_usage = meta.get("session_id"), dict(meta.get("usage") or {})
         base_raw = meta.get("raw_result") or ""
+        base_receipt = meta.get("model_receipt")
         if not truncated:
             return meta          # small-but-empty output is a real (bad) extraction, not truncation
     except ModelParseError as exc:
         if _out_tokens(exc.usage) <= suspect_floor or not exc.session_id:
             raise
         session_id, base_usage, base_raw = exc.session_id, dict(exc.usage), ""
+        base_receipt = exc.receipt
     # per-layer retry: three resumed turns against the cached document prefix
     merged: dict = {}
     usages = [base_usage]
     raws = [base_raw]
+    receipts = [r for r in (base_receipt,) if r]
     for turn_name, layers in _LAYER_TURNS:
         prior_note = ""
         if turn_name == "edges":
@@ -501,6 +671,7 @@ def invoke_with_layer_fallback(doc_id: str, source_text: str, timeout: int = 180
         session_id = meta_t.get("session_id") or session_id
         usages.append(meta_t.get("usage") or {})
         raws.append(meta_t.get("raw_result") or "")
+        receipts.append(meta_t["model_receipt"])
         out_t = meta_t["output"] if isinstance(meta_t["output"], dict) else {}
         for k in layers:
             if isinstance(out_t.get(k), list):
@@ -510,7 +681,12 @@ def invoke_with_layer_fallback(doc_id: str, source_text: str, timeout: int = 180
         total_usage[k] = sum(int((u or {}).get(k, 0) or 0) for u in usages)
     return {
         "output": merged,
-        "model_id": config["model_id"],
+        "model_id": receipts[-1]["requested"],
+        "role": config.get("role"),
+        # One receipt per call that made up this output (AD-035 R6); the last stands for all
+        # in `model_receipt`, because a substituted turn raised before it could be appended.
+        "model_receipt": receipts[-1],
+        "model_receipts": receipts,
         "usage": total_usage,
         "cost_usd": None,
         "duration_ms": None,
