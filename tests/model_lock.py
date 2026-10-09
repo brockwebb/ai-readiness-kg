@@ -44,8 +44,9 @@ def write_cli(path: Path, body: str) -> Path:
 
 def fake_cli_serving(path: Path, served: str, result: str = '{"ok": 1}') -> Path:
     """A stand-in for `claude -p --output-format json` whose envelope says `served` answered,
-    whatever `--model` asked for. It also writes its argv and the four family variables beside
-    itself, so a test can read what the launcher passed."""
+    whatever `--model` asked for. It also writes its argv, the four family variables and the
+    effort variable (`CLAUDE_CODE_EFFORT_LEVEL`, seldon AD-036-R8) beside itself, so a test can
+    read what the launcher passed."""
     envelope = json.dumps({"type": "result", "is_error": False, "result": result,
                            "session_id": "fixture-session",
                            "usage": {"output_tokens": 7},
@@ -53,7 +54,7 @@ def fake_cli_serving(path: Path, served: str, result: str = '{"ok": 1}') -> Path
     seen = path.with_suffix(".seen")
     body = ("#!/bin/sh\n"
             f"printf '%s\\n' \"$@\" > '{seen}.argv'\n"
-            f"env | grep '^ANTHROPIC_DEFAULT_' | sort > '{seen}.env'\n"
+            f"env | grep -E '^(ANTHROPIC_DEFAULT_|{models.EFFORT_ENV}=)' | sort > '{seen}.env'\n"
             "cat > /dev/null\n"
             f"cat <<'ENVELOPE'\n{envelope}\nENVELOPE\n")
     return write_cli(path, body)
@@ -76,7 +77,7 @@ def build_models_home(home: Path, cli_path: Path | None = None,
 
 
 def env_lines(seen_cli: Path) -> dict:
-    """The `ANTHROPIC_DEFAULT_*` variables a fake CLI saw."""
+    """The `ANTHROPIC_DEFAULT_*` variables and `CLAUDE_CODE_EFFORT_LEVEL` a fake CLI saw."""
     text = seen_cli.with_suffix(".seen.env").read_text(encoding="utf-8")
     return dict(line.split("=", 1) for line in text.splitlines() if "=" in line)
 
@@ -88,5 +89,19 @@ def argv_lines(seen_cli: Path) -> list:
 #: The variable the accessor reads; re-exported so tests name it once.
 MODELS_HOME_ENV = models.MODELS_HOME_ENV
 
-__all__ = ["FIXTURE_IDS", "FIXTURE_CLI_VERSION", "MODELS_HOME_ENV", "build_models_home",
+#: Seldon AD-036-R9 (task PA-001 Part E): the opt-in for a test that calls a real model. A
+#: `live_model` test is skipped (`tests/conftest.py`) unless this is exactly "1", and the skip
+#: reason names it.
+LIVE_MODEL_ENV = "LIVE_MODEL_CALLS"
+LIVE_MODEL_REASON = (f"calls a real model; set {LIVE_MODEL_ENV}=1 to run "
+                     f"(seldon AD-036-R9: a test never spends unasked)")
+
+#: The CLI the fixture lock names, when set (`tests/conftest.py` `fixture_models_home`): the
+#: zero-call proof (`tests/test_no_model_calls_by_default.py`) points it at a recording shim, so
+#: a test that reaches the lock's CLI is COUNTED rather than only refused. Unset, the lock names
+#: the refusing CLI above. Either way nothing reaches a real model.
+FIXTURE_CLI_ENV = "AIRKG_TEST_MODEL_CLI"
+
+__all__ = ["FIXTURE_IDS", "FIXTURE_CLI_VERSION", "MODELS_HOME_ENV", "LIVE_MODEL_ENV",
+           "LIVE_MODEL_REASON", "FIXTURE_CLI_ENV", "build_models_home",
            "fake_cli_serving", "write_cli", "env_lines", "argv_lines", "seldon_registry"]

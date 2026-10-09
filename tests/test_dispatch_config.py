@@ -265,6 +265,14 @@ def _wrapper_tail() -> str:
     return text[text.rfind("=== 20"):]
 
 
+#: **`live_model`** (seldon AD-036-R9, task PA-001 Part E: "a test never spends unasked"). The two
+#: tests below run a REAL `seldon dispatch once` under `env -i`, so the child reads the LIVE
+#: model lock (the autouse fixture lock's variable is stripped) and a pass that found an eligible
+#: task would launch a real `claude -p` session. The eligibility assertion before the pass is a
+#: check, not a fake, and the queue can change between it and the pass. Skipped unless
+#: LIVE_MODEL_CALLS=1 (`tests/conftest.py`); the skip is the opt-in, not a skip on queue state,
+#: so the idempotence test's "never skips on the state of the queue" still holds when it runs.
+@pytest.mark.live_model
 @pytest.mark.skipif(
     not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
 def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_identical():
@@ -330,6 +338,7 @@ interactive_only = pytest.mark.skipif(
            "checkout this test asserts cannot exist inside one. Run it from an operator shell.")
 
 
+@pytest.mark.live_model
 @interactive_only
 @pytest.mark.skipif(
     not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")

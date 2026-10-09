@@ -398,8 +398,9 @@ class SpendLedger:
         existed report as `unclassified`.
 
         `model_receipt` is seldon AD-035 R6's per-call record, `{requested, served,
-        side_models, ok}` (task MODEL-001): the settle is the one durable record every call
-        through the choke point writes, so the receipt lives here whatever the caller keeps."""
+        side_models, ok, effort}` (task MODEL-001; `effort` is the level the launch passed,
+        AD-036-R8, task PA-001): the settle is the one durable record every call through the
+        choke point writes, so the receipt lives here whatever the caller keeps."""
         with self._open_locked() as fh:
             rec = {"record": "settle", "run_id": reservation.run_id,
                    "reservation_id": reservation.reservation_id,

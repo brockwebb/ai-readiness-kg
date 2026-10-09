@@ -7,6 +7,9 @@
   settle); a served model other than the requested one stops the unit as `model_substituted`
   and the output is not used.
 * R4: the configs name roles. A config naming a model id or an alias is refused at load.
+* AD-036-R8 (task PA-001 Part E): every launch passes `--effort <the role's level>` and
+  `CLAUDE_CODE_EFFORT_LEVEL`, every receipt records the level, and a config naming its own
+  effort is refused at load.
 
 Every test runs under a fixture lock (`tests/model_lock.py`); none reads the live lock and none
 makes a model call.
@@ -116,8 +119,10 @@ def test_invoke_execs_the_lock_cli_with_the_role_model_settings_and_env(monkeypa
         "ANTHROPIC_DEFAULT_HAIKU_MODEL": FIXTURE_IDS["haiku"],
         "ANTHROPIC_DEFAULT_FABLE_MODEL": FIXTURE_IDS["fable"]}
     assert meta["model_id"] == FIXTURE_IDS["opus"]
+    assert env[models.EFFORT_ENV] == "high"                 # AD-036-R8: the level, in env too
     assert meta["model_receipt"] == {"requested": FIXTURE_IDS["opus"],
-                                     "served": FIXTURE_IDS["opus"], "side_models": [], "ok": True}
+                                     "served": FIXTURE_IDS["opus"], "side_models": [], "ok": True,
+                                     "effort": "high"}
 
 
 def test_a_real_child_sees_the_lock_env_and_argv(declared_run, fake_cli_home):
@@ -129,13 +134,19 @@ def test_a_real_child_sees_the_lock_env_and_argv(declared_run, fake_cli_home):
     argv = argv_lines(cli)
     assert argv[argv.index("--model") + 1] == FIXTURE_IDS["fable"]
     assert json.loads(argv[argv.index("--settings") + 1]) == {"switchModelsOnFlag": False}
-    assert "--effort" not in argv                      # the judge role's effort is `default`
+    # AD-036-R8: every launch passes the role's declared level, never `default` and never
+    # nothing. The level is read from the registry, so a registry edit moves this test with it.
+    level = models.resolve_role("judge").effort
+    assert level in models.EFFORT_LEVELS
+    assert argv[argv.index("--effort") + 1] == level
     assert env_lines(cli) == {
         "ANTHROPIC_DEFAULT_FABLE_MODEL": FIXTURE_IDS["fable"],
         "ANTHROPIC_DEFAULT_HAIKU_MODEL": FIXTURE_IDS["haiku"],
         "ANTHROPIC_DEFAULT_OPUS_MODEL": FIXTURE_IDS["opus"],
-        "ANTHROPIC_DEFAULT_SONNET_MODEL": FIXTURE_IDS["sonnet"]}
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": FIXTURE_IDS["sonnet"],
+        models.EFFORT_ENV: level}
     assert meta["output"] == {"ok": 1} and meta["model_receipt"]["ok"] is True
+    assert meta["model_receipt"]["effort"] == level         # the receipt records the level
     settle = _settles(spend.SpendLedger().path)[-1]
     assert settle["model_receipt"] == meta["model_receipt"]
     assert settle["outcome_class"] == model_stub.CLI_SUCCESS
@@ -154,7 +165,7 @@ def test_a_substituted_model_stops_the_unit_and_the_output_is_not_used(declared_
     assert isinstance(err, models.ModelSubstituted)            # the accessor's named failure
     assert err.reason == "model_substituted"
     assert err.receipt == {"requested": FIXTURE_IDS["opus"], "served": "some-other-model",
-                           "side_models": [], "ok": False}
+                           "side_models": [], "ok": False, "effort": "high"}
     assert "must never be used" not in str(err)
     # The durable per-call record names the failure and carries the receipt; the tokens the
     # substituted call really spent are still booked (they were spent).
@@ -259,6 +270,13 @@ def test_the_g1_consumer_config_names_roles(tmp_path):
     bad.write_text('[consumer]\nmodel_id = "claude-opus-5"\nprovider = "claude_max_oauth"\n'
                    'timeout_seconds = 60\ncall_class = "g1_eval"\n', encoding="utf-8")
     with pytest.raises(ConfigError, match="AD-035"):
+        load_consumer_config(bad)
+    # AD-036-R8: the effort is the registry role's. A consumer table naming its own would be a
+    # second, silently ignored setting that reads as an obeyed one, so it is refused at load.
+    bad.write_text('[consumer]\nrole = "consumer"\neffort = "default"\n'
+                   'provider = "claude_max_oauth"\ntimeout_seconds = 60\n'
+                   'call_class = "g1_eval"\n', encoding="utf-8")
+    with pytest.raises(ConfigError, match="effort"):
         load_consumer_config(bad)
 
 

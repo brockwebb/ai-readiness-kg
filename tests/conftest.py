@@ -63,13 +63,23 @@ def no_writes_to_the_real_event_log(monkeypatch):
     monkeypatch.setattr(eventlog, "append", guarded)
 
 
+#: Seldon AD-036-R9 (task PA-001 Part E), "a test never spends unasked": a test that can reach a
+#: model launcher without a fake carries `@pytest.mark.live_model` and is skipped below unless
+#: LIVE_MODEL_CALLS=1, with the variable named in the reason. The names are defined once, in
+#: `tests/model_lock.py`, and read here and by the zero-call proof.
+from model_lock import FIXTURE_CLI_ENV, LIVE_MODEL_ENV, LIVE_MODEL_REASON  # noqa: E402
+
+
 @pytest.fixture(scope="session")
 def fixture_models_home(tmp_path_factory):
     """One fixture model lock per test session (per xdist worker): a copy of seldon's
-    registry, the fixture ids, and a CLI that refuses to run. Built once, because the guard
-    below runs on every test."""
+    registry, the fixture ids, and a CLI that refuses to run (or the recording shim named by
+    `AIRKG_TEST_MODEL_CLI`). Built once, because the guard below runs on every test."""
+    import os
     from model_lock import build_models_home
-    return build_models_home(tmp_path_factory.mktemp("models_home"))
+    shim = os.environ.get(FIXTURE_CLI_ENV)
+    return build_models_home(tmp_path_factory.mktemp("models_home"),
+                             cli_path=Path(shim) if shim else None)
 
 
 @pytest.fixture(autouse=True)
@@ -277,8 +287,13 @@ _AUTO_GROUPS = {
                          r"|publish\.project\(|run_cypher|neo4j_driver"),
 }
 
-#: module path (repo-relative) -> (group, why). Empty until a run says otherwise.
-_DECLARED_GROUPS: dict = {}
+#: module path (repo-relative) -> (group, why). Each entry is a module a static scan cannot
+#: see sharing.
+_DECLARED_GROUPS: dict = {
+    "tests/test_no_model_calls_by_default.py": (
+        "neo4j", "nests a pytest run over the launcher-adjacent test files (seldon AD-036-R9); "
+                 "a nested test that opens the live database must not run beside an outer one"),
+}
 
 _MODULE_SCANS: dict = {}
 
@@ -354,8 +369,16 @@ def xdist_group_of(item):
 @pytest.hookimpl(tryfirst=True)
 def pytest_collection_modifyitems(config, items):
     """Mark every item with its group BEFORE xdist reads the marker (xdist's own hook turns
-    it into the `@group` suffix of the node id under `--dist loadgroup`)."""
+    it into the `@group` suffix of the node id under `--dist loadgroup`).
+
+    Also skips every `live_model` test unless `LIVE_MODEL_CALLS=1` (seldon AD-036-R9)."""
+    import os
+    live = os.environ.get(LIVE_MODEL_ENV) == "1"
     for item in items:
+        if not live and item.get_closest_marker("live_model") is not None:
+            # A `skipif` prepended, so it is evaluated before the test's own skipifs and the
+            # report names the opt-in rather than some other precondition.
+            item.add_marker(pytest.mark.skipif(True, reason=LIVE_MODEL_REASON), append=False)
         if Path(item.path).suffix != ".py":
             continue
         group = xdist_group_of(item)

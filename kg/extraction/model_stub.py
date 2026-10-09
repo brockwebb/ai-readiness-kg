@@ -10,10 +10,13 @@ guard (DD-022) and (d) the model-identity gate (invariant 5).
 names a ROLE from seldon's ``models/registry.yaml`` (``model_config.yaml`` ``role:``; the G1
 consumer config ``role =``), never a model id or an alias (R4). ``seldon.models`` resolves the
 role to the id the lock holds for its family (R1), and ``invoke`` launches the LOCK's CLI with
-``--model <id>``, ``--settings {"switchModelsOnFlag": false}``, ``--effort`` when the role has
-one, and the four ``ANTHROPIC_DEFAULT_*_MODEL`` lock ids laid over the child's environment (R3).
-Every call's served-model receipt goes into the spend ledger's settle record, and a served
-model other than the requested one stops the unit as ``model_substituted`` (R6).
+``--model <id>``, ``--settings {"switchModelsOnFlag": false}``, ``--effort <level>`` and the
+four ``ANTHROPIC_DEFAULT_*_MODEL`` lock ids plus ``CLAUDE_CODE_EFFORT_LEVEL`` laid over the
+child's environment (R3). The level is the registry role's and is always passed: seldon refuses
+``effort: default`` (AD-036-R8, task PA-001), so effort is a declared input like the model id.
+Every call's served-model receipt, which records the effort too, goes into the spend ledger's
+settle record, and a served model other than the requested one stops the unit as
+``model_substituted`` (R6).
 """
 from __future__ import annotations
 
@@ -374,15 +377,18 @@ class ModelSubstitutionError(ModelConfigError, models.ModelSubstituted):
     the requested one, and ``model_side_call`` when the requested model answered but the
     envelope lists other models beside it: this repo's invariant 5 ("exactly the pinned
     model") is stricter than R6's minimum, and R6 does not repeal it. ``receipt`` is R6's
-    ``{requested, served, side_models, ok}``."""
+    ``{requested, served, side_models, ok, effort}`` (effort per AD-036-R8). Built without
+    one, the receipt's ``effort`` is the ``effort`` passed, or None when the caller did not
+    say, which a reader can see; it is never guessed."""
 
     def __init__(self, expected: str, observed: list, receipt: dict | None = None,
-                 reason: str = CLI_MODEL_SUBSTITUTED):
+                 reason: str = CLI_MODEL_SUBSTITUTED, effort: str | None = None):
         self.expected = expected
         self.observed = observed
         self.reason = reason
         self.receipt = dict(receipt) if receipt is not None else {
-            "requested": expected, "served": None, "side_models": list(observed), "ok": False}
+            "requested": expected, "served": None, "side_models": list(observed), "ok": False,
+            "effort": effort}
         RuntimeError.__init__(self, f"{reason}: expected {expected} but envelope reports "
                                     f"models {observed} (seldon AD-035 R6)")
 
@@ -433,9 +439,10 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
 
     # Seldon AD-035 R3: the role's lock id, the lock's CLI (never `claude` on PATH, whose
     # auto-updated alias table is what pinned a model generation unrecorded), the
-    # switchModelsOnFlag settings, the role's effort, and all four family ids in the child's
-    # environment so the CLI's own background work follows the lock too. Resolved before the
-    # first reservation: a config fault refuses without booking anything.
+    # switchModelsOnFlag settings, the role's effort (`--effort <level>` in spec["args"] and
+    # CLAUDE_CODE_EFFORT_LEVEL in spec["env"], always, AD-036-R8), and all four family ids in
+    # the child's environment so the CLI's own background work follows the lock too. Resolved
+    # before the first reservation: a config fault refuses without booking anything.
     spec = launch_spec(config)
     model_id = spec["model"]
     child_env = {**os.environ, **spec["env"]}
@@ -531,7 +538,7 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     # else reads it, and classified with the CLI outcome classes: an error envelope keeps its
     # old class (the receipt is still recorded), a served model other than the requested one
     # is `model_substituted`, and a side model beside the requested one is `model_side_call`.
-    receipt = models.receipt(model_id, envelope)
+    receipt = models.receipt(model_id, envelope, effort=spec["effort"])
     model_usage = envelope.get("modelUsage") or {}
     if envelope.get("is_error"):
         envelope_class = CLI_SUCCESS
