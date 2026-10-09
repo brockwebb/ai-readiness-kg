@@ -38,9 +38,13 @@ dependencies = [
 # The graph: `make project` (scripts/build_projection.py) and `run_cypher`. The scan layer of the
 # projection (assessment/harness/scan/publish.py::project) imports `seldon.config` (audit F-13),
 # so Seldon is a dependency of the graph, declared at the commit this repository runs against.
+# 2026-10-09 (MODEL-001, seldon AD-035): bumped to seldon main a11e041, the first commit carrying
+# `seldon.models`, which kg/extraction/model_stub.py and assessment/harness/consumers.py import to
+# resolve every model role. `seldon.models` reads the lock from a seldon checkout or
+# $SELDON_MODELS_HOME; a non-editable install needs the variable set.
 graph = [
     "neo4j==6.0.3",
-    "seldon @ git+https://github.com/brockwebb/seldon.git@a694322e3bf0fa6a8ba99947532adff20cc979f6",
+    "seldon @ git+https://github.com/brockwebb/seldon.git@a11e041005d63c2b24283ef274fcbc6d647c7c4a",
 ]
 # The read-only MCP server (`mcp/airkg_server.py`, cc_tasks/2026-09-17_mcp_over_the_graph.md).
 mcp = [

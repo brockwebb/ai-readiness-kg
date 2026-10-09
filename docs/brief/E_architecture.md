@@ -78,7 +78,7 @@ flowchart TB
 | framework_writeback.save: the single writer | `scripts/framework_writeback.py:302` |
 | Neo4j seldon-ai-readiness-kg | `seldon.yaml:4` |
 | Seldon artifact graph (seldon_events.jsonl) | `seldon.yaml:3` |
-| standing dispatcher (seldon dispatch) | `seldon/seldon/core/dispatch.py:774` |
+| standing dispatcher (seldon dispatch) | `seldon/seldon/core/dispatch.py:788` |
 | MCP server, read-only | `mcp/airkg_server.py:105` |
 
 ## (c) Data flow for one verdict: CENSUS, worked from the cycle of record
