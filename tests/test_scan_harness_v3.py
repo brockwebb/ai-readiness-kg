@@ -298,7 +298,10 @@ def test_the_current_a1_and_a3_read_the_shared_leg():
     # own, and `run.run_surface` collects it once for both (`tests/test_dcat_field_rules.py`).
     # A4 and A6 joined with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): D2
     # reads A4's robots.txt, and B1-v2, B2 and B5 read A6's markup. Both have rules of their own.
-    assert SHARED_LEGS == ("A4", "A6", "D4", "link_probe")
+    # A2, D1 and F4 joined with the discoverability candidate A13 (`cc_tasks/2026-10-07_seed_
+    # known_locations_and_split_discoverability.md` decision 3), which reads their recorded
+    # locations and the fetches of them; each has a rule of its own and is collected once.
+    assert SHARED_LEGS == ("A2", "A4", "A6", "D1", "D4", "F4", "link_probe")
     assert consumes(CURRENT["A1"]) == ("link_probe",)
     assert consumes(CURRENT["A3"]) == ("link_probe",)
     # The superseded modules stay in REGISTRY and are still the rules their Findings re-derive

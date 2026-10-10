@@ -201,11 +201,13 @@ def test_overview_counts_indicators_by_tier_and_basis_from_the_record(offline):
     # Then `cc_tasks/2026-09-18_dcat_field_rules.md` tiered E1 and E3 M (`judged_reading`) and
     # added nine actions for generation 11's four rules: 36 M, 5 O, 5 D, 3 unassigned; 54.
     # `cc_tasks/2026-09-18_schema_field_rules.md` moved no tier (B2, B5, D2 were already M) and
-    # added nine actions for generation 12: 63.
-    assert by_tier["M"] == 36 and by_tier["O"] == 5 and by_tier["D"] == 5
+    # added nine actions for generation 12: 63. The discoverability candidate A13
+    # (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`) is a tier-M
+    # harness leg with one action: 37 M and 64.
+    assert by_tier["M"] == 37 and by_tier["O"] == 5 and by_tier["D"] == 5
     assert by_tier["unassigned"] == 3
     assert "structured_field" not in by_basis
-    assert fw["counts"]["actions"] + fw["counts"]["actions_on_candidate_indicators"] == 63
+    assert fw["counts"]["actions"] + fw["counts"]["actions_on_candidate_indicators"] == 64
 
 
 def test_overview_names_the_cycle_of_record_its_date_and_its_bodies(offline):
@@ -213,7 +215,7 @@ def test_overview_names_the_cycle_of_record_its_date_and_its_bodies(offline):
     c = o["cycle_of_record"]
     # The composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`):
     # its evidence is two collections, cycle 4's and the recollection's.
-    assert c["cycle"] == "scan_2026-10-06_composite_b"
+    assert c["cycle"] == "scan_2026-10-06_composite_c"
     assert c["measured"] == "2026-09-10 + 2026-10-06_recollect"
     assert c["n_bodies"] == len(c["bodies"]) == 16
     assert "BEA" in c["bodies"]
@@ -265,7 +267,7 @@ def test_an_unknown_indicator_code_says_so_and_lists_the_codes(offline):
 def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
     i = tools.get_indicator("A1")
     v = i["cycle_of_record"]["verdicts"]
-    assert i["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_b"
+    assert i["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_c"
     assert sum(v.values()) > 0
     assert set(v) <= {"pass", "fail", "error", "not_applicable"}
 
@@ -274,7 +276,7 @@ def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
 
 def test_body_names_the_finding_and_the_evidence_for_every_judged_cell(tools):
     b = tools.get_body("BEA")
-    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-10-06_composite_b"
+    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-10-06_composite_c"
     assert b["n_judged"] == len(b["legs"]) > 0
     assert b["summary"].startswith(f"{b['n_failing']} failing of {b['n_judged']} judged")
     for cell in b["legs"]:
@@ -303,7 +305,7 @@ def test_an_unknown_body_says_so_and_lists_the_bodies(offline):
 def test_prescriptions_with_no_argument_rank_by_bodies_failing_now(offline):
     p = offline.get_prescriptions()
     n = [a["value"]["bodies_failing_now"] for a in p["actions"]]
-    assert len(p["actions"]) == 63
+    assert len(p["actions"]) == 64
     assert n == sorted(n, reverse=True)
     assert p["band_note"].startswith("Notional relative estimate")
 
@@ -404,11 +406,13 @@ def test_cycle_of_record_carries_both_hashes_the_matrices_and_the_supersession(t
     c = tools.get_cycle_of_record()
     # A composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
     # decision 4): its two hashes are its parts', on `composed_of`, each beside its cycle.
-    assert c["cycle"] == "scan_2026-10-06_composite_b"
+    assert c["cycle"] == "scan_2026-10-06_composite_c"
     assert c["kind"] == "composite"
     parts = c["composed_of"]
     assert parts["base"]["cycle"] == "scan_2026-09-10_rj5"
-    assert parts["overlay"]["cycle"] == "scan_2026-10-06_recollect"
+    # Since `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` the overlay
+    # is the recollection's re-judgement under generation 15; its evidence is the recollection.
+    assert parts["overlay"]["cycle"] == "scan_2026-10-06_recollect_rj1"
     assert len(parts["base"]["params_hash"]) == len(parts["overlay"]["params_hash"]) == 64
     assert parts["base"]["params_hash"] != parts["overlay"]["params_hash"]
     assert len(c["judgement_params_hash"]) == 64
@@ -423,7 +427,7 @@ def test_cycle_of_record_carries_both_hashes_the_matrices_and_the_supersession(t
 
 def test_run_cypher_answers_a_read(tools):
     r = tools.run_cypher("MATCH (i:AssessmentIndicator) RETURN count(i) AS n")
-    assert r["rows"] == [{"n": 49}]
+    assert r["rows"] == [{"n": 50}]          # 48 + G1's two legs + A12 and A13, the candidates
     assert r["database"] == "seldon-ai-readiness-kg"
 
 
@@ -554,7 +558,7 @@ def test_every_tool_carries_a_description_and_is_marked_read_only(client_call):
 
 
 ONE_QUESTION_EACH = [
-    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_b"),
+    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_c"),
     ("get_indicator", {"code": "A5"}, lambda a: a["code"] == "A5" and a["actions"]),
     ("get_body", {"name": "NCHS"}, lambda a: a["body"] == "NCHS" and a["legs"]),
     ("get_prescriptions", {"body": "NCHS"}, lambda a: a["body"] == "NCHS" and a["actions"]),
@@ -565,7 +569,7 @@ ONE_QUESTION_EACH = [
     ("search_text", {"q": "sitemap"}, lambda a: a["hits"]),
     ("get_cycle_of_record", {}, lambda a: len(a["judgement_params_hash"]) == 64),
     ("run_cypher", {"query": "MATCH (a:Action) RETURN count(a) AS n"},
-     lambda a: a["rows"] == [{"n": 63}]),
+     lambda a: a["rows"] == [{"n": 64}]),     # + A13's (2026-10-07 seed-and-split task)
 ]
 
 

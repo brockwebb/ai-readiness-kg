@@ -10,13 +10,13 @@ Two sources and no third: `framework/ai_readiness_framework.json` and the publis
 
 ## Coverage on the cycle of record
 
-Cycle `scan_2026-10-06_composite_b`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json`, `docs/reports/scan_matrix_product_2026-10-06_composite_b.json`.
+Cycle `scan_2026-10-06_composite_c`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json`, `docs/reports/scan_matrix_product_2026-10-06_composite_c.json`.
 
 | level | measured | total |
 |---|---|---|
 | adopted harness legs scored (candidates excluded, DD-054) | 20 | 23 |
-| indicators scored, of the framework | 18 | 48 |
-| indicators scored, of `harness_leg` | 18 | 23 |
+| indicators scored, of the framework | 19 | 48 |
+| indicators scored, of `harness_leg` | 19 | 23 |
 | criteria with a scored construct | 5 | 7 |
 
 An indicator is *scored* here when at least one of its scored legs has a judged row for at least one body on this cycle. That is not the record's `measured` (`measurement_status`, DD-055, which counts admitted surfaces and instruments other than the scan); the two are different quantities and carry different names (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3).
@@ -92,6 +92,7 @@ An indicator is *scored* here when at least one of its scored legs has a judged 
 | A | Application/data-tool machine surface | `ind:A10` | `A10` | yes | — |
 | A | Effective crawler access (declared / enforced / observed) | `ind:A11` | `A11-declared` | yes | — |
 | A | Access policy coherence | `ind:A12` | `A12` | no | candidate rule (DD-054): its Findings are reported and enter no framework numerator |
+| A | Discoverability from the product page | `ind:A13` | `A13` | no | candidate rule (DD-054): its Findings are reported and enter no framework numerator |
 | A | Programmatic access | `ind:A2` | `A2` | yes | — |
 | A | Bulk access | `ind:A3` | `A3` | yes | — |
 | A | Crawler/agent access | `ind:A4` | `A4` | yes | — |
@@ -146,6 +147,7 @@ One sentence per level, from the record's legs and the prescription layer's acti
 A candidate leg (DD-054) enters no level, as it enters no score. The record's promotion field for each candidate, quoted:
 
 - `ind:A12`: “Operator decision. The framework goes out under his name and an indicator the instrument invented about itself is exactly the kind that needs a human to accept it.”
+- `ind:A13`: “Operator decision (DD-054). The framework goes out under his name, and an indicator the instrument derived from its own defect is the kind that needs a human to accept it.”
 
 ### Frontier indicators and the score
 

@@ -42,6 +42,10 @@ from . import rule_b1_v2, rule_b2, rule_b5, rule_d2
 from . import rule_d4_v3
 from . import (rule_a1_v5, rule_a2_v4, rule_a3_v7, rule_a9_v2, rule_b1_v3, rule_b3_v4,
                rule_b4_v2, rule_d1_v4, rule_d3_v2, rule_d4_v4, rule_f4_v4, rule_g4_v2)
+from . import rule_a2_v5, rule_a3_v8, rule_d1_v5
+from . import (rule_a2_v6, rule_b1_v4, rule_b4_v3, rule_d1_v6, rule_d3_v3, rule_d4_v5,
+               rule_f4_v5, rule_g4_v3)
+from . import rule_a13
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -172,6 +176,30 @@ V13 = [rule_d4_v3]
 V14 = [rule_a1_v5, rule_a2_v4, rule_a3_v7, rule_a9_v2, rule_b1_v3, rule_b3_v4, rule_b4_v2,
        rule_d1_v4, rule_d3_v2, rule_d4_v4, rule_f4_v4, rule_g4_v2]
 
+#: Generation 15 — `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`
+#: decision 1. Three modules, three false PASSES the recollection's new declarations exposed
+#: (`cc_tasks/2026-10-06_absence_verdicts_recollection_RESULT.md` §2 and §5.5). Generation 14
+#: hardened what `fail` may claim; this hardens what `pass` may claim, and each fix is the same
+#: kind of fix: read the object as what it is, not as bytes. `RULE-A2-v5` passes only on a
+#: document carrying `openapi` or `swagger` (a `dcat:Catalog` at an API base is the API's data
+#: catalog, not its description). `RULE-D1-v5` matches licence tokens on the terms page's visible
+#: text at word boundaries (`_text.py`). `RULE-A3-v8` does not take an HTML page for an
+#: unfiltered file. Every predecessor stays in `REGISTRY`, unedited.
+V15 = [rule_a2_v5, rule_a3_v8, rule_d1_v5]
+
+#: Generation 16 — the same task, decision 3, DN-013-R1: **existence is not discoverability.**
+#: Eight modules, one idea. The existence legs (A2, D1, F4, D4 and D4's consumers B1, B4, D3, G4)
+#: read only the locations recorded for a body, read from its pages or seeded from a named source
+#: (`targets.yaml` `declared_locations` scheme 2), and reach `fail` only over a complete search:
+#: every recorded location observed AND every seed source in `params.existence.seed_sources`
+#: searched for that body and object (`_existence.py`). The link probe, the guessed paths and the
+#: link cap feed none of them; they are the discoverability candidate's evidence (`RULE-A13-v1`).
+#: Every `pass` branch, every object test and every reason fragment is the predecessor's. Judged
+#: on live seeded evidence by the task's part 2 (`2026-10-07_seed_known_locations_verify.md`).
+#: Every predecessor stays in `REGISTRY`, unedited.
+V16 = [rule_a2_v6, rule_b1_v4, rule_b4_v3, rule_d1_v6, rule_d3_v3, rule_d4_v5, rule_f4_v5,
+       rule_g4_v3]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -179,7 +207,7 @@ V14 = [rule_a1_v5, rule_a2_v4, rule_a3_v7, rule_a9_v2, rule_b1_v3, rule_b3_v4, r
 #: version of a candidate is one entry here — the same shape as a generation, and the reason
 #: A12-v2 has to appear in both: `CURRENT` is built from the generations and then updated from
 #: this list, so a candidate leg's current rule is whatever this list ends with.
-CANDIDATE_RULES = [rule_a12, rule_a12_v2, rule_a12_v3]
+CANDIDATE_RULES = [rule_a12, rule_a12_v2, rule_a12_v3, rule_a13]
 
 #: What a rule's verdicts are ABOUT. `product` unless the module says otherwise, because that is
 #: what almost every rule measures and a default nobody has to write cannot go stale. The
@@ -267,7 +295,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14, V15, V16)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in

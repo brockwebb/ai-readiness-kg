@@ -353,12 +353,16 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # actions with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`).
     # And the requirements layer (`cc_tasks/2026-09-18_requirements_layer.md`): 13 tools, 19
     # preconditions and 37 REQUIRES edges, none of which the skeleton authors.
+    # 2026-10-10: the discoverability candidate A13 (`cc_tasks/2026-10-07_seed_known_locations_
+    # and_split_discoverability.md` decision 3) added a construct, an indicator, a spec, their
+    # five evidence edges and three internal ones, and one action, all written by
+    # `scripts/add_candidate_indicator.py` and `scripts/tag_prescriptions.py`.
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
-        {"MeasurementSpec": 29, "AssessmentConstruct": 1, "AssessmentIndicator": 1,
-         "Action": 63, "AssessmentTool": 13, "Precondition": 19}
+        {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
+         "Action": 64, "AssessmentTool": 13, "Precondition": 19}
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 29, "EVIDENCED_BY_INTERNAL": 3, "DECOMPOSES_INTO": 2, "EVIDENCED_BY": 2,
-         "REMEDIATES": 63, "REQUIRES": 37}
+        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 7,
+         "REMEDIATES": 64, "REQUIRES": 37}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
@@ -412,7 +416,9 @@ def test_the_event_carries_the_delta_with_before_and_after(record_copy, tmp_path
     assert [n["id"] for n in d["nodes_added"]] == ["ind:TEST"]
     assert d["edges_added"] == [{"from": "ind:TEST", "type": "MEASURED_BY", "to": "spec:A1"}]
     assert d["edges_changed"] == [] and d["edges_removed"] == [] and d["nodes_removed"] == []
-    assert d["counts_moved"]["candidate_indicators"] == [1, 2]
+    # A12 and A13 are the record's candidates (`cc_tasks/2026-10-07_seed_known_locations_and_
+    # split_discoverability.md`), so a third makes it three.
+    assert d["counts_moved"]["candidate_indicators"] == [2, 3]
     assert ev["counts_moved"] == out["counts_moved"]
     assert ev["framework_sha256"] == out["framework_sha256"]
     # and the delta is enough to replay: apply it to the old record and get the new one

@@ -43,9 +43,11 @@ PY = "/opt/anaconda3/bin/python3" if Path("/opt/anaconda3/bin/python3").exists()
 #: (B1, B4, D3, G4) and one action for each of their nine failing outcomes.
 #: 54 / 21 / 108 until `cc_tasks/2026-09-18_schema_field_rules.md` added generation 12's three
 #: legs (B2, B5, D2), B1-v2's schema.org outcome, and one action for each of the nine outcomes.
-EXPECTED_ACTIONS = 63
-EXPECTED_LEGS = 24
-EXPECTED_NOTIONAL_BANDS = 126
+#: 64 and 25 since `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`:
+#: the discoverability candidate A13 is a harness leg with one action (two notional bands).
+EXPECTED_ACTIONS = 64
+EXPECTED_LEGS = 25
+EXPECTED_NOTIONAL_BANDS = 128
 
 #: The class table of `cc_tasks/2026-09-17_notional_bands.md` decision 1, as a literal. The
 #: RESULT's §0 tables the same 45 rows with a reason for each row that is not obvious, so a
@@ -55,7 +57,7 @@ EXPECTED_NOTIONAL_BANDS = 126
 #: Generation 12 added seven `edit_existing` and two `publish_new_file` (B5's `no_term_codes`
 #: and `codes_not_shared_across_products`, each carrying a `technique_class_reason`).
 EXPECTED_PER_CLASS = {
-    "edit_existing": 29,
+    "edit_existing": 30,
     "publish_new_file": 20,
     "change_server_behaviour": 10,
     "expose_api": 1,

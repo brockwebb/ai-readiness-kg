@@ -4,7 +4,7 @@
 
 *Value is a rated judgment under a stated rubric (v1), not a measurement; it enters no score, rank or bound.*
 
-64 rows: every Action in the record's prescription layer, plus the named row the record has no Action for. The bound is Q6 of the evidence map (Census, equal weights), read and not recomputed; no weighting is asserted, so it is a bound and not a value. Full columns are in `actions.csv`.
+65 rows: every Action in the record's prescription layer, plus the named row the record has no Action for. The bound is Q6 of the evidence map (Census, equal weights), read and not recomputed; no weighting is asserted, so it is a bound and not a value. Full columns are in `actions.csv`.
 
 | action_id | indicator | who_does_it | record_effort_band | record_cost_band | effort_level | value_rating | value_basis | evidence_grade | cheap_pass | bound_equal_weights_census | named_row |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -19,12 +19,12 @@
 | act:a4-serve-a-robots-txt-that-names-ai-crawlers | A4 | publisher | days | staff_time | 3 | 2 | evidence | established | yes | TBD | robots_txt |
 | act:a5-list-the-product-url-in-the-sitemap | A5 | publisher | hours | none | 2 | 4 | evidence | established | yes | TBD |  |
 | act:a5-publish-a-sitemap-and-point-robots-txt-at-it | A5 | publisher | days | staff_time | 3 | 4 | evidence | established | yes | TBD |  |
-| act:a6-embed-json-ld-on-the-product-page | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.056 |  |
-| act:a6-make-the-dataset-markup-conform-to-the-profile | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.056 |  |
-| act:a6-type-the-product-page-as-a-dataset | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.056 |  |
-| act:a8-declare-the-product-vintage-in-the-markup | A8 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | 0.056 |  |
+| act:a6-embed-json-ld-on-the-product-page | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.048 |  |
+| act:a6-make-the-dataset-markup-conform-to-the-profile | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.048 |  |
+| act:a6-type-the-product-page-as-a-dataset | A6 | publisher | hours | none | 2 | 4 | evidence | established | yes | 0.048 |  |
+| act:a8-declare-the-product-vintage-in-the-markup | A8 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | 0.048 |  |
 | act:a8-make-the-latest-pointer-resolve | A8 | publisher | weeks | staff_time | 4 | 3 | rubric | plausible | yes | TBD |  |
-| act:a8-publish-a-release-date-for-the-product | A8 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | 0.056 |  |
+| act:a8-publish-a-release-date-for-the-product | A8 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | 0.048 |  |
 | act:a8-serve-a-stable-latest-url-on-the-product-host | A8 | publisher | weeks | staff_time | 4 | 3 | rubric | plausible | yes | TBD |  |
 | act:a9-publish-a-machine-first-entry-point | A9 | publisher | days | staff_time | 3 | 3 | rubric | plausible | yes | TBD |  |
 | act:a9-return-a-machine-format-at-the-machine-path | A9 | publisher | weeks | staff_time | 4 | 3 | rubric | plausible | yes | TBD |  |
@@ -37,6 +37,7 @@
 | act:a12-align-the-edge-with-the-declaration | A12 | publisher | weeks | staff_time | 4 | 5 | evidence | established | no | TBD |  |
 | act:a12-publish-a-robots-txt-group-an-identified-client-matches | A12 | publisher | hours | none | 2 | 5 | evidence | established | no | TBD |  |
 | act:a12-serve-robots-txt-to-every-client | A12 | publisher | weeks | staff_time | 4 | 5 | evidence | established | no | TBD |  |
+| act:a13-link-what-you-publish-from-the-product-page | A13 | publisher | hours | none | 2 | 4 | rubric | plausible | yes | TBD |  |
 | act:b1-link-the-data-dictionary-from-the-catalog-record | B1 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | TBD |  |
 | act:b1-list-the-variables-measured-in-the-page-markup | B1 | publisher | hours | none | 2 | 3 | rubric | plausible | yes | TBD |  |
 | act:b1-publish-the-products-record-with-its-data-dictionary | B1 | publisher | days | staff_time | 3 | 3 | rubric | plausible | yes | TBD |  |

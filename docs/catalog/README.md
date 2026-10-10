@@ -166,11 +166,11 @@ No inference is made about why any finding was a denial. A body with no vendor-n
 
 <!-- BEGIN GENERATED: summary -->
 
-Of the 27 framework indicators the record does not mark measured, the easiest route on any row needs:
+Of the 26 framework indicators the record does not mark measured, the easiest route on any row needs:
 
 | easiest route | n | indicators |
 |---|---|---|
-| `public_outside_in` | 9 | A2, A7, B6, C5, F2, F3, F6, G3, G5 |
+| `public_outside_in` | 8 | A7, B6, C5, F2, F3, F6, G3, G5 |
 | `needs_standard` | 9 | C1, C2, C3, C4, E6, E8, E9, G2, G6 |
 | `agency_enabled` | 0 |  |
 | `agency_records` | 7 | E1, E2, E3, E4, E7, F1, F5 |
@@ -180,7 +180,7 @@ Of the 27 framework indicators the record does not mark measured, the easiest ro
 
 No agency-side enabler unlocks more than 1 unmeasured framework indicator(s): `enabler:bing-webmaster-tools` reaches C4; `enabler:web-analytics` reaches C4. Counting indicators already measured, the widest reaches 3: `enabler:google-search-console` (A5;A6;A11). Those extra links deepen a measured indicator (its unmeasured half, or its coverage); they do not add one.
 
-The actions quick-win cell (effort at most 2, value at least 4) holds 10 action(s), 10 of them `established` and 9 of them with `cheap_pass: yes`: `act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path`, `act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt`, `act:a12-publish-a-robots-txt-group-an-identified-client-matches`, `act:a4-allow-the-data-paths-for-named-ai-crawlers`, `act:a5-list-the-product-url-in-the-sitemap`, `act:a6-embed-json-ld-on-the-product-page`, `act:a6-make-the-dataset-markup-conform-to-the-profile`, `act:a6-type-the-product-page-as-a-dataset`, `act:d4-add-the-product-to-the-public-data-inventory`, `act:d4-make-the-catalog-conform-to-dcat-us`. The scans quick-win cell holds 10 row(s), all of them `built_rule`: a built rule costs nothing more to run, so the scan grid says which built rules matter most, not what to build.
+The actions quick-win cell (effort at most 2, value at least 4) holds 11 action(s), 10 of them `established` and 10 of them with `cheap_pass: yes`: `act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path`, `act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt`, `act:a12-publish-a-robots-txt-group-an-identified-client-matches`, `act:a13-link-what-you-publish-from-the-product-page`, `act:a4-allow-the-data-paths-for-named-ai-crawlers`, `act:a5-list-the-product-url-in-the-sitemap`, `act:a6-embed-json-ld-on-the-product-page`, `act:a6-make-the-dataset-markup-conform-to-the-profile`, `act:a6-type-the-product-page-as-a-dataset`, `act:d4-add-the-product-to-the-public-data-inventory`, `act:d4-make-the-catalog-conform-to-dcat-us`. The scans quick-win cell holds 11 row(s), all of them `built_rule`: a built rule costs nothing more to run, so the scan grid says which built rules matter most, not what to build.
 
 <!-- END GENERATED: summary -->
 
@@ -195,7 +195,7 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 | code | criterion | status | indicator |
 |---|---|---|---|
 | A1 | A | measured | Product available as structured data (CSV/JSON/parquet), not PDF-only |
-| A2 | A | harness_built | Documented public API; auth model; rate limits stated |
+| A2 | A | measured | Documented public API; auth model; rate limits stated |
 | A3 | A | measured | Full-product bulk download exists and is linked from product page |
 | A4 | A | measured | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths |
 | A5 | A | measured | llms.txt (or equivalent) present; sitemap covers data products |
@@ -206,6 +206,7 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 | A10 | A | measured | Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution |
 | A11 | A | measured | A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state |
 | A12 | A | specified | An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager) (candidate, DD-054) |
+| A13 | A | specified | A machine client starting from the product page reaches the body's API, its terms, its changelog and its inventory without being told where they are (candidate, DD-054) |
 | B1 | B | measured | Comprehensive variable-level metadata (labels, definitions, units, universes) |
 | B2 | B | measured | Concept/term definitions published, versioned, linked from variables |
 | B3 | B | measured | Methodology docs in structured text (not PDF-only); summarizable by retrieval |
@@ -250,11 +251,11 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 
 <!-- BEGIN GENERATED: counts -->
 
-- Scan rows: 71, over 49 indicators (27 framework indicators are not measured).
-- By who can run it: `public_outside_in` 41, `agency_enabled` 9, `agency_records` 8, `needs_standard` 13.
-- By method kind: `built_rule` 26, `tool_open_source` 8, `tool_commercial` 10, `roll_your_own` 23, `none_known` 4.
-- By row source: `record` 62, `catalog_search` 2, `proposed_link` 7.
-- Action rows: 64 (63 from the record, 1 named).
-- Greedy set cover: 23 steps cover 25 of 27 unmeasured framework indicators; for 2, no row offers anything to obtain.
+- Scan rows: 72, over 50 indicators (26 framework indicators are not measured).
+- By who can run it: `public_outside_in` 42, `agency_enabled` 9, `agency_records` 8, `needs_standard` 13.
+- By method kind: `built_rule` 27, `tool_open_source` 8, `tool_commercial` 10, `roll_your_own` 23, `none_known` 4.
+- By row source: `record` 63, `catalog_search` 2, `proposed_link` 7.
+- Action rows: 65 (64 from the record, 1 named).
+- Greedy set cover: 22 steps cover 24 of 26 unmeasured framework indicators; for 2, no row offers anything to obtain.
 
 <!-- END GENERATED: counts -->

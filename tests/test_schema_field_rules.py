@@ -149,7 +149,9 @@ def test_generation_twelve_is_registered_and_current():
     # `RULE-B1-v3`; B2, B5 and D2 are still generation twelve's.
     for leg, rid in RULES.items():
         assert REGISTRY[rid].LEG == leg
-        assert CURRENT[leg] == ("RULE-B1-v3" if leg == "B1" else rid)
+        # Generation 16 moved it once more, to `RULE-B1-v4`
+        # (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`).
+        assert CURRENT[leg] == ("RULE-B1-v4" if leg == "B1" else rid)
     # B1-v1 is shipped and stays: every Finding recorded under it must keep re-deriving.
     assert "RULE-B1-v1" in REGISTRY
 

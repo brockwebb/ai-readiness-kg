@@ -48,6 +48,9 @@ REJUDGED = {
     # `cc_tasks/2026-10-06_absence_verdicts_rules.md`: generation 14 over the same evidence; every
     # Finding pairs with an `_rj4` one, so it adds nothing to `NEW_LEG_FINDINGS`.
     "scan_2026-09-10_rj5": 1009,
+    # `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`: generation 15 over
+    # the recollection's twelve legs; every Finding pairs with one of the recollection's.
+    "scan_2026-10-06_recollect_rj1": 552,
     "self_2026-09-13_rj1": 6,
 }
 
@@ -569,7 +572,7 @@ def test_no_finding_supersedes_itself_or_forms_a_cycle(graph):
 
 @pytest.mark.parametrize("cycle", ["scan_2026-09-07_rj3", "scan_2026-09-07b_rj4",
                                    "scan_2026-09-09_rj3", "scan_2026-09-10_rj5",
-                                   "self_2026-09-13_rj1"])
+                                   "scan_2026-10-06_recollect_rj1", "self_2026-09-13_rj1"])
 def test_the_newest_judgement_of_every_cycle_is_current(graph, cycle):
     """A Finding with no successor is current (DN-003 decision 3). The five newest judgements —
     generation 10, the instrument as it stands — are the ones a reader asking "what does this

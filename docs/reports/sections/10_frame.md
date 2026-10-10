@@ -1,23 +1,26 @@
 # AI readiness of the federal statistical system: host-level findings
 
 **Draft. {{result:fss_agencies_tier_a:value}} recognized bodies and three reference
-hosts, one cycle for the host checks and a second for ten product checks, one client
+hosts, one cycle for the host checks and a second for twelve product checks, one client
 identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
 under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, re-snapshotted under
 `cc_tasks/2026-09-19_resnapshot_rj4.md`, again under
 `cc_tasks/2026-10-06_absence_verdicts_rules.md`, and onto a recollection under
-`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`. The snapshot is a declared composite,
-`scan_2026-10-06_composite_b`, of two cycles. The host checks, and every product check not listed
-next, are cycle `scan_2026-09-10`, the first over the complete frame, as re-judged in
-`scan_2026-09-10_rj5`. Ten product checks were measured again on 2026-10-06, as cycle
-`scan_2026-10-06_recollect`, over the places each body declares for its API, its changelog and
-its inventories: `A1`, `A3`, `A9`, `B1`, `B3`, `B4`, `D3`, `D4`, `F4` and `G4`. `A2` and `D1`
-were measured again too, and are shown as `scan_2026-09-10_rj5` judged them, because on the newly declared places their
-current rules pass pages that state no API description and no licence. Both cycles are judged
-under the same rules, which make an absence a `fail` only over a complete search, and say
-`error`, naming what was not searched, everywhere else. Every number below is a registered
-Result quoted by name; nothing is typed into the prose.
+`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, and re-judged under
+`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`. The snapshot is a
+declared composite, `scan_2026-10-06_composite_c`, of two cycles. The host checks, and every
+product check not listed next, are cycle `scan_2026-09-10`, the first over the complete frame, as
+re-judged in `scan_2026-09-10_rj5`. Twelve product checks were measured again on 2026-10-06, as
+cycle `scan_2026-10-06_recollect`, over the places each body declares for its API, its terms, its
+changelog and its inventories, and are shown as that evidence was re-judged on 2026-10-10 in
+`scan_2026-10-06_recollect_rj1`: `A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`
+and `G4`. The re-judgement corrected three rules that had passed what they should not: a data
+catalogue served at an API's base is no longer read as an API description (`A2`), a licence name
+is no longer matched inside other words or inside a page's scripts (`D1`), and a web page is no
+longer taken for a downloadable file (`A3`). Every rule makes an absence a `fail` only over a
+complete search, and says `error`, naming what was not searched, everywhere else. Every number
+below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
 
@@ -57,7 +60,7 @@ target list names. The excess is not an accident and is discussed under what the
 see. It produced {{result:scan_observations_2026-09-10:value}} observations. The recollection
 issued {{result:scan_requests_total_2026-10-06_recollect:value}} requests under the same client
 and produced {{result:scan_observations_2026-10-06_recollect:value}} observations. The snapshot
-holds {{result:scan_findings_2026-10-06_composite_b:value}} findings, and every finding re-derives
+holds {{result:scan_findings_2026-10-06_composite_c:value}} findings, and every finding re-derives
 byte for byte from its stored observations. The requests and the observations are each measured
 cycle's and carry its name; the findings are each judgement's, and the composite selects them
 by check without judging anything again.

@@ -1,13 +1,13 @@
 | Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 | B1 | B2 | B4 | B5 | D2 | D3 | G4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| BEA | bea-flagship-1-interactive-data | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BEA | bea-flagship-2-news-releases | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BJS | bjs-flagship-1-data-by-topic | error | error | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | error | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BEA | bea-flagship-1-interactive-data | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BEA | bea-flagship-2-news-releases | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BJS | bjs-flagship-1-data-by-topic | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
 | BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| CENSUS | census-flagship-1-surveys-programs | error | error | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| CENSUS | census-flagship-2-american-community-survey-acs | error | error | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-1-surveys-programs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-2-american-community-survey-acs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | pass | error | pass | pass | pass | error | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail |
 | EIA | eia-flagship-1-open-data | error | error | error | error | error | error | error | error | fail | error | error | error | fail | error | fail | fail | fail |
 | ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | pass | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
@@ -15,7 +15,7 @@
 | NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NASS | nass-flagship-1-data-statistics | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
 | NASS | nass-flagship-2-livestock-county-estimates | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
-| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | pass | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
+| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
 | NCHS | nchs-flagship-1-data-briefs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | pass | error | pass | fail | fail | error | pass | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |

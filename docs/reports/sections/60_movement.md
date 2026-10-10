@@ -1,15 +1,16 @@
 ## What moved since the previous cycle, and what moved it
 
-This time the rules did not move, and the search did. The figure below draws the snapshot beside
-the judgement it replaces, `scan_2026-09-10_rj5`. Both are judged under the same rules, so no
-check on it is marked as a rule change. On the ten product checks measured again, a difference is
-the recollection: it searched the places each body declares for its API, its changelog and its
-inventories, which the earlier collection never reached, and the hosts had four weeks to change
-in between. On every other check, `A2` and `D1` included, both points are the same findings. A
+This time the evidence did not move, and three rules did. The figure below draws the snapshot
+beside the judgement it replaces, `scan_2026-10-06_composite_b`, the composite published on
+2026-10-07. Both rest on the same stored observations. Three checks are marked as a rule change
+(`A2`, `A3` and `D1`): each rule now reads the object as what it is rather than as bytes, so each
+can only have lost passes. `A2` and `D1` also change where their findings come from: the earlier
+composite withheld the recollection's verdicts on them and showed the 2026-09-10 cycle's, and this
+one shows the recollection's, re-judged. On every other check both points are the same findings. A
 check with no applicable denominator on a side has no point there, because every product surface
 is `error` on it.
 
-![Pass rate per check, previous judgement beside this one]({{figure:cycle_over_cycle_2026-10-06_composite_b:path}})
+![Pass rate per check, previous judgement beside this one]({{figure:cycle_over_cycle_2026-10-06_composite_c:path}})
 
 The figure draws no line and no arrow between the two points. A difference between two
 measurements is not a direction of travel, and two collections four weeks apart on federal
@@ -36,9 +37,9 @@ forbidden to look, and on the others the page's links ran past the request bound
 download could be reached, and both kinds had been counted as products that offer none. The
 recollection ranks a page's links by how much each looks like data before the bound applies, and
 the question is now answered over
-{{result:scan_l0_product_a3_applicable_n_2026-10-06_composite_b:value}}. The upper bound of the
+{{result:scan_l0_product_a3_applicable_n_2026-10-06_composite_c:value}}. The upper bound of the
 ninety-five percent interval on the rate went from
 {{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj1:value}} under the first
-re-judgement to {{result:scan_l0_product_leg_rate_a3_upper95_2026-10-06_composite_b:value}} now.
+re-judgement to {{result:scan_l0_product_leg_rate_a3_upper95_2026-10-06_composite_c:value}} now.
 A larger denominator is a stronger claim only because the search behind it reached further, and
 an instrument that stops scoring what it did not look at has to earn every surface it adds back.

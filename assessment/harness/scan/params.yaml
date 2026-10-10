@@ -513,6 +513,24 @@ e5_control:
   #           declared control fires" true for B5 vacuously; the two BODY fixtures at the end of
   #           this table are the control that closes it
   #           (`cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 3).
+  # **Generation 16 and the candidate A13** (`cc_tasks/2026-10-07_seed_known_locations_and_
+  # split_discoverability.md` decision 3). Derived from the rule source before either was run on
+  # a fixture, as every entry here was, and NO ROW CHANGES. A fixture declares, through
+  # `declarations.control_fixture`, its own four locations under scheme 2 with every seed source
+  # searched, so an existence rule reads exactly the locations generation 14 read and its absence
+  # branches stay reachable:
+  #   A2, D1, F4, D4, B1, B4, D3, G4 (existence)  every fixture's default. `passes_all` serves the
+  #           four objects at the declared paths (`pass`); `fails_all` answers each with its
+  #           soft-404 shell, which is observed and is not the object (`fail`); the refusing and
+  #           resetting fixtures blind the declared paths (`error`); the rest serve `passes_all`.
+  #   A13     every fixture's default. On `passes_all` the API and the changelog are linked from
+  #           the page, the inventory is `/data.json` at the host root (the convention), and
+  #           `/terms` answers 404, so it is not shown to exist (`pass`). On `fails_all` the
+  #           terms page and the changelog path answer with a served page, exist, and are not
+  #           linked from a page that was read whole (`fail`). `refuses_identified_client` and
+  #           `resets_connection` blind the page (`error`). `resets_links_only` blinds HEAD and
+  #           A13 reads the page alone (`pass`; `fixture_expectations` honours
+  #           `CONSUMES_PAGE_ONLY`). The others serve `passes_all`'s page and locations.
   expected_verdicts:
     passes_all: "pass"
     fails_all: "fail"
@@ -742,7 +760,11 @@ link_probe:
   # declare `CONSUMES` (see `rules/__init__.py`). `legs_served` are the legs whose own
   # collection is therefore empty — everything they need is on the shared leg.
   shared_leg: link_probe
-  legs_served: ["A1", "A3"]
+  # A13, the discoverability candidate (`cc_tasks/2026-10-07_seed_known_locations_and_split_
+  # discoverability.md` decision 3), collects nothing of its own either: it reads the product
+  # page of this leg (never its probed links, `RULE-A13-v1.CONSUMES_PAGE_ONLY`) and the A2, D1,
+  # F4 and D4 Observations, which carry the body's recorded locations and the fetches of them.
+  legs_served: ["A1", "A3", "A13"]
   # DN-012 d2 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 2). The cap above
   # bounds REQUESTS; it no longer chooses WHICH candidates by document order. On-host candidates
   # are ranked by data-likeness before the cap, so navigation chrome (the first links on almost
@@ -1043,3 +1065,37 @@ declarations:
     api_terms_path: "/terms"
     changelog_paths: ["/changelog.json"]
     inventory_paths: ["/data.json"]
+
+existence:
+  # DN-013-R1 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` decision
+  # 3; DN-013 ADDENDUM 01 A1). The existence legs (A2, D1, F4, D4 and D4's consumers B1, B4, D3,
+  # G4) read only the locations recorded for a body, read from its pages or seeded, and reach
+  # `fail` only over a COMPLETE search: every recorded location observed, and every source below
+  # searched for that body and that object (`declared_locations` scheme 2 `searched`;
+  # `rules/_existence.py`). These are the sources DN-013 §1 names, in its order: model
+  # knowledge, this repository's citations, the agency's own developer pages (the recollection's
+  # `read_from`), catalog.data.gov and api.data.gov. `scan/declarations.py` `SEED_SOURCES` states
+  # the same list for the writer and a test holds the two equal.
+  seed_sources: ["model_knowledge", "repo", "developer_page", "catalog.data.gov", "api.data.gov"]
+  # A recorded status that says the seed named no object, so it is not a candidate (an
+  # Observation that answered 404 or 410 says the same). RFC 9110 §15.5.5 (404: "did not find a
+  # current representation") and §15.5.11 (410: "no longer available ... likely to be
+  # permanent"). Every other `http_<code>` (401, 403, 429, 5xx) is a refusal or a failure to
+  # answer, and leaves the location unverified, which is `error`.
+  gone_statuses: ["not_the_object", "http_404", "http_410"]
+
+discoverability:
+  # The candidate indicator A13 (`RULE-A13-v1`, DD-054 candidate path): from the product page, a
+  # machine reaches the body's API, its terms, its changelog and its inventory without being told
+  # where they are. Reached when a recorded URL is among the page's links, or the object sits at
+  # a documented CONVENTION location, named here and nowhere else.
+  convention:
+    # RFC 9727 (June 2025), "api-catalog: A Well-Known URI and Link Relation to Help Discovery
+    # of APIs": §2 registers the well-known URI, §3 the link relation, and the catalog is a
+    # Linkset (RFC 9264), media type `application/linkset+json`.
+    api_catalog_path: "/.well-known/api-catalog"
+    api_catalog_link_rel: "api-catalog"
+    api_catalog_media_types: ["application/linkset+json"]
+    # OMB M-13-13 and the Project Open Data metadata schema: an agency's inventory at
+    # `/data.json` on its host; M-25-05 §4a iii repeats the address ("www.agency.gov/data.json").
+    inventory_path: "/data.json"

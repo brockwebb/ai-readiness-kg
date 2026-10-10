@@ -36,14 +36,23 @@
 # declaration, `scan_2026-10-06_composite`, took A2 and D1 and was rejected before publication
 # (its Results are `rejected`; its payload and matrices are in `state/composite_rejected_2026-10-06/`). No
 # Finding was re-judged to make either: each is on the log under its part's cycle.
-snapshot_cycle: scan_2026-10-06_composite_b
+#
+# `scan_2026-10-06_composite_c` from 2026-10-10. `cc_tasks/2026-10-07_seed_known_locations_and_
+# split_discoverability.md` decision 2: generation 15 fixes the three false passes the
+# recollection exposed (A2 counting a `dcat:Catalog` as an API description, D1 matching licence
+# tokens inside markup, A3 taking an HTML page for a file), the recollection's Observations are
+# re-judged under it as `scan_2026-10-06_recollect_rj1` (no fetch), and this composite takes all
+# twelve recollected legs from that re-judgement, A2 and D1 included, and every other leg from
+# `scan_2026-09-10_rj5`. Nothing is withheld (`state/scan_2026-10-06_composite_c.json`,
+# `composed_of`).
+snapshot_cycle: scan_2026-10-06_composite_c
 
 title: "AI readiness of the federal statistical system: host-level findings"
 
 # The version identifier the report carries, per DN-002 decision 5. The snapshot cycle IS the
 # version: two builds of the same cycle are the same findings, and a new cycle is a new
 # document rather than a new edition of this one.
-version: "2026-10-06_composite_b"
+version: "2026-10-06_composite_c"
 
 # The date each version was RELEASED, keyed by version. Every date a published file carries —
 # CITATION.cff `date-released`, the Zenodo `publication_date`, the sitemap `lastmod`, the index
@@ -70,6 +79,9 @@ released:
   # Released by the push of `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, after
   # 00:00Z on 2026-10-07 (the recollection's last event is 2026-10-06T23Z).
   "2026-10-06_composite_b": "2026-10-07"
+  # Released by the push of `cc_tasks/2026-10-07_seed_known_locations_and_split_
+  # discoverability.md`; the re-judgement's events are 2026-10-10T11Z.
+  "2026-10-06_composite_c": "2026-10-10"
 
 # Corrections to a released version's WORDS, keyed by version. A correction moves no number, no
 # verdict and no matrix cell — a change that would is a new snapshot under DN-004 decision 1,

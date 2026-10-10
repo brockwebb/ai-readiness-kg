@@ -103,11 +103,18 @@ def test_every_contacted_netloc_had_room_for_its_robots_read(payload):
 
 # ------------------------------------------------------------------ the composite
 
-def test_the_composite_is_the_cycle_of_record(comp):
+def test_the_composite_was_the_cycle_of_record_and_its_successor_overlays_this_cycle(comp):
+    """`_composite_b` was the cycle of record from 2026-10-07 until `_composite_c`
+    (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` decision 2), which
+    overlays this cycle's re-judgement under generation 15 and withholds nothing."""
     import yaml
     pub = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text())
-    assert pub["snapshot_cycle"] == COMPOSITE
+    assert "2026-10-06_composite_b" in pub["released"]
     assert composite.is_composite(comp)
+    succ = _load(pub["snapshot_cycle"])
+    assert pub["snapshot_cycle"] == "scan_2026-10-06_composite_c"
+    over = succ["composed_of"]["overlay"]
+    assert _load(over["cycle"])["derived_from"] == CYCLE and over["withheld"] == {}
 
 
 def test_the_composite_is_its_parts_selected_by_leg_and_nothing_else(comp, payload):

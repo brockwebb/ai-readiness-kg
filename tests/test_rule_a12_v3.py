@@ -264,10 +264,13 @@ def test_every_rule_that_calls_unobserved_error_still_reaches_the_same_verdicts(
     # `RULE-D4-v3`, in the same position: it calls the guard on a catalog it found served.
     # Generation 14 (`cc_tasks/2026-10-06_absence_verdicts_rules.md`) added five, each the
     # successor of a caller above and each calling the guard in the predecessor's position.
+    # Generation 16 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`)
+    # added five, again each the successor of a caller above in its predecessor's position.
     assert callers == ["rule_a10_v3", "rule_a5_v2", "rule_a8_v3", "rule_a8_v4", "rule_b1",
-                       "rule_b1_v2", "rule_b1_v3", "rule_b2", "rule_b4", "rule_b4_v2",
-                       "rule_b5", "rule_d2", "rule_d3", "rule_d3_v2", "rule_d4_v3",
-                       "rule_d4_v4", "rule_g4", "rule_g4_v2"], callers
+                       "rule_b1_v2", "rule_b1_v3", "rule_b1_v4", "rule_b2", "rule_b4",
+                       "rule_b4_v2", "rule_b4_v3", "rule_b5", "rule_d2", "rule_d3",
+                       "rule_d3_v2", "rule_d3_v3", "rule_d4_v3", "rule_d4_v4", "rule_d4_v5",
+                       "rule_g4", "rule_g4_v2", "rule_g4_v3"], callers
     base = load_params()
     for scheme in (1, 2):
         params = {**base, "reason_text": scheme}

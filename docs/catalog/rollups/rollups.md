@@ -33,8 +33,6 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | pre:staging-regression-records | agency_records | roll_your_own | 1 | F5 | 1 | F5 |
 | pre:threshold-preregistration-records | agency_records | roll_your_own | 1 | E2 | 1 | E2 |
 | tool:aidrin | public_outside_in | tool_open_source | 1 | C5 | 1 | C5 |
-| tool:openapi-spec-validator | public_outside_in | tool_open_source | 1 | A2 | 1 | A2 |
-| tool:prance | public_outside_in | tool_open_source | 1 | A2 | 1 | A2 |
 | tool:slsa-verifier | public_outside_in | tool_open_source | 1 | F6 | 1 | F6 |
 | enabler:google-search-console | agency_enabled | tool_commercial | 0 |  | 3 | A5;A6;A11 |
 | enabler:cloudflare-ai-crawl-control | agency_enabled | tool_commercial | 0 |  | 2 | A11;A12 |
@@ -44,38 +42,39 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | pre:second-scan-cycle | public_outside_in | built_rule | 0 |  | 1 | B5 |
 | tool:catalog-data-gov-ckan-api | public_outside_in | roll_your_own | 0 |  | 1 | D4 |
 | tool:extruct | public_outside_in | tool_open_source | 0 |  | 1 | A6 |
+| tool:openapi-spec-validator | public_outside_in | tool_open_source | 0 |  | 1 | A2 |
+| tool:prance | public_outside_in | tool_open_source | 0 |  | 1 | A2 |
 | tool:scrapy | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 | tool:ultimate-sitemap-parser | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 
-## (a) Greedy set cover over the 27 unmeasured framework indicators
+## (a) Greedy set cover over the 26 unmeasured framework indicators
 
 Greedy set cover (Chvátal 1979): at each step, the unlocker that covers the most indicators not yet covered; ties break on its name.
 
 | step | unlocked_by | who_can_run | n_new | newly_covered | cumulative | of_unmeasured |
 |---|---|---|---|---|---|---|
-| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 27 |
-| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 27 |
-| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 27 |
-| 4 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 6 | 27 |
-| 5 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 7 | 27 |
-| 6 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 8 | 27 |
-| 7 | tool:aidrin | public_outside_in | 1 | C5 | 9 | 27 |
-| 8 | tool:openapi-spec-validator | public_outside_in | 1 | A2 | 10 | 27 |
-| 9 | tool:slsa-verifier | public_outside_in | 1 | F6 | 11 | 27 |
-| 10 | pre:adversarial-bank | needs_standard | 1 | E9 | 12 | 27 |
-| 11 | pre:entailment-probe-set | needs_standard | 1 | C2 | 13 | 27 |
-| 12 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 14 | 27 |
-| 13 | pre:product-question-benchmark | needs_standard | 1 | C1 | 15 | 27 |
-| 14 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 16 | 27 |
-| 15 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 17 | 27 |
-| 16 | pre:series-break-cases | needs_standard | 1 | G6 | 18 | 27 |
-| 17 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 19 | 27 |
-| 18 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 20 | 27 |
-| 19 | pre:held-out-rotation-records | agency_records | 1 | E4 | 21 | 27 |
-| 20 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 22 | 27 |
-| 21 | pre:release-validation-records | agency_records | 1 | F1 | 23 | 27 |
-| 22 | pre:staging-regression-records | agency_records | 1 | F5 | 24 | 27 |
-| 23 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 25 | 27 |
+| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 26 |
+| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 26 |
+| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 26 |
+| 4 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 6 | 26 |
+| 5 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 7 | 26 |
+| 6 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 8 | 26 |
+| 7 | tool:aidrin | public_outside_in | 1 | C5 | 9 | 26 |
+| 8 | tool:slsa-verifier | public_outside_in | 1 | F6 | 10 | 26 |
+| 9 | pre:adversarial-bank | needs_standard | 1 | E9 | 11 | 26 |
+| 10 | pre:entailment-probe-set | needs_standard | 1 | C2 | 12 | 26 |
+| 11 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 13 | 26 |
+| 12 | pre:product-question-benchmark | needs_standard | 1 | C1 | 14 | 26 |
+| 13 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 15 | 26 |
+| 14 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 16 | 26 |
+| 15 | pre:series-break-cases | needs_standard | 1 | G6 | 17 | 26 |
+| 16 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 18 | 26 |
+| 17 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 19 | 26 |
+| 18 | pre:held-out-rotation-records | agency_records | 1 | E4 | 20 | 26 |
+| 19 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 21 | 26 |
+| 20 | pre:release-validation-records | agency_records | 1 | F1 | 22 | 26 |
+| 21 | pre:staging-regression-records | agency_records | 1 | F5 | 23 | 26 |
+| 22 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 24 | 26 |
 
 No row offers anything to obtain for these (built rule only, or no known method):
 
@@ -88,14 +87,14 @@ No row offers anything to obtain for these (built rule only, or no known method)
 
 | criterion | public_outside_in | agency_enabled | agency_records | needs_standard | total |
 |---|---|---|---|---|---|
-| A | 17 | 7 | 1 | 0 | 25 |
+| A | 18 | 7 | 1 | 0 | 26 |
 | B | 7 | 0 | 0 | 3 | 10 |
 | C | 1 | 2 | 0 | 4 | 7 |
 | D | 6 | 0 | 0 | 0 | 6 |
 | E | 1 | 0 | 5 | 3 | 9 |
 | F | 4 | 0 | 2 | 0 | 6 |
 | G | 5 | 0 | 0 | 3 | 8 |
-| total | 41 | 9 | 8 | 13 | 71 |
+| total | 42 | 9 | 8 | 13 | 72 |
 
 ## (c) Staffing band by cost band (rows)
 
@@ -103,25 +102,25 @@ Scans:
 
 | staffing_band | 1 | 2 | 3 | 4 | 5 | TBD | total |
 |---|---|---|---|---|---|---|---|
-| 1 | 26 | 0 | 0 | 0 | 0 | 0 | 26 |
+| 1 | 27 | 0 | 0 | 0 | 0 | 0 | 27 |
 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | TBD | 5 | 8 | 0 | 0 | 0 | 32 | 45 |
-| total | 31 | 8 | 0 | 0 | 0 | 32 | 71 |
+| total | 32 | 8 | 0 | 0 | 0 | 32 | 72 |
 
 Actions:
 
 | staffing_band | 1 | 2 | 3 | 4 | 5 | TBD | total |
 |---|---|---|---|---|---|---|---|
 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| 2 | 32 | 0 | 0 | 0 | 0 | 0 | 32 |
+| 2 | 33 | 0 | 0 | 0 | 0 | 0 | 33 |
 | 3 | 0 | 21 | 0 | 0 | 0 | 0 | 21 |
 | 4 | 0 | 10 | 0 | 0 | 0 | 0 | 10 |
 | 5 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
 | TBD | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| total | 32 | 31 | 0 | 0 | 0 | 1 | 64 |
+| total | 33 | 31 | 0 | 0 | 0 | 1 | 65 |
 
 ## DN-010 effort-by-value grid: scans
 
@@ -133,7 +132,7 @@ Actions:
 | **4** | 0 | 0 | 0 | 0 | 0 |
 | **3** | 0 | 0 | 0 | 0 | 0 |
 | **2** | 0 | 0 | 0 | 0 | 0 |
-| **1** | 0 | 4: S-D2-rule-D2;S-D3-rule-D3;S-F4-rule-F4;S-G4-rule-G4 | 11: S-A8-rule-A8;S-A9-rule-A9;S-B1-rule-B1;S-B2-rule-B2;S-B3-rule-B3;S-B4-rule-B4;S-B5-rule-B5;S-B5-second_cycle;S-D1-rule-D1;S-G1-D-rule-G1-D;S-G1-O-rule-G1-O | 5: S-A2-rule-A2;S-A3-rule-A3;S-A5-rule-A5;S-A6-rule-A6;S-D4-rule-D4 | 5: S-A1-rule-A1;S-A10-rule-A10;S-A11-rule-A11-declared;S-A12-rule-A12;S-A4-rule-A4 |
+| **1** | 0 | 4: S-D2-rule-D2;S-D3-rule-D3;S-F4-rule-F4;S-G4-rule-G4 | 11: S-A8-rule-A8;S-A9-rule-A9;S-B1-rule-B1;S-B2-rule-B2;S-B3-rule-B3;S-B4-rule-B4;S-B5-rule-B5;S-B5-second_cycle;S-D1-rule-D1;S-G1-D-rule-G1-D;S-G1-O-rule-G1-O | 6: S-A13-rule-A13;S-A2-rule-A2;S-A3-rule-A3;S-A5-rule-A5;S-A6-rule-A6;S-D4-rule-D4 | 5: S-A1-rule-A1;S-A10-rule-A10;S-A11-rule-A11-declared;S-A12-rule-A12;S-A4-rule-A4 |
 
 Beside the grid (46 rows with a `TBD` axis):
 
@@ -195,7 +194,7 @@ Beside the grid (46 rows with a `TBD` axis):
 | **5** | 0 | 0 | 0 | 0 | 0 |
 | **4** | 0 | 0 | 4: act:a8-make-the-latest-pointer-resolve;act:a8-serve-a-stable-latest-url-on-the-product-host;act:a9-return-a-machine-format-at-the-machine-path;act:b3-serve-the-methodology-without-javascript | 0 | 6: act:a1-serve-the-data-files-with-their-own-media-type;act:a10-make-the-product-deep-link-resolve;act:a10-return-a-real-status-for-routes-that-do-not-exist;act:a10-serve-the-product-content-before-javascript-runs;act:a12-align-the-edge-with-the-declaration;act:a12-serve-robots-txt-to-every-client |
 | **3** | 1: named:llms-txt | 6: act:a11-declare-a-crawler-policy-for-the-product-path;act:a4-serve-a-robots-txt-that-names-ai-crawlers;act:d3-publish-the-products-record-with-its-lineage;act:f4-publish-a-version-history-endpoint;act:f4-serve-the-changelog-in-a-machine-readable-format;act:g4-publish-the-products-record-with-its-authority-codes | 7: act:a9-publish-a-machine-first-entry-point;act:b1-publish-the-products-record-with-its-data-dictionary;act:b3-publish-a-methodology-document-reachable-from-the-product;act:b3-publish-the-methodology-in-structured-text;act:b4-publish-the-products-record-with-quality-metadata;act:b5-code-the-bodys-concepts-in-one-term-set;act:b5-use-one-identifier-per-concept | 6: act:a2-serve-a-parseable-api-description-at-the-documented-path;act:a3-add-a-whole-product-download-beside-the-query-builder;act:a3-link-a-bulk-download-from-the-product-page;act:a3-publish-the-complete-file-not-a-sample;act:a5-publish-a-sitemap-and-point-robots-txt-at-it;act:d4-publish-a-data-json-inventory | 1: act:a1-publish-a-structured-distribution |
-| **2** | 0 | 5: act:d2-declare-ai-training-and-input-terms-in-robots-txt;act:d2-use-only-the-defined-content-signal-categories;act:d3-name-the-generating-activity-in-the-catalog-record;act:f4-carry-a-revision-class-on-every-changelog-entry;act:g4-carry-bureau-and-program-codes-on-the-record | 14: act:a8-declare-the-product-vintage-in-the-markup;act:a8-publish-a-release-date-for-the-product;act:b1-link-the-data-dictionary-from-the-catalog-record;act:b1-list-the-variables-measured-in-the-page-markup;act:b2-give-each-defined-term-a-code-set-and-definition;act:b2-link-defined-terms-from-the-variables;act:b2-publish-concept-definitions-as-defined-terms;act:b3-link-the-methodology-from-the-product-page;act:b4-publish-quality-measurements-as-metadata;act:b4-state-what-changed-from-the-previous-version;act:b5-name-the-set-each-term-code-belongs-to;act:d1-publish-a-machine-readable-licence;act:d1-state-the-licence-as-an-identifier;act:g1d-publish-the-error-measure-as-a-structured-field | 6: act:a5-list-the-product-url-in-the-sitemap;act:a6-embed-json-ld-on-the-product-page;act:a6-make-the-dataset-markup-conform-to-the-profile;act:a6-type-the-product-page-as-a-dataset;act:d4-add-the-product-to-the-public-data-inventory;act:d4-make-the-catalog-conform-to-dcat-us | 4: act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path;act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt;act:a12-publish-a-robots-txt-group-an-identified-client-matches;act:a4-allow-the-data-paths-for-named-ai-crawlers |
+| **2** | 0 | 5: act:d2-declare-ai-training-and-input-terms-in-robots-txt;act:d2-use-only-the-defined-content-signal-categories;act:d3-name-the-generating-activity-in-the-catalog-record;act:f4-carry-a-revision-class-on-every-changelog-entry;act:g4-carry-bureau-and-program-codes-on-the-record | 14: act:a8-declare-the-product-vintage-in-the-markup;act:a8-publish-a-release-date-for-the-product;act:b1-link-the-data-dictionary-from-the-catalog-record;act:b1-list-the-variables-measured-in-the-page-markup;act:b2-give-each-defined-term-a-code-set-and-definition;act:b2-link-defined-terms-from-the-variables;act:b2-publish-concept-definitions-as-defined-terms;act:b3-link-the-methodology-from-the-product-page;act:b4-publish-quality-measurements-as-metadata;act:b4-state-what-changed-from-the-previous-version;act:b5-name-the-set-each-term-code-belongs-to;act:d1-publish-a-machine-readable-licence;act:d1-state-the-licence-as-an-identifier;act:g1d-publish-the-error-measure-as-a-structured-field | 7: act:a13-link-what-you-publish-from-the-product-page;act:a5-list-the-product-url-in-the-sitemap;act:a6-embed-json-ld-on-the-product-page;act:a6-make-the-dataset-markup-conform-to-the-profile;act:a6-type-the-product-page-as-a-dataset;act:d4-add-the-product-to-the-public-data-inventory;act:d4-make-the-catalog-conform-to-dcat-us | 4: act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path;act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt;act:a12-publish-a-robots-txt-group-an-identified-client-matches;act:a4-allow-the-data-paths-for-named-ai-crawlers |
 | **1** | 0 | 0 | 0 | 0 | 0 |
 
 Beside the grid (4 rows with a `TBD` axis):
@@ -219,6 +218,7 @@ Quick win: effort at most 2 and value at least 4. Clear it out: effort at most 2
 | quick_win | scans | S-A10-rule-A10 | 1 | 5 | plausible | TBD | Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution |
 | quick_win | scans | S-A11-rule-A11-declared | 1 | 5 | established | yes | A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state |
 | quick_win | scans | S-A12-rule-A12 | 1 | 5 | established | no | An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager) |
+| quick_win | scans | S-A13-rule-A13 | 1 | 4 | plausible | yes | A machine client starting from the product page reaches the body's API, its terms, its changelog and its inventory without being told where they are |
 | quick_win | scans | S-A2-rule-A2 | 1 | 4 | unevidenced | yes | Documented public API; auth model; rate limits stated |
 | quick_win | scans | S-A3-rule-A3 | 1 | 4 | plausible | yes | Full-product bulk download exists and is linked from product page |
 | quick_win | scans | S-A4-rule-A4 | 1 | 5 | established | yes | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths |
@@ -232,6 +232,7 @@ Quick win: effort at most 2 and value at least 4. Clear it out: effort at most 2
 | quick_win | actions | act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path | 2 | 5 | established | yes | Permit, in robots.txt, the AI crawlers the product is meant to reach |
 | quick_win | actions | act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt | 2 | 5 | established | yes | Resolve the meta-robots directive that contradicts robots.txt |
 | quick_win | actions | act:a12-publish-a-robots-txt-group-an-identified-client-matches | 2 | 5 | established | no | Publish a robots.txt group that an identified machine client matches |
+| quick_win | actions | act:a13-link-what-you-publish-from-the-product-page | 2 | 4 | plausible | yes | Link the API, its terms, its changelog and the inventory from the product page |
 | quick_win | actions | act:a4-allow-the-data-paths-for-named-ai-crawlers | 2 | 5 | established | yes | Allow the product's data paths for the AI crawlers you intend to serve |
 | quick_win | actions | act:a5-list-the-product-url-in-the-sitemap | 2 | 4 | established | yes | List the product URL in the discovery file that is already served |
 | quick_win | actions | act:a6-embed-json-ld-on-the-product-page | 2 | 4 | established | yes | Embed JSON-LD describing the product on the product page |

@@ -1,0 +1,432 @@
+{
+ "task": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
+ "cycle": "scan_2026-10-06_recollect_rj1",
+ "derived_from": "scan_2026-10-06_recollect",
+ "findings": 552,
+ "verdict_counts": {
+  "pass": 23,
+  "fail": 130,
+  "not_applicable": 0,
+  "error": 399
+ },
+ "rederive": {
+  "recorded": 552,
+  "rederived": 552,
+  "missing_after_rederive": [],
+  "unexpected_after_rederive": [],
+  "field_mismatches": [],
+  "identical": true
+ },
+ "distribution": {
+  "scan_2026-10-06_recollect": {
+   "A1": {
+    "pass": 6,
+    "fail": 1,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "A2": {
+    "pass": 4,
+    "fail": 3,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "A3": {
+    "pass": 14,
+    "fail": 1,
+    "not_applicable": 0,
+    "error": 31
+   },
+   "A9": {
+    "pass": 4,
+    "fail": 3,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "B1": {
+    "pass": 0,
+    "fail": 13,
+    "not_applicable": 0,
+    "error": 33
+   },
+   "B3": {
+    "pass": 5,
+    "fail": 34,
+    "not_applicable": 0,
+    "error": 7
+   },
+   "B4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "D1": {
+    "pass": 7,
+    "fail": 0,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "D3": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "D4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "F4": {
+    "pass": 0,
+    "fail": 15,
+    "not_applicable": 0,
+    "error": 31
+   },
+   "G4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   }
+  },
+  "scan_2026-10-06_recollect_rj1": {
+   "A1": {
+    "pass": 6,
+    "fail": 1,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "A2": {
+    "pass": 0,
+    "fail": 7,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "A3": {
+    "pass": 8,
+    "fail": 1,
+    "not_applicable": 0,
+    "error": 37
+   },
+   "A9": {
+    "pass": 4,
+    "fail": 3,
+    "not_applicable": 0,
+    "error": 39
+   },
+   "B1": {
+    "pass": 0,
+    "fail": 13,
+    "not_applicable": 0,
+    "error": 33
+   },
+   "B3": {
+    "pass": 5,
+    "fail": 34,
+    "not_applicable": 0,
+    "error": 7
+   },
+   "B4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "D1": {
+    "pass": 0,
+    "fail": 0,
+    "not_applicable": 0,
+    "error": 46
+   },
+   "D3": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "D4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   },
+   "F4": {
+    "pass": 0,
+    "fail": 15,
+    "not_applicable": 0,
+    "error": 31
+   },
+   "G4": {
+    "pass": 0,
+    "fail": 14,
+    "not_applicable": 0,
+    "error": 32
+   }
+  }
+ },
+ "flips": {
+  "per_leg": {
+   "A2": 4,
+   "A3": 6,
+   "D1": 7
+  },
+  "per_body": {
+   "BEA": 4,
+   "CENSUS": 8,
+   "EIA": 3,
+   "NCES": 2
+  },
+  "per_move": {
+   "pass->error": 13,
+   "pass->fail": 4
+  },
+  "total": 17
+ },
+ "vs_predecessor": {
+  "old": "scan_2026-10-06_recollect",
+  "new": "scan_2026-10-06_recollect_rj1",
+  "unchanged_legs": {
+   "A1": {
+    "rule": [
+     "RULE-A1-v5"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A9": {
+    "rule": [
+     "RULE-A9-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "B1": {
+    "rule": [
+     "RULE-B1-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "B3": {
+    "rule": [
+     "RULE-B3-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "B4": {
+    "rule": [
+     "RULE-B4-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "D3": {
+    "rule": [
+     "RULE-D3-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "D4": {
+    "rule": [
+     "RULE-D4-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "F4": {
+    "rule": [
+     "RULE-F4-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "G4": {
+    "rule": [
+     "RULE-G4-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   }
+  },
+  "unchanged_findings_compared": 414,
+  "unchanged_findings_identical": 414,
+  "unchanged_findings_differing": [],
+  "cells_only_in_old": [],
+  "cells_only_in_new": [],
+  "changed_legs": {
+   "A2": {
+    "old": [
+     "RULE-A2-v4"
+    ],
+    "new": [
+     "RULE-A2-v5"
+    ]
+   },
+   "A3": {
+    "old": [
+     "RULE-A3-v7"
+    ],
+    "new": [
+     "RULE-A3-v8"
+    ]
+   },
+   "D1": {
+    "old": [
+     "RULE-D1-v4"
+    ],
+    "new": [
+     "RULE-D1-v5"
+    ]
+   }
+  },
+  "changed_leg_verdict_moves": [
+   {
+    "target": "home:www.census.gov",
+    "leg": "A2",
+    "from": "RULE-A2-v4 pass",
+    "to": "RULE-A2-v5 fail",
+    "reason": "the API is present: a JSON document is served at the declared API base https://api.census.gov/data; but it does not parse as an API description: it carries neither the `openapi` field (OpenAPI 3.x) nor the `swagger` field (Swagger 2.0), so no description is published at the base"
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A2",
+    "from": "RULE-A2-v4 pass",
+    "to": "RULE-A2-v5 fail",
+    "reason": "the API is present: a JSON document is served at the declared API base https://api.census.gov/data; but it does not parse as an API description: it carries neither the `openapi` field (OpenAPI 3.x) nor the `swagger` field (Swagger 2.0), so no description is published at the base"
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A2",
+    "from": "RULE-A2-v4 pass",
+    "to": "RULE-A2-v5 fail",
+    "reason": "the API is present: a JSON document is served at the declared API base https://api.census.gov/data; but it does not parse as an API description: it carries neither the `openapi` field (OpenAPI 3.x) nor the `swagger` field (Swagger 2.0), so no description is published at the base"
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A2",
+    "from": "RULE-A2-v4 pass",
+    "to": "RULE-A2-v5 fail",
+    "reason": "the API is present: a JSON document is served at the declared API base https://api.census.gov/data; but it does not parse as an API description: it carries neither the `openapi` field (OpenAPI 3.x) nor the `swagger` field (Swagger 2.0), so no description is published at the base"
+   },
+   {
+    "target": "flagship:nces.ed.gov/programs/digest/",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 44 on-host links probed, 19 unprobed, cap 25 (first unprobed by rank: https://nces.ed.gov/programs/digest/2013menu_tables.asp). A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "home:nces.ed.gov",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 38 on-host links probed, 13 unprobed, cap 25 (first unprobed by rank: https://nces.ed.gov/use-work/resource-library/report/first-look-ed-tab/characteristics-private-schools-united-states-results-2023-24-private-school-universe-survey). A `fail` is reached only over a complete search; what was not searched may hold "
+   },
+   {
+    "target": "home:www.bea.gov",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 81 on-host links probed, 56 unprobed, cap 25 (first unprobed by rank: https://www.bea.gov/news). A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 71 on-host links probed, 46 unprobed, cap 25 (first unprobed by rank: https://www.bea.gov/news/blog). A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 76 on-host links probed, 51 unprobed, cap 25 (first unprobed by rank: https://apps.bea.gov/scb/). A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v7 pass",
+    "to": "RULE-A3-v8 error",
+    "reason": "absence not established: whether the product offers a whole-product download: 25 of 73 on-host links probed, 48 unprobed, cap 25 (first unprobed by rank: https://apps.bea.gov/international/factsheet/). A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.census.gov/data/developers/about/terms-of-service.html was read to 20000 of its 302319 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "home:www.eia.gov",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.eia.gov/opendata/terms-of-service.php was read to 20000 of its 45902 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.census.gov/data/developers/about/terms-of-service.html was read to 20000 of its 302319 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.census.gov/data/developers/about/terms-of-service.html was read to 20000 of its 302319 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.census.gov/data/developers/about/terms-of-service.html was read to 20000 of its 302319 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.eia.gov/opendata/terms-of-service.php was read to 20000 of its 45902 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "D1",
+    "from": "RULE-D1-v4 pass",
+    "to": "RULE-D1-v5 error",
+    "reason": "absence not established: whether the product publishes a machine-readable licence: the terms page https://www.eia.gov/opendata/terms-of-service.php was read to 20000 of its 45902 bytes and no recognised identifier is in the visible text of what was read. A `fail` is reached only over a complete search; what was not searched may hold what is being looked for (DN-012 d1)"
+   }
+  ],
+  "new_legs": {},
+  "params_hash": {
+   "old": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+   "new": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa"
+  }
+ }
+}

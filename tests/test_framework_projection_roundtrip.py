@@ -42,7 +42,11 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: `harness_built` to `measured`. The recollection searched the locations each body declares, and
 #: those legs now have `pass` or `fail` cells where rj5 had only `error`. A2 and D1 stay
 #: `harness_built`: the composite withholds them. Was 13 / 11 / 25.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 21, "harness_built": 3, "specified": 25}
+#: `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`: the write-back against
+#: `scan_2026-10-06_composite_c` moved A2 to `measured` (generation 15 gives it `fail` cells where
+#: a body declares its API base); D1 stays `harness_built`, every Finding `error`; the candidate
+#: A13 enters `specified`. Was 21 / 3 / 25.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 22, "harness_built": 2, "specified": 26}
 
 
 def _loader():
@@ -206,7 +210,9 @@ def test_the_candidate_indicator_is_present_and_marked(graph):
     assert rec["ms"] == "specified"
     n = graph.run("MATCH (i:AssessmentIndicator {status: 'candidate'}) "
                   "RETURN count(i) AS c").single()["c"]
-    assert n == 1
+    # A12 and, since `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`,
+    # the discoverability candidate A13.
+    assert n == 2
 
 
 def test_the_measured_indicators_carry_their_cycle(graph):
@@ -219,7 +225,7 @@ def test_the_measured_indicators_carry_their_cycle(graph):
         "i.measured_legs AS legs"))
     # DD-069: every scan-measured indicator names the cycle of record. 20 of the 21 measured;
     # G1-O has no scan leg (DD-036) and carries no `measured_by`.
-    assert len(rows) == 20, "20 of the 21 measured are the cycle of record's; G1-O is not a scan's"
+    assert len(rows) == 21, "21 of the 22 measured are the cycle of record's; G1-O is not a scan's"
     import yaml
     snap = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "reports"
                            / "publication.yaml").read_text(encoding="utf-8"))["snapshot_cycle"]

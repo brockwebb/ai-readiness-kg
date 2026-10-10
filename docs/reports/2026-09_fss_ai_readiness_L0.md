@@ -1,25 +1,28 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-10-06_composite_b` · version `2026-10-06_composite_b` · released `2026-10-07`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
+**Version.** Snapshot cycle `scan_2026-10-06_composite_c` · version `2026-10-06_composite_c` · released `2026-10-10`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
-hosts, one cycle for the host checks and a second for ten product checks, one client
+hosts, one cycle for the host checks and a second for twelve product checks, one client
 identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
 under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, re-snapshotted under
 `cc_tasks/2026-09-19_resnapshot_rj4.md`, again under
 `cc_tasks/2026-10-06_absence_verdicts_rules.md`, and onto a recollection under
-`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`. The snapshot is a declared composite,
-`scan_2026-10-06_composite_b`, of two cycles. The host checks, and every product check not listed
-next, are cycle `scan_2026-09-10`, the first over the complete frame, as re-judged in
-`scan_2026-09-10_rj5`. Ten product checks were measured again on 2026-10-06, as cycle
-`scan_2026-10-06_recollect`, over the places each body declares for its API, its changelog and
-its inventories: `A1`, `A3`, `A9`, `B1`, `B3`, `B4`, `D3`, `D4`, `F4` and `G4`. `A2` and `D1`
-were measured again too, and are shown as `scan_2026-09-10_rj5` judged them, because on the newly declared places their
-current rules pass pages that state no API description and no licence. Both cycles are judged
-under the same rules, which make an absence a `fail` only over a complete search, and say
-`error`, naming what was not searched, everywhere else. Every number below is a registered
-Result quoted by name; nothing is typed into the prose.
+`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, and re-judged under
+`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`. The snapshot is a
+declared composite, `scan_2026-10-06_composite_c`, of two cycles. The host checks, and every
+product check not listed next, are cycle `scan_2026-09-10`, the first over the complete frame, as
+re-judged in `scan_2026-09-10_rj5`. Twelve product checks were measured again on 2026-10-06, as
+cycle `scan_2026-10-06_recollect`, over the places each body declares for its API, its terms, its
+changelog and its inventories, and are shown as that evidence was re-judged on 2026-10-10 in
+`scan_2026-10-06_recollect_rj1`: `A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`
+and `G4`. The re-judgement corrected three rules that had passed what they should not: a data
+catalogue served at an API's base is no longer read as an API description (`A2`), a licence name
+is no longer matched inside other words or inside a page's scripts (`D1`), and a web page is no
+longer taken for a downloadable file (`A3`). Every rule makes an absence a `fail` only over a
+complete search, and says `error`, naming what was not searched, everywhere else. Every number
+below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
 
@@ -107,15 +110,15 @@ combined cell would have had to pick one without saying which.
 | Agency | A4 | A5 | A10 | A11-declared | A12 | Refused of probed |
 |---|---|---|---|---|---|---|
 | BEA | pass | fail | pass | pass | pass | 1 of 129 |
-| BJS | pass | fail | pass | pass | pass | 0 of 150 |
+| BJS | pass | fail | pass | pass | pass | 0 of 151 |
 | BLS | error | error | error | error | fail | 34 of 38 |
 | BTS | error | error | error | error | fail | 33 of 35 |
-| CENSUS | pass | pass | pass | pass | pass | 6 of 164 |
+| CENSUS | pass | pass | pass | pass | pass | 6 of 166 |
 | DRSMSU | fail | fail | pass | fail | fail | 0 of 267 |
-| EIA | pass | pass | pass | pass | pass | 2 of 156 |
+| EIA | pass | pass | pass | pass | pass | 3 of 158 |
 | ERS | pass | fail | pass | pass | pass | 1 of 112 |
 | NAHMSAPHIS | pass | fail | pass | pass | pass | 1 of 202 |
-| NASS | pass | fail | pass | pass | pass | 1 of 194 |
+| NASS | pass | fail | pass | pass | pass | 1 of 195 |
 | NCES | pass | fail | pass | pass | pass | 1 of 81 |
 | NCHS | pass | fail | fail | fail | pass | 1 of 37 |
 | NCSES | pass | pass | pass | pass | pass | 0 of 97 |
@@ -245,14 +248,14 @@ below.
 
 | Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 | B1 | B2 | B4 | B5 | D2 | D3 | G4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| BEA | bea-flagship-1-interactive-data | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BEA | bea-flagship-2-news-releases | error | error | pass | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BJS | bjs-flagship-1-data-by-topic | error | error | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | error | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BEA | bea-flagship-1-interactive-data | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BEA | bea-flagship-2-news-releases | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
+| BJS | bjs-flagship-1-data-by-topic | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
 | BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| CENSUS | census-flagship-1-surveys-programs | error | error | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| CENSUS | census-flagship-2-american-community-survey-acs | error | error | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-1-surveys-programs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-2-american-community-survey-acs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | pass | error | pass | pass | pass | error | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail |
 | EIA | eia-flagship-1-open-data | error | error | error | error | error | error | error | error | fail | error | error | error | fail | error | fail | fail | fail |
 | ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | pass | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
@@ -260,7 +263,7 @@ below.
 | NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NASS | nass-flagship-1-data-statistics | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
 | NASS | nass-flagship-2-livestock-county-estimates | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
-| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | pass | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
+| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
 | NCHS | nchs-flagship-1-data-briefs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
 | NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | pass | error | pass | fail | fail | error | pass | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
@@ -270,15 +273,15 @@ below.
 | SOI | soi-flagship-2-business-tax-statistics | pass | error | pass | fail | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 
 Across the 23 declared
-surfaces, two product checks still have no verdict at all, and that is the first thing to read
-off the matrix: a documented API with its auth model and its rate limits (`A2`), and a
-machine-readable licence (`D1`), each `error` on every one of them. Both were measured again over the
-places each body declares for its API and its terms, and both are shown as the earlier
-judgement left them, because on those places their current rules pass what they should not: a
-data catalogue served at an API's base is read as an API description, and a licence name is
-matched inside other words on a terms page that states no licence. The recollection's verdicts on
-the two checks stay on the event log under its own cycle, for the correction of those two rules
-to re-judge.
+surfaces, one product check still has no verdict at all, and that is the first thing to read off
+the matrix: a machine-readable licence (`D1`), `error` on every one of them. The terms pages the
+bodies declare were read, and none states a recognised licence in the text a reader sees; each
+was kept only in part, so the search for a licence on it is not complete and the check says
+`error`, naming how much was read. A documented API with its auth model and its rate limits
+(`A2`) now has a verdict where a body declares its API base, and the verdict is `fail` (the
+matrix's `A2` column): an API is served at the declared base, and what it serves there is a
+catalogue of its datasets, not a description of the API. Everywhere else the body declares no
+API base and the check says `error`.
 
 The other three checks that had no verdict now have some, because the search now reaches the
 places the indicator names. Structured data rather than a document is served on
@@ -294,7 +297,7 @@ changes are recorded, and on every one of them it is a page for a person rather 
 machine-readable feed; on 15 more no such place is
 declared, or the host refused to answer. Each `error` names what was not searched.
 
-9 of the
+10 of the
 17 product checks were measured and return not a
 single pass: variable-level metadata, concept definitions linked from the variables,
 data-quality attributes published as metadata rather than prose, terms that address model
@@ -316,9 +319,9 @@ Survey of Consumer Finances, is still in the Board's catalogue; its record now c
 landing page as an object instead of a URL, so no field the check reads names the product.
 
 The other checks are not at zero. A bulk download of the whole product is linked from
-9 of
-9 surfaces on which the question
-could be answered. On 14 more it could not,
+6 of
+6 surfaces on which the question
+could be answered. On 17 more it could not,
 because the links the scanner did not probe may hold the download. With structured data above,
 these are the pass rates on this page a reader would notice, and in both the denominator is why
 they should not be noticed for long. 3 of
@@ -399,16 +402,17 @@ having if nothing was quietly swept into it.
 
 ## What moved since the previous cycle, and what moved it
 
-This time the rules did not move, and the search did. The figure below draws the snapshot beside
-the judgement it replaces, `scan_2026-09-10_rj5`. Both are judged under the same rules, so no
-check on it is marked as a rule change. On the ten product checks measured again, a difference is
-the recollection: it searched the places each body declares for its API, its changelog and its
-inventories, which the earlier collection never reached, and the hosts had four weeks to change
-in between. On every other check, `A2` and `D1` included, both points are the same findings. A
+This time the evidence did not move, and three rules did. The figure below draws the snapshot
+beside the judgement it replaces, `scan_2026-10-06_composite_b`, the composite published on
+2026-10-07. Both rest on the same stored observations. Three checks are marked as a rule change
+(`A2`, `A3` and `D1`): each rule now reads the object as what it is rather than as bytes, so each
+can only have lost passes. `A2` and `D1` also change where their findings come from: the earlier
+composite withheld the recollection's verdicts on them and showed the 2026-09-10 cycle's, and this
+one shows the recollection's, re-judged. On every other check both points are the same findings. A
 check with no applicable denominator on a side has no point there, because every product surface
 is `error` on it.
 
-![Pass rate per check, previous judgement beside this one](assessment/harness/scan/figures/scan_2026-10-06_composite_b/cycle_over_cycle.svg)
+![Pass rate per check, previous judgement beside this one](assessment/harness/scan/figures/scan_2026-10-06_composite_c/cycle_over_cycle.svg)
 
 The figure draws no line and no arrow between the two points. A difference between two
 measurements is not a direction of travel, and two collections four weeks apart on federal
@@ -435,7 +439,7 @@ forbidden to look, and on the others the page's links ran past the request bound
 download could be reached, and both kinds had been counted as products that offer none. The
 recollection ranks a page's links by how much each looks like data before the bound applies, and
 the question is now answered over
-9. The upper bound of the
+6. The upper bound of the
 ninety-five percent interval on the rate went from
 0.433343 under the first
 re-judgement to 1 now.
@@ -547,8 +551,8 @@ hand-written expectation was wrong once.
 | A10 | RULE-A10-v3 |
 | A11-declared | RULE-A11-declared-v2 |
 | A12 | RULE-A12-v3 |
-| A2 | RULE-A2-v4 |
-| A3 | RULE-A3-v7 |
+| A2 | RULE-A2-v5 |
+| A3 | RULE-A3-v8 |
 | A4 | RULE-A4-v1 |
 | A5 | RULE-A5-v2 |
 | A6 | RULE-A6-v2 |
@@ -559,7 +563,7 @@ hand-written expectation was wrong once.
 | B3 | RULE-B3-v4 |
 | B4 | RULE-B4-v2 |
 | B5 | RULE-B5-v1 |
-| D1 | RULE-D1-v4 |
+| D1 | RULE-D1-v5 |
 | D2 | RULE-D2-v1 |
 | D3 | RULE-D3-v2 |
 | D4 | RULE-D4-v4 |
@@ -714,25 +718,28 @@ One row per check and admitted source: the check as the report names it, the fra
 | G4 | G4 · Authority metadata | W3C Dataset Exchange Working Group. *Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)*. 2024. <https://www.w3.org/TR/vocab-dcat-3/>. | `w3c-dcat-3` | §6.4.10 Property: publisher, dcterms:publisher, for the issuing-authority clause: "The entity responsible for making the resource available." |
 | G4 | G4 · Authority metadata | W3C. *PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)*. 2013. <https://www.w3.org/TR/prov-o/>. | `w3c-prov-o-ontology` | prov:wasAttributedTo, the issuing-authority clause as a provenance relation: "Attribution is the ascribing of an entity to an agent." |
 
-**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_b.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-10-06_composite_b.*`, the reference hosts;
-`scan_matrix_product_2026-10-06_composite_b.*`, the product matrix. Every row carries its Finding
+**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_c.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-10-06_composite_c.*`, the reference hosts;
+`scan_matrix_product_2026-10-06_composite_c.*`, the product matrix. Every row carries its Finding
 identities, and each JSON file names the two cycles under `composed_of`.
 
-**Provenance.** A declared composite, `scan_2026-10-06_composite_b`
-(`state/scan_2026-10-06_composite_b.json`, `composed_of`). The host checks and every product
-check but ten are cycle `scan_2026-09-10`, parameter hash
+**Provenance.** A declared composite, `scan_2026-10-06_composite_c`
+(`state/scan_2026-10-06_composite_c.json`, `composed_of`). The host checks and every product
+check but twelve are cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
 `scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06. The
-ten (`A1`, `A3`, `A9`, `B1`, `B3`, `B4`, `D3`, `D4`, `F4`, `G4`) are cycle
+twelve (`A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`, `G4`) are cycle
 `scan_2026-10-06_recollect`, parameter hash
 `2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9`, collected on 2026-10-06 over
-the API, changelog and inventory locations each body declares (`targets.yaml`
-`declared_locations`, every entry citing the page it was read from) and judged under the same
-rules. `A2` and `D1` were recollected and are withheld from the composite with the reason on its
-face: on the declared locations their current rules return a pass for a data catalogue served
-where an API description was looked for, and for licence names matched inside other words. Every
-superseded judgement stays registered under its own name. The event log is the source of
+the API, terms, changelog and inventory locations each body declares (`targets.yaml`
+`declared_locations`, every entry citing the page it was read from), and judged as
+`scan_2026-10-06_recollect_rj1` on 2026-10-10, parameter hash
+`bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa`, under generation 15 of the
+rules, which corrects three false passes on `A2`, `D1` and `A3`. The parameters moved between
+the collection and the judgement only in blocks the twelve legs' rules do not read (the
+`existence` and `discoverability` blocks, and the discoverability candidate's entry under the
+link probe), so no other verdict moved. Every superseded judgement stays registered under its
+own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061
 (control tables derived from collector dispatch) and DD-064 (forbidden to look is blindness,

@@ -180,6 +180,20 @@ compare_to_by_cycle:
     label: "cycle 4 · 2026-09-10, re-judged (generation 14)"
     note: "both judged under generation 14; ten legs were measured again on 2026-10-06 over the locations each body declares, every other leg is cycle 4 on both sides"
     rule_changed: {}
+  # The composite cycle of record from 2026-10-10 (`cc_tasks/2026-10-07_seed_known_locations_
+  # and_split_discoverability.md` decision 2) against `_composite_b`, the declaration it replaces.
+  # The evidence is the same on both sides; what differs is generation 15 on three legs: A3 is
+  # the recollection's evidence judged under v8 instead of v7, and A2 and D1, which composite B
+  # withheld and showed from cycle 4, are now the recollection's, judged under v5.
+  scan_2026-10-06_composite_c:
+    cycle: scan_2026-10-06_composite_b
+    suffix: "2026-10-06_composite_b"
+    label: "composite B · 2026-10-07, before generation 15"
+    note: "the same evidence on both sides; generation 15 narrows what a pass may claim on A2, A3 and D1, and A2 and D1 now come from the 2026-10-06 recollection where composite B withheld them"
+    rule_changed:
+      A2: "v4 → v5"
+      A3: "v7 → v8"
+      D1: "v4 → v5"
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

@@ -10,14 +10,14 @@
   "evidenced_by": 147,
   "evidenced_by_internal": 17,
   "gaps": 13,
-  "measurement_specs": 29,
+  "measurement_specs": 30,
   "collectors_none_known": 4,
-  "rules_built": 24,
+  "rules_built": 25,
   "specs_with_recorded_decision": 3,
-  "candidate_indicators": 1,
-  "indicators_measured": 21,
+  "candidate_indicators": 2,
+  "indicators_measured": 22,
   "actions": 60,
-  "actions_on_candidate_indicators": 3,
+  "actions_on_candidate_indicators": 4,
   "tools": 13,
   "preconditions": 19,
   "requires": 37,
@@ -167,18 +167,30 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A1"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 4,
+      "counts": {
+       "pass": 4,
+       "fail": 0,
+       "not_applicable": 0,
+       "error": 19
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A1"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 4,
      "counts": {
       "pass": 4,
@@ -187,8 +199,12 @@
       "error": 19
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -215,7 +231,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "harness_built",
+    "measurement_status": "measured",
     "gap": "**gap**",
     "criterion_code": "A",
     "measured_previously": [
@@ -236,24 +252,26 @@
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
      }
     ],
-    "not_measured_reason": {
-     "cycle": "scan_2026-10-06_composite_b",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "measured_by": {
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A2"
      ],
-     "reason": "every Finding was `error` — the collector could not observe any admitted surface",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
+     "qualifying_findings": 5,
      "counts": {
       "pass": 0,
-      "fail": 0,
+      "fail": 5,
       "not_applicable": 0,
-      "error": 23
+      "error": 18
      },
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+     "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    }
    }
   },
   {
@@ -284,20 +302,20 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A3"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
-     "qualifying_findings": 8,
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
+     "qualifying_findings": 5,
      "counts": {
-      "pass": 8,
+      "pass": 5,
       "fail": 0,
       "not_applicable": 0,
-      "error": 15
+      "error": 18
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -331,11 +349,27 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A3"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 8,
+       "fail": 0,
+       "not_applicable": 0,
+       "error": 15
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v7 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
+    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v8 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -367,11 +401,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A4"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 23,
      "counts": {
       "pass": 22,
@@ -380,7 +414,7 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -414,6 +448,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A4"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 22,
+       "fail": 1,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -450,11 +500,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A5"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 21,
      "counts": {
       "pass": 3,
@@ -463,7 +513,7 @@
       "error": 2
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -497,6 +547,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A5"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 21,
+      "counts": {
+       "pass": 3,
+       "fail": 18,
+       "not_applicable": 0,
+       "error": 2
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -533,11 +599,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A6"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -546,7 +612,7 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -580,6 +646,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A6"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -650,11 +732,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A8"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -663,7 +745,7 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -697,6 +779,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A8"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -750,18 +848,30 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A9"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 5,
+      "counts": {
+       "pass": 3,
+       "fail": 2,
+       "not_applicable": 0,
+       "error": 18
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A9"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 5,
      "counts": {
       "pass": 3,
@@ -770,8 +880,12 @@
       "error": 18
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -802,11 +916,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A10"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 19,
      "counts": {
       "pass": 13,
@@ -815,7 +929,7 @@
       "error": 4
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -849,6 +963,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A10"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 19,
+      "counts": {
+       "pass": 13,
+       "fail": 6,
+       "not_applicable": 0,
+       "error": 4
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -885,11 +1015,11 @@
     "gap": null,
     "criterion_code": "A",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "A11-declared"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 23,
      "counts": {
       "pass": 22,
@@ -898,7 +1028,7 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -932,6 +1062,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "A11-declared"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 22,
+       "fail": 1,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -969,17 +1115,12 @@
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "B1"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 7,
      "counts": {
       "pass": 0,
@@ -988,8 +1129,31 @@
       "error": 16
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "B1"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 7,
+      "counts": {
+       "pass": 0,
+       "fail": 7,
+       "not_applicable": 0,
+       "error": 16
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     }
+    ]
    }
   },
   {
@@ -1021,11 +1185,11 @@
     "criterion_code": "B",
     "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "B2"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 22,
      "counts": {
       "pass": 0,
@@ -1034,13 +1198,8 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-10_rj5",
@@ -1057,8 +1216,29 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "B2"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 0,
+       "fail": 22,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
    }
   },
   {
@@ -1089,11 +1269,11 @@
     "gap": null,
     "criterion_code": "B",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "B3"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 22,
      "counts": {
       "pass": 4,
@@ -1102,7 +1282,7 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measured_previously": [
      {
@@ -1136,6 +1316,22 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "B3"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 4,
+       "fail": 18,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
     "measurement_tier": "M",
@@ -1172,17 +1368,12 @@
     "gap": null,
     "criterion_code": "B",
     "requirement_none_reason": "The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B4'] = RULE-B4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "B4"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -1191,8 +1382,31 @@
       "error": 15
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B4'] = RULE-B4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "B4"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 15
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     }
+    ]
    }
   },
   {
@@ -1223,11 +1437,11 @@
     "gap": "**gap**",
     "criterion_code": "B",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "B5"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -1236,14 +1450,9 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
      "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`.",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-10_rj5",
@@ -1261,8 +1470,30 @@
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
       "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "B5"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
+      "surfaces": "the body's one Finding, on its well-known row, for bodies with an admitted product surface (DD-069)"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`."
    }
   },
   {
@@ -1512,7 +1743,7 @@
      }
     ],
     "not_measured_reason": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "D1"
      ],
@@ -1523,11 +1754,11 @@
       "not_applicable": 0,
       "error": 23
      },
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
+    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -1559,11 +1790,11 @@
     "gap": "**gap**",
     "criterion_code": "D",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "D2"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 23,
      "counts": {
       "pass": 0,
@@ -1572,13 +1803,8 @@
       "error": 0
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's.",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-10_rj5",
@@ -1595,8 +1821,29 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "D2"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 23,
+      "counts": {
+       "pass": 0,
+       "fail": 23,
+       "not_applicable": 0,
+       "error": 0
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's."
    }
   },
   {
@@ -1627,17 +1874,12 @@
     "gap": null,
     "criterion_code": "D",
     "requirement_none_reason": "Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D3'] = RULE-D3-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "D3"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -1646,8 +1888,31 @@
       "error": 15
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D3'] = RULE-D3-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "D3"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 15
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     }
+    ]
    }
   },
   {
@@ -1693,18 +1958,30 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "D4"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 15
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "D4"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -1713,8 +1990,12 @@
       "error": 15
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1880,7 +2161,7 @@
     "gap": null,
     "criterion_code": "E",
     "not_measured_reason": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "E5"
      ],
@@ -1891,7 +2172,7 @@
       "not_applicable": 0,
       "error": 0
      },
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
@@ -2181,18 +2462,30 @@
       },
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "F4"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 9,
+      "counts": {
+       "pass": 0,
+       "fail": 9,
+       "not_applicable": 0,
+       "error": 14
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
      }
     ],
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "F4"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 9,
      "counts": {
       "pass": 0,
@@ -2201,8 +2494,12 @@
       "error": 14
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -2307,11 +2604,11 @@
     "measurement_level": "product",
     "measurement_level_source": "DD-066 (cc_tasks/2026-09-15_g1d_leaves_l0.md). The host-level leg was withdrawn after the census in that task's RESULT §0: on host-level surfaces (`home`, `well_known`) across every body, every reference host and every cycle the rule returned 126 `fail`, 28 `error` and 0 `pass`; on product surfaces the same rule returned 104 `pass`. The construct is carryable and the home page is not where it is carried. Standards a product-tier rule would bind to: SDMX observation-status and confidence attributes; W3C Data Quality Vocabulary (DQV); schema.org Dataset variable metadata. None has yet been evaluated against a federal data product by this project.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "G1-D"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 22,
      "counts": {
       "pass": 3,
@@ -2320,14 +2617,9 @@
       "error": 1
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
      "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
     },
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`).",
     "measured_previously": [
      {
       "cycle": "scan_2026-09-10_rj5",
@@ -2345,8 +2637,30 @@
       "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
       "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md",
       "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
+     },
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "G1-D"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 22,
+      "counts": {
+       "pass": 3,
+       "fail": 19,
+       "not_applicable": 0,
+       "error": 1
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md",
+      "surfaces": "product surfaces only: the host-level leg is withdrawn (DD-066)"
      }
-    ]
+    ],
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`)."
    }
   },
   {
@@ -2468,17 +2782,12 @@
     "gap": null,
     "criterion_code": "G",
     "requirement_none_reason": "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant.",
-    "measurement_tier": "M",
-    "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['G4'] = RULE-G4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
     "measured_by": {
-     "cycle": "scan_2026-10-06_composite_b",
+     "cycle": "scan_2026-10-06_composite_c",
      "legs": [
       "G4"
      ],
-     "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+     "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
      "qualifying_findings": 8,
      "counts": {
       "pass": 0,
@@ -2487,8 +2796,31 @@
       "error": 15
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
-     "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
-    }
+     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['G4'] = RULE-G4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
+    "measured_previously": [
+     {
+      "cycle": "scan_2026-10-06_composite_b",
+      "legs": [
+       "G4"
+      ],
+      "params_hash": "2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9",
+      "qualifying_findings": 8,
+      "counts": {
+       "pass": 0,
+       "fail": 8,
+       "not_applicable": 0,
+       "error": 15
+      },
+      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
+      "recorded_by": "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md"
+     }
+    ]
    }
   },
   {
@@ -2582,7 +2914,7 @@
     "indicator_code": "A2",
     "leg": "A2",
     "mode": "auto",
-    "rule_id": "RULE-A2-v4",
+    "rule_id": "RULE-A2-v6",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the documented API base and any OpenAPI/Swagger document; record auth scheme, declared rate limits, and whether the description is machine-readable.",
     "collector": "httpx",
@@ -2600,7 +2932,7 @@
     "indicator_code": "A3",
     "leg": "A3",
     "mode": "auto",
-    "rule_id": "RULE-A3-v7",
+    "rule_id": "RULE-A3-v8",
     "collector_pin": "scrapy>=2.11",
     "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
     "collector": "scrapy",
@@ -2799,7 +3131,7 @@
     "indicator_code": "D1",
     "leg": "D1",
     "mode": "auto",
-    "rule_id": "RULE-D1-v4",
+    "rule_id": "RULE-D1-v6",
     "collector_pin": "extruct>=0.17",
     "signal": "Read the licence from schema.org/DCAT markup, an HTTP Link header, and the API's terms endpoint; test whether it is a recognised identifier (SPDX or a known URL) rather than free text.",
     "collector": "extruct + httpx",
@@ -2817,7 +3149,7 @@
     "indicator_code": "D4",
     "leg": "D4",
     "mode": "auto",
-    "rule_id": "RULE-D4-v4",
+    "rule_id": "RULE-D4-v5",
     "collector_pin": "json-schema (Project Open Data v1.1 schema)",
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
@@ -2888,7 +3220,7 @@
     "indicator_code": "F4",
     "leg": "F4",
     "mode": "auto",
-    "rule_id": "RULE-F4-v4",
+    "rule_id": "RULE-F4-v5",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
     "collector": "httpx",
@@ -3031,7 +3363,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -3070,7 +3402,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A1`",
      "constructs_served": [
       "Machine-readable formats"
      ],
@@ -3102,15 +3434,15 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A2-v4",
+    "verifies_by": "RULE-A2-v6",
     "leg": "A2",
     "indicator_code": "A2",
     "outcome": "served_but_not_an_api_description",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -3143,15 +3475,15 @@
     "cost_band": "procurement",
     "cost_source": "notional:technique_class:expose_api, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A2-v4",
+    "verifies_by": "RULE-A2-v6",
     "leg": "A2",
     "indicator_code": "A2",
     "outcome": "no_api_description",
     "applies_to_publisher": true,
     "value": {
-     "bodies_failing_now": 0,
+     "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A2`",
      "constructs_served": [
       "Programmatic access"
      ],
@@ -3182,7 +3514,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v7",
+    "verifies_by": "RULE-A3-v8",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "filtered_query_not_whole_product",
@@ -3190,7 +3522,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3220,7 +3552,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v7",
+    "verifies_by": "RULE-A3-v8",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "below_bulk_floor",
@@ -3228,7 +3560,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3258,7 +3590,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-A3-v7",
+    "verifies_by": "RULE-A3-v8",
     "leg": "A3",
     "indicator_code": "A3",
     "outcome": "no_whole_product_download",
@@ -3266,7 +3598,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `A3`",
      "constructs_served": [
       "Bulk access"
      ],
@@ -3305,7 +3637,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -3348,7 +3680,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A4`",
      "constructs_served": [
       "Crawler/agent access"
      ],
@@ -3390,7 +3722,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -3429,7 +3761,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `A5`",
      "constructs_served": [
       "Discoverability surface"
      ],
@@ -3468,7 +3800,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3507,7 +3839,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3547,7 +3879,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A6`",
      "constructs_served": [
       "Structured markup"
      ],
@@ -3585,7 +3917,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3624,7 +3956,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3662,7 +3994,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3702,7 +4034,7 @@
     "value": {
      "bodies_failing_now": 11,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 11 of 16 bodies carry the verdict `fail` on leg `A8`",
      "constructs_served": [
       "Timeliness of surface"
      ],
@@ -3741,7 +4073,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3780,7 +4112,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A9`",
      "constructs_served": [
       "M2M agent surface"
      ],
@@ -3818,7 +4150,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3856,7 +4188,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3895,7 +4227,7 @@
     "value": {
      "bodies_failing_now": 1,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 1 of 16 bodies carry the verdict `fail` on leg `A10`",
      "constructs_served": [
       "Application/data-tool machine surface"
      ],
@@ -3934,7 +4266,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -3975,7 +4307,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -4015,7 +4347,7 @@
     "value": {
      "bodies_failing_now": 2,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 2 of 16 bodies carry the verdict `fail` on leg `A11-declared`",
      "constructs_served": [
       "Effective crawler access (declared / enforced / observed)"
      ],
@@ -4055,7 +4387,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -4096,7 +4428,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -4138,7 +4470,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `A12`",
      "constructs_served": [
       "Access policy coherence"
      ],
@@ -4178,7 +4510,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4217,7 +4549,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4255,7 +4587,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4293,7 +4625,7 @@
     "value": {
      "bodies_failing_now": 10,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 10 of 16 bodies carry the verdict `fail` on leg `B3`",
      "constructs_served": [
       "Methodology legibility"
      ],
@@ -4323,7 +4655,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D1-v4",
+    "verifies_by": "RULE-D1-v6",
     "leg": "D1",
     "indicator_code": "D1",
     "outcome": "licence_is_free_text",
@@ -4331,7 +4663,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -4361,7 +4693,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D1-v4",
+    "verifies_by": "RULE-D1-v6",
     "leg": "D1",
     "indicator_code": "D1",
     "outcome": "no_licence",
@@ -4369,7 +4701,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 0 of 16 bodies carry the verdict `fail` on leg `D1`",
      "constructs_served": [
       "License clarity"
      ],
@@ -4401,7 +4733,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v4",
+    "verifies_by": "RULE-D4-v5",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "catalog_schema_violation",
@@ -4409,7 +4741,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4439,7 +4771,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v4",
+    "verifies_by": "RULE-D4-v5",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "product_absent_from_catalog",
@@ -4447,7 +4779,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4477,7 +4809,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v4",
+    "verifies_by": "RULE-D4-v5",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "no_catalog",
@@ -4485,7 +4817,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D4`",
      "constructs_served": [
       "No dark data"
      ],
@@ -4523,7 +4855,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_c` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4563,7 +4895,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_c` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4603,7 +4935,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `E5` is on neither matrix of cycle `scan_2026-10-06_composite_c` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Positive controls"
      ],
@@ -4634,7 +4966,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v4",
+    "verifies_by": "RULE-F4-v5",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "changelog_entries_lack_revision_class",
@@ -4642,7 +4974,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4672,7 +5004,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v4",
+    "verifies_by": "RULE-F4-v5",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "changelog_not_machine_readable",
@@ -4680,7 +5012,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4710,7 +5042,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-F4-v4",
+    "verifies_by": "RULE-F4-v5",
     "leg": "F4",
     "indicator_code": "F4",
     "outcome": "no_changelog",
@@ -4718,7 +5050,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `F4`",
      "constructs_served": [
       "Change legibility"
      ],
@@ -4756,7 +5088,7 @@
     "value": {
      "bodies_failing_now": 0,
      "bodies_on_the_cycle_of_record": 0,
-     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-10-06_composite_b` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "bodies_failing_now_source": "leg `G1-D` is on neither matrix of cycle `scan_2026-10-06_composite_c` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
      "constructs_served": [
       "Uncertainty legibility (two legs, scored as a vector)"
      ],
@@ -4777,7 +5109,7 @@
     "indicator_code": "B1",
     "leg": "B1",
     "mode": "auto",
-    "rule_id": "RULE-B1-v3",
+    "rule_id": "RULE-B1-v4",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1) over D4's observation; assessment/harness/scan/rules/_schema_terms.py over A6's (`parsed.raw`, extruct>=0.17)",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product links a data dictionary (DCAT-US `describedBy`, on the dataset or a distribution); on A6's markup of the product page, test whether a schema.org `Dataset` lists `variableMeasured`. Either half passes the leg.",
     "collector": "dcat-record-fields and schema-terms",
@@ -4794,7 +5126,7 @@
     "indicator_code": "B4",
     "leg": "B4",
     "mode": "auto",
-    "rule_id": "RULE-B4-v2",
+    "rule_id": "RULE-B4-v3",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product carries a quality measurement (`hasQualityMeasurement`) and revision metadata (`versionNotes`, `previousVersion` or `hasCurrentVersion`).",
     "collector": "dcat-record-fields",
@@ -4812,7 +5144,7 @@
     "indicator_code": "D3",
     "leg": "D3",
     "mode": "auto",
-    "rule_id": "RULE-D3-v2",
+    "rule_id": "RULE-D3-v3",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product names a lineage (`wasGeneratedBy`, `prov:wasGeneratedBy`, `wasDerivedFrom` or `prov:wasDerivedFrom`).",
     "collector": "dcat-record-fields",
@@ -4829,7 +5161,7 @@
     "indicator_code": "G4",
     "leg": "G4",
     "mode": "auto",
-    "rule_id": "RULE-G4-v2",
+    "rule_id": "RULE-G4-v3",
     "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
     "signal": "On D4's /data.json observation, test whether every catalog record for the product carries a well-formed `bureauCode` and `programCode`.",
     "collector": "dcat-record-fields",
@@ -4856,7 +5188,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v3",
+    "verifies_by": "RULE-B1-v4",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_product_record",
@@ -4864,7 +5196,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4895,7 +5227,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v3",
+    "verifies_by": "RULE-B1-v4",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_data_dictionary",
@@ -4903,7 +5235,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -4933,7 +5265,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v2",
+    "verifies_by": "RULE-B4-v3",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "no_product_record",
@@ -4941,7 +5273,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -4972,7 +5304,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v2",
+    "verifies_by": "RULE-B4-v3",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "quality_measurement_absent",
@@ -4980,7 +5312,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -5011,7 +5343,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B4-v2",
+    "verifies_by": "RULE-B4-v3",
     "leg": "B4",
     "indicator_code": "B4",
     "outcome": "revision_metadata_absent",
@@ -5019,7 +5351,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `B4`",
      "constructs_served": [
       "Quality metadata"
      ],
@@ -5049,7 +5381,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D3-v2",
+    "verifies_by": "RULE-D3-v3",
     "leg": "D3",
     "indicator_code": "D3",
     "outcome": "no_product_record",
@@ -5057,7 +5389,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -5088,7 +5420,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D3-v2",
+    "verifies_by": "RULE-D3-v3",
     "leg": "D3",
     "indicator_code": "D3",
     "outcome": "no_lineage_field",
@@ -5096,7 +5428,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `D3`",
      "constructs_served": [
       "Provenance completeness"
      ],
@@ -5126,7 +5458,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-G4-v2",
+    "verifies_by": "RULE-G4-v3",
     "leg": "G4",
     "indicator_code": "G4",
     "outcome": "no_product_record",
@@ -5134,7 +5466,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -5166,7 +5498,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-G4-v2",
+    "verifies_by": "RULE-G4-v3",
     "leg": "G4",
     "indicator_code": "G4",
     "outcome": "authority_codes_absent",
@@ -5174,7 +5506,7 @@
     "value": {
      "bodies_failing_now": 5,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 5 of 16 bodies carry the verdict `fail` on leg `G4`",
      "constructs_served": [
       "Authority metadata"
      ],
@@ -5258,7 +5590,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v3",
+    "verifies_by": "RULE-B1-v4",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_variable_measured",
@@ -5266,7 +5598,7 @@
     "value": {
      "bodies_failing_now": 4,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 4 of 16 bodies carry the verdict `fail` on leg `B1`",
      "constructs_served": [
       "Variable-level semantics"
      ],
@@ -5304,7 +5636,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5342,7 +5674,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5380,7 +5712,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B2`",
      "constructs_served": [
       "Definitions surface"
      ],
@@ -5419,7 +5751,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5458,7 +5790,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5496,7 +5828,7 @@
     "value": {
      "bodies_failing_now": 12,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 12 of 16 bodies carry the verdict `fail` on leg `B5`",
      "constructs_served": [
       "Semantic consistency"
      ],
@@ -5535,7 +5867,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],
@@ -5573,7 +5905,7 @@
     "value": {
      "bodies_failing_now": 13,
      "bodies_on_the_cycle_of_record": 16,
-     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_b.json (cycle `scan_2026-10-06_composite_b`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
+     "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-10-06_composite_c.json (cycle `scan_2026-10-06_composite_c`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `D2`",
      "constructs_served": [
       "Reuse permissions for AI"
      ],
@@ -6078,6 +6410,102 @@
      "assessment/harness/scan/errors.py: \"forbidden to look at a URL inside the product\""
     ],
     "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "con:A13-discoverability-from-the-product-page",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Discoverability from the product page",
+    "criterion_code": "A",
+    "status": "candidate"
+   }
+  },
+  {
+   "id": "ind:A13",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A13",
+    "construct": "Discoverability from the product page",
+    "indicator": "A machine client starting from the product page reaches the body's API, its terms, its changelog and its inventory without being told where they are",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "candidate",
+    "measurement_status": "specified",
+    "criterion_code": "A",
+    "evidence_raw": "`w3c-dwbp-2017` (Abstract: \"Data should be discoverable and understandable by humans and machines.\"); `dcat-us-1-1-schema` (Introduction: the Project Open Data metadata \"to list agency datasets and application programming interfaces (APIs) as hosted at agency.gov/data\", the inventory's convention location); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii: \"host it publicly on the agency's website at the address: www.agency.gov/data.json\"); `llmstxt-proposal` (Proposal: discovery links \"can be provided as HTML `<link>` elements, or as an HTTP `Link:` response header\"); `wilkinson-2016-fair-guiding-principles` (FAIR F4, metadata registered or indexed in a searchable resource). RFC 9727 (the well-known api-catalog URI, June 2025) is the API's convention location and is named, not admitted: this task fetched nothing",
+    "candidate_rationale": "DN-013-R1: existence is not discoverability. The harness tested whether a stranger could find an agency's API, inventory, terms or changelog from the product page and reported the failure of that search as the absence of the thing, while api.census.gov, api.bls.gov, api.eia.gov and the BEA API are public knowledge. The existence legs (A2, D1, F4, D4 and D4's consumers) now read recorded and seeded locations only; what the link probe and the guessed paths measured is this indicator: a machine that knows only the product page, and the conventions, gets there or it does not.",
+    "candidate_provenance": "Found by the harness, from the operator's objection of 2026-10-06 (DN-013 §1), not crosswalked from a published framework. The literature asks for data to be discoverable by machines (W3C DWBP; FAIR F4) and names the convention locations (OMB M-13-13's /data.json, RFC 9727's api-catalog); none states this test of a product page as an AI-readiness indicator.",
+    "candidate_promotion": "Operator decision (DD-054). The framework goes out under his name, and an indicator the instrument derived from its own defect is the kind that needs a human to accept it.",
+    "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A13'] = RULE-A13-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A13`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+   }
+  },
+  {
+   "id": "spec:A13",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A13",
+    "leg": "A13",
+    "mode": "auto",
+    "rule_id": "RULE-A13-v1",
+    "collector": "none of its own (`params.link_probe.legs_served`)",
+    "collector_pin": "the shared link probe's product-page Observation and the A2, D1, F4 and D4 Observations (`RULE-A13-v1.CONSUMES`)",
+    "signal": "Per surface, per object (the API, its terms, its changelog, the inventory): pass when an object that exists (an Observation at a recorded location served it, or the record says verified) has a recorded URL among the product page's links, on-host or off-host and past the link probe's cap, or sits at a convention location (the well-known api-catalog URI served as a Linkset, or a `Link: rel=\"api-catalog\"` header, RFC 9727; the data.json inventory at the host root, OMB M-13-13); fail when it exists, the page was read whole and neither holds; error when existence is not settled, the page was not read, or the API's convention location was not fetched; not_applicable when no object is shown to exist. The surface's verdict is the first of fail, error, pass, not_applicable that any object returns.",
+    "evidence_kind": "the product page's link set and response headers, plus the recorded locations and the fetches of them",
+    "prior_art": "W3C DWBP 2017 (data discoverable by machines); OMB M-13-13 and DCAT-US 1.1 (the data.json inventory at the host root); RFC 9727 (api-catalog); RFC 8288 (Link header)",
+    "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+   }
+  },
+  {
+   "id": "act:a13-link-what-you-publish-from-the-product-page",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Link the API, its terms, its changelog and the inventory from the product page",
+    "description": "Something the body publishes — its API, the API's terms, its changelog or its data inventory — exists, and a client that starts from the product page cannot reach it: it is not among the page's links and does not sit where a convention says to look. Link each one from the product page, as an anchor, a `<link>` element or an HTTP `Link` header; serve the API catalog at `/.well-known/api-catalog` (RFC 9727) and the inventory at `/data.json` on the product's host.",
+    "technique_source": [
+     "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), 'Abstract': \"Data should be discoverable and understandable by humans and machines.\"",
+     "corpus/kernel/llmstxt-proposal.md (doc_id `llmstxt-proposal`), 'Proposal': \"These links can be provided as HTML `<link>` elements, or as an HTTP `Link:` response header.\"",
+     "corpus/kernel/dcat-us-1-1-schema.md (doc_id `dcat-us-1-1-schema`), 'Introduction': \"guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces (APIs) as hosted at agency.gov/data.\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-A13-v1",
+    "leg": "A13",
+    "indicator_code": "A13",
+    "outcome": "exists_not_reachable_from_page",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `A13` is on neither matrix of cycle `scan_2026-10-06_composite_c` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Discoverability from the product page"
+     ],
+     "constructs_served_source": "`con:A13-discoverability-from-the-product-page` -[DECOMPOSES_INTO]-> `ind:A13` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own"
+    },
+    "authored_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
+    "technique_class_reason": "the object already exists and the page already exists; the act is adding a link, and the convention locations are the alternative named for the API and the inventory",
+    "applies_to_note": "The subject is the publisher's product page and host; what is provisional is the indicator.",
+    "note": "A13 is a CANDIDATE indicator (DD-054): its rule runs, its Findings are reported, and they enter no framework numerator until the operator adopts it. The action is recorded on the same terms. RFC 9727 is named for its location and is not an admitted corpus document; the quoted sources are."
    }
   }
  ],
@@ -7977,7 +8405,7 @@
    "to": "ind:A2",
    "properties": {
     "outcome": "served_but_not_an_api_description",
-    "rule_id": "RULE-A2-v4",
+    "rule_id": "RULE-A2-v6",
     "leg": "A2",
     "reason_fragment": "does not parse as an API "
    }
@@ -7988,7 +8416,7 @@
    "to": "ind:A2",
    "properties": {
     "outcome": "no_api_description",
-    "rule_id": "RULE-A2-v4",
+    "rule_id": "RULE-A2-v6",
     "leg": "A2",
     "reason_fragment": "no OpenAPI/JSON API description served at any probed path"
    }
@@ -7999,7 +8427,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "filtered_query_not_whole_product",
-    "rule_id": "RULE-A3-v7",
+    "rule_id": "RULE-A3-v8",
     "leg": "A3",
     "reason_fragment": "download link(s) are filtered queries, not "
    }
@@ -8010,7 +8438,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "below_bulk_floor",
-    "rule_id": "RULE-A3-v7",
+    "rule_id": "RULE-A3-v8",
     "leg": "A3",
     "reason_fragment": "the largest linked download is below the "
    }
@@ -8021,7 +8449,7 @@
    "to": "ind:A3",
    "properties": {
     "outcome": "no_whole_product_download",
-    "rule_id": "RULE-A3-v7",
+    "rule_id": "RULE-A3-v8",
     "leg": "A3",
     "reason_fragment": "no whole-product download linked from the product page "
    }
@@ -8318,7 +8746,7 @@
    "to": "ind:D1",
    "properties": {
     "outcome": "licence_is_free_text",
-    "rule_id": "RULE-D1-v4",
+    "rule_id": "RULE-D1-v6",
     "leg": "D1",
     "reason_fragment": "free text, not a recognised identifier"
    }
@@ -8329,7 +8757,7 @@
    "to": "ind:D1",
    "properties": {
     "outcome": "no_licence",
-    "rule_id": "RULE-D1-v4",
+    "rule_id": "RULE-D1-v6",
     "leg": "D1",
     "reason_fragment": "no licence in the product page's markup, in an HTTP Link header, or at a "
    }
@@ -8340,7 +8768,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "catalog_schema_violation",
-    "rule_id": "RULE-D4-v4",
+    "rule_id": "RULE-D4-v5",
     "leg": "D4",
     "reason_fragment": "but the catalog violates "
    }
@@ -8351,7 +8779,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "product_absent_from_catalog",
-    "rule_id": "RULE-D4-v4",
+    "rule_id": "RULE-D4-v5",
     "leg": "D4",
     "reason_fragment": "but the product is not in it"
    }
@@ -8362,7 +8790,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "no_catalog",
-    "rule_id": "RULE-D4-v4",
+    "rule_id": "RULE-D4-v5",
     "leg": "D4",
     "reason_fragment": "no public data.json catalog served at any of the "
    }
@@ -8406,7 +8834,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "changelog_entries_lack_revision_class",
-    "rule_id": "RULE-F4-v4",
+    "rule_id": "RULE-F4-v5",
     "leg": "F4",
     "reason_fragment": "entries carry a revision class (floor "
    }
@@ -8417,7 +8845,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "changelog_not_machine_readable",
-    "rule_id": "RULE-F4-v4",
+    "rule_id": "RULE-F4-v5",
     "leg": "F4",
     "reason_fragment": "a changelog page is served at "
    }
@@ -8428,7 +8856,7 @@
    "to": "ind:F4",
    "properties": {
     "outcome": "no_changelog",
-    "rule_id": "RULE-F4-v4",
+    "rule_id": "RULE-F4-v5",
     "leg": "F4",
     "reason_fragment": "no changelog or release-notes endpoint served"
    }
@@ -8486,7 +8914,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-B1-v3",
+    "rule_id": "RULE-B1-v4",
     "leg": "B1",
     "reason_fragment": "no catalog record for the product"
    }
@@ -8497,7 +8925,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_data_dictionary",
-    "rule_id": "RULE-B1-v3",
+    "rule_id": "RULE-B1-v4",
     "leg": "B1",
     "reason_fragment": "lack a data dictionary ("
    }
@@ -8508,7 +8936,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-B4-v2",
+    "rule_id": "RULE-B4-v3",
     "leg": "B4",
     "reason_fragment": "no catalog record for the product"
    }
@@ -8519,7 +8947,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "quality_measurement_absent",
-    "rule_id": "RULE-B4-v2",
+    "rule_id": "RULE-B4-v3",
     "leg": "B4",
     "reason_fragment": "lack a quality measurement ("
    }
@@ -8530,7 +8958,7 @@
    "to": "ind:B4",
    "properties": {
     "outcome": "revision_metadata_absent",
-    "rule_id": "RULE-B4-v2",
+    "rule_id": "RULE-B4-v3",
     "leg": "B4",
     "reason_fragment": "lack revision metadata ("
    }
@@ -8541,7 +8969,7 @@
    "to": "ind:D3",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-D3-v2",
+    "rule_id": "RULE-D3-v3",
     "leg": "D3",
     "reason_fragment": "no catalog record for the product"
    }
@@ -8552,7 +8980,7 @@
    "to": "ind:D3",
    "properties": {
     "outcome": "no_lineage_field",
-    "rule_id": "RULE-D3-v2",
+    "rule_id": "RULE-D3-v3",
     "leg": "D3",
     "reason_fragment": "lack a lineage field ("
    }
@@ -8563,7 +8991,7 @@
    "to": "ind:G4",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-G4-v2",
+    "rule_id": "RULE-G4-v3",
     "leg": "G4",
     "reason_fragment": "no catalog record for the product"
    }
@@ -8574,7 +9002,7 @@
    "to": "ind:G4",
    "properties": {
     "outcome": "authority_codes_absent",
-    "rule_id": "RULE-G4-v2",
+    "rule_id": "RULE-G4-v3",
     "leg": "G4",
     "reason_fragment": "lack a valid `bureauCode` and `programCode`"
    }
@@ -8600,7 +9028,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_variable_measured",
-    "rule_id": "RULE-B1-v3",
+    "rule_id": "RULE-B1-v4",
     "leg": "B1",
     "reason_fragment": "no `variableMeasured`"
    }
@@ -9243,6 +9671,96 @@
    "to": "doc:dcat-us-3-m-25-05-crosswalk",
    "properties": {
     "doc_id": "dcat-us-3-m-25-05-crosswalk"
+   }
+  },
+  {
+   "from": "crit:A",
+   "to": "con:A13-discoverability-from-the-product-page",
+   "type": "DECOMPOSES_INTO"
+  },
+  {
+   "from": "con:A13-discoverability-from-the-product-page",
+   "to": "ind:A13",
+   "type": "DECOMPOSES_INTO"
+  },
+  {
+   "from": "ind:A13",
+   "to": "spec:A13",
+   "type": "MEASURED_BY"
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:llmstxt-proposal",
+   "properties": {
+    "doc_id": "llmstxt-proposal"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:wilkinson-2016-fair-guiding-principles",
+   "properties": {
+    "doc_id": "wilkinson-2016-fair-guiding-principles"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:docs/design/2026-10-06_DN-013_parallelism_known_endpoints_and_prose.md §1",
+   "properties": {
+    "artifact_path": "docs/design/2026-10-06_DN-013_parallelism_known_endpoints_and_prose.md §1"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:docs/design/2026-10-07_DN-013_ADDENDUM_01_split_r1_and_r3_premise.md A1",
+   "properties": {
+    "artifact_path": "docs/design/2026-10-07_DN-013_ADDENDUM_01_split_r1_and_r3_premise.md A1"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-10-06_absence_verdicts_recollection_RESULT.md §1",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-10-06_absence_verdicts_recollection_RESULT.md §1"
+   }
+  },
+  {
+   "from": "act:a13-link-what-you-publish-from-the-product-page",
+   "type": "REMEDIATES",
+   "to": "ind:A13",
+   "properties": {
+    "outcome": "exists_not_reachable_from_page",
+    "rule_id": "RULE-A13-v1",
+    "leg": "A13",
+    "reason_fragment": "and is not reachable from the "
    }
   }
  ],

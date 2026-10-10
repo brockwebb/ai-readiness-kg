@@ -55,15 +55,20 @@ def _obs(params, leg, url, *, status=200, ctype="text/html", parsed=None, error_
 
 def _decl(**kw) -> dict:
     """A `declared` block as `declarations.record` writes it."""
-    return {"scheme": declarations.SCHEME, "body": "X", "unresolved": [], **kw}
+    return {"scheme": 1, "body": "X", "unresolved": [], **kw}
 
 
 # --------------------------------------------------------------------------- generation 14
 
 def test_generation_fourteen_is_the_twelve_new_modules_and_they_are_current():
-    assert [m.RULE_ID for m in GENERATIONS[-1]] == list(NEW)
+    # Generation 14 is the fourteenth list. Each of its modules is current unless a LATER
+    # generation versions the leg again (generation 15 versions A2, A3, D1; generation 16 the
+    # existence legs, `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`).
+    assert [m.RULE_ID for m in GENERATIONS[13]] == list(NEW)
+    later = {m.LEG for g in GENERATIONS[14:] for m in g}
     for rid in NEW:
-        assert CURRENT[REGISTRY[rid].LEG] == rid
+        leg = REGISTRY[rid].LEG
+        assert CURRENT[leg] == rid or leg in later, rid
         assert claim_of(rid) == "absence", rid
     # Every predecessor stays registered: a Finding recorded under it must re-derive.
     for rid in ("RULE-A1-v4", "RULE-A2-v3", "RULE-A3-v6", "RULE-A9-v1", "RULE-B1-v2",
@@ -75,7 +80,10 @@ def test_generation_fourteen_is_the_twelve_new_modules_and_they_are_current():
 def test_the_rules_restate_the_schemes_the_collector_writes(params):
     """A rule may not import `scan.declarations`, so `_scope` restates the two scheme numbers;
     this holds them equal to the writers'."""
-    assert _scope.DECLARED_SCHEME == declarations.SCHEME
+    # Scheme 2 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`
+    # decision 5) is scheme 1 plus provenance; the rules read both.
+    assert set(_scope.DECLARED_SCHEMES) == set(declarations.SCHEMES)
+    assert declarations.SCHEME == max(declarations.SCHEMES)
     assert _scope.CANDIDATES_SCHEME == params["link_probe"]["rank"]["candidates_scheme"]
 
 

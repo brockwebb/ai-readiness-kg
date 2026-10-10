@@ -35,6 +35,10 @@ value:
   A10: {rating: 5, reason: 'content invisible before JavaScript or deep links that do not resolve, level 5'}
   A11: {rating: 5, reason: 'the declared policy refuses AI crawlers or contradicts itself, level 5'}
   A12: {rating: 5, reason: 'an identified, robots-compliant client is refused, level 5'}
+  # A13, the discoverability candidate, rated under the same rubric by the CC session of
+  # cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md (claude-opus-5-5),
+  # 2026-10-10: its failing result is level 4's wording itself.
+  A13: {rating: 4, reason: 'an API, its terms, a changelog or the inventory exists and is reachable only by a path a machine reader is unlikely to find, level 4'}
   B1:  {rating: 3, reason: 'variable labels, definitions, units and universes withheld, level 3'}
   B2:  {rating: 3, reason: 'concept definitions withheld from the variables, level 3'}
   B3:  {rating: 3, reason: 'methodology not legible to a machine reader, level 3'}
@@ -142,6 +146,7 @@ cheap_pass:
   A10: {value: 'TBD', basis: 'not decided: the client-rendered-shell test reads visible text before JavaScript, and no case was described'}
   A11-declared: {value: 'yes', basis: 'the leg reads the declared layer only; ind:A11 names declared, enforced and observed layers'}
   A12: {value: 'no', basis: 'RULE-A12-v3 passes only on a response actually served to an identified client'}
+  A13: {value: 'yes', basis: 'RULE-A13-v1 passes on a recorded URL among the product page''s links; a footer link to an API base passes whether or not the page says what it links to'}
   B1: {value: 'yes', basis: 'field presence on the catalog record and markup (collector dcat-record-fields, schema-terms); the record says comprehensiveness is the unmeasured half (ind:B1.requirement_none_reason)'}
   B2: {value: 'yes', basis: 'field presence (collector schema-terms); a DefinedTerm with a code and a definition passes whatever it defines'}
   B3: {value: 'TBD', basis: 'not decided: the rule judges legibility of a methodology document, and no case was described'}

@@ -134,6 +134,11 @@ def build(base: dict, overlay: dict, name: str, task: str, consumes,
     over_ctrl: dict = {}
     for f in overlay.get("control_findings_detail") or []:
         over_ctrl.setdefault(f["leg"], {})[f["target_doc_id"]] = f["verdict"]
+    # A RE-JUDGED overlay carries no control Finding (a re-judgement creates no Observation);
+    # its gate is the fixture run recorded on it as `control_gate`, per leg, as the base's is
+    # (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` decision 2).
+    if not over_ctrl and overlay.get("cycle_kind") == "rejudged":
+        over_ctrl = dict((overlay.get("control_gate") or {}).get("verdicts") or {})
     gate_verdicts = {leg: (over_ctrl.get(leg) if leg in legs else base_gate.get(leg))
                      for leg in sorted(set(base_gate) | set(over_ctrl))}
     gate_verdicts = {k: v for k, v in gate_verdicts.items() if v}

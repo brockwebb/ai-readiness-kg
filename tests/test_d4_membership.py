@@ -132,7 +132,10 @@ def test_generation_thirteen_is_d4_v3_and_fourteen_supersedes_it():
     # Generation 13 is D4-v3 alone; generation 14 (`cc_tasks/2026-10-06_absence_verdicts_
     # rules.md`) superseded it with `RULE-D4-v4`, which keeps every existence branch of v3.
     assert [m.RULE_ID for m in GENERATIONS[12]] == ["RULE-D4-v3"]
-    assert CURRENT["D4"] == "RULE-D4-v4"
+    # Generation 16 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`)
+    # versions D4 again, reading only recorded inventories; v4 stays registered.
+    assert CURRENT["D4"] == "RULE-D4-v5"
+    assert "RULE-D4-v4" in REGISTRY
     assert {"RULE-D4-v1", "RULE-D4-v2", "RULE-D4-v3"} <= set(REGISTRY)
 
 

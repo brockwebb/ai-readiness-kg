@@ -365,7 +365,11 @@ def test_the_figures_print_the_things_the_task_asked_them_to(figures):
         assert f"{agency} · no admitted surface" in f2
     assert "passes_all" in f2 and "fails_all" in f2, "F2 has no control rows"
     f3 = figures["gap_map_by_criterion"]
-    assert "candidate (not counted)" in f3 and ">A12<" in f3
+    # Every candidate in the record is drawn in the candidate row: A12, and since `cc_tasks/
+    # 2026-10-07_seed_known_locations_and_split_discoverability.md` the discoverability A13.
+    label = re.search(r'data-src="label">([^<]*A12[^<]*)<', f3)
+    assert "candidate (not counted)" in f3 and label
+    assert {"A12", "A13"} <= set(label.group(1).split())
     f4 = figures["progress_over_snapshots"]
     for s in cfg()["snapshots"]:
         assert s["commit"] in f4, f"F4 omits snapshot {s['commit']}"

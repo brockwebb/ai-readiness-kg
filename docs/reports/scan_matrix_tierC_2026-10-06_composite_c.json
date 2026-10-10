@@ -1,0 +1,133 @@
+{
+ "task": "cc_tasks/2026-09-09_report_draft.md",
+ "cycle": "scan_2026-10-06_composite_c",
+ "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa",
+ "composed_of": {
+  "overlay": {
+   "cycle": "scan_2026-10-06_recollect_rj1",
+   "legs": [
+    "A1",
+    "A2",
+    "A3",
+    "A9",
+    "B1",
+    "B3",
+    "B4",
+    "D1",
+    "D3",
+    "D4",
+    "F4",
+    "G4"
+   ],
+   "params_hash": "bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa"
+  },
+  "base": {
+   "cycle": "scan_2026-09-10_rj5",
+   "legs": "every leg the overlay does not carry",
+   "params_hash": "36bc3246d92797ca58e7691af2b7e1a795aaeb52d1d12f52929ffb63a0414222"
+  }
+ },
+ "note": "Every cell names the Finding it came from. The five surface-judged tier-0 legs are read from the body's `home:` surface and A12 from its `host:` well-known surface; this cycle's home and flagship surfaces disagree on 12 of those cells across 6 bodies, so the surface is named on every row. Tier C reference hosts enter no Tier A denominator and appear on no agency matrix (DD-059).",
+ "surface_disagreements": {
+  "cells": 12,
+  "bodies": 6,
+  "comparable_bodies": 16,
+  "compared_legs": [
+   "A4",
+   "A5",
+   "A10",
+   "A11-declared"
+  ]
+ },
+ "legs_withdrawn": [
+  {
+   "leg": "G1-D",
+   "effective": "cycle 5 (this params_hash forward)",
+   "decision": "DD-066",
+   "construct": "uncertainty present for the human reader and absent from the markup",
+   "why": "the host-level surface is a home page, which carries no estimate, so the leg cannot hold the property it measures and every verdict on it is structural"
+  }
+ ],
+ "tier": "C",
+ "legs": [
+  "A4",
+  "A5",
+  "A10",
+  "A11-declared",
+  "A12"
+ ],
+ "rows": [
+  {
+   "agency": "GSA",
+   "tier": "C",
+   "host_surface": "home:www.gsa.gov",
+   "host_url": "https://www.gsa.gov",
+   "candidate_surface": "host:www.gsa.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_641cffd01b603a3361ac08cd",
+    "A5": "fnd_60ba2e16a98473df77e0e213",
+    "A10": "fnd_0c3d18ff644ac519413f377a",
+    "A11-declared": "fnd_01a9ab67c6fdb311568e43ed",
+    "A12": "fnd_8892fa2eafa9f8ba052fe16e"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 11,
+   "marks": {}
+  },
+  {
+   "agency": "NIST",
+   "tier": "C",
+   "host_surface": "home:www.nist.gov",
+   "host_url": "https://www.nist.gov",
+   "candidate_surface": "host:www.nist.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_0a20080c2d387276ed5ce85c",
+    "A5": "fnd_c9d374d5820653d9923eff09",
+    "A10": "fnd_4d0c6010d4620e01198946c3",
+    "A11-declared": "fnd_b05611974efca8c3e2aa429f",
+    "A12": "fnd_c4d34647f56fe9763fb39d3c"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 11,
+   "marks": {}
+  },
+  {
+   "agency": "data.gov",
+   "tier": "C",
+   "host_surface": "home:www.data.gov",
+   "host_url": "https://www.data.gov",
+   "candidate_surface": "host:www.data.gov",
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "A12": "pass"
+   },
+   "finding_ids": {
+    "A4": "fnd_3114670cc27138d00ea3e18f",
+    "A5": "fnd_69de6fb92362c32ad1e641b2",
+    "A10": "fnd_490c92c1281916d6133f73cd",
+    "A11-declared": "fnd_72a7beddd7ff75ae565f266b",
+    "A12": "fnd_e5b0e1b33ed1ca402c3d37e6"
+   },
+   "refused_identified_client": 0,
+   "probes_on_host_surface": 12,
+   "marks": {}
+  }
+ ]
+}

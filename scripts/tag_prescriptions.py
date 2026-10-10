@@ -212,6 +212,12 @@ OUTCOMES = {
         "nothing_declared_for_this_client": "so nothing is DECLARED for this client and there is no ",
         "declared_permits_enforced_refuses": "to that same path: the declared and ",
     },
+    # The discoverability candidate (`cc_tasks/2026-10-07_seed_known_locations_and_split_
+    # discoverability.md` decision 3). One failing outcome: an object the body publishes exists
+    # and cannot be reached from the product page.
+    "A13": {
+        "exists_not_reachable_from_page": "and is not reachable from the ",
+    },
     "B3": {
         "methodology_requires_js": "retrievable without JS: ",
         "methodology_pdf_only": "methodology is PDF-only: ",
@@ -433,6 +439,12 @@ Q_OAS = ("openapi-specification-core", "section 2 'Introduction'",
 Q_OAS_TOOLS = ("openapi-specification-core", "section 2 'Introduction'",
                "An OpenAPI Description (OAD) can then be used by documentation generation "
                "tools to display the API")
+Q_DCAT_HOSTED = ("dcat-us-1-1-schema", "'Introduction'",
+                 "guidance to support the use of the Project Open Data metadata to list agency "
+                 "datasets and application programming interfaces (APIs) as hosted at "
+                 "agency.gov/data.")
+Q_DWBP_DISCOVER = ("w3c-dwbp-2017", "'Abstract'",
+                   "Data should be discoverable and understandable by humans and machines.")
 Q_DCAT_CATALOG = ("dcat-us-1-1-schema", "'What to Document - Datasets and Web APIs'",
                   "The catalog file for each agency should list all of the agency’s "
                   "datasets that can be made public, regardless of whether they are "
@@ -775,6 +787,27 @@ ACTIONS = [
             "permits (`ind:A12.candidate_provenance`).",
        applies_to_note="The subject is the publisher's host; what is provisional is the "
                        "indicator."),
+    # ---------------------------------------------------------------------------- A13
+    _a("A13", "exists_not_reachable_from_page", "a13-link-what-you-publish-from-the-product-page",
+       "Link the API, its terms, its changelog and the inventory from the product page",
+       "Something the body publishes — its API, the API's terms, its changelog or its data "
+       "inventory — exists, and a client that starts from the product page cannot reach it: it "
+       "is not among the page's links and does not sit where a convention says to look. Link "
+       "each one from the product page, as an anchor, a `<link>` element or an HTTP `Link` "
+       "header; serve the API catalog at `/.well-known/api-catalog` (RFC 9727) and the "
+       "inventory at `/data.json` on the product's host.",
+       [Q_DWBP_DISCOVER, Q_LLMS_LINK, Q_DCAT_HOSTED], cls="edit_existing",
+       class_reason=(
+           "the object already exists and the page already exists; the act is adding a link, "
+           "and the convention locations are the alternative named for the API and the "
+           "inventory"),
+       note="A13 is a CANDIDATE indicator (DD-054): its rule runs, its Findings are reported, "
+            "and they enter no framework numerator until the operator adopts it. The action is "
+            "recorded on the same terms. RFC 9727 is named for its location and is not an "
+            "admitted corpus document; the quoted sources are.",
+       applies_to_note="The subject is the publisher's product page and host; what is "
+                       "provisional is the indicator.",
+       task="cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"),
     # ---------------------------------------------------------------------------- B3
     _a("B3", "methodology_requires_js", "b3-serve-the-methodology-without-javascript",
        "Serve the methodology document without requiring JavaScript",

@@ -342,8 +342,18 @@ def test_a_cycle_fetches_the_catalog_once_and_judges_d4_and_the_field_legs_from_
     legs = ["D4", *LEGS]
     sp = {leg: {"leg": leg} for leg in legs}
     f = _CountingFetcher(_catalog(_record()))
-    obs, findings = run_surface(sp, {"doc_id": "scan-fixture", "url": PRODUCT}, params, legs,
-                                fetcher=f)
+    # Since generation 16 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.
+    # md` decision 3) an existence leg reads the inventory only where the body's record names
+    # it, as every body's `targets.yaml` entry names its own host's `/data.json`. The surface
+    # here declares the same, with every seed source searched.
+    from scan import declarations
+    declared = {"scheme": 2,
+                "searched": {o: list(declarations.SEED_SOURCES)
+                             for o in declarations.SEARCH_OBJECTS},
+                "inventory_urls": [{"url": CATALOG, "kind": "data_json", "role": "own_host",
+                                    "read_from": {"page": PRODUCT}}]}
+    target = {"doc_id": "scan-fixture", "url": PRODUCT, "declared": declared}
+    obs, findings = run_surface(sp, target, params, legs, fetcher=f)
     # Since generation 12 B1's CURRENT rule (`RULE-B1-v2`) also reads A6's markup of the page,
     # so the surface is asked for the page once and for the catalog once — still never twice.
     assert f.gets.count(CATALOG) == 1
@@ -355,6 +365,6 @@ def test_a_cycle_fetches_the_catalog_once_and_judges_d4_and_the_field_legs_from_
         assert by_leg[leg].verdict == "pass", (leg, by_leg[leg].reason)
         assert d4[0].obs_id in by_leg[leg].evidence
     # D4 alone, as it was judged before generation 11 existed: the same Finding.
-    alone = run_surface({"D4": {"leg": "D4"}}, {"doc_id": "scan-fixture", "url": PRODUCT},
+    alone = run_surface({"D4": {"leg": "D4"}}, target,
                         params, ["D4"], fetcher=_CountingFetcher(_catalog(_record())))[1][0]
     assert alone.finding_id == by_leg["D4"].finding_id

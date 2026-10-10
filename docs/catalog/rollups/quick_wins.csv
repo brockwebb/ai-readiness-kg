@@ -3,6 +3,7 @@ quick_win,scans,S-A1-rule-A1,1,5,plausible,yes,"Product available as structured 
 quick_win,scans,S-A10-rule-A10,1,5,plausible,TBD,"Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution"
 quick_win,scans,S-A11-rule-A11-declared,1,5,established,yes,"A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state"
 quick_win,scans,S-A12-rule-A12,1,5,established,no,"An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager)"
+quick_win,scans,S-A13-rule-A13,1,4,plausible,yes,"A machine client starting from the product page reaches the body's API, its terms, its changelog and its inventory without being told where they are"
 quick_win,scans,S-A2-rule-A2,1,4,unevidenced,yes,Documented public API; auth model; rate limits stated
 quick_win,scans,S-A3-rule-A3,1,4,plausible,yes,Full-product bulk download exists and is linked from product page
 quick_win,scans,S-A4-rule-A4,1,5,established,yes,robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths
@@ -16,6 +17,7 @@ clear_out,scans,S-G4-rule-G4,1,2,plausible,yes,"The issuing authority of a data 
 quick_win,actions,act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path,2,5,established,yes,"Permit, in robots.txt, the AI crawlers the product is meant to reach"
 quick_win,actions,act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt,2,5,established,yes,Resolve the meta-robots directive that contradicts robots.txt
 quick_win,actions,act:a12-publish-a-robots-txt-group-an-identified-client-matches,2,5,established,no,Publish a robots.txt group that an identified machine client matches
+quick_win,actions,act:a13-link-what-you-publish-from-the-product-page,2,4,plausible,yes,"Link the API, its terms, its changelog and the inventory from the product page"
 quick_win,actions,act:a4-allow-the-data-paths-for-named-ai-crawlers,2,5,established,yes,Allow the product's data paths for the AI crawlers you intend to serve
 quick_win,actions,act:a5-list-the-product-url-in-the-sitemap,2,4,established,yes,List the product URL in the discovery file that is already served
 quick_win,actions,act:a6-embed-json-ld-on-the-product-page,2,4,established,yes,Embed JSON-LD describing the product on the product page

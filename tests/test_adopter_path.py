@@ -55,7 +55,11 @@ ADOPTER_UA = "example-readiness-scan/1.0 (+mailto:webmaster@example.org)"
 #: The recollection (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`) moved the
 #: parameters again (`cycle.name`, `b3_methodology.max_followed`) and measured under them, so the
 #: payload today's params reproduce is its cycle's; the composite of record names it as a part.
-SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-10-06_recollect.json"
+#: The seed-and-split task (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`)
+#: moved them again (the `existence` and `discoverability` blocks, A13 in `link_probe.legs_served`)
+#: before re-judging the recollection under them as `scan_2026-10-06_recollect_rj1`, the part the
+#: composite of record `scan_2026-10-06_composite_c` overlays.
+SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-10-06_recollect_rj1.json"
 
 
 def _frame_file(tmp: Path, text: str, name: str = "my_site.yaml") -> Path:
@@ -311,7 +315,17 @@ def test_a_run_writes_its_artifacts_under_out_and_nowhere_else(loopback):
     assert cycle == f"scan_my-site_{TODAY}"
     p = loopback["payload"]
     assert p["scope"] == "frame" and p["control_verdict"] == "pass"
-    assert p["surfaces"] == 4 and p["verdict_counts"]["error"] == 0
+    assert p["surfaces"] == 4
+    # Generation 16 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`
+    # decision 3): an existence leg reads only RECORDED locations, and an adopter frame has no
+    # field to declare them yet, so on an adopter's own site the existence legs are `error`,
+    # naming the seed sources not searched, where generation 14 passed them on guessed paths.
+    # Every `error` is one of those legs; nothing else on the loopback site is unobserved.
+    existence = {"A2", "D1", "F4", "D4", "B1", "B4", "D3", "G4"}
+    errs = [f for f in p["findings_detail"] if f["verdict"] == "error"]
+    assert errs and {f["leg"] for f in errs} <= existence, {f["leg"] for f in errs}
+    assert all("seed sources not searched" in f["reason"] for f in errs)
+    assert p["verdict_counts"]["error"] == len(errs)
     assert set(p["requests_per_host"]) == {loopback["base"].split("//", 1)[1]}
     assert p["frame"]["name"] == "my-site" and p["params_overlay"]["cycle"]["name"] == cycle
     assert p["base_params_hash"] == params_hash(load_params())

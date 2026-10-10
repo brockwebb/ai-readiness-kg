@@ -252,6 +252,14 @@ def _consumed(leg: str) -> tuple:
     return consumes(rule) if rule else ()
 
 
+def _page_only(leg: str) -> tuple:
+    """The shared legs this leg's current rule reads only the page Observation of
+    (`CONSUMES_PAGE_ONLY` on the rule module), never their dereferences."""
+    from .rules import CURRENT, REGISTRY
+    rule = CURRENT.get(leg)
+    return tuple(getattr(REGISTRY[rule], "CONSUMES_PAGE_ONLY", ())) if rule else ()
+
+
 def leg_probes(legs) -> dict:
     """Per leg, the probes its collectors issue — its own block PLUS the shared legs its
     current rule consumes: `{leg: {"methods", "dereference_methods"}}`."""
@@ -259,20 +267,31 @@ def leg_probes(legs) -> dict:
     probes = collector_probes()
     out: dict = {}
     for leg in legs:
-        body = blocks.get(leg, "") + "".join(blocks.get(c, "") for c in _consumed(leg))
+        page_only = set(_page_only(leg))
+        body = blocks.get(leg, "") + "".join(blocks.get(c, "") for c in _consumed(leg)
+                                             if c not in page_only)
+        # A shared leg the rule reads only the PAGE of (`CONSUMES_PAGE_ONLY`): its fetch of the
+        # surface counts, its dereferences of URLs it did not choose do not, because the rule
+        # never reads what they return (`RULE-A13-v1`).
+        page_body = "".join(blocks.get(c, "") for c in _consumed(leg) if c in page_only)
         methods, deref = set(), set()
         for fq, info in probes.items():
             mod, fn = fq.split(".")
-            if re.search(rf"\b{re.escape(mod)}\.{re.escape(fn)}\s*\(", body):
+            call = rf"\b{re.escape(mod)}\.{re.escape(fn)}\s*\("
+            if re.search(call, body) or (re.search(call, page_body)
+                                         and not info["dereference"]):
                 methods |= info["methods"]
                 if info["dereference"]:
                     deref |= info["methods"]
         out[leg] = {"methods": methods, "dereference_methods": deref,
                     "consumes": list(_consumed(leg)),
-                    "collectors": sorted(fq for fq in probes
-                                         if re.search(
-                                             rf"\b{re.escape(fq.split('.')[0])}\."
-                                             rf"{re.escape(fq.split('.')[1])}\s*\(", body))}
+                    "collectors": sorted(
+                        fq for fq in probes
+                        if re.search(rf"\b{re.escape(fq.split('.')[0])}\."
+                                     rf"{re.escape(fq.split('.')[1])}\s*\(", body)
+                        or (not probes[fq]["dereference"] and re.search(
+                            rf"\b{re.escape(fq.split('.')[0])}\."
+                            rf"{re.escape(fq.split('.')[1])}\s*\(", page_body)))}
     return out
 
 

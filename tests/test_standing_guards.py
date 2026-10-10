@@ -78,7 +78,10 @@ PRE_DN003_CYCLES = frozenset({"scan_2026-09-07_rj1", "scan_2026-09-07b_rj1"})
 #: by one name per later re-judgement, and each name is the task that published it.
 #: `scan_2026-09-10_rj4`: `cc_tasks/2026-09-18_rejudge_seven_legs.md`.
 #: `scan_2026-09-10_rj5`: `cc_tasks/2026-10-06_absence_verdicts_rules.md`.
-PUBLISHED_AFTER_THE_GUARD = frozenset({"scan_2026-09-10_rj4", "scan_2026-09-10_rj5"})
+#: `scan_2026-10-06_recollect_rj1`: `cc_tasks/2026-10-07_seed_known_locations_and_split_
+#: discoverability.md`.
+PUBLISHED_AFTER_THE_GUARD = frozenset({"scan_2026-09-10_rj4", "scan_2026-09-10_rj5",
+                                       "scan_2026-10-06_recollect_rj1"})
 
 #: The loopback control fixtures. Same rule: closed, named, may only shrink.
 CONTROLS_ONLY = frozenset({"scan_controls_2026-09-06", "scan_2026-09-07_controls",
@@ -263,8 +266,11 @@ def test_every_stored_judgement_is_on_the_log(live):
     _payloads, a = live
     assert a["unpublished"] == [], json.dumps(a["unpublished"], indent=1)
     assert a["unpaired"] == [], json.dumps(a["unpaired"], indent=1)
-    assert a["by_kind"] == {"rejudged": 16, "measured": 7, "controls_only": 3,
-                            "composite": 1}, a["by_kind"]
+    # The seventeenth re-judgement is `scan_2026-10-06_recollect_rj1` and the second composite
+    # `scan_2026-10-06_composite_c` (`cc_tasks/2026-10-07_seed_known_locations_and_split_
+    # discoverability.md`).
+    assert a["by_kind"] == {"rejudged": 17, "measured": 7, "controls_only": 3,
+                            "composite": 2}, a["by_kind"]
     # The one cycle with Findings on legs its predecessor never judged, and how many.
     new_legs = {r["cycle"]: r["findings_on_new_legs"] for r in a["rows"]
                 if r.get("findings_on_new_legs")}

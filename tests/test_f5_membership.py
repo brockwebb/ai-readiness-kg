@@ -78,6 +78,11 @@ EXPECTED_BLANKS = {
     # side as above; A2 and D1 are blank on the composite's too, because it withholds them and
     # shows `_rj5`'s all-`error` cells. Every other rated leg has a rate on both sides.
     "scan_2026-10-06_composite_b": {"A2", "A9", "D1", "F4"},
+    # The composite cycle of record since `cc_tasks/2026-10-07_seed_known_locations_and_split_
+    # discoverability.md`, drawn against `_composite_b`. A2 and D1 are blank on `_composite_b`'s
+    # side (it withheld them and showed `_rj5`'s all-`error` cells); D1 is blank on this side too,
+    # every one of its Findings `error`. A2 has a rate here: its `fail` cells.
+    "scan_2026-10-06_composite_c": {"A2", "D1"},
 }
 
 #: The cycles whose F5 is a figure that can be drawn and therefore checked.

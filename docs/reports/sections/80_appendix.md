@@ -65,25 +65,28 @@ listed in the frame section.
 
 <!-- include: sources_per_check -->
 
-**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_b.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-10-06_composite_b.*`, the reference hosts;
-`scan_matrix_product_2026-10-06_composite_b.*`, the product matrix. Every row carries its Finding
+**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_c.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-10-06_composite_c.*`, the reference hosts;
+`scan_matrix_product_2026-10-06_composite_c.*`, the product matrix. Every row carries its Finding
 identities, and each JSON file names the two cycles under `composed_of`.
 
-**Provenance.** A declared composite, `scan_2026-10-06_composite_b`
-(`state/scan_2026-10-06_composite_b.json`, `composed_of`). The host checks and every product
-check but ten are cycle `scan_2026-09-10`, parameter hash
+**Provenance.** A declared composite, `scan_2026-10-06_composite_c`
+(`state/scan_2026-10-06_composite_c.json`, `composed_of`). The host checks and every product
+check but twelve are cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
 `scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06. The
-ten (`A1`, `A3`, `A9`, `B1`, `B3`, `B4`, `D3`, `D4`, `F4`, `G4`) are cycle
+twelve (`A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`, `G4`) are cycle
 `scan_2026-10-06_recollect`, parameter hash
 `2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9`, collected on 2026-10-06 over
-the API, changelog and inventory locations each body declares (`targets.yaml`
-`declared_locations`, every entry citing the page it was read from) and judged under the same
-rules. `A2` and `D1` were recollected and are withheld from the composite with the reason on its
-face: on the declared locations their current rules return a pass for a data catalogue served
-where an API description was looked for, and for licence names matched inside other words. Every
-superseded judgement stays registered under its own name. The event log is the source of
+the API, terms, changelog and inventory locations each body declares (`targets.yaml`
+`declared_locations`, every entry citing the page it was read from), and judged as
+`scan_2026-10-06_recollect_rj1` on 2026-10-10, parameter hash
+`bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa`, under generation 15 of the
+rules, which corrects three false passes on `A2`, `D1` and `A3`. The parameters moved between
+the collection and the judgement only in blocks the twelve legs' rules do not read (the
+`existence` and `discoverability` blocks, and the discoverability candidate's entry under the
+link probe), so no other verdict moved. Every superseded judgement stays registered under its
+own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061
 (control tables derived from collector dispatch) and DD-064 (forbidden to look is blindness,

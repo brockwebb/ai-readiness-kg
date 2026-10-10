@@ -29,6 +29,12 @@ from . import _common as c
 #: and `tests/test_absence_verdicts_rules.py` holds the two equal.
 DECLARED_SCHEME = 1
 CANDIDATES_SCHEME = 1
+#: Every `declared` scheme this module reads. Scheme 2 (`cc_tasks/2026-10-07_seed_known_locations_
+#: and_split_discoverability.md` decision 5) is scheme 1 plus provenance fields (`seeded_from`,
+#: `status`, `verified_at`, `searched`); every key a function here reads means what it meant, so a
+#: generation-14 or -15 rule judges a scheme-2 block as it judges the same locations in scheme 1.
+#: No stored Observation carries scheme 2 before this task, so no Finding re-derives differently.
+DECLARED_SCHEMES = (DECLARED_SCHEME, 2)
 
 
 def declared(observations: list) -> dict | None:
@@ -36,7 +42,7 @@ def declared(observations: list) -> dict | None:
     `None` when none does: the Observations predate DN-012 d3."""
     for o in observations:
         d = (o.parsed or {}).get("declared") if isinstance(o.parsed, dict) else None
-        if isinstance(d, dict) and d.get("scheme") == DECLARED_SCHEME:
+        if isinstance(d, dict) and d.get("scheme") in DECLARED_SCHEMES:
             return d
     return None
 

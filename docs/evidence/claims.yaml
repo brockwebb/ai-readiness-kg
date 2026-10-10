@@ -2,14 +2,14 @@ schema_version: 1
 generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_record.md) for the entries
   whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
   the generator.'
-cycle_of_record: scan_2026-10-06_composite_b
+cycle_of_record: scan_2026-10-06_composite_c
 framework_record_commit: 330de7b3a170
 claims:
 - id: CL-001
   key: q1.partition
   question: Q1
-  text: 'Of the framework''s indicators the record does not mark measured (27), what blocks each partitions
-    as: 8 `open_tooling`, 0 `funding`, 11 `no_standard`, 7 `agency_cooperation`, 1 `not_blocked`.'
+  text: 'Of the framework''s indicators the record does not mark measured (26), what blocks each partitions
+    as: 7 `open_tooling`, 0 `funding`, 11 `no_standard`, 7 `agency_cooperation`, 1 `not_blocked`.'
   status: record
   evidence:
   - kind: query
@@ -18,10 +18,6 @@ claims:
   - kind: query
     id: mcp.get_requirements
     locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
-  - kind: indicator
-    id: ind:A2
-    locator: framework/ai_readiness_framework.json#ind:A2
-    note: open_tooling
   - kind: indicator
     id: ind:A7
     locator: framework/ai_readiness_framework.json#ind:A7
@@ -127,7 +123,7 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:G6
     note: no_standard
   numbers:
-  - value: '8'
+  - value: '7'
     source: Q1 rows classed open_tooling
   - value: '0'
     source: Q1 rows classed funding
@@ -137,7 +133,7 @@ claims:
     source: Q1 rows classed agency_cooperation
   - value: '1'
     source: Q1 rows classed not_blocked
-  - value: '27'
+  - value: '26'
     source: framework indicators whose measurement_status is not measured
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-002
@@ -712,7 +708,7 @@ claims:
 - id: CL-034
   key: q2.client
   question: Q2
-  text: 'On cycle `scan_2026-10-06_composite_b` the harness ran as one unauthenticated public client:
+  text: 'On cycle `scan_2026-10-06_composite_c` the harness ran as one unauthenticated public client:
     it identified itself as `ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)`,
     sent no credentials, cookies or other identity (the client is built with the `User-Agent` header alone,
     `assessment/harness/scan/manners.py:141`), and never varied that identity to get a better answer (`DD-060`,
@@ -739,10 +735,10 @@ claims:
 - id: CL-035
   key: q2.totals
   question: Q2
-  text: Of the 1,009 findings on cycle `scan_2026-10-06_composite_b`, 307 are access denials to that client
-    (an HTTP `401`, `403` or `429`, a robots.txt disallow, or a connection reset by the host), 325 are
-    absences (the record, field or file is not served), 35 find something served that fails the rule's
-    test, 167 are other errors (server errors, unparseable responses, a redirect loop), and 175 pass.
+  text: Of the 1,009 findings on cycle `scan_2026-10-06_composite_c`, 318 are access denials to that client
+    (an HTTP `401`, `403` or `429`, a robots.txt disallow, or a connection reset by the host), 328 are
+    absences (the record, field or file is not served), 39 find something served that fails the rule's
+    test, 155 are other errors (server errors, unparseable responses, a redirect loop), and 169 pass.
   status: record
   evidence:
   - kind: query
@@ -754,21 +750,21 @@ claims:
   numbers:
   - value: 1,009
     source: finding_derived events on the cycle
-  - value: '307'
+  - value: '318'
     source: Q2 access_denial, all bodies
-  - value: '325'
+  - value: '328'
     source: Q2 absence, all bodies
-  - value: '35'
+  - value: '39'
     source: Q2 nonconformant, all bodies
-  - value: '167'
+  - value: '155'
     source: Q2 error_other, all bodies
-  - value: '175'
+  - value: '169'
     source: Q2 pass, all bodies
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-036
   key: q2.denial.BLS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `BLS`;
     0 are absences, and 0 pass.
   status: record
@@ -777,61 +773,49 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
+    id: fnd_01d1b4f126a4743bf9595f33
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:156
+    note: 'G4 error on home:www.bls.gov: refused'
+  - kind: finding
     id: fnd_03a7c27c1fd1a8c59392c1ae
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:48
     note: 'A6 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
-    id: fnd_09e7d5a60bd421a749eab09d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7446
-    note: 'F4 error on home:www.bls.gov: refused'
+    id: fnd_0717ab9b5de897c874e75423
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:145
+    note: 'A1 error on home:www.bls.gov: refused, robots_disallowed'
   - kind: finding
-    id: fnd_0ca987784ba250c0bba5693c
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:249
+    id: fnd_087459004bd71be92b985d46
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:146
     note: 'A2 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_09279c5de3ae19033ad73f77
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:25
+    note: 'A1 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
   - kind: finding
     id: fnd_16e1fb22478848fb9f96fa90
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:252
     note: 'A5 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_16f9822ea88481196c4ade44
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:44
-    note: 'A2 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
     id: fnd_1de5a877d771f766db329ab2
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:254
     note: 'A8 error on home:www.bls.gov: refused'
-  - kind: finding
-    id: fnd_1ea9d0a1465570ce6a9309ed
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7601
-    note: 'D4 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
     id: fnd_20b2c9cf16a14c832b94dfdb
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:999
     note: 'B5 error on host:www.bls.gov: refused'
   - kind: finding
-    id: fnd_20c927da67a7c019a0e588ee
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7605
-    note: 'D3 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
     id: fnd_26d567603fe0ad8f28d64f70
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:485
     note: 'A12 fail on host:www.bls.gov: refused'
-  - kind: finding
-    id: fnd_28eee6ae27e89a42a3dbcac4
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7441
-    note: 'A3 error on home:www.bls.gov: refused, robots_disallowed'
-  - kind: finding
-    id: fnd_29eb577f7249916139f54242
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7449
-    note: 'D3 error on home:www.bls.gov: refused'
   - kind: finding
     id: fnd_2d467e9ae924221cddd1514c
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:253
     note: 'A6 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_31ba66e182fd21285c90cd32
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7602
-    note: 'F4 error on flagship:www.bls.gov/cpi/: refused'
+    id: fnd_36db2f6444c564dd5ac3818d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:31
+    note: 'D4 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
     id: fnd_4576fd95bc5d8054672c8f5d
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:51
@@ -849,105 +833,117 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:63
     note: 'D2 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
+    id: fnd_592573eb6c8c86eb9b57d994
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:36
+    note: 'G4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
     id: fnd_5a6834e207caec67b6a44f77
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:267
     note: 'D2 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_5b65e524a5cbe90840bc195f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7450
-    note: 'G4 error on home:www.bls.gov: refused'
+    id: fnd_671853565ae307f5b20af8b8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:148
+    note: 'A9 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_62a4bb7f67302769d04f6ced
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7443
-    note: 'B3 error on home:www.bls.gov: refused'
+    id: fnd_67cdcedfa12bd402d7e7dc57
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:151
+    note: 'D4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_72c60fe7ec2ba0bf55dbb4bc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:34
+    note: 'B4 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
     id: fnd_747df23787f0306235ca774f
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:46
     note: 'A4 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
-    id: fnd_7484006f6d390e3fba78f41d
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:259
-    note: 'D1 error on home:www.bls.gov: refused'
-  - kind: finding
-    id: fnd_8286c80e818e0b85408253e7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7603
-    note: 'B1 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
     id: fnd_876d643065093b04051a475f
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:62
     note: 'B2 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
-    id: fnd_975dcd0450b7227e183f0e53
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7599
-    note: 'B3 error on flagship:www.bls.gov/cpi/: refused'
+    id: fnd_8abf57aba86306f187573b39
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:147
+    note: 'A3 error on home:www.bls.gov: refused, robots_disallowed'
   - kind: finding
-    id: fnd_9ad1052660822fce2c083dd5
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:54
-    note: 'D1 error on flagship:www.bls.gov/cpi/: refused'
+    id: fnd_9255f035be0625a428cbb050
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:153
+    note: 'B1 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_928ffc443a85f2fcc7d196c0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:149
+    note: 'B3 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_963fe1e23771aef5e7c96c46
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:35
+    note: 'D3 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_9df56306732500003814f710
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:154
+    note: 'B4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_a00a217414642c430fcd953b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:33
+    note: 'B1 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
     id: fnd_a5ec0af93c3cc7e4ba16e1c4
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:256
     note: 'A10 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_a6c2fb3be0c325904864930e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7445
-    note: 'D4 error on home:www.bls.gov: refused'
+    id: fnd_a6710d85816d9b5676366cfb
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:26
+    note: 'A2 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
-    id: fnd_aa841599e1c8229beb95ec2f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7604
-    note: 'B4 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
-    id: fnd_add2bbd08e3fd78ece89a660
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7442
-    note: 'A9 error on home:www.bls.gov: refused'
-  - kind: finding
-    id: fnd_aeea6fcdc2f4e958ec048de1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7606
-    note: 'G4 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
-    id: fnd_b04a5b76b4919fd9d03ec048
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7447
-    note: 'B1 error on home:www.bls.gov: refused'
-  - kind: finding
-    id: fnd_b5cb71a994a6e97fe75a2bd5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7448
-    note: 'B4 error on home:www.bls.gov: refused'
+    id: fnd_b1feb1626a3fd7a3bc950eb9
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:152
+    note: 'F4 error on home:www.bls.gov: refused'
   - kind: finding
     id: fnd_ba67b20dfe48f8899ce8d20f
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:251
     note: 'A4 error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_c0c99fa992d0874413eafafc
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7598
-    note: 'A9 error on flagship:www.bls.gov/cpi/: refused'
+    id: fnd_bdab516e642a7a272259fe43
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:150
+    note: 'D1 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_be5f9c0e5ea5e0f1c7b07c6f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:155
+    note: 'D3 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_c1f2472ed8da8bc8c057d2dc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:32
+    note: 'F4 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
     id: fnd_c907dfc33172a3cd644e31eb
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:57
     note: 'G1-D error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
+    id: fnd_c9f0b43fec275b17b46de833
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:28
+    note: 'A9 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
     id: fnd_cc6e107a4e0ccf8bf60ad212
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:47
     note: 'A5 error on flagship:www.bls.gov/cpi/: refused'
-  - kind: finding
-    id: fnd_cd00ac598cdffc9343a51238
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7597
-    note: 'A3 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
   - kind: finding
     id: fnd_d0c253546b425716a004a662
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:257
     note: 'A11-declared error on home:www.bls.gov: refused'
   - kind: finding
-    id: fnd_d16db8449f9cbe1f5167fcfc
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7439
-    note: 'A1 error on home:www.bls.gov: refused, robots_disallowed'
-  - kind: finding
     id: fnd_d6f700b45209ac674609f1c2
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:49
     note: 'A8 error on flagship:www.bls.gov/cpi/: refused'
   - kind: finding
-    id: fnd_db9b103437a18eb70d08dbe5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7595
-    note: 'A1 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
+    id: fnd_e3dba0df933ccfd62563d195
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:27
+    note: 'A3 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
+  - kind: finding
+    id: fnd_ee745e5e75478c963533d1fc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:30
+    note: 'D1 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_ee84f5f4974e3be33ef31210
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:29
+    note: 'B3 error on flagship:www.bls.gov/cpi/: refused'
   numbers:
   - value: '0'
     source: Q2 absence for BLS
@@ -961,7 +957,7 @@ claims:
 - id: CL-037
   key: q2.denial.BTS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `BTS`;
     0 are absences, and 0 pass.
   status: record
@@ -969,6 +965,14 @@ claims:
   - kind: query
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_02321a0cb825a0c93ec91aea
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:162
+    note: 'D1 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_065efe6e27daa8f73b059936
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:42
+    note: 'D1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
     id: fnd_0f2f2b0ad8ec098a910c61e3
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:286
@@ -978,49 +982,33 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:271
     note: 'A4 error on home:www.bts.gov: refused'
   - kind: finding
-    id: fnd_137703ca48a851f69cacdac6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7614
-    note: 'F4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+    id: fnd_1445583c67a6a7174ac5d3fc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:157
+    note: 'A1 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_1741012dc70ba88fbcc3eb63
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:48
+    note: 'G4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
     id: fnd_1ae117178942b6f2f709d18a
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:1000
     note: 'B5 error on host:www.bts.gov: refused'
   - kind: finding
-    id: fnd_1b8518341ce4ff125bd08f2f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7496
-    note: 'B4 error on home:www.bts.gov: refused'
+    id: fnd_228c31c61add9ccc549019e3
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:37
+    note: 'A1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_1ed715210532087451d38d81
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7616
-    note: 'B4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_2a81e5d4a5af9a5281ea2d95
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7493
-    note: 'D4 error on home:www.bts.gov: refused'
-  - kind: finding
-    id: fnd_2a8dd71337f4b677a1d6ec83
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7495
-    note: 'B1 error on home:www.bts.gov: refused'
-  - kind: finding
-    id: fnd_2f071db54c8b46e89ecf941e
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:75
-    note: 'D1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+    id: fnd_322a8201dbb0391fb5604752
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:47
+    note: 'D3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
     id: fnd_342013908492b925821251aa
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:83
     note: 'B2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_35829624d361593f7c267111
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7491
-    note: 'B3 error on home:www.bts.gov: refused'
-  - kind: finding
     id: fnd_3621cb5390b3f7b7ce0e999d
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:69
     note: 'A6 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_391594230b669875c55360ad
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7497
-    note: 'D3 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_3ee163811ca5c6aee6502db3
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:70
@@ -1034,69 +1022,53 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:273
     note: 'A6 error on home:www.bts.gov: refused'
   - kind: finding
-    id: fnd_48801ac56e67fbc08a3a9fa0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7615
-    note: 'B1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+    id: fnd_4c0f3c6e01d92d40b4a09975
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:38
+    note: 'A2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
     id: fnd_5a37cce27e2ea38d73e98434
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:68
     note: 'A5 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_70944697ed5e2aced8fc5c09
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7494
-    note: 'F4 error on home:www.bts.gov: refused'
+    id: fnd_5c3449e818e3cc6b376efdee
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:39
+    note: 'A3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_62d65bf24e3feb5c5ccadbca
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:46
+    note: 'B4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_64188e9925a8f6311aa24aa8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:158
+    note: 'A2 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_694fc9ac7315f71531600b21
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:160
+    note: 'A9 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_6f20d98020631d18e6309395
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:159
+    note: 'A3 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_768f60be79dd0b1aef4ff135
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:72
     note: 'A10 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_7863509bde8c7635b9c1f7ae
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7617
-    note: 'D3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+    id: fnd_8ef2095190bce924a1e38ba1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:40
+    note: 'A9 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_7bf63e11585dcfea81e45290
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7498
-    note: 'G4 error on home:www.bts.gov: refused'
-  - kind: finding
-    id: fnd_8845d89aed1772fe9f5c516d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7618
-    note: 'G4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_8970398a1d0217474f1757d8
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7611
-    note: 'B3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_917dfb4501857f3350d2c520
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7613
-    note: 'D4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_95f5429d0555c856220dd442
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7490
-    note: 'A9 error on home:www.bts.gov: refused'
-  - kind: finding
-    id: fnd_963a521406fafc8c056e299f
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:279
-    note: 'D1 error on home:www.bts.gov: refused'
+    id: fnd_8ef9b4c953ca4e9bc562d1fa
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:165
+    note: 'B1 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_96a1b7ceb40340b5abeab9c9
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:73
     note: 'A11-declared error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_a2c8a722ddab472ab82ca412
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7607
-    note: 'A1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_a443db89bfdfe62793c9f7aa
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7609
-    note: 'A3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_a64ac72e8ee68ede37de3780
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7610
-    note: 'A9 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
-  - kind: finding
-    id: fnd_a6afb652aed30d76e97adfd9
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:65
-    note: 'A2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+    id: fnd_9fd9b3f889225dbe8e882313
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:41
+    note: 'B3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
     id: fnd_a90d40b4ee14c79845901e4e
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:287
@@ -1110,37 +1082,61 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:67
     note: 'A4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   - kind: finding
-    id: fnd_b2b9d87a1db482bb0a020ddc
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7487
-    note: 'A1 error on home:www.bts.gov: refused'
+    id: fnd_b3c6d57dfadbf94bdd7302fe
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:166
+    note: 'B4 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_b697beccc0c5b70b5db7d819
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:274
     note: 'A8 error on home:www.bts.gov: refused'
   - kind: finding
-    id: fnd_c08c919a4a97dfd27c9ff4bb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7489
-    note: 'A3 error on home:www.bts.gov: refused'
+    id: fnd_bd339d63468c3bb2dc55e7fb
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:164
+    note: 'F4 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_c5c10e8f0252a072b94fda0c
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:272
     note: 'A5 error on home:www.bts.gov: refused'
   - kind: finding
+    id: fnd_cc586f5a9380e466cc5c596b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:167
+    note: 'D3 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_cc812fb3996d35f2627d50d1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:161
+    note: 'B3 error on home:www.bts.gov: refused'
+  - kind: finding
     id: fnd_d12fbdb6dad0dc9f59c4b5c2
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:276
     note: 'A10 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_d5c8321d10fba4a89056f4f8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:163
+    note: 'D4 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_d5f7df28894b8f604f936706
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:486
     note: 'A12 fail on host:www.bts.gov: refused'
   - kind: finding
-    id: fnd_e346bd333e433537425c54ba
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:269
-    note: 'A2 error on home:www.bts.gov: refused'
+    id: fnd_e3e7ad0f6c467dc2a4339f0e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:45
+    note: 'B1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_ed2f39493d2043bd2cc37ec4
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:168
+    note: 'G4 error on home:www.bts.gov: refused'
   - kind: finding
     id: fnd_ed35d04aff9d1f0a455d5eac
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:84
     note: 'D2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_efa856eca7cda1cbc6510e0f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:44
+    note: 'F4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_f96f06a4a1180aad4c92c797
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:43
+    note: 'D4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
   numbers:
   - value: '0'
     source: Q2 absence for BTS
@@ -1154,7 +1150,7 @@ claims:
 - id: CL-038
   key: q2.denial.CENSUS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 28 of the 85 findings for `CENSUS`;
     23 are absences, and 18 pass.
   status: record
@@ -1163,117 +1159,117 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_191f56af33fb6c0bbd748e39
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7256
-    note: 'B4 error on home:www.census.gov: refused'
+    id: fnd_08d0a79c3abcc7483915cda0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:367
+    note: 'D4 error on scan-census-machine: refused'
   - kind: finding
-    id: fnd_28a34a4dfa32a63cf2d41060
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7265
-    note: 'D4 error on scan-census-flagship-1-surveys-programs: refused'
+    id: fnd_1619650f1cc11e19b212fb2f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:347
+    note: 'D3 error on scan-census-flagship-1-surveys-programs: refused'
   - kind: finding
-    id: fnd_393d127cc54d894785f2206e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7278
-    note: 'F4 error on scan-census-flagship-2-american-community-survey-acs: http_4xx, refused'
+    id: fnd_1736905683d976a20bb99698
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:183
+    note: 'A3 error on home:www.census.gov: http_4xx, off_host, refused, unprobed_over_cap'
   - kind: finding
-    id: fnd_3d79be9bc3e90375db00c6c1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7257
-    note: 'D3 error on home:www.census.gov: refused'
-  - kind: finding
-    id: fnd_4d08dd9552f11778331ae661
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7291
-    note: 'B1 error on scan-census-machine: refused'
-  - kind: finding
-    id: fnd_5603b3bca7625728d8f838f3
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7282
+    id: fnd_40894e366c2a89d99a524874
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:360
     note: 'G4 error on scan-census-flagship-2-american-community-survey-acs: refused'
   - kind: finding
-    id: fnd_79e51aff2d4fa20567e46604
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7279
+    id: fnd_409bb88851168ffd71fc70a9
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:190
+    note: 'B4 error on home:www.census.gov: refused'
+  - kind: finding
+    id: fnd_4e6ec764f7846ae6f271a52b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:369
+    note: 'B1 error on scan-census-machine: refused'
+  - kind: finding
+    id: fnd_532e47f132198493b57bf6fc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:371
+    note: 'D3 error on scan-census-machine: refused'
+  - kind: finding
+    id: fnd_5fce80dbdf43d42089a167c6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:357
     note: 'B1 error on scan-census-flagship-2-american-community-survey-acs: refused'
   - kind: finding
-    id: fnd_7d621c76e2e90a3c2686896f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7247
+    id: fnd_62476e90598832a2a034c37d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:348
+    note: 'G4 error on scan-census-flagship-1-surveys-programs: refused'
+  - kind: finding
+    id: fnd_6df33857ea2c0c174291b244
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:192
+    note: 'G4 error on home:www.census.gov: refused'
+  - kind: finding
+    id: fnd_6fd80adfb70ecc0b6b155d67
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:368
+    note: 'F4 error on scan-census-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_770b7d3bf7574f333513c459
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:181
     note: 'A1 error on home:www.census.gov: http_4xx, off_host, refused, unprobed_over_cap'
   - kind: finding
-    id: fnd_84473e6b4c998a15b6ab4d96
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7254
-    note: 'F4 error on home:www.census.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_8c9e0cd0061a05a09f00ef1d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7268
-    note: 'B4 error on scan-census-flagship-1-surveys-programs: refused'
-  - kind: finding
-    id: fnd_8e17b47f505717db7d9c3107
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7277
-    note: 'D4 error on scan-census-flagship-2-american-community-survey-acs: refused'
+    id: fnd_86ec7ceba56333e4909d7a77
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:344
+    note: 'F4 error on scan-census-flagship-1-surveys-programs: http_4xx, refused'
   - kind: finding
     id: fnd_9c60aa80b2d4d8d7de41da8b
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:662
     note: 'A5 error on scan-census-machine: http_4xx, refused'
   - kind: finding
-    id: fnd_a62359f95fe769d530fb5ad6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7267
-    note: 'B1 error on scan-census-flagship-1-surveys-programs: refused'
-  - kind: finding
-    id: fnd_a81242a055d715ee14d61456
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7290
-    note: 'F4 error on scan-census-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_afd80c0e4cdaf8e2d3d67ada
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7266
-    note: 'F4 error on scan-census-flagship-1-surveys-programs: http_4xx, refused'
-  - kind: finding
     id: fnd_b8b527603d3a543a70dbece7
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:641
     note: 'A5 error on scan-census-flagship-2-american-community-survey-acs: http_4xx, refused'
   - kind: finding
-    id: fnd_b920d9103d6ff577a93d7ef6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7255
+    id: fnd_c1dab38f5a22ecc0ee2b26f1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:346
+    note: 'B4 error on scan-census-flagship-1-surveys-programs: refused'
+  - kind: finding
+    id: fnd_c478881a2f497bcd12a11d10
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:189
     note: 'B1 error on home:www.census.gov: refused'
   - kind: finding
-    id: fnd_c0989810ba79a2575389aa14
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7269
-    note: 'D3 error on scan-census-flagship-1-surveys-programs: refused'
-  - kind: finding
-    id: fnd_c554a215af83e72c3b794954
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7293
-    note: 'D3 error on scan-census-machine: refused'
-  - kind: finding
-    id: fnd_d2b13ba4c032a8aec645f0f6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7270
-    note: 'G4 error on scan-census-flagship-1-surveys-programs: refused'
-  - kind: finding
-    id: fnd_dce3aefc53b7aa0600af245d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7253
-    note: 'D4 error on home:www.census.gov: refused'
-  - kind: finding
-    id: fnd_de1db4cc3fae516276b7dad1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7280
+    id: fnd_cc8078b96fb3ae90aeb9ff5f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:358
     note: 'B4 error on scan-census-flagship-2-american-community-survey-acs: refused'
   - kind: finding
-    id: fnd_f053339ed7102e925a233781
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7289
-    note: 'D4 error on scan-census-machine: refused'
-  - kind: finding
-    id: fnd_f5c834150ef141dcddb7205b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7292
-    note: 'B4 error on scan-census-machine: refused'
-  - kind: finding
-    id: fnd_f6e0aecb6a74cef22602ab26
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7249
-    note: 'A3 error on home:www.census.gov: http_4xx, off_host, refused, unprobed_over_cap'
-  - kind: finding
-    id: fnd_f84efb78a0416a8661e80c22
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7294
+    id: fnd_ccf0d25144f7f50b940442b7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:372
     note: 'G4 error on scan-census-machine: refused'
   - kind: finding
-    id: fnd_f91531581a82afb60a29ab33
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7281
+    id: fnd_d3571533de9a9aa9f680cf7b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:356
+    note: 'F4 error on scan-census-flagship-2-american-community-survey-acs: http_4xx, refused'
+  - kind: finding
+    id: fnd_d78add7d71531dacb67e1246
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:345
+    note: 'B1 error on scan-census-flagship-1-surveys-programs: refused'
+  - kind: finding
+    id: fnd_d83cdf373acb4b8dd3dbe646
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:188
+    note: 'F4 error on home:www.census.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_d9dbd9595d4c85a83fea409b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:191
+    note: 'D3 error on home:www.census.gov: refused'
+  - kind: finding
+    id: fnd_df5f05be0d05f481921b86f5
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:187
+    note: 'D4 error on home:www.census.gov: refused'
+  - kind: finding
+    id: fnd_e1ac3aa0bd7d2d432d992e6c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:355
+    note: 'D4 error on scan-census-flagship-2-american-community-survey-acs: refused'
+  - kind: finding
+    id: fnd_e451e7c9d5eaefecd0dee401
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:359
     note: 'D3 error on scan-census-flagship-2-american-community-survey-acs: refused'
   - kind: finding
-    id: fnd_f95d17e414c5bf5f48d0eb8f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7258
-    note: 'G4 error on home:www.census.gov: refused'
+    id: fnd_e76862352051faa275e63c96
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:343
+    note: 'D4 error on scan-census-flagship-1-surveys-programs: refused'
+  - kind: finding
+    id: fnd_f4666c976e843b28f933a744
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:370
+    note: 'B4 error on scan-census-machine: refused'
   numbers:
   - value: '23'
     source: Q2 absence for CENSUS
@@ -1287,8 +1283,8 @@ claims:
 - id: CL-039
   key: q2.denial.EIA
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
-    access denial (a refusal by the host or a robots.txt disallow) on 23 of the 64 findings for `EIA`;
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
+    access denial (a refusal by the host or a robots.txt disallow) on 26 of the 64 findings for `EIA`;
     28 are absences, and 7 pass.
   status: record
   evidence:
@@ -1296,13 +1292,17 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_2d8127bbd215673191cb0972
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7334
-    note: 'A9 error on scan-eia-machine: http_4xx, refused'
+    id: fnd_16a054f421ef09bc044f64c7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:380
+    note: 'F4 error on scan-eia-flagship-1-open-data: http_4xx, refused'
   - kind: finding
-    id: fnd_55ed2ab4958c1fa775dbb899
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7331
-    note: 'A1 error on scan-eia-machine: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
+    id: fnd_36bdb738644f88438a1cc442
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:196
+    note: 'A9 error on home:www.eia.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_533a86bcab5e7dce2a441be8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:377
+    note: 'B3 error on scan-eia-flagship-1-open-data: robots_disallowed'
   - kind: finding
     id: fnd_59b6ce5b051a8e3e316f98aa
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:684
@@ -1312,45 +1312,57 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:685
     note: 'A8 error on scan-eia-flagship-1-open-data: robots_disallowed'
   - kind: finding
+    id: fnd_65e5cd2d2474be1cbe620658
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:376
+    note: 'A9 error on scan-eia-flagship-1-open-data: http_4xx, refused'
+  - kind: finding
     id: fnd_6b73e927e84427e1d112cd7b
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:687
     note: 'A10 error on scan-eia-flagship-1-open-data: robots_disallowed'
   - kind: finding
-    id: fnd_7ee6217058ef0d2299a7af60
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7309
+    id: fnd_74748450cbb8b90487d206fe
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:388
+    note: 'A9 error on scan-eia-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_7f2abf6b5be7395e597436a1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:387
+    note: 'A3 error on scan-eia-machine: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_816c7e9f7ce4057b0b4156e7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:375
+    note: 'A3 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_86e4bc3a31aaf279609ec36b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:386
+    note: 'A2 error on scan-eia-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_8d6c47dc603e728e857f4181
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:195
     note: 'A3 error on home:www.eia.gov: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_8fd278e3f2274bd8415dace0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7321
-    note: 'A3 error on scan-eia-flagship-1-open-data: robots_disallowed'
+    id: fnd_916967a21a7ea6ef7764a450
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:381
+    note: 'B1 error on scan-eia-flagship-1-open-data: http_4xx, robots_disallowed'
   - kind: finding
     id: fnd_93e621040df5bd9d2bef556e
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:1003
     note: 'B5 error on host:www.eia.gov: robots_disallowed'
   - kind: finding
-    id: fnd_a7195119e05e13bf79d39e4a
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7323
-    note: 'B3 error on scan-eia-flagship-1-open-data: robots_disallowed'
+    id: fnd_a8247594f88209cbba44c02d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:200
+    note: 'F4 error on home:www.eia.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_a7ba0d7146b11d8dfc2e0fe4
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7326
-    note: 'F4 error on scan-eia-flagship-1-open-data: http_4xx, refused'
-  - kind: finding
-    id: fnd_adfef52c1a21a0995e1f0441
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7319
+    id: fnd_aa411ad3729a44f292e5b582
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:373
     note: 'A1 error on scan-eia-flagship-1-open-data: robots_disallowed'
   - kind: finding
-    id: fnd_aecd9756eea06dfdf411d9ba
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7327
-    note: 'B1 error on scan-eia-flagship-1-open-data: http_4xx, robots_disallowed'
+    id: fnd_b1b4cd4bf51c11fc2f5a3db3
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:385
+    note: 'A1 error on scan-eia-machine: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_b925e3c8f81a14c49048c322
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7338
-    note: 'F4 error on scan-eia-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_b94ae77daa3fe3ae822b36a5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7307
-    note: 'A1 error on home:www.eia.gov: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
+    id: fnd_bf47986383419290417ba51a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:378
+    note: 'D1 error on scan-eia-flagship-1-open-data: http_4xx, robots_disallowed'
   - kind: finding
     id: fnd_c1baaf6fe0e08080043f93a5
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:693
@@ -1360,37 +1372,33 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:698
     note: 'B2 error on scan-eia-flagship-1-open-data: robots_disallowed'
   - kind: finding
-    id: fnd_d1fe4fa2f18795ce124a6b06
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7322
-    note: 'A9 error on scan-eia-flagship-1-open-data: http_4xx, refused'
+    id: fnd_dd384bc44a016e34f8a6c54d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:374
+    note: 'A2 error on scan-eia-flagship-1-open-data: http_4xx, refused'
   - kind: finding
-    id: fnd_e53e3870dfa16c1c1282f6bd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7310
-    note: 'A9 error on home:www.eia.gov: http_4xx, refused'
+    id: fnd_e0fb848950d16f8d85c7771c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:392
+    note: 'F4 error on scan-eia-machine: http_4xx, refused'
   - kind: finding
-    id: fnd_ed8094270ae8286a93b1f2fe
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:690
-    note: 'D1 error on scan-eia-flagship-1-open-data: http_4xx, robots_disallowed'
+    id: fnd_e31fc6a309711816f8596e26
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:194
+    note: 'A2 error on home:www.eia.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_e49ddc55cfa3a8c10548dca4
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:193
+    note: 'A1 error on home:www.eia.gov: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
     id: fnd_f31792f00e503f19ec798e99
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:682
     note: 'A4 fail on scan-eia-flagship-1-open-data: reason'
   - kind: finding
-    id: fnd_f569521c871bda5533a5139c
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7333
-    note: 'A3 error on scan-eia-machine: http_5xx, off_host, robots_disallowed, unprobed_over_cap'
-  - kind: finding
     id: fnd_ff5f00088ea2de45f199e6b0
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:688
     note: 'A11-declared fail on scan-eia-flagship-1-open-data: robots_disallowed'
-  - kind: finding
-    id: fnd_ff69d8275af5b5165e209b00
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7314
-    note: 'F4 error on home:www.eia.gov: http_4xx, refused'
   numbers:
   - value: '28'
     source: Q2 absence for EIA
-  - value: '23'
+  - value: '26'
     source: Q2 access_denial for EIA
   - value: '64'
     source: findings for EIA
@@ -1400,8 +1408,8 @@ claims:
 - id: CL-040
   key: q2.denial.NASS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
-    access denial (a refusal by the host or a robots.txt disallow) on 24 of the 85 findings for `NASS`;
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
+    access denial (a refusal by the host or a robots.txt disallow) on 28 of the 85 findings for `NASS`;
     23 are absences, and 13 pass.
   status: record
   evidence:
@@ -1409,105 +1417,121 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_153d448a38485f582e3c0c6b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7174
-    note: 'G4 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
-  - kind: finding
-    id: fnd_16923b0eddc1f68d910ac6a1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7181
-    note: 'D4 error on scan-nass-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_2c8acbf3722476059f85a1f7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7185
-    note: 'D3 error on scan-nass-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_2ecb533141dab0e8856d6f6f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7142
-    note: 'A9 error on home:www.nass.usda.gov: http_4xx, robots_disallowed'
-  - kind: finding
-    id: fnd_3006a1b44d6831e9bdb620f0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7178
-    note: 'A9 error on scan-nass-machine: http_4xx, robots_disallowed'
-  - kind: finding
-    id: fnd_366bb7082bbdd8214d11437d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7171
-    note: 'B1 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
-  - kind: finding
-    id: fnd_3aab5f824ccbd987bd80b9cf
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7157
-    note: 'D4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
-  - kind: finding
-    id: fnd_4dbee72d9b2185f0acba19d7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7160
-    note: 'B4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
-  - kind: finding
-    id: fnd_4f803e135b0fc299058b95ce
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7183
-    note: 'B1 error on scan-nass-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_5a7014f4f19e8cd5c6afe689
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7148
-    note: 'B4 error on home:www.nass.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_7b3535b5add0e93659b574f1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7145
-    note: 'D4 error on home:www.nass.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_8212c3636234d874797af3e9
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7149
-    note: 'D3 error on home:www.nass.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_86cdce41965fd3410381f710
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7166
-    note: 'A9 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, robots_disallowed'
-  - kind: finding
-    id: fnd_86f7d07bbc6bb2b692ee2493
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7162
-    note: 'G4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
-  - kind: finding
-    id: fnd_8b28a3ffc2de770726eac170
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7147
-    note: 'B1 error on home:www.nass.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_9adbeefbc1c62d73ff33ce18
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7169
-    note: 'D4 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
-  - kind: finding
-    id: fnd_a426729786c90ee8da3fdd87
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7186
-    note: 'G4 error on scan-nass-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_b1b8d54820472e78316bdfd8
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7150
-    note: 'G4 error on home:www.nass.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_c8605027e40a4f53bebff893
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7159
-    note: 'B1 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
-  - kind: finding
-    id: fnd_d9f791f93726b7efdad81268
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7173
-    note: 'D3 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
-  - kind: finding
-    id: fnd_e105280a93c5a566ffd80fa0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7154
-    note: 'A9 error on scan-nass-flagship-1-data-statistics: http_4xx, robots_disallowed'
-  - kind: finding
-    id: fnd_e3c4e0ed3624232ba01249a1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7172
+    id: fnd_05cc2baf8e6ea21bcae1db84
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:454
     note: 'B4 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
   - kind: finding
-    id: fnd_f5f801f5bdb0eb06d3887578
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7161
+    id: fnd_0bafa07805f86a4fea779cf0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:250
+    note: 'B4 error on home:www.nass.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_0f027b4dda11f5e3a20c7b31
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:463
+    note: 'D4 error on scan-nass-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_0f2716ac824fcf371ab8a9a8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:442
+    note: 'B4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
+  - kind: finding
+    id: fnd_2bbedef609fb42b92c27bcd8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:451
+    note: 'D4 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
+  - kind: finding
+    id: fnd_4443634d570285efa43352be
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:443
     note: 'D3 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
   - kind: finding
-    id: fnd_f9835fc07a642a678db12227
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7184
+    id: fnd_4ee9bd5b742ee67b4f89e500
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:436
+    note: 'A9 error on scan-nass-flagship-1-data-statistics: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_525d46045812106312616cd9
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:434
+    note: 'A2 error on scan-nass-flagship-1-data-statistics: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_5746ef4184461b93c557f107
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:444
+    note: 'G4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
+  - kind: finding
+    id: fnd_5f37bf75cb12a88afc41b504
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:252
+    note: 'G4 error on home:www.nass.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_600f50b4441a838edd3143b1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:244
+    note: 'A9 error on home:www.nass.usda.gov: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_6ae58f0117e84175d3577fbe
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:446
+    note: 'A2 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_745efe4655eecd216496e9e2
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:466
     note: 'B4 error on scan-nass-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_7cbf97f5e562f8e4b6540641
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:251
+    note: 'D3 error on home:www.nass.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_868cbfb691015a7956e10041
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:468
+    note: 'G4 error on scan-nass-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_8e1513b3622c79c57d57ae40
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:448
+    note: 'A9 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_8ed2aa6a3a4159860030a897
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:242
+    note: 'A2 error on home:www.nass.usda.gov: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_93c5fa57724feaf5a0470ac8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:247
+    note: 'D4 error on home:www.nass.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_a99c69ca7429f0bb65fc5a96
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:455
+    note: 'D3 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
+  - kind: finding
+    id: fnd_b77189862fc6152554b8e98f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:441
+    note: 'B1 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
+  - kind: finding
+    id: fnd_be19e19b1a8d360a039ef556
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:465
+    note: 'B1 error on scan-nass-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_ceb8c9b9a11da2f15d395e49
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:467
+    note: 'D3 error on scan-nass-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_d0a53bf55d792e3935a87ca2
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:458
+    note: 'A2 error on scan-nass-machine: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_d4f104a2e280cf5e9be0af19
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:249
+    note: 'B1 error on home:www.nass.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_dda378a2e45dd089fd14c1f5
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:453
+    note: 'B1 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
+  - kind: finding
+    id: fnd_e485d1815e26fba44ac23520
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:439
+    note: 'D4 error on scan-nass-flagship-1-data-statistics: http_4xx, refused'
+  - kind: finding
+    id: fnd_e7a2b9476a3f8808a2215a07
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:456
+    note: 'G4 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, refused'
+  - kind: finding
+    id: fnd_f9e78d6e4735f3602e5595aa
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:460
+    note: 'A9 error on scan-nass-machine: http_4xx, robots_disallowed'
   numbers:
   - value: '23'
     source: Q2 absence for NASS
-  - value: '24'
+  - value: '28'
     source: Q2 access_denial for NASS
   - value: '85'
     source: findings for NASS
@@ -1517,7 +1541,7 @@ claims:
 - id: CL-041
   key: q2.denial.ORES
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `ORES`;
     0 are absences, and 0 pass.
   status: record
@@ -1530,13 +1554,13 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:1009
     note: 'B5 error on host:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_0eb4a893f6d5363f16a413fc
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7627
+    id: fnd_06dbfa904f63b1a2a1a96ed1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:81
     note: 'B1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_0f81c1d716f709c866b669da
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7542
-    note: 'F4 error on home:www.ssa.gov: refused'
+    id: fnd_0d286a002e5180792bc63b92
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:273
+    note: 'B1 error on home:www.ssa.gov: refused'
   - kind: finding
     id: fnd_10723e6da67ac59186b8f0bc
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:131
@@ -1546,49 +1570,21 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:464
     note: 'A5 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_1de98124453854d77d62b891
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7630
-    note: 'G4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+    id: fnd_157e863616017a23fd064d35
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:78
+    note: 'D1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
     id: fnd_1e558479adb93a5cb82b084d
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:469
     note: 'A11-declared error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_1fbceee312c2a6fd2fdadb7f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7623
-    note: 'B3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_30f9cf13cd7195a62020e75e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7545
+    id: fnd_291965b7dd238c543fc786f3
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:275
     note: 'D3 error on home:www.ssa.gov: refused'
-  - kind: finding
-    id: fnd_34c5f257df6998c2e3c5b9f1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7621
-    note: 'A3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_35a068cb100b04c95d585378
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7546
-    note: 'G4 error on home:www.ssa.gov: refused'
-  - kind: finding
-    id: fnd_392b16f3d6b11650c09f0896
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:461
-    note: 'A2 error on home:www.ssa.gov: refused'
   - kind: finding
     id: fnd_489d7fc40b88e068c8f326f0
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:130
     note: 'A4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_4fcb2e7ec80b383a3b09980b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7622
-    note: 'A9 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_56c3bbd37188f0349b10459c
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7626
-    note: 'F4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_66255797a81a77731c4cff51
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7535
-    note: 'A1 error on home:www.ssa.gov: refused'
   - kind: finding
     id: fnd_6742ecb016972891915a5d87
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:133
@@ -1606,9 +1602,33 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:146
     note: 'B2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_82b84786d4cf92f79cac1e20
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7538
+    id: fnd_6cf381b76547a95e99af3c77
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:265
+    note: 'A1 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_74631553651817b1a274ef19
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:79
+    note: 'D4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_74ea6ac71504e0ded91c0e32
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:268
     note: 'A9 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_7d256c9a9c6c3c04d457468d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:267
+    note: 'A3 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_818b36a428d593f78c2398ba
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:80
+    note: 'F4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_824f263af761246330476d94
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:269
+    note: 'B3 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_87697ed75b8e0e78c989ff06
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:270
+    note: 'D1 error on home:www.ssa.gov: refused'
   - kind: finding
     id: fnd_8888093b92f65d5a5b81832b
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:468
@@ -1618,85 +1638,89 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:466
     note: 'A8 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_8cb6f75021aa8f27562868eb
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:138
-    note: 'D1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_8d5c07d9ec1a8213f97ec003
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7543
-    note: 'B1 error on home:www.ssa.gov: refused'
-  - kind: finding
-    id: fnd_91e89c6d51736bb370e31d09
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7625
-    note: 'D4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
-    id: fnd_9271bcb1bb362f9679cbfc34
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7541
-    note: 'D4 error on home:www.ssa.gov: refused'
-  - kind: finding
     id: fnd_958f76284b965163b4ca6ed2
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:463
     note: 'A4 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_994e840110d8ea025bbbd285
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7537
-    note: 'A3 error on home:www.ssa.gov: refused'
+    id: fnd_9a9e2ae9dc9267cb6affc620
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:84
+    note: 'G4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_9bf41d4b6df9aa88ec8f2cf8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:76
+    note: 'A9 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
     id: fnd_a2f6c8d79d9e4fdbc9b6bfbc
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:141
     note: 'G1-D error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_a4cfa3cb19947be571107404
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7629
-    note: 'D3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+    id: fnd_a56fc49f0bfd43719f418622
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:74
+    note: 'A2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
     id: fnd_a6f68c6fe4b58239dbab1965
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:136
     note: 'A11-declared error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_afbaae21cbd1354edfc03323
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7619
-    note: 'A1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
-  - kind: finding
     id: fnd_b44e442d958a232f033bf0c2
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:132
     note: 'A6 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_bee30c31a4e11a545f7b8a53
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:266
+    note: 'A2 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_c06c41dd9b55f22c8806df22
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:276
+    note: 'G4 error on home:www.ssa.gov: refused'
   - kind: finding
     id: fnd_c93509d8b0b6230e73af7f0b
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:478
     note: 'B2 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_cbff6b7dd3fcd330503a19fd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7544
-    note: 'B4 error on home:www.ssa.gov: refused'
+    id: fnd_ca30210a97a54ab85c6570fb
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:271
+    note: 'D4 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_dee7b0ec61ab982c7eb793f7
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:128
-    note: 'A2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+    id: fnd_cb9579b1b1543ad209283f34
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:83
+    note: 'D3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
     id: fnd_df7a17f0be9e3d7c1fbd4729
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:147
     note: 'D2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_df91670bf246f4499dfb0cc5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7628
+    id: fnd_e09c98072ee76f933bf9f346
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:73
+    note: 'A1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_e17bba106909d706ded451ee
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:82
     note: 'B4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
     id: fnd_e4c8ff401f6f5d06a7c21d29
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:135
     note: 'A10 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
+    id: fnd_e4f1e384003ec39a35846784
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:274
+    note: 'B4 error on home:www.ssa.gov: refused'
+  - kind: finding
     id: fnd_e887a000d1896f36a8836078
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:465
     note: 'A6 error on home:www.ssa.gov: refused'
   - kind: finding
-    id: fnd_ed928816661028fafc563915
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7539
-    note: 'B3 error on home:www.ssa.gov: refused'
+    id: fnd_ed8e0a898a260163f039f99a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:75
+    note: 'A3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   - kind: finding
-    id: fnd_f8c92be7701e947301101dfe
-    locator: events/cycle-scan_2026-09-10_rj5.jsonl:471
-    note: 'D1 error on home:www.ssa.gov: refused'
+    id: fnd_f55ad17ea172490c64f2a0a1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:272
+    note: 'F4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_f82f291100d68fd3ab01bbb8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:77
+    note: 'B3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
   numbers:
   - value: '0'
     source: Q2 absence for ORES
@@ -1710,7 +1734,7 @@ claims:
 - id: CL-042
   key: q2.denial.SOI
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 4 of the 64 findings for `SOI`;
     35 are absences, and 12 pass.
   status: record
@@ -1719,21 +1743,21 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_530c305d40d78a9b0e5f3991
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7463
-    note: 'A1 error on scan-soi-flagship-1-individual-tax-statistics: off_host, robots_disallowed, unprobed_over_cap'
-  - kind: finding
-    id: fnd_795b216b74b2dac0c296863f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7453
+    id: fnd_25cd0790a8de90a5372f39df
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:231
     note: 'A3 error on home:www.irs.gov: off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_7e9c373cb2ffb9a17113d97e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7451
-    note: 'A1 error on home:www.irs.gov: off_host, robots_disallowed, unprobed_over_cap'
-  - kind: finding
-    id: fnd_97c550db5117f5398a0c8ff2
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7465
+    id: fnd_5792e867b652f2c0401faa0b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:531
     note: 'A3 error on scan-soi-flagship-1-individual-tax-statistics: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_813e35d2e21266e36552e5b7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:529
+    note: 'A1 error on scan-soi-flagship-1-individual-tax-statistics: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_ffe5e1b1a6286801f0a3ec1c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:229
+    note: 'A1 error on home:www.irs.gov: off_host, robots_disallowed, unprobed_over_cap'
   numbers:
   - value: '35'
     source: Q2 absence for SOI
@@ -1747,7 +1771,7 @@ claims:
 - id: CL-043
   key: q2.denial.data.gov
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 1 of the 9 findings for `data.gov`
     (a tier C comparator, not a statistical body); 1 is an absence, and 7 pass.
   status: record
@@ -1999,7 +2023,7 @@ claims:
 - id: CL-045
   key: q4.census_catalog
   question: Q4
-  text: 'On cycle `scan_2026-10-06_composite_b`, census.gov serves a catalog at `https://www.census.gov/data.json`
+  text: 'On cycle `scan_2026-10-06_composite_c`, census.gov serves a catalog at `https://www.census.gov/data.json`
     holding 1,809 records, and 20 Census findings on legs `B1`, `B4`, `D3`, `D4`, `G4` (5 legs) are `error`,
     not `fail`: no record in that catalog names the probed product, and the department inventory the indicator
     also names could not be read (`https://www.commerce.gov/data.json`: `refused`), though the body''s
@@ -2013,85 +2037,85 @@ claims:
     id: cycle.findings
     locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
   - kind: finding
-    id: fnd_191f56af33fb6c0bbd748e39
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7256
-    note: B4 on home:www.census.gov
-  - kind: finding
-    id: fnd_28a34a4dfa32a63cf2d41060
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7265
-    note: D4 on scan-census-flagship-1-surveys-programs
-  - kind: finding
-    id: fnd_3d79be9bc3e90375db00c6c1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7257
-    note: D3 on home:www.census.gov
-  - kind: finding
-    id: fnd_4d08dd9552f11778331ae661
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7291
-    note: B1 on scan-census-machine
-  - kind: finding
-    id: fnd_5603b3bca7625728d8f838f3
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7282
-    note: G4 on scan-census-flagship-2-american-community-survey-acs
-  - kind: finding
-    id: fnd_79e51aff2d4fa20567e46604
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7279
-    note: B1 on scan-census-flagship-2-american-community-survey-acs
-  - kind: finding
-    id: fnd_8c9e0cd0061a05a09f00ef1d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7268
-    note: B4 on scan-census-flagship-1-surveys-programs
-  - kind: finding
-    id: fnd_8e17b47f505717db7d9c3107
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7277
-    note: D4 on scan-census-flagship-2-american-community-survey-acs
-  - kind: finding
-    id: fnd_a62359f95fe769d530fb5ad6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7267
-    note: B1 on scan-census-flagship-1-surveys-programs
-  - kind: finding
-    id: fnd_b920d9103d6ff577a93d7ef6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7255
-    note: B1 on home:www.census.gov
-  - kind: finding
-    id: fnd_c0989810ba79a2575389aa14
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7269
-    note: D3 on scan-census-flagship-1-surveys-programs
-  - kind: finding
-    id: fnd_c554a215af83e72c3b794954
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7293
-    note: D3 on scan-census-machine
-  - kind: finding
-    id: fnd_d2b13ba4c032a8aec645f0f6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7270
-    note: G4 on scan-census-flagship-1-surveys-programs
-  - kind: finding
-    id: fnd_dce3aefc53b7aa0600af245d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7253
-    note: D4 on home:www.census.gov
-  - kind: finding
-    id: fnd_de1db4cc3fae516276b7dad1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7280
-    note: B4 on scan-census-flagship-2-american-community-survey-acs
-  - kind: finding
-    id: fnd_f053339ed7102e925a233781
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7289
+    id: fnd_08d0a79c3abcc7483915cda0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:367
     note: D4 on scan-census-machine
   - kind: finding
-    id: fnd_f5c834150ef141dcddb7205b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7292
-    note: B4 on scan-census-machine
+    id: fnd_1619650f1cc11e19b212fb2f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:347
+    note: D3 on scan-census-flagship-1-surveys-programs
   - kind: finding
-    id: fnd_f84efb78a0416a8661e80c22
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7294
+    id: fnd_40894e366c2a89d99a524874
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:360
+    note: G4 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_409bb88851168ffd71fc70a9
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:190
+    note: B4 on home:www.census.gov
+  - kind: finding
+    id: fnd_4e6ec764f7846ae6f271a52b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:369
+    note: B1 on scan-census-machine
+  - kind: finding
+    id: fnd_532e47f132198493b57bf6fc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:371
+    note: D3 on scan-census-machine
+  - kind: finding
+    id: fnd_5fce80dbdf43d42089a167c6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:357
+    note: B1 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_62476e90598832a2a034c37d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:348
+    note: G4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6df33857ea2c0c174291b244
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:192
+    note: G4 on home:www.census.gov
+  - kind: finding
+    id: fnd_c1dab38f5a22ecc0ee2b26f1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:346
+    note: B4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_c478881a2f497bcd12a11d10
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:189
+    note: B1 on home:www.census.gov
+  - kind: finding
+    id: fnd_cc8078b96fb3ae90aeb9ff5f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:358
+    note: B4 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_ccf0d25144f7f50b940442b7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:372
     note: G4 on scan-census-machine
   - kind: finding
-    id: fnd_f91531581a82afb60a29ab33
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7281
+    id: fnd_d78add7d71531dacb67e1246
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:345
+    note: B1 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_d9dbd9595d4c85a83fea409b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:191
+    note: D3 on home:www.census.gov
+  - kind: finding
+    id: fnd_df5f05be0d05f481921b86f5
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:187
+    note: D4 on home:www.census.gov
+  - kind: finding
+    id: fnd_e1ac3aa0bd7d2d432d992e6c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:355
+    note: D4 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_e451e7c9d5eaefecd0dee401
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:359
     note: D3 on scan-census-flagship-2-american-community-survey-acs
   - kind: finding
-    id: fnd_f95d17e414c5bf5f48d0eb8f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7258
-    note: G4 on home:www.census.gov
+    id: fnd_e76862352051faa275e63c96
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:343
+    note: D4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_f4666c976e843b28f933a744
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:370
+    note: B4 on scan-census-machine
   numbers:
   - value: 1,809
     source: record count of the census.gov catalog the Census findings cite
@@ -2103,8 +2127,8 @@ claims:
 - id: CL-046
   key: q5.indicators
   question: Q5
-  text: The framework record holds 49 indicators, 48 in the framework and 1 candidate (`A12`), which enters
-    no framework count until the operator adopts it (`DD-054`).
+  text: The framework record holds 50 indicators, 48 in the framework and 2 candidate (`A12`, `A13`),
+    which enters no framework count until the operator adopts it (`DD-054`).
   status: record
   evidence:
   - kind: query
@@ -2120,12 +2144,16 @@ claims:
     id: ind:A12
     locator: framework/ai_readiness_framework.json#ind:A12
     note: candidate
+  - kind: indicator
+    id: ind:A13
+    locator: framework/ai_readiness_framework.json#ind:A13
+    note: candidate
   numbers:
-  - value: '49'
+  - value: '50'
     source: AssessmentIndicator nodes in the record
   - value: '48'
     source: indicators not held out as candidates
-  - value: '1'
+  - value: '2'
     source: candidate indicators
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-047
@@ -2149,8 +2177,8 @@ claims:
 - id: CL-048
   key: q5.current_rules
   question: Q5
-  text: 23 of the framework's 48 indicators have a current rule, of 24 current rules in all; the others
-    are on `A12`, outside the framework count.
+  text: 23 of the framework's 48 indicators have a current rule, of 25 current rules in all; the others
+    are on `A12`, `A13`, outside the framework count.
   status: record
   evidence:
   - kind: query
@@ -2161,13 +2189,13 @@ claims:
     source: framework indicators with a current rule
   - value: '48'
     source: indicators not held out as candidates
-  - value: '24'
+  - value: '25'
     source: distinct current rules in rules.CURRENT
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-049
   key: q5.measurement_status
   question: Q5
-  text: Of the framework's 48 indicators the record marks 21 measured, 3 with a harness built but not
+  text: Of the framework's 48 indicators the record marks 22 measured, 2 with a harness built but not
     marked measured, and 24 specified only.
   status: record
   evidence:
@@ -2177,9 +2205,9 @@ claims:
   numbers:
   - value: '48'
     source: indicators not held out as candidates
-  - value: '21'
+  - value: '22'
     source: measurement_status measured
-  - value: '3'
+  - value: '2'
     source: measurement_status harness_built
   - value: '24'
     source: measurement_status specified
@@ -2187,7 +2215,7 @@ claims:
 - id: CL-050
   key: q5.bodies
   question: Q5
-  text: 16 statistical bodies are on cycle `scan_2026-10-06_composite_b` and 13 are ranked; `BLS`, `BTS`,
+  text: 16 statistical bodies are on cycle `scan_2026-10-06_composite_c` and 13 are ranked; `BLS`, `BTS`,
     `ORES` have no scored leg with a judged row.
   status: record
   evidence:
@@ -2206,7 +2234,7 @@ claims:
 - id: CL-051
   key: q5.legs_findings
   question: Q5
-  text: Cycle `scan_2026-10-06_composite_b` judged 23 legs and holds 1,009 findings.
+  text: Cycle `scan_2026-10-06_composite_c` judged 23 legs and holds 1,009 findings.
   status: record
   evidence:
   - kind: query
@@ -2215,11 +2243,11 @@ claims:
   - kind: query
     id: cycle.findings
     locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
-    note: events/cycle-scan_2026-10-06_recollect.jsonl, events/cycle-scan_2026-09-10_rj5.jsonl
+    note: events/cycle-scan_2026-10-06_recollect_rj1.jsonl, events/cycle-scan_2026-09-10_rj5.jsonl
   - kind: result
-    id: 733c01ea-d403-4650-acfd-2e71727e1f03
-    locator: 'neo4j:Result{artifact_id: ''733c01ea-d403-4650-acfd-2e71727e1f03''}'
-    note: scan_findings, value 1009, state published
+    id: 10578ef6-f36e-4116-a1cc-a97e1fda6c85
+    locator: 'neo4j:Result{artifact_id: ''10578ef6-f36e-4116-a1cc-a97e1fda6c85''}'
+    note: scan_findings, value 1009, state verified
   numbers:
   - value: '23'
     source: distinct legs on the cycle
@@ -2229,7 +2257,7 @@ claims:
 - id: CL-052
   key: q5.census_failing
   question: Q5
-  text: On the published matrices of cycle `scan_2026-10-06_composite_b`, `CENSUS` has 12 failing of 39
+  text: On the published matrices of cycle `scan_2026-10-06_composite_c`, `CENSUS` has 14 failing of 39
     judged rows; the matrices publish one row per leg and surface they report, so they carry fewer rows
     than the 85 findings the cycle holds for the body across all its probed surfaces.
   status: record
@@ -2237,6 +2265,10 @@ claims:
   - kind: query
     id: mcp.get_body
     locator: scripts/build_evidence_map.py::QUERIES['mcp.get_body']
+  - kind: finding
+    id: fnd_48519ac3b816d19fe7d280d1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:338
+    note: A2 fail on scan-census-flagship-1-surveys-programs
   - kind: finding
     id: fnd_f1be3cb10189b0673f403cc6
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:621
@@ -2246,8 +2278,8 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:622
     note: A8 fail on scan-census-flagship-1-surveys-programs
   - kind: finding
-    id: fnd_5a9fadda62202d3ea5ba37ab
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7263
+    id: fnd_8bf58d37892eb4992bff868a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:341
     note: B3 fail on scan-census-flagship-1-surveys-programs
   - kind: finding
     id: fnd_15b69db96f78a0794d1ffd89
@@ -2262,6 +2294,10 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:636
     note: D2 fail on scan-census-flagship-1-surveys-programs
   - kind: finding
+    id: fnd_dd2ce6179dd0f83765f91551
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:350
+    note: A2 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
     id: fnd_21e9a8e65c9f8a4608ae6631
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:642
     note: A6 fail on scan-census-flagship-2-american-community-survey-acs
@@ -2270,8 +2306,8 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:643
     note: A8 fail on scan-census-flagship-2-american-community-survey-acs
   - kind: finding
-    id: fnd_526f2f6eabb4a28050cadfe0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7275
+    id: fnd_99faa050e2ff235cf87936d8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:353
     note: B3 fail on scan-census-flagship-2-american-community-survey-acs
   - kind: finding
     id: fnd_acd6d6f8897fa6f96a546f7a
@@ -2286,7 +2322,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:657
     note: D2 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '12'
+  - value: '14'
     source: get_body n_failing
   - value: '39'
     source: get_body n_judged
@@ -2296,7 +2332,7 @@ claims:
 - id: CL-053
   key: q5.census_rank
   question: Q5
-  text: '`CENSUS` ranks 5 of 13 under the hierarchical equal-weight score (0.222), and the rank rests
+  text: '`CENSUS` ranks 7 of 13 under the hierarchical equal-weight score (0.190), and the rank rests
     on one leg, `D2`: 0 pass of 2 judged row; were that verdict reversed it would rank 1.'
   status: record
   evidence:
@@ -2312,11 +2348,11 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:657
     note: D2 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '5'
+  - value: '7'
     source: score.py concentration.rank
   - value: '13'
     source: score.py concentration.of
-  - value: '0.222'
+  - value: '0.190'
     source: score.py bodies.CENSUS.score
   - value: '0'
     source: score.py concentration.pass
@@ -2328,8 +2364,8 @@ claims:
 - id: CL-054
   key: q5.evidence_coverage
   question: Q5
-  text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 29
-    of 149 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
+  text: 'Evidence coverage in the record: 10 of 50 indicator evidence cells carry a pinpoint locator;
+    34 of 154 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
     and 84 of the 282 admitted documents are cited by one.'
   status: record
   evidence:
@@ -2360,6 +2396,10 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:A12
     note: evidence cell carries a locator
   - kind: indicator
+    id: ind:A13
+    locator: framework/ai_readiness_framework.json#ind:A13
+    note: evidence cell carries a locator
+  - kind: indicator
     id: ind:B3
     locator: framework/ai_readiness_framework.json#ind:B3
     note: evidence cell carries a locator
@@ -2376,13 +2416,13 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:G4
     note: evidence cell carries a locator
   numbers:
-  - value: '9'
+  - value: '10'
     source: indicators whose evidence cell carries a locator
-  - value: '49'
+  - value: '50'
     source: AssessmentIndicator nodes in the record
-  - value: '29'
+  - value: '34'
     source: EVIDENCED_BY edges whose document has a locator in the cell
-  - value: '149'
+  - value: '154'
     source: EVIDENCED_BY edges in the record
   - value: '16'
     source: indicators with no EVIDENCED_BY edge
@@ -2556,12 +2596,12 @@ claims:
     locator: framework/ai_readiness_framework.json#act:b3-link-the-methodology-from-the-product-page
     note: the Action node on the record
   - kind: finding
-    id: fnd_5a9fadda62202d3ea5ba37ab
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7263
+    id: fnd_8bf58d37892eb4992bff868a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:341
     note: B3 fail on scan-census-flagship-1-surveys-programs
   - kind: finding
-    id: fnd_526f2f6eabb4a28050cadfe0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7275
+    id: fnd_99faa050e2ff235cf87936d8
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:353
     note: B3 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
   - value: '0.111'
@@ -2601,7 +2641,7 @@ claims:
   question: Q6
   text: For `CENSUS`, the action "Embed JSON-LD describing the product on the product page" (`act:a6-embed-json-ld-on-the-product-page`,
     leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
-    the body's hierarchical score by at most 0.056, the bound if every failing row on `A6` passed; no
+    the body's hierarchical score by at most 0.048, the bound if every failing row on `A6` passed; no
     weighting is asserted, so this is a bound, not a value.
   status: record
   evidence:
@@ -2622,7 +2662,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:642
     note: A6 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '0.056'
+  - value: '0.048'
     source: score.py prescription delta for act:a6-embed-json-ld-on-the-product-page
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-074
@@ -2630,7 +2670,7 @@ claims:
   question: Q6
   text: For `CENSUS`, the action "Make the Dataset markup conform to the profile it declares" (`act:a6-make-the-dataset-markup-conform-to-the-profile`,
     leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
-    the body's hierarchical score by at most 0.056, the bound if every failing row on `A6` passed; no
+    the body's hierarchical score by at most 0.048, the bound if every failing row on `A6` passed; no
     weighting is asserted, so this is a bound, not a value.
   status: record
   evidence:
@@ -2651,7 +2691,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:642
     note: A6 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '0.056'
+  - value: '0.048'
     source: score.py prescription delta for act:a6-make-the-dataset-markup-conform-to-the-profile
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-075
@@ -2659,7 +2699,7 @@ claims:
   question: Q6
   text: For `CENSUS`, the action "Type the product page's existing markup as a Dataset" (`act:a6-type-the-product-page-as-a-dataset`,
     leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
-    the body's hierarchical score by at most 0.056, the bound if every failing row on `A6` passed; no
+    the body's hierarchical score by at most 0.048, the bound if every failing row on `A6` passed; no
     weighting is asserted, so this is a bound, not a value.
   status: record
   evidence:
@@ -2680,7 +2720,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:642
     note: A6 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '0.056'
+  - value: '0.048'
     source: score.py prescription delta for act:a6-type-the-product-page-as-a-dataset
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-076
@@ -2688,7 +2728,7 @@ claims:
   question: Q6
   text: For `CENSUS`, the action "Declare the product's vintage in the markup, not only in a file header"
     (`act:a8-declare-the-product-vintage-in-the-markup`, leg `A8`) is in the notional `hours` effort band
-    with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.056,
+    with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.048,
     the bound if every failing row on `A8` passed; no weighting is asserted, so this is a bound, not a
     value.
   status: record
@@ -2710,7 +2750,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:643
     note: A8 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '0.056'
+  - value: '0.048'
     source: score.py prescription delta for act:a8-declare-the-product-vintage-in-the-markup
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-077
@@ -2718,7 +2758,7 @@ claims:
   question: Q6
   text: For `CENSUS`, the action "Publish a release date for the product" (`act:a8-publish-a-release-date-for-the-product`,
     leg `A8`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
-    the body's hierarchical score by at most 0.056, the bound if every failing row on `A8` passed; no
+    the body's hierarchical score by at most 0.048, the bound if every failing row on `A8` passed; no
     weighting is asserted, so this is a bound, not a value.
   status: record
   evidence:
@@ -2739,7 +2779,7 @@ claims:
     locator: events/cycle-scan_2026-09-10_rj5.jsonl:643
     note: A8 fail on scan-census-flagship-2-american-community-survey-acs
   numbers:
-  - value: '0.056'
+  - value: '0.048'
     source: score.py prescription delta for act:a8-publish-a-release-date-for-the-product
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-078
@@ -3165,145 +3205,135 @@ claims:
 - id: CL-087
   key: q2.denial.BEA
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
-    access denial (a refusal by the host or a robots.txt disallow) on 24 of the 85 findings for `BEA`;
-    23 are absences, and 22 pass.
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
+    access denial (a refusal by the host or a robots.txt disallow) on 28 of the 85 findings for `BEA`;
+    23 are absences, and 18 pass.
   status: record
   evidence:
   - kind: query
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_05a5b1d1675e321934aaefe7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7231
-    note: 'B1 error on scan-bea-flagship-2-news-releases: refused'
-  - kind: finding
-    id: fnd_38672e763f9e71ee89085ce9
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7205
-    note: 'D4 error on home:www.bea.gov: refused'
-  - kind: finding
-    id: fnd_3df8912f2f37016ca7fdb811
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7208
-    note: 'B4 error on home:www.bea.gov: refused'
-  - kind: finding
-    id: fnd_4ce3fc6347648e67f455b2ad
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7246
-    note: 'G4 error on scan-bea-machine: refused'
-  - kind: finding
-    id: fnd_4d556572800bce6a02849ff3
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7222
-    note: 'G4 error on scan-bea-flagship-1-interactive-data: refused'
-  - kind: finding
-    id: fnd_538088973f7a493cee75cc65
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7217
-    note: 'D4 error on scan-bea-flagship-1-interactive-data: refused'
-  - kind: finding
-    id: fnd_5ce61bf729f0a7741b04705b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7221
-    note: 'D3 error on scan-bea-flagship-1-interactive-data: refused'
-  - kind: finding
-    id: fnd_625b18456c7cedf1e41216eb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7209
-    note: 'D3 error on home:www.bea.gov: refused'
-  - kind: finding
-    id: fnd_679c7d15d1ef20ba028e38e2
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7243
-    note: 'B1 error on scan-bea-machine: refused'
-  - kind: finding
-    id: fnd_7a2b0705c64ed5cad688a217
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7234
-    note: 'G4 error on scan-bea-flagship-2-news-releases: refused'
-  - kind: finding
-    id: fnd_8a467d9462c0ed2d964f10d0
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7233
-    note: 'D3 error on scan-bea-flagship-2-news-releases: refused'
-  - kind: finding
-    id: fnd_8e14b9be466798bc42514682
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7211
-    note: 'A1 error on scan-bea-flagship-1-interactive-data: off_host, robots_disallowed, unprobed_over_cap'
-  - kind: finding
-    id: fnd_9517bfd098210a501cc5bf13
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7229
+    id: fnd_080893c8b7b4de1102e153b4
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:295
     note: 'D4 error on scan-bea-flagship-2-news-releases: refused'
   - kind: finding
-    id: fnd_c05adcf2874b41b03f32a119
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7232
-    note: 'B4 error on scan-bea-flagship-2-news-releases: refused'
+    id: fnd_2b375c4884461d54e6ea3e74
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:142
+    note: 'B4 error on home:www.bea.gov: refused'
   - kind: finding
-    id: fnd_c1752d98beea31c8ef45d184
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7219
-    note: 'B1 error on scan-bea-flagship-1-interactive-data: refused'
+    id: fnd_33bb34676d3adef4dfeed7fd
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:309
+    note: 'B1 error on scan-bea-machine: refused'
   - kind: finding
-    id: fnd_c1ebb9453397ff9e2bc78ed4
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7235
+    id: fnd_3ab31a05b14eac99ca34dd14
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:288
+    note: 'G4 error on scan-bea-flagship-1-interactive-data: refused'
+  - kind: finding
+    id: fnd_534079d8b5f4563ddc5a81d5
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:301
     note: 'A1 error on scan-bea-machine: off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_cfd8adae84b619d1c2f5bb7d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7223
-    note: 'A1 error on scan-bea-flagship-2-news-releases: off_host, robots_disallowed, unprobed_over_cap'
-  - kind: finding
-    id: fnd_d5455f3e59d16f60fd083cc9
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7245
-    note: 'D3 error on scan-bea-machine: refused'
-  - kind: finding
-    id: fnd_d71583572e251e7145d4b9d2
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7207
+    id: fnd_57c6b69ddeb09f76d0a23320
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:141
     note: 'B1 error on home:www.bea.gov: refused'
   - kind: finding
-    id: fnd_d72af0a2f8361b5664b679ba
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7220
-    note: 'B4 error on scan-bea-flagship-1-interactive-data: refused'
+    id: fnd_5bc2bb3294738b48549acfc6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:279
+    note: 'A3 error on scan-bea-flagship-1-interactive-data: off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_e1130df35040b65b8e2ad36d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7210
-    note: 'G4 error on home:www.bea.gov: refused'
+    id: fnd_5d1d9a40c2536a571f9a4c53
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:300
+    note: 'G4 error on scan-bea-flagship-2-news-releases: refused'
   - kind: finding
-    id: fnd_ead51e8a4d38dee0210a91fa
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7244
-    note: 'B4 error on scan-bea-machine: refused'
+    id: fnd_61e1e588c6f8f77e49b54d9b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:283
+    note: 'D4 error on scan-bea-flagship-1-interactive-data: refused'
   - kind: finding
-    id: fnd_ee90082961104816fd4051eb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7199
+    id: fnd_6aa0967880b2a7931b846e36
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:303
+    note: 'A3 error on scan-bea-machine: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_6dfa863130b91ddb97e4f4cd
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:133
     note: 'A1 error on home:www.bea.gov: off_host, robots_disallowed, unprobed_over_cap'
   - kind: finding
-    id: fnd_efc2569c0878788bff72a35e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7241
+    id: fnd_80c38cc755910ddf99d299de
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:310
+    note: 'B4 error on scan-bea-machine: refused'
+  - kind: finding
+    id: fnd_82c91655b5465520e043f3dc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:297
+    note: 'B1 error on scan-bea-flagship-2-news-releases: refused'
+  - kind: finding
+    id: fnd_866c806d5098cffb7b9d7190
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:312
+    note: 'G4 error on scan-bea-machine: refused'
+  - kind: finding
+    id: fnd_88e93b4d92ae878e655bf0bd
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:289
+    note: 'A1 error on scan-bea-flagship-2-news-releases: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_9b219e0278b591919b62e95a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:298
+    note: 'B4 error on scan-bea-flagship-2-news-releases: refused'
+  - kind: finding
+    id: fnd_a4d398481045711dd224eb5e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:291
+    note: 'A3 error on scan-bea-flagship-2-news-releases: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_abf8326f290ff5a41bb9b9df
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:143
+    note: 'D3 error on home:www.bea.gov: refused'
+  - kind: finding
+    id: fnd_ac2b96744c0637ed93614613
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:299
+    note: 'D3 error on scan-bea-flagship-2-news-releases: refused'
+  - kind: finding
+    id: fnd_b96b8db798674269e2a7b95e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:311
+    note: 'D3 error on scan-bea-machine: refused'
+  - kind: finding
+    id: fnd_be8a78ca3c4254e26b58e955
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:135
+    note: 'A3 error on home:www.bea.gov: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_c23f3fe0305343a0c56467bb
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:285
+    note: 'B1 error on scan-bea-flagship-1-interactive-data: refused'
+  - kind: finding
+    id: fnd_c884957dbac8b8474465acd6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:144
+    note: 'G4 error on home:www.bea.gov: refused'
+  - kind: finding
+    id: fnd_dbf3834aca4a7aca2d0a52c6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:277
+    note: 'A1 error on scan-bea-flagship-1-interactive-data: off_host, robots_disallowed, unprobed_over_cap'
+  - kind: finding
+    id: fnd_e33849b80a992e605bfa951f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:139
+    note: 'D4 error on home:www.bea.gov: refused'
+  - kind: finding
+    id: fnd_ec02ddafae34f0aefb632c7e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:286
+    note: 'B4 error on scan-bea-flagship-1-interactive-data: refused'
+  - kind: finding
+    id: fnd_eed379cd4ab7216dcc926278
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:287
+    note: 'D3 error on scan-bea-flagship-1-interactive-data: refused'
+  - kind: finding
+    id: fnd_ffb8fa4a5e7af3645d0bdd7c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:307
     note: 'D4 error on scan-bea-machine: refused'
   numbers:
   - value: '23'
     source: Q2 absence for BEA
-  - value: '24'
+  - value: '28'
     source: Q2 access_denial for BEA
   - value: '85'
     source: findings for BEA
-  - value: '22'
+  - value: '18'
     source: Q2 pass for BEA
-  source_task: cc_tasks/2026-10-02_evidence_map_record.md
-- id: CL-089
-  key: q1.A2
-  question: Q1
-  text: '`A2` has no measured verdict in the record and can be measured from outside with public tooling
-    and no agency action (route `openapi_spec_validator` needs `tool:openapi-spec-validator`; route `prance`
-    needs `tool:prance`); it is to be measured before the summary is drafted (`DN-009 decision 6`).'
-  status: needs_measurement
-  evidence:
-  - kind: indicator
-    id: ind:A2
-    locator: framework/ai_readiness_framework.json#ind:A2
-    note: 'routes; record: every Finding was `error` — the collector could not observe any admitted surface'
-  - kind: query
-    id: mcp.get_requirements
-    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
-    note: get_requirements(indicator='A2')
-  - kind: query
-    id: mcp.get_requirements
-    locator: framework/ai_readiness_framework.json#tool:openapi-spec-validator
-    note: 'route openapi_spec_validator: open_source, provided by this_project'
-  - kind: query
-    id: mcp.get_requirements
-    locator: framework/ai_readiness_framework.json#tool:prance
-    note: 'route prance: open_source, provided by this_project'
-  numbers: []
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-091
   key: q1.D1
@@ -3328,7 +3358,7 @@ claims:
 - id: CL-094
   key: q2.denial.ERS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 20 of the 85 findings for `ERS`;
     28 are absences, and 16 pass.
   status: record
@@ -3337,85 +3367,85 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_01ae8aa1430cfbd37609c779
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7113
-    note: 'D3 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
-  - kind: finding
-    id: fnd_08864991563e03cda7498fda
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7124
-    note: 'B4 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
-  - kind: finding
-    id: fnd_171b1c8f2525bea5973d9d5f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7136
-    note: 'B4 error on scan-ers-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_19a950d01a465cabd18f1fc2
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7125
-    note: 'D3 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
-  - kind: finding
-    id: fnd_3800d4f2c1a5753e3843758d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7126
+    id: fnd_03af352aba318a470d792a26
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:420
     note: 'G4 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
   - kind: finding
-    id: fnd_41fa1198464ddf764445ed62
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7109
-    note: 'D4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
-  - kind: finding
-    id: fnd_4d2ffd01e3b74934adf27cb1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7135
-    note: 'B1 error on scan-ers-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_4e0afac8851ff5634a75e1fd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7112
-    note: 'B4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
-  - kind: finding
-    id: fnd_4f44a969e5f2b60e3fea9654
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7114
-    note: 'G4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
-  - kind: finding
-    id: fnd_6d516f323dd4b0853461791e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7121
-    note: 'D4 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
-  - kind: finding
-    id: fnd_88de7244192d7f87089d05aa
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7123
-    note: 'B1 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
-  - kind: finding
-    id: fnd_96d06274addd1ce30efec754
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7101
-    note: 'D3 error on home:www.ers.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_a2dc8fc7aedc2ced6b174e4c
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7138
-    note: 'G4 error on scan-ers-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_c3783744de75e9434b9e1c53
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7097
-    note: 'D4 error on home:www.ers.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_c58704359e627e068e6f959f
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7099
-    note: 'B1 error on home:www.ers.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_d91a5bc351c46bfac45a49b5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7100
-    note: 'B4 error on home:www.ers.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_e01c9078bec0c586b1925ccf
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7137
+    id: fnd_0e5895dc6f3a2e5515f1754f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:431
     note: 'D3 error on scan-ers-machine: http_4xx, refused'
   - kind: finding
-    id: fnd_e0c20d7a5ce42286912701f7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7133
-    note: 'D4 error on scan-ers-machine: http_4xx, refused'
+    id: fnd_36186fba776f9238f6217a1e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:214
+    note: 'B4 error on home:www.ers.usda.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_ed1c4be4c2286a56bed6812d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7111
+    id: fnd_362610da1a83e9bae2c94dbc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:418
+    note: 'B4 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
+  - kind: finding
+    id: fnd_3b42ede6abe4a49fd481a469
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:211
+    note: 'D4 error on home:www.ers.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_3d363db70ea6436681026649
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:430
+    note: 'B4 error on scan-ers-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_4368a50be8102d05917522b7
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:432
+    note: 'G4 error on scan-ers-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_49304410b7027ffc192f5279
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:405
     note: 'B1 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
   - kind: finding
-    id: fnd_fbf07f15c308c5e620bbedda
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7102
+    id: fnd_511996758714a933920d55b3
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:415
+    note: 'D4 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
+  - kind: finding
+    id: fnd_51a1ce0396e039afbebaf08b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:407
+    note: 'D3 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
+  - kind: finding
+    id: fnd_602ee22707e218a0697fef56
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:417
+    note: 'B1 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
+  - kind: finding
+    id: fnd_6584750122727201309b9002
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:429
+    note: 'B1 error on scan-ers-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_72e6e43a2ff6b1cc6dd9743c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:419
+    note: 'D3 error on scan-ers-flagship-2-agricultural-baseline-database: http_4xx, refused'
+  - kind: finding
+    id: fnd_8184dbde242cf693ec3a6f5c
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:427
+    note: 'D4 error on scan-ers-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_c186095675ded6532777935e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:403
+    note: 'D4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
+  - kind: finding
+    id: fnd_ce72b882fe82b71bfd4e8566
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:216
     note: 'G4 error on home:www.ers.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_f22724895185d212f08e2b43
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:406
+    note: 'B4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
+  - kind: finding
+    id: fnd_f99726028ebe0828ed049250
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:408
+    note: 'G4 error on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials: http_4xx, refused'
+  - kind: finding
+    id: fnd_fd9e5d265bb63439f62bd3c0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:215
+    note: 'D3 error on home:www.ers.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_ff3fca42a9eb3db84d9ef56b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:213
+    note: 'B1 error on home:www.ers.usda.gov: http_4xx, refused'
   numbers:
   - value: '28'
     source: Q2 absence for ERS
@@ -3429,7 +3459,7 @@ claims:
 - id: CL-095
   key: q2.denial.NAHMSAPHIS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 10 of the 43 findings for `NAHMSAPHIS`;
     12 are absences, and 9 pass.
   status: record
@@ -3438,50 +3468,50 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_23a40e1bb644348535d00871
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7193
-    note: 'D4 error on home:www.aphis.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_526d6e68d572871ec069a052
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7568
-    note: 'B4 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
-      http_4xx, refused'
-  - kind: finding
-    id: fnd_79774ae1a1316d28ae115a3d
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7567
-    note: 'B1 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
-      http_4xx, refused'
-  - kind: finding
-    id: fnd_820108d7f64b9dac2391819b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7195
-    note: 'B1 error on home:www.aphis.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_a6dd1d0ca1c294160e65dddb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7197
+    id: fnd_058991ed0e1c94ce6202f7dd
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:131
     note: 'D3 error on home:www.aphis.usda.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_a761274ed68a8cee58fb5532
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7570
+    id: fnd_2246591f16ec83c8e12bd86a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:132
+    note: 'G4 error on home:www.aphis.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_6360f24be4964e1b2a93623e
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:24
     note: 'G4 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
       http_4xx, refused'
   - kind: finding
-    id: fnd_cad61ec9196d0b898dee6219
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7198
-    note: 'G4 error on home:www.aphis.usda.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_cdd2a05234d9b3192f929741
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7565
-    note: 'D4 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
+    id: fnd_7c861db87ba19358501be47b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:22
+    note: 'B4 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
       http_4xx, refused'
   - kind: finding
-    id: fnd_d1802e786a9bb43abec60ff3
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7569
+    id: fnd_88ad5a20d39a9f04b7489822
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:127
+    note: 'D4 error on home:www.aphis.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_9e6fda940056a3ecb4eaa937
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:130
+    note: 'B4 error on home:www.aphis.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_af642606a6bb87f658e7b74f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:23
     note: 'D3 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
       http_4xx, refused'
   - kind: finding
-    id: fnd_fe403cfdddb17f059d44b88b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7196
-    note: 'B4 error on home:www.aphis.usda.gov: http_4xx, refused'
+    id: fnd_db3befbb774d6a4af211a718
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:19
+    note: 'D4 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
+      http_4xx, refused'
+  - kind: finding
+    id: fnd_dc8dcb356ef68fb912cb146b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:129
+    note: 'B1 error on home:www.aphis.usda.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_ee139928bc3505f78864ee9d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:21
+    note: 'B1 error on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms:
+      http_4xx, refused'
   numbers:
   - value: '12'
     source: Q2 absence for NAHMSAPHIS
@@ -3495,54 +3525,54 @@ claims:
 - id: CL-096
   key: q2.denial.NCES
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 10 of the 43 findings for `NCES`;
-    14 are absences, and 9 pass.
+    14 are absences, and 7 pass.
   status: record
   evidence:
   - kind: query
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_2217ef7367158d49ca685298
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7581
-    note: 'D3 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
-  - kind: finding
-    id: fnd_30aa44bb7c37e13f549059fd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7577
-    note: 'D4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
-  - kind: finding
-    id: fnd_3536937d0f74d44f52858037
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7304
-    note: 'B4 error on home:nces.ed.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_39d1f37ea43814941c2378f4
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7582
-    note: 'G4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
-  - kind: finding
-    id: fnd_5c44daa9f0f9c603f16c4044
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7580
-    note: 'B4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
-  - kind: finding
-    id: fnd_6c060508250f3c542bae31f9
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7301
-    note: 'D4 error on home:nces.ed.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_87d8eaad6ed791d23c3b83cd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7303
+    id: fnd_0a58e17e386b4f578e314550
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:105
     note: 'B1 error on home:nces.ed.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_b6fc583fa943386f7d9c39fb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7305
+    id: fnd_0d2a273ee97759f62c09ce9f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:107
     note: 'D3 error on home:nces.ed.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_cf59a6c01821cc710f9dad3e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7306
+    id: fnd_4cbf3712344d38433cf920ef
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:103
+    note: 'D4 error on home:nces.ed.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_8cb0d43fde20290fe2045b0f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:10
+    note: 'B4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
+  - kind: finding
+    id: fnd_a1124f0dd47a43da5c6f53ee
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:108
     note: 'G4 error on home:nces.ed.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_eeadf372e85c46a5412db3b5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7579
+    id: fnd_b9f11088688999a2ec83571b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:9
     note: 'B1 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
+  - kind: finding
+    id: fnd_ba0c62fbe85c51ed907e766a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:106
+    note: 'B4 error on home:nces.ed.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_c0dd57470d130be07ed2df9d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:12
+    note: 'G4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
+  - kind: finding
+    id: fnd_c7bb2a679cedc39d17112546
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:7
+    note: 'D4 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
+  - kind: finding
+    id: fnd_ca98c95f0930b6cd82e1d16f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:11
+    note: 'D3 error on flagship:nces.ed.gov/programs/digest/: http_4xx, refused'
   numbers:
   - value: '14'
     source: Q2 absence for NCES
@@ -3550,13 +3580,13 @@ claims:
     source: Q2 access_denial for NCES
   - value: '43'
     source: findings for NCES
-  - value: '9'
+  - value: '7'
     source: Q2 pass for NCES
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-097
   key: q2.denial.NCHS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 20 of the 85 findings for `NCHS`;
     29 are absences, and 9 pass.
   status: record
@@ -3565,90 +3595,90 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_00e840d8f491fd44f69afd53
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7387
-    note: 'B1 error on scan-nchs-machine: http_4xx, refused'
+    id: fnd_03a2dcc2a1fa0b96bb7e3b82
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:180
+    note: 'G4 error on home:www.cdc.gov: http_4xx, refused'
   - kind: finding
-    id: fnd_0f297f493208dc062a8ec087
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7377
+    id: fnd_04efab3bb85397a5bbd0d6a0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:499
+    note: 'D4 error on scan-nchs-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_115590db6522f7411aab29af
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:479
+    note: 'D3 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
+  - kind: finding
+    id: fnd_1179b096af2770019f80fd5d
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:178
+    note: 'B4 error on home:www.cdc.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_24d29da1ea12b011ddd024c1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:491
     note: 'D3 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
       refused'
   - kind: finding
-    id: fnd_0ffee68feb2921552b4d9086
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7388
-    note: 'B4 error on scan-nchs-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_1ed4129c9bf4ff6fdcf30c15
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7389
-    note: 'D3 error on scan-nchs-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_2db12bd50a26128df8cf9aba
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7385
-    note: 'D4 error on scan-nchs-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_4853e45dfce63992ecbc8a6b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7353
-    note: 'D3 error on home:www.cdc.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_48a20196da5d04863fff80be
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7352
-    note: 'B4 error on home:www.cdc.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_567e76d3f944e7799f4ce00e
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7363
-    note: 'B1 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
-  - kind: finding
-    id: fnd_682d5c148b5c6b3c2bf32ce5
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7378
-    note: 'G4 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
-      refused'
-  - kind: finding
-    id: fnd_69b5e69b55a9b3a6e875c2ad
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7354
-    note: 'G4 error on home:www.cdc.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_8214eba43888b5a9dddb2d42
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7361
-    note: 'D4 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
-  - kind: finding
-    id: fnd_8c380991bc214c52e4fb5010
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7349
-    note: 'D4 error on home:www.cdc.gov: http_4xx, refused'
-  - kind: finding
-    id: fnd_910b3077799eb3affb72cb09
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7366
+    id: fnd_28a2597f48b31588ffc0e796
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:480
     note: 'G4 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
   - kind: finding
-    id: fnd_9954342380d8121e9325acd1
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7373
-    note: 'D4 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
-      refused'
-  - kind: finding
-    id: fnd_a02a2884feb455c2231e606a
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7390
-    note: 'G4 error on scan-nchs-machine: http_4xx, refused'
-  - kind: finding
-    id: fnd_a455a734e68c6f97d7c1efdd
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7375
-    note: 'B1 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
-      refused'
-  - kind: finding
-    id: fnd_b8294f5679759b45a8c46d99
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7364
+    id: fnd_38b5ccd4e2907a49644653cc
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:478
     note: 'B4 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
   - kind: finding
-    id: fnd_c7ed85a3a72f8b548c30c5fb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7365
-    note: 'D3 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
-  - kind: finding
-    id: fnd_cd5f773a2ffe17d947a1d925
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7376
+    id: fnd_3f0a39788e085b7cac15d475
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:490
     note: 'B4 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
       refused'
   - kind: finding
-    id: fnd_eec7804c09e32f17256fcc20
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7351
+    id: fnd_451576234bbb801003e2b208
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:477
+    note: 'B1 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
+  - kind: finding
+    id: fnd_46ebf1576b47313b9bce990a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:503
+    note: 'D3 error on scan-nchs-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_5da75482eecc5e21a98464d1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:175
+    note: 'D4 error on home:www.cdc.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_645a26cb83c98dee01a1ef43
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:177
     note: 'B1 error on home:www.cdc.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_732b952c98605f558e9d07d6
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:489
+    note: 'B1 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
+      refused'
+  - kind: finding
+    id: fnd_88ae7c36b8d93b3aba9b8279
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:492
+    note: 'G4 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
+      refused'
+  - kind: finding
+    id: fnd_8b5a8d217934b7d9e3b44474
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:501
+    note: 'B1 error on scan-nchs-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_956215f50771b2521d76ad34
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:179
+    note: 'D3 error on home:www.cdc.gov: http_4xx, refused'
+  - kind: finding
+    id: fnd_a8852b14d2e689ea4f67a19b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:502
+    note: 'B4 error on scan-nchs-machine: http_4xx, refused'
+  - kind: finding
+    id: fnd_b8a92c9583bcf712c0644e36
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:475
+    note: 'D4 error on scan-nchs-flagship-1-data-briefs: http_4xx, refused'
+  - kind: finding
+    id: fnd_c0446b649633ff968159d901
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:487
+    note: 'D4 error on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: http_4xx,
+      refused'
+  - kind: finding
+    id: fnd_e44b23a9c50a298c4bfc4170
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:504
+    note: 'G4 error on scan-nchs-machine: http_4xx, refused'
   numbers:
   - value: '29'
     source: Q2 absence for NCHS
@@ -3662,7 +3692,7 @@ claims:
 - id: CL-098
   key: q2.denial.SAMHSACBHS
   question: Q2
-  text: On cycle `scan_2026-10-06_composite_b`, the harness's unauthenticated identified client met an
+  text: On cycle `scan_2026-10-06_composite_c`, the harness's unauthenticated identified client met an
     access denial (a refusal by the host or a robots.txt disallow) on 14 of the 43 findings for `SAMHSACBHS`;
     9 are absences, and 8 pass.
   status: record
@@ -3671,67 +3701,67 @@ claims:
     id: cycle.observation_classes
     locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
   - kind: finding
-    id: fnd_01f6304db71dd423330b9638
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7399
-    note: 'B1 error on home:www.samhsa.gov: http_5xx, parse_error, refused'
+    id: fnd_1c0e06e3b6f4bc9edaa4db1a
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:255
+    note: 'A3 error on home:www.samhsa.gov: off_host, refused, unprobed_over_cap'
   - kind: finding
-    id: fnd_0c8d493b8a29f7e0f37c42b7
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7401
-    note: 'D3 error on home:www.samhsa.gov: http_5xx, refused'
-  - kind: finding
-    id: fnd_2f01f9c26a86f44198a274eb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7592
-    note: 'B4 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
-      http_5xx, refused'
-  - kind: finding
-    id: fnd_4095cf011ce70438f32949a9
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7583
-    note: 'A1 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
-      off_host, refused, unprobed_over_cap'
-  - kind: finding
-    id: fnd_5738634f922689ee05bfc7b2
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7594
-    note: 'G4 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
-      http_5xx, refused'
-  - kind: finding
-    id: fnd_59c24afeefab0e60663d0de8
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7585
-    note: 'A3 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
-      off_host, refused, unprobed_over_cap'
-  - kind: finding
-    id: fnd_6c24ca0a560dfbea94a8ec12
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7402
+    id: fnd_2813a64c55d732d09be15a9b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:264
     note: 'G4 error on home:www.samhsa.gov: http_5xx, refused'
   - kind: finding
-    id: fnd_7f3eba8dd6f9cbdf82a96470
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7589
+    id: fnd_3940bc508c7a86e48a36bc94
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:259
+    note: 'D4 error on home:www.samhsa.gov: http_5xx, refused'
+  - kind: finding
+    id: fnd_3f476d12b75a7af5e42c4915
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:67
     note: 'D4 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
       http_5xx, refused'
   - kind: finding
-    id: fnd_a15f9c1efe6bd0673e4b9fd6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7400
+    id: fnd_411020fe5948b5e30ea81ca9
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:253
+    note: 'A1 error on home:www.samhsa.gov: off_host, refused, unprobed_over_cap'
+  - kind: finding
+    id: fnd_698ee688ccb8c336b7ddb1d0
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:61
+    note: 'A1 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
+      off_host, refused, unprobed_over_cap'
+  - kind: finding
+    id: fnd_85fd4cf9c509a370b452b34b
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:262
     note: 'B4 error on home:www.samhsa.gov: http_5xx, refused'
   - kind: finding
-    id: fnd_ae09dbef749e86f3b029b4a8
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7393
-    note: 'A3 error on home:www.samhsa.gov: off_host, refused, unprobed_over_cap'
+    id: fnd_97644dbdf55de6df4a637463
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:72
+    note: 'G4 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
+      http_5xx, refused'
   - kind: finding
-    id: fnd_b2d83f3aafccfa386ac3c931
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7397
-    note: 'D4 error on home:www.samhsa.gov: http_5xx, refused'
+    id: fnd_ad20290a640cfaa6fd01ec5f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:69
+    note: 'B1 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
+      http_5xx, refused'
   - kind: finding
-    id: fnd_e61e748bc883ab1b02ededb6
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7593
+    id: fnd_c3c2fa942e8748872405ce46
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:261
+    note: 'B1 error on home:www.samhsa.gov: http_5xx, parse_error, refused'
+  - kind: finding
+    id: fnd_dd21d947047d40865de31931
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:63
+    note: 'A3 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
+      off_host, refused, unprobed_over_cap'
+  - kind: finding
+    id: fnd_e0cd9f4a4cb170bb139ef4c1
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:263
+    note: 'D3 error on home:www.samhsa.gov: http_5xx, refused'
+  - kind: finding
+    id: fnd_ef9ba1e1892a913b6e520e07
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:71
     note: 'D3 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
       http_5xx, refused'
   - kind: finding
-    id: fnd_eb15d1dc750654db0235581b
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7391
-    note: 'A1 error on home:www.samhsa.gov: off_host, refused, unprobed_over_cap'
-  - kind: finding
-    id: fnd_ed4d16d967a1c3bde87919fb
-    locator: events/cycle-scan_2026-10-06_recollect.jsonl:7591
-    note: 'B1 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
+    id: fnd_fdb6c08f10fd3aeb5b007a8f
+    locator: events/cycle-scan_2026-10-06_recollect_rj1.jsonl:70
+    note: 'B4 error on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health:
       http_5xx, refused'
   numbers:
   - value: '9'
@@ -4738,22 +4768,6 @@ claims:
   source_task: cc_tasks/2026-10-07_DCAT-005_brief_corrections_before_omb.md
 tables:
   q1_measurement_boundary:
-  - indicator: A2
-    status: harness_built
-    tier: M
-    class: open_tooling
-    basis: routes
-    judged_on_cycle: true
-    record_text: every Finding was `error` — the collector could not observe any admitted surface
-    routes:
-    - route: openapi_spec_validator
-      class: open_tooling
-      requires:
-      - tool:openapi-spec-validator (open_source, this_project)
-    - route: prance
-      class: open_tooling
-      requires:
-      - tool:prance (open_source, this_project)
   - indicator: A7
     status: specified
     tier: O
@@ -5082,19 +5096,19 @@ tables:
   - body: BEA
     tier: A
     findings: 85
-    access_denial: 24
+    access_denial: 28
     absence: 23
     nonconformant: 0
     error_other: 16
-    pass: 22
+    pass: 18
     absence_with_denied_obs: 0
   - body: BJS
     tier: A
     findings: 64
     access_denial: 0
-    absence: 39
+    absence: 42
     nonconformant: 3
-    error_other: 12
+    error_other: 9
     pass: 10
     absence_with_denied_obs: 0
   - body: BLS
@@ -5120,8 +5134,8 @@ tables:
     findings: 85
     access_denial: 28
     absence: 23
-    nonconformant: 1
-    error_other: 15
+    nonconformant: 5
+    error_other: 11
     pass: 18
     absence_with_denied_obs: 0
   - body: DRSMSU
@@ -5136,10 +5150,10 @@ tables:
   - body: EIA
     tier: A
     findings: 64
-    access_denial: 23
+    access_denial: 26
     absence: 28
     nonconformant: 1
-    error_other: 5
+    error_other: 2
     pass: 7
     absence_with_denied_obs: 0
   - body: ERS
@@ -5172,10 +5186,10 @@ tables:
   - body: NASS
     tier: A
     findings: 85
-    access_denial: 24
+    access_denial: 28
     absence: 23
     nonconformant: 8
-    error_other: 17
+    error_other: 13
     pass: 13
     absence_with_denied_obs: 0
   - body: NCES
@@ -5184,8 +5198,8 @@ tables:
     access_denial: 10
     absence: 14
     nonconformant: 2
-    error_other: 8
-    pass: 9
+    error_other: 10
+    pass: 7
     absence_with_denied_obs: 0
   - body: NCHS
     tier: A

@@ -413,7 +413,14 @@ def measured_collections(snapshot: str) -> list:
     p = json.loads((REPO / "state" / f"{snapshot}.json").read_text(encoding="utf-8"))
     if p.get("cycle_kind") == "composite":
         c = p["composed_of"]
-        return [c["base"].get("collection") or c["base"]["cycle"], c["overlay"]["cycle"]]
+        # An overlay that is itself a RE-JUDGEMENT (`scan_2026-10-06_composite_c` overlays
+        # `scan_2026-10-06_recollect_rj1`, `cc_tasks/2026-10-07_seed_known_locations_and_split_
+        # discoverability.md` decision 2) rests on the collection it was derived from.
+        over = c["overlay"]["cycle"]
+        if c["overlay"].get("kind") == "rejudged":
+            over = json.loads((REPO / "state" / f"{over}.json").read_text(
+                encoding="utf-8"))["derived_from"]
+        return [c["base"].get("collection") or c["base"]["cycle"], over]
     if p.get("cycle_kind") == "rejudged":
         return [p["derived_from"]]
     return [snapshot]

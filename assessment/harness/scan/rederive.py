@@ -289,7 +289,20 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
     #: leg -> why it was not judged. Every entry is a leg that registers nothing.
     not_judged: dict = {}
     judgeable = []
+    # A TARGETED source (`run.restrict_legs`, `scope: legs`) measured the legs it names and
+    # nothing else; a shared leg it collected for one of them (A6 for B1, `link_probe` for A1)
+    # is evidence for that leg, not a measurement of its own. So its re-judgement judges the
+    # same legs and stays a targeted cycle, or a composite that overlays it would take legs the
+    # cycle never measured (`cc_tasks/2026-10-07_seed_known_locations_and_split_
+    # discoverability.md` decision 2). `None` for every other source, so every earlier
+    # re-judgement is what it was.
+    targeted = (list(payload.get("legs_collected") or [])
+                if payload.get("scope") == "legs" else None)
     for leg, rule_id in CURRENT.items():
+        if targeted is not None and leg not in targeted:
+            not_judged[leg] = (f"{src_cycle} is a targeted cycle (scope: legs) and did not "
+                               f"measure {leg}")
+            continue
         if leg == "E5":
             not_judged[leg] = ("E5 judges the CYCLE, and the control set changed under v4 "
                                "(a fifth fixture): re-judging the source cycle's four-fixture "
@@ -371,6 +384,8 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
         # frame re-judgement's payload is byte-for-byte what it was.
         **{k: payload[k] for k in ("scope", "spot_targets", "params_cycle")
            if payload.get("scope") == "spot" and k in payload},
+        # A re-judgement of a TARGETED cycle is targeted too, over the same legs.
+        **({"scope": "legs", "legs_collected": targeted} if targeted is not None else {}),
         "harness_version": errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
         "rejudged_note": (
             f"Findings only. Every Finding cites the `obs_id`s {src_cycle} recorded; not one "

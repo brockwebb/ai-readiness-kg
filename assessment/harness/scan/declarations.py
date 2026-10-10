@@ -20,12 +20,38 @@ its re-derivation applies the same ones.
 """
 from __future__ import annotations
 
+import re
 import urllib.parse
 from pathlib import Path
 
 #: The shape of `targets.yaml` `declared_locations`, and of the `declared` block. A reader
 #: checks the scheme before trusting any key.
-SCHEME = 1
+#:
+#: Scheme 2 (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` decision 5,
+#: DN-013-R1) is scheme 1 plus provenance: an entry may be SEEDED from a named source rather than
+#: read from the body's own page (`seeded_from`), carries what one live fetch found (`status`,
+#: `verified_at`), and a body records which seed sources were searched per object (`searched`),
+#: which is what lets an existence rule say `fail` over a complete search (`rules/_existence.py`).
+#: No key scheme 1 defines changes meaning, so a scheme-1 file still loads and its `declared`
+#: blocks are byte-identical to what they were.
+SCHEME = 2
+SCHEMES = (1, 2)
+
+#: The seed sources (DN-013-R1; the task's decision 4), in the order a search names them. Equal
+#: to `params.existence.seed_sources`, which the rules read; held equal by
+#: `tests/test_existence_and_discoverability.py`. `developer_page` is the recollection's source,
+#: the agency's own pages (`read_from`).
+SEED_SOURCES = ("model_knowledge", "repo", "developer_page", "catalog.data.gov", "api.data.gov")
+
+#: What one live fetch of a seeded location found. `http_<code>` is any HTTP status that is not
+#: the object; `verified` is the object; `not_the_object` answered but is something else.
+SEED_STATUSES = ("verified", "refused_robots", "not_the_object", "seeded_unverified")
+_HTTP_STATUS = re.compile(r"^http_[1-5]\d\d$")
+
+#: The objects a body's `searched` record and the seed table name. `catalog_organization` is
+#: an inventory entry by kind; the seed table keeps it apart because data.gov keeps it apart.
+SEED_OBJECTS = ("api_base", "api_terms", "changelog", "inventory", "catalog_organization")
+SEARCH_OBJECTS = ("api_base", "api_terms", "changelog", "inventory")
 
 TARGETS_PATH = Path(__file__).resolve().parent / "targets.yaml"
 
@@ -63,11 +89,44 @@ def _url(v, where: str) -> str:
     return v
 
 
+def _status(v, where: str) -> str:
+    if v in SEED_STATUSES or (isinstance(v, str) and _HTTP_STATUS.match(v)):
+        return v
+    raise DeclarationError(f"{where}: status {v!r} is not one of {SEED_STATUSES} or http_<code>")
+
+
+def _provenance(e: dict, where: str, scheme: int) -> None:
+    """Scheme 1: `read_from.page`, always. Scheme 2: `read_from.page` or `seeded_from` (a
+    non-empty list, each item naming its source before a colon), and, where a fetch was made,
+    its `status` with `verified_at`."""
+    read = isinstance(e.get("read_from"), dict) and bool(e["read_from"].get("page"))
+    if scheme == 1:
+        if not read:
+            raise DeclarationError(f"{where} carries no read_from.page; every declaration "
+                                   f"names the page it was read from")
+        return
+    seeded = e.get("seeded_from")
+    if seeded is not None:
+        if not isinstance(seeded, list) or not seeded or not all(
+                isinstance(x, str) and x.split(":", 1)[0] in SEED_SOURCES for x in seeded):
+            raise DeclarationError(f"{where}.seeded_from must be a non-empty list of "
+                                   f"'<source>[:<detail>]' with source in {SEED_SOURCES}")
+    if not read and not seeded:
+        raise DeclarationError(f"{where} carries neither read_from.page nor seeded_from; every "
+                               f"location names where it came from")
+    if "status" in e:
+        st = _status(e["status"], where)
+        if st != "seeded_unverified" and not e.get("verified_at"):
+            raise DeclarationError(f"{where} is {st} and carries no verified_at; a status is "
+                                   f"the result of a fetch, and a fetch has a time")
+
+
 def validate(block: dict) -> dict:
     """The `declared_locations` block, checked field by field, or `DeclarationError`."""
-    if not isinstance(block, dict) or block.get("scheme") != SCHEME:
-        raise DeclarationError(f"declared_locations.scheme must be {SCHEME}; got "
+    if not isinstance(block, dict) or block.get("scheme") not in SCHEMES:
+        raise DeclarationError(f"declared_locations.scheme must be one of {SCHEMES}; got "
                                f"{(block or {}).get('scheme')!r}")
+    scheme = block["scheme"]
     bodies = block.get("bodies")
     if not isinstance(bodies, dict):
         raise DeclarationError("declared_locations.bodies must be a map of body code -> entry")
@@ -75,10 +134,20 @@ def validate(block: dict) -> dict:
         where = f"declared_locations.bodies.{code}"
         if not isinstance(b, dict):
             raise DeclarationError(f"{where} must be a map")
-        unknown = set(b) - {"api_base", "inventory_urls", "changelog_urls", "unresolved",
-                            "department_is_own_host"}
+        allowed = {"api_base", "inventory_urls", "changelog_urls", "unresolved",
+                   "department_is_own_host"} | ({"searched"} if scheme >= 2 else set())
+        unknown = set(b) - allowed
         if unknown:
             raise DeclarationError(f"{where}: unknown field(s) {sorted(unknown)}")
+        searched = b.get("searched")
+        if searched is not None:
+            if not isinstance(searched, dict) or set(searched) - set(SEARCH_OBJECTS):
+                raise DeclarationError(f"{where}.searched must map objects in "
+                                       f"{SEARCH_OBJECTS} to the seed sources searched")
+            for obj, srcs in searched.items():
+                if not isinstance(srcs, list) or set(srcs) - set(SEED_SOURCES):
+                    raise DeclarationError(f"{where}.searched.{obj} must list sources in "
+                                           f"{SEED_SOURCES}")
         api = b.get("api_base")
         if api is not None:
             if not isinstance(api, dict):
@@ -87,9 +156,16 @@ def validate(block: dict) -> dict:
             for k in ("description_url", "terms_url"):
                 if api.get(k) is not None:
                     _url(api[k], f"{where}.api_base.{k}")
-            if not isinstance(api.get("read_from"), dict) or not api["read_from"].get("page"):
-                raise DeclarationError(f"{where}.api_base carries no read_from.page; every "
-                                       f"declaration names the page it was read from")
+            _provenance(api, f"{where}.api_base", scheme)
+            terms = api.get("terms")
+            if terms is not None:
+                if scheme < 2 or not isinstance(terms, dict) or not api.get("terms_url"):
+                    raise DeclarationError(f"{where}.api_base.terms is scheme 2 provenance for "
+                                           f"a terms_url and must be a map beside one")
+                if terms.get("seeded_from") or terms.get("read_from"):
+                    _provenance(terms, f"{where}.api_base.terms", scheme)
+                elif "status" in terms:
+                    _status(terms["status"], f"{where}.api_base.terms")
         for i, e in enumerate(b.get("inventory_urls") or []):
             w = f"{where}.inventory_urls[{i}]"
             if not isinstance(e, dict):
@@ -100,15 +176,13 @@ def validate(block: dict) -> dict:
                                        f"{INVENTORY_KINDS}")
             if e.get("role") not in ROLES:
                 raise DeclarationError(f"{w}.role {e.get('role')!r} is not one of {ROLES}")
-            if not isinstance(e.get("read_from"), dict) or not e["read_from"].get("page"):
-                raise DeclarationError(f"{w} carries no read_from.page")
+            _provenance(e, w, scheme)
         for i, e in enumerate(b.get("changelog_urls") or []):
             w = f"{where}.changelog_urls[{i}]"
             if not isinstance(e, dict):
                 raise DeclarationError(f"{w} must be a map")
             _url(e.get("url"), f"{w}.url")
-            if not isinstance(e.get("read_from"), dict) or not e["read_from"].get("page"):
-                raise DeclarationError(f"{w} carries no read_from.page")
+            _provenance(e, w, scheme)
         for i, u in enumerate(b.get("unresolved") or []):
             w = f"{where}.unresolved[{i}]"
             if not isinstance(u, dict) or u.get("role") not in ROLES or not u.get("why"):
@@ -139,8 +213,13 @@ def load(path: Path | None = None) -> dict:
 
 
 def for_body(block: dict, body) -> dict | None:
-    """The declaration of one body, or `None` when the body declares nothing."""
-    return (block.get("bodies") or {}).get(body) if body else None
+    """The declaration of one body, or `None` when the body declares nothing. A scheme-2 entry
+    carries its scheme (`scheme: 2`) so `record` stamps it on the evidence; a scheme-1 entry is
+    returned as it always was, so its blocks are byte-identical."""
+    entry = (block.get("bodies") or {}).get(body) if body else None
+    if entry is not None and block.get("scheme", 1) >= 2:
+        return dict(entry, scheme=block["scheme"])
+    return entry
 
 
 def control_fixture(base_url: str, params: dict) -> dict:
@@ -149,7 +228,12 @@ def control_fixture(base_url: str, params: dict) -> dict:
     cf = params["declarations"]["control_fixture"]
     base = base_url.rstrip("/")
     page = {"page": base_url, "how": "params.declarations.control_fixture"}
-    return {"api_base": {"url": base + cf["api_base_path"],
+    # Scheme 2, with every seed source searched for every object: a fixture is its own world and
+    # what it declares is all there is, so its absence branches stay reachable under the
+    # existence rules (`rules/_existence.py`) exactly as they were under generation 14.
+    return {"scheme": SCHEME,
+            "searched": {o: list(SEED_SOURCES) for o in SEARCH_OBJECTS},
+            "api_base": {"url": base + cf["api_base_path"],
                          "terms_url": base + cf["api_terms_path"], "read_from": page},
             "inventory_urls": [{"url": base + p, "kind": "data_json", "role": "own_host",
                                 "read_from": page} for p in cf["inventory_paths"]],
@@ -183,7 +267,12 @@ def record(decl: dict | None, body, leg: str, params: dict) -> dict | None:
     # D1's field is the API's terms endpoint, so an unresolved API base is its remainder too.
     wanted = {field} | ({"api_base"} if field == "api_terms" else set())
     unresolved = [u for u in (decl.get("unresolved") or []) if _ROLE_FIELD[u["role"]] in wanted]
-    out = {"scheme": SCHEME, "body": body, "field": field, "unresolved": unresolved}
+    scheme = decl.get("scheme", 1)
+    out = {"scheme": scheme, "body": body, "field": field, "unresolved": unresolved}
+    if scheme >= 2:
+        objs = {"api_base": ("api_base",), "api_terms": ("api_terms", "api_base"),
+                "inventory_urls": ("inventory",), "changelog_urls": ("changelog",)}[field]
+        out["searched"] = {o: list((decl.get("searched") or {}).get(o) or []) for o in objs}
     if field in ("api_base", "api_terms"):
         out["api_base"] = decl.get("api_base")
     elif field == "inventory_urls":
@@ -211,3 +300,38 @@ def admitted_hosts(decl: dict | None, leg: str, params: dict) -> frozenset:
     else:
         urls = [e["url"] for e in decl.get("changelog_urls") or []]
     return frozenset(urllib.parse.urlsplit(u).netloc.lower() for u in urls if u)
+
+
+#: The shape of the seed table (`assessment/harness/scan/seeds/known_locations_*.yaml`).
+SEED_TABLE_SCHEME = 1
+
+
+def validate_seed_table(table: dict) -> dict:
+    """The seed table, checked, or `DeclarationError`. A seed names its URL, the host it lives
+    on, where it came from (`seeded_from`, every source in `SEED_SOURCES`) and its status; the
+    table's `hosts` covers every seed's host, because part 2 generates its fetch list from it."""
+    if not isinstance(table, dict) or table.get("scheme") != SEED_TABLE_SCHEME:
+        raise DeclarationError(f"seed table scheme must be {SEED_TABLE_SCHEME}")
+    bodies = table.get("bodies")
+    if not isinstance(bodies, dict) or not bodies:
+        raise DeclarationError("seed table carries no bodies")
+    hosts = set(table.get("hosts") or [])
+    for code, b in bodies.items():
+        objs = b.get("objects")
+        if not isinstance(objs, dict) or set(objs) != set(SEED_OBJECTS):
+            raise DeclarationError(f"seeds.{code}.objects must name exactly {SEED_OBJECTS}")
+        for obj, seeds in objs.items():
+            for i, e in enumerate(seeds):
+                w = f"seeds.{code}.{obj}[{i}]"
+                _url(e.get("url"), f"{w}.url")
+                if e.get("host") != urllib.parse.urlsplit(e["url"]).netloc.lower():
+                    raise DeclarationError(f"{w}.host {e.get('host')!r} is not the URL's host")
+                if e["host"] not in hosts:
+                    raise DeclarationError(f"{w}.host {e['host']} is not in the table's hosts")
+                _provenance(dict(e, seeded_from=e.get("seeded_from")), w, 2)
+                if not e.get("seeded_from"):
+                    raise DeclarationError(f"{w} names no seeded_from")
+                _status(e.get("status"), w)
+        if sorted(b.get("no_seed") or []) != sorted(o for o, v in objs.items() if not v):
+            raise DeclarationError(f"seeds.{code}.no_seed does not list its empty objects")
+    return table
