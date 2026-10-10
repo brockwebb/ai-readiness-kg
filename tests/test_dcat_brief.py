@@ -476,10 +476,19 @@ def test_brief_passes_the_lint():
 
 
 def test_every_model_sentence_in_the_brief_is_one_the_validator_kept_and_no_cut_one_is():
+    """Every kept sentence is printed verbatim, except one the operator's own paragraph replaces
+    (ADDENDUM 01 item 4), which the build names in its report."""
+    import dcat_brief_build as BB
     text = BRIEF.read_text(encoding="utf-8")
     a = json.loads(ANSWERS.read_text(encoding="utf-8"))
+    rep = json.loads((OUT / "build_report.json").read_text(encoding="utf-8"))
+    superseded = {c["superseded_by_operator_text"] for c in rep["cut_by_build"] if "superseded_by_operator_text" in c}
+    assert superseded == {t for ts in BB.SUPERSEDED_BY_OPERATOR.values() for t in ts}
     for k, s in a["sections"].items():
         for row in s.get("kept") or []:
+            if row["text"].rstrip() in superseded:
+                assert row["text"].rstrip() not in text
+                continue
             assert row["text"].rstrip() in text, f"section {k}: kept sentence missing"
         for row in s.get("cut") or []:
             assert row["text"].rstrip() not in text, f"section {k}: cut sentence printed"
@@ -502,11 +511,9 @@ def test_the_table_and_the_verdict_are_what_the_rule_computes():
     v = BR.verdict(rows, BCFG)
     text = BRIEF.read_text(encoding="utf-8")
     assert {k: x["answer"] for k, x in v.items()} == {k: x["answer"] for k, x in c["verdict"].items()}
-    for name, label in (("findability", "Finding statistical data"),
-                        ("fitness_for_use", "Judging whether data are fit for a use")):
-        assert f"**{label} ({BB.row_range(v[name]['rows'])}): {v[name]['answer']}.**" in text
-    for r in rows.values():
-        assert re.search(rf"^\| {re.escape(r['need'])} \|.*\| {re.escape(BB.outcome_cell(r))} \|$", text, re.M)
+    # ADDENDUM 01 item 2: the table prints the plain label computed from the overlay's row.
+    for k, r in c["rows"].items():
+        assert re.search(rf"^\| {re.escape(BB.need_name(r))} \|.*\| {re.escape(BB.result_label(r))} \|$", text, re.M)
 
 
 def test_the_dcat004_record_is_not_rewritten():
@@ -533,7 +540,7 @@ def test_the_full_read_left_nothing_unread():
 def test_section_5_states_the_void_as_the_rule_s_limit():
     text = BRIEF.read_text(encoding="utf-8")
     assert "No need is in outcome C" not in text
-    assert "cannot be shown while the plan is unpublished" in text
+    assert "cannot be shown from the public record while the project's sequencing plan is unpublished" in text
 
 
 def test_the_body_is_within_the_word_limit():
@@ -550,8 +557,13 @@ def test_the_working_draft_is_cited_only_as_the_draft():
 
 
 def test_no_acronym_is_used_before_its_expansion():
+    """The build may add no unexpanded acronym. The operator-reviewed v2 (ADDENDUM 01) uses some
+    deliberately (DCAT-US and FCSM in the title, JSON, AI in the FCSM 26-01 heading); those are
+    his value input, and only those pass."""
+    import dcat_brief_build as BB
     rep = json.loads((OUT / "build_report.json").read_text(encoding="utf-8"))
-    assert [x["acronym"] for x in rep["acronyms"] if not x["ok"]] == []
+    v2 = {x["acronym"] for x in BB.acronyms(BB.V2_BRIEF.read_text(encoding="utf-8")) if not x["ok"]}
+    assert {x["acronym"] for x in rep["acronyms"] if not x["ok"]} <= v2
 
 
 @pytest.mark.parametrize("name", ["BRIEF.md", "ROWS.md"])
@@ -561,3 +573,133 @@ def test_shipped_files_carry_no_pipeline_vocabulary(name):
     text = (OUT / name).read_text(encoding="utf-8")
     hits = [(p, m.group(0)) for p in TF.BANNED for m in re.finditer(p, text, re.I)]
     assert not hits, hits
+
+
+# ------------------------------------------- the 2026-10-08 structure and the PDFs from the build
+
+def _row(**over):
+    r = {"need": "units of measure", "asked": "asked", "landed": "optional", "literature": None,
+         "elements": ["hasQualityMeasurement"], "deferred": False}
+    return {**r, **over}
+
+
+def test_a_property_only_on_another_class_is_no_field_never_optional():
+    """ADDENDUM 02 item 2: unitMeasure sits on QualityMeasurement and gives a quality score's
+    unit, not the data's; the brief must not print "Optional" for the need."""
+    import dcat_brief_build as BB
+    other = _row(elements=["QualityMeasurement unitMeasure"])
+    assert BB.level(other) == "no_field"
+    assert "Optional" not in BB.result_label(other) and "Optional" not in BB.level_cell(other, [], None)
+    assert BB.level(_row()) == "optional"
+    assert BB.level(_row(elements=["QualityMeasurement unitMeasure", "hasQualityMeasurement"])) == "optional"
+    c = json.loads(CORR.read_text(encoding="utf-8"))
+    assert BB.level(c["rows"]["3"]) == "no_field"
+    assert re.search(r"^\| units of measure \|[^|]*\| No field[^|]*\| \*\*No field\*\*", BRIEF.read_text(encoding="utf-8"), re.M)
+
+
+@pytest.mark.parametrize("over,want", [
+    ({"literature": "matches"}, "**Optional only**"),
+    ({"literature": None}, "**Optional**; form not checked"),
+    ({"literature": "carries_differently_than_asked"}, "**Optional**, and **different form**"),
+    ({"landed": "dropped", "literature": "carries_3_0_does_not"}, "**Dropped**"),
+    ({"landed": None, "literature": "carries_differently_than_asked"}, "**Different form**; level not confirmed"),
+    ({"landed": "recommended"}, "**Recommended**; form not checked"),
+    ({"asked": None, "elements": ["QualityMeasurement unitMeasure"]}, "**No field**; FCSM ask not confirmed"),
+])
+def test_result_labels_are_plain_and_carry_no_letter(over, want):
+    import dcat_brief_build as BB
+    assert BB.result_label(_row(**over)) == want
+
+
+def test_no_letter_codes_in_the_brief_or_the_rows_file():
+    """ADDENDUM 01 item 2 and ADDENDUM 02 item 1: no outcome letters in either file."""
+    for name in ("BRIEF.md", "ROWS.md"):
+        body = (OUT / name).read_text(encoding="utf-8").split("\n## Sources")[0]
+        assert not re.search(r"\boutcomes? [A-E]\b|\| [A-E] \||\*\*[A-E]\.\*\*|Not placed", body), name
+
+
+def test_repeats_are_cut_to_the_first_statement():
+    import dcat_brief_build as BB
+    s = ["FCSM asks documentation to state the expected periodicity of production.",
+         "FCSM asks documentation to state the expected periodicity of production.",
+         "FCSM recommends documentation state the expected periodicity of a product's production.",
+         "Restricted-use data are reached through Research Data Centers."]
+    kept, cuts = BB.dedupe(s)
+    assert kept == [0, 3]
+    assert [c["exact"] for c in cuts] == [True, False]
+
+
+def test_the_bottom_line_is_computed_from_the_table():
+    import dcat_brief_build as BB
+    c = json.loads(CORR.read_text(encoding="utf-8"))
+    text, counts, asked = BB.bottom_line({str(k): v for k, v in c["rows"].items()})
+    assert counts["asked"] == len(asked) == sum(r["asked"] == "asked" for r in c["rows"].values())
+    assert sum(counts[k] for k in ("mandatory", "recommended", "optional", "dropped", "no_field",
+                                   "not_confirmed")) == counts["asked"]
+    assert text.split(" [")[0] in BRIEF.read_text(encoding="utf-8")
+    rep = json.loads((OUT / "build_report.json").read_text(encoding="utf-8"))
+    assert rep["bottom_line"] == counts
+
+
+@pytest.mark.parametrize("ref", ["BRIEF_v2_2026-10-08.md", "ROWS_v2_2026-10-08.md"])
+def test_the_build_matches_the_operator_reviewed_structure(ref):
+    """ADDENDUM 01 item 5 and ADDENDUM 02 item 3: section order, table rows, bottom line and
+    result labels equal the v2 reference, citation numbers aside."""
+    import dcat_brief_build as BB
+    built = (OUT / ref.replace("_v2_2026-10-08", "")).read_text(encoding="utf-8")
+    c = BB.compare_v2(built, (OUT / ref).read_text(encoding="utf-8"))
+    assert (c["sections_equal"], c["table_rows_equal"], c["bottom_line_equal"], c["results_equal"]) == (
+        True, True, True, True), c
+
+
+def _pdf_text(pdf: Path) -> str:
+    from pypdf import PdfReader
+    return re.sub(r"\s+", " ", " ".join(p.extract_text() for p in PdfReader(str(pdf)).pages))
+
+
+def _headings(md: str) -> list:
+    return [re.sub(r"\s+", " ", ln[3:].strip()) for ln in md.splitlines() if ln.startswith("## ")]
+
+
+@pytest.mark.parametrize("name", ["BRIEF", "ROWS", "DEMO"])
+def test_each_pdf_is_rendered_by_the_build_from_its_markdown(name):
+    """The base task, decision 1: each PDF exists, was rendered from the Markdown as it stands
+    (by sha256, recorded by the build; git keeps no file times, so this is the checkout-proof
+    form of "newer than its Markdown"), and prints every `##` heading of it."""
+    pytest.importorskip("pypdf")
+    md, pdf = OUT / f"{name}.md", OUT / f"{name}.pdf"
+    rep = json.loads((OUT / "build_report.json").read_text(encoding="utf-8"))["pdfs"][pdf.name]
+    import hashlib
+    assert rep["md_sha256"] == hashlib.sha256(md.read_bytes()).hexdigest(), f"{md.name} changed since {pdf.name}"
+    assert rep["pdf_sha256"] == hashlib.sha256(pdf.read_bytes()).hexdigest(), f"{pdf.name} not the build's"
+    text = _pdf_text(pdf)
+    missing = [h for h in _headings(md.read_text(encoding="utf-8")) if h not in text]
+    assert not missing, missing
+
+
+def test_render_report_writes_a_pdf_newer_than_its_markdown(tmp_path, monkeypatch):
+    import shutil
+    import dcat_brief_build as BB
+    if not (shutil.which("pandoc") and shutil.which("typst")):
+        pytest.skip("pandoc and typst are not installed")
+    pytest.importorskip("pypdf")
+    monkeypatch.setattr(BB, "OUT", tmp_path)
+    md = tmp_path / "X.md"
+    md.write_text("# A title\n\n## 1. First part\n\nText.\n\n## Second part\n\nMore text.\n", encoding="utf-8")
+    pdf = tmp_path / "X.pdf"
+    rec = BB.render_report(md, pdf, BB.FB.strip_title(md.read_text(encoding="utf-8")))
+    assert pdf.stat().st_mtime >= md.stat().st_mtime and rec["pages"] == 1
+    assert all(h in _pdf_text(pdf) for h in _headings(md.read_text(encoding="utf-8")))
+    assert not (tmp_path / "build").exists()
+
+
+def test_the_ai_use_statement_names_the_models_in_the_run_records():
+    """ADDENDUM 01 item 3: the model list is generated from the records, not typed."""
+    import dcat_brief_build as BB
+    ai = BB.ai_use_records()
+    text = BRIEF.read_text(encoding="utf-8")
+    for mid in ai["run_model_ids"]:
+        assert BB._model_name(mid) in text
+    assert f"Anthropic's {BB.FB._join(ai['models'])}, used through Claude Code" in text
+    assert text.index("## AI use in this document") > text.index("## 6. ")
+

@@ -1,11 +1,123 @@
 {
  "generated_by": "scripts/dcat_brief_build.py",
  "added_by_code": [
-  "section 3: both answers and their grounds, from the table",
-  "section 4: the table and the outcome sentences (config)",
-  "section 5: the lead sentences naming the D rows and the rows the void cannot be ruled out for"
+  "bottom line: the answer and the counts, from the table",
+  "sections 1 and 2: what DCAT-US is a version of, and the FAIRness Project's name",
+  "section 3: the table, its plain result labels and the legend",
+  "section 4: the validated literature sentence of need 2 (dimensions), which section 5's sentences do not cover",
+  "section 4: the void as the rule's limit"
  ],
- "cut_by_build": [],
+ "cut_by_build": [
+  {
+   "superseded_by_operator_text": "Data.gov's overview page says agencies can automatically check their dataset descriptions against the version 3.0 schema, using an online validator or their own tools."
+  }
+ ],
+ "bottom_line": {
+  "asked": 7,
+  "of": 8,
+  "answer": "partly",
+  "mandatory": 0,
+  "recommended": 1,
+  "optional": 4,
+  "dropped": 1,
+  "no_field": 0,
+  "not_confirmed": 1
+ },
+ "rows_cut_as_repeats": {
+  "1. series": [
+   {
+    "part": "asked",
+    "cut": "FCSM's Framework for Data Quality asks agencies to tell data users the expected periodicity of production and the time frames available.",
+    "repeats": "FCSM's Framework for Data Quality asks that documentation state the expected periodicity of a data product's production and the time frames it covers.",
+    "resemblance": 0.58,
+    "exact": false
+   },
+   {
+    "part": "asked",
+    "cut": "FCSM's Framework for Data Quality calls for telling data users the expected periodicity of a data product's production.",
+    "repeats": "FCSM's Framework for Data Quality asks that documentation state the expected periodicity of a data product's production and the time frames it covers.",
+    "resemblance": 0.5,
+    "exact": false
+   },
+   {
+    "part": "asked",
+    "cut": "FCSM's Framework for Data Quality recommends documentation state the expected periodicity of a data product's production.",
+    "repeats": "FCSM's Framework for Data Quality asks that documentation state the expected periodicity of a data product's production and the time frames it covers.",
+    "resemblance": 0.69,
+    "exact": false
+   },
+   {
+    "part": "asked",
+    "cut": "FCSM notes OMB directives require agencies to publish annual release dates identifying reports as regular and recurring.",
+    "repeats": "FCSM notes OMB directives require agencies to publish annual release dates identifying reports as regular and recurring.",
+    "resemblance": 1.0,
+    "exact": true
+   }
+  ],
+  "6. revisions and versions": [
+   {
+    "part": "asked",
+    "cut": "FCSM 25-03 on AI-ready federal statistical data recommends that high-value data products expose metadata recording when the data were updated.",
+    "repeats": "FCSM 25-03 on AI-ready federal statistical data asks agencies to return comprehensive metadata, including update timestamps, through their data product APIs.",
+    "resemblance": 0.38,
+    "exact": false
+   },
+   {
+    "part": "asked",
+    "cut": "FCSM's AI-Ready Federal Statistical Data report calls for data product metadata that includes update timestamps reflecting when data was revised.",
+    "repeats": "FCSM 25-03 on AI-ready federal statistical data asks agencies to return comprehensive metadata, including update timestamps, through their data product APIs.",
+    "resemblance": 0.38,
+    "exact": false
+   }
+  ],
+  "8. restricted-access terms": [
+   {
+    "part": "asked",
+    "cut": "The CDO Council's data sharing report calls for establishing data use agreements that define how a party requests access to a dataset.",
+    "repeats": "The Chief Data Officers Council data sharing report calls for an expedited data use agreement process governing the conditions of access to shared data.",
+    "resemblance": 0.35,
+    "exact": false
+   },
+   {
+    "part": "asked",
+    "cut": "The FCSM Framework for Data Quality notes agencies may establish special user access provisions for datasets under accessibility.",
+    "repeats": "FCSM's Framework for Data Quality describes special arrangements, such as Research Data Centers, by which users apply for access to restricted-use data.",
+    "resemblance": 0.29,
+    "exact": false
+   }
+  ]
+ },
+ "operator_authored": [
+  "byline",
+  "section 5: Proposed next step",
+  "section 5: Checking it is automated",
+  "need plain names (NEED_PLAIN)",
+  "dropped and no-field cell wording (DROPPED_PLAIN, NO_FIELD_PLAIN)",
+  "result legend",
+  "rows file: How to use this file",
+  "AI-use statements (model list and dates generated from the run records)"
+ ],
+ "ai_use": {
+  "models": [
+   "Claude Opus 5",
+   "Claude Opus 4.8",
+   "Claude Sonnet 5",
+   "Claude Fable 5.1"
+  ],
+  "dates": "5 to 8 October 2026",
+  "run_model_ids": [
+   "claude-opus-4-8",
+   "claude-opus-5",
+   "claude-sonnet-5"
+  ],
+  "layout_models": [
+   "Claude Fable 5.1"
+  ],
+  "date_range": [
+   "2026-10-05",
+   "2026-10-08"
+  ]
+ },
  "lint": {
   "BRIEF.md": 0,
   "ROWS.md": 0,
@@ -13,14 +125,14 @@
  },
  "readability": {
   "implementation": "textstat (0, 7, 13), textstat.flesch_kincaid_grade",
-  "grade": 9.48,
-  "words": 604,
-  "sentences": 41,
+  "grade": 9.97,
+  "words": 705,
+  "sentences": 51,
   "target_grade": 10,
   "body": "lines of BRIEF.md that are not headings, table rows or sources; citation marks removed"
  },
  "body_words": {
-  "words": 842,
+  "words": 860,
   "implementation": "textstat (0, 7, 13), textstat.lexicon_count, above the source list",
   "max": 900
  },
@@ -29,31 +141,19 @@
   {
    "acronym": "DCAT-US",
    "first_line": 1,
-   "expansion_line": 1,
-   "ok": true
-  },
-  {
-   "acronym": "DCAT",
-   "first_line": 3,
-   "expansion_line": 3,
-   "ok": true
-  },
-  {
-   "acronym": "FAIR",
-   "first_line": 3,
-   "expansion_line": 3,
-   "ok": true
-  },
-  {
-   "acronym": "FAIRness",
-   "first_line": 3,
-   "expansion_line": 3,
-   "ok": true
+   "expansion_line": 9,
+   "ok": false
   },
   {
    "acronym": "FCSM",
-   "first_line": 3,
-   "expansion_line": 3,
+   "first_line": 1,
+   "expansion_line": 5,
+   "ok": false
+  },
+  {
+   "acronym": "DCAT",
+   "first_line": 9,
+   "expansion_line": 9,
    "ok": true
   },
   {
@@ -63,17 +163,94 @@
    "ok": true
   },
   {
-   "acronym": "CDO",
-   "first_line": 25,
-   "expansion_line": 25,
+   "acronym": "FAIRness",
+   "first_line": 13,
+   "expansion_line": 13,
+   "ok": true
+  },
+  {
+   "acronym": "FAIR",
+   "first_line": 13,
+   "expansion_line": 13,
    "ok": true
   },
   {
    "acronym": "StatDCAT-AP",
-   "first_line": 25,
-   "expansion_line": 25,
+   "first_line": 34,
+   "expansion_line": 34,
    "ok": true
+  },
+  {
+   "acronym": "ICSP",
+   "first_line": 47,
+   "expansion_line": 47,
+   "ok": true
+  },
+  {
+   "acronym": "JSON",
+   "first_line": 49,
+   "expansion_line": null,
+   "ok": false
+  },
+  {
+   "acronym": "AI",
+   "first_line": 55,
+   "expansion_line": null,
+   "ok": false
   }
  ],
+ "compared_with_v2": {
+  "BRIEF_v2_2026-10-08.md": {
+   "sections_equal": true,
+   "table_rows_equal": true,
+   "bottom_line_equal": true,
+   "results_equal": true,
+   "table_rows_differing": [],
+   "lines_only_in_build": [
+    "The General Services Administration says DCAT-US version 3.0 was built together by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology (FCSM), and the Data.gov team. Their joint effort is the FAIRness Project (FAIR: findable, accessible, interoperable and reusable).",
+    "The Federal Committee on Statistical Methodology (FCSM) report A Framework for Data Quality says documentation should include methods used in processing, imputations, weighting, editing, integration methods, and data dictionaries. Data on the Web Best Practices (2017) intends that people learn a dataset's origin and history and that computer programs process this provenance automatically, and tests for that. The Data Catalog Vocabulary (DCAT) Version 3 says quality dimensions are characteristics that matter to users, sets no required list, and leaves implementers to choose their own. StatDCAT-AP, a statistical catalog profile, and the Data Cube vocabulary name each breakdown as its own field in the record, not in a written description of variables.",
+    "The FAIRness Project's two-year sequencing plan, a plan for transition, went to the Office of Management and Budget and was not published; a 2024 public request remains unanswered."
+   ],
+   "lines_only_in_v2": [
+    "The General Services Administration says DCAT-US version 3.0 was built together by the Federal Chief Data Officers Council, FCSM, and the Data.gov team. Their joint effort is the FAIRness Project (FAIR: findable, accessible, interoperable and reusable).",
+    "FCSM's A Framework for Data Quality says documentation should include methods used in processing, imputations, weighting, editing, integration methods, and data dictionaries. Data on the Web Best Practices (2017) intends that people learn a dataset's origin and history and that computer programs process this provenance automatically. DCAT Version 3 says quality dimensions are characteristics that matter to users, sets no required list, and leaves implementers to choose their own. StatDCAT-AP and the W3C Data Cube vocabulary name each breakdown, such as place or time, as its own field in the record.",
+    "The FAIRness Project's two-year sequencing plan went to OMB and was not published; a 2024 public request remains unanswered."
+   ]
+  },
+  "ROWS_v2_2026-10-08.md": {
+   "sections_equal": true,
+   "table_rows_equal": true,
+   "bottom_line_equal": true,
+   "results_equal": true,
+   "table_rows_differing": [],
+   "lines_only_in_build": [
+    "- The Chief Data Officers Council data sharing report calls for an expedited data use agreement process governing the conditions of access to shared data."
+   ],
+   "lines_only_in_v2": [
+    "- The CDO Council's data sharing report calls for establishing data use agreements that define how a party requests access to a dataset."
+   ]
+  }
+ },
+ "pdfs": {
+  "BRIEF.pdf": {
+   "markdown": "BRIEF.md",
+   "md_sha256": "910707de5f016ff2ebe4a7e8dd12d1b64dac474334c0238ec870ab760cff1359",
+   "pdf_sha256": "8f6c56f7042854d90860b10046aea0b38b8cc70de7383ad167c250193ff957e9",
+   "pages": 3
+  },
+  "ROWS.pdf": {
+   "markdown": "ROWS.md",
+   "md_sha256": "8011cf9218ca53b4d13682435299601dc9c2ab2a137c6befd5fcfc56b0db899f",
+   "pdf_sha256": "2256c66ad7c10be15d91dcba3260185c0435a38d9193fd50345c482a77efccb5",
+   "pages": 4
+  },
+  "DEMO.pdf": {
+   "markdown": "DEMO.md",
+   "md_sha256": "7112774271e30b8d250c9f870a476e9a3971a618465e63009c91c690f685ad8c",
+   "pdf_sha256": "2bb464135b4fb45492e222a17ba30beabc118045ff393054f25a8d9191d7dd89",
+   "pages": 2,
+   "note": "DEMO.md is hand-written; no script writes it. Rendered as found."
+  }
+ },
  "pdf_pages": 3
 }
