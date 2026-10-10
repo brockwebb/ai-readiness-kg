@@ -71,7 +71,10 @@ gate-stranger:
 
 ## A variable rather than `$(MAKE) suite` inside gate-full: make runs any recipe line naming
 ## `$(MAKE)` even under `make -n`, so a dry run of gate-full would have started a detached job.
-SUITE_CMD = $(PY) -m pytest tests/ assessment/ $(XDIST) -q -rs $(SUITE_ARGS)
+## `-rfE` puts one `FAILED <node id>` / `ERROR <node id>` line per failure in the summary: the daily
+## job names its Issue from them (cc_tasks/2026-10-09_main_green_dispatch_stuck_without_a_path.md
+## decision 6).
+SUITE_CMD = $(PY) -m pytest tests/ assessment/ $(XDIST) -q -rfEs $(SUITE_ARGS)
 
 suite:
 	$(SUITE_CMD)

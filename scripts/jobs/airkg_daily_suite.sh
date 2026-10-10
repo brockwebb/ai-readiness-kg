@@ -20,9 +20,17 @@
 # (`seldon.yaml dispatch.stop_file`, `.seldon/DISPATCH_STOP`), so nothing is dispatched onto a
 # red main, and a Seldon Issue is opened naming the log. A STOP file someone else wrote is never
 # overwritten: this job appends its lines to it.
-# GREEN. A STOP file THIS job wrote (its first line is `STOP_MARK`) is removed and the removal is
-# logged: main is green again and the reason for the stop is gone. A STOP file anyone else wrote
-# is left exactly as it is.
+# GREEN. This job's own lines are removed from the STOP file — `STOP_MARK` and its one-per-red-run
+# record lines — and nothing else; the file is deleted only when nothing else is left in it. A
+# line someone else wrote stays, and with it the stop, until whoever wrote it removes it
+# (cc_tasks/2026-10-09_main_green_dispatch_stuck_without_a_path.md decision 7: the 2026-10-07
+# file began with an operator budget line and carried three red-run lines after it; the old rule,
+# "delete the file if its first line is STOP_MARK", would have left all four lines there forever,
+# and on a file that began with STOP_MARK it would have deleted an operator line appended later).
+#
+# ISSUES (decision 6 there). `daily_suite_issues.py` beside this: a red run opens a NAMED Issue per
+# failing test set, or records the run on the open one of that name; a green run resolves every
+# open Issue this job opened, with the green log's path.
 #
 # Exits 0 on a green suite and on a red one alike once the STOP and the Issue are written: a red
 # suite is a finding about main, not a failure of this job. Non-zero only when the job itself
@@ -133,11 +141,27 @@ import yaml
 print(yaml.safe_load(open('$REPO/seldon.yaml'))['dispatch']['stop_file'])" 2>/dev/null)"
 STOP="$REPO/${STOP_REL:-.seldon/DISPATCH_STOP}"
 
+ISSUES=("$PY" "$REPO/scripts/jobs/daily_suite_issues.py")
+ISSUE_ARGS=(--seldon "$SELDON" --repo "$REPO" --log "$LOG" --sha "$SHA" --stamp "$STAMP"
+            --branch "$BRANCH")
+# The record line a red run appends, as a pattern: `<STAMP> <branch>@<40-hex sha> EXIT=<rc> log=…`.
+OWN_LINE='^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{6}Z [^ ]+@[0-9a-f]{40} EXIT=[^ ]+ log=.+$'
+
 if [ "${rc:-}" = "0" ]; then
-  if [ -f "$STOP" ] && [ "$(head -1 "$STOP")" = "$STOP_MARK" ]; then
-    rm -f "$STOP"
-    say "main is green again; removed the STOP file this job wrote ($STOP)"
+  if [ -f "$STOP" ]; then
+    kept="$(grep -Fvx -- "$STOP_MARK" "$STOP" | grep -Ev -- "$OWN_LINE")"
+    if [ -z "$(printf '%s' "$kept" | tr -d '[:space:]')" ]; then
+      rm -f "$STOP"
+      say "main is green again; removed the STOP file, every line of which this job wrote ($STOP)"
+    elif [ "$kept" != "$(cat "$STOP")" ]; then
+      printf '%s\n' "$kept" > "$STOP"
+      say "main is green again; removed this job's lines from $STOP and left $(printf '%s\n' "$kept" | wc -l | tr -d ' ') line(s) someone else wrote: dispatch stays stopped until they are removed"
+    else
+      say "main is green; $STOP holds no line this job wrote and is left as it is"
+    fi
   fi
+  ( cd "$REPO" && "${ISSUES[@]}" green "${ISSUE_ARGS[@]}" ) >> "$JOBLOG" 2>&1 \
+    || say "WARNING: closing this job's Issues failed; see the lines above"
   exit 0
 fi
 
@@ -149,9 +173,7 @@ if [ ! -f "$STOP" ]; then
 fi
 echo "$STAMP $BRANCH@$SHA EXIT=${rc:-none} log=$LOG" >> "$STOP"
 say "main is RED; wrote $STOP"
-( cd "$REPO" && "$SELDON" issue create \
-    --description "Daily full suite on $BRANCH@${SHA:0:12} is red (EXIT=${rc:-none}, ${summary:-no summary line}). Log: $LOG. Dispatch is stopped by $STOP until main is green." \
-    --type merge_blocked --importance high --urgency high --detection build_failure \
-    --target structure ) >> "$JOBLOG" 2>&1 \
-  || say "WARNING: seldon issue create failed; the STOP file stands and names the log"
+( cd "$REPO" && "${ISSUES[@]}" red "${ISSUE_ARGS[@]}" --rc "${rc:-}" --summary "$summary" \
+    --stop "$STOP" ) >> "$JOBLOG" 2>&1 \
+  || say "WARNING: recording the red run as an Issue failed; the STOP file stands and names the log"
 exit 0

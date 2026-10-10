@@ -170,15 +170,19 @@ WRAPPER = REPO / "scripts" / "jobs" / "airkg_dispatch.sh"
 LIVE_LOG = REPO / "logs" / "airkg_dispatch.log"
 
 
-def _bare_env_run(home: Path, log: Path):
+def _bare_env_run(home: Path, log: Path, stuck_state: Path | None = None):
     """The wrapper under `env -i`, which is as close to launchd's environment as a test gets.
 
     `AIRKG_DISPATCH_LOG` points the wrapper at a file under `tmp_path`: a refusal this fixture
     provokes is not a pass, and it does not belong in the live log beside real ones
-    (cc_tasks/2026-09-17_dispatcher_notifies.md decision 4)."""
+    (cc_tasks/2026-09-17_dispatcher_notifies.md decision 4).
+
+    `stuck_state`, for a test that runs a REAL pass: the pass's stuck-streak file, a copy the
+    test owns (`_isolated_stuck_state`)."""
+    extra = [f"{STUCK_STATE_ENV}={stuck_state}"] if stuck_state is not None else []
     return subprocess.run(
         ["/usr/bin/env", "-i", f"HOME={home}", "PATH=/usr/bin:/bin",
-         f"AIRKG_DISPATCH_LOG={log}", "/bin/bash", str(WRAPPER)],
+         f"AIRKG_DISPATCH_LOG={log}", *extra, "/bin/bash", str(WRAPPER)],
         capture_output=True, text=True, cwd=REPO)
 
 
@@ -249,14 +253,40 @@ def _neo4j_up() -> bool:
     return proj.neo4j_reachable()
 
 
-def _survey() -> dict:
+def _survey(stuck_state: Path | None = None) -> dict:
     """`seldon dispatch status --json`, which writes no event. The pass's own criteria vector,
-    read without running a pass."""
+    read without running a pass, against the same streak file the pass will use."""
     import json
+    env = {**os.environ, **({STUCK_STATE_ENV: str(stuck_state)} if stuck_state else {})}
     r = subprocess.run(["/opt/anaconda3/bin/seldon", "dispatch", "status", "--json"],
-                       cwd=REPO, capture_output=True, text=True)
+                       cwd=REPO, capture_output=True, text=True, env=env)
     assert r.returncode == 0, r.stdout + r.stderr
     return json.loads(r.stdout)
+
+
+#: Seldon's override for the stuck-streak file (`seldon/core/dispatch.py::STUCK_STATE_ENV`),
+#: spelled here rather than imported so this module still collects without the checkout beside it.
+STUCK_STATE_ENV = "SELDON_DISPATCH_STUCK_STATE"
+
+
+def _isolated_stuck_state(tmp_path: Path) -> Path:
+    """A copy of the live streak file that this test's passes read and write, and nobody else's.
+
+    `cc_tasks/2026-10-09_main_green_dispatch_stuck_without_a_path.md` decision 4. Every real pass
+    advances the stuck streaks of every refused candidate, and the streak file is the checkout's
+    (`.seldon/dispatch_stuck.json`). The two tests below made three passes in four seconds, all
+    on the one file, so the third crossed `stuck_after_passes: 3` and wrote `dispatch_stuck`:
+    the daily suite went red on it on 2026-10-08 and 2026-10-09. Run from an operator shell, the
+    same passes advanced the launchd dispatcher's own streaks. `xdist_group` would serialize the
+    tests and still share the file; a copy per test is what isolates them. A COPY rather than an
+    empty file, so a streak the live state is one pass from alarming on is still seen, and the
+    quiet-state test can name it in its precondition."""
+    import shutil
+    live = REPO / ".seldon" / "dispatch_stuck.json"
+    mine = tmp_path / "dispatch_stuck.json"
+    if live.is_file():
+        shutil.copy(live, mine)
+    return mine
 
 
 def _wrapper_tail() -> str:
@@ -275,7 +305,8 @@ def _wrapper_tail() -> str:
 @pytest.mark.live_model
 @pytest.mark.skipif(
     not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
-def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_identical():
+def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_identical(
+        tmp_path):
     """DN-006 decision 7 as ADDENDUM_03 §3 restates it, end to end, in the environment that
     actually broke: no shell, no exported credentials, the real wrapper, the real graph.
 
@@ -297,16 +328,17 @@ def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_ide
     # environment DN-006 decision 10 permits the suite to run in — inside a dispatched session
     # — the lease is held for the length of that session and nothing is eligible, so an
     # eligible task here means the checkout is in a state the rule says it cannot be in.
-    eligible = _survey()["eligible"]
+    stuck = _isolated_stuck_state(tmp_path)
+    eligible = _survey(stuck)["eligible"]
     assert not eligible, (
         f"a pass would launch {eligible}; the suite must not dispatch a session. Under DN-006 "
         f"decision 10 the operator does not hand-dispatch while the dispatcher is enabled")
 
     events = REPO / "seldon_events.jsonl"
-    first = _bare_env_run(Path.home(), LIVE_LOG)
+    first = _bare_env_run(Path.home(), LIVE_LOG, stuck)
     after_first = hashlib.sha256(events.read_bytes()).hexdigest()
     tail_first = _wrapper_tail()
-    second = _bare_env_run(Path.home(), LIVE_LOG)
+    second = _bare_env_run(Path.home(), LIVE_LOG, stuck)
     after_second = hashlib.sha256(events.read_bytes()).hexdigest()
     tail_second = _wrapper_tail()
 
@@ -342,7 +374,7 @@ interactive_only = pytest.mark.skipif(
 @interactive_only
 @pytest.mark.skipif(
     not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
-def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
+def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert(tmp_path):
     """Decision 7's original claim, kept and narrowed to the state it is true in.
 
     That state is the one the cadence task observed: nothing eligible, no claim in flight, a
@@ -360,11 +392,21 @@ def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
 
     Two kinds of skip, and they are different. `interactive_only` is the declared one: inside a
     dispatched session the state cannot be quiet. The reasons listed below are data conditions
-    in an operator shell: the state could be quiet, and at this moment is not."""
+    in an operator shell: the state could be quiet, and at this moment is not.
+
+    `stuck_due` is the one reason that is not about the checkout's cleanliness
+    (`cc_tasks/2026-10-09_main_green_dispatch_stuck_without_a_path.md` decision 4): a candidate
+    refused for `stuck_after_passes - 1` passes is one pass from a `dispatch_stuck`, and that
+    event is an assertion the pass WOULD make. It is reachable after decision 3 — a candidate
+    refused as `wrong_branch` (the daily worktree is a detached HEAD) or `dirty_tree` still
+    counts — so it is named rather than assumed away. "Nothing eligible" is not "nothing to
+    assert"; this is the difference. The pass runs against this test's own copy of the streak
+    file, so no other test's passes are counted toward it."""
     import hashlib
     if not _neo4j_up():
         pytest.skip("Neo4j is not reachable")
-    s = _survey()
+    stuck = _isolated_stuck_state(tmp_path)
+    s = _survey(stuck)
     reasons = []
     if s["eligible"]:
         reasons.append(f"eligible: {s['eligible']}")
@@ -378,12 +420,14 @@ def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
         reasons.append("STOP file present")
     if not s["enabled"]:
         reasons.append("dispatch disabled")
+    if s.get("stuck_due"):
+        reasons.append(f"the pass would raise dispatch_stuck for {s['stuck_due']}")
     if reasons:
         pytest.skip("not the quiet state this asserts: " + "; ".join(reasons))
 
     events = REPO / "seldon_events.jsonl"
     before = hashlib.sha256(events.read_bytes()).hexdigest()
-    r = _bare_env_run(Path.home(), LIVE_LOG)
+    r = _bare_env_run(Path.home(), LIVE_LOG, stuck)
     tail = _wrapper_tail()
     assert r.returncode == 0, tail
     assert "=== rc=0" in tail and "launching" not in tail
