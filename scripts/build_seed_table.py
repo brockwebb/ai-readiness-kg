@@ -377,8 +377,15 @@ def build() -> dict:
         seeds: dict = {o: {} for o in declarations.SEED_OBJECTS}
 
         def add(obj, url, source, **extra):
+            fresh = url not in seeds[obj]
             e = seeds[obj].setdefault(url, {"url": url, "host": host(url), "seeded_from": [],
                                              "status": "seeded_unverified"})
+            # A location some source names as the object stays a location when it is also a
+            # page the recollection searched: `page_to_read` marks an entry that is ONLY that.
+            if not fresh and extra.get("kind") == "page_to_read":
+                extra = {k: v for k, v in extra.items() if k not in ("kind", "note")}
+            elif fresh is False and e.get("kind") == "page_to_read" and "kind" not in extra:
+                e.pop("kind", None)
             repo_n = sum(1 for x in e["seeded_from"] if x.startswith("repo:"))
             if source not in e["seeded_from"] and not (source.startswith("repo:")
                                                        and repo_n >= MAX_CITATIONS):
