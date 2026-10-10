@@ -27,6 +27,12 @@ the graph are listed in `GRAPH_PAGES`; `--no-graph` renders every other page.
 came from running commands (`D_demo_runbook.md`) is rendered from the stored capture, and the
 capture is written only by `--capture-demo`, so the render stays deterministic.
 
+**Code in another repository is read at a pinned commit.** The one such repository is Seldon,
+and the commit is `SELDON_PIN` below: a citation into it reads `seldon@<sha12>:path:line`, and its
+line is resolved from `git show <SELDON_PIN>:<path>`, never from Seldon's working tree, so a
+Seldon commit cannot change this pack's bytes (`cc_tasks/2026-10-10_brief_pack_cites_seldon_at_a_pinned_commit.md`).
+Moving the pin is an explicit act: edit `SELDON_PIN`, regenerate, commit both together.
+
 **Numbers.** No numeral is typed into prose. Every number a page states in prose goes through
 `Page.n(value, source)`, which records it with its source in `docs/brief/numbers.json`; the test
 reads each page's prose and fails on a numeral the ledger does not hold for that page. Tables,
@@ -64,6 +70,14 @@ DN007 = REPO / "docs" / "design" / "2026-09-19_DN-007_operator_rulings_and_state
 DN003 = REPO / "docs" / "design" / "2026-09-14_DN-003_event_log_and_rejudgements.md"
 FRAME_SECTION = REPO / "docs" / "reports" / "sections" / "10_frame.md"
 SELDON_REPO = Path("/Users/brock/GitHub/seldon")
+#: The Seldon commit every citation into Seldon is read at, and the only place it is named.
+#: Set 2026-10-10 to seldon `main` (`cc_tasks/2026-10-10_brief_pack_cites_seldon_at_a_pinned_commit.md`
+#: decision 2). It is not the `seldon` dependency pin in `pyproject.toml`: that one names the code
+#: this repository imports, this one the code the brief describes, and the dispatcher the brief
+#: cites runs from the Seldon checkout, not from the installed package. Prior art for pinning a
+#: line citation to a commit: GitHub Docs, "Creating a permanent link to a code snippet"; for an
+#: output that depends only on declared inputs: reproducible-builds.org, "Definitions".
+SELDON_PIN = "2c76c65f562d1c584724e0daa436bf69357b6dc1"
 PY = "/opt/anaconda3/bin/python3"
 TASK = "cc_tasks/2026-09-22_brief_material_pack_v2.md"
 GENERATOR = "scripts/build_brief_pack.py"
@@ -153,6 +167,42 @@ def git_out(*args: str, cwd: Path = REPO) -> str:
     if r.returncode != 0:
         raise SystemExit(f"FATAL: git {' '.join(args)} failed: {r.stderr.strip()}")
     return r.stdout.strip()
+
+
+def pinned_text(path: str, sha: str | None = None) -> str | None:
+    """`path` in the Seldon repository as it was at `sha` (default `SELDON_PIN`); None when the
+    commit does not hold the file. A commit the checkout does not have stops the build naming the
+    sha: falling back to the working tree is the drift this pin exists to remove."""
+    sha = sha or SELDON_PIN
+    r = subprocess.run(["git", "-C", str(SELDON_REPO), "cat-file", "-e", f"{sha}^{{commit}}"],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(f"FATAL: the Seldon checkout {SELDON_REPO} has no commit {sha} (shallow "
+                         f"clone or rewritten history?); the pack cites Seldon at that commit and "
+                         f"does not read the working tree instead. {r.stderr.strip()}")
+    r = subprocess.run(["git", "-C", str(SELDON_REPO), "show", f"{sha}:{path}"],
+                       capture_output=True, text=True)
+    return r.stdout if r.returncode == 0 else None
+
+
+class SeldonFile:
+    """A file in the Seldon repository, read at `SELDON_PIN` (looked up when read, so a test can
+    move the pin)."""
+
+    def __init__(self, path: str):
+        self.path = path
+
+    def read_text(self, encoding: str = "utf-8") -> str:
+        text = pinned_text(self.path)
+        if text is None:
+            raise SystemExit(f"FATAL: seldon@{SELDON_PIN} has no {self.path}; the diagram is stale")
+        return text
+
+    def cite(self) -> str:
+        return f"seldon@{SELDON_PIN[:12]}:{self.path}"
+
+    def __str__(self) -> str:
+        return self.cite()
 
 
 class Sources:
@@ -307,7 +357,7 @@ def rel(p: Path) -> str:
     return str(p.relative_to(REPO))
 
 
-def line_of(path: Path, needle: str, regex: bool = False) -> int:
+def line_of(path: Path | SeldonFile, needle: str, regex: bool = False) -> int:
     """1-indexed line of the first match. Fails loud: a box whose code moved is a diagram that
     is now wrong, and it must not render as if it were right."""
     lines = path.read_text(encoding="utf-8").splitlines()
@@ -317,16 +367,13 @@ def line_of(path: Path, needle: str, regex: bool = False) -> int:
     raise SystemExit(f"FATAL: {path} has no line matching {needle!r}; the diagram is stale")
 
 
-def sym(path: Path, name: str) -> str:
+def sym(path: Path | SeldonFile, name: str) -> str:
     """`path:line` of a `def`/`class` symbol, or of a literal line when `name` has a space."""
     if " " in name or ":" in name:
         n = line_of(path, name)
     else:
         n = line_of(path, rf"^\s*(def|class)\s+{re.escape(name)}\b", regex=True)
-    try:
-        shown = str(path.relative_to(REPO))
-    except ValueError:
-        shown = "seldon/" + str(path.relative_to(SELDON_REPO))
+    shown = path.cite() if isinstance(path, SeldonFile) else str(path.relative_to(REPO))
     return f"{shown}:{n}"
 
 
@@ -849,15 +896,18 @@ def mermaid(lines: list) -> list:
 
 def page_e(s: Sources) -> Page:
     H = REPO / "assessment" / "harness" / "scan"
+    D = SeldonFile("seldon/core/dispatch.py")
     pg = Page("E_architecture.md", "E. Architecture",
               ["assessment/harness/scan/*.py", "scripts/build_projection.py",
                "scripts/load_framework_graph.py", "scripts/framework_writeback.py",
-               "mcp/airkg_server.py", "seldon/seldon/core/dispatch.py", "CLAUDE.md",
+               "mcp/airkg_server.py", D.cite(), "CLAUDE.md",
                rel(DN003), "Neo4j (worked example)"], s)
     pg.add("# E. Architecture", "",
            "Four diagrams. Every box names the code it stands for, and the generator resolves "
            "each `file:line` against the code when it renders. A box whose code has moved "
-           "stops the build, so no diagram here is drawn from memory. Each diagram is "
+           "stops the build, so no diagram here is drawn from memory. Code in the Seldon "
+           "repository is read at the commit its citation names, not as it stands today. "
+           "Each diagram is "
            "rendered by `mmdc` in `tests/test_brief_pack.py`.", "")
     # (a) operational
     import airkg_tools as T
@@ -900,7 +950,6 @@ def page_e(s: Sources) -> Page:
            "the log or from what it projects. Dotted arrows are configuration, not data.", "")
     pg.add(*table(["box", "code"], [[t.replace("<br/>", " "), f"`{loc}`"] for _, t, loc in boxes_a]))
     # (b) systems
-    D = SELDON_REPO / "seldon" / "core" / "dispatch.py"
     boxes_b = [
         ("harness", "scan harness (run.py)", sym(H / "run.py", "run_cycle")),
         ("events", "event log shards events/*.jsonl", sym(REPO / "kg" / "eventlog.py", "def append")),

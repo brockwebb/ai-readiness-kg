@@ -11,7 +11,11 @@ What is asserted, and why each is the right test:
 * **Mermaid parses** (decision 4): every ```mermaid block is rendered by `mmdc`, the Mermaid
   project's own CLI, which is a parser and not a lint. Skipped, with the reason, if `mmdc` is
   not installed.
-* **Every cited file exists**, and every `file:line` is inside its file.
+* **Every cited file exists**, and every `file:line` is inside its file. A citation into another
+  repository names the commit it was read at (`seldon@<sha12>:path:line`) and is checked at that
+  commit, never against that repository's working tree
+  (`cc_tasks/2026-10-10_brief_pack_cites_seldon_at_a_pinned_commit.md` decision 1), so a commit
+  in the other repository cannot change this repository's verdict.
 * **No bare numeral in prose** that the page's number ledger does not hold. Prose is every line
   outside tables, code blocks, block quotes, headings and the generator comment, with
   backticked spans, URLs and identifiers (`§5b`, `DN-007`, dates) removed.
@@ -108,16 +112,26 @@ def test_every_mermaid_block_parses(key, src, tmp_path):
     assert r.returncode == 0 and (tmp_path / "d.svg").is_file(), f"{key}: {r.stderr[-800:]}"
 
 
-_PATH = re.compile(r"`((?:seldon/)?[\w./-]+\.(?:py|md|json|jsonl|yaml|yml|csv|sh|pdf|html|cff))"
+_PATH = re.compile(r"`((?:seldon@[0-9a-f]{12}:|seldon/)?[\w./-]+\.(?:py|md|json|jsonl|yaml|yml|csv|sh|pdf|html|cff))"
                    r"(?::(\d+)|::[\w]+)?`")
 
 
-def _resolve(path: str) -> Path | None:
-    if path.startswith("seldon/"):
-        return B.SELDON_REPO.parent / path if B.SELDON_REPO.is_dir() else None
+def _cited_lines(path: str) -> list | None:
+    """The cited file's lines, or None when it does not exist. A `seldon@<sha>:` citation is read
+    at that commit; None for the whole check when the Seldon repository is not on this machine
+    is the caller's business."""
+    if path.startswith("seldon@"):
+        sha, inner = path[len("seldon@"):].split(":", 1)
+        text = B.pinned_text(inner, sha)        # fails loud on a sha the checkout lacks
+        return None if text is None else text.splitlines()
     if path.startswith("appendix/"):
-        return OUT / path         # a link inside the pack
-    return REPO / path
+        target = OUT / path       # a link inside the pack
+    else:
+        target = REPO / path
+    if not target.is_file():
+        return None
+    # A PDF or other binary is cited by name only; it has no lines to be inside.
+    return target.read_text(encoding="utf-8").splitlines() if target.suffix != ".pdf" else []
 
 
 def _outside_fences(text: str) -> str:
@@ -133,16 +147,67 @@ def test_every_cited_file_exists_and_every_line_is_inside_it():
             continue
         for m in _PATH.finditer(_outside_fences(p.read_text(encoding="utf-8"))):
             path, line = m.group(1), m.group(2)
+            if path.startswith("seldon/"):
+                bad.append(f"{name}: {path} cites the Seldon working tree, not a commit")
+                continue
             if "/" not in path and not (REPO / path).exists():
                 continue          # a bare file name in prose, e.g. the page's own CSV
-            target = _resolve(path)
-            if target is None:
+            if path.startswith("seldon@") and not B.SELDON_REPO.is_dir():
                 continue          # the Seldon repository is not on this machine
-            if not target.is_file():
+            lines = _cited_lines(path)
+            if lines is None:
                 bad.append(f"{name}: {path} does not exist")
-            elif line and int(line) > len(target.read_text(encoding="utf-8").splitlines()):
+            elif line and int(line) > len(lines):
                 bad.append(f"{name}: {path}:{line} is past the end of the file")
     assert not bad, "\n".join(bad)
+
+
+def test_every_seldon_citation_names_the_pinned_commit():
+    """Decision 2: the pin lives in one place, so a page citing any other commit is a page the
+    pin did not produce."""
+    pin = B.SELDON_PIN[:12]
+    cited = {m.group(1) for _, p in _pack_files().items()
+             for m in re.finditer(r"seldon@([0-9a-f]+):", p.read_text(encoding="utf-8"))}
+    assert cited == {pin}, cited
+
+
+def _git(repo: Path, *args: str) -> str:
+    return subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True,
+                          text=True).stdout.strip()
+
+
+@pytest.fixture
+def scratch_seldon(tmp_path, monkeypatch):
+    """A throwaway repository standing in for the Seldon checkout: one commit whose `def target`
+    is on line 3, then a working-tree edit that moves it to line 5."""
+    repo = tmp_path / "seldon"
+    repo.mkdir()
+    _git(repo, "init", "-q")
+    f = repo / "m.py"
+    f.write_text("# a\n# b\ndef target():\n    pass\n", encoding="utf-8")
+    _git(repo, "add", "m.py")
+    _git(repo, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.hooksPath=/dev/null",
+         "commit", "-q", "-m", "c1")
+    sha = _git(repo, "rev-parse", "HEAD")
+    f.write_text("# a\n# b\n# c\n# d\ndef target():\n    pass\n", encoding="utf-8")
+    monkeypatch.setattr(B, "SELDON_REPO", repo)
+    monkeypatch.setattr(B, "SELDON_PIN", sha)
+    return repo, sha
+
+
+def test_a_seldon_citation_is_read_at_the_pin_not_from_the_working_tree(scratch_seldon):
+    _, sha = scratch_seldon
+    assert B.sym(B.SeldonFile("m.py"), "target") == f"seldon@{sha[:12]}:m.py:3"
+
+
+def test_a_pin_the_seldon_checkout_lacks_fails_naming_the_sha(scratch_seldon, monkeypatch):
+    """Decision 4: no fallback to the working tree."""
+    missing = "0123456789abcdef0123456789abcdef01234567"
+    monkeypatch.setattr(B, "SELDON_PIN", missing)
+    with pytest.raises(SystemExit, match=missing):
+        B.sym(B.SeldonFile("m.py"), "target")
+    with pytest.raises(SystemExit, match=missing):
+        B.pinned_text("m.py", missing)
 
 
 def prose_numerals(text: str) -> list:
