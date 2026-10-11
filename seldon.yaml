@@ -134,3 +134,12 @@ dispatch:
   # The template `cc_tasks/templates/scan_cycle.md` stays and is rendered on request by the command
   # in `cc_tasks/2026-09-18_cadence_off_RESULT.md` §1 until Seldon ships `seldon cadence render`.
   cadence: []
+
+prior_art:
+  # AD-036 (seldon): the prior-art receipts gate, by REFERENCE to seldon's one definition, never a copy (SQ-010
+  # Part 0; seldon docs/design/AD-036_ADDENDUM_03_prior_art_by_reference.md). The corpus paths resolve from seldon's
+  # file; the log, the design directory, the baseline and the verdict ledger resolve from this repository. Only the
+  # baseline is this repository's own: the notes on main when the gate reached it, grandfathered.
+  ref: ../seldon/seldon.yaml#prior_art
+  gate:
+    baseline: docs/design/AD-036_baseline.txt
