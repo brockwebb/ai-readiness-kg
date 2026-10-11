@@ -3,24 +3,25 @@
 **Version.** Snapshot cycle `scan_2026-10-07_composite_d` · version `2026-10-07_composite_d` · released `2026-10-11`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
-hosts, one cycle for the host checks and a second for twelve product checks, one client
+hosts, one cycle for the host checks and two more for the product checks, one client
 identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
 under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, re-snapshotted under
 `cc_tasks/2026-09-19_resnapshot_rj4.md`, again under
 `cc_tasks/2026-10-06_absence_verdicts_rules.md`, and onto a recollection under
-`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, and re-judged under
-`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`. The snapshot is a
-declared composite, `scan_2026-10-06_composite_c`, of two cycles. The host checks, and every
+`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, re-judged under
+`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`, and measured again over
+every seeded location under `cc_tasks/2026-10-07_seed_known_locations_verify.md`. The snapshot is
+a declared composite, `scan_2026-10-07_composite_d`, of three cycles. The host checks, and every
 product check not listed next, are cycle `scan_2026-09-10`, the first over the complete frame, as
-re-judged in `scan_2026-09-10_rj5`. Twelve product checks were measured again on 2026-10-06, as
-cycle `scan_2026-10-06_recollect`, over the places each body declares for its API, its terms, its
-changelog and its inventories, and are shown as that evidence was re-judged on 2026-10-10 in
-`scan_2026-10-06_recollect_rj1`: `A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`
-and `G4`. The re-judgement corrected three rules that had passed what they should not: a data
-catalogue served at an API's base is no longer read as an API description (`A2`), a licence name
-is no longer matched inside other words or inside a page's scripts (`D1`), and a web page is no
-longer taken for a downloadable file (`A3`). Every rule makes an absence a `fail` only over a
+re-judged in `scan_2026-09-10_rj5`. Three product checks, `A1`, `A3` and `B3`, are cycle
+`scan_2026-10-06_recollect`, measured on 2026-10-06 over the places each body's own pages declare
+and re-judged on 2026-10-10 in `scan_2026-10-06_recollect_rj1`. The checks that ask for a body's
+API, its terms, its changelog and its inventory, `A2`, `D1`, `F4`, `D4`, `B1`, `B4`, `D3` and
+`G4`, with the frontier check `A9`, are cycle `scan_2026-10-07_seeded`, measured on 2026-10-11
+over every location recorded for the body: the places its own pages declare, and the places this
+repository, the model that wrote the seed table, catalog.data.gov and api.data.gov name for it,
+each verified by one request. Every rule makes an absence a `fail` only over a
 complete search, and says `error`, naming what was not searched, everywhere else. Every number
 below is a registered Result quoted by name; nothing is typed into the prose.
 
@@ -61,8 +62,10 @@ The first cycle issued 2684 requests across
 target list names. The excess is not an accident and is discussed under what the matrix cannot
 see. It produced 2718 observations. The recollection
 issued 2074 requests under the same client
-and produced 6512 observations. The snapshot
-holds 1009 findings, and every finding re-derives
+and produced 6512 observations, and the seeded
+cycle issued 1078 and produced
+1205. The snapshot
+holds 1055 findings, and every finding re-derives
 byte for byte from its stored observations. The requests and the observations are each measured
 cycle's and carry its name; the findings are each judgement's, and the composite selects them
 by check without judging anything again.
@@ -273,42 +276,56 @@ below.
 | SOI | soi-flagship-2-business-tax-statistics | pass | fail | pass | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 
 Across the 23 declared
-surfaces, one product check still has no verdict at all, and that is the first thing to read off
-the matrix: a machine-readable licence (`D1`), `error` on every one of them. The terms pages the
-bodies declare were read, and none states a recognised licence in the text a reader sees; each
-was kept only in part, so the search for a licence on it is not complete and the check says
-`error`, naming how much was read. A documented API with its auth model and its rate limits
-(`A2`) now has a verdict where a body declares its API base, and the verdict is `fail` (the
-matrix's `A2` column): an API is served at the declared base, and what it serves there is a
-catalogue of its datasets, not a description of the API. Everywhere else the body declares no
-API base and the check says `error`.
+surfaces, the checks that ask for a body's API, its terms, its changelog and its inventory now read
+every location recorded for the body: the places its own pages declare, and the places this
+repository, the model that wrote the seed table, catalog.data.gov and api.data.gov name for it,
+each verified by one request on 2026-10-11. They reach `fail` only when every recorded location
+was read and every one of those sources was searched, and say `error`, naming what was not read,
+everywhere else. A machine-readable licence (`D1`) has a verdict now and the verdict is `fail`,
+on 16 surfaces, with no pass: where
+the body's API terms page is recorded it was read whole, and it states its licence in free text
+rather than as a recognised identifier; where no source records a terms page, the product page
+carries no licence field either. 7
+more could not be observed, or a source was not searched for them. A documented API with its auth
+model and its rate limits (`A2`) fails on
+13 surfaces: where an API is recorded
+and served, what it serves at its base is not a description of the API, and where no source
+records an API for the body there is none to describe. On
+10 more the recorded API base refused
+this client, by `robots.txt` or by status, and the check says `error`. Whether a machine starting
+from the product page can reach the API, the terms, the changelog and the inventory at all is a
+separate question, asked by a candidate check that enters no rate here and is reported apart
+(`docs/research/2026-10-11_seeded_delta.md`).
 
-The other three checks that had no verdict now have some, because the search now reaches the
-places the indicator names. Structured data rather than a document is served on
+The other three checks that had no verdict before the recollection have some, because the search
+reaches the places the indicator names. Structured data rather than a document is served on
 4 of the
 4 surfaces on which the question could be
 answered; on 19 more the product page links more of
 its own site than the scanner's request bound probed, and the links it did not reach may hold
 the data file. A machine-first entry point, a frontier check that enters no score, answers on
-2 surfaces and is absent on
-2 whose body declares its API base. A changelog is
-published on 8 surfaces whose body declares where its
-changes are recorded, and on every one of them it is a page for a person rather than a
-machine-readable feed; on 15 more no such place is
-declared, or the host refused to answer. Each `error` names what was not searched.
+5 surfaces and is absent on
+3 whose API base is recorded. No
+surface has a machine-readable changelog: on
+18 surfaces the search was complete,
+and either the changelog recorded for the body is a page for a person rather than a feed, or no
+source records one at all; on 5
+more a recorded location could not be read or a source was not searched. Each `error` names what
+was not searched.
 
-10 of the
+11 of the
 17 product checks were measured and return not a
 single pass: variable-level metadata, concept definitions linked from the variables,
 data-quality attributes published as metadata rather than prose, terms that address model
 training and retrieval, published source lineage, an entry in a public inventory, the issuing
-authority recorded in that entry, and a machine-readable changelog. The last check at zero is
+authority recorded in that entry, a machine-readable changelog, a documented API and a
+machine-readable licence. The last check at zero is
 asked of the body rather than of a surface: whether the same concept carries the same identifier
 across a body's products, and no body answers it yes. Four of these read the product's own record
 in a public inventory, and that record was found for no declared product. On
-7 surfaces every inventory the body declares was
-read, its own host's, its department's and its data.gov organization's, and none names the
-product. On 16 more an inventory could not be read,
+7 surfaces every inventory recorded
+for the body was read, its own host's, its department's and its data.gov organization's, and none
+names the product. On 16 more an inventory could not be read,
 because the department's or the body's own host refused this client or failed to answer, and
 the `error` names which. So the issuing authority and its programme, recorded as structured
 metadata in the product's catalogue record, are present on
@@ -402,20 +419,21 @@ having if nothing was quietly swept into it.
 
 ## What moved since the previous cycle, and what moved it
 
-This time the evidence did not move, and three rules did. The figure below draws the snapshot
-beside the judgement it replaces, `scan_2026-10-06_composite_b`, the composite published on
-2026-10-07. Both rest on the same stored observations. Three checks are marked as a rule change
-(`A2`, `A3` and `D1`): each rule now reads the object as what it is rather than as bytes, so each
-can only have lost passes. `A2` and `D1` also change where their findings come from: the earlier
-composite withheld the recollection's verdicts on them and showed the 2026-09-10 cycle's, and this
-one shows the recollection's, re-judged. On every other check both points are the same findings. A
-check with no applicable denominator on a side has no point there, because every product surface
-is `error` on it.
+This time the evidence and the rules moved together, on the checks that ask for a body's API,
+its terms, its changelog and its inventory. The figure below draws the snapshot beside the
+judgement it replaces, `scan_2026-10-06_composite_c`, the composite published on 2026-10-10.
+Eight checks are marked as a rule change (`A2`, `B1`, `B4`, `D1`, `D3`, `D4`, `F4` and `G4`):
+each now reads only the locations recorded for the body, and says `fail` only when every one of
+them was read and every named source was searched. On those eight and on `A9` the evidence is
+new too: cycle `scan_2026-10-07_seeded`, collected on 2026-10-11 over every location seeded for
+the body and verified by one request each. On every other check both points are the same
+findings. A check with no applicable denominator on a side has no point there, because every
+product surface is `error` on it.
 
-![Pass rate per check, previous judgement beside this one](assessment/harness/scan/figures/scan_2026-10-06_composite_c/cycle_over_cycle.svg)
+![Pass rate per check, previous judgement beside this one](assessment/harness/scan/figures/scan_2026-10-07_composite_d/cycle_over_cycle.svg)
 
 The figure draws no line and no arrow between the two points. A difference between two
-measurements is not a direction of travel, and two collections four weeks apart on federal
+measurements is not a direction of travel, and two collections days or weeks apart on federal
 publication schedules are not a rate of change. A check with no applicable denominator in a
 cycle is left blank rather than plotted at zero, because not measured is a reason and not a
 zero.
@@ -430,7 +448,11 @@ short, at the scanner's own request bound or at a location nobody declared, the 
 `error`, and the `error` says which places were not searched. The recollection is the other half
 of that correction. The places were declared, each read off a page the body or data.gov
 publishes, and searched; a check now says `fail` where the whole declared search found nothing,
-and still says `error` where a host refused to be searched.
+and still says `error` where a host refused to be searched. The seeded cycle completes that
+search: it adds the locations that sources other than the body's own pages name for it (this
+repository, the model that wrote the seed table, catalog.data.gov and api.data.gov), verifies
+each by one request, and records which sources were searched for which object, so a `fail` now
+stands on a search a stranger can repeat source by source.
 
 **The bulk-download check shows both halves.** Under the first re-judgement of the first cycle it
 was answered over 19 declared
@@ -572,9 +594,9 @@ hand-written expectation was wrong once.
 | G1-D | RULE-G1-D-v1 |
 | G4 | RULE-G4-v3 |
 
-**Requests issued, per netloc.** Summed over the two collections the snapshot rests on: the
-first cycle, which measured every check, and the recollection, which measured the twelve checks
-listed in the frame section.
+**Requests issued, per netloc.** Summed over the three collections the snapshot rests on: the
+first cycle, which measured every check, the recollection, which measured twelve product checks,
+and the seeded cycle, which measured ten of them again, as the frame section lists.
 
 | Netloc | Requests |
 |---|---|
@@ -648,35 +670,40 @@ One row per check and admitted source: the check as the report names it, the fra
 | G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | no admitted source |  |  |
 | A3 | A3 · Bulk access | no admitted source |  |  |
 | A1 | A1 · Machine-readable formats | no admitted source |  |  |
+| A2 | A2 · Programmatic access | no admitted source |  |  |
 | A6 | A6 · Structured markup | no admitted source |  |  |
 | A8 | A8 · Timeliness of surface | no admitted source |  |  |
 | A9 | A9 · M2M agent surface | no admitted source |  |  |
 | B3 | B3 · Methodology legibility | no admitted source |  |  |
+| D1 | D1 · License clarity | no admitted source |  |  |
 | D4 | D4 · No dark data | no admitted source |  |  |
 | F4 | F4 · Change legibility | no admitted source |  |  |
 | G4 | G4 · Authority metadata | no admitted source |  |  |
 
-**Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_c.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-10-06_composite_c.*`, the reference hosts;
-`scan_matrix_product_2026-10-06_composite_c.*`, the product matrix. Every row carries its Finding
-identities, and each JSON file names the two cycles under `composed_of`.
+**Files beside this report.** `scan_matrix_tierA_2026-10-07_composite_d.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-10-07_composite_d.*`, the reference hosts;
+`scan_matrix_product_2026-10-07_composite_d.*`, the product matrix. Every row carries its Finding
+identities, and each JSON file names its parts under `composed_of` and `composed_of_parts`.
 
-**Provenance.** A declared composite, `scan_2026-10-06_composite_c`
-(`state/scan_2026-10-06_composite_c.json`, `composed_of`). The host checks and every product
-check but twelve are cycle `scan_2026-09-10`, parameter hash
+**Provenance.** A declared composite over a composite, `scan_2026-10-07_composite_d`
+(`state/scan_2026-10-07_composite_d.json`, `composed_of`, scheme 2). The host checks and every
+product check but thirteen are cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
-`scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06. The
-twelve (`A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`, `G4`) are cycle
-`scan_2026-10-06_recollect`, parameter hash
+`scan_2026-09-10_rj5`: the same stored observations under the rules current on 2026-10-06.
+`A1`, `A3` and `B3` are cycle `scan_2026-10-06_recollect`, parameter hash
 `2e56a8815bc22a2708f153978a8231ccfa1647027f85f27c5979beecfa1b50e9`, collected on 2026-10-06 over
-the API, terms, changelog and inventory locations each body declares (`targets.yaml`
-`declared_locations`, every entry citing the page it was read from), and judged as
-`scan_2026-10-06_recollect_rj1` on 2026-10-10, parameter hash
-`bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa`, under generation 15 of the
-rules, which corrects three false passes on `A2`, `D1` and `A3`. The parameters moved between
-the collection and the judgement only in blocks the twelve legs' rules do not read (the
-`existence` and `discoverability` blocks, and the discoverability candidate's entry under the
-link probe), so no other verdict moved. Every superseded judgement stays registered under its
+the locations each body's own pages declare, and judged as `scan_2026-10-06_recollect_rj1` on
+2026-10-10, parameter hash `bcea2d92c74e53f8d9e364c7eee0ab143675ddba6574553c1473197d18d926aa`,
+under generation 15 of the rules. The ten others (`A2`, `D1`, `F4`, `D4`, `B1`, `B4`, `D3`, `G4`,
+the frontier check `A9` and the discoverability candidate `A13`) are cycle
+`scan_2026-10-07_seeded`, parameter hash
+`5166e78c756f8d736df02c667fcc4c1748ecfef3fbebf1df5124054e1fc22412`, collected on 2026-10-11 under
+generation 16 over every location recorded for the body (`targets.yaml` `declared_locations`
+scheme 2: each location read from the body's page or seeded from a named source, with the status
+of its one verifying request), each product page read from the recollection rather than fetched
+again. The parameters moved between the recollection and the seeded cycle only in the cycle's
+name, the existence and discoverability blocks the generation-16 rules read, and the ceiling on
+how much of a terms page the licence check keeps. Every superseded judgement stays registered under its
 own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061

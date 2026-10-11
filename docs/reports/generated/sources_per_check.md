@@ -10,10 +10,12 @@ One row per check and admitted source: the check as the report names it, the fra
 | G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | no admitted source |  |  |
 | A3 | A3 · Bulk access | no admitted source |  |  |
 | A1 | A1 · Machine-readable formats | no admitted source |  |  |
+| A2 | A2 · Programmatic access | no admitted source |  |  |
 | A6 | A6 · Structured markup | no admitted source |  |  |
 | A8 | A8 · Timeliness of surface | no admitted source |  |  |
 | A9 | A9 · M2M agent surface | no admitted source |  |  |
 | B3 | B3 · Methodology legibility | no admitted source |  |  |
+| D1 | D1 · License clarity | no admitted source |  |  |
 | D4 | D4 · No dark data | no admitted source |  |  |
 | F4 | F4 · Change legibility | no admitted source |  |  |
 | G4 | G4 · Authority metadata | no admitted source |  |  |

@@ -1,24 +1,25 @@
 # AI readiness of the federal statistical system: host-level findings
 
 **Draft. {{result:fss_agencies_tier_a:value}} recognized bodies and three reference
-hosts, one cycle for the host checks and a second for twelve product checks, one client
+hosts, one cycle for the host checks and two more for the product checks, one client
 identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
 under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, re-snapshotted under
 `cc_tasks/2026-09-19_resnapshot_rj4.md`, again under
 `cc_tasks/2026-10-06_absence_verdicts_rules.md`, and onto a recollection under
-`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, and re-judged under
-`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`. The snapshot is a
-declared composite, `scan_2026-10-06_composite_c`, of two cycles. The host checks, and every
+`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`, re-judged under
+`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md`, and measured again over
+every seeded location under `cc_tasks/2026-10-07_seed_known_locations_verify.md`. The snapshot is
+a declared composite, `scan_2026-10-07_composite_d`, of three cycles. The host checks, and every
 product check not listed next, are cycle `scan_2026-09-10`, the first over the complete frame, as
-re-judged in `scan_2026-09-10_rj5`. Twelve product checks were measured again on 2026-10-06, as
-cycle `scan_2026-10-06_recollect`, over the places each body declares for its API, its terms, its
-changelog and its inventories, and are shown as that evidence was re-judged on 2026-10-10 in
-`scan_2026-10-06_recollect_rj1`: `A1`, `A2`, `A3`, `A9`, `B1`, `B3`, `B4`, `D1`, `D3`, `D4`, `F4`
-and `G4`. The re-judgement corrected three rules that had passed what they should not: a data
-catalogue served at an API's base is no longer read as an API description (`A2`), a licence name
-is no longer matched inside other words or inside a page's scripts (`D1`), and a web page is no
-longer taken for a downloadable file (`A3`). Every rule makes an absence a `fail` only over a
+re-judged in `scan_2026-09-10_rj5`. Three product checks, `A1`, `A3` and `B3`, are cycle
+`scan_2026-10-06_recollect`, measured on 2026-10-06 over the places each body's own pages declare
+and re-judged on 2026-10-10 in `scan_2026-10-06_recollect_rj1`. The checks that ask for a body's
+API, its terms, its changelog and its inventory, `A2`, `D1`, `F4`, `D4`, `B1`, `B4`, `D3` and
+`G4`, with the frontier check `A9`, are cycle `scan_2026-10-07_seeded`, measured on 2026-10-11
+over every location recorded for the body: the places its own pages declare, and the places this
+repository, the model that wrote the seed table, catalog.data.gov and api.data.gov name for it,
+each verified by one request. Every rule makes an absence a `fail` only over a
 complete search, and says `error`, naming what was not searched, everywhere else. Every number
 below is a registered Result quoted by name; nothing is typed into the prose.
 
@@ -59,8 +60,10 @@ The first cycle issued {{result:scan_requests_total_2026-09-10:value}} requests 
 target list names. The excess is not an accident and is discussed under what the matrix cannot
 see. It produced {{result:scan_observations_2026-09-10:value}} observations. The recollection
 issued {{result:scan_requests_total_2026-10-06_recollect:value}} requests under the same client
-and produced {{result:scan_observations_2026-10-06_recollect:value}} observations. The snapshot
-holds {{result:scan_findings_2026-10-06_composite_c:value}} findings, and every finding re-derives
+and produced {{result:scan_observations_2026-10-06_recollect:value}} observations, and the seeded
+cycle issued {{result:scan_requests_total_2026-10-07_seeded:value}} and produced
+{{result:scan_observations_2026-10-07_seeded:value}}. The snapshot
+holds {{result:scan_findings_2026-10-07_composite_d:value}} findings, and every finding re-derives
 byte for byte from its stored observations. The requests and the observations are each measured
 cycle's and carry its name; the findings are each judgement's, and the composite selects them
 by check without judging anything again.
