@@ -357,11 +357,14 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # and_split_discoverability.md` decision 3) added a construct, an indicator, a spec, their
     # five evidence edges and three internal ones, and one action, all written by
     # `scripts/add_candidate_indicator.py` and `scripts/tag_prescriptions.py`.
+    # 2026-10-11: a sixth A13 evidence edge, to `rfc-9727-api-catalog`, added by
+    # `add_candidate_indicator.py --refresh` once the RFC was admitted
+    # (`cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md`).
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
         {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
          "Action": 64, "AssessmentTool": 13, "Precondition": 19}
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 7,
+        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 8,
          "REMEDIATES": 64, "REQUIRES": 37}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",

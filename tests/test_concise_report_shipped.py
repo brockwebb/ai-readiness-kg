@@ -5,8 +5,12 @@ digit check, the control caught every plant, the gate and reader files are the r
 Markdown passes the lint."""
 import hashlib
 import json
+import re
+import subprocess
 import sys
 from pathlib import Path
+
+import yaml
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
@@ -19,7 +23,26 @@ import dcat_faq_lint  # noqa: E402
 OUT = REPO / "reports" / "concise"
 PIPE = json.loads((OUT / "run" / "pipeline.json").read_text(encoding="utf-8"))
 CFG = R.load_config()
-CLAIMS = R.load_claims(CFG)
+R.load_claims(CFG)          # the live file still cites the composite FROZEN.md names
+
+
+def frozen_claims() -> dict:
+    """The claims the report was written from: `docs/evidence/claims.yaml` AT the commit
+    `docs/evidence/FROZEN.md` names. FROZEN.md says the report "still cites the composite above,
+    at the commit above", and the evidence map is a view that later tasks rebuild
+    (`cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md`
+    decision 4: "the report is not rebuilt here"). Read from the live file, this guard went red
+    the first time the corpus grew under a frozen report (CL-044, 282 -> 287 admitted)."""
+    text = (REPO / "docs" / "evidence" / "FROZEN.md").read_text(encoding="utf-8")
+    m = re.search(r"\| Commit \| `([0-9a-f]{40})`", text)
+    assert m, "FROZEN.md names no commit"
+    doc = yaml.safe_load(subprocess.run(
+        ["git", "show", f"{m.group(1)}:docs/evidence/claims.yaml"], cwd=REPO, check=True,
+        capture_output=True, text=True).stdout)
+    return {c["id"]: c for c in doc["claims"]}
+
+
+CLAIMS = frozen_claims()
 
 
 def test_the_pdf_is_rendered_from_this_markdown():

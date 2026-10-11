@@ -9,9 +9,9 @@
 | row_id | who_can_run | method_kind | route | rule_id | tool_name | q1_class | measurement_tier | effort_level | value_rating | evidence_grade | cheap_pass | row_source |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | S-A1-rule-A1 | public_outside_in | built_rule | rule:A1 | RULE-A1-v5 | httpx | measured | M | 1 | 5 | plausible | yes | record |
-| S-A2-rule-A2 | public_outside_in | built_rule | rule:A2 | RULE-A2-v6 | httpx | measured | M | 1 | 4 | unevidenced | yes | record |
-| S-A2-openapi_spec_validator | public_outside_in | tool_open_source | openapi_spec_validator |  | openapi-spec-validator | measured | M | TBD | 4 | unevidenced | yes | record |
-| S-A2-prance | public_outside_in | tool_open_source | prance |  | prance | measured | M | TBD | 4 | unevidenced | yes | record |
+| S-A2-rule-A2 | public_outside_in | built_rule | rule:A2 | RULE-A2-v6 | httpx | measured | M | 1 | 4 | plausible | yes | record |
+| S-A2-openapi_spec_validator | public_outside_in | tool_open_source | openapi_spec_validator |  | openapi-spec-validator | measured | M | TBD | 4 | plausible | yes | record |
+| S-A2-prance | public_outside_in | tool_open_source | prance |  | prance | measured | M | TBD | 4 | plausible | yes | record |
 | S-A3-rule-A3 | public_outside_in | built_rule | rule:A3 | RULE-A3-v8 | scrapy | measured | M | 1 | 4 | plausible | yes | record |
 | S-A4-rule-A4 | public_outside_in | built_rule | rule:A4 | RULE-A4-v1 | protego | measured | M | 1 | 5 | established | yes | record |
 | S-A5-rule-A5 | public_outside_in | built_rule | rule:A5 | RULE-A5-v2 | ultimate-sitemap-parser | measured | M | 1 | 4 | established | yes | record |

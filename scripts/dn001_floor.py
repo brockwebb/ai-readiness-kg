@@ -47,7 +47,10 @@ def quoted_legs(claims: dict, payload: dict) -> dict:
             if e["kind"] == "finding" and e["id"] in leg_of:
                 legs.add(leg_of[e["id"]])
             elif e["kind"] == "result":
-                m = RESULT_LEG.match(e["id"])
+                # The evidence id is the Result's artifact_id; its name leads the note
+                # (`build_evidence_map`: "<name>, value <v>, state <s>").
+                m = RESULT_LEG.match((e.get("note") or "").split(",", 1)[0].strip()) or \
+                    RESULT_LEG.match(e["id"])
                 if m:
                     legs.add(m.group(1).upper())
         for leg in legs:

@@ -243,6 +243,14 @@ QUERIES = {
     "manifest.admission_dates": "date of the first manifest_add event in events/*.jsonl for "
                                 "each included entry (build_evidence_map.admissions)",
     "git.framework_start": "git log --diff-filter=A on framework/ai_readiness_framework.json",
+    "delta.seeded": "scripts/seeded_delta.py over the stored Observations of the cycle of "
+                    "record's A13 part (state/seeded_delta_2026-10-11.json): RULE-A13-v1's own "
+                    "_exists and per_object per body and object; its counts are the registered "
+                    "seeded_delta_* Results, and a disagreement between the two stops the render",
+    "cycle.a13_convention": "the A13 part's payload Observations: every fetch of "
+                            "params discoverability.convention.api_catalog_path and its "
+                            "Content-Type, and every link-probe product page's Link header "
+                            "read with rule_a13._link_rels",
 }
 
 NUM_RX = re.compile(r"(?<![\w.\-])\d[\d,]*(?:\.\d+)?(?![\w])")
@@ -1069,6 +1077,232 @@ def q6_claims(M: Map) -> list:
     return out
 
 
+# ------------------------------------------------------------------------------ Q7
+#
+# Existence against discoverability (DN-013-R1), added by `cc_tasks/2026-10-11_evidence_map_
+# carries_discoverability_and_admits_a2_d1_a13_standards.md` decisions 2 and 3. DN-013-R1 puts
+# the gap between the two at the report's centre, and its headline was in
+# `docs/research/2026-10-11_seeded_delta.md` and in no claim, so the concise report could not
+# state it. Every number here is a registered Result or a count of the cycle's Findings.
+
+#: The delta table its Results were registered from (`scripts/register_seeded_delta_results.py`).
+DELTA = REPO / "state" / "seeded_delta_2026-10-11.json"
+#: The A13 part's cycle, which the delta Results' names carry (DD-056).
+DELTA_RESULT_SUFFIX = "2026-10-07_seeded"
+Q7_OBJECTS = {"api": "an API", "terms": "an API terms page", "changelog": "a changelog",
+              "inventory": "an inventory"}
+#: The existence legs whose verdicts become quotable once their sources are admitted
+#: (decision 3): each claim names the documents its indicator is evidenced by.
+Q7_EXISTENCE_LEGS = ("A2", "D1")
+A13 = "A13"
+
+
+def result_named(M: Map, name: str) -> dict:
+    """The one live Result with this name, or a stop: a claim never quotes a number its Result
+    does not hold."""
+    rows = M.s.gread("MATCH (r:Artifact:Result) WHERE r.name = $n "
+                     "AND coalesce(r.state, '') <> 'superseded' "
+                     "RETURN r.artifact_id AS id, r.value AS v, r.state AS st", n=name)
+    if len(rows) != 1:
+        raise SystemExit(f"FATAL: {len(rows)} live Results named {name!r}; Q7 quotes only "
+                         f"registered Results (register them with "
+                         f"scripts/register_seeded_delta_results.py)")
+    return {**rows[0], "name": name}
+
+
+def _cite(c: Claim, r: dict) -> int:
+    c.ev("result", r["id"], f"neo4j:Result{{artifact_id: '{r['id']}'}}",
+         f"{r['name']}, value {r['v']:g}, state {r['st']}")
+    return int(r["v"])
+
+
+def _a13_part(M: Map) -> str:
+    # A part with `legs` None carries every leg no other part names (`Map.findings`).
+    hits = ([cyc for cyc, _, legs in M.parts if legs and A13 in legs]
+            or [cyc for cyc, _, legs in M.parts if legs is None])
+    if len(hits) != 1:
+        raise SystemExit(f"FATAL: {len(hits)} parts of {M.cycle} carry {A13}")
+    return hits[0]
+
+
+def q7_claims(M: Map) -> list:
+    out = []
+    where = M.body_of()
+    a13 = sorted((f for f in M.findings.values() if f["leg"] == A13),
+                 key=lambda f: f["finding_id"])
+    if not a13:
+        raise SystemExit(f"FATAL: cycle {M.cycle} holds no {A13} Finding")
+    delta = json.loads(DELTA.read_text(encoding="utf-8"))
+    rn = lambda stem: result_named(M, f"seeded_delta_{stem}_{DELTA_RESULT_SUFFIX}")  # noqa: E731
+
+    # -- the headline
+    h = {k: rn(k) for k in ("pairs_exist_unreachable", "bodies_with_unreachable_pair",
+                            "pairs_exist", "surface_pairs_exist_unreachable",
+                            "surface_pairs_exist")}
+    want = {"pairs_exist_unreachable": "pairs_exist_unreachable_from_every_product_page",
+            "bodies_with_unreachable_pair": "bodies_with_such_a_pair",
+            "pairs_exist": "pairs_exist",
+            "surface_pairs_exist_unreachable": "surface_object_pairs_exist_and_fail",
+            "surface_pairs_exist": "surface_object_pairs_exist"}
+    for k, dk in want.items():
+        if int(h[k]["v"]) != delta["headline"][dk]:
+            raise SystemExit(f"FATAL: Result {h[k]['name']} = {h[k]['v']} but the delta says "
+                             f"{delta['headline'][dk]}; re-run scripts/seeded_delta.py and "
+                             f"register the change, never quote across the two")
+    c = Claim("q7.discoverability.headline", "Q7", "record")
+    v = {k: _cite(c, r) for k, r in h.items()}
+    c.text = (f"On cycle `{M.cycle}`, `RULE-A13-v1` (`{A13}`, discoverability from the product "
+              f"page, a candidate that enters no level and no score) finds "
+              f"{c.n(v['pairs_exist_unreachable'], 'Result ' + h['pairs_exist_unreachable']['name'])} "
+              f"body and object pairs, in "
+              f"{c.n(v['bodies_with_unreachable_pair'], 'Result ' + h['bodies_with_unreachable_pair']['name'])} "
+              f"bodies, where the object (an API, the API's terms, a changelog or an inventory) "
+              f"exists and no product page of the body reaches it, of "
+              f"{c.n(v['pairs_exist'], 'Result ' + h['pairs_exist']['name'])} pairs where it "
+              f"exists; counted per product page, "
+              f"{c.n(v['surface_pairs_exist_unreachable'], 'Result ' + h['surface_pairs_exist_unreachable']['name'])} "
+              f"of the {c.n(v['surface_pairs_exist'], 'Result ' + h['surface_pairs_exist']['name'])} "
+              f"page and object pairs where the object exists are not reachable from that page. "
+              f"Existence is read at the recorded and seeded locations, so each of these objects "
+              f"is published and a machine that starts from the product page does not find it "
+              f"(`DN-013-R1`).")
+    c.q("delta.seeded").ev("indicator", f"ind:{A13}", rec_loc(f"ind:{A13}"), "candidate")
+    for f in a13:
+        if f["verdict"] == "fail":
+            c.ev("finding", f["finding_id"], M.floc(f["finding_id"]),
+                 f"{A13} fail on {f['target_doc_id']}")
+    out.append(c)
+
+    # -- per object
+    for obj, noun in Q7_OBJECTS.items():
+        rows = [r for r in delta["rows"] if r["object"] == obj]
+        ex_r, un_r = rn(f"{obj}_pairs_exist"), rn(f"{obj}_pairs_exist_unreachable")
+        unreach = sorted(r["body"] for r in rows if r["exists_unreachable_from_every_page"])
+        if (int(ex_r["v"]) != sum(1 for r in rows if r["exists"] == "yes")
+                or int(un_r["v"]) != len(unreach)):
+            raise SystemExit(f"FATAL: the {obj} Results disagree with the delta table")
+        c = Claim(f"q7.discoverability.{obj}", "Q7", "record")
+        n_ex, n_un = _cite(c, ex_r), _cite(c, un_r)
+        named = f" ({', '.join(f'`{b}`' for b in unreach)})" if unreach else ""
+        c.text = (f"On cycle `{M.cycle}`, {c.n(n_ex, 'Result ' + ex_r['name'])} bodies publish "
+                  f"{noun} that is shown to exist at a recorded or seeded location, and in "
+                  f"{c.n(n_un, 'Result ' + un_r['name'])} of them{named} no product page of "
+                  f"the body reaches it (`RULE-A13-v1`, `{A13}`).")
+        c.q("delta.seeded")
+        for f in a13:
+            if where[f["target_doc_id"]][0] in unreach and f"{obj} fail (" in f["reason"]:
+                c.ev("finding", f["finding_id"], M.floc(f["finding_id"]),
+                     f"{A13} {obj} fail on {f['target_doc_id']}")
+        out.append(c)
+
+    # -- per body
+    by_body = defaultdict(list)
+    for f in a13:
+        by_body[where[f["target_doc_id"]][0]].append(f)
+    for body in sorted(by_body):
+        fs = by_body[body]
+        k = Counter(f["verdict"] for f in fs)
+        c = Claim(f"q7.a13.{body}", "Q7", "record")
+        parts = [f"{v} on {c.n(k[v], f'{A13} {v} findings for {body}')}"
+                 for v in ("pass", "fail", "error", "not_applicable") if k.get(v)]
+        c.text = (f"On cycle `{M.cycle}`, `{A13}` (discoverability from the product page, a "
+                  f"candidate in no level and no score) is {' and '.join(parts)} of the "
+                  f"{c.n(len(fs), f'{A13} findings for {body}')} product surfaces of `{body}` "
+                  f"it judged.")
+        c.q("cycle.findings")
+        for f in fs:
+            c.ev("finding", f["finding_id"], M.floc(f["finding_id"]),
+                 f"{A13} {f['verdict']} on {f['target_doc_id']}")
+        out.append(c)
+
+    # -- the convention locations
+    from scan import load_params
+    from scan.rules import rule_a13
+    part = _a13_part(M)
+    payload = json.loads((REPO / "state" / f"{part}.json").read_text(encoding="utf-8"))
+    params = load_params()
+    from scan.model import params_hash
+    if params_hash(params) != payload["params_hash"]:
+        raise SystemExit(f"FATAL: params.yaml is not the parameters {part} was judged with; "
+                         f"the convention claim reads that cycle under its own parameters")
+    conv = params["discoverability"]["convention"]
+    obs = [o for o in payload["observations_detail"]
+           if not str(o.get("target_doc_id", "")).startswith("control:")]
+    import urllib.parse
+    fetched = [o for o in obs
+               if urllib.parse.urlsplit(o.get("target_url") or "").path == conv["api_catalog_path"]]
+    linkset = [o for o in fetched
+               if str(((o.get("response") or {}).get("headers") or {}).get("content-type", ""))
+               .split(";")[0].strip().lower() in conv["api_catalog_media_types"]]
+    pages = [o for o in obs if o["leg"] == "link_probe"
+             and (o.get("parsed") or {}).get("probe") != "link"]
+    rel = [o for o in pages
+           if any(r == conv["api_catalog_link_rel"]
+                  for _, r in rule_a13._link_rels((o.get("response") or {}).get("headers")))]
+    by_convention = [f for f in a13 if "RFC 9727 §" in f["reason"]]
+    if not fetched or not pages:
+        raise SystemExit(f"FATAL: {part} holds no api-catalog fetch or no product page; the "
+                         f"convention claim would be vacuous")
+    if linkset or rel or by_convention:
+        raise SystemExit(f"FATAL: {part} has {len(linkset)} Linkset responses, {len(rel)} "
+                         f"rel=api-catalog pages and {len(by_convention)} A13 passes by "
+                         f"convention; the convention claim is worded for none and must be "
+                         f"rewritten with its counts")
+    adm = admissions()
+    rfc = "rfc-9727-api-catalog"
+    if rfc not in adm:
+        raise SystemExit(f"FATAL: {rfc} has no manifest_add; the convention claim cites it")
+    c = Claim("q7.discoverability.convention", "Q7", "record")
+    c.text = (f"On cycle `{M.cycle}`, no host the harness fetched it on answered the well-known location "
+              f"`{conv['api_catalog_path']}` with an API catalog "
+              f"(`{', '.join(conv['api_catalog_media_types'])}`), and no product page sent a "
+              f"`Link` header with `rel=\"{conv['api_catalog_link_rel']}\"`, the two conventions "
+              f"`RFC 9727` defines (`§2`, `§3`); so `RULE-A13-v1` found no API by convention, "
+              f"and an API reached a machine from the product page by a link or not at all.")
+    c.q("cycle.a13_convention", part)
+    c.ev("document", rfc, adm[rfc][1], f"first manifest_add {adm[rfc][0]}")
+    for f in a13:
+        if "api fail (" in f["reason"]:
+            c.ev("finding", f["finding_id"], M.floc(f["finding_id"]),
+                 f"{A13} api fail on {f['target_doc_id']}: no API catalog at the convention "
+                 f"location")
+    out.append(c)
+
+    # -- A2 and D1, quotable now that their sources are admitted (decision 3)
+    suffix = M.cycle[len("scan_"):]
+    inds = {n["properties"].get("code"): n for n in M.s.record["nodes"]
+            if "AssessmentIndicator" in n["labels"]}
+    for leg in Q7_EXISTENCE_LEGS:
+        node = inds[leg]
+        srcs = sorted(e["to"][len("doc:"):] for e in M.s.record["edges"]
+                      if e["from"] == node["id"] and e["type"] == "EVIDENCED_BY")
+        if not srcs:
+            raise SystemExit(f"FATAL: ind:{leg} reaches no admitted source, so a claim that "
+                             f"quotes its verdicts breaks DN-001's floor")
+        rs = {v: result_named(M, f"scan_{leg.lower()}_{v}_{suffix}")
+              for v in ("pass", "fail", "error")}
+        k = Counter(f["verdict"] for f in M.findings.values() if f["leg"] == leg)
+        for v, r in rs.items():
+            if int(r["v"]) != k.get(v, 0):
+                raise SystemExit(f"FATAL: Result {r['name']} = {r['v']} but the cycle holds "
+                                 f"{k.get(v, 0)} {leg} {v} Findings")
+        c = Claim(f"q7.existence.{leg}", "Q7", "record")
+        n = {v: _cite(c, r) for v, r in rs.items()}
+        c.text = (f"On cycle `{M.cycle}`, `{leg}` (\"{node['properties']['indicator']}\") is "
+                  f"pass on {c.n(n['pass'], 'Result ' + rs['pass']['name'])} of the surfaces "
+                  f"it judged at the recorded and seeded locations, fail on "
+                  f"{c.n(n['fail'], 'Result ' + rs['fail']['name'])} and error on "
+                  f"{c.n(n['error'], 'Result ' + rs['error']['name'])}; `ind:{leg}` is evidenced by "
+                  f"{', '.join(f'`{d}`' for d in srcs)}.")
+        c.ev("indicator", node["id"], rec_loc(node["id"]))
+        for d in srcs:
+            if d not in adm:
+                raise SystemExit(f"FATAL: {d} evidences ind:{leg} and has no manifest_add")
+            c.ev("document", d, adm[d][1], f"first manifest_add {adm[d][0]}")
+        out.append(c)
+    return out
+
+
 # ------------------------------------------------------------------------------ render
 
 def existing() -> dict:
@@ -1101,7 +1335,8 @@ def render(graph) -> str:
     q2 = q2_table(M)
     q3c, q3t = q3_claims(M)
     q5c, diffs = q5_claims(M)
-    mine = (q1_claims(M, q1) + q2_claims(M, q2) + q3c + q4_claims(M) + q5c + q6_claims(M))
+    mine = (q1_claims(M, q1) + q2_claims(M, q2) + q3c + q4_claims(M) + q5c + q6_claims(M)
+            + q7_claims(M))
     keys = [c.key for c in mine]
     if len(keys) != len(set(keys)):
         raise SystemExit(f"FATAL: duplicate claim keys {[k for k in keys if keys.count(k) > 1]}")

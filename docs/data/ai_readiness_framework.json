@@ -7,9 +7,9 @@
   "criteria": 7,
   "constructs": 47,
   "indicators": 48,
-  "evidenced_by": 147,
+  "evidenced_by": 152,
   "evidenced_by_internal": 17,
-  "gaps": 13,
+  "gaps": 11,
   "measurement_specs": 30,
   "collectors_none_known": 4,
   "rules_built": 25,
@@ -246,9 +246,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`openapi-specification-core` (OpenAPI 3.2.0, section 4.1.1, the openapi field: \"This string MUST be the version number of the OpenAPI Specification that the OpenAPI document uses\", the field RULE-A2-v6 reads as an OpenAPI 3.x description; and section 4.27, Security Scheme Object, where the auth model is declared); `openapi-specification-v2-0` (Swagger 2.0, section 6.4.1.1, the swagger field: \"Specifies the Swagger Specification version being used\", whose value \"MUST be \"2.0\"\", the field RULE-A2-v6 names as Swagger 2.0; and section 6.4.23, Security Definitions Object). Rate limits are reported by the rule and decide nothing; no admitted source is cited for them",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "A",
     "measured_previously": [
      {
@@ -1961,9 +1961,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`spdx-license-list` (the list's introduction: \"The SPDX License List includes a standardized short identifier, the full name, the license text, and a canonical permanent URL for each license and exception\"; rows CC0-1.0, CC-BY-4.0, MIT and Apache-2.0; https://spdx.org/licenses/ is a prefix RULE-D1-v6 recognises through params d1_licence); `cc-by-4-0-deed` (the identifier \"CC BY 4.0\" and its Canonical URL https://creativecommons.org/licenses/by/4.0/, the creativecommons.org prefix and the CC-BY token RULE-D1-v6 recognises); `cc0-1-0-deed` (the identifier \"CC0 1.0\" and its Canonical URL https://creativecommons.org/publicdomain/zero/1.0/, the CC0 token). The rule's other recognised prefixes and tokens (opensource.org, usa.gov government-works, opendefinition.org, PUBLIC DOMAIN, U.S. GOVERNMENT WORK, ODC-BY) are not admitted",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "D",
     "measured_previously": [
      {
@@ -6778,7 +6778,7 @@
     "status": "candidate",
     "measurement_status": "specified",
     "criterion_code": "A",
-    "evidence_raw": "`w3c-dwbp-2017` (Abstract: \"Data should be discoverable and understandable by humans and machines.\"); `dcat-us-1-1-schema` (Introduction: the Project Open Data metadata \"to list agency datasets and application programming interfaces (APIs) as hosted at agency.gov/data\", the inventory's convention location); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii: \"host it publicly on the agency's website at the address: www.agency.gov/data.json\"); `llmstxt-proposal` (Proposal: discovery links \"can be provided as HTML `<link>` elements, or as an HTTP `Link:` response header\"); `wilkinson-2016-fair-guiding-principles` (FAIR F4, metadata registered or indexed in a searchable resource). RFC 9727 (the well-known api-catalog URI, June 2025) is the API's convention location and is named, not admitted: this task fetched nothing",
+    "evidence_raw": "`w3c-dwbp-2017` (Abstract: \"Data should be discoverable and understandable by humans and machines.\"); `dcat-us-1-1-schema` (Introduction: the Project Open Data metadata \"to list agency datasets and application programming interfaces (APIs) as hosted at agency.gov/data\", the inventory's convention location); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii: \"host it publicly on the agency's website at the address: www.agency.gov/data.json\"); `llmstxt-proposal` (Proposal: discovery links \"can be provided as HTML `<link>` elements, or as an HTTP `Link:` response header\"); `wilkinson-2016-fair-guiding-principles` (FAIR F4, metadata registered or indexed in a searchable resource); `rfc-9727-api-catalog` (section 2: a Publisher \"SHALL resolve an HTTPS GET request to /.well-known/api-catalog and return an API catalog document\"; section 3, the api-catalog link relation; section 4.2: \"The Publisher MUST publish the API catalog document in the Linkset format application/linkset+json\"), the API's convention location, admitted 2026-10-11",
     "candidate_rationale": "DN-013-R1: existence is not discoverability. The harness tested whether a stranger could find an agency's API, inventory, terms or changelog from the product page and reported the failure of that search as the absence of the thing, while api.census.gov, api.bls.gov, api.eia.gov and the BEA API are public knowledge. The existence legs (A2, D1, F4, D4 and D4's consumers) now read recorded and seeded locations only; what the link probe and the guessed paths measured is this indicator: a machine that knows only the product page, and the conventions, gets there or it does not.",
     "candidate_provenance": "Found by the harness, from the operator's objection of 2026-10-06 (DN-013 §1), not crosswalked from a published framework. The literature asks for data to be discoverable by machines (W3C DWBP; FAIR F4) and names the convention locations (OMB M-13-13's /data.json, RFC 9727's api-catalog); none states this test of a product page as an AI-readiness indicator.",
     "candidate_promotion": "Operator decision (DD-054). The framework goes out under his name, and an indicator the instrument derived from its own defect is the kind that needs a human to accept it.",
@@ -10101,6 +10101,54 @@
     "rule_id": "RULE-A13-v1",
     "leg": "A13",
     "reason_fragment": "and is not reachable from the "
+   }
+  },
+  {
+   "from": "ind:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openapi-specification-core",
+   "properties": {
+    "doc_id": "openapi-specification-core"
+   }
+  },
+  {
+   "from": "ind:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openapi-specification-v2-0",
+   "properties": {
+    "doc_id": "openapi-specification-v2-0"
+   }
+  },
+  {
+   "from": "ind:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:spdx-license-list",
+   "properties": {
+    "doc_id": "spdx-license-list"
+   }
+  },
+  {
+   "from": "ind:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cc-by-4-0-deed",
+   "properties": {
+    "doc_id": "cc-by-4-0-deed"
+   }
+  },
+  {
+   "from": "ind:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cc0-1-0-deed",
+   "properties": {
+    "doc_id": "cc0-1-0-deed"
+   }
+  },
+  {
+   "from": "ind:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9727-api-catalog",
+   "properties": {
+    "doc_id": "rfc-9727-api-catalog"
    }
   }
  ],

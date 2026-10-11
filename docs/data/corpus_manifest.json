@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-07T12:00:29.826255+00:00",
+ "generated_at": "2026-10-11T15:27:36.957522+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 282,
+  "included": 287,
   "excluded": 73,
   "pending_refetch": 42,
   "pending_review": 1
@@ -4461,6 +4461,208 @@
     "notes": [
      "Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contribution under R1."
     ]
+   }
+  },
+  "cc-by-4-0-deed": {
+   "doc_id": "cc-by-4-0-deed",
+   "identity": {
+    "sha256": "a1035c221e4e3f03e07759533da936bdad651b2ee8e2888e34d9bea42897d111",
+    "canonical_path": "corpus/kernel/cc-by-4-0-deed.md",
+    "title": "Creative Commons Attribution 4.0 International (CC BY 4.0), deed",
+    "authors_or_org": [
+     "Creative Commons"
+    ],
+    "pub_year": "n.d.",
+    "doc_type": "standard",
+    "source_url": "https://creativecommons.org/licenses/by/4.0/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-11T15:27:36.289086+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "4839 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "4698 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-11T15:27:36.290034+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md decision 1, implementing DN-001 decision 1 (every check the report quotes reaches an admitted source): params.yaml d1_licence names the prefix https://creativecommons.org/ and the token CC-BY; the deed states the identifier CC BY 4.0 and its canonical URL. Binds to ind:D1 only because that rule's text already cites it; no rule changes.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-11T15:27:29.714586+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "standards_2026-10-11"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://creativecommons.org/licenses/by/4.0/ at 2026-10-11T15:24:38.987697+00:00 (logs/2026-10-11_standards_fetch.jsonl, capture sha256 8dda1ccec4be91fc80821d4e4fd5c568072b9a3a74b2fdc07c249a27e920ef01); rendered to markdown for the sweep. Licence: CC-BY-4.0: \"Except where otherwise noted, content on this site is licensed under a Creative Commons Attribution 4.0 International license.\""
+    ],
+    "observed_files": {
+     "corpus/kernel/cc-by-4-0-deed.md": {
+      "sha256": "a1035c221e4e3f03e07759533da936bdad651b2ee8e2888e34d9bea42897d111",
+      "size": 4839,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/cc-by-4-0-deed.md": {
+      "path": "corpus/kernel/cc-by-4-0-deed.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "4839 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "4698 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-11T15:27:36.290034+00:00"
+     }
+    },
+    "added_in": "standards-a2-d1-a13-2026-10-11"
+   }
+  },
+  "cc0-1-0-deed": {
+   "doc_id": "cc0-1-0-deed",
+   "identity": {
+    "sha256": "42f7559c0382bf3a5f4f45549f90cc4182f2b8c0b75367d1d9ac3b2277e804f5",
+    "canonical_path": "corpus/kernel/cc0-1-0-deed.md",
+    "title": "Creative Commons CC0 1.0 Universal (CC0 1.0), deed",
+    "authors_or_org": [
+     "Creative Commons"
+    ],
+    "pub_year": "n.d.",
+    "doc_type": "standard",
+    "source_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-11T15:27:36.290308+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "4281 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "4154 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-11T15:27:36.290485+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md decision 1, implementing DN-001 decision 1 (every check the report quotes reaches an admitted source): params.yaml d1_licence names the prefix https://creativecommons.org/ and the token CC0; the deed states the identifier CC0 1.0 and its canonical URL. Binds to ind:D1 only because that rule's text already cites it; no rule changes.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-11T15:27:29.714586+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "standards_2026-10-11"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://creativecommons.org/publicdomain/zero/1.0/ at 2026-10-11T15:24:40.446506+00:00 (logs/2026-10-11_standards_fetch.jsonl, capture sha256 abb4d48fc8b85de52b377dd105532c6c549f515d492a8e1712bc99e7316a1f12); rendered to markdown for the sweep. Licence: CC-BY-4.0: \"Except where otherwise noted, content on this site is licensed under a Creative Commons Attribution 4.0 International license.\""
+    ],
+    "observed_files": {
+     "corpus/kernel/cc0-1-0-deed.md": {
+      "sha256": "42f7559c0382bf3a5f4f45549f90cc4182f2b8c0b75367d1d9ac3b2277e804f5",
+      "size": 4281,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/cc0-1-0-deed.md": {
+      "path": "corpus/kernel/cc0-1-0-deed.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "4281 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "4154 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-11T15:27:36.290485+00:00"
+     }
+    },
+    "added_in": "standards-a2-d1-a13-2026-10-11"
    }
   },
   "ccsa-2026-ai-ready-official-statistics": {
@@ -24393,6 +24595,107 @@
     "added_in": "kernel-v03"
    }
   },
+  "openapi-specification-v2-0": {
+   "doc_id": "openapi-specification-v2-0",
+   "identity": {
+    "sha256": "c41436bbabaa9849b2dcc92cd07c14e532348cb65fe3b276a5e4694379c4fd72",
+    "canonical_path": "corpus/kernel/openapi-specification-v2-0.md",
+    "title": "OpenAPI Specification v2.0 (fka Swagger RESTful API Documentation Specification)",
+    "authors_or_org": [
+     "OpenAPI Initiative"
+    ],
+    "pub_year": "2014",
+    "doc_type": "standard",
+    "source_url": "https://spec.openapis.org/oas/v2.0.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-11T15:27:36.331082+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "77856 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "77691 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-11T15:27:36.331601+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md decision 1, implementing DN-001 decision 1 (every check the report quotes reaches an admitted source): RULE-A2-v6 names the `swagger` field (Swagger 2.0) as one of the two fields that make a JSON document an API description; section 6.4.1.1 defines it. Binds to ind:A2 only because that rule's text already cites it; no rule changes.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-11T15:27:29.714586+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "standards_2026-10-11"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://spec.openapis.org/oas/v2.0.html at 2026-10-11T15:23:53.642507+00:00 (logs/2026-10-11_standards_fetch.jsonl, capture sha256 74960840572e1dde9bd489b55853dd43abcc3f1b0ac0bd097084fe454ba1a07e); rendered to markdown for the sweep. Licence: Apache-2.0: \"The Swagger specification is licensed under The Apache License, Version 2.0.\" (section 2.1)"
+    ],
+    "observed_files": {
+     "corpus/kernel/openapi-specification-v2-0.md": {
+      "sha256": "c41436bbabaa9849b2dcc92cd07c14e532348cb65fe3b276a5e4694379c4fd72",
+      "size": 77856,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/openapi-specification-v2-0.md": {
+      "path": "corpus/kernel/openapi-specification-v2-0.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "77856 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "77691 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-11T15:27:36.331601+00:00"
+     }
+    },
+    "added_in": "standards-a2-d1-a13-2026-10-11"
+   }
+  },
   "organizational-ai-readiness-prosci-adkar": {
    "doc_id": "organizational-ai-readiness-prosci-adkar",
    "identity": {
@@ -25871,6 +26174,107 @@
       }
      }
     ]
+   }
+  },
+  "rfc-9727-api-catalog": {
+   "doc_id": "rfc-9727-api-catalog",
+   "identity": {
+    "sha256": "1be014f20fec8647a19d68f780cd06a59290b4e0c4b57f6f9227772e5e982ad8",
+    "canonical_path": "corpus/kernel/rfc-9727-api-catalog.md",
+    "title": "RFC 9727: api-catalog: A Well-Known URI and Link Relation to Help Discovery of APIs",
+    "authors_or_org": [
+     "K. Smith (IETF)"
+    ],
+    "pub_year": "2025",
+    "doc_type": "standard",
+    "source_url": "https://www.rfc-editor.org/rfc/rfc9727.txt",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-11T15:27:36.334190+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "33466 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "33462 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-11T15:27:36.334652+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md decision 1, implementing DN-001 decision 1 (every check the report quotes reaches an admitted source): RULE-A13-v1 cites RFC 9727 section 2 (the well-known URI) and section 3 (the link relation) and reads application/linkset+json, its section 4.2 format. Binds to ind:A13 only because that rule's text already cites it; no rule changes.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-11T15:27:29.714586+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "standards_2026-10-11"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://www.rfc-editor.org/rfc/rfc9727.txt at 2026-10-11T15:23:56.913521+00:00 (logs/2026-10-11_standards_fetch.jsonl, capture sha256 e17c39c0e3b4cf24be8b8c2080fe8d0a3258b1d225da1bca73c6db013e549033); rendered to markdown for the sweep. Licence: IETF Trust Legal Provisions (BCP 78): \"Copyright (c) 2025 IETF Trust and the persons identified as the document authors. All rights reserved.\"; code components under the Revised BSD License"
+    ],
+    "observed_files": {
+     "corpus/kernel/rfc-9727-api-catalog.md": {
+      "sha256": "1be014f20fec8647a19d68f780cd06a59290b4e0c4b57f6f9227772e5e982ad8",
+      "size": 33466,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/rfc-9727-api-catalog.md": {
+      "path": "corpus/kernel/rfc-9727-api-catalog.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "33466 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "33462 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-11T15:27:36.334652+00:00"
+     }
+    },
+    "added_in": "standards-a2-d1-a13-2026-10-11"
    }
   },
   "rsl-1-0-specification": {
@@ -30796,6 +31200,107 @@
       "checked_at": "2026-09-02T21:35:40.468561+00:00"
      }
     }
+   }
+  },
+  "spdx-license-list": {
+   "doc_id": "spdx-license-list",
+   "identity": {
+    "sha256": "6b014ac84a7085e8afe6ab4329e34285941720720d4336a3c1496b5a82e04bba",
+    "canonical_path": "corpus/kernel/spdx-license-list.md",
+    "title": "SPDX License List (version 3.29.0, 2026-09-16)",
+    "authors_or_org": [
+     "SPDX Workgroup, a Linux Foundation Project"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://spdx.org/licenses/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-11T15:27:36.348979+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "48674 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "48643 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-11T15:27:36.349988+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md decision 1, implementing DN-001 decision 1 (every check the report quotes reaches an admitted source): params.yaml d1_licence.recognised_prefixes, which RULE-D1-v6 reads as its test of a recognised licence identifier, names https://spdx.org/licenses/. Binds to ind:D1 only because that rule's text already cites it; no rule changes.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-11T15:27:29.714586+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "standards_2026-10-11"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://spdx.org/licenses/ at 2026-10-11T15:23:55.404538+00:00 (logs/2026-10-11_standards_fetch.jsonl, capture sha256 38f2f8605235267d67aa58f34d58aac41d250d2ccdea71561352821f43d4fd75); rendered to markdown for the sweep. Licence: as served: \"© 2018 SPDX Workgroup a Linux Foundation Project. All Rights Reserved.\" with a link to terms of use; the page states no open licence for the list itself"
+    ],
+    "observed_files": {
+     "corpus/kernel/spdx-license-list.md": {
+      "sha256": "6b014ac84a7085e8afe6ab4329e34285941720720d4336a3c1496b5a82e04bba",
+      "size": 48674,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/kernel/spdx-license-list.md": {
+      "path": "corpus/kernel/spdx-license-list.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "48674 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "48643 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-11T15:27:36.349988+00:00"
+     }
+    },
+    "added_in": "standards-a2-d1-a13-2026-10-11"
    }
   },
   "spectral-readme": {

@@ -218,7 +218,7 @@ Quick win: effort at most 2 and value at least 4. Clear it out: effort at most 2
 | quick_win | scans | S-A11-rule-A11-declared | 1 | 5 | established | yes | A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state |
 | quick_win | scans | S-A12-rule-A12 | 1 | 5 | established | no | An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager) |
 | quick_win | scans | S-A13-rule-A13 | 1 | 4 | plausible | yes | A machine client starting from the product page reaches the body's API, its terms, its changelog and its inventory without being told where they are |
-| quick_win | scans | S-A2-rule-A2 | 1 | 4 | unevidenced | yes | Documented public API; auth model; rate limits stated |
+| quick_win | scans | S-A2-rule-A2 | 1 | 4 | plausible | yes | Documented public API; auth model; rate limits stated |
 | quick_win | scans | S-A3-rule-A3 | 1 | 4 | plausible | yes | Full-product bulk download exists and is linked from product page |
 | quick_win | scans | S-A4-rule-A4 | 1 | 5 | established | yes | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths |
 | quick_win | scans | S-A5-rule-A5 | 1 | 4 | established | yes | llms.txt (or equivalent) present; sitemap covers data products |

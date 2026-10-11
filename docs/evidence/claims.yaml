@@ -3,7 +3,7 @@ generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_r
   whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
   the generator.'
 cycle_of_record: scan_2026-10-07_composite_d
-framework_record_commit: d3bb998b714e
+framework_record_commit: 380d852685af
 claims:
 - id: CL-001
   key: q1.partition
@@ -1811,8 +1811,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 282 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 49 on or after it, of which 25 are captured scan surfaces rather
+    and holds 287 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 54 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1826,6 +1826,14 @@ claims:
     id: git.framework_start
     locator: scripts/build_evidence_map.py::QUERIES['git.framework_start']
     note: 51d2526e1ad2ede2520281e3c3c2a60b256dbd1a
+  - kind: document
+    id: cc-by-4-0-deed
+    locator: events/batch-001.jsonl:132
+    note: first manifest_add 2026-10-11; provenance standards_2026-10-11
+  - kind: document
+    id: cc0-1-0-deed
+    locator: events/batch-001.jsonl:133
+    note: first manifest_add 2026-10-11; provenance standards_2026-10-11
   - kind: document
     id: cdoc-dswg-findings-and-recommendations-2022
     locator: events/batch-001.jsonl:125
@@ -1906,6 +1914,14 @@ claims:
     id: oasdiff-readme
     locator: events/batch-001.jsonl:109
     note: first manifest_add 2026-09-19; provenance tool_docs_2026-09-18
+  - kind: document
+    id: openapi-specification-v2-0
+    locator: events/batch-001.jsonl:130
+    note: first manifest_add 2026-10-11; provenance standards_2026-10-11
+  - kind: document
+    id: rfc-9727-api-catalog
+    locator: events/batch-001.jsonl:134
+    note: first manifest_add 2026-10-11; provenance standards_2026-10-11
   - kind: document
     id: scan-bea-flagship-1-interactive-data
     locator: events/batch-001.jsonl:73
@@ -2011,6 +2027,10 @@ claims:
     locator: events/batch-001.jsonl:128
     note: first manifest_add 2026-10-07; provenance dcat_004_2026-10-07
   - kind: document
+    id: spdx-license-list
+    locator: events/batch-001.jsonl:131
+    note: first manifest_add 2026-10-11; provenance standards_2026-10-11
+  - kind: document
     id: statdcat-ap-1-0-1
     locator: events/batch-001.jsonl:119
     note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
@@ -2025,11 +2045,11 @@ claims:
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '282'
+  - value: '287'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '49'
+  - value: '54'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2395,9 +2415,9 @@ claims:
 - id: CL-054
   key: q5.evidence_coverage
   question: Q5
-  text: 'Evidence coverage in the record: 10 of 50 indicator evidence cells carry a pinpoint locator;
-    34 of 154 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
-    and 84 of the 282 admitted documents are cited by one.'
+  text: 'Evidence coverage in the record: 12 of 50 indicator evidence cells carry a pinpoint locator;
+    40 of 160 `EVIDENCED_BY` edges point at a located document; 14 indicators have no `EVIDENCED_BY` edge;
+    and 90 of the 287 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2409,6 +2429,10 @@ claims:
   - kind: indicator
     id: ind:A1
     locator: framework/ai_readiness_framework.json#ind:A1
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:A2
+    locator: framework/ai_readiness_framework.json#ind:A2
     note: evidence cell carries a locator
   - kind: indicator
     id: ind:A3
@@ -2435,6 +2459,10 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:B3
     note: evidence cell carries a locator
   - kind: indicator
+    id: ind:D1
+    locator: framework/ai_readiness_framework.json#ind:D1
+    note: evidence cell carries a locator
+  - kind: indicator
     id: ind:D3
     locator: framework/ai_readiness_framework.json#ind:D3
     note: evidence cell carries a locator
@@ -2447,19 +2475,19 @@ claims:
     locator: framework/ai_readiness_framework.json#ind:G4
     note: evidence cell carries a locator
   numbers:
-  - value: '10'
+  - value: '12'
     source: indicators whose evidence cell carries a locator
   - value: '50'
     source: AssessmentIndicator nodes in the record
-  - value: '34'
+  - value: '40'
     source: EVIDENCED_BY edges whose document has a locator in the cell
-  - value: '154'
+  - value: '160'
     source: EVIDENCED_BY edges in the record
-  - value: '16'
+  - value: '14'
     source: indicators with no EVIDENCED_BY edge
-  - value: '84'
+  - value: '90'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '282'
+  - value: '287'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-059
@@ -4954,6 +4982,1079 @@ claims:
   - value: '0.125'
     source: score.py prescription delta for act:d1-state-the-licence-as-an-identifier
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-118
+  key: q7.discoverability.headline
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `RULE-A13-v1` (`A13`, discoverability from the product
+    page, a candidate that enters no level and no score) finds 15 body and object pairs, in 11 bodies,
+    where the object (an API, the API's terms, a changelog or an inventory) exists and no product page
+    of the body reaches it, of 29 pairs where it exists; counted per product page, 54 of the 88 page and
+    object pairs where the object exists are not reachable from that page. Existence is read at the recorded
+    and seeded locations, so each of these objects is published and a machine that starts from the product
+    page does not find it (`DN-013-R1`).
+  status: record
+  evidence:
+  - kind: result
+    id: 55c29a16-7674-4709-9307-fa26c510a4f8
+    locator: 'neo4j:Result{artifact_id: ''55c29a16-7674-4709-9307-fa26c510a4f8''}'
+    note: seeded_delta_pairs_exist_unreachable_2026-10-07_seeded, value 15, state proposed
+  - kind: result
+    id: ecdd9090-2c8f-4d35-b6d8-e567daa28b85
+    locator: 'neo4j:Result{artifact_id: ''ecdd9090-2c8f-4d35-b6d8-e567daa28b85''}'
+    note: seeded_delta_bodies_with_unreachable_pair_2026-10-07_seeded, value 11, state proposed
+  - kind: result
+    id: 9dc77898-df7c-4fd1-9f0e-b90c351fb424
+    locator: 'neo4j:Result{artifact_id: ''9dc77898-df7c-4fd1-9f0e-b90c351fb424''}'
+    note: seeded_delta_pairs_exist_2026-10-07_seeded, value 29, state proposed
+  - kind: result
+    id: c9b875dc-38f4-4b03-ae20-e21108dd69df
+    locator: 'neo4j:Result{artifact_id: ''c9b875dc-38f4-4b03-ae20-e21108dd69df''}'
+    note: seeded_delta_surface_pairs_exist_unreachable_2026-10-07_seeded, value 54, state proposed
+  - kind: result
+    id: a4688d67-bc10-4d09-b9df-1d1ac9939d4d
+    locator: 'neo4j:Result{artifact_id: ''a4688d67-bc10-4d09-b9df-1d1ac9939d4d''}'
+    note: seeded_delta_surface_pairs_exist_2026-10-07_seeded, value 88, state proposed
+  - kind: query
+    id: delta.seeded
+    locator: scripts/build_evidence_map.py::QUERIES['delta.seeded']
+  - kind: indicator
+    id: ind:A13
+    locator: framework/ai_readiness_framework.json#ind:A13
+    note: candidate
+  - kind: finding
+    id: fnd_02513259ab1aebc93dc552b0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1824
+    note: A13 fail on scan-ers-flagship-2-agricultural-baseline-database
+  - kind: finding
+    id: fnd_0b25267a466ffd646f268913
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1864
+    note: A13 fail on scan-nass-flagship-2-livestock-county-estimates
+  - kind: finding
+    id: fnd_1906f41ac91b5369b4d5386a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2154
+    note: A13 fail on scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023
+  - kind: finding
+    id: fnd_193bf918964dc775c385455a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1984
+    note: A13 fail on home:www.eia.gov
+  - kind: finding
+    id: fnd_19c37707da5b2d8bf861f9d6
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2124
+    note: A13 fail on scan-soi-flagship-2-business-tax-statistics
+  - kind: finding
+    id: fnd_215af1db0c6c3d4139c119d1
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2144
+    note: A13 fail on home:ncses.nsf.gov
+  - kind: finding
+    id: fnd_2515112d1d4b4443faa9a384
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1944
+    note: A13 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_2c181e0e836a15218c6440a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2024
+    note: A13 fail on scan-nchs-flagship-1-data-briefs
+  - kind: finding
+    id: fnd_32150ae5c7cc9f7921bef99a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2194
+    note: A13 fail on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+  - kind: finding
+    id: fnd_3bbda71358101ecc74da3e5e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2214
+    note: A13 fail on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health
+  - kind: finding
+    id: fnd_44d0eb9dd5531fe42892689c
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1874
+    note: A13 fail on scan-nass-machine
+  - kind: finding
+    id: fnd_4ba8311ca7f4528d5b5b5b83
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1904
+    note: A13 fail on scan-bea-flagship-1-interactive-data
+  - kind: finding
+    id: fnd_525d979ca7adf6e79ea74ade
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2004
+    note: A13 fail on scan-eia-machine
+  - kind: finding
+    id: fnd_5dfa36edc057a100119d36c0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2204
+    note: A13 fail on flagship:nces.ed.gov/programs/digest/
+  - kind: finding
+    id: fnd_61b0185ba7e3cee3b38b9be9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1844
+    note: A13 fail on home:www.nass.usda.gov
+  - kind: finding
+    id: fnd_6eade3dbb2e7a3519450d4b8
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1964
+    note: A13 fail on scan-census-machine
+  - kind: finding
+    id: fnd_7d53e09281440f95de72d04e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1814
+    note: A13 fail on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials
+  - kind: finding
+    id: fnd_7eb5ee2c9d5e473c33d60649
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1884
+    note: A13 fail on home:www.aphis.usda.gov
+  - kind: finding
+    id: fnd_7f86f0d729fa8437747119b7
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1974
+    note: A13 fail on home:nces.ed.gov
+  - kind: finding
+    id: fnd_8982367b0526469d9a01c155
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1834
+    note: A13 fail on scan-ers-machine
+  - kind: finding
+    id: fnd_a0b003ced7ef908998871117
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2104
+    note: A13 fail on home:www.irs.gov
+  - kind: finding
+    id: fnd_a2eb011a07966f228441740a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2034
+    note: A13 fail on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis
+  - kind: finding
+    id: fnd_ad428c57658e14e99230f9d9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2164
+    note: A13 fail on scan-ncses-machine
+  - kind: finding
+    id: fnd_b160108da11be62c8c8a87e5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2014
+    note: A13 fail on home:www.cdc.gov
+  - kind: finding
+    id: fnd_b2253bb1a2fa302af52da8bc
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1804
+    note: A13 fail on home:www.ers.usda.gov
+  - kind: finding
+    id: fnd_bd556be5a20ce4f98f2a4d61
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2074
+    note: A13 fail on scan-bjs-flagship-1-data-by-topic
+  - kind: finding
+    id: fnd_c27a3a408a37ea3903876eaa
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1914
+    note: A13 fail on scan-bea-flagship-2-news-releases
+  - kind: finding
+    id: fnd_c521eafa67623e693aa2f0eb
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2084
+    note: A13 fail on scan-bjs-flagship-2-death-in-custody-reporting-act
+  - kind: finding
+    id: fnd_c6502a88806fdc5cc1f08c39
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1894
+    note: A13 fail on home:www.bea.gov
+  - kind: finding
+    id: fnd_cac05eb3a39fbafdd660158b
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1954
+    note: A13 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_eab99a8b4af2f635ef506d04
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2114
+    note: A13 fail on scan-soi-flagship-1-individual-tax-statistics
+  - kind: finding
+    id: fnd_eb43ed2aaf7010fd686b7dab
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2054
+    note: A13 fail on home:www.samhsa.gov
+  - kind: finding
+    id: fnd_ec2169187713d1d0680eacec
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1854
+    note: A13 fail on scan-nass-flagship-1-data-statistics
+  - kind: finding
+    id: fnd_f798e2513ef0df9b51360dd0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2064
+    note: A13 fail on home:bjs.ojp.gov
+  - kind: finding
+    id: fnd_f93ba57bd7db8b6b7af4061a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1934
+    note: A13 fail on home:www.census.gov
+  - kind: finding
+    id: fnd_fa13e933e85f844ea5f17de0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1924
+    note: A13 fail on scan-bea-machine
+  - kind: finding
+    id: fnd_fc410a878e92249291925397
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2044
+    note: A13 fail on scan-nchs-machine
+  numbers:
+  - value: '15'
+    source: Result seeded_delta_pairs_exist_unreachable_2026-10-07_seeded
+  - value: '11'
+    source: Result seeded_delta_bodies_with_unreachable_pair_2026-10-07_seeded
+  - value: '29'
+    source: Result seeded_delta_pairs_exist_2026-10-07_seeded
+  - value: '54'
+    source: Result seeded_delta_surface_pairs_exist_unreachable_2026-10-07_seeded
+  - value: '88'
+    source: Result seeded_delta_surface_pairs_exist_2026-10-07_seeded
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-119
+  key: q7.discoverability.api
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, 5 bodies publish an API that is shown to exist at a recorded
+    or seeded location, and in 3 of them (`BJS`, `NCES`, `NCHS`) no product page of the body reaches it
+    (`RULE-A13-v1`, `A13`).
+  status: record
+  evidence:
+  - kind: result
+    id: fb9c712a-53cc-4076-bdd9-757b5e68a519
+    locator: 'neo4j:Result{artifact_id: ''fb9c712a-53cc-4076-bdd9-757b5e68a519''}'
+    note: seeded_delta_api_pairs_exist_2026-10-07_seeded, value 5, state proposed
+  - kind: result
+    id: c66e7e28-11a8-4c68-92c9-429b581fdd97
+    locator: 'neo4j:Result{artifact_id: ''c66e7e28-11a8-4c68-92c9-429b581fdd97''}'
+    note: seeded_delta_api_pairs_exist_unreachable_2026-10-07_seeded, value 3, state proposed
+  - kind: query
+    id: delta.seeded
+    locator: scripts/build_evidence_map.py::QUERIES['delta.seeded']
+  - kind: finding
+    id: fnd_2c181e0e836a15218c6440a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2024
+    note: A13 api fail on scan-nchs-flagship-1-data-briefs
+  - kind: finding
+    id: fnd_5dfa36edc057a100119d36c0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2204
+    note: A13 api fail on flagship:nces.ed.gov/programs/digest/
+  - kind: finding
+    id: fnd_7f86f0d729fa8437747119b7
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1974
+    note: A13 api fail on home:nces.ed.gov
+  - kind: finding
+    id: fnd_a2eb011a07966f228441740a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2034
+    note: A13 api fail on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis
+  - kind: finding
+    id: fnd_b160108da11be62c8c8a87e5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2014
+    note: A13 api fail on home:www.cdc.gov
+  - kind: finding
+    id: fnd_bd556be5a20ce4f98f2a4d61
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2074
+    note: A13 api fail on scan-bjs-flagship-1-data-by-topic
+  - kind: finding
+    id: fnd_c521eafa67623e693aa2f0eb
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2084
+    note: A13 api fail on scan-bjs-flagship-2-death-in-custody-reporting-act
+  - kind: finding
+    id: fnd_f798e2513ef0df9b51360dd0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2064
+    note: A13 api fail on home:bjs.ojp.gov
+  - kind: finding
+    id: fnd_fc410a878e92249291925397
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2044
+    note: A13 api fail on scan-nchs-machine
+  numbers:
+  - value: '5'
+    source: Result seeded_delta_api_pairs_exist_2026-10-07_seeded
+  - value: '3'
+    source: Result seeded_delta_api_pairs_exist_unreachable_2026-10-07_seeded
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-120
+  key: q7.discoverability.terms
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, 3 bodies publish an API terms page that is shown to exist
+    at a recorded or seeded location, and in 2 of them (`BEA`, `CENSUS`) no product page of the body reaches
+    it (`RULE-A13-v1`, `A13`).
+  status: record
+  evidence:
+  - kind: result
+    id: 67ceae72-fb3f-48fa-a289-bc8e3f6eb26b
+    locator: 'neo4j:Result{artifact_id: ''67ceae72-fb3f-48fa-a289-bc8e3f6eb26b''}'
+    note: seeded_delta_terms_pairs_exist_2026-10-07_seeded, value 3, state proposed
+  - kind: result
+    id: 144c194c-b682-4671-a947-3dade82af7d8
+    locator: 'neo4j:Result{artifact_id: ''144c194c-b682-4671-a947-3dade82af7d8''}'
+    note: seeded_delta_terms_pairs_exist_unreachable_2026-10-07_seeded, value 2, state proposed
+  - kind: query
+    id: delta.seeded
+    locator: scripts/build_evidence_map.py::QUERIES['delta.seeded']
+  - kind: finding
+    id: fnd_2515112d1d4b4443faa9a384
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1944
+    note: A13 terms fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_4ba8311ca7f4528d5b5b5b83
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1904
+    note: A13 terms fail on scan-bea-flagship-1-interactive-data
+  - kind: finding
+    id: fnd_6eade3dbb2e7a3519450d4b8
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1964
+    note: A13 terms fail on scan-census-machine
+  - kind: finding
+    id: fnd_c27a3a408a37ea3903876eaa
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1914
+    note: A13 terms fail on scan-bea-flagship-2-news-releases
+  - kind: finding
+    id: fnd_c6502a88806fdc5cc1f08c39
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1894
+    note: A13 terms fail on home:www.bea.gov
+  - kind: finding
+    id: fnd_cac05eb3a39fbafdd660158b
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1954
+    note: A13 terms fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_f93ba57bd7db8b6b7af4061a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1934
+    note: A13 terms fail on home:www.census.gov
+  - kind: finding
+    id: fnd_fa13e933e85f844ea5f17de0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1924
+    note: A13 terms fail on scan-bea-machine
+  numbers:
+  - value: '3'
+    source: Result seeded_delta_terms_pairs_exist_2026-10-07_seeded
+  - value: '2'
+    source: Result seeded_delta_terms_pairs_exist_unreachable_2026-10-07_seeded
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-121
+  key: q7.discoverability.changelog
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, 5 bodies publish a changelog that is shown to exist at
+    a recorded or seeded location, and in 1 of them (`CENSUS`) no product page of the body reaches it
+    (`RULE-A13-v1`, `A13`).
+  status: record
+  evidence:
+  - kind: result
+    id: 4db560cb-6683-4d78-956e-2ac5c91cf688
+    locator: 'neo4j:Result{artifact_id: ''4db560cb-6683-4d78-956e-2ac5c91cf688''}'
+    note: seeded_delta_changelog_pairs_exist_2026-10-07_seeded, value 5, state proposed
+  - kind: result
+    id: c2ec1640-e454-4b78-92b9-e83a3cb3db6d
+    locator: 'neo4j:Result{artifact_id: ''c2ec1640-e454-4b78-92b9-e83a3cb3db6d''}'
+    note: seeded_delta_changelog_pairs_exist_unreachable_2026-10-07_seeded, value 1, state proposed
+  - kind: query
+    id: delta.seeded
+    locator: scripts/build_evidence_map.py::QUERIES['delta.seeded']
+  - kind: finding
+    id: fnd_2515112d1d4b4443faa9a384
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1944
+    note: A13 changelog fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6eade3dbb2e7a3519450d4b8
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1964
+    note: A13 changelog fail on scan-census-machine
+  - kind: finding
+    id: fnd_cac05eb3a39fbafdd660158b
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1954
+    note: A13 changelog fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_f93ba57bd7db8b6b7af4061a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1934
+    note: A13 changelog fail on home:www.census.gov
+  numbers:
+  - value: '5'
+    source: Result seeded_delta_changelog_pairs_exist_2026-10-07_seeded
+  - value: '1'
+    source: Result seeded_delta_changelog_pairs_exist_unreachable_2026-10-07_seeded
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-122
+  key: q7.discoverability.inventory
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, 16 bodies publish an inventory that is shown to exist
+    at a recorded or seeded location, and in 9 of them (`BJS`, `ERS`, `NAHMSAPHIS`, `NASS`, `NCES`, `NCHS`,
+    `NCSES`, `SAMHSACBHS`, `SOI`) no product page of the body reaches it (`RULE-A13-v1`, `A13`).
+  status: record
+  evidence:
+  - kind: result
+    id: 54a127ec-97c1-495e-908a-52bc843956c1
+    locator: 'neo4j:Result{artifact_id: ''54a127ec-97c1-495e-908a-52bc843956c1''}'
+    note: seeded_delta_inventory_pairs_exist_2026-10-07_seeded, value 16, state proposed
+  - kind: result
+    id: e72ae430-429f-4afb-86f1-3fa63b285c88
+    locator: 'neo4j:Result{artifact_id: ''e72ae430-429f-4afb-86f1-3fa63b285c88''}'
+    note: seeded_delta_inventory_pairs_exist_unreachable_2026-10-07_seeded, value 9, state proposed
+  - kind: query
+    id: delta.seeded
+    locator: scripts/build_evidence_map.py::QUERIES['delta.seeded']
+  - kind: finding
+    id: fnd_02513259ab1aebc93dc552b0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1824
+    note: A13 inventory fail on scan-ers-flagship-2-agricultural-baseline-database
+  - kind: finding
+    id: fnd_0b25267a466ffd646f268913
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1864
+    note: A13 inventory fail on scan-nass-flagship-2-livestock-county-estimates
+  - kind: finding
+    id: fnd_1906f41ac91b5369b4d5386a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2154
+    note: A13 inventory fail on scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023
+  - kind: finding
+    id: fnd_19c37707da5b2d8bf861f9d6
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2124
+    note: A13 inventory fail on scan-soi-flagship-2-business-tax-statistics
+  - kind: finding
+    id: fnd_215af1db0c6c3d4139c119d1
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2144
+    note: A13 inventory fail on home:ncses.nsf.gov
+  - kind: finding
+    id: fnd_2c181e0e836a15218c6440a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2024
+    note: A13 inventory fail on scan-nchs-flagship-1-data-briefs
+  - kind: finding
+    id: fnd_32150ae5c7cc9f7921bef99a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2194
+    note: A13 inventory fail on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+  - kind: finding
+    id: fnd_3bbda71358101ecc74da3e5e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2214
+    note: A13 inventory fail on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health
+  - kind: finding
+    id: fnd_44d0eb9dd5531fe42892689c
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1874
+    note: A13 inventory fail on scan-nass-machine
+  - kind: finding
+    id: fnd_5dfa36edc057a100119d36c0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2204
+    note: A13 inventory fail on flagship:nces.ed.gov/programs/digest/
+  - kind: finding
+    id: fnd_61b0185ba7e3cee3b38b9be9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1844
+    note: A13 inventory fail on home:www.nass.usda.gov
+  - kind: finding
+    id: fnd_7d53e09281440f95de72d04e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1814
+    note: A13 inventory fail on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials
+  - kind: finding
+    id: fnd_7eb5ee2c9d5e473c33d60649
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1884
+    note: A13 inventory fail on home:www.aphis.usda.gov
+  - kind: finding
+    id: fnd_7f86f0d729fa8437747119b7
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1974
+    note: A13 inventory fail on home:nces.ed.gov
+  - kind: finding
+    id: fnd_8982367b0526469d9a01c155
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1834
+    note: A13 inventory fail on scan-ers-machine
+  - kind: finding
+    id: fnd_a0b003ced7ef908998871117
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2104
+    note: A13 inventory fail on home:www.irs.gov
+  - kind: finding
+    id: fnd_a2eb011a07966f228441740a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2034
+    note: A13 inventory fail on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis
+  - kind: finding
+    id: fnd_ad428c57658e14e99230f9d9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2164
+    note: A13 inventory fail on scan-ncses-machine
+  - kind: finding
+    id: fnd_b160108da11be62c8c8a87e5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2014
+    note: A13 inventory fail on home:www.cdc.gov
+  - kind: finding
+    id: fnd_b2253bb1a2fa302af52da8bc
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1804
+    note: A13 inventory fail on home:www.ers.usda.gov
+  - kind: finding
+    id: fnd_bd556be5a20ce4f98f2a4d61
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2074
+    note: A13 inventory fail on scan-bjs-flagship-1-data-by-topic
+  - kind: finding
+    id: fnd_c521eafa67623e693aa2f0eb
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2084
+    note: A13 inventory fail on scan-bjs-flagship-2-death-in-custody-reporting-act
+  - kind: finding
+    id: fnd_eab99a8b4af2f635ef506d04
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2114
+    note: A13 inventory fail on scan-soi-flagship-1-individual-tax-statistics
+  - kind: finding
+    id: fnd_eb43ed2aaf7010fd686b7dab
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2054
+    note: A13 inventory fail on home:www.samhsa.gov
+  - kind: finding
+    id: fnd_ec2169187713d1d0680eacec
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1854
+    note: A13 inventory fail on scan-nass-flagship-1-data-statistics
+  - kind: finding
+    id: fnd_f798e2513ef0df9b51360dd0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2064
+    note: A13 inventory fail on home:bjs.ojp.gov
+  - kind: finding
+    id: fnd_fc410a878e92249291925397
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2044
+    note: A13 inventory fail on scan-nchs-machine
+  numbers:
+  - value: '16'
+    source: Result seeded_delta_inventory_pairs_exist_2026-10-07_seeded
+  - value: '9'
+    source: Result seeded_delta_inventory_pairs_exist_unreachable_2026-10-07_seeded
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-123
+  key: q7.a13.BEA
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 4 of the 4 product surfaces of `BEA` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_4ba8311ca7f4528d5b5b5b83
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1904
+    note: A13 fail on scan-bea-flagship-1-interactive-data
+  - kind: finding
+    id: fnd_c27a3a408a37ea3903876eaa
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1914
+    note: A13 fail on scan-bea-flagship-2-news-releases
+  - kind: finding
+    id: fnd_c6502a88806fdc5cc1f08c39
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1894
+    note: A13 fail on home:www.bea.gov
+  - kind: finding
+    id: fnd_fa13e933e85f844ea5f17de0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1924
+    note: A13 fail on scan-bea-machine
+  numbers:
+  - value: '4'
+    source: A13 fail findings for BEA
+  - value: '4'
+    source: A13 findings for BEA
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-124
+  key: q7.a13.BJS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 3 of the 3 product surfaces of `BJS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_bd556be5a20ce4f98f2a4d61
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2074
+    note: A13 fail on scan-bjs-flagship-1-data-by-topic
+  - kind: finding
+    id: fnd_c521eafa67623e693aa2f0eb
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2084
+    note: A13 fail on scan-bjs-flagship-2-death-in-custody-reporting-act
+  - kind: finding
+    id: fnd_f798e2513ef0df9b51360dd0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2064
+    note: A13 fail on home:bjs.ojp.gov
+  numbers:
+  - value: '3'
+    source: A13 fail findings for BJS
+  - value: '3'
+    source: A13 findings for BJS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-125
+  key: q7.a13.BLS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is error on 2 of the 2 product surfaces of `BLS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_96605e519cc2128f38a656a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2094
+    note: A13 error on home:www.bls.gov
+  - kind: finding
+    id: fnd_9865a82731804e035cd2277d
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2224
+    note: A13 error on flagship:www.bls.gov/cpi/
+  numbers:
+  - value: '2'
+    source: A13 error findings for BLS
+  - value: '2'
+    source: A13 findings for BLS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-126
+  key: q7.a13.BTS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is error on 2 of the 2 product surfaces of `BTS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_1ef4771f1285477981f45b33
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2234
+    note: A13 error on flagship:www.bts.gov/topics/national-transportation-statistics
+  - kind: finding
+    id: fnd_352edac1fcbaa90b5c6803af
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2134
+    note: A13 error on home:www.bts.gov
+  numbers:
+  - value: '2'
+    source: A13 error findings for BTS
+  - value: '2'
+    source: A13 findings for BTS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-127
+  key: q7.a13.CENSUS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 4 of the 4 product surfaces of `CENSUS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_2515112d1d4b4443faa9a384
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1944
+    note: A13 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6eade3dbb2e7a3519450d4b8
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1964
+    note: A13 fail on scan-census-machine
+  - kind: finding
+    id: fnd_cac05eb3a39fbafdd660158b
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1954
+    note: A13 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_f93ba57bd7db8b6b7af4061a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1934
+    note: A13 fail on home:www.census.gov
+  numbers:
+  - value: '4'
+    source: A13 fail findings for CENSUS
+  - value: '4'
+    source: A13 findings for CENSUS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-128
+  key: q7.a13.DRSMSU
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is pass on 2 of the 2 product surfaces of `DRSMSU` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_b35bdf2ca011f5ce6f7476d6
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1794
+    note: A13 pass on home:www.federalreserve.gov
+  - kind: finding
+    id: fnd_cf61ed355c99dd0d7cd4f52c
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2184
+    note: A13 pass on flagship:www.federalreserve.gov/econres/scfindex.htm
+  numbers:
+  - value: '2'
+    source: A13 pass findings for DRSMSU
+  - value: '2'
+    source: A13 findings for DRSMSU
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-129
+  key: q7.a13.EIA
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 2 and error on 1 of the 3 product surfaces of `EIA` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_193bf918964dc775c385455a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1984
+    note: A13 fail on home:www.eia.gov
+  - kind: finding
+    id: fnd_525d979ca7adf6e79ea74ade
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2004
+    note: A13 fail on scan-eia-machine
+  - kind: finding
+    id: fnd_ce6081d009f2aca95f3b17ab
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1994
+    note: A13 error on scan-eia-flagship-1-open-data
+  numbers:
+  - value: '2'
+    source: A13 fail findings for EIA
+  - value: '1'
+    source: A13 error findings for EIA
+  - value: '3'
+    source: A13 findings for EIA
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-130
+  key: q7.a13.ERS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 4 of the 4 product surfaces of `ERS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_02513259ab1aebc93dc552b0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1824
+    note: A13 fail on scan-ers-flagship-2-agricultural-baseline-database
+  - kind: finding
+    id: fnd_7d53e09281440f95de72d04e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1814
+    note: A13 fail on scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials
+  - kind: finding
+    id: fnd_8982367b0526469d9a01c155
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1834
+    note: A13 fail on scan-ers-machine
+  - kind: finding
+    id: fnd_b2253bb1a2fa302af52da8bc
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1804
+    note: A13 fail on home:www.ers.usda.gov
+  numbers:
+  - value: '4'
+    source: A13 fail findings for ERS
+  - value: '4'
+    source: A13 findings for ERS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-131
+  key: q7.a13.NAHMSAPHIS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 2 of the 2 product surfaces of `NAHMSAPHIS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_32150ae5c7cc9f7921bef99a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2194
+    note: A13 fail on flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+  - kind: finding
+    id: fnd_7eb5ee2c9d5e473c33d60649
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1884
+    note: A13 fail on home:www.aphis.usda.gov
+  numbers:
+  - value: '2'
+    source: A13 fail findings for NAHMSAPHIS
+  - value: '2'
+    source: A13 findings for NAHMSAPHIS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-132
+  key: q7.a13.NASS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 4 of the 4 product surfaces of `NASS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_0b25267a466ffd646f268913
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1864
+    note: A13 fail on scan-nass-flagship-2-livestock-county-estimates
+  - kind: finding
+    id: fnd_44d0eb9dd5531fe42892689c
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1874
+    note: A13 fail on scan-nass-machine
+  - kind: finding
+    id: fnd_61b0185ba7e3cee3b38b9be9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1844
+    note: A13 fail on home:www.nass.usda.gov
+  - kind: finding
+    id: fnd_ec2169187713d1d0680eacec
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1854
+    note: A13 fail on scan-nass-flagship-1-data-statistics
+  numbers:
+  - value: '4'
+    source: A13 fail findings for NASS
+  - value: '4'
+    source: A13 findings for NASS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-133
+  key: q7.a13.NCES
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 2 of the 2 product surfaces of `NCES` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_5dfa36edc057a100119d36c0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2204
+    note: A13 fail on flagship:nces.ed.gov/programs/digest/
+  - kind: finding
+    id: fnd_7f86f0d729fa8437747119b7
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1974
+    note: A13 fail on home:nces.ed.gov
+  numbers:
+  - value: '2'
+    source: A13 fail findings for NCES
+  - value: '2'
+    source: A13 findings for NCES
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-134
+  key: q7.a13.NCHS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 4 of the 4 product surfaces of `NCHS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_2c181e0e836a15218c6440a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2024
+    note: A13 fail on scan-nchs-flagship-1-data-briefs
+  - kind: finding
+    id: fnd_a2eb011a07966f228441740a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2034
+    note: A13 fail on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis
+  - kind: finding
+    id: fnd_b160108da11be62c8c8a87e5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2014
+    note: A13 fail on home:www.cdc.gov
+  - kind: finding
+    id: fnd_fc410a878e92249291925397
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2044
+    note: A13 fail on scan-nchs-machine
+  numbers:
+  - value: '4'
+    source: A13 fail findings for NCHS
+  - value: '4'
+    source: A13 findings for NCHS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-135
+  key: q7.a13.NCSES
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 3 of the 3 product surfaces of `NCSES` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_1906f41ac91b5369b4d5386a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2154
+    note: A13 fail on scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023
+  - kind: finding
+    id: fnd_215af1db0c6c3d4139c119d1
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2144
+    note: A13 fail on home:ncses.nsf.gov
+  - kind: finding
+    id: fnd_ad428c57658e14e99230f9d9
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2164
+    note: A13 fail on scan-ncses-machine
+  numbers:
+  - value: '3'
+    source: A13 fail findings for NCSES
+  - value: '3'
+    source: A13 findings for NCSES
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-136
+  key: q7.a13.ORES
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is error on 2 of the 2 product surfaces of `ORES` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_849ca333d31bb28977c0b074
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2174
+    note: A13 error on home:www.ssa.gov
+  - kind: finding
+    id: fnd_b4a7d9481d20cdec312bf3ef
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2244
+    note: A13 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/
+  numbers:
+  - value: '2'
+    source: A13 error findings for ORES
+  - value: '2'
+    source: A13 findings for ORES
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-137
+  key: q7.a13.SAMHSACBHS
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 2 of the 2 product surfaces of `SAMHSACBHS` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_3bbda71358101ecc74da3e5e
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2214
+    note: A13 fail on flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health
+  - kind: finding
+    id: fnd_eb43ed2aaf7010fd686b7dab
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2054
+    note: A13 fail on home:www.samhsa.gov
+  numbers:
+  - value: '2'
+    source: A13 fail findings for SAMHSACBHS
+  - value: '2'
+    source: A13 findings for SAMHSACBHS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-138
+  key: q7.a13.SOI
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A13` (discoverability from the product page, a candidate
+    in no level and no score) is fail on 3 of the 3 product surfaces of `SOI` it judged.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_19c37707da5b2d8bf861f9d6
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2124
+    note: A13 fail on scan-soi-flagship-2-business-tax-statistics
+  - kind: finding
+    id: fnd_a0b003ced7ef908998871117
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2104
+    note: A13 fail on home:www.irs.gov
+  - kind: finding
+    id: fnd_eab99a8b4af2f635ef506d04
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2114
+    note: A13 fail on scan-soi-flagship-1-individual-tax-statistics
+  numbers:
+  - value: '3'
+    source: A13 fail findings for SOI
+  - value: '3'
+    source: A13 findings for SOI
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-139
+  key: q7.discoverability.convention
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, no host the harness fetched it on answered the well-known
+    location `/.well-known/api-catalog` with an API catalog (`application/linkset+json`), and no product
+    page sent a `Link` header with `rel="api-catalog"`, the two conventions `RFC 9727` defines (`§2`,
+    `§3`); so `RULE-A13-v1` found no API by convention, and an API reached a machine from the product
+    page by a link or not at all.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.a13_convention
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.a13_convention']
+    note: scan_2026-10-07_seeded
+  - kind: document
+    id: rfc-9727-api-catalog
+    locator: events/batch-001.jsonl:134
+    note: first manifest_add 2026-10-11
+  - kind: finding
+    id: fnd_2c181e0e836a15218c6440a5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2024
+    note: 'A13 api fail on scan-nchs-flagship-1-data-briefs: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_5dfa36edc057a100119d36c0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2204
+    note: 'A13 api fail on flagship:nces.ed.gov/programs/digest/: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_7f86f0d729fa8437747119b7
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:1974
+    note: 'A13 api fail on home:nces.ed.gov: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_a2eb011a07966f228441740a
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2034
+    note: 'A13 api fail on scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis: no
+      API catalog at the convention location'
+  - kind: finding
+    id: fnd_b160108da11be62c8c8a87e5
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2014
+    note: 'A13 api fail on home:www.cdc.gov: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_bd556be5a20ce4f98f2a4d61
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2074
+    note: 'A13 api fail on scan-bjs-flagship-1-data-by-topic: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_c521eafa67623e693aa2f0eb
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2084
+    note: 'A13 api fail on scan-bjs-flagship-2-death-in-custody-reporting-act: no API catalog at the convention
+      location'
+  - kind: finding
+    id: fnd_f798e2513ef0df9b51360dd0
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2064
+    note: 'A13 api fail on home:bjs.ojp.gov: no API catalog at the convention location'
+  - kind: finding
+    id: fnd_fc410a878e92249291925397
+    locator: events/cycle-scan_2026-10-07_seeded.jsonl:2044
+    note: 'A13 api fail on scan-nchs-machine: no API catalog at the convention location'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-140
+  key: q7.existence.A2
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `A2` ("Documented public API; auth model; rate limits
+    stated") is pass on 0 of the surfaces it judged at the recorded and seeded locations, fail on 25 and
+    error on 21; `ind:A2` is evidenced by `openapi-specification-core`, `openapi-specification-v2-0`.
+  status: record
+  evidence:
+  - kind: result
+    id: d313936c-0cb4-45e9-ae0f-898ba8823a6e
+    locator: 'neo4j:Result{artifact_id: ''d313936c-0cb4-45e9-ae0f-898ba8823a6e''}'
+    note: scan_a2_pass_2026-10-07_composite_d, value 0, state proposed
+  - kind: result
+    id: 4ba59f4a-16db-4af0-8361-b503d0456153
+    locator: 'neo4j:Result{artifact_id: ''4ba59f4a-16db-4af0-8361-b503d0456153''}'
+    note: scan_a2_fail_2026-10-07_composite_d, value 25, state proposed
+  - kind: result
+    id: 20785245-fc29-43d4-a36f-e8a3edf0addf
+    locator: 'neo4j:Result{artifact_id: ''20785245-fc29-43d4-a36f-e8a3edf0addf''}'
+    note: scan_a2_error_2026-10-07_composite_d, value 21, state proposed
+  - kind: indicator
+    id: ind:A2
+    locator: framework/ai_readiness_framework.json#ind:A2
+  - kind: document
+    id: openapi-specification-core
+    locator: events/batch-006.jsonl:21
+    note: first manifest_add 2026-08-21
+  - kind: document
+    id: openapi-specification-v2-0
+    locator: events/batch-001.jsonl:130
+    note: first manifest_add 2026-10-11
+  numbers:
+  - value: '0'
+    source: Result scan_a2_pass_2026-10-07_composite_d
+  - value: '25'
+    source: Result scan_a2_fail_2026-10-07_composite_d
+  - value: '21'
+    source: Result scan_a2_error_2026-10-07_composite_d
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-141
+  key: q7.existence.D1
+  question: Q7
+  text: On cycle `scan_2026-10-07_composite_d`, `D1` ("Explicit machine-readable license/terms on product
+    and API") is pass on 0 of the surfaces it judged at the recorded and seeded locations, fail on 31
+    and error on 15; `ind:D1` is evidenced by `cc-by-4-0-deed`, `cc0-1-0-deed`, `spdx-license-list`.
+  status: record
+  evidence:
+  - kind: result
+    id: 06babf69-fc22-41e9-9f4a-f2ba2b018ac5
+    locator: 'neo4j:Result{artifact_id: ''06babf69-fc22-41e9-9f4a-f2ba2b018ac5''}'
+    note: scan_d1_pass_2026-10-07_composite_d, value 0, state proposed
+  - kind: result
+    id: 0a2a3a5a-899f-4d31-a20a-841692d85787
+    locator: 'neo4j:Result{artifact_id: ''0a2a3a5a-899f-4d31-a20a-841692d85787''}'
+    note: scan_d1_fail_2026-10-07_composite_d, value 31, state proposed
+  - kind: result
+    id: 05fc8600-0e7f-426e-9b9a-d8dec9a0b9aa
+    locator: 'neo4j:Result{artifact_id: ''05fc8600-0e7f-426e-9b9a-d8dec9a0b9aa''}'
+    note: scan_d1_error_2026-10-07_composite_d, value 15, state proposed
+  - kind: indicator
+    id: ind:D1
+    locator: framework/ai_readiness_framework.json#ind:D1
+  - kind: document
+    id: cc-by-4-0-deed
+    locator: events/batch-001.jsonl:132
+    note: first manifest_add 2026-10-11
+  - kind: document
+    id: cc0-1-0-deed
+    locator: events/batch-001.jsonl:133
+    note: first manifest_add 2026-10-11
+  - kind: document
+    id: spdx-license-list
+    locator: events/batch-001.jsonl:131
+    note: first manifest_add 2026-10-11
+  numbers:
+  - value: '0'
+    source: Result scan_d1_pass_2026-10-07_composite_d
+  - value: '31'
+    source: Result scan_d1_fail_2026-10-07_composite_d
+  - value: '15'
+    source: Result scan_d1_error_2026-10-07_composite_d
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
 tables:
   q1_measurement_boundary:
   - indicator: A7
@@ -5475,4 +6576,6 @@ tables:
     documents: 15
   - first_admitted: '2026-10-07'
     documents: 2
+  - first_admitted: '2026-10-11'
+    documents: 5
   q5_numbers_that_differ_from_the_pack: []
