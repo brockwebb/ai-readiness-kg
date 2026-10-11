@@ -46,7 +46,10 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: `scan_2026-10-06_composite_c` moved A2 to `measured` (generation 15 gives it `fail` cells where
 #: a body declares its API base); D1 stays `harness_built`, every Finding `error`; the candidate
 #: A13 enters `specified`. Was 21 / 3 / 25.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 22, "harness_built": 2, "specified": 26}
+#: `cc_tasks/2026-10-07_seed_known_locations_verify.md`: the write-back against
+#: `scan_2026-10-07_composite_d` moved D1 to `measured` (its terms pages read whole, it has `fail`
+#: cells); E5 stays `harness_built`, as it judges the cycle. Was 22 / 2 / 26.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 23, "harness_built": 1, "specified": 26}
 
 
 def _loader():
@@ -223,9 +226,10 @@ def test_the_measured_indicators_carry_their_cycle(graph):
         "MATCH (i:AssessmentIndicator) WHERE i.measured_cycle IS NOT NULL "
         "RETURN i.code AS code, i.measured_cycle AS cyc, i.measured_params_hash AS ph, "
         "i.measured_legs AS legs"))
-    # DD-069: every scan-measured indicator names the cycle of record. 20 of the 21 measured;
-    # G1-O has no scan leg (DD-036) and carries no `measured_by`.
-    assert len(rows) == 21, "21 of the 22 measured are the cycle of record's; G1-O is not a scan's"
+    # DD-069: every scan-measured indicator names the cycle of record. 22 of the 23 measured
+    # since `cc_tasks/2026-10-07_seed_known_locations_verify.md` (D1 joined them); G1-O has no
+    # scan leg (DD-036) and carries no `measured_by`.
+    assert len(rows) == 22, "22 of the 23 measured are the cycle of record's; G1-O is not a scan's"
     import yaml
     snap = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "reports"
                            / "publication.yaml").read_text(encoding="utf-8"))["snapshot_cycle"]

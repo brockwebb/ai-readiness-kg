@@ -214,9 +214,10 @@ def test_overview_names_the_cycle_of_record_its_date_and_its_bodies(offline):
     o = offline.get_overview()
     c = o["cycle_of_record"]
     # The composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`):
-    # its evidence is two collections, cycle 4's and the recollection's.
-    assert c["cycle"] == "scan_2026-10-06_composite_c"
-    assert c["measured"] == "2026-09-10 + 2026-10-06_recollect"
+    # its evidence is cycle 4's collection, the recollection's and, since
+    # `cc_tasks/2026-10-07_seed_known_locations_verify.md`, the seeded cycle's.
+    assert c["cycle"] == "scan_2026-10-07_composite_d"
+    assert c["measured"] == "2026-09-10 + 2026-10-06_recollect + 2026-10-07_seeded"
     assert c["n_bodies"] == len(c["bodies"]) == 16
     assert "BEA" in c["bodies"]
 
@@ -267,7 +268,7 @@ def test_an_unknown_indicator_code_says_so_and_lists_the_codes(offline):
 def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
     i = tools.get_indicator("A1")
     v = i["cycle_of_record"]["verdicts"]
-    assert i["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_c"
+    assert i["cycle_of_record"]["cycle"] == "scan_2026-10-07_composite_d"
     assert sum(v.values()) > 0
     assert set(v) <= {"pass", "fail", "error", "not_applicable"}
 
@@ -276,7 +277,7 @@ def test_indicator_reports_pass_and_fail_on_the_cycle_of_record(tools):
 
 def test_body_names_the_finding_and_the_evidence_for_every_judged_cell(tools):
     b = tools.get_body("BEA")
-    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-10-06_composite_c"
+    assert b["body"] == "BEA" and b["cycle"] == "scan_2026-10-07_composite_d"
     assert b["n_judged"] == len(b["legs"]) > 0
     assert b["summary"].startswith(f"{b['n_failing']} failing of {b['n_judged']} judged")
     for cell in b["legs"]:
@@ -406,13 +407,15 @@ def test_cycle_of_record_carries_both_hashes_the_matrices_and_the_supersession(t
     c = tools.get_cycle_of_record()
     # A composite cycle of record (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
     # decision 4): its two hashes are its parts', on `composed_of`, each beside its cycle.
-    assert c["cycle"] == "scan_2026-10-06_composite_c"
+    assert c["cycle"] == "scan_2026-10-07_composite_d"
     assert c["kind"] == "composite"
     parts = c["composed_of"]
-    assert parts["base"]["cycle"] == "scan_2026-09-10_rj5"
-    # Since `cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` the overlay
-    # is the recollection's re-judgement under generation 15; its evidence is the recollection.
-    assert parts["overlay"]["cycle"] == "scan_2026-10-06_recollect_rj1"
+    # Since `cc_tasks/2026-10-07_seed_known_locations_verify.md` the base is itself a composite,
+    # `_composite_c`, which names its own parts (scheme 2), and the overlay is the seeded cycle.
+    assert parts["base"]["cycle"] == "scan_2026-10-06_composite_c"
+    assert [p[0] for p in parts["base"]["parts"]] == ["scan_2026-10-06_recollect_rj1",
+                                                      "scan_2026-09-10_rj5"]
+    assert parts["overlay"]["cycle"] == "scan_2026-10-07_seeded"
     assert len(parts["base"]["params_hash"]) == len(parts["overlay"]["params_hash"]) == 64
     assert parts["base"]["params_hash"] != parts["overlay"]["params_hash"]
     assert len(c["judgement_params_hash"]) == 64
@@ -558,7 +561,7 @@ def test_every_tool_carries_a_description_and_is_marked_read_only(client_call):
 
 
 ONE_QUESTION_EACH = [
-    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-10-06_composite_c"),
+    ("get_overview", {}, lambda a: a["cycle_of_record"]["cycle"] == "scan_2026-10-07_composite_d"),
     ("get_indicator", {"code": "A5"}, lambda a: a["code"] == "A5" and a["actions"]),
     ("get_body", {"name": "NCHS"}, lambda a: a["body"] == "NCHS" and a["legs"]),
     ("get_prescriptions", {"body": "NCHS"}, lambda a: a["body"] == "NCHS" and a["actions"]),

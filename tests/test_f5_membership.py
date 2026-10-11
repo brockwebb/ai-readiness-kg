@@ -83,6 +83,10 @@ EXPECTED_BLANKS = {
     # side (it withheld them and showed `_rj5`'s all-`error` cells); D1 is blank on this side too,
     # every one of its Findings `error`. A2 has a rate here: its `fail` cells.
     "scan_2026-10-06_composite_c": {"A2", "D1"},
+    # The composite cycle of record since `cc_tasks/2026-10-07_seed_known_locations_verify.md`,
+    # drawn against `_composite_c`. D1 is blank on `_composite_c`'s side (every Finding `error`);
+    # on this side it has a rate, the seeded cycle having read each recorded terms page whole.
+    "scan_2026-10-07_composite_d": {"D1"},
 }
 
 #: The cycles whose F5 is a figure that can be drawn and therefore checked.

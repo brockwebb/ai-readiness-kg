@@ -151,6 +151,9 @@ NONCONFORMANT_REASON = (
     r"answer with HTML rather than a machine format",
     r"is not retrievable without JS",
     r"^a changelog page is served at .* but not in a machine-readable content type",
+    # `RULE-D1-v6` (`cc_tasks/2026-10-07_seed_known_locations_verify.md`): a terms page states a
+    # licence, in words a reader can follow and a machine cannot match to an identifier.
+    r"but its value is free text, not a recognised identifier",
 )
 
 #: A `fail` where the record, field or file the rule asks for is not there (DN-009 decision 5:
@@ -183,6 +186,10 @@ ABSENCE_REASON = (
     r"but the product is not in it",
     r"^no changelog or release-notes endpoint served",
     r"^none of the \d+ error-measure field tokens appears",
+    # `RULE-A13-v1`, the discoverability candidate (`cc_tasks/2026-10-07_seed_known_locations_
+    # verify.md`): the object exists and the path from the product page to it, a link or a
+    # convention location, is not there.
+    r"^an object that exists is not reachable from the product page",
 )
 
 Q2_COLUMNS = ("access_denial", "absence", "nonconformant", "error_other", "pass")
@@ -203,6 +210,11 @@ CATALOG_ABSENCE = (r"holds no catalog record for the product among its (\d+) rec
 #: class, where present, is what the claim says about the inventory.
 INVENTORY_REMAINDER = (r"declared inventory not observed(?: \(([a-z0-9_]+)\))?: "
                        r"(https://\S+?)(?=\.\s|\.$|;|\s\(|$)")
+#: Generation 16 (`rules/_existence.remainder`, `cc_tasks/2026-10-07_seed_known_locations_
+#: verify.md`) words the same fact as "the recorded inventory <url> could not be verified
+#: (<class>; <provenance>)". Read as `(class, url)`, the order the pattern above yields.
+INVENTORY_REMAINDER_RECORDED = (r"the recorded inventory (https://\S+?) could not be verified "
+                                r"\(([a-z0-9_]+)[;)]")
 
 #: Named queries: the `id` of every `query` evidence entry is a key here, and the test resolves
 #: it against this table. The value says what was computed and from what.
@@ -806,7 +818,8 @@ def q4_claims_unsearched(M: Map, where: dict) -> list:
     for fid, f in sorted(M.findings.items()):
         if where[f["target_doc_id"]][0] != CENSUS or f["verdict"] != "error":
             continue
-        found = re.findall(INVENTORY_REMAINDER, f["reason"])
+        found = re.findall(INVENTORY_REMAINDER, f["reason"]) + [
+            (cls, u) for u, cls in re.findall(INVENTORY_REMAINDER_RECORDED, f["reason"])]
         if not found:
             continue
         hits.append(fid)

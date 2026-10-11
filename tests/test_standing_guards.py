@@ -268,9 +268,11 @@ def test_every_stored_judgement_is_on_the_log(live):
     assert a["unpaired"] == [], json.dumps(a["unpaired"], indent=1)
     # The seventeenth re-judgement is `scan_2026-10-06_recollect_rj1` and the second composite
     # `scan_2026-10-06_composite_c` (`cc_tasks/2026-10-07_seed_known_locations_and_split_
-    # discoverability.md`).
-    assert a["by_kind"] == {"rejudged": 17, "measured": 7, "controls_only": 3,
-                            "composite": 2}, a["by_kind"]
+    # discoverability.md`); the eighth measurement is `scan_2026-10-07_seeded` and the third
+    # composite `scan_2026-10-07_composite_d` (`cc_tasks/2026-10-07_seed_known_locations_
+    # verify.md`).
+    assert a["by_kind"] == {"rejudged": 17, "measured": 8, "controls_only": 3,
+                            "composite": 3}, a["by_kind"]
     # The one cycle with Findings on legs its predecessor never judged, and how many.
     new_legs = {r["cycle"]: r["findings_on_new_legs"] for r in a["rows"]
                 if r.get("findings_on_new_legs")}

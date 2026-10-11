@@ -106,15 +106,21 @@ def test_every_contacted_netloc_had_room_for_its_robots_read(payload):
 def test_the_composite_was_the_cycle_of_record_and_its_successor_overlays_this_cycle(comp):
     """`_composite_b` was the cycle of record from 2026-10-07 until `_composite_c`
     (`cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md` decision 2), which
-    overlays this cycle's re-judgement under generation 15 and withholds nothing."""
+    overlays this cycle's re-judgement under generation 15 and withholds nothing. `_composite_c`
+    is in turn the BASE of `_composite_d` (`cc_tasks/2026-10-07_seed_known_locations_verify.md`
+    decision 5), which keeps this cycle's A1, A3 and B3 and takes the rest from the seeded cycle."""
     import yaml
     pub = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text())
     assert "2026-10-06_composite_b" in pub["released"]
+    assert "2026-10-06_composite_c" in pub["released"]
     assert composite.is_composite(comp)
-    succ = _load(pub["snapshot_cycle"])
-    assert pub["snapshot_cycle"] == "scan_2026-10-06_composite_c"
+    assert pub["snapshot_cycle"] == "scan_2026-10-07_composite_d"
+    d = _load(pub["snapshot_cycle"])
+    assert d["composed_of"]["base"]["cycle"] == "scan_2026-10-06_composite_c"
+    succ = _load("scan_2026-10-06_composite_c")
     over = succ["composed_of"]["overlay"]
     assert _load(over["cycle"])["derived_from"] == CYCLE and over["withheld"] == {}
+    assert dict(composite.parts(d))["scan_2026-10-06_recollect_rj1"] == ["A1", "A3", "B3"]
 
 
 def test_the_composite_is_its_parts_selected_by_leg_and_nothing_else(comp, payload):

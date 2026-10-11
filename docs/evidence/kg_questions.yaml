@@ -8,14 +8,14 @@ citation_standard: 'every row carries doc_id, locator and grounding_span_id; gro
   null is complete: false'
 projection_gate:
   status: green
-  nodes_compared: 228
+  nodes_compared: 232
   mismatches: 0
 epoch:
   documents: 283
   documents_sha256: 9753ee3bfa0b32776fab9e63eff01614074d9f7b61760216170688ba108478d0
   definitions: 2824
   instruments: 506
-  framework_record_sha256: 3dd8ca3fbd4225211893d3017a1621849950775c904cfde16f516ba94adc4f0b
+  framework_record_sha256: 4b72ebe9b9a0f5c08126aec43a684607d5d39d73eacfbfb3dfedd5f0b4a8a359
 questions:
 - id: Q1
   question: What definitions of AI readiness and of AI-ready data exist in the corpus?
@@ -1479,7 +1479,7 @@ questions:
   question: For the FSS AI-readiness survey, which items map to which constructs and definitions, and
     which constructs have no item?
   grade: partial
-  reason: '49 items map to 48 constructs (0 constructs have no item). The crosswalk''s construct -> definition
+  reason: '50 items map to 49 constructs (0 constructs have no item). The crosswalk''s construct -> definition
     hop does not exist: the record holds 0 edges from a construct or an item to a Definition. Its primary-source
     hop is `EVIDENCED_BY`, whose edges carry a doc_id and no grounding span, so no row meets the citation
     standard; 16 items cite no document at all. The items are the framework instrument''s; the ICSP working
@@ -1494,12 +1494,12 @@ questions:
   route: 'record: framework/ai_readiness_framework.json (mcp/airkg_tools.py decision 3: framework questions
     are answered from the record)'
   counts:
-    items: 49
-    constructs: 48
-    items_candidate: 1
+    items: 50
+    constructs: 49
+    items_candidate: 2
     constructs_with_no_item: 0
     constructs_with_no_primary_source: 16
-    constructs_with_no_definition: 48
+    constructs_with_no_definition: 49
     items_with_no_document: 16
     items_with_project_internal_evidence_only: 1
   uncovered:
@@ -1583,6 +1583,20 @@ questions:
     - cloudflare-ai-crawl-control-manage-crawlers
     - rfc-9309-robots-exclusion-protocol
     locator: framework/ai_readiness_framework.json#ind:A12
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A13
+    status: candidate
+    construct:
+    - con:A13-discoverability-from-the-product-page
+    doc_id:
+    - dcat-us-1-1-schema
+    - llmstxt-proposal
+    - m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+    - w3c-dwbp-2017
+    - wilkinson-2016-fair-guiding-principles
+    locator: framework/ai_readiness_framework.json#ind:A13
     grounding_span_id: null
     complete: false
     definition: null
