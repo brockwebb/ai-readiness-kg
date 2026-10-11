@@ -135,8 +135,11 @@ A13_INDICATOR = {
         "`llmstxt-proposal` (Proposal: discovery links \"can be provided as HTML `<link>` "
         "elements, or as an HTTP `Link:` response header\"); "
         "`wilkinson-2016-fair-guiding-principles` (FAIR F4, metadata registered or indexed in a "
-        "searchable resource). RFC 9727 (the well-known api-catalog URI, June 2025) is the API's "
-        "convention location and is named, not admitted: this task fetched nothing"),
+        "searchable resource); `rfc-9727-api-catalog` (section 2: a Publisher \"SHALL resolve "
+        "an HTTPS GET request to /.well-known/api-catalog and return an API catalog document\"; "
+        "section 3, the api-catalog link relation; section 4.2: \"The Publisher MUST publish "
+        "the API catalog document in the Linkset format application/linkset+json\"), the API's "
+        "convention location, admitted 2026-10-11"),
     "candidate_rationale": (
         "DN-013-R1: existence is not discoverability. The harness tested whether a stranger "
         "could find an agency's API, inventory, terms or changelog from the product page and "
@@ -195,7 +198,8 @@ CANDIDATES = {
             "construct_id": "con:A13-discoverability-from-the-product-page",
             "evidenced_by": ["w3c-dwbp-2017", "dcat-us-1-1-schema",
                              "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
-                             "llmstxt-proposal", "wilkinson-2016-fair-guiding-principles"],
+                             "llmstxt-proposal", "wilkinson-2016-fair-guiding-principles",
+                             "rfc-9727-api-catalog"],
             "evidenced_by_internal": [
                 "docs/design/2026-10-06_DN-013_parallelism_known_endpoints_and_prose.md §1",
                 "docs/design/2026-10-07_DN-013_ADDENDUM_01_split_r1_and_r3_premise.md A1",
@@ -251,9 +255,31 @@ def add(g: dict, code: str = CODE) -> dict:
 def refresh(g: dict, code: str) -> dict:
     """Rewrite the indicator and spec properties this script owns for an existing candidate, from
     `CANDIDATES`, and nothing else: the fields a later write-back adds (rule id, tiers, status)
-    are left as they are. The same writer, so the change is on a `framework_writeback` event."""
+    are left as they are. The same writer, so the change is on a `framework_writeback` event.
+
+    **Evidence edges are added, never removed** (`cc_tasks/2026-10-11_evidence_map_carries_
+    discoverability_and_admits_a2_d1_a13_standards.md` decision 1): a document named in
+    `evidenced_by` that the record has no `EVIDENCED_BY` edge to gets one, once the manifest
+    holds it; a document the manifest does not hold is refused, as
+    `framework_writeback_evidence.py` refuses one, because an edge to an unadmitted document is a
+    citation a stranger cannot follow. An edge in the record and not in `evidenced_by` is left
+    alone: dropping one is the writer's `--force` decision, not a refresh's."""
     cand = CANDIDATES[code]
     moved = []
+    manifest_ids = set(json.loads((REPO / "corpus" / "manifest.json").read_text(
+        encoding="utf-8"))["entries"])
+    missing = [d for d in cand["evidenced_by"] if d not in manifest_ids]
+    if missing:
+        raise SystemExit(f"REFUSING: {code} names {missing}, which corpus/manifest.json does "
+                         f"not hold; admit it first")
+    have = {e["to"] for e in g["edges"]
+            if e["from"] == f"ind:{code}" and e["type"] == "EVIDENCED_BY"}
+    added = []
+    for doc in cand["evidenced_by"]:
+        if f"doc:{doc}" not in have:
+            g["edges"].append({"from": f"ind:{code}", "type": "EVIDENCED_BY", "to": f"doc:{doc}",
+                               "properties": {"doc_id": doc}})
+            added.append(f"doc:{doc}")
     for nid, props in ((f"ind:{code}", cand["indicator"]), (f"spec:{code}", cand["spec"])):
         node = next((n for n in g["nodes"] if n["id"] == nid), None)
         if node is None:
@@ -264,7 +290,7 @@ def refresh(g: dict, code: str) -> dict:
             if node["properties"].get(k) != v:
                 node["properties"][k] = v
                 moved.append(f"{nid}.{k}")
-    return {"refreshed": code, "properties_moved": moved}
+    return {"refreshed": code, "properties_moved": moved, "evidenced_by_added": added}
 
 
 def main(argv=None) -> int:
@@ -274,14 +300,17 @@ def main(argv=None) -> int:
                     help="which candidate to add (default A12, the first)")
     ap.add_argument("--refresh", action="store_true",
                     help="rewrite an existing candidate's owned properties from CANDIDATES")
+    ap.add_argument("--task", default=None, metavar="PATH",
+                    help="the cc_task this refresh is part of; lands on the framework_writeback "
+                         "event (default: the task that added the candidate)")
     fw.add_force_args(ap)
     a = ap.parse_args(argv)
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     if a.refresh:
         out = refresh(g, a.code)
         print(json.dumps(out, indent=1))
-        if out["properties_moved"]:
-            ev = fw.save(g, script=SCRIPT, task=CANDIDATES[a.code]["task"], changes=out,
+        if out["properties_moved"] or out["evidenced_by_added"]:
+            ev = fw.save(g, script=SCRIPT, task=a.task or CANDIDATES[a.code]["task"], changes=out,
                          dry_run=a.dry_run, **fw.force_kwargs(a))
             print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1),
                   file=sys.stderr)
