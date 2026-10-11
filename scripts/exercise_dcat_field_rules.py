@@ -65,8 +65,10 @@ def source_cycle() -> str:
     where it was: the recollection is a second collection, not a re-reading of the first."""
     cor = _payload(cycle_of_record())
     if cor.get("cycle_kind") == "composite":
-        base = cor["composed_of"]["base"]
-        return base.get("collection") or base["cycle"]
+        # The base-most part's collection, through a nested base too
+        # (`cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 5).
+        from scan import composite
+        return composite.collections(cor, REPO / "state")[0]
     return cor.get("derived_from") or cor["cycle"]
 
 

@@ -31,7 +31,15 @@ from pathlib import Path
 
 KIND = "composite"
 #: The shape of `composed_of`. A reader checks it before trusting a key.
+#: Scheme 2 (`cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 5) is scheme 1 with a
+#: base that may itself be a composite: `scan_2026-10-07_composite_d` overlays the seeded cycle
+#: on `scan_2026-10-06_composite_c`. The base then carries its own parts, flattened, as `parts`
+#: (`[[cycle, legs or null], ...]`, most specific first), so every reader that asks which cycle
+#: a leg's verdicts come from (`parts`, `part_of_leg`) answers with a cycle that HAS Findings, and
+#: `evidence` assembles the base's evidence from its own parts. A flat composite is written
+#: exactly as before, scheme 1.
 SCHEME = 1
+SCHEME_NESTED = 2
 
 
 def is_composite(payload: dict | None) -> bool:
@@ -43,16 +51,34 @@ def overlay_legs(payload: dict) -> list:
 
 
 def part_of_leg(payload: dict, leg: str) -> str:
-    """The cycle a leg's verdicts come from on this composite."""
-    c = payload["composed_of"]
-    return c["overlay"]["cycle"] if leg in c["overlay"]["legs"] else c["base"]["cycle"]
+    """The cycle a leg's verdicts come from on this composite: the first part that names the
+    leg, else the part that carries every other leg."""
+    for cycle, legs in parts(payload):
+        if legs is None or leg in legs:
+            return cycle
+    raise ValueError(f"{payload.get('cycle')}: no part carries {leg}")
 
 
 def parts(payload: dict) -> list:
     """`[(cycle, legs_or_None)]`: the overlay with its legs, then the base with `None`, meaning
-    every leg the overlay does not carry."""
+    every leg the overlay does not carry. A nested base (scheme 2) contributes its own parts in
+    its place, each less the legs a more specific part already carries, so the list names only
+    cycles that hold Findings."""
     c = payload["composed_of"]
-    return [(c["overlay"]["cycle"], list(c["overlay"]["legs"])), (c["base"]["cycle"], None)]
+    over = (c["overlay"]["cycle"], list(c["overlay"]["legs"]))
+    nested = c["base"].get("parts")
+    if not nested:
+        return [over, (c["base"]["cycle"], None)]
+    taken = set(over[1])
+    out = [over]
+    for cycle, legs in nested:
+        if legs is None:
+            out.append((cycle, None))
+            continue
+        mine = [l for l in legs if l not in taken]
+        taken |= set(mine)
+        out.append((cycle, mine))
+    return out
 
 
 def finding_part(payload: dict, finding: dict) -> str:
@@ -61,6 +87,19 @@ def finding_part(payload: dict, finding: dict) -> str:
 
 def _load(state: Path, cycle: str) -> dict:
     return json.loads((state / f"{cycle}.json").read_text(encoding="utf-8"))
+
+
+def collections(payload: dict, state: Path) -> list:
+    """The MEASURED collections a composite rests on, base-most first: each part's own cycle, or
+    a re-judgement's `derived_from`. For a flat composite this is `[base collection, overlay
+    collection]`, which is what every reader computed before scheme 2."""
+    out = []
+    for cycle, _legs in reversed(parts(payload)):
+        p = _load(state, cycle)
+        c = p.get("derived_from") if p.get("cycle_kind") == "rejudged" else cycle
+        if c not in out:
+            out.append(c)
+    return out
 
 
 def _measured(state: Path, p: dict) -> dict:
@@ -145,10 +184,11 @@ def build(base: dict, overlay: dict, name: str, task: str, consumes,
     kept = [l for l in base.get("legs_judged") or [] if l not in legs]
     shared_dropped = sorted({s for leg in legs for s in consumes(leg)}
                             - {s for leg in kept for s in consumes(leg)} - set(kept))
+    nested = is_composite(base)
     return {
         "task": task, "cycle": name, "cycle_kind": KIND,
         "composed_of": {
-            "scheme": SCHEME,
+            "scheme": SCHEME_NESTED if nested else SCHEME,
             "rule": ("each leg's matrix cells and Findings are the overlay's where the leg is "
                      "one the overlay collected, and the base's otherwise; no Finding is "
                      "re-judged and no Observation is created"),
@@ -160,7 +200,10 @@ def build(base: dict, overlay: dict, name: str, task: str, consumes,
             "base": {"cycle": base["cycle"], "legs": "every leg the overlay does not carry",
                      "params_hash": base["params_hash"], "task": base.get("task"),
                      "kind": base.get("cycle_kind") or "measured",
-                     "collection": base.get("derived_from") or base["cycle"]},
+                     # A composite base is no collection: it names its own parts, flattened
+                     # (scheme 2), and `collections` resolves each to the one it rests on.
+                     **({"parts": [[c, l] for c, l in parts(base)]} if nested else
+                        {"collection": base.get("derived_from") or base["cycle"]})},
             # Base Observations of a shared leg only overlay legs consumed (link_probe) rest
             # under no composite Finding, so `evidence` leaves them out.
             "base_observation_legs_dropped": sorted(set(legs) | set(shared_dropped)),
@@ -203,7 +246,15 @@ def evidence(payload: dict, state: Path) -> dict:
     """
     c = payload["composed_of"]
     over = _measured(state, _load(state, c["overlay"]["cycle"]))
-    base = _measured(state, _load(state, c["base"]["cycle"]))
+    base = _load(state, c["base"]["cycle"])
+    if is_composite(base):
+        # A nested base's evidence is its own composite evidence, assembled the same way.
+        inner = evidence(base, state)
+        base = {"cycle": base["cycle"], "observations_detail": inner["observations_detail"],
+                "requests_per_host": inner["requests_per_host"],
+                "requests_per_host_by_part": inner["requests_per_host_by_part"]}
+    else:
+        base = _measured(state, base)
     dropped = set(c["base_observation_legs_dropped"])
     # The overlay's Observations of a withheld leg rest under no composite Finding.
     withheld = set((c["overlay"].get("withheld") or {}))
@@ -212,9 +263,10 @@ def evidence(payload: dict, state: Path) -> dict:
            + [o for o in over["observations_detail"] if real(o) and o.get("leg") not in withheld])
     per = Counter(base.get("requests_per_host") or {})
     per.update(over.get("requests_per_host") or {})
+    by_part = dict(base.get("requests_per_host_by_part")
+                   or {base["cycle"]: base.get("requests_per_host") or {}})
+    by_part[over["cycle"]] = over.get("requests_per_host") or {}
     return {"cycle": payload["cycle"], "params_hash": payload["params_hash"],
             "observations_detail": obs, "requests_per_host": dict(sorted(per.items())),
-            "requests_per_host_by_part": {
-                base["cycle"]: base.get("requests_per_host") or {},
-                over["cycle"]: over.get("requests_per_host") or {}},
+            "requests_per_host_by_part": by_part,
             "requests_total": sum(per.values())}

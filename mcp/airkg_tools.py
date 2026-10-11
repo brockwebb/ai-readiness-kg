@@ -205,19 +205,6 @@ def matrix_loc(path: str, cell: str) -> dict:
     return {"kind": "matrix", "path": path, "cell": cell}
 
 
-def _part_collection(part: dict) -> str:
-    """The MEASURED collection a composite's part rests on: the base names it (`collection`); an
-    overlay that is itself a re-judgement (`scan_2026-10-06_recollect_rj1` under
-    `scan_2026-10-06_composite_c`, `cc_tasks/2026-10-07_seed_known_locations_and_split_
-    discoverability.md`) rests on the cycle it was derived from."""
-    if part.get("collection"):
-        return part["collection"]
-    if part.get("kind") == "rejudged":
-        return json.loads((REPO / "state" / f"{part['cycle']}.json").read_text(
-            encoding="utf-8"))["derived_from"]
-    return part["cycle"]
-
-
 def payload_loc(cycle: str, key: str) -> dict:
     return {"kind": "payload", "path": f"state/{cycle}.json", "key": key}
 
@@ -395,6 +382,7 @@ class Tools:
         bodies = presc.bodies(cycle)
         mats = presc.matrices(cycle)
         payload = self._payload(cycle)
+        from scan import composite as _composite
         return {
             "graph": "ai-readiness-kg",
             "database": self.graph.database if self.graph else guard.project_database(),
@@ -425,8 +413,8 @@ class Tools:
             "cycle_of_record": {
                 "cycle": cycle,
                 "measured": (" + ".join(
-                    _part_collection(payload["composed_of"][k]).replace("scan_", "")
-                    for k in ("base", "overlay"))
+                    c.replace("scan_", "") for c in _composite.collections(
+                        payload, REPO / "state"))
                     if payload.get("cycle_kind") == "composite"
                     else (payload.get("derived_from") or cycle).replace("scan_", "")),
                 "kind": payload.get("cycle_kind"),

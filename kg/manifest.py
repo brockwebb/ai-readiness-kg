@@ -580,7 +580,10 @@ def _admission_shard(doc_id: str) -> int:
     for shard in sorted((q for q in eventlog._EVENTS_DIR.glob("batch-*.jsonl")
                          if pat.fullmatch(q.stem)),
                         key=lambda q: int(pat.fullmatch(q.stem).group(1))):
-        for line in shard.read_text(encoding="utf-8").splitlines():
+        # JSON Lines separates records on "\n" alone (jsonlines.org); `str.splitlines()` also breaks on
+        # U+0085, U+2028, U+2029 and form feed, which RFC 8259 lets a JSON string carry unescaped
+        # (a whole terms page D1 keeps, `events/cycle-scan_2026-10-07_seeded.jsonl`).
+        for line in shard.read_text(encoding="utf-8").split("\n"):
             if doc_id not in line or _MANIFEST_ADD not in line:
                 continue
             ev = json.loads(line)

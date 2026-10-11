@@ -331,7 +331,10 @@ class Map:
                 if not shard.is_file():
                     raise SystemExit(f"FATAL: {BP.rel(shard)} is missing; the cycle of record "
                                      "has no event shard to read its Findings from")
-                for i, line in enumerate(shard.read_text(encoding="utf-8").splitlines(), 1):
+                # JSON Lines separates records on "\n" alone (jsonlines.org); `str.splitlines()` also breaks on
+                # U+0085, U+2028, U+2029 and form feed, which RFC 8259 lets a JSON string carry unescaped
+                # (a whole terms page D1 keeps, `events/cycle-scan_2026-10-07_seeded.jsonl`).
+                for i, line in enumerate(shard.read_text(encoding="utf-8").split("\n"), 1):
                     if not line.strip():
                         continue
                     e = json.loads(line)

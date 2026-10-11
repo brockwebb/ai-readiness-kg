@@ -194,6 +194,26 @@ compare_to_by_cycle:
       A2: "v4 → v5"
       A3: "v7 → v8"
       D1: "v4 → v5"
+  # The composite cycle of record from 2026-10-11 (`cc_tasks/2026-10-07_seed_known_locations_
+  # verify.md` decision 5) against `_composite_c`, the declaration it replaces. On the ten legs
+  # it takes from `scan_2026-10-07_seeded` the evidence is new (every seeded location verified
+  # and searched, the product page read from the recollection) and the existence rules are
+  # generation 16; A9's rule is unchanged and A13 is a candidate, drawn on no rated figure.
+  # Every other leg is `_composite_c`'s own Finding on both sides.
+  scan_2026-10-07_composite_d:
+    cycle: scan_2026-10-06_composite_c
+    suffix: "2026-10-06_composite_c"
+    label: "composite C · 2026-10-10, before the seeded cycle"
+    note: "eight existence legs and A9 measured again on 2026-10-11 over every seeded location, verified and searched, and judged under generation 16; every other leg is composite C on both sides"
+    rule_changed:
+      A2: "v5 → v6"
+      B1: "v3 → v4"
+      B4: "v2 → v3"
+      D1: "v5 → v6"
+      D3: "v2 → v3"
+      D4: "v4 → v5"
+      F4: "v4 → v5"
+      G4: "v2 → v3"
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

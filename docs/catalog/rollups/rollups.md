@@ -47,40 +47,39 @@ Generated from the two tables. Nothing is ranked by value, impact or return (DN-
 | tool:scrapy | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 | tool:ultimate-sitemap-parser | public_outside_in | tool_open_source | 0 |  | 1 | A5 |
 
-## (a) Greedy set cover over the 26 unmeasured framework indicators
+## (a) Greedy set cover over the 25 unmeasured framework indicators
 
 Greedy set cover (Chvátal 1979): at each step, the unlocker that covers the most indicators not yet covered; ties break on its name.
 
 | step | unlocked_by | who_can_run | n_new | newly_covered | cumulative | of_unmeasured |
 |---|---|---|---|---|---|---|
-| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 26 |
-| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 26 |
-| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 26 |
-| 4 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 6 | 26 |
-| 5 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 7 | 26 |
-| 6 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 8 | 26 |
-| 7 | tool:aidrin | public_outside_in | 1 | C5 | 9 | 26 |
-| 8 | tool:slsa-verifier | public_outside_in | 1 | F6 | 10 | 26 |
-| 9 | pre:adversarial-bank | needs_standard | 1 | E9 | 11 | 26 |
-| 10 | pre:entailment-probe-set | needs_standard | 1 | C2 | 12 | 26 |
-| 11 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 13 | 26 |
-| 12 | pre:product-question-benchmark | needs_standard | 1 | C1 | 14 | 26 |
-| 13 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 15 | 26 |
-| 14 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 16 | 26 |
-| 15 | pre:series-break-cases | needs_standard | 1 | G6 | 17 | 26 |
-| 16 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 18 | 26 |
-| 17 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 19 | 26 |
-| 18 | pre:held-out-rotation-records | agency_records | 1 | E4 | 20 | 26 |
-| 19 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 21 | 26 |
-| 20 | pre:release-validation-records | agency_records | 1 | F1 | 22 | 26 |
-| 21 | pre:staging-regression-records | agency_records | 1 | F5 | 23 | 26 |
-| 22 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 24 | 26 |
+| 1 | tool:wayback-cdx-server | public_outside_in | 2 | A7;F3 | 2 | 25 |
+| 2 | pre:vintage-disambiguation-set | needs_standard | 2 | C3;G2 | 4 | 25 |
+| 3 | method:B6:wcag_reading_level | public_outside_in | 1 | B6 | 5 | 25 |
+| 4 | method:G3:sdmx_structure_map | public_outside_in | 1 | G3 | 6 | 25 |
+| 5 | method:G5:sdmx_conf_status | public_outside_in | 1 | G5 | 7 | 25 |
+| 6 | pre:second-scan-cycle+tool:oasdiff | public_outside_in | 1 | F2 | 8 | 25 |
+| 7 | tool:aidrin | public_outside_in | 1 | C5 | 9 | 25 |
+| 8 | tool:slsa-verifier | public_outside_in | 1 | F6 | 10 | 25 |
+| 9 | pre:adversarial-bank | needs_standard | 1 | E9 | 11 | 25 |
+| 10 | pre:entailment-probe-set | needs_standard | 1 | C2 | 12 | 25 |
+| 11 | pre:generative-engine-query-set+tool:perplexity-ai | needs_standard | 1 | C4 | 13 | 25 |
+| 12 | pre:product-question-benchmark | needs_standard | 1 | C1 | 14 | 25 |
+| 13 | pre:product-question-benchmark+pre:second-evaluation-run | needs_standard | 1 | E8 | 15 | 25 |
+| 14 | pre:product-question-benchmark+pre:vintage-disambiguation-set | needs_standard | 1 | E6 | 16 | 25 |
+| 15 | pre:series-break-cases | needs_standard | 1 | G6 | 17 | 25 |
+| 16 | pre:eval-failure-closure-records | agency_records | 1 | E7 | 18 | 25 |
+| 17 | pre:evaluation-set-version-records | agency_records | 1 | E3 | 19 | 25 |
+| 18 | pre:held-out-rotation-records | agency_records | 1 | E4 | 20 | 25 |
+| 19 | pre:published-conformance-and-evaluation-report | agency_records | 1 | E1 | 21 | 25 |
+| 20 | pre:release-validation-records | agency_records | 1 | F1 | 22 | 25 |
+| 21 | pre:staging-regression-records | agency_records | 1 | F5 | 23 | 25 |
+| 22 | pre:threshold-preregistration-records | agency_records | 1 | E2 | 24 | 25 |
 
 No row offers anything to obtain for these (built rule only, or no known method):
 
 | indicator | reason |
 |---|---|
-| D1 | no row offers anything to obtain: method kinds built_rule |
 | E5 | no row offers anything to obtain: method kinds built_rule |
 
 ## (b) Criterion by who can run it (rows)

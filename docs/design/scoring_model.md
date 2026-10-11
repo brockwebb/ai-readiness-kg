@@ -10,13 +10,13 @@ Two sources and no third: `framework/ai_readiness_framework.json` and the publis
 
 ## Coverage on the cycle of record
 
-Cycle `scan_2026-10-06_composite_c`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-10-06_composite_c.json`, `docs/reports/scan_matrix_product_2026-10-06_composite_c.json`.
+Cycle `scan_2026-10-07_composite_d`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json`, `docs/reports/scan_matrix_product_2026-10-07_composite_d.json`.
 
 | level | measured | total |
 |---|---|---|
 | adopted harness legs scored (candidates excluded, DD-054) | 20 | 23 |
-| indicators scored, of the framework | 19 | 48 |
-| indicators scored, of `harness_leg` | 19 | 23 |
+| indicators scored, of the framework | 20 | 48 |
+| indicators scored, of `harness_leg` | 20 | 23 |
 | criteria with a scored construct | 5 | 7 |
 
 An indicator is *scored* here when at least one of its scored legs has a judged row for at least one body on this cycle. That is not the record's `measured` (`measurement_status`, DD-055, which counts admitted surfaces and instruments other than the scan); the two are different quantities and carry different names (`cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md` decision 3).

@@ -160,7 +160,7 @@ def cycle_findings(cycle: str) -> int:
             on_log: set = set()
             for part, _legs in composite.parts(p):
                 shard = REPO / "events" / f"cycle-{part}.jsonl"
-                for line in shard.read_text(encoding="utf-8").splitlines():
+                for line in shard.read_text(encoding="utf-8").split("\n"):
                     if '"finding_derived"' in line:
                         e = json.loads(line)
                         if e.get("cycle") == part:
@@ -176,7 +176,7 @@ def cycle_findings(cycle: str) -> int:
         raise SystemExit(f"FATAL: {shard.relative_to(REPO)} is missing; the cycle of record "
                          "has no event shard to count its Findings from")
     ids = set()
-    for line in shard.read_text(encoding="utf-8").splitlines():
+    for line in shard.read_text(encoding="utf-8").split("\n"):
         if '"finding_derived"' not in line:
             continue
         e = json.loads(line)

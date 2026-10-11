@@ -1,6 +1,6 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-10-06_composite_c` · version `2026-10-06_composite_c` · released `2026-10-10`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
+**Version.** Snapshot cycle `scan_2026-10-07_composite_d` · version `2026-10-07_composite_d` · released `2026-10-11`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle for the host checks and a second for twelve product checks, one client
@@ -109,22 +109,22 @@ combined cell would have had to pick one without saying which.
 
 | Agency | A4 | A5 | A10 | A11-declared | A12 | Refused of probed |
 |---|---|---|---|---|---|---|
-| BEA | pass | fail | pass | pass | pass | 1 of 129 |
-| BJS | pass | fail | pass | pass | pass | 0 of 151 |
-| BLS | error | error | error | error | fail | 34 of 38 |
-| BTS | error | error | error | error | fail | 33 of 35 |
-| CENSUS | pass | pass | pass | pass | pass | 6 of 166 |
-| DRSMSU | fail | fail | pass | fail | fail | 0 of 267 |
-| EIA | pass | pass | pass | pass | pass | 3 of 158 |
-| ERS | pass | fail | pass | pass | pass | 1 of 112 |
-| NAHMSAPHIS | pass | fail | pass | pass | pass | 1 of 202 |
-| NASS | pass | fail | pass | pass | pass | 1 of 195 |
-| NCES | pass | fail | pass | pass | pass | 1 of 81 |
-| NCHS | pass | fail | fail | fail | pass | 1 of 37 |
-| NCSES | pass | pass | pass | pass | pass | 0 of 97 |
-| ORES | error | error | error | error | fail | 33 of 35 |
-| SAMHSACBHS | pass | fail | pass | pass | pass | 2 of 927 |
-| SOI | pass | fail | pass | pass | pass | 0 of 161 |
+| BEA | pass | fail | pass | pass | pass | 1 of 135 |
+| BJS | pass | fail | pass | pass | pass | 0 of 156 |
+| BLS | error | error | error | error | fail | 40 of 46 |
+| BTS | error | error | error | error | fail | 37 of 44 |
+| CENSUS | pass | pass | pass | pass | pass | 7 of 171 |
+| DRSMSU | fail | fail | pass | fail | fail | 0 of 270 |
+| EIA | pass | pass | pass | pass | pass | 3 of 161 |
+| ERS | pass | fail | pass | pass | pass | 1 of 117 |
+| NAHMSAPHIS | pass | fail | pass | pass | pass | 1 of 205 |
+| NASS | pass | fail | pass | pass | pass | 1 of 199 |
+| NCES | pass | fail | pass | pass | pass | 1 of 86 |
+| NCHS | pass | fail | fail | fail | pass | 2 of 46 |
+| NCSES | pass | pass | pass | pass | pass | 0 of 100 |
+| ORES | error | error | error | error | fail | 36 of 38 |
+| SAMHSACBHS | pass | fail | pass | pass | pass | 3 of 931 |
+| SOI | pass | fail | pass | pass | pass | 0 of 164 |
 | *this report* | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
 
 ### Reading it by column
@@ -248,29 +248,29 @@ below.
 
 | Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 | B1 | B2 | B4 | B5 | D2 | D3 | G4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| BEA | bea-flagship-1-interactive-data | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BEA | bea-flagship-2-news-releases | error | error | error | fail | fail | error | pass | error | error | error | error | fail | error | fail | fail | error | error |
-| BJS | bjs-flagship-1-data-by-topic | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | fail | error | fail | fail | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BEA | bea-flagship-1-interactive-data | error | error | error | fail | fail | error | pass | error | error | fail | error | fail | error | fail | fail | error | error |
+| BEA | bea-flagship-2-news-releases | error | error | error | fail | fail | error | pass | error | error | fail | error | fail | error | fail | fail | error | error |
+| BJS | bjs-flagship-1-data-by-topic | error | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BJS | bjs-flagship-2-death-in-custody-reporting-act | error | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| CENSUS | census-flagship-1-surveys-programs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| CENSUS | census-flagship-2-american-community-survey-acs | error | fail | error | fail | fail | pass | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | pass | error | pass | pass | pass | error | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail |
-| EIA | eia-flagship-1-open-data | error | error | error | error | error | error | error | error | fail | error | error | error | fail | error | fail | fail | fail |
-| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | pass | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| ERS | ers-flagship-2-agricultural-baseline-database | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| NASS | nass-flagship-1-data-statistics | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
-| NASS | nass-flagship-2-livestock-county-estimates | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
-| NCES | flagship:nces.ed.gov/programs/digest/ | error | error | error | fail | fail | error | fail | error | error | fail | error | fail | error | fail | fail | error | error |
-| NCHS | nchs-flagship-1-data-briefs | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | error | error | pass | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | pass | error | pass | fail | fail | error | pass | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | pass | error | error | error | error | error | error | error | error | error | error | error |
+| CENSUS | census-flagship-1-surveys-programs | error | fail | error | fail | fail | pass | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| CENSUS | census-flagship-2-american-community-survey-acs | error | fail | error | fail | fail | pass | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | pass | fail | pass | pass | pass | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| EIA | eia-flagship-1-open-data | error | error | error | error | error | error | error | fail | fail | fail | error | error | fail | error | fail | fail | fail |
+| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | pass | error | error | fail | fail | error | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| ERS | ers-flagship-2-agricultural-baseline-database | error | error | pass | fail | fail | error | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | error | fail | pass | fail | fail | error | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| NASS | nass-flagship-1-data-statistics | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NASS | nass-flagship-2-livestock-county-estimates | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
+| NCES | flagship:nces.ed.gov/programs/digest/ | error | fail | error | fail | fail | fail | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| NCHS | nchs-flagship-1-data-briefs | error | fail | error | fail | fail | pass | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | error | fail | pass | fail | fail | pass | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | pass | fail | pass | fail | fail | error | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | ORES | flagship:www.ssa.gov/policy/docs/statcomps/supplement/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
-| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | error | error | error | fail | fail | error | fail | error | error | error | error | fail | error | fail | fail | error | error |
-| SOI | soi-flagship-1-individual-tax-statistics | error | error | error | fail | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| SOI | soi-flagship-2-business-tax-statistics | pass | error | pass | fail | fail | error | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | error | fail | error | fail | fail | error | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| SOI | soi-flagship-1-individual-tax-statistics | error | fail | error | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| SOI | soi-flagship-2-business-tax-statistics | pass | fail | pass | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 
 Across the 23 declared
 surfaces, one product check still has no verdict at all, and that is the first thing to read off
@@ -551,25 +551,26 @@ hand-written expectation was wrong once.
 | A10 | RULE-A10-v3 |
 | A11-declared | RULE-A11-declared-v2 |
 | A12 | RULE-A12-v3 |
-| A2 | RULE-A2-v5 |
+| A13 | RULE-A13-v1 |
+| A2 | RULE-A2-v6 |
 | A3 | RULE-A3-v8 |
 | A4 | RULE-A4-v1 |
 | A5 | RULE-A5-v2 |
 | A6 | RULE-A6-v2 |
 | A8 | RULE-A8-v4 |
 | A9 | RULE-A9-v2 |
-| B1 | RULE-B1-v3 |
+| B1 | RULE-B1-v4 |
 | B2 | RULE-B2-v1 |
 | B3 | RULE-B3-v4 |
-| B4 | RULE-B4-v2 |
+| B4 | RULE-B4-v3 |
 | B5 | RULE-B5-v1 |
-| D1 | RULE-D1-v5 |
+| D1 | RULE-D1-v6 |
 | D2 | RULE-D2-v1 |
-| D3 | RULE-D3-v2 |
-| D4 | RULE-D4-v4 |
-| F4 | RULE-F4-v4 |
+| D3 | RULE-D3-v3 |
+| D4 | RULE-D4-v5 |
+| F4 | RULE-F4-v5 |
 | G1-D | RULE-G1-D-v1 |
-| G4 | RULE-G4-v2 |
+| G4 | RULE-G4-v3 |
 
 **Requests issued, per netloc.** Summed over the two collections the snapshot rests on: the
 first cycle, which measured every check, and the recollection, which measured the twelve checks
@@ -577,56 +578,61 @@ listed in the frame section.
 
 | Netloc | Requests |
 |---|---|
-| `api.census.gov` | 9 |
-| `api.eia.gov` | 7 |
-| `api.ojp.gov` | 7 |
-| `apps.bea.gov` | 34 |
-| `bjs.ojp.gov` | 325 |
-| `catalog.data.gov` | 60 |
+| `api.bls.gov` | 1 |
+| `api.census.gov` | 26 |
+| `api.eia.gov` | 14 |
+| `api.ers.usda.gov` | 1 |
+| `api.ojp.gov` | 20 |
+| `apps.bea.gov` | 39 |
+| `bjs.ojp.gov` | 389 |
+| `catalog.data.gov` | 107 |
 | `data.bls.gov` | 2 |
+| `data.bts.gov` | 11 |
+| `data.cdc.gov` | 21 |
 | `data.census.gov` | 11 |
 | `data.gov` | 2 |
 | `data.nist.gov` | 13 |
 | `datatools.samhsa.gov` | 3 |
 | `gis.cdc.gov` | 4 |
-| `hhs.gov` | 5 |
+| `hhs.gov` | 12 |
 | `ir.eia.gov` | 4 |
-| `nces.ed.gov` | 223 |
-| `ncses.nsf.gov` | 330 |
+| `nces.ed.gov` | 270 |
+| `ncses.nsf.gov` | 397 |
 | `open.gsa.gov` | 13 |
-| `quickstats.nass.usda.gov` | 2 |
+| `quickstats.nass.usda.gov` | 3 |
 | `sa.www4.irs.gov` | 17 |
 | `samhsa.gov` | 3 |
 | `tools.bea.gov` | 10 |
 | `tools.cdc.gov` | 5 |
 | `wonder.cdc.gov` | 4 |
-| `www.aphis.usda.gov` | 214 |
-| `www.bea.gov` | 353 |
-| `www.bls.gov` | 118 |
-| `www.bts.gov` | 114 |
-| `www.cdc.gov` | 369 |
-| `www.census.gov` | 430 |
-| `www.commerce.gov` | 9 |
+| `www.aphis.usda.gov` | 255 |
+| `www.bea.gov` | 434 |
+| `www.bls.gov` | 165 |
+| `www.bts.gov` | 155 |
+| `www.cdc.gov` | 450 |
+| `www.census.gov` | 519 |
+| `www.commerce.gov` | 18 |
 | `www.data.gov` | 15 |
-| `www.dol.gov` | 3 |
-| `www.ed.gov` | 3 |
-| `www.eia.gov` | 253 |
-| `www.energy.gov` | 4 |
-| `www.ers.usda.gov` | 428 |
-| `www.federalreserve.gov` | 216 |
+| `www.dol.gov` | 6 |
+| `www.ed.gov` | 6 |
+| `www.eia.gov` | 321 |
+| `www.energy.gov` | 8 |
+| `www.ers.usda.gov` | 509 |
+| `www.federalreserve.gov` | 257 |
 | `www.gsa.gov` | 15 |
-| `www.hhs.gov` | 3 |
-| `www.irs.gov` | 306 |
-| `www.justice.gov` | 4 |
-| `www.nass.usda.gov` | 436 |
+| `www.hhs.gov` | 10 |
+| `www.irs.gov` | 370 |
+| `www.justice.gov` | 8 |
+| `www.nass.usda.gov` | 437 |
 | `www.nist.gov` | 15 |
-| `www.nsf.gov` | 4 |
-| `www.samhsa.gov` | 218 |
-| `www.ssa.gov` | 114 |
-| `www.treasury.gov` | 4 |
-| `www.usda.gov` | 11 |
+| `www.nsf.gov` | 8 |
+| `www.samhsa.gov` | 259 |
+| `www.ssa.gov` | 155 |
+| `www.transportation.gov` | 3 |
+| `www.treasury.gov` | 8 |
+| `www.usda.gov` | 22 |
 | `wwwn.cdc.gov` | 6 |
-| **total** | **4758** |
+| **total** | **5836** |
 
 **Sources per check.**
 
@@ -634,89 +640,21 @@ One row per check and admitted source: the check as the report names it, the fra
 
 | Check | Indicator | Source | doc_id | Locator |
 |-----|--------------|----------------------------------------------|-----------------|------------------|
-| A4 | A4 · Crawler/agent access | Anthropic. *Does Anthropic crawl data from the web, and how can site owners block the crawler? (Anthropic support)*. <https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler>. | `anthropic-crawler-support-article` |  |
-| A4 | A4 · Crawler/agent access | Cloudflare. *Cloudflare AI Crawl Control: Manage AI crawlers*. 2026. <https://developers.cloudflare.com/ai-crawl-control/features/manage-ai-crawlers/>. | `cloudflare-ai-crawl-control-manage-crawlers` |  |
-| A4 | A4 · Crawler/agent access | Google Search Central. *Google Search Central: Introduction to robots.txt*. 2025. <https://developers.google.com/search/docs/crawling-indexing/robots/intro>. | `google-robots-txt-intro` |  |
-| A4 | A4 · Crawler/agent access | OpenAI. *OpenAI: Overview of OpenAI crawlers (developers.openai.com/api/docs/bots)*. <https://platform.openai.com/docs/bots>. | `openai-crawlers-bots` |  |
-| A4 | A4 · Crawler/agent access | Perplexity AI. *Perplexity crawlers (docs.perplexity.ai)*. <https://docs.perplexity.ai/guides/bots>. | `perplexity-crawlers` |  |
-| A4 | A4 · Crawler/agent access | M. Koster; G. Illyes; H. Zeller; L. Sassman; IETF. *RFC 9309: Robots Exclusion Protocol*. 2022. <https://www.rfc-editor.org/rfc/rfc9309>. | `rfc-9309-robots-exclusion-protocol` |  |
-| A5 | A5 · Discoverability surface | Jeremy Howard / Answer.AI. *The /llms.txt file (llmstxt.org)*. 2026. <https://llmstxt.org/>. | `llmstxt-proposal` |  |
-| A5 | A5 · Discoverability surface | sitemaps.org. *Sitemaps XML format (sitemaps.org protocol)*. 2022. <https://www.sitemaps.org/protocol.html>. | `sitemaps-protocol` |  |
-| A10 | A10 · Application/data-tool machine surface | W3C Data on the Web Best Practices Working Group. *Data on the Web Best Practices (W3C Recommendation, 31 January 2017)*. 2017. <https://www.w3.org/TR/dwbp/>. | `w3c-dwbp-2017` | BP 9, persistent URIs as identifiers of datasets: "developers may build URIs into their code and so it is important that those URIs persist and that they dereference to the same resource over time"; and BP 27, preserve identifiers: a dereference that leads to "the infamous 404" must tell the client whether the absence is permanent or temporary, which is the property a soft-404 destroys |
-| A10 | A10 · Application/data-tool machine surface | Mark D. Wilkinson; et al. *The FAIR Guiding Principles for scientific data management and stewardship*. 2019. <https://www.nature.com/articles/sdata201618>. | `wilkinson-2016-fair-guiding-principles` | F1: globally unique and persistent identifier; A2: metadata accessible even when the data are no longer available |
-| A11-declared | A11 · Effective crawler access (declared / enforced / observed) | Cloudflare. *Cloudflare AI Crawl Control: Manage AI crawlers*. 2026. <https://developers.cloudflare.com/ai-crawl-control/features/manage-ai-crawlers/>. | `cloudflare-ai-crawl-control-manage-crawlers` |  |
-| A11-declared | A11 · Effective crawler access (declared / enforced / observed) | M. Koster; G. Illyes; H. Zeller; L. Sassman; IETF. *RFC 9309: Robots Exclusion Protocol*. 2022. <https://www.rfc-editor.org/rfc/rfc9309>. | `rfc-9309-robots-exclusion-protocol` |  |
-| A12 | A12 · Access policy coherence | Cloudflare. *Cloudflare AI Crawl Control: Manage AI crawlers*. 2026. <https://developers.cloudflare.com/ai-crawl-control/features/manage-ai-crawlers/>. | `cloudflare-ai-crawl-control-manage-crawlers` | the enforcing layer this indicator detects from outside |
-| A12 | A12 · Access policy coherence | M. Koster; G. Illyes; H. Zeller; L. Sassman; IETF. *RFC 9309: Robots Exclusion Protocol*. 2022. <https://www.rfc-editor.org/rfc/rfc9309>. | `rfc-9309-robots-exclusion-protocol` | the declared layer's semantics |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Bureau of Labor Statistics. *BLS news release archive: The Employment Situation — May 2026 (released June 2026; Technical Note on reliability of the estimates)*. 2026. <https://www.bls.gov/news.release/archives/empsit_06052026.htm>. | `bls-employment-situation-2026-05-news-release-archive` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Bureau of Labor Statistics. *BLS news release: The Employment Situation — July 2026 (released August 2026; Technical Note on reliability of the estimates)*. 2026. <https://www.bls.gov/news.release/empsit.htm>. | `bls-employment-situation-2026-08-news-release` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Tianyu Cao; Natraj Raman; Danial Dervovic; Chenhao Tan. *Characterizing Multimodal Long-form Summarization: A Case Study on Financial Reports*. 2024. <https://arxiv.org/abs/2404.06162>. | `cao-2024-multimodal-long-form-summarization-financial-reports` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Disclosure Avoidance for the 2020 Census: An Introduction*. 2021. <https://www.census.gov/library/publications/2021/decennial/2020-census-disclosure-avoidance-handbook.html>. | `census-2020-disclosure-avoidance-handbook-2021` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *American Community Survey — Data Suppression (data release rules)*. 2026. <https://www.census.gov/programs-surveys/acs/technical-documentation/data-suppression.html>. | `census-acs-data-suppression-rules` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Understanding and Using American Community Survey Data: What All Data Users Need to Know*. 2020. <https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html>. | `census-acs-general-handbook-2020` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Colorado*. 2023. <https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}>. | `census-api-acs5-2023-b19013-counties-colorado` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Idaho*. 2023. <https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}>. | `census-api-acs5-2023-b19013-counties-idaho` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Census Data API: 2020 Census Demographic and Housing Characteristics, P1_001N (total population) for all counties in Colorado*. 2020. <https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}>. | `census-api-dec2020-dhc-p1-counties-colorado` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Census QuickFacts: Denver County, Colorado*. 2025. <https://www.census.gov/quickfacts/denvercountycolorado>. | `census-quickfacts-denver-county-colorado` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | U.S. Census Bureau. *Census QuickFacts CSV export: Denver County, Colorado (PST045224)*. 2025. <https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224>. | `census-quickfacts-denver-county-colorado-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Hongbo Du; Zixin Lu; Jiaming Qu. *Possible or Definite? A Benchmark for Evaluating Diagnostic Uncertainty Preservation in Clinical Text*. 2026. <https://arxiv.org/abs/2606.18471>. | `du-2026-possible-or-definite` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | European Broadcasting Union; BBC. *News Integrity in AI Assistants: An international PSM study*. 2025. <https://www.ebu.ch/research/open/report/news-integrity-in-ai-assistants>. | `ebu-bbc-2025-news-integrity-ai-assistants` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Mirel LB; Singpurwalla D; Hoppe T; Liliedahl E; Schmitt R; Weber J. *FCSM 23-02: A Framework for Data Quality: Case Studies*. 2023. <https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf>. | `fcsm-23-02-a-framework-for-data-quality-case-studies` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Hoyoung Lee; Suhwan Park; Seunghan Lee; Jun Seo. *When Summaries Distort Decisions: Information Fidelity in LLM-Compressed Financial Analysis*. 2026. <https://arxiv.org/abs/2606.29251>. | `lee-2026-when-summaries-distort-decisions` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Charles F. Manski. *Communicating Uncertainty in Official Economic Statistics: An Appraisal Fifty Years after Morgenstern*. 2015. <https://doi.org/10.1257/jel.53.3.631>. | `manski-2015-communicating-uncertainty-official-economic-statistics` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Gian Luigi Mazzi; James Mitchell; Florabela Carausu. *Measuring and Communicating the Uncertainty in Official Economic Statistics*. 2021. <https://doi.org/10.2478/jos-2021-0013>. | `mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Sewon Min; Kalpesh Krishna; Xinxi Lyu; Mike Lewis; Wen-tau Yih; Pang Wei Koh; Mohit Iyyer; Luke Zettlemoyer; Hannaneh Hajishirzi. *FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*. 2023. <https://doi.org/10.18653/v1/2023.emnlp-main.741>. | `min-2023-factscore` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Jennifer D. Parker; Makram Talih; Donald J. Malec; Vladislav Beresovsky; Matthew Carroll; Joe Fred Gonzalez Jr.; Brady E. Hamilton; Kathleen Ingram; Deborah D. Ingram; Sherry L. Murphy; Sadeq R. Chowdhury; Yulei He; Jennifer M. Madans; Kristin M. Ellis; David F. Ingram; Meena Khare. *National Center for Health Statistics Data Presentation Standards for Proportions*. 2017. <https://www.cdc.gov/nchs/data/series/sr_02/sr02_175.pdf>. | `nchs-2017-data-presentation-standards-proportions` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Jennifer D. Parker; Makram Talih; Guangyu Zhang; Donald J. Malec; Brady E. Hamilton; Andrés A. Berruezo; Yulei He; Farida Ahmad; Lauren M. Rossen; Sherry L. Murphy; Deborah D. Ingram. *National Center for Health Statistics Data Presentation Standards for Rates and Counts*. 2023. <https://www.cdc.gov/nchs/data/series/sr_02/sr02-200.pdf>. | `nchs-2023-data-presentation-standards-rates-counts` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | National Center for Health Statistics. *Dental Visits Among Adults Age 65 and Older: United States, 2022 (NCHS Data Brief No. 500)*. 2024. <https://www.cdc.gov/nchs/data/databriefs/db500.pdf>. | `nchs-data-brief-500-dental-visits-adults-65-2022` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | National Center for Health Statistics. *Total and High-density Lipoprotein Cholesterol in Adults: United States, August 2021–August 2023 (NCHS Data Brief No. 515)*. 2024. <https://www.cdc.gov/nchs/data/databriefs/db515.pdf>. | `nchs-data-brief-515-high-total-cholesterol-2021-2023` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Claudia P. Valenzuela; Elizabeth C.W. Gregory; Joyce A. Martin. *Perinatal Mortality in the United States, 2022 and 2023 (NCHS Data Brief No. 530)*. 2025. <https://www.cdc.gov/nchs/data/databriefs/db530.pdf>. | `nchs-data-brief-530-perinatal-mortality-2022-2023` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Office for National Statistics (UK). *Uncertainty and how we measure it for our surveys*. 2026. <https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/uncertaintyandhowwemeasureit>. | `ons-uncertainty-and-how-we-measure-it` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Uwe Peters; Benjamin Chin-Yee. *Generalization bias in large language model summarization of scientific research*. 2025. <https://doi.org/10.1098/rsos.241776>. | `peters-2025-generalization-bias-llm-summarization` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Prashanth Radhakrishnan; Jennifer Chen; Bo Xu; Prem Ramaswami; Google / Data Commons. *Knowing When to Ask - Bridging Large Language Models and Data*. 2024. <https://arxiv.org/abs/2409.13741>. | `radhakrishnan-2024-knowing-when-to-ask-data-commons` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 13-10-0096-01, Health characteristics, annual estimates — 2022, Canada and provinces, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)*. 2022. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=>. | `statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 13-10-0096-01 — cube metadata (dimensions, members, notes, symbol legend)*. 2022. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en>. | `statcan-13-10-0096-01-cube-metadata-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 13-10-0113-01, Health characteristics, two-year period estimates — 2021/2022, Quebec health regions, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)*. 2022. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=>. | `statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 13-10-0113-01 — cube metadata (dimensions, members, notes, symbol legend)*. 2022. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en>. | `statcan-13-10-0113-01-cube-metadata-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 14-10-0287-01 — cube metadata (dimensions, members, notes, symbol legend)*. 2026. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en>. | `statcan-14-10-0287-01-cube-metadata-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — December 2025, Canada and provinces, estimate and standard error of estimate (CSV for database loading)*. 2025. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=>. | `statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — July 2026, Canada and provinces, estimate and standard error of estimate (CSV for database loading)*. 2026. <https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=>. | `statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Guide to the Labour Force Survey, 2025 (Catalogue no. 71-543-G)*. 2025. <https://www150.statcan.gc.ca/n1/pub/71-543-g/71-543-g2025001-eng.htm>. | `statcan-71-543-g-guide-labour-force-survey-2025` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Statistics Canada. *Statistics Canada Quality Guidelines, Sixth Edition*. 2019. <https://www150.statcan.gc.ca/n1/pub/12-539-x/12-539-x2019001-eng.htm>. | `statcan-quality-guidelines-6th-edition` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Gadir Suleymanli; Alexander Rogiers; Lucas Lageweg; Jefrey Lijffijt. *Are LLMs ready to help non-expert users to make charts of official statistics data?*. 2025. <https://arxiv.org/abs/2510.01197>. | `suleymanli-2025-llms-charts-official-statistics` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Anne Marthe van der Bles; Sander van der Linden; Alexandra L. J. Freeman; James Mitchell; Ana B. Galvao; Lisa Zaval; David J. Spiegelhalter. *Communicating uncertainty about facts, numbers and science*. 2019. <https://doi.org/10.1098/rsos.181870>. | `van-der-bles-2019-communicating-uncertainty` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Venktesh V; Abhijit Anand; Avishek Anand; Vinay Setty. *QuanTemp: A real-world open-domain benchmark for fact-checking numerical claims*. 2024. <https://doi.org/10.1145/3626772.3657874>. | `venktesh-2024-quantemp-numerical-claims` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Zheng Zhao; Shay B. Cohen; Bonnie Webber. *Reducing Quantity Hallucinations in Abstractive Summarization*. 2020. <https://doi.org/10.18653/v1/2020.findings-emnlp.203>. | `zhao-2020-reducing-quantity-hallucinations` |  |
-| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | Meng Zhou; Wenhao You; Wei Yuan. *LOOMSUM: Weaving Quantitative and Narrative Evidence for Faithful Long Text-Table Summarization*. 2026. <https://arxiv.org/abs/2609.00241>. | `zhou-2026-loomsum-table-grounded-faithfulness` |  |
-| A3 | A3 · Bulk access | U.S. General Services Administration / Data.gov. *DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov*. 2026. <https://resources.data.gov/resources/dcat-us/>. | `dcat-us-1-1-schema` | distribution → downloadURL, "must be the **direct** download URL", distinguished there from accessURL, which is an indirect means of access; the Project Open Data metadata schema whose implementation guidance is OMB M-13-13 |
-| A3 | A3 · Bulk access | W3C Data on the Web Best Practices Working Group. *Data on the Web Best Practices (W3C Recommendation, 31 January 2017)*. 2017. <https://www.w3.org/TR/dwbp/>. | `w3c-dwbp-2017` | BP 17, provide bulk download: "enable consumers to retrieve the full dataset with a single request" |
-| A3 | A3 · Bulk access | Mark D. Wilkinson; et al. *The FAIR Guiding Principles for scientific data management and stewardship*. 2019. <https://www.nature.com/articles/sdata201618>. | `wilkinson-2016-fair-guiding-principles` | A1 and A1.1: retrievable by their identifier using a standardized communications protocol that is open, free, and universally implementable |
-| A1 | A1 · Machine-readable formats | 115th Congress. *Foundations for Evidence-Based Policymaking Act of 2018 (Evidence Act)*. 2019. <https://www.govinfo.gov/app/details/PLAW-115publ435>. | `foundations-for-evidence-based-policymaking-act-of-2018-evid` | Title II, the OPEN Government Data Act, amending 44 U.S.C. 3502: paragraph 18 defines machine-readable as "data in a format that can be easily processed by a computer without human intervention while ensuring no semantic meaning is lost", and paragraph 20 requires an open Government data asset to be machine-readable and available in an open format |
-| A1 | A1 · Machine-readable formats | Office of Management and Budget. *M-25-05: Phase 2 Implementation of the Evidence Act — Open Government Data Access and Management*. 2025. <https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf>. | `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` | section 5, attributes generally required for public data assets, i. Machine-Readable: "agencies must make each of their public data assets machine-readable", with the worked example that tabular data "should not provide this data as a scanned image or image-based PDF document, but rather should provide that public data asset in an appropriate format e.g. in a character-delimited format such as a CSV file" |
-| A1 | A1 · Machine-readable formats | W3C Data on the Web Best Practices Working Group. *Data on the Web Best Practices (W3C Recommendation, 31 January 2017)*. 2017. <https://www.w3.org/TR/dwbp/>. | `w3c-dwbp-2017` | BP 12, use machine-readable standardized data formats: "make data available in a machine-readable, standardized data format that is well suited to its intended or potential use", implemented as "CSV, XML, HDF5, JSON and RDF serialization syntaxes" and tested by "check if the data format conforms to a known machine-readable data format specification"; and BP 14, provide data in multiple formats, the not-PDF-only half |
-| A6 | A6 · Structured markup | Akhtar et al. *Croissant: A Metadata Format for ML-Ready Datasets*. 2024. <https://arxiv.org/abs/2403.19546>. | `croissant-akhtar-2024-paper` |  |
-| A6 | A6 · Structured markup | MLCommons Croissant Working Group. *Croissant Format Specification (MLCommons)*. 2026. <https://docs.mlcommons.org/croissant/docs/croissant-spec.html>. | `mlcommons-croissant-spec` |  |
-| A6 | A6 · Structured markup | Schema.org Community Group. *schema.org: Dataset*. 2026. <https://schema.org/Dataset>. | `schema-org-dataset` |  |
-| A6 | A6 · Structured markup | W3C Dataset Exchange Working Group. *Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)*. 2024. <https://www.w3.org/TR/vocab-dcat-3/>. | `w3c-dcat-3` |  |
-| A8 | A8 · Timeliness of surface | U.S. General Services Administration / Data.gov. *DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov*. 2026. <https://resources.data.gov/resources/dcat-us/>. | `dcat-us-1-1-schema` | the modified field, required "yes, always": "most recent date on which the dataset was changed, updated or modified", as an ISO 8601 date; and the accrualPeriodicity field, the publishing frequency as an ISO 8601 repeating duration |
-| A8 | A8 · Timeliness of surface | Office of Management and Budget. *OMB M-23-22: Delivering a Digital-First Public Experience*. 2023. <https://www.whitehouse.gov/wp-content/uploads/2023/09/M-23-22-Delivering-a-Digital-First-Public-Experience.pdf>. | `omb-m-23-22-digital-first-public-experience` | indicate timeliness of content: agencies "should indicate when content on static, public-facing websites was created or last updated by including temporal information in line with content or by using 'Last Modified' in the HTTP header, in metadata tags, or in XML sitemaps" |
-| A8 | A8 · Timeliness of surface | W3C Data on the Web Best Practices Working Group. *Data on the Web Best Practices (W3C Recommendation, 31 January 2017)*. 2017. <https://www.w3.org/TR/dwbp/>. | `w3c-dwbp-2017` | BP 7, provide a version indicator: "assign and indicate a version number or date for each dataset", whose intended outcome is that "humans and software agents will easily be able to determine which version of a dataset they are working with" and whose implementation note is that "the URI used to request the latest version of the data should not change as the versions change", which is the latest-vintage pointer; and BP 21, provide data up to date: "make data available in an up-to-date manner, and make the update frequency explicit" |
-| A9 | A9 · M2M agent surface | Mark D. Wilkinson; et al. *The FAIR Guiding Principles for scientific data management and stewardship*. 2019. <https://www.nature.com/articles/sdata201618>. | `wilkinson-2016-fair-guiding-principles` |  |
-| B3 | B3 · Methodology legibility | Microsoft Bing. *Bing Webmaster Guidelines*. <https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a>. | `bing-webmaster-guidelines` | section 8, allow efficient crawling and rendering, which lists "hiding critical content behind client-side rendering" among the things to avoid and states that "content that cannot be reliably rendered may not be indexed or selected for grounding results", which is the served-without-script-execution half |
-| B3 | B3 · Methodology legibility | Office of Management and Budget. *OMB M-23-22: Delivering a Digital-First Public Experience*. 2023. <https://www.whitehouse.gov/wp-content/uploads/2023/09/M-23-22-Delivering-a-Digital-First-Public-Experience.pdf>. | `omb-m-23-22-digital-first-public-experience` | default to HTML: agencies "should default to creating and publishing content in an HTML format in lieu of publishing content in other electronic document formats that are designed for printing or preserving and protecting the content and layout of the document e.g. PDF and DOCX formats", and "an agency should develop online content in a non-HTML format only if necessitated by a specific user need", which is the structured-text, not-PDF-only half |
-| B3 | B3 · Methodology legibility | W3C Data on the Web Best Practices Working Group. *Data on the Web Best Practices (W3C Recommendation, 31 January 2017)*. 2017. <https://www.w3.org/TR/dwbp/>. | `w3c-dwbp-2017` | BP 5, provide data provenance information, intended outcome "software agents will be able to automatically process provenance information"; and BP 6, provide data quality information, intended outcome "humans and software agents will be able to assess the quality and therefore suitability of a dataset for their application" - why a methodology statement has to be machine-processable rather than merely published |
-| D4 | D4 · No dark data | U.S. General Services Administration / Data.gov. *DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov*. 2026. <https://resources.data.gov/resources/dcat-us/>. | `dcat-us-1-1-schema` | that metadata schema, which states the listing requirement on its face: "guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces as hosted at agency.gov/data", and "the catalog file for each agency should list all of the agency's datasets that can be made public, regardless of whether they are distributed by a file download or a Web API"; its Catalog fields section describes "the entire Public Data Listing catalog file" |
-| D4 | D4 · No dark data | 115th Congress. *Foundations for Evidence-Based Policymaking Act of 2018 (Evidence Act)*. 2019. <https://www.govinfo.gov/app/details/PLAW-115publ435>. | `foundations-for-evidence-based-policymaking-act-of-2018-evid` | Title II, the OPEN Government Data Act, enacting 44 U.S.C. 3511: subsection a paragraph 1 requires each agency to "develop and maintain a comprehensive data inventory that accounts for all data assets created by, collected by, under the control or direction of, or maintained by the agency"; subsection a paragraph 3 requires that inventory updated "not later than 90 days" after a data asset is created or identified; subsection b requires public data assets be submitted "for inclusion in the Federal data catalogue"; subsection c paragraph 1 makes that catalogue "a single public interface online as a point of entry" |
-| D4 | D4 · No dark data | Office of Management and Budget. *M-25-05: Phase 2 Implementation of the Evidence Act — Open Government Data Access and Management*. 2025. <https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf>. | `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` | section 4a iii, public dissemination: agencies "must submit their comprehensive data inventory to the Federal Data Catalog as a data asset" and "host it publicly on the agency's website at the address: www.agency.gov/data.json", repeated at section 5b ii with the OMB-approved metadata schema |
-| F4 | F4 · Change legibility | USAFacts. *AI-Ready Data: Ensuring Public Data Meets the Needs of AI and the American Public — The USAFacts Guide to AI-Ready Data for Government Agencies*. 2026. <https://media.usafacts.org/m/634ac133d72ded81/original/USAFacts_AIReadinessForGovernment.pdf>. | `usafacts-ai-ready-data-guide` |  |
-| G4 | G4 · Authority metadata | U.S. General Services Administration / Data.gov. *DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov*. 2026. <https://resources.data.gov/resources/dcat-us/>. | `dcat-us-1-1-schema` | Dataset Required Fields and the field definitions, which support the issuing-authority clause and define the fields RULE-G4-v1 tests: Publisher, "The publishing entity and optionally their parent organization(s)."; bureauCode, required "Yes, for United States Federal Government agencies", "Represent each bureau responsible for the dataset according to the codes found in OMB Circular A-11, Appendix C"; programCode, "Provide an array of programs related to this data asset" |
-| G4 | G4 · Authority metadata | U.S. General Services Administration / Data.gov. *DCAT-US 3.0 Schema: Dataset (resources.data.gov)*. 2026. <https://resources.data.gov/standards/catalog/dcat-us-3/dataset/>. | `dcat-us-3-dataset-schema` | Dataset, publisher, as the corpus captured the page on 2026-08-21, when it was marked Mandatory; superseded by the September 2026 rewrite and kept because RULE-B4-v1 and RULE-D3-v1 cite this capture: "Organization responsible for publishing and making the dataset available" |
-| G4 | G4 · Authority metadata | U.S. General Services Administration / Data.gov. *DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)*. 2026. <https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/>. | `dcat-us-3-dataset-schema-2026-09-15` | Dataset > publisher, Requirement: Recommended, on the page as rewritten in September 2026 and served at https://resources.data.gov/standards/catalog/dcat-us-3/dataset/ on 2026-10-05, where the Mandatory properties are contactPoint, description, identifier and title; the field DCAT-US 3.0 defines for the issuing-authority clause: "Organization responsible for publishing and making the dataset available" |
-| G4 | G4 · Authority metadata | U.S. General Services Administration / Data.gov. *DCAT-US 3 / M-25-05 Crosswalk (resources.data.gov)*. 2026. <https://resources.data.gov/resources/dcat-us-3-crosswalk/>. | `dcat-us-3-m-25-05-crosswalk` | M-25-05 element O, mapped to Dataset publisher or contributor, the federal metadata requirement the field serves: "The name of each agency responsible for maintaining and updating the data asset"; "publisher: Must be an org:Organization and should include the agency's name." |
-| G4 | G4 · Authority metadata | U.S. General Services Administration / Data.gov. *DCAT-US 3.0 Overview (resources.data.gov)*. 2026. <https://resources.data.gov/resources/dcat-us3/>. | `dcat-us-3-overview` | Changes from v1.1, Fields not in the v3.0 core schema, on the bureau and program codes RULE-G4-v1 tests: "The following fields were introduced in v1.1 specifically for U.S. federal agencies. They are not defined in the v3.0 core schema however the v3.0 schema will not reject records that include them." |
-| G4 | G4 · Authority metadata | Schema.org Community Group. *schema.org: Dataset*. 2026. <https://schema.org/Dataset>. | `schema-org-dataset` | sourceOrganization, for the issuing-authority clause: "The Organization on whose behalf the creator was working." |
-| G4 | G4 · Authority metadata | W3C Dataset Exchange Working Group. *Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)*. 2024. <https://www.w3.org/TR/vocab-dcat-3/>. | `w3c-dcat-3` | §6.4.10 Property: publisher, dcterms:publisher, for the issuing-authority clause: "The entity responsible for making the resource available." |
-| G4 | G4 · Authority metadata | W3C. *PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)*. 2013. <https://www.w3.org/TR/prov-o/>. | `w3c-prov-o-ontology` | prov:wasAttributedTo, the issuing-authority clause as a provenance relation: "Attribution is the ascribing of an entity to an agent." |
+| A4 | A4 · Crawler/agent access | no admitted source |  |  |
+| A5 | A5 · Discoverability surface | no admitted source |  |  |
+| A10 | A10 · Application/data-tool machine surface | no admitted source |  |  |
+| A11-declared | A11 · Effective crawler access (declared / enforced / observed) | no admitted source |  |  |
+| A12 | A12 · Access policy coherence | no admitted source |  |  |
+| G1-D | G1-D · Uncertainty legibility (two legs, scored as a vector) | no admitted source |  |  |
+| A3 | A3 · Bulk access | no admitted source |  |  |
+| A1 | A1 · Machine-readable formats | no admitted source |  |  |
+| A6 | A6 · Structured markup | no admitted source |  |  |
+| A8 | A8 · Timeliness of surface | no admitted source |  |  |
+| A9 | A9 · M2M agent surface | no admitted source |  |  |
+| B3 | B3 · Methodology legibility | no admitted source |  |  |
+| D4 | D4 · No dark data | no admitted source |  |  |
+| F4 | F4 · Change legibility | no admitted source |  |  |
+| G4 | G4 · Authority metadata | no admitted source |  |  |
 
 **Files beside this report.** `scan_matrix_tierA_2026-10-06_composite_c.csv` and `.json`, the
 host-level matrix; `scan_matrix_tierC_2026-10-06_composite_c.*`, the reference hosts;

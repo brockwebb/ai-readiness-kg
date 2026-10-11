@@ -186,7 +186,7 @@ def main(argv=None) -> int:
         return 0
     shard = REPO / "events" / f"batch-{spec['batch']:03d}.jsonl"
     if shard.is_file():
-        for line in shard.read_text(encoding="utf-8").splitlines():
+        for line in shard.read_text(encoding="utf-8").split("\n"):
             if not line.strip():
                 continue
             ev = json.loads(line)

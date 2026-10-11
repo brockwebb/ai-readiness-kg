@@ -59,7 +59,10 @@ ADOPTER_UA = "example-readiness-scan/1.0 (+mailto:webmaster@example.org)"
 #: moved them again (the `existence` and `discoverability` blocks, A13 in `link_probe.legs_served`)
 #: before re-judging the recollection under them as `scan_2026-10-06_recollect_rj1`, the part the
 #: composite of record `scan_2026-10-06_composite_c` overlays.
-SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-10-06_recollect_rj1.json"
+#: Part 2 (`cc_tasks/2026-10-07_seed_known_locations_verify.md`) moved them again (`cycle.name`,
+#: `d1_sources.terms_text_max_bytes`) and measured under them as `scan_2026-10-07_seeded`, the
+#: overlay of the composite of record `scan_2026-10-07_composite_d`.
+SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-10-07_seeded.json"
 
 
 def _frame_file(tmp: Path, text: str, name: str = "my_site.yaml") -> Path:

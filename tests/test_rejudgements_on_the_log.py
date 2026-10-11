@@ -324,7 +324,7 @@ def test_every_other_cycle_has_its_own_named_shard(cycle):
     path = REPO / "events" / f"cycle-{cycle}.jsonl"
     assert path.is_file(), f"{cycle} has no named shard at {path}"
     ids = {f["finding_id"] for f in payload(cycle)["findings_detail"]}
-    on_shard = {json.loads(l)["finding_id"] for l in path.read_text(encoding="utf-8").splitlines()
+    on_shard = {json.loads(l)["finding_id"] for l in path.read_text(encoding="utf-8").split("\n")
                 if l.strip() and json.loads(l).get("event_type") == publish.FIND_EVENT}
     assert on_shard == ids
 

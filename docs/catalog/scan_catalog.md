@@ -44,7 +44,7 @@
 | S-C4-bing_ai_performance | agency_enabled | tool_commercial | bing_ai_performance |  | Bing Webmaster Tools, AI Performance report | no_standard | M | TBD | 3 | plausible | yes | record |
 | S-C4-engine_queries | needs_standard | tool_commercial | engine_queries |  | Perplexity.ai | no_standard | M | TBD | 3 | plausible | yes | record |
 | S-C5-aidrin | public_outside_in | tool_open_source | aidrin |  | AIDRIN (AI Data Readiness Inspector) PyPI package | open_tooling | O | TBD | 2 | plausible | TBD | record |
-| S-D1-rule-D1 | public_outside_in | built_rule | rule:D1 | RULE-D1-v6 | extruct + httpx | open_tooling | M | 1 | 3 | established | yes | record |
+| S-D1-rule-D1 | public_outside_in | built_rule | rule:D1 | RULE-D1-v6 | extruct + httpx | measured | M | 1 | 3 | established | yes | record |
 | S-D2-rule-D2 | public_outside_in | built_rule | rule:D2 | RULE-D2-v1 | content-signals | measured | M | 1 | 2 | unevidenced | yes | record |
 | S-D3-rule-D3 | public_outside_in | built_rule | rule:D3 | RULE-D3-v3 | dcat-record-fields | measured | M | 1 | 2 | plausible | yes | record |
 | S-D3-prov_walk | public_outside_in | roll_your_own | prov_walk |  |  | measured | M | TBD | 2 | plausible | yes | record |

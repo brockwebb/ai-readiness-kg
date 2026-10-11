@@ -45,14 +45,23 @@
 # twelve recollected legs from that re-judgement, A2 and D1 included, and every other leg from
 # `scan_2026-09-10_rj5`. Nothing is withheld (`state/scan_2026-10-06_composite_c.json`,
 # `composed_of`).
-snapshot_cycle: scan_2026-10-06_composite_c
+#
+# `scan_2026-10-07_composite_d` from 2026-10-11. `cc_tasks/2026-10-07_seed_known_locations_
+# verify.md` decision 5: every seeded location verified by one GET and written to
+# `targets.yaml` under scheme 2, then `scan_2026-10-07_seeded` measured the existence legs (A2,
+# D1, F4, D4, B1, B4, D3, G4), A9 and the discoverability candidate A13 on the 46 surfaces. This
+# composite takes those ten legs from it and everything else from `_composite_c` (A1, A3, B3
+# from `scan_2026-10-06_recollect_rj1`, the rest from `scan_2026-09-10_rj5`): a composite over
+# a composite, `composed_of` scheme 2. FROZEN: the concise report cites this composite and no
+# other (`docs/evidence/FROZEN.md`).
+snapshot_cycle: scan_2026-10-07_composite_d
 
 title: "AI readiness of the federal statistical system: host-level findings"
 
 # The version identifier the report carries, per DN-002 decision 5. The snapshot cycle IS the
 # version: two builds of the same cycle are the same findings, and a new cycle is a new
 # document rather than a new edition of this one.
-version: "2026-10-06_composite_c"
+version: "2026-10-07_composite_d"
 
 # The date each version was RELEASED, keyed by version. Every date a published file carries —
 # CITATION.cff `date-released`, the Zenodo `publication_date`, the sitemap `lastmod`, the index
@@ -82,6 +91,9 @@ released:
   # Released by the push of `cc_tasks/2026-10-07_seed_known_locations_and_split_
   # discoverability.md`; the re-judgement's events are 2026-10-10T11Z.
   "2026-10-06_composite_c": "2026-10-10"
+  # Released by the push of `cc_tasks/2026-10-07_seed_known_locations_verify.md`; the seeded
+  # cycle's events are 2026-10-11T04Z.
+  "2026-10-07_composite_d": "2026-10-11"
 
 # Corrections to a released version's WORDS, keyed by version. A correction moves no number, no
 # verdict and no matrix cell — a change that would is a new snapshot under DN-004 decision 1,

@@ -269,7 +269,17 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
     #: recollection_v2.md` decision 4).
     composed = payload.get("cycle_kind") == "composite"
     rejudged = payload.get("cycle_kind") == "rejudged" or composed
-    if composed:
+    if composed and payload["composed_of"]["base"].get("parts"):
+        # A composite over a composite (`scan.composite` scheme 2,
+        # `cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 5): every part named,
+        # each with the legs it supplies.
+        from scan import composite as _composite
+        tag = (f"Cycle {cycle}, a COMPOSITE cycle of record: " + "; ".join(
+            (f"legs {', '.join(legs)} from {part}" if legs is not None
+             else f"every other leg from {part}")
+            for part, legs in _composite.parts(payload))
+            + "; no Finding re-judged and nothing re-fetched.")
+    elif composed:
         c = payload["composed_of"]
         tag = (f"Cycle {cycle}, a COMPOSITE cycle of record: legs "
                f"{', '.join(c['overlay']['legs'])} from {c['overlay']['cycle']} (params_hash "

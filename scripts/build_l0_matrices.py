@@ -645,6 +645,10 @@ def compute(cycle: str, params: dict | None = None) -> dict:
                                     "params_hash": v["params_hash"]}
                                 for k, v in p["composed_of"].items() if isinstance(v, dict)}}
                if _composite.is_composite(p) else {}),
+            # A composite over a composite (`scan.composite` scheme 2) also names every part and
+            # the legs it supplies, so the header says which cycle each verdict comes from.
+            **({"composed_of_parts": [[c, legs] for c, legs in _composite.parts(p)]}
+               if _composite.is_composite(p) and p["composed_of"]["base"].get("parts") else {}),
             # A spot matrix says it is one ON the matrix, so a reader of the file alone — and
             # every view that lists cycles (`scripts/prescriptions.py`) — can tell it from the
             # frame's. Absent on a frame cycle's header, so no published matrix changes.

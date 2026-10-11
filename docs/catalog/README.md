@@ -166,7 +166,7 @@ No inference is made about why any finding was a denial. A body with no vendor-n
 
 <!-- BEGIN GENERATED: summary -->
 
-Of the 26 framework indicators the record does not mark measured, the easiest route on any row needs:
+Of the 25 framework indicators the record does not mark measured, the easiest route on any row needs:
 
 | easiest route | n | indicators |
 |---|---|---|
@@ -174,7 +174,7 @@ Of the 26 framework indicators the record does not mark measured, the easiest ro
 | `needs_standard` | 9 | C1, C2, C3, C4, E6, E8, E9, G2, G6 |
 | `agency_enabled` | 0 |  |
 | `agency_records` | 7 | E1, E2, E3, E4, E7, F1, F5 |
-| `no_route_to_obtain` | 2 | D1, E5 |
+| `no_route_to_obtain` | 1 | E5 |
 
 `no_route_to_obtain` means no row offers anything to obtain: the indicator has a built rule the record does not mark measured, and its unmeasured half has no known method (`none_known`) or nothing stands in its way but the definition of measured. It does not mean the indicator needs nothing.
 
@@ -218,7 +218,7 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 | C3 | C | specified | Version/vintage disambiguation: does retrieval return the vintage asked for? |
 | C4 | C | specified | Generative engines citing the product cite the authoritative page (not aggregators) |
 | C5 | C | specified | Product scored against published AI-data-readiness metrics |
-| D1 | D | harness_built | Explicit machine-readable license/terms on product and API |
+| D1 | D | measured | Explicit machine-readable license/terms on product and API |
 | D2 | D | measured | Terms address model training/retrieval use explicitly |
 | D3 | D | measured | Source lineage published (collection → processing → product) |
 | D4 | D | measured | Statutory products enumerable from a public inventory (data.gov/agency inventory current) |
@@ -251,11 +251,11 @@ Criteria, as the record names them: `A` ACCESSIBLE; `B` UNDERSTANDABLE; `C` ACCU
 
 <!-- BEGIN GENERATED: counts -->
 
-- Scan rows: 72, over 50 indicators (26 framework indicators are not measured).
+- Scan rows: 72, over 50 indicators (25 framework indicators are not measured).
 - By who can run it: `public_outside_in` 42, `agency_enabled` 9, `agency_records` 8, `needs_standard` 13.
 - By method kind: `built_rule` 27, `tool_open_source` 8, `tool_commercial` 10, `roll_your_own` 23, `none_known` 4.
 - By row source: `record` 63, `catalog_search` 2, `proposed_link` 7.
 - Action rows: 65 (64 from the record, 1 named).
-- Greedy set cover: 22 steps cover 24 of 26 unmeasured framework indicators; for 2, no row offers anything to obtain.
+- Greedy set cover: 22 steps cover 24 of 25 unmeasured framework indicators; for 1, no row offers anything to obtain.
 
 <!-- END GENERATED: counts -->

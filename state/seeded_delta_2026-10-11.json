@@ -1,0 +1,2721 @@
+{
+ "cycle": "scan_2026-10-07_seeded",
+ "headline": {
+  "bodies_with_such_a_pair": 11,
+  "pairs_exist": 29,
+  "pairs_exist_unreachable_from_every_product_page": 15,
+  "surface_object_pairs_exist": 88,
+  "surface_object_pairs_exist_and_fail": 54
+ },
+ "legs_after": {
+  "counts": {
+   "A13": {
+    "error": 7,
+    "fail": 37,
+    "not_applicable": 0,
+    "pass": 2
+   },
+   "A2": {
+    "error": 21,
+    "fail": 25,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "A9": {
+    "error": 31,
+    "fail": 5,
+    "not_applicable": 0,
+    "pass": 10
+   },
+   "B1": {
+    "error": 33,
+    "fail": 13,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "B4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D1": {
+    "error": 15,
+    "fail": 31,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D3": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "F4": {
+    "error": 10,
+    "fail": 36,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "G4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   }
+  },
+  "cycle": "scan_2026-10-07_composite_d"
+ },
+ "legs_before": {
+  "counts": {
+   "A13": {
+    "error": 0,
+    "fail": 0,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "A2": {
+    "error": 39,
+    "fail": 7,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "A9": {
+    "error": 39,
+    "fail": 3,
+    "not_applicable": 0,
+    "pass": 4
+   },
+   "B1": {
+    "error": 33,
+    "fail": 13,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "B4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D1": {
+    "error": 46,
+    "fail": 0,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D3": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "D4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "F4": {
+    "error": 31,
+    "fail": 15,
+    "not_applicable": 0,
+    "pass": 0
+   },
+   "G4": {
+    "error": 32,
+    "fail": 14,
+    "not_applicable": 0,
+    "pass": 0
+   }
+  },
+  "cycle": "scan_2026-10-06_composite_c"
+ },
+ "params_hash": "5166e78c756f8d736df02c667fcc4c1748ecfef3fbebf1df5124054e1fc22412",
+ "per_surface": [
+  {
+   "body": "NCES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://nces.ed.gov/opengis/rest/services and is not reachable from the product page: not among its 58 link(s), and no API catalog is served at https://nces.ed.gov/.well-known/api-catalog",
+   "surface": "flagship:nces.ed.gov/programs/digest/"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:nces.ed.gov/programs/digest/"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (every recorded changelog or release-notes location read (1); seed sources searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov)",
+   "surface": "flagship:nces.ed.gov/programs/digest/"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/ed and is not reachable from the product page: not among its 58 link(s), and it is not at https://nces.ed.gov/data.json",
+   "surface": "flagship:nces.ed.gov/programs/digest/"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 182 link(s), and it is not at https://www.aphis.usda.gov/data.json",
+   "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.bls.gov/publicAPI/v1/timeseries/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's documented API base: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.bls.gov/cpi/"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://www.bls.gov/developers/termsOfService.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.bls.gov/cpi/"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.bls.gov/bls/whatsnew.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); the recorded changelog or release-notes location https://www.bls.gov/developers/api_faqs.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.bls.gov/cpi/"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "flagship:www.bls.gov/cpi/"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, and the product page was not served or its links were not read",
+   "surface": "flagship:www.bts.gov/topics/national-transportation-statistics"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (department): the department's host could not be read from a page: catalog.data.gov's Department of Transportation organization page links only DOIs (doi.org), and the body's own pages answer 403; https://www.transportation.gov/ was requested without having been read from any page, answered 403, and is not declared; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.bts.gov/topics/national-transportation-statistics"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (department): the department's host could not be read from a page: catalog.data.gov's Department of Transportation organization page links only DOIs (doi.org), and the body's own pages answer 403; https://www.transportation.gov/ was requested without having been read from any page, answered 403, and is not declared; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.bts.gov/topics/national-transportation-statistics"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "flagship:www.bts.gov/topics/national-transportation-statistics"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.federalreserve.gov/data.json (OMB M-13-13)",
+   "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 384 link(s), and it is not at https://www.samhsa.gov/data.json",
+   "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://api.ojp.gov/bjsdataset/v1/ and is not reachable from the product page: not among its 153 link(s), and no API catalog is served at https://bjs.ojp.gov/.well-known/api-catalog",
+   "surface": "home:bjs.ojp.gov"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:bjs.ojp.gov"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://bjs.ojp.gov/library/publications/data-corrections)",
+   "surface": "home:bjs.ojp.gov"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.justice.gov/data.json and is not reachable from the product page: not among its 153 link(s), and it is not at https://bjs.ojp.gov/data.json",
+   "surface": "home:bjs.ojp.gov"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://nces.ed.gov/opengis/rest/services and is not reachable from the product page: not among its 50 link(s), and no API catalog is served at https://nces.ed.gov/.well-known/api-catalog",
+   "surface": "home:nces.ed.gov"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:nces.ed.gov"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (every recorded changelog or release-notes location read (1); seed sources searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov)",
+   "surface": "home:nces.ed.gov"
+  },
+  {
+   "body": "NCES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/ed and is not reachable from the product page: not among its 50 link(s), and it is not at https://nces.ed.gov/data.json",
+   "surface": "home:nces.ed.gov"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:ncses.nsf.gov"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:ncses.nsf.gov"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://ncses.nsf.gov/corrections)",
+   "surface": "home:ncses.nsf.gov"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.nsf.gov/data.json and is not reachable from the product page: not among its 96 link(s), and it is not at https://ncses.nsf.gov/data.json",
+   "surface": "home:ncses.nsf.gov"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.aphis.usda.gov"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.aphis.usda.gov"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.aphis.usda.gov"
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 182 link(s), and it is not at https://www.aphis.usda.gov/data.json",
+   "surface": "home:www.aphis.usda.gov"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): the body's developer page links its API only at https://apps.bea.gov/API/signup/ (anchor \"Application Programming Interface (API)\"), and apps.bea.gov's robots.txt disallows that path to this client, so the documented base cannot be read from a page this client may fetch; not declared (changelog): no page labelled a changelog, release notes, updates, what's new or corrections is linked from the home page or the developer page; the \"News Release Feed (RSS)\" announces publications and is not a revision log (spec:F4: \"a revision class per entry\")",
+   "surface": "home:www.bea.gov"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf and is not reachable from the product page: not among its 132 link(s)",
+   "surface": "home:www.bea.gov"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.bea.gov"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.bea.gov/data.json (OMB M-13-13)",
+   "surface": "home:www.bea.gov"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.bls.gov/publicAPI/v1/timeseries/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's documented API base: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.bls.gov"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://www.bls.gov/developers/termsOfService.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.bls.gov"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.bls.gov/bls/whatsnew.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); the recorded changelog or release-notes location https://www.bls.gov/developers/api_faqs.htm could not be verified (refused; seeded from model_knowledge:claude-opus-5-5); seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.bls.gov"
+  },
+  {
+   "body": "BLS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "home:www.bls.gov"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, and the product page was not served or its links were not read",
+   "surface": "home:www.bts.gov"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (department): the department's host could not be read from a page: catalog.data.gov's Department of Transportation organization page links only DOIs (doi.org), and the body's own pages answer 403; https://www.transportation.gov/ was requested without having been read from any page, answered 403, and is not declared; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.bts.gov"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (department): the department's host could not be read from a page: catalog.data.gov's Department of Transportation organization page links only DOIs (doi.org), and the body's own pages answer 403; https://www.transportation.gov/ was requested without having been read from any page, answered 403, and is not declared; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.bts.gov"
+  },
+  {
+   "body": "BTS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "home:www.bts.gov"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://data.cdc.gov/api/views and is not reachable from the product page: not among its 0 link(s), and no API catalog is served at https://www.cdc.gov/.well-known/api-catalog",
+   "surface": "home:www.cdc.gov"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.cdc.gov"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.cdc.gov"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 0 link(s), and it is not at https://www.cdc.gov/data.json",
+   "surface": "home:www.cdc.gov"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, is not linked from the product page, and the convention location https://www.census.gov/.well-known/api-catalog was not fetched",
+   "surface": "home:www.census.gov"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.census.gov/data/developers/about/terms-of-service.html and is not reachable from the product page: not among its 255 link(s)",
+   "surface": "home:www.census.gov"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.census.gov/data/developers/updates.html and is not reachable from the product page: not among its 255 link(s)",
+   "surface": "home:www.census.gov"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.census.gov/data.json (OMB M-13-13)",
+   "surface": "home:www.census.gov"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.eia.gov/v2/ could not be verified (refused; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:534, developer_page:https://www.eia.gov/opendata/documentation.php)",
+   "surface": "home:www.eia.gov"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.eia.gov/opendata/terms-of-service.php and is not reachable from the product page: not among its 147 link(s)",
+   "surface": "home:www.eia.gov"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://www.eia.gov/about/new/)",
+   "surface": "home:www.eia.gov"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.energy.gov/data.json and is not reachable from the product page: not among its 147 link(s), and it is not at https://www.eia.gov/data.json",
+   "surface": "home:www.eia.gov"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.ers.usda.gov/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5)",
+   "surface": "home:www.ers.usda.gov"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.ers.usda.gov"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.ers.usda.gov"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 92 link(s), and it is not at https://www.ers.usda.gov/data.json",
+   "surface": "home:www.ers.usda.gov"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.federalreserve.gov"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.federalreserve.gov"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.federalreserve.gov"
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.federalreserve.gov/data.json (OMB M-13-13)",
+   "surface": "home:www.federalreserve.gov"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.irs.gov"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.irs.gov"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://www.irs.gov/statistics/soi-tax-stats-whats-new)",
+   "surface": "home:www.irs.gov"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.treasury.gov/data.json and is not reachable from the product page: not among its 225 link(s), and it is not at https://www.irs.gov/data.json",
+   "surface": "home:www.irs.gov"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689, developer_page:https://www.nass.usda.gov, repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230, repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200, catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000)",
+   "surface": "home:www.nass.usda.gov"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_terms): the body's API page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats API page that would carry them is disallowed to this client by quickstats.nass.usda.gov's robots.txt",
+   "surface": "home:www.nass.usda.gov"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.nass.usda.gov/Corrections/?log=QS could not be verified (robots_disallowed; seeded from repo:assessment/harness/scan/targets.yaml:0, developer_page:https://www.nass.usda.gov/developer/index.php)",
+   "surface": "home:www.nass.usda.gov"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 209 link(s), and it is not at https://www.nass.usda.gov/data.json",
+   "surface": "home:www.nass.usda.gov"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.samhsa.gov"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.samhsa.gov"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "home:www.samhsa.gov"
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 1536 link(s), and it is not at https://www.samhsa.gov/data.json",
+   "surface": "home:www.samhsa.gov"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.ssa.gov"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.ssa.gov"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: seed sources not searched for this body's changelog or release-notes location: developer_page; not declared (api_base): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read; not declared (changelog): every page of the body's own host answered HTTP 403 to this client's declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read",
+   "surface": "home:www.ssa.gov"
+  },
+  {
+   "body": "ORES",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "home:www.ssa.gov"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): the body's developer page links its API only at https://apps.bea.gov/API/signup/ (anchor \"Application Programming Interface (API)\"), and apps.bea.gov's robots.txt disallows that path to this client, so the documented base cannot be read from a page this client may fetch; not declared (changelog): no page labelled a changelog, release notes, updates, what's new or corrections is linked from the home page or the developer page; the \"News Release Feed (RSS)\" announces publications and is not a revision log (spec:F4: \"a revision class per entry\")",
+   "surface": "scan-bea-flagship-1-interactive-data"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf and is not reachable from the product page: not among its 88 link(s)",
+   "surface": "scan-bea-flagship-1-interactive-data"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-bea-flagship-1-interactive-data"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.bea.gov/data.json (OMB M-13-13)",
+   "surface": "scan-bea-flagship-1-interactive-data"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): the body's developer page links its API only at https://apps.bea.gov/API/signup/ (anchor \"Application Programming Interface (API)\"), and apps.bea.gov's robots.txt disallows that path to this client, so the documented base cannot be read from a page this client may fetch; not declared (changelog): no page labelled a changelog, release notes, updates, what's new or corrections is linked from the home page or the developer page; the \"News Release Feed (RSS)\" announces publications and is not a revision log (spec:F4: \"a revision class per entry\")",
+   "surface": "scan-bea-flagship-2-news-releases"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf and is not reachable from the product page: not among its 104 link(s)",
+   "surface": "scan-bea-flagship-2-news-releases"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-bea-flagship-2-news-releases"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.bea.gov/data.json (OMB M-13-13)",
+   "surface": "scan-bea-flagship-2-news-releases"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: seed sources not searched for this body's documented API base: developer_page; not declared (api_base): the body's developer page links its API only at https://apps.bea.gov/API/signup/ (anchor \"Application Programming Interface (API)\"), and apps.bea.gov's robots.txt disallows that path to this client, so the documented base cannot be read from a page this client may fetch; not declared (changelog): no page labelled a changelog, release notes, updates, what's new or corrections is linked from the home page or the developer page; the \"News Release Feed (RSS)\" announces publications and is not a revision log (spec:F4: \"a revision class per entry\")",
+   "surface": "scan-bea-machine"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf and is not reachable from the product page: not among its 92 link(s)",
+   "surface": "scan-bea-machine"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-bea-machine"
+  },
+  {
+   "body": "BEA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.bea.gov/data.json (OMB M-13-13)",
+   "surface": "scan-bea-machine"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://api.ojp.gov/bjsdataset/v1/ and is not reachable from the product page: not among its 128 link(s), and no API catalog is served at https://bjs.ojp.gov/.well-known/api-catalog",
+   "surface": "scan-bjs-flagship-1-data-by-topic"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-bjs-flagship-1-data-by-topic"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://bjs.ojp.gov/library/publications/data-corrections)",
+   "surface": "scan-bjs-flagship-1-data-by-topic"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.justice.gov/data.json and is not reachable from the product page: not among its 128 link(s), and it is not at https://bjs.ojp.gov/data.json",
+   "surface": "scan-bjs-flagship-1-data-by-topic"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://api.ojp.gov/bjsdataset/v1/ and is not reachable from the product page: not among its 143 link(s), and no API catalog is served at https://bjs.ojp.gov/.well-known/api-catalog",
+   "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://bjs.ojp.gov/library/publications/data-corrections)",
+   "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act"
+  },
+  {
+   "body": "BJS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.justice.gov/data.json and is not reachable from the product page: not among its 143 link(s), and it is not at https://bjs.ojp.gov/data.json",
+   "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, is not linked from the product page, and the convention location https://www.census.gov/.well-known/api-catalog was not fetched",
+   "surface": "scan-census-flagship-1-surveys-programs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.census.gov/data/developers/about/terms-of-service.html and is not reachable from the product page: not among its 259 link(s)",
+   "surface": "scan-census-flagship-1-surveys-programs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.census.gov/data/developers/updates.html and is not reachable from the product page: not among its 259 link(s)",
+   "surface": "scan-census-flagship-1-surveys-programs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.census.gov/data.json (OMB M-13-13)",
+   "surface": "scan-census-flagship-1-surveys-programs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, is not linked from the product page, and the convention location https://www.census.gov/.well-known/api-catalog was not fetched",
+   "surface": "scan-census-flagship-2-american-community-survey-acs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.census.gov/data/developers/about/terms-of-service.html and is not reachable from the product page: not among its 274 link(s)",
+   "surface": "scan-census-flagship-2-american-community-survey-acs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.census.gov/data/developers/updates.html and is not reachable from the product page: not among its 274 link(s)",
+   "surface": "scan-census-flagship-2-american-community-survey-acs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.census.gov/data.json (OMB M-13-13)",
+   "surface": "scan-census-flagship-2-american-community-survey-acs"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists, is not linked from the product page, and the convention location https://www.census.gov/.well-known/api-catalog was not fetched",
+   "surface": "scan-census-machine"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.census.gov/data/developers/about/terms-of-service.html and is not reachable from the product page: not among its 215 link(s)",
+   "surface": "scan-census-machine"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.census.gov/data/developers/updates.html and is not reachable from the product page: not among its 215 link(s)",
+   "surface": "scan-census-machine"
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: at the convention location https://www.census.gov/data.json (OMB M-13-13)",
+   "surface": "scan-census-machine"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.eia.gov/v2/ could not be verified (refused; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:534, developer_page:https://www.eia.gov/opendata/documentation.php)",
+   "surface": "scan-eia-flagship-1-open-data"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists, and the product page was not served or its links were not read",
+   "surface": "scan-eia-flagship-1-open-data"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists, and the product page was not served or its links were not read",
+   "surface": "scan-eia-flagship-1-open-data"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists, and the product page was not served or its links were not read",
+   "surface": "scan-eia-flagship-1-open-data"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.eia.gov/v2/ could not be verified (refused; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:534, developer_page:https://www.eia.gov/opendata/documentation.php)",
+   "surface": "scan-eia-machine"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "terms",
+   "reason": "the API's terms: exists at https://www.eia.gov/opendata/terms-of-service.php and is not reachable from the product page: not among its 133 link(s)",
+   "surface": "scan-eia-machine"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://www.eia.gov/about/new/)",
+   "surface": "scan-eia-machine"
+  },
+  {
+   "body": "EIA",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.energy.gov/data.json and is not reachable from the product page: not among its 133 link(s), and it is not at https://www.eia.gov/data.json",
+   "surface": "scan-eia-machine"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.ers.usda.gov/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5)",
+   "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 77 link(s), and it is not at https://www.ers.usda.gov/data.json",
+   "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.ers.usda.gov/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5)",
+   "surface": "scan-ers-flagship-2-agricultural-baseline-database"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-flagship-2-agricultural-baseline-database"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-flagship-2-agricultural-baseline-database"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 101 link(s), and it is not at https://www.ers.usda.gov/data.json",
+   "surface": "scan-ers-flagship-2-agricultural-baseline-database"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://api.ers.usda.gov/data/ could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5)",
+   "surface": "scan-ers-machine"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-machine"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ers-machine"
+  },
+  {
+   "body": "ERS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 153 link(s), and it is not at https://www.ers.usda.gov/data.json",
+   "surface": "scan-ers-machine"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689, developer_page:https://www.nass.usda.gov, repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230, repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200, catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000)",
+   "surface": "scan-nass-flagship-1-data-statistics"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_terms): the body's API page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats API page that would carry them is disallowed to this client by quickstats.nass.usda.gov's robots.txt",
+   "surface": "scan-nass-flagship-1-data-statistics"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.nass.usda.gov/Corrections/?log=QS could not be verified (robots_disallowed; seeded from repo:assessment/harness/scan/targets.yaml:0, developer_page:https://www.nass.usda.gov/developer/index.php)",
+   "surface": "scan-nass-flagship-1-data-statistics"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 225 link(s), and it is not at https://www.nass.usda.gov/data.json",
+   "surface": "scan-nass-flagship-1-data-statistics"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689, developer_page:https://www.nass.usda.gov, repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230, repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200, catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000)",
+   "surface": "scan-nass-flagship-2-livestock-county-estimates"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_terms): the body's API page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats API page that would carry them is disallowed to this client by quickstats.nass.usda.gov's robots.txt",
+   "surface": "scan-nass-flagship-2-livestock-county-estimates"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.nass.usda.gov/Corrections/?log=QS could not be verified (robots_disallowed; seeded from repo:assessment/harness/scan/targets.yaml:0, developer_page:https://www.nass.usda.gov/developer/index.php)",
+   "surface": "scan-nass-flagship-2-livestock-county-estimates"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 205 link(s), and it is not at https://www.nass.usda.gov/data.json",
+   "surface": "scan-nass-flagship-2-livestock-county-estimates"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "api",
+   "reason": "the API: existence not settled: the recorded documented API base https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689, developer_page:https://www.nass.usda.gov, repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230, repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200, catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000)",
+   "surface": "scan-nass-machine"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "terms",
+   "reason": "the API's terms: existence not settled: the recorded API terms endpoint https://quickstats.nass.usda.gov/api could not be verified (robots_disallowed; seeded from model_knowledge:claude-opus-5-5, repo:assessment/harness/scan/targets.yaml:689); seed sources not searched for this body's API terms endpoint: developer_page; not declared (api_terms): the body's API page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats API page that would carry them is disallowed to this client by quickstats.nass.usda.gov's robots.txt",
+   "surface": "scan-nass-machine"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "error",
+   "exists": "unknown",
+   "object": "changelog",
+   "reason": "the changelog: existence not settled: the recorded changelog or release-notes location https://www.nass.usda.gov/Corrections/?log=QS could not be verified (robots_disallowed; seeded from repo:assessment/harness/scan/targets.yaml:0, developer_page:https://www.nass.usda.gov/developer/index.php)",
+   "surface": "scan-nass-machine"
+  },
+  {
+   "body": "NASS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/usda and is not reachable from the product page: not among its 218 link(s), and it is not at https://www.nass.usda.gov/data.json",
+   "surface": "scan-nass-machine"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://data.cdc.gov/api/views and is not reachable from the product page: not among its 168 link(s), and no API catalog is served at https://www.cdc.gov/.well-known/api-catalog",
+   "surface": "scan-nchs-flagship-1-data-briefs"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-flagship-1-data-briefs"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-flagship-1-data-briefs"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 168 link(s), and it is not at https://www.cdc.gov/data.json",
+   "surface": "scan-nchs-flagship-1-data-briefs"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://data.cdc.gov/api/views and is not reachable from the product page: not among its 176 link(s), and no API catalog is served at https://www.cdc.gov/.well-known/api-catalog",
+   "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 176 link(s), and it is not at https://www.cdc.gov/data.json",
+   "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "api",
+   "reason": "the API: exists at https://data.cdc.gov/api/views and is not reachable from the product page: not among its 232 link(s), and no API catalog is served at https://www.cdc.gov/.well-known/api-catalog",
+   "surface": "scan-nchs-machine"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-machine"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "changelog",
+   "reason": "the changelog: not shown to exist (no seed source records a changelog or release-notes location (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-nchs-machine"
+  },
+  {
+   "body": "NCHS",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://catalog.data.gov/organization/hhs and is not reachable from the product page: not among its 232 link(s), and it is not at https://www.cdc.gov/data.json",
+   "surface": "scan-nchs-machine"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://ncses.nsf.gov/corrections)",
+   "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.nsf.gov/data.json and is not reachable from the product page: not among its 479 link(s), and it is not at https://ncses.nsf.gov/data.json",
+   "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ncses-machine"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-ncses-machine"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "pass",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: linked from the product page (https://ncses.nsf.gov/corrections)",
+   "surface": "scan-ncses-machine"
+  },
+  {
+   "body": "NCSES",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.nsf.gov/data.json and is not reachable from the product page: not among its 81 link(s), and it is not at https://ncses.nsf.gov/data.json",
+   "surface": "scan-ncses-machine"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-soi-flagship-1-individual-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-soi-flagship-1-individual-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.irs.gov/statistics/soi-tax-stats-whats-new and is not reachable from the product page: not among its 227 link(s)",
+   "surface": "scan-soi-flagship-1-individual-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.treasury.gov/data.json and is not reachable from the product page: not among its 227 link(s), and it is not at https://www.irs.gov/data.json",
+   "surface": "scan-soi-flagship-1-individual-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "api",
+   "reason": "the API: not shown to exist (no seed source records a documented API base (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-soi-flagship-2-business-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "not_applicable",
+   "exists": "no",
+   "object": "terms",
+   "reason": "the API's terms: not shown to exist (no seed source records a API terms endpoint (searched: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov))",
+   "surface": "scan-soi-flagship-2-business-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "changelog",
+   "reason": "the changelog: exists at https://www.irs.gov/statistics/soi-tax-stats-whats-new and is not reachable from the product page: not among its 236 link(s)",
+   "surface": "scan-soi-flagship-2-business-tax-statistics"
+  },
+  {
+   "body": "SOI",
+   "discoverability": "fail",
+   "exists": "yes",
+   "object": "inventory",
+   "reason": "the inventory: exists at https://www.treasury.gov/data.json and is not reachable from the product page: not among its 236 link(s), and it is not at https://www.irs.gov/data.json",
+   "surface": "scan-soi-flagship-2-business-tax-statistics"
+  }
+ ],
+ "recollection_commit": "512c1315",
+ "rows": [
+  {
+   "body": "BEA",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "unreadable",
+   "seed_sources": [
+    "catalog.data.gov",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 3,
+    "refused_robots": 2
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "BEA",
+   "discoverability": {
+    "not_applicable": 4
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "BEA",
+   "discoverability": {
+    "pass": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "BEA",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "refused_robots": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "BJS",
+   "discoverability": {
+    "fail": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "api",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "refused_robots": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "BJS",
+   "discoverability": {
+    "pass": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "repo"
+   ],
+   "seed_statuses": {
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "BJS",
+   "discoverability": {
+    "fail": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "BJS",
+   "discoverability": {
+    "not_applicable": 3
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "BLS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "unreadable",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "refused_robots": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BLS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "unreadable",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "http_403": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BLS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "verified": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BLS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "http_403": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BTS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "unreadable",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "verified": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BTS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "unreadable",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "BTS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 2,
+    "verified": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "BTS",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "declared",
+   "seed_sources": [
+    "catalog.data.gov",
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "verified": 4
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": {
+    "pass": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "CENSUS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "terms",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "verified": 3
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "not_the_object": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": {
+    "pass": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "verified": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "DRSMSU",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "EIA",
+   "discoverability": {
+    "error": 3
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "declared",
+   "seed_sources": [
+    "catalog.data.gov",
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 5,
+    "refused_robots": 2
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "EIA",
+   "discoverability": {
+    "error": 1,
+    "pass": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "EIA",
+   "discoverability": {
+    "error": 1,
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "EIA",
+   "discoverability": {
+    "error": 1,
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "ERS",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "catalog.data.gov",
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "refused_robots": 3,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "ERS",
+   "discoverability": {
+    "not_applicable": 4
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 4
+  },
+  {
+   "body": "ERS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "http_404": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "ERS",
+   "discoverability": {
+    "not_applicable": 4
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": {
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "http_404": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "NAHMSAPHIS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "NASS",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "declared",
+   "seed_sources": [
+    "catalog.data.gov",
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 2,
+    "refused_robots": 3
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NASS",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "repo"
+   ],
+   "seed_statuses": {
+    "refused_robots": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NASS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "refused_robots": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NASS",
+   "discoverability": {
+    "error": 4
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "unreadable",
+   "seed_sources": [
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "refused_robots": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NCES",
+   "discoverability": {
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1,
+    "verified": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "NCES",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 2
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "NCES",
+   "discoverability": {
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1,
+    "http_404": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "NCES",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "NCHS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "http_500": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NCHS",
+   "discoverability": {
+    "not_applicable": 4
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 4
+  },
+  {
+   "body": "NCHS",
+   "discoverability": {
+    "fail": 4
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 2,
+    "http_404": 1,
+    "verified": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NCHS",
+   "discoverability": {
+    "not_applicable": 4
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "http_404": 1
+   },
+   "surfaces": 4
+  },
+  {
+   "body": "NCSES",
+   "discoverability": {
+    "not_applicable": 3
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [
+    "model_knowledge"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "NCSES",
+   "discoverability": {
+    "pass": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "repo"
+   ],
+   "seed_statuses": {
+    "not_the_object": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "NCSES",
+   "discoverability": {
+    "fail": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "NCSES",
+   "discoverability": {
+    "not_applicable": 3
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 3
+  },
+  {
+   "body": "ORES",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "unreadable",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "ORES",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "unreadable",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "ORES",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "ORES",
+   "discoverability": {
+    "error": 2
+   },
+   "exists": "unknown",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": {
+    "fail": 2
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_403": 2,
+    "http_500": 1
+   },
+   "surfaces": 2
+  },
+  {
+   "body": "SAMHSACBHS",
+   "discoverability": {
+    "not_applicable": 2
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 2
+  },
+  {
+   "body": "SOI",
+   "discoverability": {
+    "not_applicable": 3
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "api",
+   "recollection": "not_declared",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 3
+  },
+  {
+   "body": "SOI",
+   "discoverability": {
+    "fail": 2,
+    "pass": 1
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": false,
+   "object": "changelog",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "repo"
+   ],
+   "seed_statuses": {
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "SOI",
+   "discoverability": {
+    "fail": 3
+   },
+   "exists": "yes",
+   "exists_unreachable_from_every_page": true,
+   "object": "inventory",
+   "recollection": "declared",
+   "seed_sources": [
+    "developer_page",
+    "model_knowledge",
+    "repo"
+   ],
+   "seed_statuses": {
+    "http_404": 1,
+    "verified": 1
+   },
+   "surfaces": 3
+  },
+  {
+   "body": "SOI",
+   "discoverability": {
+    "not_applicable": 3
+   },
+   "exists": "no",
+   "exists_unreachable_from_every_page": false,
+   "object": "terms",
+   "recollection": "n/a",
+   "seed_sources": [],
+   "seed_statuses": {},
+   "surfaces": 3
+  }
+ ],
+ "task": "cc_tasks/2026-10-07_seed_known_locations_verify.md"
+}

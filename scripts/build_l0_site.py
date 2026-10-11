@@ -184,8 +184,11 @@ def release_date(pub: dict) -> str:
         shard = REPO / CYCLE_SHARD.format(cycle=cyc)
         if not shard.is_file():
             continue
+        # JSON Lines separates records on "\n" alone (jsonlines.org); `str.splitlines()` also breaks on
+        # U+0085, U+2028, U+2029 and form feed, which RFC 8259 lets a JSON string carry unescaped
+        # (a whole terms page D1 keeps, `events/cycle-scan_2026-10-07_seeded.jsonl`).
         last = max((json.loads(l).get("timestamp") or "")[:10]
-                   for l in shard.read_text(encoding="utf-8").splitlines() if l.strip())
+                   for l in shard.read_text(encoding="utf-8").split("\n") if l.strip())
         if day < last:
             raise SystemExit(f"FATAL: version {pub['version']!r} is declared released on {day}, "
                              f"before the last event on {shard.relative_to(REPO)} ({last}); a "
