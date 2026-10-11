@@ -288,7 +288,9 @@ rather than as a recognised identifier; where no source records a terms page, th
 carries no licence field either. 7
 more could not be observed, or a source was not searched for them. A documented API with its auth
 model and its rate limits (`A2`) fails on
-13 surfaces: where an API is recorded
+13 of the
+13 surfaces on which the
+question could be answered: where an API is recorded
 and served, what it serves at its base is not a description of the API, and where no source
 records an API for the body there is none to describe. On
 10 more the recorded API base refused

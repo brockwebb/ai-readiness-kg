@@ -32,7 +32,9 @@ rather than as a recognised identifier; where no source records a terms page, th
 carries no licence field either. {{result:scan_l0_product_d1_error_2026-10-07_composite_d:value}}
 more could not be observed, or a source was not searched for them. A documented API with its auth
 model and its rate limits (`A2`) fails on
-{{result:scan_l0_product_a2_fail_2026-10-07_composite_d:value}} surfaces: where an API is recorded
+{{result:scan_l0_product_a2_fail_2026-10-07_composite_d:value}} of the
+{{result:scan_l0_product_a2_applicable_n_2026-10-07_composite_d:value}} surfaces on which the
+question could be answered: where an API is recorded
 and served, what it serves at its base is not a description of the API, and where no source
 records an API for the body there is none to describe. On
 {{result:scan_l0_product_a2_error_2026-10-07_composite_d:value}} more the recorded API base refused
