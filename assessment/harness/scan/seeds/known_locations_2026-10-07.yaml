@@ -50,19 +50,22 @@ bodies:
         - repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:48
         - repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:74
         - repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:101
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:31Z'
       - url: https://apps.bea.gov/API
         host: apps.bea.gov
         seeded_from:
         - repo:corpus/evidence/frame/4c/4c3e4df4eaf5b24c3992b0b126490f3515e9a46d8873774cca85bf6fe9a21171:103
         - repo:corpus/evidence/frame/52/520390a2b694e4b29102f0910f49eabc1f140247f46ca4b5b39bed6df4bf1f15:107
         - repo:corpus/evidence/frame/6c/6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2:107
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:32Z'
       - url: https://apps.bea.gov/API/signup/index.cfm
         host: apps.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:291
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:32Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: the body''s developer
           page links its API only at https://apps.bea.gov/API/signup/ (anchor "Application Programming
@@ -72,14 +75,16 @@ bodies:
         host: apps.bea.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:32Z'
         confidence: high
         note: the BEA API endpoint; every request carries UserID and method
       - url: https://www.bea.gov/
         host: www.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:266
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:33Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: the body''s developer
           page links its API only at https://apps.bea.gov/API/signup/ (anchor "Application Programming
@@ -89,7 +94,8 @@ bodies:
         host: www.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:290
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:35Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: the body''s developer
           page links its API only at https://apps.bea.gov/API/signup/ (anchor "Application Programming
@@ -100,14 +106,16 @@ bodies:
         host: apps.bea.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:36Z'
         confidence: medium
         note: the API's sign-up page, where its terms of service are presented
       - url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
         host: apps.bea.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:36Z'
         confidence: medium
         note: the API user guide, which states the terms of use
       changelog:
@@ -115,14 +123,16 @@ bodies:
         host: apps.bea.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:36Z'
         confidence: low
         note: a what's-new page for the API; the path is a guess
       - url: https://www.bea.gov/
         host: www.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:266
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:33Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections is linked from the home page
@@ -132,7 +142,8 @@ bodies:
         host: www.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:290
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:35Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections is linked from the home page
@@ -143,7 +154,8 @@ bodies:
         host: www.bea.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:256
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:37Z'
       - url: https://www.commerce.gov/data.json
         host: www.commerce.gov
         seeded_from:
@@ -152,7 +164,8 @@ bodies:
         - developer_page:https://www.bea.gov/
         - repo:docs/brief/G_census_dogfood.md:47
         - repo:docs/brief/G_census_dogfood.md:49
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:37Z'
         confidence: high
         note: the Department of Commerce inventory, which data.gov harvests
       catalog_organization:
@@ -162,7 +175,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:272
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:280
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:01:21Z'
     no_seed: []
   BJS:
     roster_hosts:
@@ -191,21 +205,24 @@ bodies:
         - repo:corpus/evidence/frame/9b/9bbcf8ebc0cf578d359e4333bce6c2359c63c666e6d39d0ffb98d20e4f03028e:984
         - repo:corpus/evidence/frame/ed/ed4b3ba38d1538c0f39407fc8b4850839028816d76dedc8e44faefbdf271ce93:984
         - repo:assessment/harness/scan/targets.yaml:300
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:26:38Z'
       - url: https://api.ojp.gov/bjsdataset/v1/
         host: api.ojp.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:300
         - developer_page:https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:40Z'
         confidence: medium
         note: the BJS dataset API path its NCVS and NIBRS pages state
       - url: https://data.ojp.gov/api/views
         host: data.ojp.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:40Z'
         confidence: medium
         note: OJP's Socrata catalog, which hosts BJS datasets
       api_terms:
@@ -213,7 +230,8 @@ bodies:
         host: bjs.ojp.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:302
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:40Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_terms and recorded not_declared: neither API page
           links a terms-of-service or terms-of-use page for the API'
@@ -221,7 +239,8 @@ bodies:
         host: bjs.ojp.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:307
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:42Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_terms and recorded not_declared: neither API page
           links a terms-of-service or terms-of-use page for the API'
@@ -229,7 +248,8 @@ bodies:
         host: dev.socrata.com
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:26:43Z'
         confidence: low
         note: Socrata's API documentation; the platform's terms, not BJS's own
       changelog:
@@ -238,20 +258,23 @@ bodies:
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:339
         - developer_page:https://bjs.ojp.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:44Z'
       inventory:
       - url: https://bjs.ojp.gov/data.json
         host: bjs.ojp.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:310
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:26:44Z'
       - url: https://www.justice.gov/data.json
         host: www.justice.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:316
         - developer_page:https://bjs.ojp.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:46Z'
         confidence: high
         note: the Department of Justice inventory
       catalog_organization:
@@ -261,7 +284,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:326
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:334
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:05:39Z'
     no_seed: []
   BLS:
     roster_hosts:
@@ -288,21 +312,24 @@ bodies:
         host: api.bls.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:47Z'
         confidence: high
         note: version 1, no registration key
       - url: https://api.bls.gov/publicAPI/v2/timeseries/data/
         host: api.bls.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:47Z'
         confidence: high
         note: the BLS Public Data API, version 2
       - url: https://catalog.data.gov/organization/dol-bls
         host: catalog.data.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:376
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:06:09Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -312,7 +339,8 @@ bodies:
         host: www.bls.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:372
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:47Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -323,7 +351,8 @@ bodies:
         host: www.bls.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:48Z'
         confidence: medium
         note: the BLS developers terms of service
       changelog:
@@ -331,7 +360,8 @@ bodies:
         host: www.bls.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:372
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:47Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -341,14 +371,16 @@ bodies:
         host: www.bls.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:49Z'
         confidence: medium
         note: the BLS what's-new page, for the site rather than the API
       - url: https://www.bls.gov/developers/api_faqs.htm
         host: www.bls.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:50Z'
         confidence: low
         note: the API FAQ, which records version changes
       inventory:
@@ -356,14 +388,16 @@ bodies:
         host: www.bls.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:358
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:51Z'
       - url: https://www.dol.gov/data.json
         host: www.dol.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:364
         - developer_page:https://www.dol.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:52Z'
         confidence: high
         note: the Department of Labor inventory
       catalog_organization:
@@ -374,7 +408,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
         - repo:assessment/harness/scan/targets.yaml:384
         - repo:assessment/harness/scan/targets.yaml:394
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:06:09Z'
     no_seed: []
   BTS:
     roster_hosts:
@@ -401,21 +436,24 @@ bodies:
         host: data.bts.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:54Z'
         confidence: low
         note: the Socrata discovery API scoped to the portal
       - url: https://data.bts.gov/api/views
         host: data.bts.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:26:55Z'
         confidence: medium
         note: BTS's Socrata data portal; every dataset has a /resource/ endpoint
       - url: https://www.bts.gov/
         host: www.bts.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:425
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:01Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -427,7 +465,8 @@ bodies:
         host: www.bts.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:425
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:01Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -438,7 +477,8 @@ bodies:
         host: catalog.data.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:408
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:06:39Z'
         kind: page_to_read
         note: 'searched by the recollection for the department and recorded unreadable: the department''s
           host could not be read from a page: catalog.data.gov''s Department of Transportation organization
@@ -448,14 +488,16 @@ bodies:
         host: data.bts.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:01Z'
         confidence: medium
         note: the Socrata portal's DCAT-US catalog
       - url: https://www.bts.gov/
         host: www.bts.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:425
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:01Z'
         kind: page_to_read
         note: 'searched by the recollection for the department and recorded unreadable: the department''s
           host could not be read from a page: catalog.data.gov''s Department of Transportation organization
@@ -465,12 +507,14 @@ bodies:
         host: www.bts.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:402
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:02Z'
       - url: https://www.transportation.gov/
         host: www.transportation.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:423
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:03Z'
         kind: page_to_read
         note: 'searched by the recollection for the department and recorded unreadable: the department''s
           host could not be read from a page: catalog.data.gov''s Department of Transportation organization
@@ -480,7 +524,8 @@ bodies:
         host: www.transportation.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:04Z'
         confidence: high
         note: the Department of Transportation inventory
       catalog_organization:
@@ -491,7 +536,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:416
         - repo:assessment/harness/scan/targets.yaml:426
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:06:39Z'
     no_seed:
     - api_terms
   CENSUS:
@@ -521,7 +567,8 @@ bodies:
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:3
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:15
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:16
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:05Z'
       - url: https://api.census.gov/data
         host: api.census.gov
         seeded_from:
@@ -530,14 +577,16 @@ bodies:
         - developer_page:https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}
         - repo:docs/brief/G_census_dogfood.md:40
         - repo:docs/brief/G_census_dogfood.md:44
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:08Z'
         confidence: high
         note: the Census Data API base
       - url: https://api.census.gov/data.json
         host: api.census.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:11Z'
         confidence: high
         note: the API's discovery catalog (a dcat:Catalog of its datasets)
       - url: https://data.census.gov/api
@@ -545,7 +594,8 @@ bodies:
         seeded_from:
         - repo:docs/data/corpus_manifest.json:8457
         - repo:docs/data/corpus_manifest.json:8472
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:12Z'
       api_terms:
       - url: http://www.census.gov/popest/about/geo/terms.html
         host: www.census.gov
@@ -553,14 +603,16 @@ bodies:
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59340
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59589
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59651
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:27:14Z'
       - url: http://www.census.gov/popest/about/terms.html
         host: www.census.gov
         seeded_from:
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59340
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59651
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:63224
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:15Z'
       - url: https://www.census.gov/data/developers/about/terms-of-service.html
         host: www.census.gov
         seeded_from:
@@ -569,14 +621,16 @@ bodies:
         - developer_page:https://www.census.gov/data/developers.html
         - repo:docs/brief/G_census_dogfood.md:46
         - repo:docs/brief/G_census_dogfood.md:63
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:16Z'
         confidence: high
         note: the Census Data API terms of service
       - url: https://www.census.gov/popest/about/terms.html
         host: www.census.gov
         seeded_from:
         - repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:67790
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:18Z'
       changelog:
       - url: https://www.census.gov/data/developers/updates.html
         host: www.census.gov
@@ -586,7 +640,8 @@ bodies:
         - developer_page:https://www.census.gov/data/developers.html
         - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:910
         - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:1150
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:19Z'
         confidence: medium
         note: the developers' updates page
       - url: https://www.census.gov/data/developers/updates/new-discovery-tool.html
@@ -594,14 +649,16 @@ bodies:
         seeded_from:
         - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:860
         - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:1122
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:20Z'
       inventory:
       - url: https://www.census.gov/data.json
         host: www.census.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:457
         - repo:docs/evidence/claims.yaml:2026
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:21Z'
       - url: https://www.commerce.gov/data.json
         host: www.commerce.gov
         seeded_from:
@@ -610,7 +667,8 @@ bodies:
         - developer_page:https://www.census.gov/
         - repo:docs/brief/G_census_dogfood.md:47
         - repo:docs/brief/G_census_dogfood.md:49
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:26:37Z'
         confidence: high
         note: the Department of Commerce inventory
       catalog_organization:
@@ -620,7 +678,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:473
         - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
         - repo:assessment/harness/scan/targets.yaml:481
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:07:10Z'
     no_seed: []
   DRSMSU:
     roster_hosts:
@@ -646,7 +705,8 @@ bodies:
         host: api.stlouisfed.org
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:24Z'
         confidence: low
         note: FRED is the St. Louis Fed's API, not the Board's; it republishes some Board series and none
           of the SCF microdata
@@ -654,7 +714,8 @@ bodies:
         host: www.federalreserve.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:525
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:25Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API is linked
           from the unit''s page or the Board''s data page; the "Data Download Program" is a download tool,
@@ -663,14 +724,16 @@ bodies:
         host: www.federalreserve.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:26Z'
         confidence: medium
         note: 'the Board''s Data Download Program: a download tool, not a REST API'
       - url: https://www.federalreserve.gov/econres/rsmecs-staff.htm
         host: www.federalreserve.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:524
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:27Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API is linked
           from the unit''s page or the Board''s data page; the "Data Download Program" is a download tool,
@@ -681,7 +744,8 @@ bodies:
         host: www.federalreserve.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:525
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:25Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections for the unit''s products is
@@ -690,7 +754,8 @@ bodies:
         host: www.federalreserve.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:524
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:27Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections for the unit''s products is
@@ -701,7 +766,8 @@ bodies:
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:501
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:28Z'
         confidence: high
         note: the Board's own inventory
       catalog_organization:
@@ -711,7 +777,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:507
         - developer_page:https://catalog.data.gov/organization/
         - repo:assessment/harness/scan/targets.yaml:515
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:19:20Z'
     no_seed:
     - api_terms
   EIA:
@@ -740,33 +807,38 @@ bodies:
         seeded_from:
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:464
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:470
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:29Z'
       - url: http://api.eia.gov/v2
         host: api.eia.gov
         seeded_from:
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:512
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:30Z'
       - url: https://api.eia.gov/
         host: api.eia.gov
         seeded_from:
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:394
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:430
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:488
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:32Z'
       - url: https://api.eia.gov/v2
         host: api.eia.gov
         seeded_from:
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:446
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:476
         - repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:477
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:33Z'
       - url: https://api.eia.gov/v2/
         host: api.eia.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:534
         - developer_page:https://www.eia.gov/opendata/documentation.php
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:34Z'
         confidence: high
         note: EIA API version 2
       - url: https://www.eia.gov/beta/api
@@ -775,7 +847,8 @@ bodies:
         - repo:docs/data/corpus_manifest.json:26944
         - repo:docs/reports/scan_matrix_product_2026-09-09.csv:8
         - repo:docs/reports/scan_matrix_product_2026-09-09.json:211
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:35Z'
       api_terms:
       - url: https://www.eia.gov/opendata/terms-of-service.php
         host: www.eia.gov
@@ -784,7 +857,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:535
         - developer_page:https://www.eia.gov/opendata/
         - repo:assessment/harness/scan/targets.yaml:549
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:35Z'
         confidence: high
         note: the EIA open data terms of service
       changelog:
@@ -793,14 +867,16 @@ bodies:
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:593
         - developer_page:https://www.eia.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:36Z'
       - url: https://www.eia.gov/opendata/documentation.php
         host: www.eia.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:537
         - developer_page:https://www.eia.gov/opendata/documentation.php
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:37Z'
         confidence: medium
         note: the API documentation, which carries the version notes
       inventory:
@@ -808,14 +884,16 @@ bodies:
         host: www.eia.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:554
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:27:38Z'
       - url: https://www.energy.gov/data.json
         host: www.energy.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:560
         - developer_page:https://www.eia.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:39Z'
         confidence: high
         note: the Department of Energy inventory
       catalog_organization:
@@ -825,7 +903,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:570
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:578
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:19:40Z'
     no_seed: []
   ERS:
     roster_hosts:
@@ -852,14 +931,16 @@ bodies:
         host: api.ers.usda.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:41Z'
         confidence: medium
         note: ERS data APIs (ARMS and others), keyed through api.data.gov
       - url: https://www.ers.usda.gov/
         host: www.ers.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:615
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:41Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the home page or the data-products index'
@@ -867,7 +948,8 @@ bodies:
         host: www.ers.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:70
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:42Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the home page or the data-products index'
@@ -875,7 +957,8 @@ bodies:
         host: www.ers.usda.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:43Z'
         confidence: high
         note: the ERS developer page that documents them
       api_terms:
@@ -883,7 +966,8 @@ bodies:
         host: api.data.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:03:26Z'
         confidence: low
         note: api.data.gov issues the key; its terms apply to the key, not ERS's data
       changelog:
@@ -891,7 +975,8 @@ bodies:
         host: www.ers.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:615
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:41Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections is linked from the home page
@@ -900,7 +985,8 @@ bodies:
         host: www.ers.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:70
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:42Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections is linked from the home page
@@ -910,7 +996,8 @@ bodies:
         host: www.ers.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:605
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:27:44Z'
       - url: https://www.usda.gov/data.json
         host: www.usda.gov
         seeded_from:
@@ -919,7 +1006,8 @@ bodies:
         - developer_page:https://www.ers.usda.gov/
         - repo:assessment/harness/scan/targets.yaml:654
         - repo:assessment/harness/scan/targets.yaml:702
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:46Z'
         confidence: high
         note: the Department of Agriculture inventory
       catalog_organization:
@@ -930,7 +1018,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:629
         - repo:assessment/harness/scan/targets.yaml:664
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:20:00Z'
     no_seed: []
   NAHMSAPHIS:
     roster_hosts:
@@ -957,7 +1046,8 @@ bodies:
         host: www.aphis.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:658
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:48Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the unit''s page'
@@ -967,7 +1057,8 @@ bodies:
         host: www.aphis.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:658
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:48Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates, what''s new or corrections for the unit''s products is
@@ -977,7 +1068,8 @@ bodies:
         host: www.aphis.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:648
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:27:52Z'
       - url: https://www.usda.gov/data.json
         host: www.usda.gov
         seeded_from:
@@ -986,7 +1078,8 @@ bodies:
         - developer_page:https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
         - repo:assessment/harness/scan/targets.yaml:654
         - repo:assessment/harness/scan/targets.yaml:702
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:46Z'
         confidence: high
         note: the Department of Agriculture inventory
       catalog_organization:
@@ -997,7 +1090,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:629
         - repo:assessment/harness/scan/targets.yaml:664
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:20:00Z'
     no_seed:
     - api_terms
   NASS:
@@ -1025,7 +1119,8 @@ bodies:
         host: quickstats.nass.usda.gov
         seeded_from:
         - repo:corpus/evidence/frame/bf/bfc2b4db93e98230014a21fd8e14afd1622683c67df06c1b29595d484e76ab97:1094
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:55Z'
       - url: https://quickstats.nass.usda.gov/api
         host: quickstats.nass.usda.gov
         seeded_from:
@@ -1034,14 +1129,16 @@ bodies:
         - developer_page:https://www.nass.usda.gov
         - repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230
         - repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:56Z'
         confidence: high
         note: the Quick Stats API
       - url: https://quickstats.nass.usda.gov/api/api_GET/
         host: quickstats.nass.usda.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:56Z'
         confidence: high
         note: its query endpoint
       api_terms:
@@ -1050,14 +1147,16 @@ bodies:
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:689
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:56Z'
         confidence: medium
         note: the API page, which carries the usage terms
       - url: https://www.nass.usda.gov/developer/index.php
         host: www.nass.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:727
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:57Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_terms and recorded unreadable: the body''s API
           page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats
@@ -1068,13 +1167,15 @@ bodies:
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:0
         - developer_page:https://www.nass.usda.gov/developer/index.php
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:57Z'
       inventory:
       - url: https://www.nass.usda.gov/data.json
         host: www.nass.usda.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:696
-        status: seeded_unverified
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:57Z'
       - url: https://www.usda.gov/data.json
         host: www.usda.gov
         seeded_from:
@@ -1083,7 +1184,8 @@ bodies:
         - developer_page:https://www.nass.usda.gov/
         - repo:assessment/harness/scan/targets.yaml:654
         - repo:assessment/harness/scan/targets.yaml:702
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:27:46Z'
         confidence: high
         note: the Department of Agriculture inventory
       catalog_organization:
@@ -1094,7 +1196,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:629
         - repo:assessment/harness/scan/targets.yaml:664
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:20:00Z'
     no_seed: []
   NCES:
     roster_hosts:
@@ -1121,14 +1224,16 @@ bodies:
         host: educationdata.urban.org
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:57Z'
         confidence: low
         note: the Urban Institute's Education Data Portal API over NCES data; not NCES's own
       - url: https://nces.ed.gov/
         host: nces.ed.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:774
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:27:58Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the home page'
@@ -1138,12 +1243,14 @@ bodies:
         - repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:123
         - repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:172
         - repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:243
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:27:58Z'
       - url: https://nces.ed.gov/opengis/rest/services
         host: nces.ed.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:00Z'
         confidence: medium
         note: the EDGE ArcGIS REST services NCES publishes
       api_terms: []
@@ -1153,26 +1260,30 @@ bodies:
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:772
         - developer_page:https://nces.ed.gov/
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:00Z'
       - url: https://nces.ed.gov/whatsnew/commissioner/remarks_archive.asp
         host: nces.ed.gov
         seeded_from:
         - repo:corpus/evidence/frame/5d/5de6d5e4e78b46afd50d3ccbf467571814b37edc1ff6c4fe17c0bdf2a6b5a42b:374
         - repo:corpus/evidence/frame/b2/b200fd9665d60983517117451d90bb47ab6e6f71dc86273cb80e276397315d33:374
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:01Z'
       inventory:
       - url: https://nces.ed.gov/data.json
         host: nces.ed.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:744
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:28:03Z'
       - url: https://www.ed.gov/data.json
         host: www.ed.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:750
         - developer_page:https://nces.ed.gov/national-center-education-statistics-nces/about
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:03Z'
         confidence: high
         note: the Department of Education inventory
       catalog_organization:
@@ -1182,7 +1293,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:759
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:767
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:21:00Z'
     no_seed:
     - api_terms
   NCHS:
@@ -1211,21 +1323,24 @@ bodies:
         host: data.cdc.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:05Z'
         confidence: medium
         note: CDC's Socrata portal, which hosts NCHS datasets
       - url: https://wonder.cdc.gov/controller/datarequest/
         host: wonder.cdc.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_500
+        verified_at: '2026-10-11T04:28:16Z'
         confidence: high
         note: the CDC WONDER API, which serves NCHS vital statistics
       - url: https://www.cdc.gov/nchs/index.htm
         host: www.cdc.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:823
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:17Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the body''s home page'
@@ -1233,7 +1348,8 @@ bodies:
         host: www.cdc.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:824
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:18Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the body''s home page'
@@ -1242,7 +1358,8 @@ bodies:
         host: wonder.cdc.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:28:19Z'
         confidence: medium
         note: WONDER's data use restrictions
       changelog:
@@ -1250,7 +1367,8 @@ bodies:
         host: www.cdc.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:824
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:18Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, what''s new or corrections is linked from the home page; the "updates"
@@ -1260,7 +1378,8 @@ bodies:
         host: data.cdc.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:19Z'
         confidence: medium
         note: the Socrata portal's DCAT-US catalog
       - url: https://hhs.gov/data.json
@@ -1268,18 +1387,21 @@ bodies:
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:796
         - developer_page:https://www.cdc.gov/nchs/products/databriefs.htm
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:22Z'
       - url: https://www.cdc.gov/data.json
         host: www.cdc.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:790
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:28:23Z'
       - url: https://www.hhs.gov/data.json
         host: www.hhs.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:930
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:23Z'
         confidence: high
         note: the Department of Health and Human Services inventory
       catalog_organization:
@@ -1290,7 +1412,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
         - repo:assessment/harness/scan/targets.yaml:814
         - repo:assessment/harness/scan/targets.yaml:940
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:21:20Z'
     no_seed: []
   NCSES:
     roster_hosts:
@@ -1317,14 +1440,16 @@ bodies:
         host: api.nsf.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:24Z'
         confidence: low
         note: 'NSF''s awards API: NSF''s, not an NCSES statistics API'
       - url: https://ncses.nsf.gov/
         host: ncses.nsf.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:842
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:25Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the home page or the explore-data page'
@@ -1332,7 +1457,8 @@ bodies:
         host: ncses.nsf.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:873
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:26Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the home page or the explore-data page'
@@ -1344,26 +1470,30 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:861
         - developer_page:https://ncses.nsf.gov/
         - repo:assessment/harness/scan/targets.yaml:867
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:27Z'
       - url: https://ncses.nsf.gov/corrections
         host: ncses.nsf.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:871
         - developer_page:https://ncses.nsf.gov/explore-data
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:29Z'
       inventory:
       - url: https://ncses.nsf.gov/data.json
         host: ncses.nsf.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:832
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:28:30Z'
       - url: https://www.nsf.gov/data.json
         host: www.nsf.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:838
         - developer_page:https://ncses.nsf.gov/
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:31Z'
         confidence: high
         note: the NSF inventory
       catalog_organization:
@@ -1373,7 +1503,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:848
         - developer_page:https://catalog.data.gov/organization?page=3&per_page=24
         - repo:assessment/harness/scan/targets.yaml:856
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:21:50Z'
     no_seed:
     - api_terms
   ORES:
@@ -1400,7 +1531,8 @@ bodies:
         host: www.ssa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:110
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:32Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -1412,7 +1544,8 @@ bodies:
         host: www.ssa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:110
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:32Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded unreadable: every page of the
           body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on
@@ -1424,7 +1557,8 @@ bodies:
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:893
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:33Z'
         confidence: high
         note: SSA's own inventory
       catalog_organization:
@@ -1434,7 +1568,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:899
         - developer_page:https://catalog.data.gov/organization?page=4&per_page=24
         - repo:assessment/harness/scan/targets.yaml:907
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:22:10Z'
     no_seed:
     - api_terms
   SAMHSACBHS:
@@ -1463,7 +1598,8 @@ bodies:
         host: www.samhsa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:934
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:34Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the center''s page or the SAMHSA data page'
@@ -1471,7 +1607,8 @@ bodies:
         host: www.samhsa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:958
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:35Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the center''s page or the SAMHSA data page'
@@ -1481,7 +1618,8 @@ bodies:
         host: www.samhsa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:934
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:34Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates or corrections for the center''s products is linked; the
@@ -1490,7 +1628,8 @@ bodies:
         host: www.samhsa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:958
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:35Z'
         kind: page_to_read
         note: 'searched by the recollection for the changelog and recorded not_declared: no page labelled
           a changelog, release notes, updates or corrections for the center''s products is linked; the
@@ -1500,21 +1639,24 @@ bodies:
         host: hhs.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:796
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:22Z'
       - url: https://www.hhs.gov/data.json
         host: www.hhs.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:930
         - developer_page:https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
-        status: seeded_unverified
+        status: http_403
+        verified_at: '2026-10-11T04:28:23Z'
         confidence: high
         note: the Department of Health and Human Services inventory
       - url: https://www.samhsa.gov/data.json
         host: www.samhsa.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:924
-        status: seeded_unverified
+        status: http_500
+        verified_at: '2026-10-11T04:28:36Z'
       catalog_organization:
       - url: https://catalog.data.gov/organization/hhs
         host: catalog.data.gov
@@ -1523,7 +1665,8 @@ bodies:
         - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
         - repo:assessment/harness/scan/targets.yaml:814
         - repo:assessment/harness/scan/targets.yaml:940
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:21:20Z'
     no_seed:
     - api_terms
   SOI:
@@ -1552,7 +1695,8 @@ bodies:
         host: www.irs.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:977
-        status: seeded_unverified
+        status: not_the_object
+        verified_at: '2026-10-11T04:28:37Z'
         kind: page_to_read
         note: 'searched by the recollection for the api_base and recorded not_declared: no API or developer
           page is linked from the body''s home page'
@@ -1564,20 +1708,23 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:996
         - developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
         - repo:assessment/harness/scan/targets.yaml:1002
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:28:38Z'
       inventory:
       - url: https://www.irs.gov/data.json
         host: www.irs.gov
         seeded_from:
         - repo:assessment/harness/scan/targets.yaml:967
-        status: seeded_unverified
+        status: http_404
+        verified_at: '2026-10-11T04:28:39Z'
       - url: https://www.treasury.gov/data.json
         host: www.treasury.gov
         seeded_from:
         - model_knowledge:claude-opus-5-5
         - repo:assessment/harness/scan/targets.yaml:973
         - developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:29:00Z'
         confidence: high
         note: the Department of the Treasury inventory
       catalog_organization:
@@ -1587,7 +1734,8 @@ bodies:
         - repo:assessment/harness/scan/targets.yaml:983
         - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
         - repo:assessment/harness/scan/targets.yaml:991
-        status: seeded_unverified
+        status: verified
+        verified_at: '2026-10-11T04:23:00Z'
     no_seed:
     - api_terms
 hosts:

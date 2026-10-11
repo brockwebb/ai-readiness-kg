@@ -248,10 +248,33 @@ machine_entry_tokens:
 # attempted": its `unresolved` entry says `not_declared` (the body's own pages were searched and
 # do not publish it) or `unreadable` (the page that would carry it refused this client), with
 # the pages searched (`declarations.UNRESOLVED_STATUSES`). Both stay `error` under DN-012 d1.
+#
+# Scheme 2 since 2026-10-11 (`cc_tasks/2026-10-07_seed_known_locations_verify.md`
+# decision 2, DN-013-R1), written by `scripts/verify_seeded_locations.py declare`. Every
+# location the recollection read keeps its `read_from`; each seeded location carries
+# `seeded_from`; each carries the `status` of its one GET with `verified_at`
+# (`state/seed_verification_fetches_2026-10-11.jsonl`); and each body records, per object,
+# the seed sources `searched`, which is what lets an existence rule say `fail` over a
+# complete search (`rules/_existence.py`). A seed that answered 404, 410 or proved not to
+# be the object stays in the seed tables with its status and is not a location here.
 declared_locations:
-  scheme: 1
+  scheme: 2
   bodies:
     BEA:
+      api_base:
+        url: https://apps.bea.gov/API
+        seeded_from:
+          - repo:corpus/evidence/frame/4c/4c3e4df4eaf5b24c3992b0b126490f3515e9a46d8873774cca85bf6fe9a21171:103
+          - repo:corpus/evidence/frame/52/520390a2b694e4b29102f0910f49eabc1f140247f46ca4b5b39bed6df4bf1f15:107
+          - repo:corpus/evidence/frame/6c/6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2:107
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:32Z'
+        terms_url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+        terms:
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: verified
+          verified_at: '2026-10-11T04:26:36Z'
       inventory_urls:
         - url: https://www.bea.gov/data.json
           kind: data_json
@@ -259,6 +282,10 @@ declared_locations:
           read_from:
             page: https://www.bea.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:256
+          status: verified
+          verified_at: '2026-10-11T04:26:37Z'
         - url: https://www.commerce.gov/data.json
           kind: data_json
           role: department
@@ -269,6 +296,14 @@ declared_locations:
             link: https://www.commerce.gov/
             anchor: U.S. Department of Commerce
             how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:262
+            - developer_page:https://www.bea.gov/
+            - repo:docs/brief/G_census_dogfood.md:47
+            - repo:docs/brief/G_census_dogfood.md:49
+          status: http_403
+          verified_at: '2026-10-11T04:26:37Z'
         - url: https://catalog.data.gov/organization/commerce
           kind: catalog_organization
           role: catalog_organization
@@ -281,6 +316,13 @@ declared_locations:
             anchor: Department of Commerce
             how: 'catalog.data.gov''s organization list (page 2 of 5); the body''s parent department (roster `department`: Commerce) is a catalog.data.gov organization; the body has none of its own on the list'
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:272
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:280
+            - catalog.data.gov:https://catalog.data.gov/organization/commerce
+          status: verified
+          verified_at: '2026-10-11T04:01:21Z'
       unresolved:
         - role: api_base
           status: unreadable
@@ -295,6 +337,29 @@ declared_locations:
           pages_searched:
             - https://www.bea.gov/
             - https://www.bea.gov/resources/for-developers
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     BJS:
       api_base:
         url: https://api.ojp.gov/bjsdataset/v1/
@@ -306,6 +371,12 @@ declared_locations:
           quote: Path = https://api.ojp.gov/bjsdataset/v1/
           how: the body's NCVS API page states the API's path; the NIBRS National Estimates API page states the same path (https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api); both are linked from https://bjs.ojp.gov/data/data-analysis-tools
           task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+          - repo:assessment/harness/scan/targets.yaml:300
+          - developer_page:https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+        status: verified
+        verified_at: '2026-10-11T04:26:40Z'
       inventory_urls:
         - url: https://bjs.ojp.gov/data.json
           kind: data_json
@@ -313,6 +384,10 @@ declared_locations:
           read_from:
             page: https://bjs.ojp.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:310
+          status: http_404
+          verified_at: '2026-10-11T04:26:44Z'
         - url: https://www.justice.gov/data.json
           kind: data_json
           role: department
@@ -323,6 +398,12 @@ declared_locations:
             link: https://www.justice.gov/
             anchor: Justice.gov
             how: the body's own page links the home page of its parent department (Department of Justice); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:316
+            - developer_page:https://bjs.ojp.gov/
+          status: verified
+          verified_at: '2026-10-11T04:26:46Z'
         - url: https://catalog.data.gov/organization/doj
           kind: catalog_organization
           role: catalog_organization
@@ -335,6 +416,13 @@ declared_locations:
             anchor: Department of Justice
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Justice); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:326
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:334
+            - catalog.data.gov:https://catalog.data.gov/organization/doj
+          status: verified
+          verified_at: '2026-10-11T04:05:39Z'
       changelog_urls:
         - url: https://bjs.ojp.gov/library/publications/data-corrections
           read_from:
@@ -346,6 +434,11 @@ declared_locations:
             anchor: Errata | Corrections
             how: 'the body''s home page links its errata and corrections list: a log of revisions to published products'
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:339
+            - developer_page:https://bjs.ojp.gov/
+          status: verified
+          verified_at: '2026-10-11T04:26:44Z'
       unresolved:
         - role: api_terms
           status: not_declared
@@ -353,7 +446,44 @@ declared_locations:
           pages_searched:
             - https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
             - https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     BLS:
+      api_base:
+        url: https://api.bls.gov/publicAPI/v1/timeseries/data/
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+        status: refused_robots
+        verified_at: '2026-10-11T04:26:47Z'
+        terms_url: https://www.bls.gov/developers/termsOfService.htm
+        terms:
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: http_403
+          verified_at: '2026-10-11T04:26:48Z'
       inventory_urls:
         - url: https://www.bls.gov/data.json
           kind: data_json
@@ -361,6 +491,10 @@ declared_locations:
           read_from:
             page: https://www.bls.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:358
+          status: http_403
+          verified_at: '2026-10-11T04:26:51Z'
         - url: https://www.dol.gov/data.json
           kind: data_json
           role: department
@@ -373,6 +507,12 @@ declared_locations:
             anchor: Bureau of Labor Statistics (BLS)
             how: the department's own home page (Department of Labor) links the body; the host was read from catalog.data.gov's Department of Labor organization page (https://catalog.data.gov/organization/dol), whose records point at www.dol.gov; data.gov reads each department's data.json (params.yaml dept_domains)
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:364
+            - developer_page:https://www.dol.gov/
+          status: verified
+          verified_at: '2026-10-11T04:26:52Z'
         - url: https://catalog.data.gov/organization/dol-bls
           kind: catalog_organization
           role: catalog_organization
@@ -385,6 +525,25 @@ declared_locations:
             anchor: U.S. Department of Labor Bureau of Labor Statistics
             how: catalog.data.gov's organization list (page 5 of 5); the list carries an organization named for the body itself
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:376
+            - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:384
+            - repo:assessment/harness/scan/targets.yaml:394
+            - catalog.data.gov:https://catalog.data.gov/organization/dol-bls
+          status: verified
+          verified_at: '2026-10-11T04:06:09Z'
+      changelog_urls:
+        - url: https://www.bls.gov/bls/whatsnew.htm
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: http_403
+          verified_at: '2026-10-11T04:26:49Z'
+        - url: https://www.bls.gov/developers/api_faqs.htm
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: http_403
+          verified_at: '2026-10-11T04:26:50Z'
       unresolved:
         - role: api_base
           status: unreadable
@@ -397,7 +556,35 @@ declared_locations:
           why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
           pages_searched:
             - https://www.bls.gov/
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     BTS:
+      api_base:
+        url: https://data.bts.gov/api/views
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+        status: verified
+        verified_at: '2026-10-11T04:26:55Z'
       inventory_urls:
         - url: https://www.bts.gov/data.json
           kind: data_json
@@ -405,6 +592,10 @@ declared_locations:
           read_from:
             page: https://www.bts.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:402
+          status: http_403
+          verified_at: '2026-10-11T04:27:02Z'
         - url: https://catalog.data.gov/organization/dot
           kind: catalog_organization
           role: catalog_organization
@@ -417,6 +608,28 @@ declared_locations:
             anchor: Department of Transportation
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Transportation); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:408
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:416
+            - repo:assessment/harness/scan/targets.yaml:426
+            - catalog.data.gov:https://catalog.data.gov/organization/dot
+          status: verified
+          verified_at: '2026-10-11T04:06:39Z'
+        - url: https://www.transportation.gov/data.json
+          kind: data_json
+          role: department
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: http_403
+          verified_at: '2026-10-11T04:27:04Z'
+        - url: https://data.bts.gov/data.json
+          kind: data_json
+          role: own_host
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: verified
+          verified_at: '2026-10-11T04:27:01Z'
       unresolved:
         - role: department
           status: unreadable
@@ -435,6 +648,27 @@ declared_locations:
           why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
           pages_searched:
             - https://www.bts.gov/
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
     CENSUS:
       api_base:
         url: https://api.census.gov/data
@@ -453,6 +687,24 @@ declared_locations:
           anchor: Terms of Service
           how: the body's developers page links the API's terms of service
           task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+          - repo:assessment/harness/scan/targets.yaml:440
+          - developer_page:https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}
+          - repo:docs/brief/G_census_dogfood.md:40
+          - repo:docs/brief/G_census_dogfood.md:44
+          - catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&publisher=U.S.+Census+Bureau&per_page=1000
+        status: verified
+        verified_at: '2026-10-11T04:27:08Z'
+        terms:
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:446
+            - developer_page:https://www.census.gov/data/developers.html
+            - repo:docs/brief/G_census_dogfood.md:46
+            - repo:docs/brief/G_census_dogfood.md:63
+          status: verified
+          verified_at: '2026-10-11T04:27:16Z'
       inventory_urls:
         - url: https://www.census.gov/data.json
           kind: data_json
@@ -460,6 +712,11 @@ declared_locations:
           read_from:
             page: https://www.census.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:457
+            - repo:docs/evidence/claims.yaml:2026
+          status: verified
+          verified_at: '2026-10-11T04:27:21Z'
         - url: https://www.commerce.gov/data.json
           kind: data_json
           role: department
@@ -470,6 +727,14 @@ declared_locations:
             link: https://www.commerce.gov/
             anchor: U.S. Department of Commerce
             how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:262
+            - developer_page:https://www.census.gov/
+            - repo:docs/brief/G_census_dogfood.md:47
+            - repo:docs/brief/G_census_dogfood.md:49
+          status: http_403
+          verified_at: '2026-10-11T04:26:37Z'
         - url: https://catalog.data.gov/organization/census
           kind: catalog_organization
           role: catalog_organization
@@ -482,6 +747,13 @@ declared_locations:
             anchor: U.S. Census Bureau, Department of Commerce
             how: catalog.data.gov's organization list (page 5 of 5); the list carries an organization named for the body itself
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:473
+            - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:481
+            - catalog.data.gov:https://catalog.data.gov/organization/census
+          status: verified
+          verified_at: '2026-10-11T04:07:10Z'
       changelog_urls:
         - url: https://www.census.gov/data/developers/updates.html
           read_from:
@@ -493,10 +765,40 @@ declared_locations:
             anchor: Developer Updates
             how: the body's developers page links its API updates page
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:486
+            - developer_page:https://www.census.gov/data/developers.html
+            - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:910
+            - repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:1150
+          status: verified
+          verified_at: '2026-10-11T04:27:19Z'
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     DRSMSU:
-      # The parent (Board of Governors of the Federal Reserve System) publishes on the roster host itself, so the own-host
-      # inventory IS the department's: there is no second data.json to declare.
-      department_is_own_host: true
       inventory_urls:
         - url: https://www.federalreserve.gov/data.json
           kind: data_json
@@ -504,6 +806,11 @@ declared_locations:
           read_from:
             page: https://www.federalreserve.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:501
+          status: verified
+          verified_at: '2026-10-11T04:27:28Z'
         - url: https://catalog.data.gov/organization/fed-reserve
           kind: catalog_organization
           role: catalog_organization
@@ -516,6 +823,13 @@ declared_locations:
             anchor: Board of Governors of the Federal Reserve System
             how: catalog.data.gov's organization list (page 1 of 5); the body's parent (the Board, which publishes on the roster host) is a catalog.data.gov organization
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:507
+            - developer_page:https://catalog.data.gov/organization/
+            - repo:assessment/harness/scan/targets.yaml:515
+            - catalog.data.gov:https://catalog.data.gov/organization/fed-reserve
+          status: verified
+          verified_at: '2026-10-11T04:19:20Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -529,6 +843,34 @@ declared_locations:
           pages_searched:
             - https://www.federalreserve.gov/econres/rsmecs-staff.htm
             - https://www.federalreserve.gov/data.htm
+      # The parent (Board of Governors of the Federal Reserve System) publishes on the roster host itself, so the own-host
+      # inventory IS the department's: there is no second data.json to declare.
+      department_is_own_host: true
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     EIA:
       api_base:
         url: https://api.eia.gov/v2/
@@ -550,6 +892,20 @@ declared_locations:
           anchor: API Terms of Service Agreement
           how: the body's open-data page links the API's terms of service
           task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+          - repo:assessment/harness/scan/targets.yaml:534
+          - developer_page:https://www.eia.gov/opendata/documentation.php
+        status: http_403
+        verified_at: '2026-10-11T04:27:34Z'
+        terms:
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:535
+            - developer_page:https://www.eia.gov/opendata/
+            - repo:assessment/harness/scan/targets.yaml:549
+          status: verified
+          verified_at: '2026-10-11T04:27:35Z'
       inventory_urls:
         - url: https://www.eia.gov/data.json
           kind: data_json
@@ -557,6 +913,10 @@ declared_locations:
           read_from:
             page: https://www.eia.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:554
+          status: http_404
+          verified_at: '2026-10-11T04:27:38Z'
         - url: https://www.energy.gov/data.json
           kind: data_json
           role: department
@@ -567,6 +927,12 @@ declared_locations:
             link: https://www.energy.gov/
             anchor: U.S. Department of Energy
             how: the body's own page links the home page of its parent department (Department of Energy); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:560
+            - developer_page:https://www.eia.gov/
+          status: verified
+          verified_at: '2026-10-11T04:27:39Z'
         - url: https://catalog.data.gov/organization/energy
           kind: catalog_organization
           role: catalog_organization
@@ -579,6 +945,13 @@ declared_locations:
             anchor: Department of Energy
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Energy); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:570
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:578
+            - catalog.data.gov:https://catalog.data.gov/organization/energy
+          status: verified
+          verified_at: '2026-10-11T04:19:40Z'
       changelog_urls:
         - url: https://www.eia.gov/opendata/documentation.php
           read_from:
@@ -590,6 +963,12 @@ declared_locations:
             anchor: Changelog
             how: the API documentation carries a section the body labels "Changelog"; the fragment is not sent, so the page is the endpoint
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:537
+            - developer_page:https://www.eia.gov/opendata/documentation.php
+          status: not_the_object
+          verified_at: '2026-10-11T04:27:37Z'
         - url: https://www.eia.gov/about/new/
           read_from:
             page: https://www.eia.gov/
@@ -600,7 +979,43 @@ declared_locations:
             anchor: What's New?
             how: the body's home page links its what's-new page
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:593
+            - developer_page:https://www.eia.gov/
+          status: verified
+          verified_at: '2026-10-11T04:27:36Z'
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     ERS:
+      api_base:
+        url: https://api.ers.usda.gov/data/
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:41Z'
       inventory_urls:
         - url: https://www.ers.usda.gov/data.json
           kind: data_json
@@ -608,6 +1023,10 @@ declared_locations:
           read_from:
             page: https://www.ers.usda.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:605
+          status: http_404
+          verified_at: '2026-10-11T04:27:44Z'
         - url: https://www.usda.gov/data.json
           kind: data_json
           role: department
@@ -618,6 +1037,14 @@ declared_locations:
             link: https://www.usda.gov/
             anchor: U.S. DEPARTMENT OF AGRICULTURE
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:611
+            - developer_page:https://www.ers.usda.gov/
+            - repo:assessment/harness/scan/targets.yaml:654
+            - repo:assessment/harness/scan/targets.yaml:702
+          status: http_403
+          verified_at: '2026-10-11T04:27:46Z'
         - url: https://catalog.data.gov/organization/usda
           kind: catalog_organization
           role: catalog_organization
@@ -630,6 +1057,14 @@ declared_locations:
             anchor: Department of Agriculture
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:621
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:629
+            - repo:assessment/harness/scan/targets.yaml:664
+            - catalog.data.gov:https://catalog.data.gov/organization/usda
+          status: verified
+          verified_at: '2026-10-11T04:20:00Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -643,6 +1078,31 @@ declared_locations:
           pages_searched:
             - https://www.ers.usda.gov/
             - https://www.ers.usda.gov/data-products
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     NAHMSAPHIS:
       inventory_urls:
         - url: https://www.aphis.usda.gov/data.json
@@ -651,6 +1111,10 @@ declared_locations:
           read_from:
             page: https://www.aphis.usda.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:648
+          status: http_404
+          verified_at: '2026-10-11T04:27:52Z'
         - url: https://www.usda.gov/data.json
           kind: data_json
           role: department
@@ -661,6 +1125,14 @@ declared_locations:
             link: https://www.usda.gov/
             anchor: U.S. Department of Agriculture
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:611
+            - developer_page:https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+            - repo:assessment/harness/scan/targets.yaml:654
+            - repo:assessment/harness/scan/targets.yaml:702
+          status: http_403
+          verified_at: '2026-10-11T04:27:46Z'
         - url: https://catalog.data.gov/organization/usda
           kind: catalog_organization
           role: catalog_organization
@@ -673,6 +1145,14 @@ declared_locations:
             anchor: Department of Agriculture
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); neither APHIS nor NAHMS has an organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:621
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:629
+            - repo:assessment/harness/scan/targets.yaml:664
+            - catalog.data.gov:https://catalog.data.gov/organization/usda
+          status: verified
+          verified_at: '2026-10-11T04:20:00Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -684,6 +1164,31 @@ declared_locations:
           why: no page labelled a changelog, release notes, updates, what's new or corrections for the unit's products is linked; "News and Updates" is APHIS's agency news
           pages_searched:
             - https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     NASS:
       api_base:
         url: https://quickstats.nass.usda.gov/api
@@ -692,6 +1197,22 @@ declared_locations:
           cited_at: state/scan_preflight_2026-09.json (obs_91b1ffd453634126f8891d10, parsed.links[181])
           anchor: API
           how: the agency's own home page links its Quick Stats API under the anchor text "API"
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+          - repo:assessment/harness/scan/targets.yaml:689
+          - developer_page:https://www.nass.usda.gov
+          - repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230
+          - repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200
+          - catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000
+        status: refused_robots
+        verified_at: '2026-10-11T04:27:56Z'
+        terms_url: https://quickstats.nass.usda.gov/api
+        terms:
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:689
+          status: refused_robots
+          verified_at: '2026-10-11T04:27:56Z'
       inventory_urls:
         - url: https://www.nass.usda.gov/data.json
           kind: data_json
@@ -699,6 +1220,10 @@ declared_locations:
           read_from:
             page: https://www.nass.usda.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:696
+          status: refused_robots
+          verified_at: '2026-10-11T04:27:57Z'
         - url: https://www.usda.gov/data.json
           kind: data_json
           role: department
@@ -709,6 +1234,14 @@ declared_locations:
             link: http://www.usda.gov
             anchor: United States Department of Agriculture
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:611
+            - developer_page:https://www.nass.usda.gov/
+            - repo:assessment/harness/scan/targets.yaml:654
+            - repo:assessment/harness/scan/targets.yaml:702
+          status: http_403
+          verified_at: '2026-10-11T04:27:46Z'
         - url: https://catalog.data.gov/organization/usda
           kind: catalog_organization
           role: catalog_organization
@@ -721,6 +1254,14 @@ declared_locations:
             anchor: Department of Agriculture
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:621
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:629
+            - repo:assessment/harness/scan/targets.yaml:664
+            - catalog.data.gov:https://catalog.data.gov/organization/usda
+          status: verified
+          verified_at: '2026-10-11T04:20:00Z'
       changelog_urls:
         - url: https://www.nass.usda.gov/Corrections/?log=QS
           read_from:
@@ -732,6 +1273,11 @@ declared_locations:
             anchor: Quick Stats System Updates
             how: the body's API page links the Quick Stats system update log
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:0
+            - developer_page:https://www.nass.usda.gov/developer/index.php
+          status: refused_robots
+          verified_at: '2026-10-11T04:27:57Z'
       unresolved:
         - role: api_terms
           status: unreadable
@@ -739,7 +1285,37 @@ declared_locations:
           pages_searched:
             - https://www.nass.usda.gov/developer/index.php
             - https://quickstats.nass.usda.gov/api
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     NCES:
+      api_base:
+        url: https://nces.ed.gov/opengis/rest/services
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+        status: verified
+        verified_at: '2026-10-11T04:28:00Z'
       inventory_urls:
         - url: https://nces.ed.gov/data.json
           kind: data_json
@@ -747,6 +1323,10 @@ declared_locations:
           read_from:
             page: https://nces.ed.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:744
+          status: http_404
+          verified_at: '2026-10-11T04:28:03Z'
         - url: https://www.ed.gov/data.json
           kind: data_json
           role: department
@@ -756,6 +1336,12 @@ declared_locations:
             link: https://www.ed.gov/
             anchor: U.S. Department of Education
             how: the body's own About page names its parent department (Department of Education) and links its home page; data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:750
+            - developer_page:https://nces.ed.gov/national-center-education-statistics-nces/about
+          status: http_403
+          verified_at: '2026-10-11T04:28:03Z'
         - url: https://catalog.data.gov/organization/ed
           kind: catalog_organization
           role: catalog_organization
@@ -768,6 +1354,13 @@ declared_locations:
             anchor: Department of Education
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Education); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:759
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:767
+            - catalog.data.gov:https://catalog.data.gov/organization/ed
+          status: verified
+          verified_at: '2026-10-11T04:21:00Z'
       changelog_urls:
         - url: https://nces.ed.gov/national-center-education-statistics-nces/product-publication-release
           read_from:
@@ -779,13 +1372,49 @@ declared_locations:
             anchor: View new product/publication releases
             how: the body's home page links its list of new product releases
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:772
+            - developer_page:https://nces.ed.gov/
+          status: not_the_object
+          verified_at: '2026-10-11T04:28:00Z'
       unresolved:
         - role: api_base
           status: not_declared
           why: no API or developer page is linked from the home page
           pages_searched:
             - https://nces.ed.gov/
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     NCHS:
+      api_base:
+        url: https://data.cdc.gov/api/views
+        seeded_from:
+          - model_knowledge:claude-opus-5-5
+        status: verified
+        verified_at: '2026-10-11T04:28:05Z'
       inventory_urls:
         - url: https://www.cdc.gov/data.json
           kind: data_json
@@ -793,6 +1422,10 @@ declared_locations:
           read_from:
             page: https://www.cdc.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:790
+          status: http_404
+          verified_at: '2026-10-11T04:28:23Z'
         - url: https://hhs.gov/data.json
           kind: data_json
           role: department
@@ -803,6 +1436,11 @@ declared_locations:
             link: https://hhs.gov
             anchor: HHS.gov
             how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:796
+            - developer_page:https://www.cdc.gov/nchs/products/databriefs.htm
+          status: http_403
+          verified_at: '2026-10-11T04:28:22Z'
         - url: https://catalog.data.gov/organization/hhs
           kind: catalog_organization
           role: catalog_organization
@@ -815,6 +1453,29 @@ declared_locations:
             anchor: U.S. Department of Health & Human Services
             how: catalog.data.gov's organization list (page 5 of 5); the body's parent department (HHS); neither CDC nor NCHS has an organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:806
+            - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:814
+            - repo:assessment/harness/scan/targets.yaml:940
+            - catalog.data.gov:https://catalog.data.gov/organization/hhs
+          status: verified
+          verified_at: '2026-10-11T04:21:20Z'
+        - url: https://www.hhs.gov/data.json
+          kind: data_json
+          role: department
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:930
+          status: http_403
+          verified_at: '2026-10-11T04:28:23Z'
+        - url: https://data.cdc.gov/data.json
+          kind: data_json
+          role: own_host
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+          status: verified
+          verified_at: '2026-10-11T04:28:19Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -827,6 +1488,31 @@ declared_locations:
           why: no page labelled a changelog, release notes, what's new or corrections is linked from the home page; the "updates" pages it links are e-mail subscription and feature pages
           pages_searched:
             - https://www.cdc.gov/nchs/index.html
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     NCSES:
       inventory_urls:
         - url: https://ncses.nsf.gov/data.json
@@ -835,6 +1521,10 @@ declared_locations:
           read_from:
             page: https://ncses.nsf.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:832
+          status: http_404
+          verified_at: '2026-10-11T04:28:30Z'
         - url: https://www.nsf.gov/data.json
           kind: data_json
           role: department
@@ -845,6 +1535,12 @@ declared_locations:
             link: https://www.nsf.gov/
             anchor: ''
             how: the body's own page links the home page of its parent department (National Science Foundation); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:838
+            - developer_page:https://ncses.nsf.gov/
+          status: verified
+          verified_at: '2026-10-11T04:28:31Z'
         - url: https://catalog.data.gov/organization/nsf
           kind: catalog_organization
           role: catalog_organization
@@ -857,6 +1553,13 @@ declared_locations:
             anchor: National Science Foundation
             how: catalog.data.gov's organization list (page 3 of 5); the body's parent agency (NSF); the body has no organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:848
+            - developer_page:https://catalog.data.gov/organization?page=3&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:856
+            - catalog.data.gov:https://catalog.data.gov/organization/nsf
+          status: verified
+          verified_at: '2026-10-11T04:21:50Z'
       changelog_urls:
         - url: https://ncses.nsf.gov/about/whats-new
           read_from:
@@ -868,6 +1571,12 @@ declared_locations:
             anchor: What's New from NCSES
             how: the body's home page links its what's-new page
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:861
+            - developer_page:https://ncses.nsf.gov/
+            - repo:assessment/harness/scan/targets.yaml:867
+          status: not_the_object
+          verified_at: '2026-10-11T04:28:27Z'
         - url: https://ncses.nsf.gov/corrections
           read_from:
             page: https://ncses.nsf.gov/explore-data
@@ -878,6 +1587,11 @@ declared_locations:
             anchor: Corrections
             how: 'the body''s explore-data page links its corrections list: a log of revisions to published products'
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:871
+            - developer_page:https://ncses.nsf.gov/explore-data
+          status: verified
+          verified_at: '2026-10-11T04:28:29Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -885,10 +1599,32 @@ declared_locations:
           pages_searched:
             - https://ncses.nsf.gov/
             - https://ncses.nsf.gov/explore-data
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     ORES:
-      # The parent (Social Security Administration) publishes on the roster host itself, so the own-host
-      # inventory IS the department's: there is no second data.json to declare.
-      department_is_own_host: true
       inventory_urls:
         - url: https://www.ssa.gov/data.json
           kind: data_json
@@ -896,6 +1632,11 @@ declared_locations:
           read_from:
             page: https://www.ssa.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:893
+          status: http_403
+          verified_at: '2026-10-11T04:28:33Z'
         - url: https://catalog.data.gov/organization/ssa
           kind: catalog_organization
           role: catalog_organization
@@ -908,6 +1649,13 @@ declared_locations:
             anchor: Social Security Administration
             how: catalog.data.gov's organization list (page 4 of 5); the body's parent agency (SSA, which publishes on the roster host)
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:899
+            - developer_page:https://catalog.data.gov/organization?page=4&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:907
+            - catalog.data.gov:https://catalog.data.gov/organization/ssa
+          status: verified
+          verified_at: '2026-10-11T04:22:10Z'
       unresolved:
         - role: api_base
           status: unreadable
@@ -919,6 +1667,31 @@ declared_locations:
           why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
           pages_searched:
             - https://www.ssa.gov
+      # The parent (Social Security Administration) publishes on the roster host itself, so the own-host
+      # inventory IS the department's: there is no second data.json to declare.
+      department_is_own_host: true
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     SAMHSACBHS:
       inventory_urls:
         - url: https://www.samhsa.gov/data.json
@@ -927,6 +1700,10 @@ declared_locations:
           read_from:
             page: https://www.samhsa.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:924
+          status: http_500
+          verified_at: '2026-10-11T04:28:36Z'
         - url: https://www.hhs.gov/data.json
           kind: data_json
           role: department
@@ -937,6 +1714,12 @@ declared_locations:
             link: https://www.hhs.gov
             anchor: HHS.gov
             how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:930
+            - developer_page:https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
+          status: http_403
+          verified_at: '2026-10-11T04:28:23Z'
         - url: https://catalog.data.gov/organization/hhs
           kind: catalog_organization
           role: catalog_organization
@@ -949,6 +1732,21 @@ declared_locations:
             anchor: U.S. Department of Health & Human Services
             how: catalog.data.gov's organization list (page 5 of 5); the body's parent department (HHS); neither SAMHSA nor CBHSQ has an organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:806
+            - developer_page:https://catalog.data.gov/organization?page=5&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:814
+            - repo:assessment/harness/scan/targets.yaml:940
+            - catalog.data.gov:https://catalog.data.gov/organization/hhs
+          status: verified
+          verified_at: '2026-10-11T04:21:20Z'
+        - url: https://hhs.gov/data.json
+          kind: data_json
+          role: department
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:796
+          status: http_403
+          verified_at: '2026-10-11T04:28:22Z'
       unresolved:
         - role: api_base
           status: not_declared
@@ -962,6 +1760,31 @@ declared_locations:
           pages_searched:
             - https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
             - https://www.samhsa.gov/data/
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
     SOI:
       inventory_urls:
         - url: https://www.irs.gov/data.json
@@ -970,6 +1793,10 @@ declared_locations:
           read_from:
             page: https://www.irs.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:967
+          status: http_404
+          verified_at: '2026-10-11T04:28:39Z'
         - url: https://www.treasury.gov/data.json
           kind: data_json
           role: department
@@ -980,6 +1807,12 @@ declared_locations:
             link: https://www.treasury.gov/
             anchor: U.S. Treasury
             how: the body's own page links the home page of its parent department (Department of the Treasury); data.gov reads each department's data.json (params.yaml dept_domains)
+          seeded_from:
+            - model_knowledge:claude-opus-5-5
+            - repo:assessment/harness/scan/targets.yaml:973
+            - developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
+          status: verified
+          verified_at: '2026-10-11T04:29:00Z'
         - url: https://catalog.data.gov/organization/treasury
           kind: catalog_organization
           role: catalog_organization
@@ -992,6 +1825,13 @@ declared_locations:
             anchor: Department of the Treasury
             how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Treasury); neither the IRS nor SOI has an organization of its own on the list
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:983
+            - developer_page:https://catalog.data.gov/organization?page=2&per_page=24
+            - repo:assessment/harness/scan/targets.yaml:991
+            - catalog.data.gov:https://catalog.data.gov/organization/treasury
+          status: verified
+          verified_at: '2026-10-11T04:23:00Z'
       changelog_urls:
         - url: https://www.irs.gov/statistics/soi-tax-stats-whats-new
           read_from:
@@ -1003,9 +1843,40 @@ declared_locations:
             anchor: What's new
             how: the body's home page links its what's-new page
             task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+          seeded_from:
+            - repo:assessment/harness/scan/targets.yaml:996
+            - developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
+            - repo:assessment/harness/scan/targets.yaml:1002
+          status: verified
+          verified_at: '2026-10-11T04:28:38Z'
       unresolved:
         - role: api_base
           status: not_declared
           why: no API or developer page is linked from the body's home page
           pages_searched:
             - https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
+      searched:
+        api_base:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        api_terms:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        changelog:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov
+        inventory:
+          - model_knowledge
+          - repo
+          - developer_page
+          - catalog.data.gov
+          - api.data.gov

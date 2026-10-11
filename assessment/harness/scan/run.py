@@ -30,7 +30,7 @@ from scan.model import (Observation, SYNTHETIC_PREFIXES,       # noqa: E402
                         params_hash)
 from scan.rules import (BODY_LEGS, CANDIDATE_LEGS, CURRENT,       # noqa: E402
                         FRAMEWORK_LEGS, body_groups, consumes, judge as judge_rule)
-from scan.runner import collect_leg                            # noqa: E402
+from scan.runner import STORED_PAGE_COLLECTOR, collect_leg     # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 #: Where a cycle STAGES the bodies it captures, before anything is published.
@@ -529,6 +529,14 @@ def targets(params: dict, bodies=None) -> list:
             # the same rule passes on product surfaces; what is withdrawn is the LEVEL, not the
             # leg.
             legs = [l for l in CONTROL_LEGS if l not in withdrawn_on(params, kind)]
+            # A candidate that judges a PRODUCT surface reaches it here
+            # (`cc_tasks/2026-10-07_seed_known_locations_verify_ADDENDUM_01.md` A): A13 asks
+            # whether a machine starting from this page reaches the body's API, terms, changelog
+            # and inventory, so it is a leg of every Tier A surface that is not a host's
+            # well-known set. A candidate in `HOST_LEGS` (A12) stays on `well_known` rows only.
+            # Candidate Findings sit on the matrix and enter no level and no score (DD-054).
+            legs += [l for l in sorted(CANDIDATE_LEGS)
+                     if l not in HOST_LEGS and l not in withdrawn_on(params, kind)]
         url = r["url"]
         if not synthetic:
             url = ((entries[doc_id].get("identity") or {}).get("source_url") or url)
@@ -637,9 +645,36 @@ def merge_controls(payload_path: Path, params: dict, clock=None) -> int:
     return 0
 
 
+def stored_pages(cycle: str, tgts: list) -> dict:
+    """`{doc_id: page Observation row}`: the link probe's product-page Observation of each
+    target in a stored cycle, for `--pages-from` (`ADDENDUM_01` A, base decision 4: "the
+    product-page link observations are read from scan_2026-10-06_recollect, not re-fetched").
+
+    Refuses rather than guesses: a target with no stored page, or with more than one, would be
+    judged on a page another surface recorded or on none."""
+    path = STATE_DIR / f"{cycle}.json"
+    if not path.is_file():
+        raise SystemExit(f"REFUSING: --pages-from {cycle}: {path} does not exist")
+    rows = json.loads(path.read_text(encoding="utf-8")).get("observations_detail") or []
+    pages: dict = {}
+    for o in rows:
+        if o.get("leg") != "link_probe" or (o.get("parsed") or {}).get("probe") == "link" \
+                or str(o.get("target_doc_id", "")).startswith("control:"):
+            continue
+        if o["target_doc_id"] in pages:
+            raise SystemExit(f"REFUSING: {cycle} holds two page Observations for "
+                             f"{o['target_doc_id']}")
+        pages[o["target_doc_id"]] = o
+    missing = [t["doc_id"] for t in tgts if t["doc_id"] not in pages]
+    if missing:
+        raise SystemExit(f"REFUSING: {cycle} recorded no product page for {len(missing)} "
+                         f"target(s), first {missing[:3]}")
+    return {t["doc_id"]: pages[t["doc_id"]] for t in tgts}
+
+
 def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
               evidence_root: str, cycle: str | None = None, spot_targets=None,
-              legs_collected=None, surfaces_dropped=None) -> dict:
+              legs_collected=None, surfaces_dropped=None, pages_from=None) -> dict:
     """Measure `tgts` after a control gate that PASSED, and return the cycle's payload.
 
     Factored out of `main` (`cc_tasks/2026-09-19_spot_scan.md` decision 5) so the spot path can
@@ -704,7 +739,11 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
     # cycle if a control misfired; this re-judges E5 with the ordering evidence now that there
     # IS a first real host, so the cycle's recorded E5 Finding carries the whole signal rather
     # than the half a pure rule could see beforehand.
-    earliest = min((o.captured_at for o in all_obs), default=None)
+    # A product page READ from a stored cycle (`--pages-from`) carries the time its bytes were
+    # captured, in that cycle; no host was asked for it in this one, so it is not this cycle's
+    # first contact with a real host and is left off the ordering clock.
+    earliest = min((o.captured_at for o in all_obs if o.collector != STORED_PAGE_COLLECTOR),
+                   default=None)
     if earliest:
         for o in control_obs:
             if o.leg == "E5":
@@ -725,6 +764,10 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
         **({"legs_collected": list(legs_collected),
             "surfaces_dropped": list(surfaces_dropped or [])}
            if legs_collected is not None else {}),
+        # Where this cycle's product pages came from when they were read rather than fetched
+        # (`--pages-from`): the stored cycle, how many, and the rule, on the payload so the
+        # cycle's manifest says it (base decision 4).
+        **({"pages_read_from": pages_from} if pages_from else {}),
         **({"spot_targets": list(spot_targets),
             # The frame cycle `params.yaml` names on the day the spot ran. Recorded, not
             # implied: the spot measured under that cycle's parameters and is not that cycle.
@@ -948,6 +991,10 @@ def main(argv=None) -> int:
                          "the frame gives them; a surface left with none is not contacted. The "
                          "payload records `scope: legs`. "
                          "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md decision 2")
+    ap.add_argument("--pages-from", default=None, metavar="CYCLE",
+                    help="with --legs: read each surface's product page from this stored "
+                         "cycle's link-probe Observation instead of fetching it, and probe no "
+                         "link. cc_tasks/2026-10-07_seed_known_locations_verify_ADDENDUM_01.md A")
     a = ap.parse_args(argv)
     params = load_params()
     if a.frame:
@@ -978,6 +1025,21 @@ def main(argv=None) -> int:
         tgts, surfaces_dropped = restrict_legs(tgts, legs_collected)
         print(f"TARGETED cycle: {len(tgts)} surface(s) on {', '.join(legs_collected)}; "
               f"{len(surfaces_dropped)} surface(s) carry none of them and are not contacted",
+              file=sys.stderr)
+    pages_from = None
+    if a.pages_from:
+        if legs_collected is None:
+            raise SystemExit("REFUSING: --pages-from reads stored pages for a TARGETED cycle; "
+                             "give --legs")
+        pages = stored_pages(a.pages_from, tgts)
+        tgts = [dict(t, stored_page={"cycle": a.pages_from, "row": pages[t["doc_id"]]})
+                for t in tgts]
+        pages_from = {"cycle": a.pages_from, "surfaces": len(tgts),
+                      "collector": STORED_PAGE_COLLECTOR,
+                      "rule": ("each surface's product page is the link probe's page "
+                               "Observation in this cycle, read from the stored cycle and never "
+                               "re-fetched; no link is probed (ADDENDUM_01 A, base decision 4)")}
+        print(f"PAGES read from {a.pages_from} for {len(tgts)} surface(s); none re-fetched",
               file=sys.stderr)
     # Redirect the module-path global rather than threading a root through seven collectors:
     # `store_evidence` reads `EVIDENCE_ROOT` at CALL time, which is the repo convention
@@ -1041,7 +1103,8 @@ def main(argv=None) -> int:
     from scan.manners import Fetcher
     summary = run_cycle(params, tgts, (cf, e5, control_obs), Fetcher(params), task=a.task,
                         evidence_root=_staging_rel, cycle=cycle, spot_targets=spot_targets,
-                        legs_collected=legs_collected, surfaces_dropped=surfaces_dropped)
+                        legs_collected=legs_collected, surfaces_dropped=surfaces_dropped,
+                        pages_from=pages_from)
     cycle_out, _ = out_paths(params, cycle)
     write_payload(cycle_out, summary, params)
     print(json.dumps({k: v for k, v in summary.items()

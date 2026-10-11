@@ -128,7 +128,11 @@ cycle:
   # cycle 4, whose payload stays the cycle of record for every leg it does not collect. The
   # name is the task's: a dated suffix that is not `_rjN`, because this is a measurement and not
   # a re-judgement (`publish.supersedes_of`).
-  name: scan_2026-10-06_recollect
+  # The seeded cycle (`cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 4): a
+  # TARGETED cycle over the existence legs, A9 as frontier and the discoverability candidate A13,
+  # on the same 46 surfaces, over the scheme-2 declarations the seeds were verified into. The
+  # name is the task's, dated by the task and not by the day it ran (2026-10-11).
+  name: scan_2026-10-07_seeded
   targets: scan_targets_fss_2026-09_v5
 
 manners:
@@ -883,6 +887,17 @@ d1_sources:
   terms_paths: ["/terms", "/terms-of-service", "/policies/terms", "/about/policies",
                 "/license", "/licence", "/legal"]
   max_terms_probed: 3
+  # How much of a terms page D1's collector keeps (`runner._terms_text`;
+  # `cc_tasks/2026-10-07_seed_known_locations_verify_ADDENDUM_01.md` A). The collector kept
+  # 20,000 characters, a literal in `runner.py`, so census.gov's 302,319-byte terms page could
+  # never be judged whole and `RULE-D1-v5`/`v6` call a truncated read `error`. The page is now
+  # kept whole up to this ceiling, and a page over it is `error` naming the bytes kept.
+  # Chosen from the largest terms page the seed tables name, measured by part 2's one GET each
+  # (`state/seed_verification_2026-10-11.json`): BEA's API user guide, 1,376,062 bytes (a PDF;
+  # the largest HTML one is census.gov's popest terms, 364,944). 4 MiB is about three times the
+  # largest, and well under the 15 MB Googlebot reads of an HTML or text file (Google Search
+  # Central, "Googlebot": "the first 15MB of an HTML file or supported text-based file").
+  terms_text_max_bytes: 4194304
 
 d4_validation:
   schema_path: "shapes/pod_v1_1_min.schema.json"

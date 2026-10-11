@@ -1,0 +1,96 @@
+# How part 2 verifies a seeded location, and how it reads data.gov. Read by
+# scripts/verify_seeded_locations.py, never by a rule: these decide a seed's STATUS
+# (`declarations.SEED_STATUSES`), which `targets.yaml` `declared_locations` then carries, and the
+# rules judge the cycle's own Observations of those locations.
+#
+# cc_tasks/2026-10-07_seed_known_locations_verify.md decision 2 defines `verified` per object:
+# "an API base answers with a machine-readable body or a documented landing page; a terms page
+# states terms; a changelog carries dated entries; an inventory parses as DCAT-US `data.json` or
+# a CKAN listing". Each test below is that sentence made checkable, and nothing more.
+scheme: 1
+task: cc_tasks/2026-10-07_seed_known_locations_verify.md
+
+# The checkpoint and the evidence lane. One row per URL, appended, flushed and fsynced before
+# the next request (CLAUDE.md §15); the URL is the key, so re-running a command is the resume
+# command and no URL is fetched twice. Bodies go to corpus/evidence/frame/, the lane the
+# recollection's resolver used for pages a declaration cites and no Observation does.
+fetch_log: state/seed_verification_fetches_2026-10-11.jsonl
+runs_log: state/seed_verification_runs_2026-10-11.jsonl
+hosts_record: state/seed_verification_hosts_2026-10-11.json
+report: state/seed_verification_2026-10-11.json
+datagov_table: assessment/harness/scan/seeds/datagov_2026-10-11.yaml
+seed_table: assessment/harness/scan/seeds/known_locations_2026-10-07.yaml
+
+tests:
+  # An API base "answers with a machine-readable body": the body parses as JSON, or as XML
+  # (an XML API answers XML), whatever the content type says, because a JSON body served as
+  # text/html is still JSON. A 4xx other than 404/410 counts when the body is machine-readable:
+  # an API refusing an under-specified request (RFC 9110 §15.5.1, 400 "the server cannot or will
+  # not process the request due to something that is perceived to be a client error") has
+  # answered as an API. 401/403/407/429 never count: those are `manners.unobservable_statuses`,
+  # the host declining this client.
+  api_machine_readable_4xx: true
+  # "Or a documented landing page": an HTML page served AT the seeded base (its final URL is the
+  # seed or beneath it after redirects), where the seed is an API location and not a page the
+  # recollection searched (`kind: page_to_read`), and whose visible text names an API at a word
+  # boundary. A developer page on the product host is where an API is ANNOUNCED, not its base;
+  # it is `not_the_object` for `api_base`.
+  api_landing_tokens: ["API", "application programming interface"]
+  # "A terms page states terms": a served page whose visible text carries one of these phrases
+  # (case-insensitive). The phrases are the headings US federal API terms pages use, e.g.
+  # census.gov "Terms of Service", eia.gov "Terms of Service", wonder.cdc.gov "Data Use
+  # Restrictions"; a licence statement is terms too.
+  terms_phrases: ["terms of service", "terms of use", "terms and conditions", "data use",
+                  "license", "licence", "disclaimer"]
+  # "A changelog carries dated entries": at least this many distinct dates in the visible text,
+  # by the patterns below. Two, because "entries" is plural and one date is a page's own
+  # last-updated stamp, which every federal page carries.
+  changelog_min_dates: 2
+  # And the page names itself as a log of changes: its <title>, or one of its <h1>/<h2>
+  # headings, carries one of these (case-insensitive). Dates alone admitted a single update
+  # article (census.gov ".../updates/new-discovery-tool.html") and an archive of speeches
+  # (nces.ed.gov "Archived Commissioner's Remarks"); every page the recollection read as a
+  # changelog that is one is headed as one: "Errata | Corrections" (BJS), "Developer Updates"
+  # (Census), "What's New" (EIA, SOI), "Corrections" (NCSES).
+  changelog_heading_tokens: ["update", "what's new", "what’s new", "whats new", "errata",
+                             "correction", "change log", "changelog", "release notes",
+                             "revision", "new releases"]
+  date_patterns:
+    - '\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.? \d{1,2}, \d{4}\b'
+    - '\b\d{1,2} (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{4}\b'
+    - '\b\d{4}-\d{2}-\d{2}\b'
+    - '\b\d{1,2}/\d{1,2}/\d{4}\b'
+  # "An inventory parses as DCAT-US data.json": a JSON object with a `dataset` array (Project
+  # Open Data metadata schema v1.1, the catalog's required field). "Or a CKAN listing": a served
+  # catalog.data.gov organization page, or a CKAN action API response with `success: true`.
+  inventory_dataset_key: dataset
+
+# catalog.data.gov (CKAN 2.x action API, docs.ckan.org/en/2.9/api/). The seed table's queries are
+# run as written. `package_search` returns at most `rows` results; when `count` exceeds it the
+# query is paged with `start` (docs.ckan.org "package_search ... start (int) - the offset in the
+# complete result for where the set of returned datasets should begin") up to this many pages.
+datagov:
+  max_pages: 20
+  rows: 1000
+  # API resources: a resource whose `format` is one of these, the seed table's own filter.
+  api_formats: ["API", "Esri REST"]
+  # A data.gov record belongs to a body when its publisher (the DCAT-US `publisher.name`, which
+  # data.gov stores as the `publisher` extra) contains the body's `agency_name` from the frame,
+  # or one of these strings. Each alias is the body's own name as US federal catalogs write it;
+  # the frame's names are formal ("Bureau of the Census") and the catalogs' are not.
+  # DRSMSU and ORES are units whose parent publishes on the unit's own host
+  # (`targets.yaml` `department_is_own_host`), and catalog.data.gov lists no publisher for either
+  # unit, only the parent (fed-reserve: "Board of Governors of the Federal Reserve System", 167
+  # records; ssa: "Social Security Administration", 2,392): the parent's name stands for both.
+  publisher_aliases:
+    CENSUS: ["Census Bureau", "U.S. Census Bureau"]
+    DRSMSU: ["Board of Governors of the Federal Reserve System"]
+    NAHMSAPHIS: ["Animal and Plant Health Inspection Service"]
+    ORES: ["Office of Research, Evaluation, and Statistics", "Social Security Administration"]
+    SAMHSACBHS: ["Substance Abuse and Mental Health Services Administration"]
+    SOI: ["Statistics of Income", "Internal Revenue Service"]
+    NCSES: ["National Center for Science and Engineering Statistics"]
+  # api.data.gov's documentation index: an API is listed under its agency's name. A link on that
+  # page belongs to a body when the agency heading or the link text names the body by the same
+  # strings as above.
+  api_data_gov_docs: https://api.data.gov/docs/

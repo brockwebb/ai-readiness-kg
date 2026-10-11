@@ -321,7 +321,10 @@ def test_a_run_writes_its_artifacts_under_out_and_nowhere_else(loopback):
     # field to declare them yet, so on an adopter's own site the existence legs are `error`,
     # naming the seed sources not searched, where generation 14 passed them on guessed paths.
     # Every `error` is one of those legs; nothing else on the loopback site is unobserved.
-    existence = {"A2", "D1", "F4", "D4", "B1", "B4", "D3", "G4"}
+    # A13, the discoverability candidate, is a product leg since part 2
+    # (`cc_tasks/2026-10-07_seed_known_locations_verify_ADDENDUM_01.md` A) and judges what the
+    # existence legs could not settle, so it is `error` for the same reason.
+    existence = {"A2", "D1", "F4", "D4", "B1", "B4", "D3", "G4", "A13"}
     errs = [f for f in p["findings_detail"] if f["verdict"] == "error"]
     assert errs and {f["leg"] for f in errs} <= existence, {f["leg"] for f in errs}
     assert all("seed sources not searched" in f["reason"] for f in errs)

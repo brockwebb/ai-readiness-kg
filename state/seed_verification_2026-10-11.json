@@ -1,0 +1,4157 @@
+{
+ "task": "cc_tasks/2026-10-07_seed_known_locations_verify.md",
+ "generated_at": "2026-10-11T04:31:12Z",
+ "config": "assessment/harness/scan/seeds/verification.yaml",
+ "fetch_log": "state/seed_verification_fetches_2026-10-11.jsonl",
+ "seeds": [
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "http://www.bea.gov/api",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:48",
+    "repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:74",
+    "repo:corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b:101"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200 text/html: not machine-readable, and redirected away from the base to https://apps.bea.gov/api/, and names no API",
+   "verified_at": "2026-10-11T04:26:31Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/api/",
+    "content_type": "text/html",
+    "bytes": 310,
+    "sha256": "2823bc401c9ce944949fdf751e3523dcdd6eb2bc94d4aee289ae122db33f54ac",
+    "retained_at": "corpus/evidence/frame/28/2823bc401c9ce944949fdf751e3523dcdd6eb2bc94d4aee289ae122db33f54ac",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://apps.bea.gov/API",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/4c/4c3e4df4eaf5b24c3992b0b126490f3515e9a46d8873774cca85bf6fe9a21171:103",
+    "repo:corpus/evidence/frame/52/520390a2b694e4b29102f0910f49eabc1f140247f46ca4b5b39bed6df4bf1f15:107",
+    "repo:corpus/evidence/frame/6c/6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2:107"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://apps.bea.gov/API)",
+   "verified_at": "2026-10-11T04:26:32Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://apps.bea.gov/API"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://apps.bea.gov/API/signup/index.cfm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:291"
+   ],
+   "kind": "page_to_read",
+   "status": "refused_robots",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:32Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://apps.bea.gov/API/signup/index.cfm"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://apps.bea.gov/api/data",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200 text/plain: not machine-readable, and names no API",
+   "verified_at": "2026-10-11T04:26:32Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/api/data",
+    "content_type": "text/plain",
+    "bytes": 0,
+    "sha256": null,
+    "retained_at": null,
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://www.bea.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:266"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:33Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.bea.gov/",
+    "content_type": "text/html",
+    "bytes": 59040,
+    "sha256": "f9decd78a1da29000d719500d388460b685bd3dddb89ddf42def1cb36ed2b041",
+    "retained_at": "corpus/evidence/frame/f9/f9decd78a1da29000d719500d388460b685bd3dddb89ddf42def1cb36ed2b041",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://www.bea.gov/resources/for-developers",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:290"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:35Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.bea.gov/resources/for-developers",
+    "content_type": "text/html",
+    "bytes": 37440,
+    "sha256": "6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2",
+    "retained_at": "corpus/evidence/frame/6c/6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_terms",
+   "url": "https://apps.bea.gov/API/signup/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://apps.bea.gov/API/signup/)",
+   "verified_at": "2026-10-11T04:26:36Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://apps.bea.gov/API/signup/"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "api_terms",
+   "url": "https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, the page states terms (\"terms of service\")",
+   "verified_at": "2026-10-11T04:26:36Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf",
+    "content_type": "application/pdf",
+    "bytes": 1376062,
+    "sha256": "21f9a5fa68aafb2eca35f2ff85948b415cdde9b72478594dd0064988b73d2ca0",
+    "retained_at": "corpus/evidence/frame/21/21f9a5fa68aafb2eca35f2ff85948b415cdde9b72478594dd0064988b73d2ca0",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "changelog",
+   "url": "https://apps.bea.gov/api/whatsnew.htm",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 0 distinct date(s); fewer than 2",
+   "verified_at": "2026-10-11T04:26:36Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/api/whatsnew.htm",
+    "content_type": "text/html",
+    "bytes": 28185,
+    "sha256": "9578ca8e36ee33fe10a8164b936120a1ef9bb3f3cd36d48db19144543a49a9af",
+    "retained_at": "corpus/evidence/frame/95/9578ca8e36ee33fe10a8164b936120a1ef9bb3f3cd36d48db19144543a49a9af",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "changelog",
+   "url": "https://www.bea.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:266"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:33Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.bea.gov/",
+    "content_type": "text/html",
+    "bytes": 59040,
+    "sha256": "f9decd78a1da29000d719500d388460b685bd3dddb89ddf42def1cb36ed2b041",
+    "retained_at": "corpus/evidence/frame/f9/f9decd78a1da29000d719500d388460b685bd3dddb89ddf42def1cb36ed2b041",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "changelog",
+   "url": "https://www.bea.gov/resources/for-developers",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:290"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:35Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.bea.gov/resources/for-developers",
+    "content_type": "text/html",
+    "bytes": 37440,
+    "sha256": "6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2",
+    "retained_at": "corpus/evidence/frame/6c/6c3dafb291f9bd52b326453695ab7474b283f775454decfa69b29c0fa84315f2",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "inventory",
+   "url": "https://www.bea.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:256"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (26 `dataset` records)",
+   "verified_at": "2026-10-11T04:26:37Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 47958,
+    "sha256": "31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
+    "retained_at": "corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "inventory",
+   "url": "https://www.commerce.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:262",
+    "developer_page:https://www.bea.gov/",
+    "repo:docs/brief/G_census_dogfood.md:47",
+    "repo:docs/brief/G_census_dogfood.md:49"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:37Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.commerce.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 5540,
+    "sha256": "24da288ffd147f6fc2c8a3a62d82c13aaca86e2ab1667c6c1b14970ac1b69e09",
+    "retained_at": "corpus/evidence/frame/24/24da288ffd147f6fc2c8a3a62d82c13aaca86e2ab1667c6c1b14970ac1b69e09",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BEA",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/commerce",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:272",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:280"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:01:21Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/commerce",
+    "content_type": "text/html",
+    "bytes": 176629,
+    "sha256": "a60b92e4a97992f1d7c0d7fcdcdaabdc02e4fcb808a16636fbac28aef6000acc",
+    "retained_at": "corpus/evidence/frame/a6/a60b92e4a97992f1d7c0d7fcdcdaabdc02e4fcb808a16636fbac28aef6000acc",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_base",
+   "url": "https://api.ojp.gov/bjsdataset/v1",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/9b/9bbcf8ebc0cf578d359e4333bce6c2359c63c666e6d39d0ffb98d20e4f03028e:984",
+    "repo:corpus/evidence/frame/ed/ed4b3ba38d1538c0f39407fc8b4850839028816d76dedc8e44faefbdf271ce93:984",
+    "repo:assessment/harness/scan/targets.yaml:300"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:26:38Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://api.ojp.gov/bjsdataset/v1",
+    "content_type": "text/html",
+    "bytes": 503352,
+    "sha256": "8f1f5928af37333e956289515b40cec25b2de304c4d7187e094e38360891dbbe",
+    "retained_at": "corpus/evidence/frame/8f/8f1f5928af37333e956289515b40cec25b2de304c4d7187e094e38360891dbbe",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_base",
+   "url": "https://api.ojp.gov/bjsdataset/v1/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:300",
+    "developer_page:https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 400, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:26:40Z",
+   "fetch": {
+    "status": 400,
+    "final_url": "https://api.ojp.gov/bjsdataset/v1/",
+    "content_type": "application/json",
+    "bytes": 146,
+    "sha256": "24a25e55b4b7dd2672bc409afad4a58ea676f977b217f32844246120398b2470",
+    "retained_at": "corpus/evidence/frame/24/24a25e55b4b7dd2672bc409afad4a58ea676f977b217f32844246120398b2470",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_base",
+   "url": "https://data.ojp.gov/api/views",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://data.ojp.gov/api/views (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:26:40Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://data.ojp.gov/api/views (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_terms",
+   "url": "https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:302"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_terms, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:40Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api",
+    "content_type": "text/html",
+    "bytes": 63553,
+    "sha256": "e8121884d3988dca52aa994f472d1564cccf3b5b77f99a5a508eb3c23bcf1175",
+    "retained_at": "corpus/evidence/frame/e8/e8121884d3988dca52aa994f472d1564cccf3b5b77f99a5a508eb3c23bcf1175",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_terms",
+   "url": "https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:307"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_terms, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:42Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api",
+    "content_type": "text/html",
+    "bytes": 71196,
+    "sha256": "689d6f1880813e860e65aa680377c00c0f9a3159e485a76c419397b46f023400",
+    "retained_at": "corpus/evidence/frame/68/689d6f1880813e860e65aa680377c00c0f9a3159e485a76c419397b46f023400",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "api_terms",
+   "url": "https://dev.socrata.com/docs/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://dev.socrata.com/docs/ is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:26:43Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://dev.socrata.com/docs/",
+    "content_type": "text/html",
+    "bytes": 34035,
+    "sha256": "f4478dc44e93aa16e862b0099a32fdfa361937e1da59233cc2aa133d6eb0f93c",
+    "retained_at": "corpus/evidence/frame/f4/f4478dc44e93aa16e862b0099a32fdfa361937e1da59233cc2aa133d6eb0f93c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "changelog",
+   "url": "https://bjs.ojp.gov/library/publications/data-corrections",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:339",
+    "developer_page:https://bjs.ojp.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, 87 distinct dated entries, headed as a log of changes (\"errata\")",
+   "verified_at": "2026-10-11T04:26:44Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://bjs.ojp.gov/library/publications/data-corrections",
+    "content_type": "text/html",
+    "bytes": 103176,
+    "sha256": "2429950a89faa33e9100d9efaa675a2c8354f0fb8db30c00aac8313876341a56",
+    "retained_at": "corpus/evidence/frame/24/2429950a89faa33e9100d9efaa675a2c8354f0fb8db30c00aac8313876341a56",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "inventory",
+   "url": "https://bjs.ojp.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:310"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:26:44Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://bjs.ojp.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 47465,
+    "sha256": "a97e94bc990eb50f5c0f6faffd1b41d8b11888ac22d282c822f978cfd8676fa7",
+    "retained_at": "corpus/evidence/frame/a9/a97e94bc990eb50f5c0f6faffd1b41d8b11888ac22d282c822f978cfd8676fa7",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "inventory",
+   "url": "https://www.justice.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:316",
+    "developer_page:https://bjs.ojp.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (3267 `dataset` records)",
+   "verified_at": "2026-10-11T04:26:46Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.justice.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 10455182,
+    "sha256": "55a1c04d718be7b901c850eec0b68dcea27a07c54ce0545bb3dc3865aa146157",
+    "retained_at": "corpus/evidence/frame/55/55a1c04d718be7b901c850eec0b68dcea27a07c54ce0545bb3dc3865aa146157",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BJS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/doj",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:326",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:334"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:05:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/doj",
+    "content_type": "text/html",
+    "bytes": 182680,
+    "sha256": "e2e65ec331d3797352a1504ef34ac476a425fb7413aa4061866505efa1ffaa99",
+    "retained_at": "corpus/evidence/frame/e2/e2e65ec331d3797352a1504ef34ac476a425fb7413aa4061866505efa1ffaa99",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "api_base",
+   "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://api.bls.gov/publicAPI/v1/timeseries/data/)",
+   "verified_at": "2026-10-11T04:26:47Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "api_base",
+   "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://api.bls.gov/publicAPI/v2/timeseries/data/)",
+   "verified_at": "2026-10-11T04:26:47Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://api.bls.gov/publicAPI/v2/timeseries/data/"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "api_base",
+   "url": "https://catalog.data.gov/organization/dol-bls",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:376"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:06:09Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dol-bls",
+    "content_type": "text/html",
+    "bytes": 171671,
+    "sha256": "a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "retained_at": "corpus/evidence/frame/a5/a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "api_base",
+   "url": "https://www.bls.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:372"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:47Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "38a4a4f15968a1844fbbcb8b31f9530498f3110e94a7282e6965efc73b194a90",
+    "retained_at": "corpus/evidence/frame/38/38a4a4f15968a1844fbbcb8b31f9530498f3110e94a7282e6965efc73b194a90",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "api_terms",
+   "url": "https://www.bls.gov/developers/termsOfService.htm",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:48Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/developers/termsOfService.htm",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "b967fd88cf86135c9aabf5d9062549f32564d9e5ad1669bed22413ab262f7cce",
+    "retained_at": "corpus/evidence/frame/b9/b967fd88cf86135c9aabf5d9062549f32564d9e5ad1669bed22413ab262f7cce",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "changelog",
+   "url": "https://www.bls.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:372"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:26:47Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "38a4a4f15968a1844fbbcb8b31f9530498f3110e94a7282e6965efc73b194a90",
+    "retained_at": "corpus/evidence/frame/38/38a4a4f15968a1844fbbcb8b31f9530498f3110e94a7282e6965efc73b194a90",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "changelog",
+   "url": "https://www.bls.gov/bls/whatsnew.htm",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:49Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/bls/whatsnew.htm",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "f2996e314bc319c381759a554dd46b13747826e704ef77088d4dac3df0338165",
+    "retained_at": "corpus/evidence/frame/f2/f2996e314bc319c381759a554dd46b13747826e704ef77088d4dac3df0338165",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "changelog",
+   "url": "https://www.bls.gov/developers/api_faqs.htm",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:50Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/developers/api_faqs.htm",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "5a7bbd55cf6a18d852f60dd54e4b7ecacea8711f956935bce5b984b7a3657a96",
+    "retained_at": "corpus/evidence/frame/5a/5a7bbd55cf6a18d852f60dd54e4b7ecacea8711f956935bce5b984b7a3657a96",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "inventory",
+   "url": "https://www.bls.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:358"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:51Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bls.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 1325,
+    "sha256": "d74f62a7d171af895a2b5dcfd34856b431a3030673814f926c774d40934cdffd",
+    "retained_at": "corpus/evidence/frame/d7/d74f62a7d171af895a2b5dcfd34856b431a3030673814f926c774d40934cdffd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "inventory",
+   "url": "https://www.dol.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:364",
+    "developer_page:https://www.dol.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (404 `dataset` records)",
+   "verified_at": "2026-10-11T04:26:52Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.dol.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 496327,
+    "sha256": "8813948f7858c5df3fcc452c6cef30525f80dfe48a92a067d7bb3aae473789a8",
+    "retained_at": "corpus/evidence/frame/88/8813948f7858c5df3fcc452c6cef30525f80dfe48a92a067d7bb3aae473789a8",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BLS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/dol-bls",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:376",
+    "developer_page:https://catalog.data.gov/organization?page=5&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:384",
+    "repo:assessment/harness/scan/targets.yaml:394"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:06:09Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dol-bls",
+    "content_type": "text/html",
+    "bytes": 171671,
+    "sha256": "a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "retained_at": "corpus/evidence/frame/a5/a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "api_base",
+   "url": "https://data.bts.gov/api/catalog/v1",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:26:54Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.bts.gov/api/catalog/v1",
+    "content_type": "application/json",
+    "bytes": 973916,
+    "sha256": "b930037be6a672d892c8f214e3070e85769c660be8403c7c282ce67cd005b58d",
+    "retained_at": "corpus/evidence/frame/b9/b930037be6a672d892c8f214e3070e85769c660be8403c7c282ce67cd005b58d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "api_base",
+   "url": "https://data.bts.gov/api/views",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:26:55Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.bts.gov/api/views",
+    "content_type": "application/json",
+    "bytes": 2419814,
+    "sha256": "d31b20fd170890a251cb037a8df1715005ca7f475e7240ec782f1aae23a58b5f",
+    "retained_at": "corpus/evidence/frame/d3/d31b20fd170890a251cb037a8df1715005ca7f475e7240ec782f1aae23a58b5f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "api_base",
+   "url": "https://www.bts.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:425"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:01Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bts.gov/",
+    "content_type": "text/html",
+    "bytes": 365,
+    "sha256": "7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "retained_at": "corpus/evidence/frame/7f/7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "changelog",
+   "url": "https://www.bts.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:425"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:01Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bts.gov/",
+    "content_type": "text/html",
+    "bytes": 365,
+    "sha256": "7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "retained_at": "corpus/evidence/frame/7f/7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://catalog.data.gov/organization/dot",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:408"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the inventory, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:06:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dot",
+    "content_type": "text/html",
+    "bytes": 187894,
+    "sha256": "9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "retained_at": "corpus/evidence/frame/9c/9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://data.bts.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (416 `dataset` records)",
+   "verified_at": "2026-10-11T04:27:01Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.bts.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 600927,
+    "sha256": "148f5c7b0e30fd2b19ba12895d93c0a906c1dd73fd6154292eb9bf2617aead59",
+    "retained_at": "corpus/evidence/frame/14/148f5c7b0e30fd2b19ba12895d93c0a906c1dd73fd6154292eb9bf2617aead59",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://www.bts.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:425"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the inventory, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:01Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bts.gov/",
+    "content_type": "text/html",
+    "bytes": 365,
+    "sha256": "7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "retained_at": "corpus/evidence/frame/7f/7fc916cd189b7f347ca3389f8720943bf20c568789055b74bfffd4c4ad007a0c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://www.bts.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:402"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:02Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.bts.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "413485453c49e4916d444c5b1d527cd349e8a4bda89d75627946d498d5ece568",
+    "retained_at": "corpus/evidence/frame/41/413485453c49e4916d444c5b1d527cd349e8a4bda89d75627946d498d5ece568",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://www.transportation.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:423"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the inventory, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:03Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.transportation.gov/",
+    "content_type": "text/html",
+    "bytes": 376,
+    "sha256": "a2f70fb576281d59e5f539194cb866dc82b1fd3a77afdc5cb48f20300905e8e3",
+    "retained_at": "corpus/evidence/frame/a2/a2f70fb576281d59e5f539194cb866dc82b1fd3a77afdc5cb48f20300905e8e3",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "inventory",
+   "url": "https://www.transportation.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:04Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.transportation.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 389,
+    "sha256": "5c9c9bababee46fd35d0070d4ac9c8ecabb6d6c4c971321355ba9121eeeefe12",
+    "retained_at": "corpus/evidence/frame/5c/5c9c9bababee46fd35d0070d4ac9c8ecabb6d6c4c971321355ba9121eeeefe12",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "BTS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/dot",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:408",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:416",
+    "repo:assessment/harness/scan/targets.yaml:426"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:06:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dot",
+    "content_type": "text/html",
+    "bytes": 187894,
+    "sha256": "9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "retained_at": "corpus/evidence/frame/9c/9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "http://api.census.gov/data",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:3",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:15",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:16"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:05Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data/",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "https://api.census.gov/data",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:440",
+    "developer_page:https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}",
+    "repo:docs/brief/G_census_dogfood.md:40",
+    "repo:docs/brief/G_census_dogfood.md:44"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:08Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data/",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "https://api.census.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:11Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "https://data.census.gov/api",
+   "seeded_from": [
+    "repo:docs/data/corpus_manifest.json:8457",
+    "repo:docs/data/corpus_manifest.json:8472"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:12Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.census.gov/api",
+    "content_type": "application/json",
+    "bytes": 3549,
+    "sha256": "706d57376d0be1fd208b51865214a5e2d3db157a9a08bf8a14c70a525723c41c",
+    "retained_at": "corpus/evidence/frame/70/706d57376d0be1fd208b51865214a5e2d3db157a9a08bf8a14c70a525723c41c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_terms",
+   "url": "http://www.census.gov/popest/about/geo/terms.html",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59340",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59589",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59651"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:27:14Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.census.gov/popest/about/geo/terms.html",
+    "content_type": "text/html",
+    "bytes": 26711,
+    "sha256": "cbb20e4d31be43104e52a474253d34caf695178d60e6e99e8c1d6d259afddcbe",
+    "retained_at": "corpus/evidence/frame/cb/cbb20e4d31be43104e52a474253d34caf695178d60e6e99e8c1d6d259afddcbe",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_terms",
+   "url": "http://www.census.gov/popest/about/terms.html",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59340",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:59651",
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:63224"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, the page states terms (\"data use\")",
+   "verified_at": "2026-10-11T04:27:15Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.census.gov/programs-surveys/popest.html",
+    "content_type": "text/html",
+    "bytes": 364944,
+    "sha256": "538849bb2df685ecfceaf6e87e4336451f015c6cffdd3ef36ef0834848e8ef07",
+    "retained_at": "corpus/evidence/frame/53/538849bb2df685ecfceaf6e87e4336451f015c6cffdd3ef36ef0834848e8ef07",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_terms",
+   "url": "https://www.census.gov/data/developers/about/terms-of-service.html",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:446",
+    "developer_page:https://www.census.gov/data/developers.html",
+    "repo:docs/brief/G_census_dogfood.md:46",
+    "repo:docs/brief/G_census_dogfood.md:63"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, the page states terms (\"terms of service\")",
+   "verified_at": "2026-10-11T04:27:16Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.census.gov/data/developers/about/terms-of-service.html",
+    "content_type": "text/html",
+    "bytes": 302319,
+    "sha256": "3d3cfbce5ee351689a4fc8cac93c0d9400aac38f74e4598d19425a63a3cda70e",
+    "retained_at": "corpus/evidence/frame/3d/3d3cfbce5ee351689a4fc8cac93c0d9400aac38f74e4598d19425a63a3cda70e",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "api_terms",
+   "url": "https://www.census.gov/popest/about/terms.html",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987:67790"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, the page states terms (\"data use\")",
+   "verified_at": "2026-10-11T04:27:18Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.census.gov/programs-surveys/popest.html",
+    "content_type": "text/html",
+    "bytes": 364944,
+    "sha256": "3cb2cd1bda28d743d3cf568987b961391329d23f3d59f847e26d0144c9fd8b3d",
+    "retained_at": "corpus/evidence/frame/3c/3cb2cd1bda28d743d3cf568987b961391329d23f3d59f847e26d0144c9fd8b3d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "changelog",
+   "url": "https://www.census.gov/data/developers/updates.html",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:486",
+    "developer_page:https://www.census.gov/data/developers.html",
+    "repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:910",
+    "repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:1150"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, 2 distinct dated entries, headed as a log of changes (\"update\")",
+   "verified_at": "2026-10-11T04:27:19Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.census.gov/data/developers/updates.html",
+    "content_type": "text/html",
+    "bytes": 307086,
+    "sha256": "5b6f22db8af0185b5a6e4b417d987951f9696a3f6027611f7f64c96987f480a1",
+    "retained_at": "corpus/evidence/frame/5b/5b6f22db8af0185b5a6e4b417d987951f9696a3f6027611f7f64c96987f480a1",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "changelog",
+   "url": "https://www.census.gov/data/developers/updates/new-discovery-tool.html",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:860",
+    "repo:corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310:1122"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 2 distinct dates, but neither its title nor an h1/h2 names it a log of changes",
+   "verified_at": "2026-10-11T04:27:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.census.gov/data/developers/updates/new-discovery-tool.html",
+    "content_type": "text/html",
+    "bytes": 285408,
+    "sha256": "c8a6f1d6244f73c49cb6e9331b22f5b19ba9e7ed8a7a37f21d9e1411aaaea6e3",
+    "retained_at": "corpus/evidence/frame/c8/c8a6f1d6244f73c49cb6e9331b22f5b19ba9e7ed8a7a37f21d9e1411aaaea6e3",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "inventory",
+   "url": "https://www.census.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:457",
+    "repo:docs/evidence/claims.yaml:2026"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (1810 `dataset` records)",
+   "verified_at": "2026-10-11T04:27:21Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "inventory",
+   "url": "https://www.commerce.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:262",
+    "developer_page:https://www.census.gov/",
+    "repo:docs/brief/G_census_dogfood.md:47",
+    "repo:docs/brief/G_census_dogfood.md:49"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:26:37Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.commerce.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 5540,
+    "sha256": "24da288ffd147f6fc2c8a3a62d82c13aaca86e2ab1667c6c1b14970ac1b69e09",
+    "retained_at": "corpus/evidence/frame/24/24da288ffd147f6fc2c8a3a62d82c13aaca86e2ab1667c6c1b14970ac1b69e09",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "CENSUS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/census",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:473",
+    "developer_page:https://catalog.data.gov/organization?page=5&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:481"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:07:10Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/census",
+    "content_type": "text/html",
+    "bytes": 203222,
+    "sha256": "84128781627f264f395677f84b50827e954a8016c95df5b9c078679f79d5ea61",
+    "retained_at": "corpus/evidence/frame/84/84128781627f264f395677f84b50827e954a8016c95df5b9c078679f79d5ea61",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "api_base",
+   "url": "https://api.stlouisfed.org/fred/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://api.stlouisfed.org/fred/ is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:27:24Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://api.stlouisfed.org/fred/",
+    "content_type": "text/xml",
+    "bytes": 80,
+    "sha256": "b940a43ef9b6640578a92829363822e36fd8679f41523624c5952056419db8f3",
+    "retained_at": "corpus/evidence/frame/b9/b940a43ef9b6640578a92829363822e36fd8679f41523624c5952056419db8f3",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "api_base",
+   "url": "https://www.federalreserve.gov/data.htm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:525"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:25Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/data.htm",
+    "content_type": "text/html",
+    "bytes": 102485,
+    "sha256": "040320bbe352b1f03ec4f7ee425e339d7272f50d0eabdca64b43e574da6286bd",
+    "retained_at": "corpus/evidence/frame/04/040320bbe352b1f03ec4f7ee425e339d7272f50d0eabdca64b43e574da6286bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "api_base",
+   "url": "https://www.federalreserve.gov/datadownload/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200 text/html: not machine-readable, and names no API",
+   "verified_at": "2026-10-11T04:27:26Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/datadownload/",
+    "content_type": "text/html",
+    "bytes": 86361,
+    "sha256": "4d22b5722a6e8a8486b251a76c0a13b5cf06e6a3e5785f64718cc7aef987cfdc",
+    "retained_at": "corpus/evidence/frame/4d/4d22b5722a6e8a8486b251a76c0a13b5cf06e6a3e5785f64718cc7aef987cfdc",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "api_base",
+   "url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:524"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:27Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+    "content_type": "text/html",
+    "bytes": 91674,
+    "sha256": "94706f314882f96d35ee1968bcf5f8eddf79e790441e7bf24dc1c5da94f78a4f",
+    "retained_at": "corpus/evidence/frame/94/94706f314882f96d35ee1968bcf5f8eddf79e790441e7bf24dc1c5da94f78a4f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "changelog",
+   "url": "https://www.federalreserve.gov/data.htm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:525"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:25Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/data.htm",
+    "content_type": "text/html",
+    "bytes": 102485,
+    "sha256": "040320bbe352b1f03ec4f7ee425e339d7272f50d0eabdca64b43e574da6286bd",
+    "retained_at": "corpus/evidence/frame/04/040320bbe352b1f03ec4f7ee425e339d7272f50d0eabdca64b43e574da6286bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "changelog",
+   "url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:524"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:27Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+    "content_type": "text/html",
+    "bytes": 91674,
+    "sha256": "94706f314882f96d35ee1968bcf5f8eddf79e790441e7bf24dc1c5da94f78a4f",
+    "retained_at": "corpus/evidence/frame/94/94706f314882f96d35ee1968bcf5f8eddf79e790441e7bf24dc1c5da94f78a4f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "inventory",
+   "url": "https://www.federalreserve.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:501"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (167 `dataset` records)",
+   "verified_at": "2026-10-11T04:27:28Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.federalreserve.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 305473,
+    "sha256": "d861ab9ea275be7b854d0f66ff159351f4e0257d3de75b12e55fb43a28aafd6a",
+    "retained_at": "corpus/evidence/frame/d8/d861ab9ea275be7b854d0f66ff159351f4e0257d3de75b12e55fb43a28aafd6a",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "DRSMSU",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/fed-reserve",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:507",
+    "developer_page:https://catalog.data.gov/organization/",
+    "repo:assessment/harness/scan/targets.yaml:515"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:19:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/fed-reserve",
+    "content_type": "text/html",
+    "bytes": 160186,
+    "sha256": "b4b65c01dc19a1eb3fd0433fd115ed3972dc33982402bca233b22e066b46c383",
+    "retained_at": "corpus/evidence/frame/b4/b4b65c01dc19a1eb3fd0433fd115ed3972dc33982402bca233b22e066b46c383",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "http://api.eia.gov/",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:464",
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:470"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:29Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "http://api.eia.gov/v2",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:512"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:30Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/v2",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://api.eia.gov/",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:394",
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:430",
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:488"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:32Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://api.eia.gov/v2",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:446",
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:476",
+    "repo:corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b:477"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:33Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/v2",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://api.eia.gov/v2/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:534",
+    "developer_page:https://www.eia.gov/opendata/documentation.php"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:34Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/v2/",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://www.eia.gov/beta/api",
+   "seeded_from": [
+    "repo:docs/data/corpus_manifest.json:26944",
+    "repo:docs/reports/scan_matrix_product_2026-09-09.csv:8",
+    "repo:docs/reports/scan_matrix_product_2026-09-09.json:211"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://www.eia.gov/beta/api)",
+   "verified_at": "2026-10-11T04:27:35Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.eia.gov/beta/api"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "api_terms",
+   "url": "https://www.eia.gov/opendata/terms-of-service.php",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:535",
+    "developer_page:https://www.eia.gov/opendata/",
+    "repo:assessment/harness/scan/targets.yaml:549"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, the page states terms (\"terms of service\")",
+   "verified_at": "2026-10-11T04:27:35Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.eia.gov/opendata/terms-of-service.php",
+    "content_type": "text/html",
+    "bytes": 45934,
+    "sha256": "5b1ea3da35f9f5e3cc92967a1e3d639a522dbe8daa1cc35260b1ac33ed2ec13d",
+    "retained_at": "corpus/evidence/frame/5b/5b1ea3da35f9f5e3cc92967a1e3d639a522dbe8daa1cc35260b1ac33ed2ec13d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "changelog",
+   "url": "https://www.eia.gov/about/new/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:593",
+    "developer_page:https://www.eia.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, 15 distinct dated entries, headed as a log of changes (\"what's new\")",
+   "verified_at": "2026-10-11T04:27:36Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.eia.gov/about/new/",
+    "content_type": "text/html",
+    "bytes": 60722,
+    "sha256": "a53c3d3a02885fef346a25f2626e8fc22597a5d4899c40a1754f716dc7c3a090",
+    "retained_at": "corpus/evidence/frame/a5/a53c3d3a02885fef346a25f2626e8fc22597a5d4899c40a1754f716dc7c3a090",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "changelog",
+   "url": "https://www.eia.gov/opendata/documentation.php",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:537",
+    "developer_page:https://www.eia.gov/opendata/documentation.php"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 6 distinct dates, but neither its title nor an h1/h2 names it a log of changes",
+   "verified_at": "2026-10-11T04:27:37Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.eia.gov/opendata/documentation.php",
+    "content_type": "text/html",
+    "bytes": 127381,
+    "sha256": "a0b0338b2875388dde6e3c600557578cc016453e71d18e6e88224a3841f5e54c",
+    "retained_at": "corpus/evidence/frame/a0/a0b0338b2875388dde6e3c600557578cc016453e71d18e6e88224a3841f5e54c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "inventory",
+   "url": "https://www.eia.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:554"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:27:38Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.eia.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 46416,
+    "sha256": "db25d52377262ea260e37ce9302694790a14e277728fa100de3f83289ac9e694",
+    "retained_at": "corpus/evidence/frame/db/db25d52377262ea260e37ce9302694790a14e277728fa100de3f83289ac9e694",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "inventory",
+   "url": "https://www.energy.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:560",
+    "developer_page:https://www.eia.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (487 `dataset` records)",
+   "verified_at": "2026-10-11T04:27:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.energy.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 885630,
+    "sha256": "8037c02540bfeadb9a61b26e004794ac6b28712ffa96948bb5a58fd1d93c950f",
+    "retained_at": "corpus/evidence/frame/80/8037c02540bfeadb9a61b26e004794ac6b28712ffa96948bb5a58fd1d93c950f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "EIA",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/energy",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:570",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:578"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:19:40Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/energy",
+    "content_type": "text/html",
+    "bytes": 203949,
+    "sha256": "c6ece858ce632af8baece9cf62c793d71f0e1ee13e3f681b2a72f44e43395f66",
+    "retained_at": "corpus/evidence/frame/c6/c6ece858ce632af8baece9cf62c793d71f0e1ee13e3f681b2a72f44e43395f66",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://api.ers.usda.gov/data/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://api.ers.usda.gov/data/ (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:27:41Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://api.ers.usda.gov/data/ (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://www.ers.usda.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:615"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:41Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/",
+    "content_type": "text/html",
+    "bytes": 53658,
+    "sha256": "e37ddbf562c336391b2a5c35de52bf498fbcf238a05f2abd21dcc94d64a9732d",
+    "retained_at": "corpus/evidence/frame/e3/e37ddbf562c336391b2a5c35de52bf498fbcf238a05f2abd21dcc94d64a9732d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://www.ers.usda.gov/data-products",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:70"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:42Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/data-products",
+    "content_type": "text/html",
+    "bytes": 249125,
+    "sha256": "94a4a1e745531de78bb191b08e879d447a28c9d4ad407038bf5baa805d9b5907",
+    "retained_at": "corpus/evidence/frame/94/94a4a1e745531de78bb191b08e879d447a28c9d4ad407038bf5baa805d9b5907",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://www.ers.usda.gov/developer/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, an HTML page at the base that documents an API",
+   "verified_at": "2026-10-11T04:27:43Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/developer",
+    "content_type": "text/html",
+    "bytes": 35086,
+    "sha256": "6806f3dec27749dc1df8bc14a781ee9186436f911dc35d0ff50b40075a6223f7",
+    "retained_at": "corpus/evidence/frame/68/6806f3dec27749dc1df8bc14a781ee9186436f911dc35d0ff50b40075a6223f7",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "api_terms",
+   "url": "https://api.data.gov/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://api.data.gov/ is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:03:26Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.data.gov/",
+    "content_type": "text/html",
+    "bytes": 13697,
+    "sha256": "3e13c75ecf01e05e35f7f3830b247fdb928d7b3782b96c6e52360a2f45f1791d",
+    "retained_at": "corpus/evidence/frame/3e/3e13c75ecf01e05e35f7f3830b247fdb928d7b3782b96c6e52360a2f45f1791d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "changelog",
+   "url": "https://www.ers.usda.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:615"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:41Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/",
+    "content_type": "text/html",
+    "bytes": 53658,
+    "sha256": "e37ddbf562c336391b2a5c35de52bf498fbcf238a05f2abd21dcc94d64a9732d",
+    "retained_at": "corpus/evidence/frame/e3/e37ddbf562c336391b2a5c35de52bf498fbcf238a05f2abd21dcc94d64a9732d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "changelog",
+   "url": "https://www.ers.usda.gov/data-products",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:70"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:42Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/data-products",
+    "content_type": "text/html",
+    "bytes": 249125,
+    "sha256": "94a4a1e745531de78bb191b08e879d447a28c9d4ad407038bf5baa805d9b5907",
+    "retained_at": "corpus/evidence/frame/94/94a4a1e745531de78bb191b08e879d447a28c9d4ad407038bf5baa805d9b5907",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "inventory",
+   "url": "https://www.ers.usda.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:605"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:27:44Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.ers.usda.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 29703,
+    "sha256": "b402d053612e05313c8804fa3785f5839ef270d9106c7926f7fa4f974d6031a1",
+    "retained_at": "corpus/evidence/frame/b4/b402d053612e05313c8804fa3785f5839ef270d9106c7926f7fa4f974d6031a1",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "inventory",
+   "url": "https://www.usda.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:611",
+    "developer_page:https://www.ers.usda.gov/",
+    "repo:assessment/harness/scan/targets.yaml:654",
+    "repo:assessment/harness/scan/targets.yaml:702"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:46Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.usda.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 377,
+    "sha256": "688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "retained_at": "corpus/evidence/frame/68/688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ERS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:621",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:629",
+    "repo:assessment/harness/scan/targets.yaml:664"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NAHMSAPHIS",
+   "object": "api_base",
+   "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:658"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:48Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.aphis.usda.gov/livestock-poultry-disease/nahms",
+    "content_type": "text/html",
+    "bytes": 101736,
+    "sha256": "49d08367bcf96fdc3bb3766556cb15e38dfc942f259fecebe6fb3d2f62e9eac5",
+    "retained_at": "corpus/evidence/frame/49/49d08367bcf96fdc3bb3766556cb15e38dfc942f259fecebe6fb3d2f62e9eac5",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NAHMSAPHIS",
+   "object": "changelog",
+   "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:658"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:48Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.aphis.usda.gov/livestock-poultry-disease/nahms",
+    "content_type": "text/html",
+    "bytes": 101736,
+    "sha256": "49d08367bcf96fdc3bb3766556cb15e38dfc942f259fecebe6fb3d2f62e9eac5",
+    "retained_at": "corpus/evidence/frame/49/49d08367bcf96fdc3bb3766556cb15e38dfc942f259fecebe6fb3d2f62e9eac5",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NAHMSAPHIS",
+   "object": "inventory",
+   "url": "https://www.aphis.usda.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:648"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:27:52Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.aphis.usda.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 60825,
+    "sha256": "bb9ed886a517783882779c1f941eb3ad0bd68f9fb2e6305fa393dc9ee50c6a57",
+    "retained_at": "corpus/evidence/frame/bb/bb9ed886a517783882779c1f941eb3ad0bd68f9fb2e6305fa393dc9ee50c6a57",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NAHMSAPHIS",
+   "object": "inventory",
+   "url": "https://www.usda.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:611",
+    "developer_page:https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+    "repo:assessment/harness/scan/targets.yaml:654",
+    "repo:assessment/harness/scan/targets.yaml:702"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:46Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.usda.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 377,
+    "sha256": "688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "retained_at": "corpus/evidence/frame/68/688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NAHMSAPHIS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:621",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:629",
+    "repo:assessment/harness/scan/targets.yaml:664"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "http://quickstats.nass.usda.gov/api",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/bf/bfc2b4db93e98230014a21fd8e14afd1622683c67df06c1b29595d484e76ab97:1094"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: http://quickstats.nass.usda.gov/api)",
+   "verified_at": "2026-10-11T04:27:55Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: http://quickstats.nass.usda.gov/api"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "https://quickstats.nass.usda.gov/api",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:689",
+    "developer_page:https://www.nass.usda.gov",
+    "repo:corpus/evidence/frame/20/200229cd676357c8cc399ee5ffc0c8ed8279873ab6960f8aca597beef31c786a:1230",
+    "repo:corpus/evidence/frame/fd/fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3:1200"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://quickstats.nass.usda.gov/api)",
+   "verified_at": "2026-10-11T04:27:56Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://quickstats.nass.usda.gov/api"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "https://quickstats.nass.usda.gov/api/api_GET/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://quickstats.nass.usda.gov/api/api_GET/)",
+   "verified_at": "2026-10-11T04:27:56Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://quickstats.nass.usda.gov/api/api_GET/"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "api_terms",
+   "url": "https://quickstats.nass.usda.gov/api",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:689"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://quickstats.nass.usda.gov/api)",
+   "verified_at": "2026-10-11T04:27:56Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://quickstats.nass.usda.gov/api"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "api_terms",
+   "url": "https://www.nass.usda.gov/developer/index.php",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:727"
+   ],
+   "kind": "page_to_read",
+   "status": "refused_robots",
+   "reason": "a page searched for the api_terms, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:57Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.nass.usda.gov/developer/index.php (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "changelog",
+   "url": "https://www.nass.usda.gov/Corrections/?log=QS",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:0",
+    "developer_page:https://www.nass.usda.gov/developer/index.php"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://www.nass.usda.gov/Corrections/?log=QS (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:27:57Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.nass.usda.gov/Corrections/?log=QS (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "inventory",
+   "url": "https://www.nass.usda.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:696"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://www.nass.usda.gov/data.json (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:27:57Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.nass.usda.gov/data.json (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "inventory",
+   "url": "https://www.usda.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:611",
+    "developer_page:https://www.nass.usda.gov/",
+    "repo:assessment/harness/scan/targets.yaml:654",
+    "repo:assessment/harness/scan/targets.yaml:702"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:46Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.usda.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 377,
+    "sha256": "688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "retained_at": "corpus/evidence/frame/68/688706bce3594f6e4877620869024106c4876b8e3b2605436df8216d9e20985b",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NASS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:621",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:629",
+    "repo:assessment/harness/scan/targets.yaml:664"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "api_base",
+   "url": "https://educationdata.urban.org/api/v1/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://educationdata.urban.org/api/v1/ is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:27:57Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://educationdata.urban.org/api/v1/"
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "api_base",
+   "url": "https://nces.ed.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:774"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:27:58Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nces.ed.gov/",
+    "content_type": "text/html",
+    "bytes": 84646,
+    "sha256": "d725187e231d0fa3cce76419d9b7acacc8f580e82475c48fb8358a3e03d38d6c",
+    "retained_at": "corpus/evidence/frame/d7/d725187e231d0fa3cce76419d9b7acacc8f580e82475c48fb8358a3e03d38d6c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "api_base",
+   "url": "https://nces.ed.gov/opengis/rest",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:123",
+    "repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:172",
+    "repo:corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17:243"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, an HTML page at the base that documents an API",
+   "verified_at": "2026-10-11T04:27:58Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nces.ed.gov/opengis/rest/",
+    "content_type": "text/html",
+    "bytes": 4000,
+    "sha256": "4286f6f0769cf1c65f293ffa5ffa2f0ab72b4c902f9ade350bf2d3ce5db30da1",
+    "retained_at": "corpus/evidence/frame/42/4286f6f0769cf1c65f293ffa5ffa2f0ab72b4c902f9ade350bf2d3ce5db30da1",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "api_base",
+   "url": "https://nces.ed.gov/opengis/rest/services",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, an HTML page at the base that documents an API",
+   "verified_at": "2026-10-11T04:28:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nces.ed.gov/opengis/rest/services",
+    "content_type": "text/html",
+    "bytes": 3854,
+    "sha256": "c1073c48cf2cc0d591869dd47f4e27cb26c59244fac21974ead0bfe5d5aa3f7f",
+    "retained_at": "corpus/evidence/frame/c1/c1073c48cf2cc0d591869dd47f4e27cb26c59244fac21974ead0bfe5d5aa3f7f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "changelog",
+   "url": "https://nces.ed.gov/national-center-education-statistics-nces/product-publication-release",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:772",
+    "developer_page:https://nces.ed.gov/"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 0 distinct date(s); fewer than 2",
+   "verified_at": "2026-10-11T04:28:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nces.ed.gov/national-center-education-statistics-nces/product-publication-release",
+    "content_type": "text/html",
+    "bytes": 25663,
+    "sha256": "092c6c71ddd1ecdb0a3e424181f8671a97d67d0f1e2657dea9a2ec5707d81aa4",
+    "retained_at": "corpus/evidence/frame/09/092c6c71ddd1ecdb0a3e424181f8671a97d67d0f1e2657dea9a2ec5707d81aa4",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "changelog",
+   "url": "https://nces.ed.gov/whatsnew/commissioner/remarks_archive.asp",
+   "seeded_from": [
+    "repo:corpus/evidence/frame/5d/5de6d5e4e78b46afd50d3ccbf467571814b37edc1ff6c4fe17c0bdf2a6b5a42b:374",
+    "repo:corpus/evidence/frame/b2/b200fd9665d60983517117451d90bb47ab6e6f71dc86273cb80e276397315d33:374"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 8 distinct dates, but neither its title nor an h1/h2 names it a log of changes",
+   "verified_at": "2026-10-11T04:28:01Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nces.ed.gov/whatsnew/commissioner/remarks_archive.asp",
+    "content_type": "text/html",
+    "bytes": 16378,
+    "sha256": "aadb545b5a197f1fc108b78382c6cc4ed6dc9bec779a07ab245370db79764d81",
+    "retained_at": "corpus/evidence/frame/aa/aadb545b5a197f1fc108b78382c6cc4ed6dc9bec779a07ab245370db79764d81",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "inventory",
+   "url": "https://nces.ed.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:744"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:28:03Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://nces.ed.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 1245,
+    "sha256": "dc1d54dab6ec8c00f70137927504e4f222c8395f10760b6beecfcfa94e08249f",
+    "retained_at": "corpus/evidence/frame/dc/dc1d54dab6ec8c00f70137927504e4f222c8395f10760b6beecfcfa94e08249f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "inventory",
+   "url": "https://www.ed.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:750",
+    "developer_page:https://nces.ed.gov/national-center-education-statistics-nces/about"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:03Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.ed.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 11633,
+    "sha256": "cc4924e480355c21fa6a3a5d447d9e5ce47344c68aa4410fc27f2355e16ec705",
+    "retained_at": "corpus/evidence/frame/cc/cc4924e480355c21fa6a3a5d447d9e5ce47344c68aa4410fc27f2355e16ec705",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/ed",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:759",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:767"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/ed",
+    "content_type": "text/html",
+    "bytes": 205159,
+    "sha256": "f117ca793c99db8fe639047cc67498b0d56cabbbf8975c24a0720af80082a03f",
+    "retained_at": "corpus/evidence/frame/f1/f117ca793c99db8fe639047cc67498b0d56cabbbf8975c24a0720af80082a03f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "api_base",
+   "url": "https://data.cdc.gov/api/views",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:28:05Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.cdc.gov/api/views",
+    "content_type": "application/json",
+    "bytes": 7826911,
+    "sha256": "e4dd49e94d391b3a7ae99f46b6ff30eb0e9a5f0f035e94221c828b7e8a5ff14d",
+    "retained_at": "corpus/evidence/frame/e4/e4dd49e94d391b3a7ae99f46b6ff30eb0e9a5f0f035e94221c828b7e8a5ff14d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "api_base",
+   "url": "https://wonder.cdc.gov/controller/datarequest/",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_500",
+   "reason": "answered HTTP 500 with no machine-readable body",
+   "verified_at": "2026-10-11T04:28:16Z",
+   "fetch": {
+    "status": 500,
+    "final_url": "https://wonder.cdc.gov/controller/datarequest/",
+    "content_type": "text/html",
+    "bytes": 166643,
+    "sha256": "13202fae1921cb84097650794e20d283efd83dd0ad1260de4ad4219191a0b1b8",
+    "retained_at": "corpus/evidence/frame/13/13202fae1921cb84097650794e20d283efd83dd0ad1260de4ad4219191a0b1b8",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "api_base",
+   "url": "https://www.cdc.gov/nchs/index.htm",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:823"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:17Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.cdc.gov/nchs/index.htm",
+    "content_type": "text/html",
+    "bytes": 248,
+    "sha256": "17a6d96f068d44b335e8cf558591142af3dccbb9e79e632c7a8a54c6a2513457",
+    "retained_at": "corpus/evidence/frame/17/17a6d96f068d44b335e8cf558591142af3dccbb9e79e632c7a8a54c6a2513457",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "api_base",
+   "url": "https://www.cdc.gov/nchs/index.html",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:824"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:18Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.cdc.gov/nchs/index.html",
+    "content_type": "text/html",
+    "bytes": 55551,
+    "sha256": "dfab5fe6f8727a0c6e2c0786d09a4ed49a402d2beb1983e443fc63bbb437c635",
+    "retained_at": "corpus/evidence/frame/df/dfab5fe6f8727a0c6e2c0786d09a4ed49a402d2beb1983e443fc63bbb437c635",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "api_terms",
+   "url": "https://wonder.cdc.gov/DataUse.html",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:28:19Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://wonder.cdc.gov/DataUse.html",
+    "content_type": "text/html",
+    "bytes": 1669,
+    "sha256": "7ee5fe6183a5ace596f6882ffca008dd282369d633435a33c7797d1710c3624f",
+    "retained_at": "corpus/evidence/frame/7e/7ee5fe6183a5ace596f6882ffca008dd282369d633435a33c7797d1710c3624f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "changelog",
+   "url": "https://www.cdc.gov/nchs/index.html",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:824"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:18Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.cdc.gov/nchs/index.html",
+    "content_type": "text/html",
+    "bytes": 55551,
+    "sha256": "dfab5fe6f8727a0c6e2c0786d09a4ed49a402d2beb1983e443fc63bbb437c635",
+    "retained_at": "corpus/evidence/frame/df/dfab5fe6f8727a0c6e2c0786d09a4ed49a402d2beb1983e443fc63bbb437c635",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "inventory",
+   "url": "https://data.cdc.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (1391 `dataset` records)",
+   "verified_at": "2026-10-11T04:28:19Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://data.cdc.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 4090648,
+    "sha256": "79228ced21e7e1400440e4673db7893ab5ba2fd2dd544555b8989d8571e34475",
+    "retained_at": "corpus/evidence/frame/79/79228ced21e7e1400440e4673db7893ab5ba2fd2dd544555b8989d8571e34475",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "inventory",
+   "url": "https://hhs.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:796",
+    "developer_page:https://www.cdc.gov/nchs/products/databriefs.htm"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:22Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.hhs.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "33f19043339106d7ee65c34b2f6034195d65123d5e1cf9f5933ecd6aa1d453a0",
+    "retained_at": "corpus/evidence/frame/33/33f19043339106d7ee65c34b2f6034195d65123d5e1cf9f5933ecd6aa1d453a0",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "inventory",
+   "url": "https://www.cdc.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:790"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:28:23Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.cdc.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 20905,
+    "sha256": "a6b66cdebef567c41fa89c8ee3a601dac20060d81d83738b60efcd680b7ecb93",
+    "retained_at": "corpus/evidence/frame/a6/a6b66cdebef567c41fa89c8ee3a601dac20060d81d83738b60efcd680b7ecb93",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "inventory",
+   "url": "https://www.hhs.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:930"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:23Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.hhs.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "bbe44e8d93d07392d16d59cc5c377a680f42a976a674ed41d40dce1e36fb83d6",
+    "retained_at": "corpus/evidence/frame/bb/bbe44e8d93d07392d16d59cc5c377a680f42a976a674ed41d40dce1e36fb83d6",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCHS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/hhs",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:806",
+    "developer_page:https://catalog.data.gov/organization?page=5&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:814",
+    "repo:assessment/harness/scan/targets.yaml:940"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/hhs",
+    "content_type": "text/html",
+    "bytes": 196374,
+    "sha256": "0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "retained_at": "corpus/evidence/frame/0a/0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "api_base",
+   "url": "https://api.nsf.gov/services/v1/awards.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://api.nsf.gov/services/v1/awards.json is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:28:24Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.nsf.gov/services/v1/awards.json",
+    "content_type": "application/json",
+    "bytes": 204,
+    "sha256": "7c43fec7a84741d14ffca3b0810584d50ad62522a6c39556d3f5007b4b166d9f",
+    "retained_at": "corpus/evidence/frame/7c/7c43fec7a84741d14ffca3b0810584d50ad62522a6c39556d3f5007b4b166d9f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "api_base",
+   "url": "https://ncses.nsf.gov/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:842"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:25Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://ncses.nsf.gov/",
+    "content_type": "text/html",
+    "bytes": 55331,
+    "sha256": "607cadb01bc4dcf0d9d90e3377d359e7edb5074e7bcd3fc197b6d3e7b96f3e7d",
+    "retained_at": "corpus/evidence/frame/60/607cadb01bc4dcf0d9d90e3377d359e7edb5074e7bcd3fc197b6d3e7b96f3e7d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "api_base",
+   "url": "https://ncses.nsf.gov/explore-data",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:873"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:26Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://ncses.nsf.gov/explore-data",
+    "content_type": "text/html",
+    "bytes": 67706,
+    "sha256": "1beac421fbb3c9a39cc1623df825d8847a5aa3608b8c5f8ef3104fc0eca1b05e",
+    "retained_at": "corpus/evidence/frame/1b/1beac421fbb3c9a39cc1623df825d8847a5aa3608b8c5f8ef3104fc0eca1b05e",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "changelog",
+   "url": "https://ncses.nsf.gov/about/whats-new",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:861",
+    "developer_page:https://ncses.nsf.gov/",
+    "repo:assessment/harness/scan/targets.yaml:867"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200, 2 distinct dates, but neither its title nor an h1/h2 names it a log of changes",
+   "verified_at": "2026-10-11T04:28:27Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://ncses.nsf.gov/browse-library",
+    "content_type": "text/html",
+    "bytes": 2086958,
+    "sha256": "e426f8565d1f3af6655a3ed6fede56e9a7a36af5e5945ff56f7ebe43d4f6c3b4",
+    "retained_at": "corpus/evidence/frame/e4/e426f8565d1f3af6655a3ed6fede56e9a7a36af5e5945ff56f7ebe43d4f6c3b4",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "changelog",
+   "url": "https://ncses.nsf.gov/corrections",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:871",
+    "developer_page:https://ncses.nsf.gov/explore-data"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, 184 distinct dated entries, headed as a log of changes (\"correction\")",
+   "verified_at": "2026-10-11T04:28:29Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://ncses.nsf.gov/corrections",
+    "content_type": "text/html",
+    "bytes": 166372,
+    "sha256": "3cba4dda3f6dc29c5ea008e807e1101b0c35fa0fed3f9bcdcfa879b2d0afc82f",
+    "retained_at": "corpus/evidence/frame/3c/3cba4dda3f6dc29c5ea008e807e1101b0c35fa0fed3f9bcdcfa879b2d0afc82f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "inventory",
+   "url": "https://ncses.nsf.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:832"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:28:30Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://ncses.nsf.gov/data.json",
+    "content_type": "application/json",
+    "bytes": 20799,
+    "sha256": "ed033f66754f0e6e8b281bc43140da21a6659e02eb7c8587940ad7088da0f945",
+    "retained_at": "corpus/evidence/frame/ed/ed033f66754f0e6e8b281bc43140da21a6659e02eb7c8587940ad7088da0f945",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "inventory",
+   "url": "https://www.nsf.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:838",
+    "developer_page:https://ncses.nsf.gov/"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (113 `dataset` records)",
+   "verified_at": "2026-10-11T04:28:31Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nsf-gov-resources.nsf.gov/files/data.json",
+    "content_type": "application/json",
+    "bytes": 312274,
+    "sha256": "2ad1739f6c538d4c5f962978d99fbde1e913eb0b6d03367978e556a49d900a9e",
+    "retained_at": "corpus/evidence/frame/2a/2ad1739f6c538d4c5f962978d99fbde1e913eb0b6d03367978e556a49d900a9e",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "NCSES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/nsf",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:848",
+    "developer_page:https://catalog.data.gov/organization?page=3&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:856"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:50Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/nsf",
+    "content_type": "text/html",
+    "bytes": 187467,
+    "sha256": "e51d15f128bd9c575c115f096a09c7b165d8083cd020b8c5e2f80fed9f190523",
+    "retained_at": "corpus/evidence/frame/e5/e51d15f128bd9c575c115f096a09c7b165d8083cd020b8c5e2f80fed9f190523",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ORES",
+   "object": "api_base",
+   "url": "https://www.ssa.gov",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:110"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:32Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.ssa.gov",
+    "content_type": "text/html",
+    "bytes": 365,
+    "sha256": "896d4d09cfbe1ad8b5bfe0d49e9414066130b369dabca7a5877648d0d16d3b04",
+    "retained_at": "corpus/evidence/frame/89/896d4d09cfbe1ad8b5bfe0d49e9414066130b369dabca7a5877648d0d16d3b04",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ORES",
+   "object": "changelog",
+   "url": "https://www.ssa.gov",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:110"
+   ],
+   "kind": "page_to_read",
+   "status": "http_403",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:32Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.ssa.gov",
+    "content_type": "text/html",
+    "bytes": 365,
+    "sha256": "896d4d09cfbe1ad8b5bfe0d49e9414066130b369dabca7a5877648d0d16d3b04",
+    "retained_at": "corpus/evidence/frame/89/896d4d09cfbe1ad8b5bfe0d49e9414066130b369dabca7a5877648d0d16d3b04",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ORES",
+   "object": "inventory",
+   "url": "https://www.ssa.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:893"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:33Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.ssa.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "1782ebd4695a01c20370307c36f3be92418d94ea6744ce4c62f4492f1ab9344f",
+    "retained_at": "corpus/evidence/frame/17/1782ebd4695a01c20370307c36f3be92418d94ea6744ce4c62f4492f1ab9344f",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "ORES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/ssa",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:899",
+    "developer_page:https://catalog.data.gov/organization?page=4&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:907"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:22:10Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/ssa",
+    "content_type": "text/html",
+    "bytes": 166422,
+    "sha256": "77c8cc49a672f378121992c203f29fa318de621827db3ab7f39a5d88d8d44321",
+    "retained_at": "corpus/evidence/frame/77/77c8cc49a672f378121992c203f29fa318de621827db3ab7f39a5d88d8d44321",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "api_base",
+   "url": "https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:934"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:34Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.samhsa.gov/about/offices-centers/cbhsq",
+    "content_type": "text/html",
+    "bytes": 691664,
+    "sha256": "59d101cd8324d88a0dee367bd5313db21ff9e5287a7ed74cc3b18c141615da42",
+    "retained_at": "corpus/evidence/frame/59/59d101cd8324d88a0dee367bd5313db21ff9e5287a7ed74cc3b18c141615da42",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "api_base",
+   "url": "https://www.samhsa.gov/data/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:958"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:35Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.samhsa.gov/data/",
+    "content_type": "text/html",
+    "bytes": 259801,
+    "sha256": "871fd11edd2851a7c48c41589dd793e77d77f72fa7bd5186cb5c2ad247292579",
+    "retained_at": "corpus/evidence/frame/87/871fd11edd2851a7c48c41589dd793e77d77f72fa7bd5186cb5c2ad247292579",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "changelog",
+   "url": "https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:934"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:34Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.samhsa.gov/about/offices-centers/cbhsq",
+    "content_type": "text/html",
+    "bytes": 691664,
+    "sha256": "59d101cd8324d88a0dee367bd5313db21ff9e5287a7ed74cc3b18c141615da42",
+    "retained_at": "corpus/evidence/frame/59/59d101cd8324d88a0dee367bd5313db21ff9e5287a7ed74cc3b18c141615da42",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "changelog",
+   "url": "https://www.samhsa.gov/data/",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:958"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the changelog, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:35Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.samhsa.gov/data/",
+    "content_type": "text/html",
+    "bytes": 259801,
+    "sha256": "871fd11edd2851a7c48c41589dd793e77d77f72fa7bd5186cb5c2ad247292579",
+    "retained_at": "corpus/evidence/frame/87/871fd11edd2851a7c48c41589dd793e77d77f72fa7bd5186cb5c2ad247292579",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "inventory",
+   "url": "https://hhs.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:796"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:22Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.hhs.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "33f19043339106d7ee65c34b2f6034195d65123d5e1cf9f5933ecd6aa1d453a0",
+    "retained_at": "corpus/evidence/frame/33/33f19043339106d7ee65c34b2f6034195d65123d5e1cf9f5933ecd6aa1d453a0",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "inventory",
+   "url": "https://www.hhs.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:930",
+    "developer_page:https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:28:23Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.hhs.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 378,
+    "sha256": "bbe44e8d93d07392d16d59cc5c377a680f42a976a674ed41d40dce1e36fb83d6",
+    "retained_at": "corpus/evidence/frame/bb/bbe44e8d93d07392d16d59cc5c377a680f42a976a674ed41d40dce1e36fb83d6",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "inventory",
+   "url": "https://www.samhsa.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:924"
+   ],
+   "kind": null,
+   "status": "http_500",
+   "reason": "answered HTTP 500",
+   "verified_at": "2026-10-11T04:28:36Z",
+   "fetch": {
+    "status": 500,
+    "final_url": "https://www.samhsa.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 573,
+    "sha256": "16589a0797e7306e331f3b1a052b97cdf6ce25b7ab7563abde22c214d146eabb",
+    "retained_at": "corpus/evidence/frame/16/16589a0797e7306e331f3b1a052b97cdf6ce25b7ab7563abde22c214d146eabb",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SAMHSACBHS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/hhs",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:806",
+    "developer_page:https://catalog.data.gov/organization?page=5&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:814",
+    "repo:assessment/harness/scan/targets.yaml:940"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/hhs",
+    "content_type": "text/html",
+    "bytes": 196374,
+    "sha256": "0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "retained_at": "corpus/evidence/frame/0a/0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SOI",
+   "object": "api_base",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:977"
+   ],
+   "kind": "page_to_read",
+   "status": "not_the_object",
+   "reason": "a page searched for the api_base, not a location of it (kind: page_to_read)",
+   "verified_at": "2026-10-11T04:28:37Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
+    "content_type": "text/html",
+    "bytes": 102805,
+    "sha256": "4ef103f052dbe51ccb329914b8e708d45ee132b6cdae60563da3d82c5f627937",
+    "retained_at": "corpus/evidence/frame/4e/4ef103f052dbe51ccb329914b8e708d45ee132b6cdae60563da3d82c5f627937",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SOI",
+   "object": "changelog",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-whats-new",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:996",
+    "developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
+    "repo:assessment/harness/scan/targets.yaml:1002"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, 53 distinct dated entries, headed as a log of changes (\"update\")",
+   "verified_at": "2026-10-11T04:28:38Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.irs.gov/statistics/soi-tax-stats-whats-new",
+    "content_type": "text/html",
+    "bytes": 319519,
+    "sha256": "7293859c0e845c0edbf7e22335d3f9a593d55f91c7aa03d23740a6dff2a4e1a3",
+    "retained_at": "corpus/evidence/frame/72/7293859c0e845c0edbf7e22335d3f9a593d55f91c7aa03d23740a6dff2a4e1a3",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SOI",
+   "object": "inventory",
+   "url": "https://www.irs.gov/data.json",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:967"
+   ],
+   "kind": null,
+   "status": "http_404",
+   "reason": "answered HTTP 404",
+   "verified_at": "2026-10-11T04:28:39Z",
+   "fetch": {
+    "status": 404,
+    "final_url": "https://www.irs.gov/data.json",
+    "content_type": "text/html",
+    "bytes": 85666,
+    "sha256": "9ad19dcb929cb2e43486a2a9b44e83ec8d985131dffb654557032c8b638c1c73",
+    "retained_at": "corpus/evidence/frame/9a/9ad19dcb929cb2e43486a2a9b44e83ec8d985131dffb654557032c8b638c1c73",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SOI",
+   "object": "inventory",
+   "url": "https://www.treasury.gov/data.json",
+   "seeded_from": [
+    "model_knowledge:claude-opus-5-5",
+    "repo:assessment/harness/scan/targets.yaml:973",
+    "developer_page:https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, parses as DCAT-US data.json (231 `dataset` records)",
+   "verified_at": "2026-10-11T04:29:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.treasury.gov/jsonfiles/data.json",
+    "content_type": "application/json",
+    "bytes": 497538,
+    "sha256": "0f00fa13097106c4b1121885769e22f731d2f392c859e63462e5195b52ebc15d",
+    "retained_at": "corpus/evidence/frame/0f/0f00fa13097106c4b1121885769e22f731d2f392c859e63462e5195b52ebc15d",
+    "error": null
+   }
+  },
+  {
+   "table": "seed_table",
+   "body": "SOI",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/treasury",
+   "seeded_from": [
+    "repo:assessment/harness/scan/targets.yaml:983",
+    "developer_page:https://catalog.data.gov/organization?page=2&per_page=24",
+    "repo:assessment/harness/scan/targets.yaml:991"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:23:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/treasury",
+    "content_type": "text/html",
+    "bytes": 181654,
+    "sha256": "ab51fa56eef5810f0062104892469fa6424627635ffdd121f88f16636f2b397b",
+    "retained_at": "corpus/evidence/frame/ab/ab51fa56eef5810f0062104892469fa6424627635ffdd121f88f16636f2b397b",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "http://www.bea.gov/api",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=commerce&publisher=Bureau+of+Economic+Analysis&per_page=1000"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200 text/html: not machine-readable, and redirected away from the base to https://apps.bea.gov/api/, and names no API",
+   "verified_at": "2026-10-11T04:26:31Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://apps.bea.gov/api/",
+    "content_type": "text/html",
+    "bytes": 310,
+    "sha256": "2823bc401c9ce944949fdf751e3523dcdd6eb2bc94d4aee289ae122db33f54ac",
+    "retained_at": "corpus/evidence/frame/28/2823bc401c9ce944949fdf751e3523dcdd6eb2bc94d4aee289ae122db33f54ac",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "http://www.bea.gov/data.htm",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=commerce&publisher=Bureau+of+Economic+Analysis&per_page=1000"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "HTTP 200 text/html: not machine-readable, and redirected away from the base to https://www.bea.gov/open-data",
+   "verified_at": "2026-10-11T04:29:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.bea.gov/open-data",
+    "content_type": "text/html",
+    "bytes": 40117,
+    "sha256": "de7ec14be6f55ac721f2bd9480da6ecd18bbe6c476b07ab19808abc0e29330bb",
+    "retained_at": "corpus/evidence/frame/de/de7ec14be6f55ac721f2bd9480da6ecd18bbe6c476b07ab19808abc0e29330bb",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BEA",
+   "object": "api_base",
+   "url": "https://apps.bea.gov/itable/",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=commerce&publisher=Bureau+of+Economic+Analysis&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://apps.bea.gov/itable/)",
+   "verified_at": "2026-10-11T04:29:21Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://apps.bea.gov/itable/"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BEA",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/commerce",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/commerce"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:01:21Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/commerce",
+    "content_type": "text/html",
+    "bytes": 176629,
+    "sha256": "a60b92e4a97992f1d7c0d7fcdcdaabdc02e4fcb808a16636fbac28aef6000acc",
+    "retained_at": "corpus/evidence/frame/a6/a60b92e4a97992f1d7c0d7fcdcdaabdc02e4fcb808a16636fbac28aef6000acc",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BJS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/doj",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/doj"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:05:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/doj",
+    "content_type": "text/html",
+    "bytes": 182680,
+    "sha256": "e2e65ec331d3797352a1504ef34ac476a425fb7413aa4061866505efa1ffaa99",
+    "retained_at": "corpus/evidence/frame/e2/e2e65ec331d3797352a1504ef34ac476a425fb7413aa4061866505efa1ffaa99",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BLS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/dol-bls",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/dol-bls"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:06:09Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dol-bls",
+    "content_type": "text/html",
+    "bytes": 171671,
+    "sha256": "a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "retained_at": "corpus/evidence/frame/a5/a53ecc9a8f1d74898e511a91ba387e82d0da2f381876ad99838533b8164a9849",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "BTS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/dot",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/dot"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:06:39Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/dot",
+    "content_type": "text/html",
+    "bytes": 187894,
+    "sha256": "9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "retained_at": "corpus/evidence/frame/9c/9cd0e188ea810a41e683c299a71f8b99c8653701fdcaec1a9d3f8e821153a1df",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "http://api.census.gov/data",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&publisher=U.S.+Census+Bureau&per_page=1000",
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&publisher=U.S.+Census+Bureau&per_page=1000&after=WzEuMCwxLCIyYzBmZDZiMC05YzMzLTQxNGItYjVkOC1hMmE3ODVmYzA1ZjgiXQ%3D%3D"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:05Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data/",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "CENSUS",
+   "object": "api_base",
+   "url": "https://api.census.gov/data",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&publisher=U.S.+Census+Bureau&per_page=1000"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a machine-readable (json) body at the base",
+   "verified_at": "2026-10-11T04:27:08Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://api.census.gov/data/",
+    "content_type": "application/json",
+    "bytes": 5234590,
+    "sha256": "4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "retained_at": "corpus/evidence/frame/4b/4be5a2f8a6773b9766f5220706e83c64a37abb72afaae183a4487c6274434d8d",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "CENSUS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/census",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/census"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:07:10Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/census",
+    "content_type": "text/html",
+    "bytes": 203222,
+    "sha256": "84128781627f264f395677f84b50827e954a8016c95df5b9c078679f79d5ea61",
+    "retained_at": "corpus/evidence/frame/84/84128781627f264f395677f84b50827e954a8016c95df5b9c078679f79d5ea61",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "DRSMSU",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/fed-reserve",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/fed-reserve"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:19:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/fed-reserve",
+    "content_type": "text/html",
+    "bytes": 160186,
+    "sha256": "b4b65c01dc19a1eb3fd0433fd115ed3972dc33982402bca233b22e066b46c383",
+    "retained_at": "corpus/evidence/frame/b4/b4b65c01dc19a1eb3fd0433fd115ed3972dc33982402bca233b22e066b46c383",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://api.eia.gov/",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=energy&publisher=U.S.+Energy+Information+Administration&per_page=1000"
+   ],
+   "kind": null,
+   "status": "http_403",
+   "reason": "answered HTTP 403",
+   "verified_at": "2026-10-11T04:27:32Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://api.eia.gov/",
+    "content_type": "application/json",
+    "bytes": 163,
+    "sha256": "b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "retained_at": "corpus/evidence/frame/b7/b71fb384d31b5e7ccc66d279785c9e6cd51fa51f07820a3363c849034b9608bd",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://www.eia.gov/beta/api",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=energy&publisher=U.S.+Energy+Information+Administration&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://www.eia.gov/beta/api)",
+   "verified_at": "2026-10-11T04:27:35Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.eia.gov/beta/api"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "EIA",
+   "object": "api_base",
+   "url": "https://www.eia.gov/beta/petroleum/imports/browser/",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=energy&publisher=U.S.+Energy+Information+Administration&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://www.eia.gov/beta/petroleum/imports/browser/)",
+   "verified_at": "2026-10-11T04:29:21Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://www.eia.gov/beta/petroleum/imports/browser/"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "EIA",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/energy",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/energy"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:19:40Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/energy",
+    "content_type": "text/html",
+    "bytes": 203949,
+    "sha256": "c6ece858ce632af8baece9cf62c793d71f0e1ee13e3f681b2a72f44e43395f66",
+    "retained_at": "corpus/evidence/frame/c6/c6ece858ce632af8baece9cf62c793d71f0e1ee13e3f681b2a72f44e43395f66",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "http://gis.ers.usda.gov/arcgis/rest",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=Economic+Research+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: http://gis.ers.usda.gov/arcgis/rest (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:29:21Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: http://gis.ers.usda.gov/arcgis/rest (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://gis.ers.usda.gov/arcgis/rest",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=Economic+Research+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://gis.ers.usda.gov/arcgis/rest (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow))",
+   "verified_at": "2026-10-11T04:29:22Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://gis.ers.usda.gov/arcgis/rest (robots_status: unreachable; RFC 9309 \u00a72.3.1.4 complete disallow)"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "ERS",
+   "object": "api_base",
+   "url": "https://www.ers.usda.gov/developer/",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=Economic+Research+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, an HTML page at the base that documents an API",
+   "verified_at": "2026-10-11T04:27:43Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://www.ers.usda.gov/developer",
+    "content_type": "text/html",
+    "bytes": 35086,
+    "sha256": "6806f3dec27749dc1df8bc14a781ee9186436f911dc35d0ff50b40075a6223f7",
+    "retained_at": "corpus/evidence/frame/68/6806f3dec27749dc1df8bc14a781ee9186436f911dc35d0ff50b40075a6223f7",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "ERS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/usda"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NAHMSAPHIS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/usda"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "https://nassgeodata.gmu.edu/VegScape/devhelp/help.html",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://nassgeodata.gmu.edu/VegScape/devhelp/help.html is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:29:22Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://nassgeo.csiss.gmu.edu/VegScape/devhelp/help.html",
+    "content_type": "text/html",
+    "bytes": 1865,
+    "sha256": "1ed398b4ad6184f5dfac0c8da252cdc56c86952832f49c58b8def2303c2f9ea6",
+    "retained_at": "corpus/evidence/frame/1e/1ed398b4ad6184f5dfac0c8da252cdc56c86952832f49c58b8def2303c2f9ea6",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "https://quickstats.nass.usda.gov/api",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "refused_robots",
+   "reason": "robots.txt disallows it to this client (robots_disallowed: https://quickstats.nass.usda.gov/api)",
+   "verified_at": "2026-10-11T04:27:56Z",
+   "fetch": {
+    "status": null,
+    "final_url": null,
+    "content_type": null,
+    "bytes": null,
+    "sha256": null,
+    "retained_at": null,
+    "error": "robots_disallowed: https://quickstats.nass.usda.gov/api"
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NASS",
+   "object": "api_base",
+   "url": "https://www.ers.usda.gov/developer/geospatial-apis/nass-map-service-documentation.aspx",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/search?q=&sort=relevance&org_slug=usda&publisher=National+Agricultural+Statistics+Service%2C+Department+of+Agriculture&per_page=1000"
+   ],
+   "kind": null,
+   "status": "not_the_object",
+   "reason": "https://www.ers.usda.gov/developer/geospatial-apis/nass-map-service-documentation.aspx is not on a host of the body (build_seed_table.BODY_DOMAINS)",
+   "verified_at": "2026-10-11T04:29:23Z",
+   "fetch": {
+    "status": 403,
+    "final_url": "https://www.ers.usda.gov/developer/geospatial-apis/nass-map-service-documentation",
+    "content_type": "text/html",
+    "bytes": 29713,
+    "sha256": "866263f97b7af55c6cf7630e7a107c53a37ade15c30c46d9680b9fe2acf6d0d8",
+    "retained_at": "corpus/evidence/frame/86/866263f97b7af55c6cf7630e7a107c53a37ade15c30c46d9680b9fe2acf6d0d8",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NASS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/usda",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/usda"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:20:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/usda",
+    "content_type": "text/html",
+    "bytes": 190022,
+    "sha256": "c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "retained_at": "corpus/evidence/frame/c0/c0214f2549f80475cfd7359ed3b12f502ee61a17e9c2cb5f17f95d1060a93772",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NCES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/ed",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/ed"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/ed",
+    "content_type": "text/html",
+    "bytes": 205159,
+    "sha256": "f117ca793c99db8fe639047cc67498b0d56cabbbf8975c24a0720af80082a03f",
+    "retained_at": "corpus/evidence/frame/f1/f117ca793c99db8fe639047cc67498b0d56cabbbf8975c24a0720af80082a03f",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NCHS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/hhs",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/hhs"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/hhs",
+    "content_type": "text/html",
+    "bytes": 196374,
+    "sha256": "0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "retained_at": "corpus/evidence/frame/0a/0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "NCSES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/nsf",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/nsf"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:50Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/nsf",
+    "content_type": "text/html",
+    "bytes": 187467,
+    "sha256": "e51d15f128bd9c575c115f096a09c7b165d8083cd020b8c5e2f80fed9f190523",
+    "retained_at": "corpus/evidence/frame/e5/e51d15f128bd9c575c115f096a09c7b165d8083cd020b8c5e2f80fed9f190523",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "ORES",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/ssa",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/ssa"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:22:10Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/ssa",
+    "content_type": "text/html",
+    "bytes": 166422,
+    "sha256": "77c8cc49a672f378121992c203f29fa318de621827db3ab7f39a5d88d8d44321",
+    "retained_at": "corpus/evidence/frame/77/77c8cc49a672f378121992c203f29fa318de621827db3ab7f39a5d88d8d44321",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "SAMHSACBHS",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/hhs",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/hhs"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:21:20Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/hhs",
+    "content_type": "text/html",
+    "bytes": 196374,
+    "sha256": "0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "retained_at": "corpus/evidence/frame/0a/0ab9b529a5f9becb28a019ba9a97f1d1ee663b7f226fb0ccbc55f319d7048d4c",
+    "error": null
+   }
+  },
+  {
+   "table": "datagov_table",
+   "body": "SOI",
+   "object": "catalog_organization",
+   "url": "https://catalog.data.gov/organization/treasury",
+   "seeded_from": [
+    "catalog.data.gov:https://catalog.data.gov/organization/treasury"
+   ],
+   "kind": null,
+   "status": "verified",
+   "reason": "HTTP 200, a catalog.data.gov organization listing",
+   "verified_at": "2026-10-11T04:23:00Z",
+   "fetch": {
+    "status": 200,
+    "final_url": "https://catalog.data.gov/organization/treasury",
+    "content_type": "text/html",
+    "bytes": 181654,
+    "sha256": "ab51fa56eef5810f0062104892469fa6424627635ffdd121f88f16636f2b397b",
+    "retained_at": "corpus/evidence/frame/ab/ab51fa56eef5810f0062104892469fa6424627635ffdd121f88f16636f2b397b",
+    "error": null
+   }
+  }
+ ],
+ "declared": {
+  "written_at": "2026-10-11T04:32:27Z",
+  "notes": {
+   "BEA": [
+    "api_base: https://apps.bea.gov/API (refused_robots; unverified base of 5 candidate(s))",
+    "terms: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf (verified of 2)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "BJS": [
+    "api_base: the recollection's https://api.ojp.gov/bjsdataset/v1/ kept (verified)",
+    "terms: none standing of 1 candidate(s)",
+    "changelog_urls: 1 (1 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "BLS": [
+    "api_base: https://api.bls.gov/publicAPI/v1/timeseries/data/ (refused_robots; unverified base of 2 candidate(s))",
+    "terms: https://www.bls.gov/developers/termsOfService.htm (http_403 of 1)",
+    "changelog_urls: 2 (0 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "BTS": [
+    "api_base: https://data.bts.gov/api/views (verified; machine-readable of 2 candidate(s))",
+    "terms: none standing of 0 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 4 (2 verified)"
+   ],
+   "CENSUS": [
+    "api_base: the recollection's https://api.census.gov/data kept (verified)",
+    "terms: the recollection's https://www.census.gov/data/developers/about/terms-of-service.html kept (verified)",
+    "changelog_urls: 1 (1 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "DRSMSU": [
+    "api_base: none standing of 2 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 2 (2 verified)"
+   ],
+   "EIA": [
+    "api_base: the recollection's https://api.eia.gov/v2/ kept (http_403)",
+    "terms: the recollection's https://www.eia.gov/opendata/terms-of-service.php kept (verified)",
+    "changelog_urls: 2 (1 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "ERS": [
+    "api_base: https://api.ers.usda.gov/data/ (refused_robots; unverified base of 4 candidate(s))",
+    "terms: none standing of 1 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 3 (1 verified)"
+   ],
+   "NAHMSAPHIS": [
+    "api_base: none standing of 0 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 3 (1 verified)"
+   ],
+   "NASS": [
+    "api_base: the recollection's https://quickstats.nass.usda.gov/api kept (refused_robots)",
+    "terms: https://quickstats.nass.usda.gov/api (refused_robots of 1)",
+    "changelog_urls: 1 (0 verified)",
+    "inventory_urls: 3 (1 verified)"
+   ],
+   "NCES": [
+    "api_base: https://nces.ed.gov/opengis/rest/services (verified; landing page of 3 candidate(s))",
+    "terms: none standing of 0 candidate(s)",
+    "changelog_urls: 1 (0 verified)",
+    "inventory_urls: 3 (1 verified)"
+   ],
+   "NCHS": [
+    "api_base: https://data.cdc.gov/api/views (verified; machine-readable of 2 candidate(s))",
+    "terms: none standing of 1 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 5 (2 verified)"
+   ],
+   "NCSES": [
+    "api_base: none standing of 1 candidate(s)",
+    "changelog_urls: 2 (1 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ],
+   "ORES": [
+    "api_base: none standing of 0 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 2 (1 verified)"
+   ],
+   "SAMHSACBHS": [
+    "api_base: none standing of 0 candidate(s)",
+    "changelog_urls: 0 (0 verified)",
+    "inventory_urls: 4 (1 verified)"
+   ],
+   "SOI": [
+    "api_base: none standing of 0 candidate(s)",
+    "changelog_urls: 1 (1 verified)",
+    "inventory_urls: 3 (2 verified)"
+   ]
+  }
+ }
+}

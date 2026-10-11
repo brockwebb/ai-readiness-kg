@@ -48,6 +48,87 @@ def _with_declared(obs: list, block) -> list:
     return obs
 
 
+#: The collector of a product-page Observation READ from a stored cycle, never fetched
+#: (`cc_tasks/2026-10-07_seed_known_locations_verify_ADDENDUM_01.md` A, base decision 4). Its
+#: `obs_id` differs from the stored one because the collector and the params are this cycle's;
+#: its `captured_at`, `request` and `response` are the stored Observation's, and
+#: `parsed.read_from_cycle` names that Observation. `run.run_cycle` excludes it from E5's "every
+#: control precedes the first real host" clock, because no host was asked for it in this cycle.
+STORED_PAGE_COLLECTOR = "stored_page"
+STORED_PAGE_VERSION = "0.1.0"
+#: The page facts carried over. `link_candidates` is not: it counts the stored cycle's link
+#: PROBES, and this cycle probed none, so carrying it would put another cycle's requests on a
+#: page Observation of this one. `declared` is not: this cycle's block is attached instead.
+STORED_PAGE_KEYS = ("content_type", "final_url", "extension", "links", "links_error")
+
+
+def stored_page(stored: dict, leg: str, doc_id: str, url: str, params: dict):
+    """The link probe's product-page Observation for this surface, made from the Observation
+    a stored cycle recorded for it (`target["stored_page"]`, set by `run.py --pages-from`). No
+    request is made. Refuses a stored row of another surface or another URL."""
+    from .model import Observation
+    row = stored["row"]
+    if row.get("target_doc_id") != doc_id or row.get("target_url") != url \
+            or row.get("leg") != leg or (row.get("parsed") or {}).get("probe") == "link":
+        raise ValueError(f"stored page {row.get('obs_id')} is not the {leg} page of "
+                         f"{doc_id} at {url}")
+    parsed = {k: row["parsed"][k] for k in STORED_PAGE_KEYS if k in (row.get("parsed") or {})}
+    parsed["read_from_cycle"] = {"cycle": stored["cycle"], "obs_id": row["obs_id"],
+                                 "captured_at": row["captured_at"]}
+    return Observation.make(leg, leg, doc_id, url, STORED_PAGE_COLLECTOR, STORED_PAGE_VERSION,
+                            params, dict(row.get("request") or {}),
+                            dict(row.get("response") or {}), parsed=parsed,
+                            error_class=row.get("error_class"),
+                            captured_at=row["captured_at"])
+
+
+def _convention_fetches(f, leg: str, doc_id: str, url: str, decl, params: dict,
+                        admitted) -> list:
+    """The discoverability candidate's convention locations (`RULE-A13-v1`), collected on A2
+    because A13 reads only the legs it consumes and A2 is the API leg among them.
+
+    For the product page's host and, where the body's recorded API base is `verified`, the API's
+    host: RFC 9727's `/.well-known/api-catalog` (§2), and `/data.json` at the API host's root
+    (OMB M-13-13; the product host's own `/data.json` is D4's fetch already, `d4_catalog.paths`,
+    and is not asked for twice). Through the same gate every collector uses, robots-first.
+    `ADDENDUM_01` A: "for each roster host and each verified API host"."""
+    from .manners import on_roster_host
+    conv = params["discoverability"]["convention"]
+    roots = ["{0.scheme}://{0.netloc}".format(urllib.parse.urlsplit(url))]
+    api = (decl or {}).get("api_base") or {}
+    if api.get("url") and api.get("status") == "verified":
+        api_root = "{0.scheme}://{0.netloc}".format(urllib.parse.urlsplit(api["url"]))
+        if api_root.lower() != roots[0].lower():
+            roots.append(api_root)
+    out = []
+    for i, root in enumerate(roots):
+        of = "product_host" if i == 0 else "api_host"
+        wanted = [(root + conv["api_catalog_path"], "api_catalog")]
+        if of == "api_host":
+            wanted.append((root + conv["inventory_path"], "convention_inventory"))
+        for u, probe in wanted:
+            if not on_roster_host(u, url, params, admitted):
+                continue
+            for o in http.fetch(f, leg, doc_id, u, params):
+                o.parsed = dict(o.parsed or {}, probe=probe, convention_of=of)
+                out.append(o)
+    return out
+
+
+def _terms_text(body: bytes, params: dict) -> dict:
+    """The terms page as D1 stores it: the WHOLE body, decoded, up to the declared ceiling
+    (`d1_sources.terms_text_max_bytes`; `ADDENDUM_01` A, "a truncated read is never judged").
+    A page over the ceiling keeps its first `ceiling` bytes and says so, and `RULE-D1-v6`'s
+    truncated-read branch makes that `error` ("read to N of its M bytes", N the ceiling). The
+    body is stored as served, not as visible text: the rule reads visible text and the
+    `license` links from it itself, and decides truncation by comparing what is kept with the
+    bytes served, so a pre-stripped text would read as truncated on every page."""
+    cap = int(params["d1_sources"]["terms_text_max_bytes"])
+    over = len(body) > cap
+    return {"terms_text": (body[:cap] if over else body).decode("utf-8", "replace"),
+            "terms_text_ceiling": cap, "terms_text_truncated": over}
+
+
 def _declared_api_urls(decl, already: list) -> list:
     """The declared API base and its description, where declared and not already probed."""
     api = (decl or {}).get("api_base") or {}
@@ -71,6 +152,13 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
     declared = declarations.record(decl, body, leg, params)
 
     lp = params["link_probe"]
+    if leg == lp["shared_leg"] and target.get("stored_page") is not None:
+        # Read, never re-fetched (`ADDENDUM_01` A; base decision 4): the product page this
+        # surface's link probe recorded in a stored cycle, as THIS cycle's page Observation with
+        # THIS cycle's `declared` block. No link is probed: only `RULE-A13-v1` reads this leg in
+        # such a cycle, and it reads the page alone (`CONSUMES_PAGE_ONLY`).
+        return _with_declared([stored_page(target["stored_page"], leg, doc_id, url, params)],
+                              declared)
     if leg == lp["shared_leg"]:
         # The product page and every download link on it, observed ONCE per surface. A1 and A3
         # ask different questions of the same 25 objects; before this leg existed each HEADed
@@ -109,6 +197,7 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                 o.parsed = dict(o.parsed or {}, api=v2clauses.api_declarations(
                     _body(o), (o.response or {}).get("headers") or {}, params))
             out += obs
+        out += _convention_fetches(f, leg, doc_id, url, decl, params, admitted)
         return _with_declared(out, declared)
     if leg == "A12":
         # The two layers, observed against the SAME path so the comparison is real. A12 judges
@@ -213,8 +302,7 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                     :int(params["d1_sources"]["max_terms_probed"])]:
                 t = http.fetch(f, leg, doc_id, join(p), params)
                 for o in t:
-                    o.parsed = dict(o.parsed or {}, probe="terms",
-                                    terms_text=_body(o).decode("utf-8", "replace")[:20000])
+                    o.parsed = dict(o.parsed or {}, probe="terms", **_terms_text(_body(o), params))
                 obs += t
                 # `.get("status", 999)` here is the same bug the four v3 rules exist for, and
                 # it survived the rule fix because it lives in the COLLECTOR layer: it crashed
@@ -232,8 +320,7 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                     and on_roster_host(terms, url, params, admitted):
                 t = http.fetch(f, leg, doc_id, terms, params)
                 for o in t:
-                    o.parsed = dict(o.parsed or {}, probe="terms",
-                                    terms_text=_body(o).decode("utf-8", "replace")[:20000])
+                    o.parsed = dict(o.parsed or {}, probe="terms", **_terms_text(_body(o), params))
                 obs += t
         return _with_declared(obs, declared)
     if leg == "D4":

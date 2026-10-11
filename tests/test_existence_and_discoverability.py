@@ -341,8 +341,30 @@ def _scheme(scheme, body):
     return {"scheme": scheme, "bodies": {"X": body}}
 
 
-def test_scheme_1_still_loads_and_its_blocks_are_unchanged(params):
-    block = declarations.load()
+#: What scheme 2 added to a body and to its locations. Stripping them from the live file gives
+#: back the recollection's scheme-1 entry, which part 2 kept whole
+#: (`cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 2).
+_SCHEME_2_KEYS = ("seeded_from", "status", "verified_at", "searched", "terms")
+
+
+def _as_scheme_1(v):
+    if isinstance(v, dict):
+        return {k: _as_scheme_1(x) for k, x in v.items() if k not in _SCHEME_2_KEYS}
+    if isinstance(v, list):
+        return [_as_scheme_1(x) for x in v]
+    return v
+
+
+def test_scheme_1_still_loads_and_its_blocks_are_unchanged(params, tmp_path):
+    """`targets.yaml` is scheme 2 since part 2; a scheme-1 file (the recollection's entry, with
+    the scheme-2 keys taken off) still loads, and its blocks carry no scheme-2 key."""
+    import yaml
+    live = declarations.load()
+    assert live["scheme"] == 2
+    one = {"scheme": 1, "bodies": {"CENSUS": _as_scheme_1(live["bodies"]["CENSUS"])}}
+    path = tmp_path / "targets.yaml"
+    path.write_text(yaml.safe_dump({"declared_locations": one}), encoding="utf-8")
+    block = declarations.load(path)
     assert block["scheme"] == 1
     body = declarations.for_body(block, "CENSUS")
     assert "scheme" not in body
@@ -408,7 +430,10 @@ def test_the_seed_table_is_valid_and_covers_every_declared_body(seeds):
         assert "catalog.data.gov" in v["queries"] and "api.data.gov" in v["queries"], b
         for es in v["objects"].values():
             for e in es:
-                assert e["status"] == "seeded_unverified", (b, e["url"])
+                # Part 2 verified every seed by one GET (`cc_tasks/2026-10-07_seed_known_
+                # locations_verify.md` decision 2) and wrote its status, with the GET's time.
+                assert e["status"] != "seeded_unverified", (b, e["url"])
+                assert e.get("verified_at"), (b, e["url"])
                 assert e["host"] in seeds["hosts"], (b, e["url"])
 
 

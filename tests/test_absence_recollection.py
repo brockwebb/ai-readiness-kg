@@ -73,7 +73,10 @@ def test_every_body_has_every_field_resolved_or_says_why():
                 or b.get("department_is_own_host")), code
         assert b.get("changelog_urls") or "changelog" in roles, code
         if b.get("api_base"):
-            assert b["api_base"].get("terms_url") or "api_terms" in roles, code
+            # Scheme 2 (part 2): a body whose API was SEEDED says which sources were searched
+            # for its terms (`searched`), which is the record of why none is declared.
+            assert (b["api_base"].get("terms_url") or "api_terms" in roles
+                    or "api_terms" in (b.get("searched") or {})), code
         # No entry is left in the legacy "not attempted" state: the recollection read for each.
         for u in b.get("unresolved") or []:
             assert u.get("status") in ("not_declared", "unreadable"), (code, u)
