@@ -436,7 +436,9 @@ def test_the_declarations_load_and_every_entry_names_its_page():
     assert block["bodies"]["CENSUS"]["api_base"]["url"] == "https://api.census.gov/data"
     for code, b in block["bodies"].items():
         for e in b.get("inventory_urls") or []:
-            assert e["read_from"]["page"], (code, e)
+            # Scheme 2 (`cc_tasks/2026-10-07_seed_known_locations_verify.md` decision 2): a
+            # location is read from the body's page or seeded from a named source.
+            assert (e.get("read_from") or {}).get("page") or e.get("seeded_from"), (code, e)
 
 
 def test_a_malformed_declaration_is_refused():
@@ -465,7 +467,11 @@ def test_expose_an_api_is_withdrawn_for_a_body_that_declares_its_api_base():
     acts = [{"id": "act:x", "leg": "A2", "withdrawn_when_declared": "api_base"},
             {"id": "act:y", "leg": "A2"}]
     assert [a["id"] for a in P.applicable(acts, "CENSUS")] == ["act:y"]
-    assert [a["id"] for a in P.applicable(acts, "BEA")] == ["act:x", "act:y"]
+    # BEA declared no API base until the seeds were verified
+    # (`cc_tasks/2026-10-07_seed_known_locations_verify.md`): its record now holds
+    # `apps.bea.gov/API`, refused to this client by robots.txt but recorded, so SOI, for which no
+    # source records an API, is the body that keeps the action.
+    assert [a["id"] for a in P.applicable(acts, "SOI")] == ["act:x", "act:y"]
     assert [a["id"] for a in P.applicable(acts, "NOT-A-BODY")] == ["act:x", "act:y"]
 
 

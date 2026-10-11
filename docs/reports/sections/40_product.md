@@ -25,20 +25,17 @@ every location recorded for the body: the places its own pages declare, and the 
 repository, the model that wrote the seed table, catalog.data.gov and api.data.gov name for it,
 each verified by one request on 2026-10-11. They reach `fail` only when every recorded location
 was read and every one of those sources was searched, and say `error`, naming what was not read,
-everywhere else. A machine-readable licence (`D1`) has a verdict now and the verdict is `fail`,
-on {{result:scan_l0_product_d1_fail_2026-10-07_composite_d:value}} surfaces, with no pass: where
-the body's API terms page is recorded it was read whole, and it states its licence in free text
-rather than as a recognised identifier; where no source records a terms page, the product page
-carries no licence field either. {{result:scan_l0_product_d1_error_2026-10-07_composite_d:value}}
-more could not be observed, or a source was not searched for them. A documented API with its auth
-model and its rate limits (`A2`) fails on
-{{result:scan_l0_product_a2_fail_2026-10-07_composite_d:value}} of the
-{{result:scan_l0_product_a2_applicable_n_2026-10-07_composite_d:value}} surfaces on which the
-question could be answered: where an API is recorded
-and served, what it serves at its base is not a description of the API, and where no source
-records an API for the body there is none to describe. On
-{{result:scan_l0_product_a2_error_2026-10-07_composite_d:value}} more the recorded API base refused
-this client, by `robots.txt` or by status, and the check says `error`. Whether a machine starting
+everywhere else. A machine-readable licence (`D1`) has a verdict now, and wherever the search was
+complete the verdict is `fail`; no surface passes. Where the body's API terms page is recorded it
+was read whole, and it states its licence in free text rather than as a recognised identifier;
+where no source records a terms page, the product page carries no licence field either. A
+documented API with its auth model and its rate limits (`A2`) fails wherever the question could
+be answered: where an API is recorded and served, what it serves at its base is not a description
+of the API, and where no source records an API for the body there is none to describe. Where a
+host refused this client, by `robots.txt` or by status, or a source was not searched, either check
+says `error`. Neither check is counted in this prose: neither indicator yet reaches an admitted
+source document, and a check this report quotes by number must; their cells are on the product
+matrix. Whether a machine starting
 from the product page can reach the API, the terms, the changelog and the inventory at all is a
 separate question, asked by a candidate check that enters no rate here and is reported apart
 (`docs/research/2026-10-11_seeded_delta.md`).

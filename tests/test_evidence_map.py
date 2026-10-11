@@ -97,6 +97,8 @@ def test_every_claim_has_the_schema(on_disk):
 # ------------------------------------------------------------------------ evidence resolves
 
 def test_every_record_claims_evidence_resolves(graph, on_disk):
+    # Locators are JSON Lines line numbers: "\n" alone separates records
+    # (`tests/test_shard_line_separator.py`).
     import json
     m = E.Map(graph)
     record_ids = {n["id"] for n in m.s.record["nodes"]}
@@ -108,14 +110,14 @@ def test_every_record_claims_evidence_resolves(graph, on_disk):
             if k == "finding":
                 fids.add(i)
                 path, line = e["locator"].rsplit(":", 1)
-                row = (REPO / path).read_text(encoding="utf-8").splitlines()[int(line) - 1]
+                row = (REPO / path).read_text(encoding="utf-8").split("\n")[int(line) - 1]
                 assert json.loads(row)["finding_id"] == i, f"{c['id']}: {e['locator']} is not {i}"
             elif k == "indicator":
                 assert i in record_ids, f"{c['id']}: {i} is not a record node"
             elif k == "document":
                 assert i in included, f"{c['id']}: {i} is not an admitted document"
                 path, line = e["locator"].rsplit(":", 1)
-                row = (REPO / path).read_text(encoding="utf-8").splitlines()[int(line) - 1]
+                row = (REPO / path).read_text(encoding="utf-8").split("\n")[int(line) - 1]
                 ev = json.loads(row)
                 assert ev["event_type"] == "manifest_add"
                 assert (ev.get("doc_id") or ev["payload"]["doc_id"]) == i
@@ -340,7 +342,7 @@ def test_prior_art_document_evidence_is_an_admitted_document_at_its_manifest_add
             n += 1
             assert e["id"] in included, f"{c['id']}: {e['id']} is not an admitted document"
             path, line = e["locator"].rsplit(":", 1)
-            ev = json.loads((REPO / path).read_text(encoding="utf-8").splitlines()[int(line) - 1])
+            ev = json.loads((REPO / path).read_text(encoding="utf-8").split("\n")[int(line) - 1])
             assert ev["event_type"] == "manifest_add", f"{c['id']}: {e['locator']}"
             assert (ev.get("doc_id") or ev["payload"]["doc_id"]) == e["id"], c["id"]
     assert n, "no document evidence at all"
