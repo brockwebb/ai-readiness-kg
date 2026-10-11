@@ -9,7 +9,10 @@ out under the operator's name, and that em dashes, which the operator's standing
 his output, were in titles and in generated text (addendum, "Why", items 1 and 4). DCAT-003 step 4
 had required "no task codes or pipeline vocabulary in either file", and its test caught neither.
 The rules below are the addendum's list. `scripts/dcat_faq_build.py` runs them on both texts
-before writing either file and refuses the build on any finding.
+before writing either file and refuses the build on any finding. Since
+`cc_tasks/2026-10-07_concise_report_prose.md` decision 5 it also applies every entry of the
+operator's banned list, `docs/style/operator_banned_words.yaml` (rules `banned_word` and
+`flagged_source`), so the briefs and the concise report answer to one list.
 
 Positive control (`tests/test_dcat_faq.py`): the lint fails on FAQ.md as it stood at 1a5e6cc and
 passes on the rebuilt file.
@@ -21,6 +24,13 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
+
+import yaml
+
+#: The operator's banned list (`cc_tasks/2026-10-07_concise_report_prose.md` decision 5,
+#: DN-013-R6). Read at call time, so a test can point it at a tmp file; the list is the
+#: operator's and this module only reads it.
+BANNED_PATH = Path(__file__).resolve().parents[1] / "docs" / "style" / "operator_banned_words.yaml"
 
 #: Removed before the path and extension rules run: a URL legitimately carries both
 #: (".../wiki/DOI-DO/dcat-us/Home.md"). A markdown link whose target is a URL counts as that
@@ -50,11 +60,26 @@ def _without_citation_titles(line: str) -> str:
     return re.sub(r"^\*[^*]+\*", "", line)
 
 
+def banned_rules(path: Path | None = None) -> list:
+    """(rule, compiled pattern, applies-outside-URLs-only) for every entry of the banned list.
+    A missing list is a hard error: the lint would otherwise pass text it was meant to check."""
+    path = path or BANNED_PATH
+    if not path.is_file():
+        raise SystemExit(f"FATAL: the operator's banned list {path} is missing")
+    doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    out = []
+    for kind, rule in (("words", "banned_word"), ("flagged_sources", "flagged_source")):
+        for e in doc.get(kind) or []:
+            out.append((rule, re.compile(e["pattern"], re.I), True))
+    return out
+
+
 def lint(text: str) -> list[dict]:
     out = []
+    rules = RULES + banned_rules()
     for n, line in enumerate(text.splitlines(), 1):
         bare = URL_RE.sub(" ", line)
-        for rule, pat, url_free in RULES:
+        for rule, pat, url_free in rules:
             subject = bare if url_free else line
             if rule == "task_code":
                 subject = _without_citation_titles(subject)

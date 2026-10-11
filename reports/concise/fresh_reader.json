@@ -1,0 +1,232 @@
+{
+ "generated_by": "scripts/concise_report_build.py",
+ "task": "cc_tasks/2026-10-07_concise_report_prose.md",
+ "questions": {
+  "q1": "What was measured, and on whom?",
+  "q2": "What is the main finding, in one sentence?",
+  "q3": "Name one thing an agency could do, and the evidence the report gives for it."
+ },
+ "grading": {
+  "q1": {
+   "expect": "the 16 statistical bodies, and what the scanner checked: whether a plain public machine client can reach, read and use their data",
+   "all_of": [
+    [
+     "\\b16\\b",
+     "sixteen"
+    ],
+    [
+     "statistic",
+     "agenc",
+     "bod(y|ies)"
+    ],
+    [
+     "access",
+     "reach",
+     "machine",
+     "public client",
+     "scan",
+     "check",
+     "AI"
+    ]
+   ],
+   "sections": [
+    2
+   ]
+  },
+  "q2": {
+   "expect": "most checks did not pass: hosts refused the plain client, or did not serve what the check looks for",
+   "all_of": [
+    [
+     "refus",
+     "denied",
+     "denial",
+     "block",
+     "not served",
+     "absen",
+     "not pass",
+     "fail",
+     "did not"
+    ]
+   ],
+   "sections": [
+    3,
+    4
+   ]
+  },
+  "q3": {
+   "expect": "one prescribed action (for example a machine-readable licence, Dataset markup, or AI terms in robots.txt) and the measured failure or source behind it",
+   "all_of": [
+    [
+     "robots",
+     "licen[cs]e",
+     "JSON-LD",
+     "markup",
+     "Dataset",
+     "methodology",
+     "defined term",
+     "definition",
+     "term set",
+     "release date",
+     "vintage",
+     "changelog",
+     "revision",
+     "content signal",
+     "inventory",
+     "catalog"
+    ],
+    [
+     "fail",
+     "finding",
+     "measur",
+     "check",
+     "score",
+     "Census",
+     "scan",
+     "bound"
+    ]
+   ],
+   "sections": [
+    6
+   ]
+  }
+ },
+ "rounds": {
+  "1": {
+   "unit_id": "12503a8bf3d4038b",
+   "model_id": "claude-sonnet-5-5",
+   "prompt_sha256": "63751c0894d60b306be6b0a375e5babd57b1fb58ee1dc2ca3c0e8fc3b91421e0",
+   "answers": {
+    "q1": "The report describes one composite measurement cycle (scan_2026-10-07_composite_d) of a framework scoring AI readiness, in which a single identified, credential-free public scanner client produced 1,055 findings on 16 federal statistical bodies (13 of them ranked), and it also included Data.gov as a comparator host.",
+    "q2": "The scanner was denied access on 341 of its 1,055 findings and met 415 absences against only 177 passes, so outside readers and their tools often cannot reach or use these bodies' data, though a refusal shows only that the scanner was not served, not that the item is missing.",
+    "q3": "The Census Bureau could carry a revision class on every changelog entry, which addresses the change-legibility check and could raise its hierarchical score by at most 0.25 (a ceiling, not a predicted gain), and the report puts this fix in the hours effort band at no cost."
+   },
+   "response_text": "{\"q1\": \"The report describes one composite measurement cycle (scan_2026-10-07_composite_d) of a framework scoring AI readiness, in which a single identified, credential-free public scanner client produced 1,055 findings on 16 federal statistical bodies (13 of them ranked), and it also included Data.gov as a comparator host.\", \"q2\": \"The scanner was denied access on 341 of its 1,055 findings and met 415 absences against only 177 passes, so outside readers and their tools often cannot reach or use these bodies' data, though a refusal shows only that the scanner was not served, not that the item is missing.\", \"q3\": \"The Census Bureau could carry a revision class on every changelog entry, which addresses the change-legibility check and could raise its hierarchical score by at most 0.25 (a ceiling, not a predicted gain), and the report puts this fix in the hours effort band at no cost.\"}",
+   "grade": {
+    "q1": {
+     "right": true,
+     "matched": [
+      [
+       "\\b16\\b"
+      ],
+      [
+       "statistic",
+       "bod(y|ies)"
+      ],
+      [
+       "scan",
+       "AI"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      2
+     ]
+    },
+    "q2": {
+     "right": true,
+     "matched": [
+      [
+       "refus",
+       "denied",
+       "not served",
+       "absen"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      3,
+      4
+     ]
+    },
+    "q3": {
+     "right": true,
+     "matched": [
+      [
+       "changelog",
+       "revision"
+      ],
+      [
+       "check",
+       "score",
+       "Census"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      6
+     ]
+    }
+   },
+   "report_sha256": "b5fbfab133bbaac18296776000fcb293693bfc3b63a489da7ea4f960b011f19a"
+  },
+  "2": {
+   "unit_id": "6c7d2f691e003afe",
+   "model_id": "claude-sonnet-5-5",
+   "prompt_sha256": "63751c0894d60b306be6b0a375e5babd57b1fb58ee1dc2ca3c0e8fc3b91421e0",
+   "answers": {
+    "q1": "The report describes one measurement cycle (scan_2026-10-07_composite_d) of 16 federal statistical bodies (13 ranked), in which an identified, credential-free scanner produced 1,055 findings on whether the public and AI tools can reach, understand and use their data.",
+    "q2": "Many of the bodies refused the plain scanner (341 of 1,055 findings were denials) or did not serve the items checked (415 absences), and only 177 findings passed, so access and machine-usable publication fall short, though refusals show only that the scanner was not served, not that the thing is missing.",
+    "q3": "An agency such as the Census Bureau could publish a machine-readable licence stated as an identifier, which the report says is an hours-band, no-cost fix that could raise its hierarchical score by at most 0.125 under equal weights, a ceiling and not a predicted gain."
+   },
+   "response_text": "{\"q1\": \"The report describes one measurement cycle (scan_2026-10-07_composite_d) of 16 federal statistical bodies (13 ranked), in which an identified, credential-free scanner produced 1,055 findings on whether the public and AI tools can reach, understand and use their data.\", \"q2\": \"Many of the bodies refused the plain scanner (341 of 1,055 findings were denials) or did not serve the items checked (415 absences), and only 177 findings passed, so access and machine-usable publication fall short, though refusals show only that the scanner was not served, not that the thing is missing.\", \"q3\": \"An agency such as the Census Bureau could publish a machine-readable licence stated as an identifier, which the report says is an hours-band, no-cost fix that could raise its hierarchical score by at most 0.125 under equal weights, a ceiling and not a predicted gain.\"}",
+   "grade": {
+    "q1": {
+     "right": true,
+     "matched": [
+      [
+       "\\b16\\b"
+      ],
+      [
+       "statistic",
+       "bod(y|ies)"
+      ],
+      [
+       "reach",
+       "scan",
+       "AI"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      2
+     ]
+    },
+    "q2": {
+     "right": true,
+     "matched": [
+      [
+       "refus",
+       "denial",
+       "not served",
+       "absen",
+       "did not"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      3,
+      4
+     ]
+    },
+    "q3": {
+     "right": true,
+     "matched": [
+      [
+       "licen[cs]e"
+      ],
+      [
+       "score",
+       "Census"
+      ]
+     ],
+     "numbers_not_in_claims": [],
+     "sections": [
+      6
+     ]
+    }
+   },
+   "report_sha256": "b5fbfab133bbaac18296776000fcb293693bfc3b63a489da7ea4f960b011f19a",
+   "sections_sent_back": []
+  }
+ }
+}

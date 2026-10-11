@@ -77,6 +77,11 @@ publishing = [
     "python-pptx==1.0.2",
     "pypdf==6.7.0",
     "textstat==0.7.13",
+    # The concise report's prose gate (scripts/concise_report_gate.py,
+    # cc_tasks/2026-10-07_concise_report_prose.md decision 5): spaCy's tagger finds finite verbs,
+    # lemmas and content words; the English model is a wheel spaCy publishes, not an index package.
+    "spacy==3.8.14",
+    "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
 ]
 # One-off research scripts: probe_aggregate.py (pandas, crowd-kit), homograph_split.py and
 # link_vocabulary.py and t1_build_index.py (sentence-transformers, numpy), g1_prior_art_search.py

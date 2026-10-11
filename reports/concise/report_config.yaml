@@ -1,0 +1,192 @@
+# The concise report: its sections and the claims each may use, the planted controls, the prose
+# gate's parameters, the fresh reader's questions and how code grades them, and the run's dials.
+#
+# cc_tasks/2026-10-07_concise_report_prose.md (DN-013-R5, R6; DN-009 d2). Read by
+# scripts/concise_report_run.py, scripts/concise_report_gate.py and
+# scripts/concise_report_build.py. Written before any model call and not edited after the first
+# one; the RESULT quotes it. Nothing here is a threshold on a finding. The gate thresholds are
+# the task's own (decision 5), copied here so code reads them from one place.
+
+title: "AI readiness of federal statistical publishers: what one measurement shows"
+prepared: "11 October 2026"
+
+inputs:
+  claims: docs/evidence/claims.yaml
+  frozen: docs/evidence/FROZEN.md
+  # Names a writer and the checker may use for a code in a claim: the body codes from the scan
+  # frame (agency -> agency_name), the indicator codes from the framework record (code ->
+  # construct and indicator). A name is a definition, not a fact, and the checker sees the same
+  # table, so a sentence that names a body by its name is checked against the claim that names
+  # it by its code.
+  body_names: state/scan_targets_fss_2026-09_v5.json
+  framework_record: framework/ai_readiness_framework.json
+  # Framing a writer reads for its section and the checker does not: decision 1's list (DN-005
+  # §1 and §2, the L0 report's methods, the audit's limits). Nothing from these is a fact in the
+  # report unless a claim states it; the checker cuts what no claim supports, and the digit check
+  # cuts a number no cited claim holds. Each entry is a file and a 1-based inclusive line range.
+  context:
+    dn005_goal: {path: docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md, lines: [9, 17]}
+    dn005_layers: {path: docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md, lines: [19, 40]}
+    l0_methods: {path: docs/reports/2026-09_fss_ai_readiness_L0.md, lines: [28, 96]}
+    l0_limits: {path: docs/reports/2026-09_fss_ai_readiness_L0.md, lines: [370, 418]}
+    l0_cannot_answer: {path: docs/reports/2026-09_fss_ai_readiness_L0.md, lines: [470, 491]}
+    audit_limits: {path: docs/audit/2026-10-04_full_audit.md, lines: [322, 332]}
+
+# Claims left out of every section, with the reason. Everything else in the claims file that no
+# section lists is also unused; the RESULT counts both.
+excluded_claims:
+  CL-083: "status `unsupported` in the claims file: the claim as worded is not what its source says"
+  CL-084: "the executive order's term governs the operator's summary and brief (DN-009 decision 4), not this report"
+  CL-099..CL-114: "the DCAT-US 3.0 brief's table, a separate report on a catalog standard; CL-099 to CL-108 are also superseded by CL-109 to CL-114"
+
+# Decision 2's order. `claims`: the only claims the section's writer and checker see.
+# `context`: framing keys above. `job`: what the section must do, given to its writer.
+sections:
+  - id: 1
+    title: "What the framework is for"
+    claims: [CL-047, CL-046, CL-078, CL-080, CL-081, CL-085, CL-086]
+    context: [dn005_goal]
+    job: >-
+      State what the framework is for: whether the public, and the tools the public now uses to
+      find and read data (search engines, AI assistants and the programs behind them), can reach,
+      understand and use the data the public paid for. Say how the framework is built (its
+      criteria and indicators) and why reaching data is a distinct problem from publishing it,
+      using the prior-art claims. Do not report any measurement result here.
+  - id: 2
+    title: "What was measured, on whom, and how"
+    claims: [CL-034, CL-050, CL-051, CL-048, CL-049, CL-044]
+    context: [l0_methods, dn005_layers]
+    job: >-
+      Say what was measured, on which 16 statistical bodies, when, and how: one named composite
+      measurement cycle, one plain identified public client that sent no credentials and never
+      changed its identity, the checks it ran and the findings it holds, how many of the
+      framework's indicators have a rule that measures them, and the literature the framework
+      rests on. Do not report what was found; the next section does.
+  - id: 3
+    title: "What was found: hosts that refused a plain client"
+    claims: [CL-035, CL-036, CL-041, CL-037, CL-087, CL-040, CL-094, CL-038, CL-039, CL-097, CL-098, CL-095, CL-096, CL-042, CL-043, CL-081]
+    context: []
+    job: >-
+      Report the strongest evidence first. Access denials are the most direct observation the
+      measurement makes: the host's own answer to a plain, identified, robots-respecting client.
+      Give the totals across all findings, then the bodies that refused the client most and least,
+      by name. State the denial as a finding about public access, which is what it is: the
+      public's tools meet the same answer. Keep the comparator host apart from the statistical
+      bodies.
+  - id: 4
+    title: "What was found: what the hosts that answered serve"
+    claims: [CL-035, CL-042, CL-052, CL-045, CL-079, CL-078, CL-086]
+    context: []
+    job: >-
+      Report what the hosts that did answer serve to a machine: how many findings are absences
+      (the record, field or file is not served), how many find something served that fails its
+      test, and how many pass. Use the Census Bureau as the worked case the claims describe. Keep
+      what was not found apart from what does not exist; say so where a claim draws that line.
+  - id: 5
+    title: "What the measurement cannot say"
+    claims: [CL-045, CL-050, CL-053, CL-052, CL-038, CL-046, CL-049, CL-001, CL-054]
+    context: [l0_limits, l0_cannot_answer, audit_limits]
+    job: >-
+      Say what this measurement cannot establish, each limit as precisely as a claim states it:
+      findings that are errors rather than failures, and why; bodies that could not be ranked
+      because they refused the client, which is itself a finding about access; how much a rank
+      rests on a single check; candidate indicators that enter no count; indicators that are
+      specified but not yet measured, and what blocks each kind; and how much of the framework's
+      evidence carries a pinpoint locator.
+  - id: 6
+    title: "What an agency can do, and what is measured next"
+    claims: [CL-059, CL-116, CL-117, CL-069, CL-066, CL-067, CL-068, CL-072, CL-073, CL-074, CL-075, CL-076, CL-077, CL-115, CL-060, CL-079, CL-082, CL-001, CL-002, CL-012, CL-025, CL-026, CL-028, CL-030]
+    context: [dn005_layers]
+    job: >-
+      Say what an agency can do, from the prescribed actions the claims name for the Census
+      Bureau, each with its effort band and the most it can move the score, stated as a bound and
+      not a value, as the claims state it. Group the actions by what they fix rather than listing
+      every one. Say that tying each measured result to a prescribed fix is an existing pattern
+      and what this framework adds. Close with what the framework measures next: the indicators
+      that can be measured from outside with public tools and no agency action.
+
+# Decision 4's control: one known-false sentence planted in each section, contradicting a claim
+# that section's checker sees. Inserted after the section's middle sentence. The checker must
+# label it `unsupported`; if it misses any, the run stops before the real check.
+controls:
+  1: {sentence: "The framework keeps 6 of the USAFacts criteria and adds 5 of its own, for 11 in all.", contradicts: CL-047}
+  2: {sentence: "The scanner signed in to every host with credentials the agencies issued to it.", contradicts: CL-034}
+  3: {sentence: "The Bureau of Labor Statistics refused the client on 12 of its 45 findings, and 30 of them pass.", contradicts: CL-036}
+  4: {sentence: "Of the 1,055 findings, 512 pass.", contradicts: CL-035}
+  5: {sentence: "All 16 bodies on the cycle are ranked, the Bureau of Labor Statistics among them.", contradicts: CL-050}
+  6: {sentence: "For the Census Bureau, publishing a machine-readable licence is in the notional months effort band, at a cost of 2 million dollars.", contradicts: CL-116}
+
+# Decision 5. `qualifier_openers` and the pair rule are the task's words.
+gate:
+  pair:
+    max_short_words: 8
+    long_to_short_ratio: 2
+    qualifier_openers: ["Not", "Only", "Never", "No", "Just", "Or", "That is"]
+    max_flagged_pairs_per_section: 2
+  repetition:
+    min_ngram_count: 2          # a content 3-gram occurring this often or more in the report
+    max_lemma_per_section: 5    # a content lemma used more than this often in one section
+  # Content words: these spaCy coarse tags, alphabetic, not a stop word. The same definition
+  # serves the 3-grams, the per-section lemma counts and the adjacent-sentence overlap.
+  content_pos: [NOUN, PROPN, VERB, ADJ, ADV]
+  # The connective list, reported not gated: this project's list after TAACO's connective
+  # categories (Crossley, Kyle and McNamara 2016: addition, opposition and contrast, cause and
+  # result, time and sequence, exemplification and restatement). Matched as whole words or
+  # phrases, case-insensitively.
+  connectives:
+    list_name: "concise_report connectives v1, after TAACO's categories (Crossley, Kyle and McNamara 2016)"
+    addition: [also, and, "as well", besides, furthermore, likewise, moreover, similarly]
+    opposition: [although, but, conversely, despite, however, instead, nevertheless, nonetheless, though, whereas, while, yet, "even so", "in contrast", "on the other hand", rather]
+    cause: [because, consequently, hence, since, so, therefore, thus, "as a result", "for this reason", accordingly]
+    time: [after, before, finally, first, next, once, then, until, when, "at the same time"]
+    exemplification: ["for example", "for instance", "in particular", "that is", namely, specifically, "in other words"]
+
+# Decision 6. Questions as the task words them. Grading is by code, fixed here before the reader
+# runs: an answer is right when every `all_of` group has a match (a case-insensitive regular
+# expression) and no number in it is outside the report's cited claims. `sections`: which section
+# a wrong answer sends back. `expect`: what the section's writer is told a right answer holds.
+fresh_reader:
+  questions:
+    q1: "What was measured, and on whom?"
+    q2: "What is the main finding, in one sentence?"
+    q3: "Name one thing an agency could do, and the evidence the report gives for it."
+  grade:
+    q1:
+      expect: "the 16 statistical bodies, and what the scanner checked: whether a plain public machine client can reach, read and use their data"
+      all_of:
+        - ["\\b16\\b", "sixteen"]
+        - ["statistic", "agenc", "bod(y|ies)"]
+        - ["access", "reach", "machine", "public client", "scan", "check", "AI"]
+      sections: [2]
+    q2:
+      expect: "most checks did not pass: hosts refused the plain client, or did not serve what the check looks for"
+      all_of:
+        - ["refus", "denied", "denial", "block", "not served", "absen", "not pass", "fail", "did not"]
+      sections: [3, 4]
+    q3:
+      expect: "one prescribed action (for example a machine-readable licence, Dataset markup, or AI terms in robots.txt) and the measured failure or source behind it"
+      all_of:
+        - ["robots", "licen[cs]e", "JSON-LD", "markup", "Dataset", "methodology", "defined term", "definition", "term set", "release date", "vintage", "changelog", "revision", "content signal", "inventory", "catalog"]
+        - ["fail", "finding", "measur", "check", "score", "Census", "scan", "bound"]
+      sections: [6]
+
+run:
+  writer_model_key: model_id                    # kg/extraction/model_config.yaml role document_extractor
+  checker_model_key: primary_judge_model_id     # role judge: a different family from the writer, by design
+  reader_model_key: secondary_judge_model_id    # role secondary_rater: neither writer nor checker
+  call_class: judge
+  run_id: concise_report_2026-10-11
+  timeout_seconds: 900
+  workers: 4
+  max_attempts: 2
+  # Estimate before any call, from DCAT-004's measured rates on the same CLI (53,815 to 61,000
+  # tokens per call, the CLI's own context dominating): 6 writes, 1 joins, 6 controls, 6
+  # checks; a revision round of 6 rewrites, 1 joins, 6 checks; 2 readers; at most 3 sections
+  # back from the reader and their 3 checks: 40 calls x 70,000 = 2,800,000. The task's estimate
+  # is 2,500,000. Ceiling: 1.4 x the task's estimate. The pilot (the first write) is measured
+  # and projects all 40 calls against it before the second call.
+  expected_calls: 40
+  ceiling_tokens: 3500000
+  max_wall_seconds: 14400
+  progress_every_units: 2
+  progress_every_seconds: 60

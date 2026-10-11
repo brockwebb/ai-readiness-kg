@@ -1,0 +1,36 @@
+# The operator's banned list: words that do not appear in text that goes out under his name.
+#
+# DN-013-R6 cites "the operator's banned list"; no such file existed in this repository
+# (DN-013 ADDENDUM 01 A3). Created by cc_tasks/2026-10-07_concise_report_prose.md decision 5
+# with exactly the entries that task names, each carrying its source line. Read by
+# scripts/dcat_faq_lint.py (rule `banned_word`, and `flagged_source` for a source the operator
+# does not want cited), so the DCAT briefs and the concise report are held to the same list.
+#
+# `pattern` is a Python regular expression, matched case-insensitively. A new entry is an
+# operator decision; code reads this list and never edits it.
+
+words:
+  - term: load-bearing
+    pattern: '\bload-bearing\b'
+    source: "operator, stated preferences, recorded 2026-10-07"
+  - term: load bearing
+    pattern: '\bload bearing\b'
+    source: "operator, stated preferences, recorded 2026-10-07"
+  - term: hallucinate
+    # "and its forms": hallucinate, hallucinates, hallucinated, hallucinating, hallucination(s).
+    pattern: '\bhallucinat\w*'
+    note: "the operator's term is confabulate"
+    source: "operator, stated preferences, recorded 2026-10-07"
+  - term: delve
+    pattern: '\bdelv(?:e|es|ed|ing)\b'
+    source: "operator, stated preferences, recorded 2026-10-07"
+  - term: testament
+    pattern: '\btestaments?\b'
+    source: "operator, stated preferences, recorded 2026-10-07"
+
+# Sources whose citation is flagged. Any mention is flagged, because the lint cannot tell a
+# citation from a mention and a mention is where a citation starts.
+flagged_sources:
+  - term: Gartner
+    pattern: '\bGartner\b'
+    source: "operator, stated preferences, recorded 2026-10-07"
