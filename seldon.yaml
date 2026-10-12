@@ -45,6 +45,12 @@ dispatch:
   # The branch a pass may dispatch on. Any other branch fails c7, together with a dirty tree.
   branch: main
 
+  # AD-037-R9 (seldon): parallel dispatch stays at one task at a time in every project, this one included, until
+  # AD-037-R6's four stations and the dispatcher's disk preflight are live; this repository's SEL-004 opt-in is
+  # decided as not now. After that a project opts in only on measured demand, by an accepted register record
+  # anchored at AD-037-R9 that names it in its scope (seldon tests/test_dispatch_parallel_held.py fails otherwise).
+  max_parallel: 1
+
   # THE STANDING BAND, as a REFERENCE and never a copied number (DN-006 §5). This is the same
   # value the preemptive spend guard enforces (DD-022, `kg/spend.py`); a second copy here would
   # drift silently the first time the operator moved the cap and nothing would say so.
