@@ -96,12 +96,21 @@ def test_the_project_frame_is_the_target_datafile_and_the_parameters_it_is_measu
 def test_the_schedule_key_moves_no_hash_and_the_identity_does():
     """Decision 2's key is outside `params_hash` (`model.UNHASHED_KEYS`), so the committed
     parameters still hash to the snapshot's and every stored payload keeps its identity;
-    the User-Agent is a measurement condition (DD-060) and moves it."""
+    the User-Agent is a measurement condition (DD-060) and moves it.
+
+    The snapshot's identity is checked by recovering its parameters from git BY HASH
+    (`support.prior_params.params_for`, DD-052 §3, DD-064 §2), not by comparing it to today's
+    file: `params_hash(load_params()) == snap["params_hash"]` went red the first time a hashed
+    key legitimately moved (`manners.crawl_delay_max_s`,
+    `cc_tasks/2026-10-11_manners_honours_crawl_delay.md`)."""
+    from support.prior_params import params_for
     params = load_params()
     assert params["schedule"] == {"when": "on_demand",
                                   "frame": "assessment/harness/scan/frames/fss16.yaml"}
     snap = json.loads(SNAPSHOT_PAYLOAD.read_text(encoding="utf-8"))
-    assert params_hash(params) == snap["params_hash"]
+    prior = params_for(snap)
+    assert params_hash(prior) == snap["params_hash"]
+    assert params_hash({**prior, "schedule": {"when": "0 6 * * 1"}}) == snap["params_hash"]
     without = {k: v for k, v in params.items() if k != "schedule"}
     assert params_hash(without) == params_hash(params)
     assert params_hash({**params, "schedule": {"when": "0 6 * * 1"}}) == params_hash(params)

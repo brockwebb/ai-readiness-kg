@@ -1116,6 +1116,32 @@ def _cite(c: Claim, r: dict) -> int:
     return int(r["v"])
 
 
+
+def _params_of(payload: dict, part: str, load_params) -> dict:
+    """The parameters `part` was judged with, recovered from git BY HASH (DD-052 §3, DD-064 §2;
+    the discipline of `tests/support/prior_params.py::params_for`).
+
+    This compared `load_params()` to the payload and refused on any difference, so every later
+    change to `params.yaml` (`manners.crawl_delay_max_s`,
+    `cc_tasks/2026-10-11_manners_honours_crawl_delay.md`) made the map unbuildable until a new
+    cycle ran. The claim's intent was always "read that cycle under its own parameters", and
+    the parameters are recoverable; a set that is not is still a refusal."""
+    import subprocess
+    from scan.model import params_hash
+    want = payload["params_hash"]
+    if params_hash(load_params()) == want:
+        return load_params()
+    rel = "assessment/harness/scan/params.yaml"
+    revs = subprocess.run(["git", "log", "--format=%H", "--", rel], capture_output=True,
+                          text=True, cwd=str(REPO), check=True).stdout.split()
+    for rev in revs:
+        txt = subprocess.run(["git", "show", f"{rev}:{rel}"], capture_output=True, text=True,
+                             cwd=str(REPO), check=True).stdout
+        if txt.strip() and params_hash(yaml.safe_load(txt)) == want:
+            return yaml.safe_load(txt)
+    raise SystemExit(f"FATAL: no commit of {rel} hashes to {part}'s params_hash {want[:12]}; "
+                     f"the convention claim reads that cycle under its own parameters")
+
 def _a13_part(M: Map) -> str:
     # A part with `legs` None carries every leg no other part names (`Map.findings`).
     hits = ([cyc for cyc, _, legs in M.parts if legs and A13 in legs]
@@ -1220,11 +1246,7 @@ def q7_claims(M: Map) -> list:
     from scan.rules import rule_a13
     part = _a13_part(M)
     payload = json.loads((REPO / "state" / f"{part}.json").read_text(encoding="utf-8"))
-    params = load_params()
-    from scan.model import params_hash
-    if params_hash(params) != payload["params_hash"]:
-        raise SystemExit(f"FATAL: params.yaml is not the parameters {part} was judged with; "
-                         f"the convention claim reads that cycle under its own parameters")
+    params = _params_of(payload, part, load_params)
     conv = params["discoverability"]["convention"]
     obs = [o for o in payload["observations_detail"]
            if not str(o.get("target_doc_id", "")).startswith("control:")]

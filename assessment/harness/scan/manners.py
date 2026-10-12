@@ -17,10 +17,17 @@ failure on the read). RFC 9309 §2.3.1.4 says the crawler "MUST assume complete 
 that is an instruction about the server, not a rule in a file the carve-out could override —
 so every fetch to that netloc but `/robots.txt` itself is refused for the cycle
 (`robots_access`, `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 1).
+
+A host's `Crawl-delay` slows us down and never speeds us up: the interval to a netloc is
+`max(standing, Crawl-delay)` for the group that applies to this UA, and a delay above
+`manners.crawl_delay_max_s` sets the host aside for the cycle
+(`cc_tasks/2026-10-11_manners_honours_crawl_delay.md`; see `crawl_delay_of`).
 """
 from __future__ import annotations
 
 import collections
+import logging
+import math
 import threading
 import urllib.parse
 from pathlib import Path
@@ -31,6 +38,48 @@ VERSION = "0.1.0"
 #: a parsed "Disallow: /" so the refusal can say why, and so nobody mistakes it for the host's
 #: own policy: an unreachable file declares nothing.
 DISALLOW_ALL = object()
+
+_log = logging.getLogger("scan.manners")
+
+#: The two spellings Protego reads, and so the two this module scans for values it ignored.
+_CRAWL_DELAY_FIELDS = ("crawl-delay", "crawl delay")
+
+
+def _delay_seconds(value) -> float | None:
+    """A `Crawl-delay` value as non-negative finite seconds, or `None` when it is not one.
+
+    Protego casts with `float()` and keeps what casts, so `-5`, `nan` and `inf` reach us as
+    numbers; none is a delay a host could have meant, and each is ignored like `soon` is."""
+    try:
+        x = float(value)
+    except (TypeError, ValueError):
+        return None
+    return x if math.isfinite(x) and x >= 0 else None
+
+
+def crawl_delay_of(rp, text: str, user_agent: str) -> tuple:
+    """`(delay_s or None, ignored)` for one parsed robots.txt. **Pure.**
+
+    `cc_tasks/2026-10-11_manners_honours_crawl_delay.md` decision 1. RFC 9309 (corpus/kernel/
+    rfc-9309-robots-exclusion-protocol.md) does not define `Crawl-delay`; its §2.2.4 "Other
+    Records" lets a crawler interpret records the RFC does not define. The value is the one in
+    the group that applies to `user_agent`, chosen by Protego's matcher, which is the same
+    matcher `allowed()` asks for Allow and Disallow, so one group answers both questions.
+
+    `ignored` lists every `Crawl-delay` line in the file whose value is not a non-negative
+    number, `{"line", "value"}`, 1-based. Logged and recorded, never guessed at: Protego drops
+    an unparseable value silently, and a host that wrote `Crawl-delay: soon` asked for something
+    a reader of the cycle should be able to see we did not do.
+    """
+    ignored = []
+    for n, raw in enumerate(text.splitlines(), 1):
+        field, sep, value = raw.split("#", 1)[0].partition(":")
+        if sep and field.strip().lower() in _CRAWL_DELAY_FIELDS:
+            if _delay_seconds(value.strip()) is None:
+                ignored.append({"line": n, "value": value.strip()})
+    if rp is None or rp is DISALLOW_ALL:
+        return None, ignored
+    return _delay_seconds(rp.crawl_delay(user_agent)), ignored
 
 
 def robots_access(status, error_class: str | None = None) -> tuple:
@@ -105,6 +154,11 @@ class Fetcher:
         self.clock = clock or REAL
         self._last: dict = {}
         self._robots: dict = {}
+        #: netloc -> the `Crawl-delay` that applies to this UA, in seconds, when one does.
+        #: Written under that netloc's lock by the robots read, read under it by `_wait`.
+        self._crawl_delay: dict = {}
+        #: netloc -> the refusal reason, for a netloc whose delay is over the ceiling.
+        self._over_ceiling: dict = {}
         #: netloc -> its lock (see the class docstring). Created on first contact under
         #: `_locks_guard`, so two workers reaching a new netloc at once get the same lock.
         self._host_locks: dict = {}
@@ -153,7 +207,7 @@ class Fetcher:
     def _wait(self, host: str) -> None:
         """Hold `host` to its gap. Called with `host`'s lock held, so the read of the last
         stamp, the sleep and the new stamp are one step for that netloc."""
-        gap = 1.0 / float(self.p["requests_per_second_per_host"])
+        gap = max(self._standing_interval(), self._crawl_delay.get(host, 0.0))
         last = self._last.get(host)
         if last is not None:
             delta = self.clock.now() - last
@@ -164,6 +218,37 @@ class Fetcher:
         with self._book:
             self.request_times.setdefault(host, []).append(stamp)
             self.requests[host] += 1
+
+    def _standing_interval(self) -> float:
+        return 1.0 / float(self.p["requests_per_second_per_host"])
+
+    def _pace(self, netloc: str, rp, txt: str) -> dict:
+        """Read the host's `Crawl-delay` into this netloc's pace, and return the fields the
+        robots log line carries for it (decision 3: the interval used, and its source).
+
+        Over `manners.crawl_delay_max_s` the netloc is set aside for the cycle (decision 2):
+        `_gate` refuses every fetch to it but `/robots.txt`, naming the delay and the ceiling,
+        and no interval is recorded because none is used. Both schemes of one netloc share
+        one clock, so a second robots read on it can only lengthen the interval."""
+        delay, ignored = crawl_delay_of(rp, txt, self.p["user_agent"])
+        ceiling = float(self.p["crawl_delay_max_s"])
+        for bad in ignored:
+            _log.warning("%s robots.txt line %d: Crawl-delay %r is not a non-negative number "
+                         "of seconds; ignored", netloc, bad["line"], bad["value"])
+        standing = self._standing_interval()
+        if delay is not None and delay > ceiling:
+            self._over_ceiling[netloc] = (
+                f"Crawl-delay: {delay:g} s for this client exceeds manners.crawl_delay_max_s "
+                f"{ceiling:g} s; host not fetched this cycle")
+            interval, source = None, "crawl_delay_over_ceiling"
+        else:
+            if delay is not None:
+                self._crawl_delay[netloc] = max(delay, self._crawl_delay.get(netloc, 0.0))
+            interval = max(standing, self._crawl_delay.get(netloc, 0.0))
+            source = "crawl_delay" if interval > standing else "standing"
+        return {"crawl_delay_s": delay, "crawl_delay_ignored": ignored,
+                "crawl_delay_max_s": ceiling, "interval_s": interval,
+                "interval_source": source}
 
     # ---------------------------------------------------------------- robots
     def _robots_for(self, base: str):
@@ -197,6 +282,7 @@ class Fetcher:
         except Exception as exc:                  # the read failed; classified, never guessed
             error_class = classify_exception(exc)
         robots_status, decision, clause = robots_access(status, error_class=error_class)
+        txt = ""
         if decision == "rules":
             txt = r["body"].decode("utf-8", "replace") if r["body"] else ""
             self._robots[base] = Protego.parse(txt) if txt.strip() else None
@@ -204,11 +290,12 @@ class Fetcher:
             self._robots[base] = DISALLOW_ALL
         else:
             self._robots[base] = None
+        netloc = urllib.parse.urlsplit(base).netloc
         line = {
-            "netloc": urllib.parse.urlsplit(base).netloc, "url": url, "status": status,
+            "netloc": netloc, "url": url, "status": status,
             "final_url": final_url, "error_class": error_class,
             "robots_status": robots_status, "decision": decision, "rfc9309": clause,
-            "read_at": self.clock.now()}
+            "read_at": self.clock.now(), **self._pace(netloc, self._robots[base], txt)}
         with self._book:
             self.robots_log.append(line)
         return self._robots[base]
@@ -251,6 +338,19 @@ class Fetcher:
         """
         from .errors import RobotsDisallowed
         self.ensure_robots(url)
+        # Decision 2 of `cc_tasks/2026-10-11_manners_honours_crawl_delay.md`. Before
+        # `allowed()` and over the carve-out, like an unreachable robots.txt: the ceiling is
+        # about the host, not a rule in its file. Raised here and not answered by `allowed()`,
+        # because `allowed()` is the permission question and the host permitted it; what the
+        # host asked for is a pace this cycle will not keep. The class is `robots_disallowed`
+        # (BLIND, not requested), the same refusal the unreachable case raises, and the reason
+        # rides on the message a collector records.
+        parts = urllib.parse.urlsplit(url)
+        if (parts.path or "/") != "/robots.txt":
+            with self.host_lock(parts.netloc):
+                reason = self._over_ceiling.get(parts.netloc)
+            if reason:
+                raise RobotsDisallowed(f"{url} ({reason})")
         if not self.allowed(url):
             if self._robots_unreachable(url):
                 raise RobotsDisallowed(

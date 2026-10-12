@@ -143,6 +143,18 @@ manners:
   # ourselves rather than the product's accessibility. 0.2 from the 2026-09-08 frame task.
   user_agent: "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)"
   requests_per_second_per_host: 1.0
+  # A host's `Crawl-delay` (`cc_tasks/2026-10-11_manners_honours_crawl_delay.md`). RFC 9309
+  # does not define the record and its §2.2.4 lets a parser read it; this scanner's posture is
+  # to be the most polite client on the host, so the interval to a host is
+  # max(1 / requests_per_second_per_host, Crawl-delay) for the group that applies to this UA.
+  # ABOVE this ceiling the host is not fetched in that cycle and every leg that needed it is
+  # `error`, naming the delay and the ceiling; the cycle never runs quietly at the ceiling.
+  # 60 s because the per-host request count of a cycle is tens, not units (part 2's cycle sent
+  # 47 to catalog.data.gov), so 60 s already holds one host for most of an hour; and because
+  # the largest delay seen applying to this client on a measured host is catalog.data.gov's 10
+  # (census.gov's 15 is Googlebot's group), so 60 leaves six times that before a host is set
+  # aside. A host above it is a finding to read, not a pace to keep.
+  crawl_delay_max_s: 60
   # How many surface netlocs a cycle works on at once (DN-013-R2,
   # `cc_tasks/2026-10-07_parallel_hosts_and_fast_gate.md` decision 2). Politeness is per host
   # and is the rate above; parallelism is ACROSS hosts and never within one (the Fetcher holds

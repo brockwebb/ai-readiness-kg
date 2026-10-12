@@ -128,6 +128,17 @@ def restore_chunked_pilot_run_state(monkeypatch):
                  "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_ROLE", "DOCS", "DOC_PATHS",
                  "PURPOSE", "CHUNK_FILTER", "BATCH_ID"):
         monkeypatch.setattr(cp, name, getattr(cp, name))
+    # `cp.apply_arm` calls `run_bulk_extraction.apply_profile(..., chunk_unit_ok=True)`, which
+    # rebinds the whole-document runner's globals too. Unrestored, a test that applies a
+    # chunk-unit arm left `PROFILE_NAME` at it, and `test_bulk_v038.py::test_the_whole_document_
+    # runner_refuses_a_chunk_unit_profile` then re-applied it in its `finally:` WITHOUT the opt-in
+    # and was refused: red whenever xdist put an arm test before it on one worker, and in one
+    # process after `test_v037_arm.py` (`cc_tasks/2026-10-11_manners_honours_crawl_delay_
+    # RESULT.md` §3; reproduced at e6d9b43e).
+    import run_bulk_extraction as rbe
+    for name in ("PROFILE_NAME", "CORPUS_EPOCH", "BULK_BATCH", "JOB", "OVERSIZE_ALLOW",
+                 "ORDER", "RAW_DIR", "STOP_FILE", "RESULT_FILE"):
+        monkeypatch.setattr(rbe, name, getattr(rbe, name))
 
 
 @pytest.fixture(autouse=True)

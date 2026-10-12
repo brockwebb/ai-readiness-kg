@@ -25,8 +25,8 @@ flowchart LR
 | box | code |
 |---|---|
 | Agency site home, well-known, flagship surfaces | `assessment/harness/scan/run.py:465` |
-| Fetcher: identified UA, robots.txt first, 1 req/s per host (params.yaml) | `assessment/harness/scan/manners.py:69` |
-| robots_access: RFC 9309 decision per netloc | `assessment/harness/scan/manners.py:36` |
+| Fetcher: identified UA, robots.txt first, 1 req/s per host (params.yaml) | `assessment/harness/scan/manners.py:118` |
+| robots_access: RFC 9309 decision per netloc | `assessment/harness/scan/manners.py:85` |
 | one declared User-Agent | `assessment/harness/scan/params.yaml:144` |
 | Observation + body sha256 in corpus/evidence/scan | `assessment/harness/scan/model.py:192` |
 | rules.judge: versioned pure rule | `assessment/harness/scan/rules/__init__.py:449` |
