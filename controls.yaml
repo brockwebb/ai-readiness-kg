@@ -106,3 +106,13 @@ projection:
   # whole log, 140,688 events on 2026-09-21, so 5,000 is ~28 lines per loop: enough to read a
   # rate off, few enough that the 60 s line still carries the signal on a slow phase.
   progress_every: 5000
+  # Canonical export of the projected graph (scripts/projection_canonical_export.py; task
+  # 2026-10-12_projection_replay_measured_then_batched decision 3): the equivalence hash any
+  # change to the projection must reproduce. `exclude_labels` are Seldon's artifact graph,
+  # which shares the database and is not projected from this log (invariant: disjoint
+  # labels). `volatile_properties` are write-time values excluded from the hash; none of the
+  # three projection layers writes one (no datetime()/timestamp() in their Cypher, 2026-10-13),
+  # and two projections of one log hashing equal is the check that the empty list is right.
+  canonical_export:
+    exclude_labels: [Artifact, _SeldonMeta, _OntologyReplicaMeta]
+    volatile_properties: []
