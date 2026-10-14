@@ -1,0 +1,273 @@
+{
+ "generated_by": "scripts/summary_verify.py",
+ "task": "cc_tasks/2026-10-12_executive_summary_from_brief_v2.md",
+ "check": {
+  "control_unit": "c53ca74ead4289d3",
+  "tokens": 39358,
+  "controls_caught": true,
+  "controls": [
+   {
+    "text": "Every one of the 1,055 checks was refused outright by the host.",
+    "expect": "unsupported",
+    "label": "unsupported",
+    "caught": true,
+    "reason": "Only 341 of the 1,055 findings are access denials, not every one."
+   },
+   {
+    "text": "A machine reaches all 29 of the resources that agencies publish for it from the data page.",
+    "expect": "unsupported",
+    "label": "unsupported",
+    "caught": true,
+    "reason": "CL-118 says 15 of the 29 pairs where the object exists are not reachable, so a machine does not reach all 29."
+   },
+   {
+    "text": "The Census Bureau passes every one of its 39 published rows.",
+    "expect": "unsupported",
+    "label": "unsupported",
+    "caught": true,
+    "reason": "CL-052 says CENSUS has 18 failing of 39 judged rows, so it does not pass every row."
+   }
+  ],
+  "unsupported_check_passed": true,
+  "reals": [
+   {
+    "text": "All 16 federal statistical agencies are now on this measurement.",
+    "marker_ids": [
+     "CL-050"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-050"
+    ],
+    "reason": "CL-050 says 16 statistical bodies are on the cycle, which is the glossary's 'all 16 federal statistical agencies'.",
+    "digit_check": {
+     "ok": true,
+     "digits": [
+      "16"
+     ],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-050"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "A plain, identified machine client is frequently refused before it can read anything.",
+    "marker_ids": [
+     "CL-035"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-035"
+    ],
+    "reason": "341 of 1,055 findings are access denials to the client, which supports 'frequently refused'.",
+    "digit_check": {
+     "ok": true,
+     "digits": [],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-035"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "Much of what such a client looks for is not served at all.",
+    "marker_ids": [
+     "CL-035"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-035"
+    ],
+    "reason": "415 of 1,055 findings are absences (not served), the largest category, which supports 'much'.",
+    "digit_check": {
+     "ok": true,
+     "digits": [],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-035"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "And resources that agencies do publish often cannot be reached by a machine that starts at the data page, because nothing links to them.",
+    "marker_ids": [
+     "CL-118"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-118"
+    ],
+    "reason": "54 of 88 page-and-object pairs, and 15 of 29 body-and-object pairs, are published objects that no product page reaches.",
+    "digit_check": {
+     "ok": true,
+     "digits": [],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-118"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "341 of 1,055 checks met an access denial, a 401, 403 or 429 reply, a robots rule, or a reset connection, and 177 passed.",
+    "marker_ids": [
+     "CL-035"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-035"
+    ],
+    "reason": "CL-035 gives 341 access denials, defined by the 401/403/429, robots disallow and reset connection, and 177 passes, out of 1,055.",
+    "digit_check": {
+     "ok": true,
+     "digits": [
+      "341",
+      "1055",
+      "401",
+      "403",
+      "429",
+      "177"
+     ],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-035"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "415 of the 1,055 checks found nothing served where a machine looks for it.",
+    "marker_ids": [
+     "CL-035"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-035"
+    ],
+    "reason": "CL-035 gives 415 absences out of 1,055, where the record, field or file is not served.",
+    "digit_check": {
+     "ok": true,
+     "digits": [
+      "415",
+      "1055"
+     ],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-035"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "Of 29 agency-and-object pairs where the object exists, a data interface, its terms, a change history or a data inventory, a machine that starts at the data page cannot reach 15; counted per page, 54 of 88 cannot be reached.",
+    "marker_ids": [
+     "CL-118"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-118"
+    ],
+    "reason": "CL-118 gives 15 of 29 pairs unreachable and 54 of 88 per page, with the same object types.",
+    "digit_check": {
+     "ok": true,
+     "digits": [
+      "29",
+      "15",
+      "54",
+      "88"
+     ],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-118"
+     ]
+    },
+    "supported": true
+   },
+   {
+    "text": "18 of 39 published rows fail, and two of the fixes the record names, a machine-readable licence and a revision class on every changelog entry, sit in a notional effort band of hours and carry no cost.",
+    "marker_ids": [
+     "CL-052",
+     "CL-115",
+     "CL-116"
+    ],
+    "label": "supported",
+    "claim_ids": [
+     "CL-052",
+     "CL-115",
+     "CL-116"
+    ],
+    "reason": "CL-052 gives 18 of 39 rows failing, and CL-115 and CL-116 put the revision-class and licence actions in the notional hours band with no cost.",
+    "digit_check": {
+     "ok": true,
+     "digits": [
+      "18",
+      "39"
+     ],
+     "missing": [],
+     "unknown_ids": [],
+     "ids": [
+      "CL-052",
+      "CL-115",
+      "CL-116"
+     ]
+    },
+    "supported": true
+   }
+  ],
+  "stray_digits": []
+ },
+ "models": {
+  "checker": "claude-sonnet-5-5",
+  "reader": "claude-fable-5-1"
+ },
+ "updated_at": "2026-10-14T03:22:56.717692+00:00",
+ "reads": [
+  {
+   "round": 1,
+   "unit_id": "663d7b87f311977c",
+   "model_id": "claude-fable-5-1",
+   "body_sha256": "c46a0dad04f77f017a9a94a0166443c7a4945f594a87f8afb85c7fbba4efab7d",
+   "answers": {
+    "q1": "(a) Yes. Page 1 says SI readiness has many parts, is wide and fast-moving, that no one person holds all of it, and that we meet an SI problem with SI, with SI systems having helped build the work. (b) Yes. Page 1 says it is a decision support system in three parts: it measures what a machine actually meets on the site rather than what the agency says, maps each result onto a readiness framework and one standard scale, and says what to do with the cheap, high-value fixes first. The only softening is that the framework is described as built on USAFacts's four qualities plus three added, with worth a rated judgment rather than a measurement, so 'best value' is a rating, not a measured value. (c) Yes. Page 1 says an executive, someone anywhere in the data's life, a site administrator or a data producer can ask it questions, get answers pitched at their own level, with sources attached. (d) Yes. Page 1 says all 16 federal statistical agencies are on the measurement, the results come from the public tier, and three stand out. None of the four is unsupported by page 1; the figures themselves sit on page 2, but the claim of standout results is made on page 1.",
+    "q2": "1. 'SI' itself: it is never expanded or defined; 'SI readiness' is defined in terms of an 'SI system', which is itself undefined. 2. 'A plain, identified machine client': what such a client is, what 'identified' means, and why it is refused. 3. 'Knowledge graph': unexplained. 4. 'USAFacts' and 'the four qualities USAFacts set out': who USAFacts is and why their qualities are the base. 5. 'Three more added': the three added qualities are never named. 6. 'The largest commercial crawlers': unexplained and never tied to SI. 7. 'Much of what such a client looks for': what a client looks for is not stated on page 1. 8. 'When a source is overtaken': what overtaken means and who decides. 9. 'Someone working anywhere in the data's life': the data lifecycle is not explained. 10. 'Which metadata standards apply': which standards are meant. 11. 'A tier that needs an agency to turn something on': what would be turned on. 12. 'The merely temporary ones, set aside': which fixes count as temporary and why they are set aside. 13. 'How much each fix would open up': what is being opened up. 14. 'Any single score can be gamed': how a score would be gamed and which score is meant. 15. 'The fundamentals that limit what SI systems can do with federal data today': those fundamentals are not named.",
+    "q3": "1. The field moves fast: said in the opening definition, again in Why it matters ('wide and fast-moving'), and again in One caution ('the work evolves with the science'). 2. No one person holds all of it: said in Why it matters and again in Who can use it ('no one needs to be expert in every field it touches'). 3. The public reaches data through SI systems: said twice in Why it matters ('People increasingly reach official statistics through SI systems' and 'these systems are how the public now reaches the data'). 4. Measuring what a machine actually meets: said in What we built, again in the tiers section ('what any SI system, and any member of the public, actually meets'), and again in One caution ('judged where real users and their tools meet the data'). 5. Not a site checker: 'not a site checker' and 'looking at the site is the way in, not the point' say the same thing in one paragraph. 6. Fixes are ordered by effort and value: the ordering is stated, then restated as a list of cheap, larger, high-effort and temporary fixes. 7. Worth and effort are judgments, not measurements: said in What we built ('a rated judgment under a stated rubric, not a measurement'), in the Census row ('notional effort band'), and in the page 2 footer ('relative, notional estimates'). 8. Three tiers by who can run them: in the section header and again in its first sentence. 9. Each finding comes with a free action: said in What we found, again in the page 2 intro sentence, and again in the table column header. 10. The three findings: the access refusal, the missing served items and the unreachable resources are stated in prose in What we found and again in the first three table rows. 11. 'A plain, identified machine client' appears in What we found and again in the page 2 intro and the first table row. 12. The Census Bureau fixes: the machine-readable licence and the revision class on every changelog entry are named in the 'What the machine met' cell and repeated in the action cell of the same row; the machine-readable licence also appears as the action in the 'Finding what is published' row. 13. All results come from the public tier: said in What we found ('The results below come from the public tier') and implied again by the page 2 intro.",
+    "q4": "1. The second sentence of the opening ('The field moves fast, so this work holds to the fundamentals...'): the fast-moving point is made again in Why it matters and One caution, and the fundamentals are never named. 2. 'Looking at the site is the way in, not the point': restates 'not a site checker'. 3. The restated list after 'ordered by effort and by how much each fix would open up' (cheap first, larger planned, high-effort low-value and temporary set aside): the ordering rule already says it, and 'temporary' is unexplained. 4. 'With three more added': names nothing, so either name them or cut. 5. 'So the work can also explain why an approach was tried and dropped': a side benefit that adds nothing to the trust argument. 6. The first sentence of the tiers section ('The checks fall into three tiers by who can run them'): the header says it. 7. 'Often free to do' in the middle tier: a hedge that adds nothing. 8. 'The figures are on the next page': the table follows directly. 9. 'And the work evolves with the science' in One caution: already said in the opening. 10. The page 2 intro sentence ('Each result below is what a plain, identified machine client met... with one free action that would move it'): the column headers and page 1 already say it. 11. 'A 401, 403 or 429 reply' in the first table row: the codes add nothing for the reader that 'access denial' does not already say. 12. 'Counted per page, 54 of 88 cannot be reached' in the third row: a second count of the same finding; one count suffices. 13. In the Census row, the action cell repeats the finding cell word for word, so one of the two can go; 'in a notional effort band of hours and carry no cost' also repeats the free-action framing and the footer. 14. The page 2 footer ('Effort and worth are relative, notional estimates...'): page 1 already says worth is a rated judgment, not a measurement. 15. The list of what the fuller definition covers ('how the data was made, where it came from, its date, and its terms of use'): the pointer to the appendix is enough."
+   }
+  },
+  {
+   "round": 2,
+   "unit_id": "6b77bfb23d4649e6",
+   "model_id": "claude-fable-5-1",
+   "body_sha256": "1fd4da47503b8a7fba1a9d50570cb3668b22c5d2f1a501da160c03660025454e",
+   "answers": {
+    "q1": "Yes to all four. (a) Yes: page 1 says SI readiness has many parts, the field moves fast, no one person holds all of it, and we meet an SI problem with SI. (b) Yes: the What we built section says it is a decision support system that measures what a machine actually meets rather than what the agency says, maps results onto a readiness framework on one standard scale, and orders fixes by effort and value with cheap high-value fixes first. (c) Yes: the Who can use it section says an executive, someone anywhere in the data's life, a site administrator or a data producer can ask questions, get answers at their own level, with sources attached. (d) Yes: the What we found section says all 16 federal statistical agencies are on the measurement, the results come from the public tier, and three stand out, each named on page 1; only the figures are deferred to page 2. None fails.",
+    "q2": "1. The term SI itself: it is never expanded or defined anywhere on page 1, and SI system is used as if known. 2. The appendix: the fuller definition is deferred to an appendix that is not in the summary. 3. The fundamentals that limit what SI systems can do with federal data today: asserted, never named. 4. USAFacts: named as the source of the four qualities with no indication of who or what it is. 5. The three added qualities: the framework is said to have seven qualities but only four are named. 6. The one standard scale: its range, units and meaning are not given. 7. The stated rubric for how much a fix is worth: referred to, never shown. 8. The merely temporary fixes: what makes a fix temporary is not explained. 9. Knowledge graph: used without definition. 10. The second tier's turn something on: what setting an agency turns on is never specified. 11. A plain, identified machine client and robots rules: undefined jargon in the findings. 12. The data page and standard address: assumed concepts, never explained. 13. Large commercial crawlers as the contrast case for the public tier: unexplained.",
+    "q3": "1. SI readiness spans many fields and exceeds any one person: said in the opening (many parts), in Why it matters (wide, no one person holds all of it) and again in Who can use it (no one needs to be expert in every field it touches). 2. The public reaches official statistics through SI systems: said twice in Why it matters, once as people increasingly reach statistics through SI systems and again as these systems are how the public now reaches the data. 3. It measures what a machine actually meets, not claims: said in What we built, again in the tiers section (what any SI system and any member of the public actually meets) and a third time in One caution (judged where real users and their tools meet the data). 4. Not a site checker and measurement is the way in, not the point: the same idea in two adjacent sentences. 5. The tiers are divided by who can run them: in the section heading and again in its first sentence. 6. Each finding has a free action: stated in What we found and again as the table column heading. 7. The three findings themselves: stated in prose on page 1 and restated as the first three table rows on page 2. 8. Effort is notional and relative: in the Census row (notional effort band, no cost) and again in the footnote below the table. 9. Machine-readable licence as a fix: in the Finding what is published row, in the Census row's middle cell, and again in the Census row's action cell. 10. The Census row's two fixes appear in both the What the machine met cell and the A free action cell, word for word in substance.",
+    "q4": "1. The typst pagebreak code block, a build artifact that should not appear in the summary. 2. The sentence saying the measurement is the way in, not the point, since not a site checker already says it. 3. The phrase that these systems helped build the work, an aside that supports nothing. 4. The reference to the appendix, since the appendix is not part of the summary. 5. The clause about the merely temporary fixes being set aside, which is unexplained and unused. 6. The phrase not only the largest commercial crawlers. 7. The clause that the graph can explain why an approach was tried and dropped. 8. The phrase the figures are on the next page, since the page 2 heading announces the results. 9. The first sentence of the tiers section, which restates its own heading. 10. The whole One caution section, whose point is already made in the tiers section. 11. The second count in the third table row (54 of 88 per page), since one count of the same gap suffices. 12. The Census row's action cell, which repeats the two fixes already named in the cell beside it. 13. The enumeration of 401, 403, 429, robots rule and reset connection, which an executive summary can leave to the detail report. 14. The figure 177 passed, which is not used by any finding or action."
+   }
+  },
+  {
+   "round": 3,
+   "unit_id": "975ea096a13ee8b0",
+   "model_id": "claude-fable-5-1",
+   "body_sha256": "9c395f15d2bf8e4d5fe02aeb1c01edd46e56d45157558e06f3a62e1ff3785778",
+   "answers": {
+    "q1": "Yes to all four. (a) Yes: page 1 says SI readiness has many parts, that the field moves fast, that it is wide and no one person holds all of it, and that we meet an SI problem with SI. (b) Yes: the 'What we built' section names a decision support system that measures what a machine actually meets on an agency's site rather than what the agency says about itself, maps each result onto a readiness framework on one standard scale, and orders fixes by effort and value with the cheap, high-value fixes first. (c) Yes: 'Who can use it' says an executive, someone working anywhere in the data's life, a site administrator or a data producer can all ask it questions and get answers pitched at their own level, with sources attached. (d) Yes: 'What we found' says all 16 federal statistical agencies are on the measurement, the results come from the public tier, and three stand out, which it then names. None of the four depends on page 2; page 2 only adds the numbers.",
+    "q2": "Things page 1 uses without explaining: (1) the term SI itself, and 'SI system', which are never expanded or defined, only described as a system that works on its own to find, understand and use data; (2) 'a plain, identified machine client', and what makes a client plain or identified; (3) 'what such a client looks for' and what it means for that to be 'not served', which page 1 never specifies; (4) 'USAFacts', who they are and why their four qualities anchor the framework; (5) the 'three more' qualities added to the framework, which are never named; (6) 'knowledge graph', used as if familiar; (7) 'the largest commercial crawlers', with no gloss; (8) what an agency would 'turn something on' to reach the second tier; (9) 'how much each fix would open up', the measure of value, which is left vague; (10) 'the data page' as a starting point for a machine, and why linking from it matters; (11) 'the appendix', which is referred to but not present in the two pages; (12) 'the merely temporary ones', with no indication of what a temporary fix is.",
+    "q3": "Points made more than once: (1) that the problem is wider than any one expert, said in the definition ('many parts'), in 'Why it matters' ('no one person holds all of it') and again in 'Who can use it' ('no one needs to be expert in every field it touches'); (2) that the public reaches statistics through SI systems, said twice in one paragraph ('People increasingly reach official statistics through SI systems' and 'they are how the public now reaches the data'); (3) that this is not a site checker and measurement is not the point, said twice in consecutive sentences of 'What we built'; (4) that readiness is judged where real users and their machines actually meet the data, said in 'What we built' (what a machine actually meets), in the tiers section (what any SI system and any member of the public faces) and again in 'One caution'; (5) that the public tier matters most because it is what the public faces, in the tiers section and again in the caution; (6) that effort and value are rated, notional judgments rather than measurements, said on page 1 ('a rated judgment under a stated rubric, not a measurement') and on page 2 in the footnote ('relative, notional estimates... not a calendar or a budget') and in the Census row ('notional effort band'); (7) that the standout findings each have a free action, said on page 1 ('each with a free action that would move it'), in the tier description ('often free to do'), in the page 2 column heading, and in the Census row ('carry no cost'); (8) the three findings themselves, stated in prose on page 1 and restated as the first three rows of the page 2 table; (9) 'by who can run them', in the tiers heading and again in its first sentence; (10) the machine-readable licence fix, named in the 'Finding what is published' row and twice more in the Census row; (11) the Census row's free action column repeats the two fixes already named in its middle column.",
+    "q4": "Details that could go without loss: (1) the second sentence of 'What we built' ('that measurement is the way in, not the point'), since 'not a site checker' already says it; (2) one of the two sentences in 'Why it matters' about the public reaching data through SI systems; (3) 'not only the largest commercial crawlers'; (4) 'and the merely temporary ones, set aside', which introduces an unexplained category; (5) 'so the work can also explain why an approach was tried and dropped', a side benefit; (6) 'these systems helped build the work', which does not bear on the findings; (7) the repeated 'by who can run them' in the first sentence under that heading; (8) the 'One caution' section, since the tiers section already says readiness is judged where the public meets the data; (9) in the table, the enumeration 'a 401, 403 or 429 reply, a robots rule, or a reset connection', which could be 'an access denial or block'; (10) 'and 177 passed', which adds a figure that, with 341 denials out of 1,055, leaves the remainder unexplained and raises a question rather than answering one; (11) the second count 'counted per page, 54 of 88 cannot be reached', since the per-pair count already makes the point; (12) 'in a notional effort band of hours and carry no cost' in the Census row, since the footnote and the free-action column already carry it; (13) the free-action cell of the Census row, which repeats the middle cell word for word; (14) the four-way list of user types in 'Who can use it', which could be 'anyone from an executive to a data producer'."
+   }
+  }
+ ]
+}

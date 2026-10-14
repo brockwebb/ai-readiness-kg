@@ -1,0 +1,154 @@
+# The executive summary: its authored prose, the page-2 table, the appendix, and the
+# verification dials. Written by Opus 4.8 (role `author`) against DN-014, the accepted brief, by
+# cc_tasks/2026-10-12_executive_summary_from_brief_v2.md. Read by scripts/summary_build.py (the
+# Markdown and the PDF) and scripts/summary_verify.py (the planted and unsupported checks, and
+# Fable's reading). Written before the checks ran; the RESULT quotes it. Nothing here is a
+# threshold on a measured result.
+#
+# A sentence that states a MEASURED result ends with [c:CL-xxx]: the ids of the claims in
+# docs/evidence/claims.yaml that support it. A sentence with no marker states what the system is,
+# or a principle; its grounding is the capability table (task step 3) and DN-014, not the results
+# evidence map, so the unsupported check (which reads claims.yaml) does not judge it. The digit
+# check judges EVERY reader-facing sentence of pages 1 and 2: a number in one must be a value of a
+# claim the sentence cites. The only count on page 1 is the 16 agencies (DN-014 §6).
+
+title: "SI readiness of federal statistical data: an executive summary"
+prepared: "13 October 2026"
+
+inputs:
+  claims: docs/evidence/claims.yaml
+  frozen: docs/evidence/FROZEN.md
+  manifest: corpus/manifest.json
+  # The NAMES table the checker reads: a body code in a claim (CENSUS, BLS) and the name a
+  # sentence uses instead; the indicator codes from the framework record. Same files the concise
+  # report's run reads, so a sentence that names a body is checked against the claim that codes it.
+  body_names: state/scan_targets_fss_2026-09_v5.json
+  framework_record: framework/ai_readiness_framework.json
+
+# -------------------------------------------------------------------------- page 1: the message
+# Blocks render in order. A `heading` is a short line; a `para` is a list of sentences.
+page1:
+  - para:
+      - "SI readiness is how well an SI system, working on its own, can find an agency's data, understand it, and use it correctly."
+      - "It has many parts, so each is measured on its own, and each can sit at a different level."
+      - "The field moves fast, so this work holds to the fundamentals that limit what SI systems can do with federal data today."
+      - "A fuller definition, covering how the data was made, where it came from, its date, and its terms of use, is in the appendix."
+  - heading: "Why it matters"
+  - para:
+      - "SI readiness is wide: it runs across how data is published, how the web is used, which metadata standards apply, what policy requires, and how SI systems behave, and no one person holds all of it."
+      - "People increasingly reach official statistics through SI systems, so when those systems cannot find or understand federal data, the public is left with stale or second-hand numbers."
+      - "We meet an SI problem with SI: these systems helped build the work, and they are how the public now reaches the data."
+  - heading: "What we built"
+  - para:
+      - "This is a decision support system, not a site checker, and it works in three parts."
+      - "It measures what a machine actually meets on an agency's site, rather than what the agency says about itself, and that measurement is the way in, not the point."
+      - "It maps each result onto a readiness framework, built on the four qualities USAFacts set out, that data be accessible, understandable, accurate and open, with three more added, and puts every result on one standard scale, so agencies can be set side by side."
+      - "It then says what to do, ordered by effort and by how much each fix would open up: the cheap, high-value fixes first, the larger ones planned, and the high-effort, low-value ones, and the merely temporary ones, set aside."
+      - "How much a fix is worth is a rated judgment under a stated rubric, not a measurement."
+  - heading: "Who can use it, and why the advice can be trusted"
+  - para:
+      - "An executive, someone working anywhere in the data's life, a site administrator or a data producer can all ask it questions, get answers pitched at their own level, and see where their part fits the whole, so no one needs to be expert in every field it touches."
+      - "The advice rests on a knowledge graph of the research, standards and policy, which an SI system reads to give answers with their sources attached, rather than off the cuff."
+      - "When a source is overtaken, the graph keeps it as history but stops it shaping advice, so the work can also explain why an approach was tried and dropped."
+  - heading: "Measured in three tiers, by who can run them"
+  - para:
+      - "The checks fall into three tiers by who can run them: a public tier that anyone can run with free, open tools; a tier that needs an agency to turn something on, often free to do; and a tier that needs paid tools."
+      - "The public tier matters most, because it is what any SI system, and any member of the public, faces, not only the largest commercial crawlers."
+      - "Each tier connects to the framework, so an agency can see how far the public tier alone carries it, and what turning a setting on, or buying a tool, would add."
+  - heading: "What we found"
+  - para:
+      - "All 16 federal statistical agencies are now on this measurement. [c:CL-050]"
+      - "The results below come from the public tier, and three stand out, each with a free action that would move it."
+      - "A plain, identified machine client is frequently refused before it can read anything. [c:CL-035]"
+      - "Much of what such a client looks for is not served at all. [c:CL-035]"
+      - "And resources that agencies do publish often cannot be reached by a machine that starts at the data page, because nothing links to them. [c:CL-118]"
+  - heading: "One caution"
+  - para:
+      - "Any single score can be gamed, so we design around what the public can actually reach: readiness is judged where real users and their tools meet the data."
+
+# ----------------------------------------------------------------------- page 2: the one table
+page2:
+  heading: "The results, and the free actions that move them"
+  intro: []
+  table:
+    columns: ["What we looked at", "What the machine met", "A free action that moves it"]
+    rows:
+      - looked_at: "Reaching the data at all"
+        found: "341 of 1,055 checks met an access denial, a 401, 403 or 429 reply, a robots rule, or a reset connection, and 177 passed. [c:CL-035]"
+        action: "Serve a plain, identified, robots-respecting client the pages it asks for."
+      - looked_at: "Finding what is published"
+        found: "415 of the 1,055 checks found nothing served where a machine looks for it. [c:CL-035]"
+        action: "Publish the missing piece, such as a machine-readable licence."
+      - looked_at: "Reaching resources that do exist"
+        found: "Of 29 agency-and-object pairs where the object exists, a data interface, its terms, a change history or a data inventory, a machine that starts at the data page cannot reach 15; counted per page, 54 of 88 cannot be reached. [c:CL-118]"
+        action: "Link the object from the data page, or place it at the standard address a published standard defines."
+      - looked_at: "One publisher in focus: the Census Bureau"
+        found: "18 of 39 published rows fail, and two of the fixes the record names, a machine-readable licence and a revision class on every changelog entry, sit in a notional effort band of hours and carry no cost. [c:CL-052, CL-115, CL-116]"
+        action: "Publish a machine-readable licence, and carry a revision class on every changelog entry."
+  note: "Effort and cost are relative, notional estimates by type of fix, not a calendar or a budget."
+
+# --------------------------------------------------------------------------- appendix (page 3+)
+appendix:
+  definition_heading: "The fuller definition"
+  definition:
+      - "SI readiness is how well a system that finds, reads and uses data on its own can reach an agency's data, understand it, and use it correctly, judged where real users and the tools they now use meet the data."
+      - "It has several parts, each measured on its own and each able to sit at a different level."
+      - "The first is discovery: the data, and the ways into it, can be found without anyone being told where they are."
+      - "The second is access: a plain, identified machine client is served."
+      - "The third is interpretation: the data is machine-readable and machine-understandable, with contextual metadata in standard formats."
+      - "The fourth is fitness for use: how the data was made, where it came from, its date, and its terms of use are stated."
+      - "The framework keeps the four qualities USAFacts set out, that data be accessible, understandable, accurate and open, and adds three more."
+  definition_sources_note: "The definition draws on the U.S. Department of Commerce guidance (machine-readable and machine-understandable, with contextual metadata in standard formats), NOAA NAO 216-128 and the World Bank (discoverable, and the ways in), the UN Statistical Commission (how the data was made, and its date), and USAFacts (the four qualities)."
+  sources_heading: "Sources"
+  # Corpus documents are cited by id; the build reads their title, organisation, year and URL from
+  # the manifest. A standard not in the corpus carries its title and URL inline.
+  sources:
+    - {id: usafacts-fde-standards-detailed}
+    - {id: generative-ai-and-open-data-guidelines-and-best-practices-de}
+    - {id: nao-216-128-artificial-intelligence-in-noaa}
+    - {id: ai-readiness-for-official-data-and-statistics-un-statistical}
+    - {id: worldbank-blog-open-data-to-ai-ready-2025}
+    - {id: rfc-9727-api-catalog}
+    - {id: dcat-us-1-1-schema}
+    - {id: schema-org-webapi}
+    - {title: "RFC 8288: Web Linking", who: "M. Nottingham", year: "2017", url: "https://www.rfc-editor.org/rfc/rfc8288"}
+  provenance: "Measured across all 16 federal statistical agencies in September and October 2026. Every figure above traces to a registered result; the detailed report and the knowledge graph hold the evidence behind each one."
+
+# ----------------------------------------------------------------- verification (summary_verify)
+# The planted controls (methodology 7.6): each is a false sentence the checker must label
+# `unsupported`. One miss stops the run before the real check is trusted. Each cites a real claim
+# so the plant is adversarial (it reads as if that claim backed it).
+controls:
+  - text: "Every one of the 1,055 checks was refused outright by the host."
+    cites: ["CL-035"]
+    expect: "unsupported"
+  - text: "A machine reaches all 29 of the resources that agencies publish for it from the data page."
+    cites: ["CL-118"]
+    expect: "unsupported"
+  - text: "The Census Bureau passes every one of its 39 published rows."
+    cites: ["CL-052"]
+    expect: "unsupported"
+
+# Fable (role `judge`) reads the built page 1 and page 2 in a fresh context and answers these four
+# each round (DN-014 §4). Editorial review, not a measurement.
+reader:
+  questions:
+    q1: "Can each of these be said from page 1 alone? (a) SI readiness is complex, fast-moving and beyond any one expert, and we use SI to solve it; (b) we built a decision support system that measures a site's real state, maps it to a standard framework, and says what to fix first for the best value; (c) anyone from an executive to a site administrator can ask it questions and get cited explanations at their own level; (d) we ran the public tier on all 16 federal statistical agencies and found standout results. Answer yes or no for each, and name any that cannot."
+    q2: "What on page 1 would a chief information officer new to the term SI not understand? List each such thing."
+    q3: "What is said twice? Name each point made more than once."
+    q4: "What detail could be cut without loss? Name each."
+
+run:
+  # The author is Opus 4.8 (this session); the reader is Fable (role `judge`); the checker is a
+  # third family, Sonnet (role `critic`), so writer, checker and reader are three model families,
+  # as the concise report's pipeline requires. Roles resolve through seldon's lock (AD-035).
+  checker_role: critic
+  reader_role: judge
+  call_class: judge
+  run_id: executive_summary_2026-10-12
+  ceiling_tokens: 3000000
+  timeout_seconds: 900
+  max_attempts: 2
+  max_wall_seconds: 7200
+  progress_every_units: 1
+  progress_every_seconds: 60

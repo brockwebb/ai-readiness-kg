@@ -1,0 +1,32 @@
+# The word list for the executive summary's text check, committed with the summary (the gate of
+# cc_tasks/2026-10-12_executive_summary_from_brief_v2.md). Read by scripts/summary_text_check.py.
+# The four things the gate forbids in the reader-facing body (DN-014 §6 and the task's rules for
+# the text): process words, indicator codes, "AI" anywhere but a published title, and dashes.
+# A new entry is an authoring decision; code reads this list and never edits it.
+
+# DN-014 §6 cut list / the task's rules for the text.
+process_words:
+  - cycle
+  - claim
+  - leg
+  - composite
+  - harness
+  - verdict
+  - gate
+  - pipeline
+
+# An indicator code is a criterion letter (A to G) and one or two digits: A1, A13, B2, D1, F4, G4.
+indicator_code_pattern: '\b[A-G][0-9]{1,2}\b'
+
+# "AI" as a standalone token, or "Artificial Intelligence" spelled out. The body uses SI; AI is
+# allowed only inside a published document's exact title, which lives in the Sources section and
+# is skipped wholesale (scripts/summary_text_check.py), the titles being published titles by
+# construction and normalised by the builder.
+ai_pattern: '(?<![A-Za-z])AI(?![A-Za-z])|Artificial Intelligence'
+
+# The operator bars the em dash from his output (docs/style/operator_banned_words.yaml context);
+# the en dash goes with it (DN-013-R6, concise_report_gate.dash_findings).
+dash_pattern: '[–—]'
+
+# The heading whose section is reference-only (published titles) and is not scanned.
+skip_section_heading: "Sources"

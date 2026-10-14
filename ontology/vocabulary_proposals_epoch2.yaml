@@ -17,3 +17,73 @@ proposals:
   - dcat-us-3-dataset-schema
   - doe-data-cards-standardized-metadata-2026
   draft_scope_note: '# DCAT-US 3.0: Dataset'
+
+# Authored term definitions (not entity-linking finds). Added by
+# cc_tasks/2026-10-12_executive_summary_from_brief_v2.md steps 1 and 2, from DN-014 §1 and its
+# appendix line. `sources` are corpus document ids the definition draws on. These reached state
+# `proposed`: they sit in this file for the operator's promotion cadence, and nothing in the
+# pipeline reads them until promoted into ai_readiness_vocabulary.ttl (which this task does not
+# edit). `origin: authored` marks them apart from the >=3-document entity-linking proposals above.
+- proposed_term_id: air:concept/si-readiness
+  pref_label: SI readiness
+  node_label: Concept
+  alt_labels:
+  - AI readiness
+  - AI-ready data readiness
+  origin: authored
+  state: proposed
+  short_definition: >-
+    How well an SI system, working on its own, can find an agency's data, understand it, and use
+    it correctly. ("SI" is the term an executive order of 2026-09-29 puts in place of "AI" in
+    federal usage, DN-009 decision 4; the record itself says AI throughout.)
+  full_definition: >-
+    SI readiness is how well a system that finds, reads and uses data on its own can reach an
+    agency's data, understand it, and use it correctly, judged where real users and the tools
+    they now use meet the data. It has several parts, each measured separately and each able to
+    sit at a different level: discovery (the data and the ways in can be found without being
+    told where they are), access (a plain, identified machine client is served), interpretation
+    (the data is machine-readable and machine-understandable, with contextual metadata in
+    standard formats), and fitness for use (how the data was made, its source, its date, and its
+    terms of use are stated). The work focuses on the fundamentals that limit SI systems' use of
+    federal data today; the field moves fast and the definition evolves with it.
+  sources:
+  - generative-ai-and-open-data-guidelines-and-best-practices-de   # Commerce: machine-readable + machine-understandable, contextual metadata, standard formats
+  - nao-216-128-artificial-intelligence-in-noaa                    # NOAA NAO 216-128: discoverable, access methods
+  - worldbank-blog-open-data-to-ai-ready-2025                      # World Bank: access methods / the ways in
+  - ai-readiness-for-official-data-and-statistics-un-statistical   # UN Statistical Commission: provenance and vintage
+  - usafacts-fde-standards-detailed                                # USAFacts: the four facets (accessible, understandable, accurate, open)
+  draft_scope_note: >-
+    DN-014 §1 (the accepted brief for the executive summary). The project's framework keeps
+    USAFacts' four criteria (accessible, understandable, accurate, open) and adds three.
+- proposed_term_id: air:concept/discoverability-from-the-product-page
+  pref_label: discoverability from the product page
+  node_label: Concept
+  alt_labels: []
+  origin: authored
+  state: proposed
+  project_invented: true
+  short_definition: >-
+    Whether a machine client that starts at a data product's page reaches the data interface, its
+    terms, a change history and a data inventory the agency publishes, by following links or at a
+    documented standard location, without being told where they are.
+  full_definition: >-
+    A project-coined candidate construct (candidate indicator A13, DD-054 / DN-013-R1): it
+    enters no level and no score. It composes four per-object reachability tests into one view.
+    The composition itself (the choice of these four objects and the rule that any one
+    unreachable fails the surface) is project-invented and no single published source defines it;
+    it is recorded here as that. Each per-object test, however, rests on a published definition:
+    reachability by a link from the page on web linking (RFC 8288) and, for datasets, on a
+    catalog record linking its access service and distributions (schema.org WebAPI; the DCAT-US
+    / Project Open Data metadata schema); the API's standard location on RFC 9727 §2-§3
+    (/.well-known/api-catalog, a Linkset); the inventory's standard location on OMB M-13-13 and
+    the Project Open Data / DCAT-US metadata schema (/data.json at the host root), with M-25-05
+    §4a iii repeating the address. The summary uses only the grounded per-object form (an object
+    that exists but cannot be reached from the page), never the construct as a score.
+  sources:
+  - rfc-9727-api-catalog                 # API standard location: /.well-known/api-catalog, Linkset (§2, §3, §4.2)
+  - dcat-us-1-1-schema                   # inventory /data.json (Project Open Data / DCAT-US metadata schema); dataset links its distributions
+  - schema-org-webapi                    # a dataset's access service / web API as a linked, described resource
+  draft_scope_note: >-
+    cc_tasks/2026-10-12_executive_summary_from_brief_v2.md step 1. RULE-A13-v1
+    (assessment/harness/scan/rules/rule_a13.py) and its convention parameters
+    (assessment/harness/scan/params.yaml discoverability.convention).
