@@ -1341,7 +1341,15 @@ def merge(g: dict, nodes: list, edges: list) -> dict:
     and keeping every other node and edge whole. Order is the record's; new entries append."""
     new_nodes = {n["id"]: n for n in nodes}
     new_edges = {(e["from"], e["type"], e["to"]): e for e in edges}
-    kept = [new_nodes[n["id"]] if n["id"] in new_nodes else n for n in g["nodes"]]
+
+    def _overlay(old: dict, new: dict) -> dict:
+        # Keep the write-backs the generator does not author (e.g. `fix_line`, added through the
+        # one writer for the executive-summary grid): a regenerated action takes its generated
+        # properties but keeps any extra property the record carried, so re-deriving the layer is
+        # a no-op rather than a silent drop (`test_the_write_back_is_idempotent_over_the_record`).
+        return {**new, "properties": {**(old.get("properties") or {}), **(new.get("properties") or {})}}
+
+    kept = [_overlay(n, new_nodes[n["id"]]) if n["id"] in new_nodes else n for n in g["nodes"]]
     have = {n["id"] for n in kept}
     kept += [n for n in nodes if n["id"] not in have]
     kept_e = []

@@ -18,6 +18,14 @@ process_words:
 # An indicator code is a criterion letter (A to G) and one or two digits: A1, A13, B2, D1, F4, G4.
 indicator_code_pattern: '\b[A-G][0-9]{1,2}\b'
 
+# DN-014 ADDENDUM 01 §3: the measurement-tier letters (the record's M, O, D), as standalone
+# tokens, are forbidden in the reader-facing text; the summary names tiers in words ("public
+# tier"), never by letter.
+tier_letter_pattern: '\b[MOD]\b'
+
+# A rule code (the harness's RULE-<indicator>-v<n>), forbidden with the indicator codes.
+rule_code_pattern: '\bRULE-[A-Za-z0-9-]+'
+
 # "AI" as a standalone token, or "Artificial Intelligence" spelled out. The body uses SI; AI is
 # allowed only inside a published document's exact title, which lives in the Sources section and
 # is skipped wholesale (scripts/summary_text_check.py), the titles being published titles by

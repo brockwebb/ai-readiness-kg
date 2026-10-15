@@ -41,7 +41,7 @@ import dcat_faq_lint as LINT  # noqa: E402
 import summary_text_check as TC  # noqa: E402
 
 GENERATOR = "scripts/summary_build.py"
-TASK = "cc_tasks/2026-10-12_executive_summary_from_brief_v2.md"
+TASK = "cc_tasks/2026-10-14_executive_summary_v3_grid.md"
 OUT = REPO / "reports" / "summary"
 SOURCE = OUT / "summary_source.yaml"
 PAGEBREAK = "```{=typst}\n#pagebreak()\n```"
@@ -94,31 +94,100 @@ def page1_md(blocks: list) -> list[str]:
     return out
 
 
-def table_md(tbl: dict) -> list[str]:
-    cols = tbl["columns"]
-    out = ["| " + " | ".join(cols) + " |", "|" + "|".join([" --- "] * len(cols)) + "|"]
-    for r in tbl["rows"]:
-        cells = [r["looked_at"], strip_markers(r["found"]), r["action"]]
-        out.append("| " + " | ".join(c.replace("|", "\\|") for c in cells) + " |")
+# ---------------------------------------------------------------------------- the page-2 grid
+# Page two is one grid (DN-014 ADDENDUM 01 §2): 16 agencies by the public-tier checks, a glyph
+# and a colour in every cell, the fix line under each check, a legend, a three-sentence footnote.
+# Two renderings, ONE source (reports/summary/grid.json): a raw typst block for the coloured
+# landscape PDF, and clean text for the reader (Fable) and the text check. Both carry the same
+# human strings, so the check that reads the text covers what the PDF shows.
+GLYPH = {"pass": "●", "partial": "◐", "fail": "○"}  # ● ◐ ○ (shape distinguishes)
+COLOR = {"pass": "#1b5e9c", "partial": "#c77d0a", "fail": "#b22222"}  # blue, amber, red
+_TZ = {c: "\\" + c for c in "\\#$*_`@<>[]~"}
+
+
+def tz(s: str) -> str:
+    """Escape the characters typst reads as markup, so a plain string shows verbatim."""
+    return "".join(_TZ.get(ch, ch) for ch in str(s))
+
+
+def _row_label(r: dict) -> str:
+    return r["display_name"] + (f" ({r['page_count']} pages)" if r["page_count"] > 1 else "")
+
+
+def grid_typst(src: dict, grid: dict) -> str:
+    """The colourful landscape grid, as a raw typst block for the PDF."""
+    cols, rows = grid["columns"], grid["rows"]
+    n = len(cols)
+
+    def mark(state: str) -> str:
+        return f'#text(fill: rgb("{COLOR[state]}"))[{GLYPH[state]}]'
+
+    header = ", ".join(f"[*{tz(c['plain_name'])}*]" for c in cols)
+    body_rows = []
+    for r in rows:
+        cells = ", ".join(f"[{mark(r['cells'][c['leg']]['state'])}]" for c in cols)
+        body_rows.append(f"[{tz(_row_label(r))}], {cells}")
+    rows_block = ",\n  ".join(body_rows)
+    fixes = "\n".join(f"  [*{tz(c['plain_name'])}.* {tz(c['fix_line'])}]," for c in cols)
+    lg = grid["legend"]
+    legend = (f'*Key.* #text(fill: rgb("{COLOR["pass"]}"))[{GLYPH["pass"]}] pass: {tz(lg["pass"])}; '
+              f'#text(fill: rgb("{COLOR["partial"]}"))[{GLYPH["partial"]}] partial: {tz(lg["partial"])}; '
+              f'#text(fill: rgb("{COLOR["fail"]}"))[{GLYPH["fail"]}] fail: {tz(lg["fail"])}.')
+    return (
+        "```{=typst}\n"
+        "#pagebreak(weak: true)\n"
+        "#page(flipped: true, margin: (x: 1.1cm, y: 1.0cm))[\n"
+        f'#align(center)[#text(size: 12pt, weight: "bold")[{tz(src["page2"]["heading"])}]]\n'
+        "#v(4pt)\n"
+        "#set text(size: 6pt)\n"
+        "#table(\n"
+        f"  columns: (4.5cm,) + (1fr,)*{n},\n"
+        f"  align: (left + horizon,) + (center + horizon,)*{n},\n"
+        '  stroke: 0.3pt + rgb("#bbbbbb"),\n'
+        "  inset: 2.1pt,\n"
+        f"  table.header([*Agency*], {header}),\n"
+        f"  {rows_block}\n"
+        ")\n"
+        "#v(6pt)\n"
+        '#text(size: 7pt)[*The fix under each check.*]\n'
+        "#v(2pt)\n"
+        "#set text(size: 6.2pt)\n"
+        "#grid(columns: (1fr, 1fr), gutter: 9pt, row-gutter: 2.4pt,\n"
+        f"{fixes}\n"
+        ")\n"
+        "#v(6pt)\n"
+        f'#text(size: 6.3pt)[{legend}]\n'
+        "#v(3pt)\n"
+        f'#text(size: 6pt, style: "italic")[{tz(grid["footnote"])}]\n'
+        "]\n"
+        "```"
+    )
+
+
+def grid_plaintext(src: dict, grid: dict) -> list[str]:
+    """The grid as clean markdown the reader and the text check read. Same strings as the PDF."""
+    cols, rows = grid["columns"], grid["rows"]
+    lg = grid["legend"]
+    out = [f"## {src['page2']['heading']}", "",
+           (f"Key: {GLYPH['pass']} pass, {lg['pass']}; {GLYPH['partial']} partial, "
+            f"{lg['partial']}; {GLYPH['fail']} fail, {lg['fail']}."), ""]
+    head = ["Agency"] + [c["plain_name"] for c in cols]
+    out.append("| " + " | ".join(head) + " |")
+    out.append("|" + "|".join([" --- "] * len(head)) + "|")
+    for r in rows:
+        cells = [_row_label(r)] + [GLYPH[r["cells"][c["leg"]]["state"]] for c in cols]
+        out.append("| " + " | ".join(x.replace("|", "\\|") for x in cells) + " |")
+    out += ["", "The fix under each check:", ""]
+    for c in cols:
+        out.append(f"- {c['plain_name']}: {c['fix_line']}")
+    out += ["", grid["footnote"], ""]
     return out
 
 
-def page2_md(p2: dict) -> list[str]:
-    out = [f"## {p2['heading']}", ""]
-    if p2.get("intro"):
-        out += [" ".join(strip_markers(s) for s in p2["intro"]), ""]
-    out += table_md(p2["table"]) + [""]
-    if p2.get("note"):
-        out += [p2["note"], ""]
-    return out
-
+# ------------------------------------------------------------------------------------ markdown 2
 
 def appendix_md(ap: dict, manifest: dict) -> list[str]:
-    out = [f"## {ap['definition_heading']}", "",
-           " ".join(ap["definition"]), ""]
-    if ap.get("definition_sources_note"):
-        out += [ap["definition_sources_note"], ""]
-    out += [f"## {ap['sources_heading']}", ""]
+    out = [f"## {ap['sources_heading']}", ""]
     for n, e in enumerate(ap["sources"], 1):
         out.append(f"{n}. {source_line(e, manifest)}")
     out.append("")
@@ -127,17 +196,30 @@ def appendix_md(ap: dict, manifest: dict) -> list[str]:
     return out
 
 
-def body_markdown(src: dict) -> str:
-    lines = [f"# {src['title']}", "", f"Prepared {src['prepared']}.", ""]
-    lines += page1_md(src["page1"])
-    lines += ["", PAGEBREAK, ""]
-    lines += page2_md(src["page2"])
+def page1_lines(src: dict) -> list[str]:
+    return [f"# {src['title']}", "", f"Prepared {src['prepared']}.", ""] + page1_md(src["page1"])
+
+
+def body_markdown(src: dict, grid: dict) -> str:
+    """PDF body: page-1 prose, then the typst grid (page 2)."""
+    lines = page1_lines(src) + ["", grid_typst(src, grid), ""]
     return "\n".join(lines).rstrip() + "\n"
 
 
-def full_markdown(src: dict, manifest: dict) -> str:
-    body = body_markdown(src).rstrip()
-    lines = [body, "", PAGEBREAK, ""]
+def body_plaintext(src: dict, grid: dict) -> str:
+    """Reader/text-check body: page-1 prose, a page break, the grid as clean text."""
+    lines = page1_lines(src) + ["", PAGEBREAK, ""] + grid_plaintext(src, grid)
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def full_markdown(src: dict, grid: dict, manifest: dict) -> str:
+    lines = [body_markdown(src, grid).rstrip(), "", PAGEBREAK, ""]
+    lines += appendix_md(src["appendix"], manifest)
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def full_plaintext(src: dict, grid: dict, manifest: dict) -> str:
+    lines = [body_plaintext(src, grid).rstrip(), "", PAGEBREAK, ""]
     lines += appendix_md(src["appendix"], manifest)
     return "\n".join(lines).rstrip() + "\n"
 
@@ -174,14 +256,18 @@ def main(argv=None) -> int:
     out = Path(a.out_dir) if a.out_dir else OUT
     src = yaml.safe_load((Path(a.source) if a.source else SOURCE).read_text(encoding="utf-8"))
     manifest = json.loads((REPO / src["inputs"]["manifest"]).read_text(encoding="utf-8"))
+    grid = json.loads((REPO / src["inputs"]["grid"]).read_text(encoding="utf-8"))
 
-    body = body_markdown(src)
-    full = full_markdown(src, manifest)
-    findings = text_findings(full)
+    body = body_markdown(src, grid)
+    full = full_markdown(src, grid, manifest)
+    # The text check reads the CLEAN TEXT of both pages (page-1 prose and the grid as text) plus
+    # the sources, not the raw typst of the PDF grid: the two carry the same human strings.
+    plain = full_plaintext(src, grid, manifest)
+    findings = text_findings(plain)
     if findings:
         for f in findings:
-            print(f"SUMMARY.md:{f['line']} [{f['src']}:{f['rule']}] {f['match']!r} in {f.get('context','')!r}")
-        raise SystemExit(f"FATAL: SUMMARY.md fails the text check ({len(findings)} finding(s)); nothing is written")
+            print(f"page:{f['line']} [{f['src']}:{f['rule']}] {f['match']!r} in {f.get('context','')!r}")
+        raise SystemExit(f"FATAL: the summary fails the text check ({len(findings)} finding(s)); nothing is written")
 
     md_path = out / "SUMMARY.md"
     md_path.write_text(full, encoding="utf-8")

@@ -1,0 +1,5647 @@
+{
+ "generated_by": "scripts/summary_grid.py",
+ "task": "cc_tasks/2026-10-14_executive_summary_v3_grid.md",
+ "cycle": "scan_2026-10-07_composite_d",
+ "tier": "public",
+ "tier_display_name": "public tier",
+ "matrices": {
+  "product": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+  "tierA": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json"
+ },
+ "excluded": {
+  "declared": [
+   "A11-declared"
+  ],
+  "candidate": [
+   "A12"
+  ],
+  "non_public": [
+   "A11-declared",
+   "B1",
+   "B2",
+   "B4",
+   "B5",
+   "D2",
+   "D3",
+   "G4"
+  ]
+ },
+ "columns": [
+  {
+   "leg": "A1",
+   "code": "A1",
+   "plain_name": "Data offered in a machine format",
+   "construct": "Machine-readable formats",
+   "source_matrix": "product",
+   "fix_line": "Link a data file from the product page and serve it with its own media type.",
+   "fix_outcome": "no_structured_link",
+   "fix_basis": {
+    "rule": "absence_fallback",
+    "why": "no matrix cell for this check carries verdict fail; every non-pass was an access error, so the column names the fix for publishing the object"
+   },
+   "fix_ranking": []
+  },
+  {
+   "leg": "A2",
+   "code": "A2",
+   "plain_name": "A documented machine interface",
+   "construct": "Programmatic access",
+   "source_matrix": "product",
+   "fix_line": "Expose the product through a machine interface and publish its description.",
+   "fix_outcome": "no_api_description",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 6
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_api_description",
+     "agencies": 6
+    },
+    {
+     "outcome": "served_but_not_an_api_description",
+     "agencies": 3
+    }
+   ]
+  },
+  {
+   "leg": "A3",
+   "code": "A3",
+   "plain_name": "A full dataset download",
+   "construct": "Bulk access",
+   "source_matrix": "product",
+   "fix_line": "Link a bulk download of the product from the product page.",
+   "fix_outcome": "no_whole_product_download",
+   "fix_basis": {
+    "rule": "absence_fallback",
+    "why": "no matrix cell for this check carries verdict fail; every non-pass was an access error, so the column names the fix for publishing the object"
+   },
+   "fix_ranking": []
+  },
+  {
+   "leg": "A4",
+   "code": "A4",
+   "plain_name": "Crawlers allowed to reach the data",
+   "construct": "Crawler/agent access",
+   "source_matrix": "tierA",
+   "fix_line": "Serve a robots.txt that permits the data paths for the crawlers you want to allow.",
+   "fix_outcome": "no_robots_txt",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 1
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_robots_txt",
+     "agencies": 1
+    }
+   ]
+  },
+  {
+   "leg": "A5",
+   "code": "A5",
+   "plain_name": "The data is listed for discovery",
+   "construct": "Discoverability surface",
+   "source_matrix": "tierA",
+   "fix_line": "List the product address in the discovery file that is already served.",
+   "fix_outcome": "discovery_file_omits_product",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 9
+   },
+   "fix_ranking": [
+    {
+     "outcome": "discovery_file_omits_product",
+     "agencies": 9
+    },
+    {
+     "outcome": "no_discovery_file",
+     "agencies": 1
+    }
+   ]
+  },
+  {
+   "leg": "A6",
+   "code": "A6",
+   "plain_name": "Structured markup describes the data",
+   "construct": "Structured markup",
+   "source_matrix": "product",
+   "fix_line": "Type the product page's existing markup as a dataset.",
+   "fix_outcome": "markup_without_dataset_type",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 11
+   },
+   "fix_ranking": [
+    {
+     "outcome": "markup_without_dataset_type",
+     "agencies": 11
+    }
+   ]
+  },
+  {
+   "leg": "A8",
+   "code": "A8",
+   "plain_name": "A machine readable release date",
+   "construct": "Timeliness of surface",
+   "source_matrix": "product",
+   "fix_line": "Publish a release date for the product.",
+   "fix_outcome": "no_declared_date",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 6
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_declared_date",
+     "agencies": 6
+    },
+    {
+     "outcome": "last_modified_header_only",
+     "agencies": 4
+    },
+    {
+     "outcome": "no_latest_vintage_pointer",
+     "agencies": 1
+    }
+   ]
+  },
+  {
+   "leg": "A9",
+   "code": "A9",
+   "plain_name": "A machine first entry point",
+   "construct": "M2M agent surface",
+   "source_matrix": "product",
+   "fix_line": "Publish a machine-first entry point for the product.",
+   "fix_outcome": "no_machine_first_path",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 1
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_machine_first_path",
+     "agencies": 1
+    },
+    {
+     "outcome": "machine_path_answers_html",
+     "agencies": 1
+    }
+   ]
+  },
+  {
+   "leg": "A10",
+   "code": "A10",
+   "plain_name": "Data tools answer a machine",
+   "construct": "Application/data-tool machine surface",
+   "source_matrix": "tierA",
+   "fix_line": "Return a real status for routes that do not exist.",
+   "fix_outcome": "soft_404",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 1
+   },
+   "fix_ranking": [
+    {
+     "outcome": "soft_404",
+     "agencies": 1
+    }
+   ]
+  },
+  {
+   "leg": "B3",
+   "code": "B3",
+   "plain_name": "Methodology in reachable structured text",
+   "construct": "Methodology legibility",
+   "source_matrix": "product",
+   "fix_line": "Link the methodology from the product page.",
+   "fix_outcome": "no_methodology_link",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 8
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_methodology_link",
+     "agencies": 8
+    },
+    {
+     "outcome": "methodology_requires_js",
+     "agencies": 3
+    }
+   ]
+  },
+  {
+   "leg": "D1",
+   "code": "D1",
+   "plain_name": "A machine readable licence",
+   "construct": "License clarity",
+   "source_matrix": "product",
+   "fix_line": "Publish a machine-readable licence for the product.",
+   "fix_outcome": "no_licence",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 9
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_licence",
+     "agencies": 9
+    },
+    {
+     "outcome": "licence_is_free_text",
+     "agencies": 2
+    }
+   ]
+  },
+  {
+   "leg": "D4",
+   "code": "D4",
+   "plain_name": "Listed in a public inventory",
+   "construct": "No dark data",
+   "source_matrix": "product",
+   "fix_line": "Add the product to the public data inventory already published.",
+   "fix_outcome": "product_absent_from_catalog",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 5
+   },
+   "fix_ranking": [
+    {
+     "outcome": "product_absent_from_catalog",
+     "agencies": 5
+    }
+   ]
+  },
+  {
+   "leg": "F4",
+   "code": "F4",
+   "plain_name": "A machine readable change history",
+   "construct": "Change legibility",
+   "source_matrix": "product",
+   "fix_line": "Publish a version history for the product.",
+   "fix_outcome": "no_changelog",
+   "fix_basis": {
+    "rule": "most_agencies",
+    "agencies": 6
+   },
+   "fix_ranking": [
+    {
+     "outcome": "no_changelog",
+     "agencies": 6
+    },
+    {
+     "outcome": "changelog_not_machine_readable",
+     "agencies": 6
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "agency": "BEA",
+   "display_name": "Bureau of Economic Analysis",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "BEA",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_dbf3834aca4a7aca2d0a52c6"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_88e93b4d92ae878e655bf0bd"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A1",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A1",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "BEA",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_c41f32c66ba92de014a41c54"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_c59ed49de10cea55188dfc25"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A2",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A2",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "BEA",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_5bc2bb3294738b48549acfc6"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_a4d398481045711dd224eb5e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A3",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A3",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "BEA",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.bea.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_26988b4a3068f74726f4b8d4"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BEA/A4",
+       "surface": "home:www.bea.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "BEA",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bea.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_4a6719a24063a4068a4ebe99"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BEA/A5",
+       "surface": "home:www.bea.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "BEA",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail",
+       "finding_id": "fnd_4b638712395afd6617148640"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail",
+       "finding_id": "fnd_e622baaa24da17d22413ffb4"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A6",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A6",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "BEA",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail",
+       "finding_id": "fnd_19c7e636b7056c735bad1583"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail",
+       "finding_id": "fnd_eb14110dddfe23b39a3f3857"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A8",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A8",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "BEA",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_2137988f2459d78b8c0e1c94"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_df0971d0a6917d93d484f18f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A9",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/A9",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "BEA",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.bea.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_4af2db556ec0976ad986ed4f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BEA/A10",
+       "surface": "home:www.bea.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "BEA",
+     "check": "B3",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "pass",
+       "finding_id": "fnd_591ba422357c4c7ae0ac03d7"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "pass",
+       "finding_id": "fnd_56390c4264b84cdcbba81174"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/B3",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "pass"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/B3",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "BEA",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_71b469d141e21b3c0dc0c839"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_f985a6205ec36d8b9105afa9"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/D1",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/D1",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "BEA",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error",
+       "finding_id": "fnd_ca115a8e180b77a58e71c3af"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error",
+       "finding_id": "fnd_90a2afe0a4d318819815c360"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/D4",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/D4",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "BEA",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail",
+       "finding_id": "fnd_c1fce11f97d261f0e38d1c56"
+      },
+      {
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail",
+       "finding_id": "fnd_36953237e55e9a2a60a9e8c0"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/F4",
+       "surface": "scan-bea-flagship-1-interactive-data",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BEA/F4",
+       "surface": "scan-bea-flagship-2-news-releases",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "BJS",
+   "display_name": "Bureau of Justice Statistics",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "BJS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "error",
+       "finding_id": "fnd_28a76a81ba9e3c5aef4ba7d6"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "error",
+       "finding_id": "fnd_24e4af5cf471301bd75631e4"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A1",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A1",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "BJS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_8e9c8d6c9ae44083a76d2c61"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_eea1554d809f69c8b8b0fc43"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A2",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A2",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "BJS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "error",
+       "finding_id": "fnd_88e8429e9ee8a7713941efa0"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "error",
+       "finding_id": "fnd_0958a4c5afc9b45d32080e6e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A3",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A3",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "BJS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_2b84d247eb30aed7c5143739"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BJS/A4",
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "BJS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_5c1085de638e456b4f986344"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BJS/A5",
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "BJS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_d84512ae6a1d5fed61b6a936"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_951b0a2f1f82d5acde3b1945"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A6",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A6",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "BJS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_18e2a532b6f95bf9dbaa7e01"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_9f6bb56bdadc5904db8c9ad7"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A8",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A8",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "BJS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_bb18077505a2bd310f4c6920"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_8c5027f44d2223c5f4385fbd"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A9",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/A9",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "BJS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_651f4f27cd08453bb126e3dc"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BJS/A10",
+       "surface": "home:bjs.ojp.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "BJS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_3cc095f19773bef375d85835"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_88a8a0590c0e27e86a838e78"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/B3",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/B3",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "BJS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_96e10b19e095cba3d22a0095"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_a07d3cc6423433150798348c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/D1",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/D1",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "BJS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_b454dface1195f47ff32f272"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_a61d2c5c1c42611361682f0c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/D4",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/D4",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "BJS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail",
+       "finding_id": "fnd_9605fd048132a5aa312934f5"
+      },
+      {
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail",
+       "finding_id": "fnd_98aef5cb543d3684cac399b6"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/F4",
+       "surface": "scan-bjs-flagship-1-data-by-topic",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BJS/F4",
+       "surface": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "BLS",
+   "display_name": "Bureau of Labor Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "BLS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_09279c5de3ae19033ad73f77"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A1",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "BLS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_47ae0882fd0f68bcc3a8bfe4"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A2",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "BLS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_e3dba0df933ccfd62563d195"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A3",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "BLS",
+     "check": "A4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bls.gov",
+       "verdict": "error",
+       "finding_id": "fnd_ba67b20dfe48f8899ce8d20f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BLS/A4",
+       "surface": "home:www.bls.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "BLS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bls.gov",
+       "verdict": "error",
+       "finding_id": "fnd_16e1fb22478848fb9f96fa90"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BLS/A5",
+       "surface": "home:www.bls.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "BLS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_03a7c27c1fd1a8c59392c1ae"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A6",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "BLS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_d6f700b45209ac674609f1c2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A8",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "BLS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_0ac30b834e2c6c73d166627a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/A9",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "BLS",
+     "check": "A10",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bls.gov",
+       "verdict": "error",
+       "finding_id": "fnd_a5ec0af93c3cc7e4ba16e1c4"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BLS/A10",
+       "surface": "home:www.bls.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "BLS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_ee84f5f4974e3be33ef31210"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/B3",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "BLS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_cfc66702b5420378db4dcd3f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/D1",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "BLS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_967aa28845b7ded5249d3857"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/D4",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "BLS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error",
+       "finding_id": "fnd_7495b53fd1632c96e2d36b7f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BLS/F4",
+       "surface": "flagship:www.bls.gov/cpi/",
+       "verdict": "error"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "display_name": "Bureau of the Census",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "CENSUS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error",
+       "finding_id": "fnd_f1dcae93f21c4027d23dbbf1"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error",
+       "finding_id": "fnd_d3f9c67b8e544f252e7a849d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A1",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A1",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "CENSUS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_3af605c534901aa4b0e66f0e"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_6ae29c11c9a238a518d3b98a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A2",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A2",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "CENSUS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error",
+       "finding_id": "fnd_aa17f5cfd6cfe20155b6c519"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error",
+       "finding_id": "fnd_e5e26eac336783b949e6b8ae"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A3",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A3",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "CENSUS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.census.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_90449d6d7f6d49e0dd6dc8f2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A4",
+       "surface": "home:www.census.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "CENSUS",
+     "check": "A5",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.census.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_4e6fa006a833421dde9a0a1b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A5",
+       "surface": "home:www.census.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "CENSUS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_f1be3cb10189b0673f403cc6"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_21e9a8e65c9f8a4608ae6631"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A6",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A6",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "CENSUS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_df878f205b6f451dfd060e6d"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_939209759fe51123db405802"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A8",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A8",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "CENSUS",
+     "check": "A9",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "pass",
+       "finding_id": "fnd_65ff06080438dfd53bedff63"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "pass",
+       "finding_id": "fnd_2ffe6d55dd57c3f46db9d201"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A9",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "pass"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A9",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "CENSUS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.census.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_24c273ff32be2ea3a46daeb3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "CENSUS/A10",
+       "surface": "home:www.census.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "CENSUS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_8bf58d37892eb4992bff868a"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_99faa050e2ff235cf87936d8"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/B3",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/B3",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "CENSUS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_5782f69860c8168683f01343"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_57e92411b3d20384c9991236"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/D1",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/D1",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "CENSUS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error",
+       "finding_id": "fnd_a781cf955800660886ae5e2d"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error",
+       "finding_id": "fnd_6f0e7bce4914cb73de3280fd"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/D4",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/D4",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "CENSUS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail",
+       "finding_id": "fnd_fb4c91b5b97f098496607da0"
+      },
+      {
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail",
+       "finding_id": "fnd_0ac8cb283fe4f8872c122c58"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/F4",
+       "surface": "scan-census-flagship-1-surveys-programs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "CENSUS/F4",
+       "surface": "scan-census-flagship-2-american-community-survey-acs",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "BTS",
+   "display_name": "Bureau of Transportation Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "BTS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_228c31c61add9ccc549019e3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A1",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "BTS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_0a97e200cb3ea7b192d2a4b5"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A2",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "BTS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_5c3449e818e3cc6b376efdee"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A3",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "BTS",
+     "check": "A4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bts.gov",
+       "verdict": "error",
+       "finding_id": "fnd_123a1b8d434f1df6c3f99912"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BTS/A4",
+       "surface": "home:www.bts.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "BTS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bts.gov",
+       "verdict": "error",
+       "finding_id": "fnd_c5c10e8f0252a072b94fda0c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BTS/A5",
+       "surface": "home:www.bts.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "BTS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_3621cb5390b3f7b7ce0e999d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A6",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "BTS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_3ee163811ca5c6aee6502db3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A8",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "BTS",
+     "check": "A9",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "pass",
+       "finding_id": "fnd_8d7fa31cfe9873b9543edbfd"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/A9",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "BTS",
+     "check": "A10",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.bts.gov",
+       "verdict": "error",
+       "finding_id": "fnd_d12fbdb6dad0dc9f59c4b5c2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "BTS/A10",
+       "surface": "home:www.bts.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "BTS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_9fd9b3f889225dbe8e882313"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/B3",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "BTS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_6e6ad366644cca8cd050e5a5"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/D1",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "BTS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_707ca2b1537de96901a9987e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/D4",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "BTS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_fb525775b6e846594860c359"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "BTS/F4",
+       "surface": "flagship:www.bts.gov/topics/national-transportation-statistics",
+       "verdict": "error"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "DRSMSU",
+   "display_name": "Division of Research and Statistics, Microeconomic Surveys Unit",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "DRSMSU",
+     "check": "A1",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass",
+       "finding_id": "fnd_af45b39716fbee350d75a165"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A1",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "DRSMSU",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail",
+       "finding_id": "fnd_a2e8461c67f6bc750eb35852"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A2",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "DRSMSU",
+     "check": "A3",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass",
+       "finding_id": "fnd_d4c1682c8005e723b3d4d27c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A3",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "DRSMSU",
+     "check": "A4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_90ffb21e98e3e9a2cf1d357b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A4",
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "DRSMSU",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_aa43ffa7ac324033de9bbdc3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A5",
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "DRSMSU",
+     "check": "A6",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass",
+       "finding_id": "fnd_0e948fc014606f20f772dc1b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A6",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "DRSMSU",
+     "check": "A8",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass",
+       "finding_id": "fnd_c491fe4e3b07ed11e5eb9909"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A8",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "DRSMSU",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "error",
+       "finding_id": "fnd_30e011caec36123dd25c3b94"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A9",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "DRSMSU",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_f03d5290041efaf7390d3eeb"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/A10",
+       "surface": "home:www.federalreserve.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "DRSMSU",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail",
+       "finding_id": "fnd_471bcccd8d9d8663a00e3e2e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/B3",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "DRSMSU",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail",
+       "finding_id": "fnd_ce9e855ad2ff9dfa87ea4c41"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/D1",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "DRSMSU",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail",
+       "finding_id": "fnd_5ced1bfcdf054fe48854263b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/D4",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "DRSMSU",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail",
+       "finding_id": "fnd_00893c2dcb65c276f39344c7"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "DRSMSU/F4",
+       "surface": "flagship:www.federalreserve.gov/econres/scfindex.htm",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "ERS",
+   "display_name": "Economic Research Service",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "ERS",
+     "check": "A1",
+     "state": "partial",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "pass",
+       "finding_id": "fnd_d57af44152fe73e4b00b5cf2"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error",
+       "finding_id": "fnd_38d429926757497a7cc785c6"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A1",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "pass"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A1",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "ERS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error",
+       "finding_id": "fnd_03930be9e5844d30cb804bb9"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error",
+       "finding_id": "fnd_1e416ab75fdeeb66c168ccce"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A2",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A2",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "ERS",
+     "check": "A3",
+     "state": "partial",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error",
+       "finding_id": "fnd_ce85fbed72414c44697e29ed"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "pass",
+       "finding_id": "fnd_3ad8c30afd64288197740cbb"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A3",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A3",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "ERS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_0b2fe5ac48493c8a22de4dad"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ERS/A4",
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "ERS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_10d50470b3e4370e77c86e72"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ERS/A5",
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "ERS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail",
+       "finding_id": "fnd_440d9a8eb8c878504bbd85f7"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail",
+       "finding_id": "fnd_e5c89f4d40c01bcfb153f4b2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A6",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A6",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "ERS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail",
+       "finding_id": "fnd_be1d9dd7fac7c9293d4049e7"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail",
+       "finding_id": "fnd_050134eda42bac369f17ae0e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A8",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A8",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "ERS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error",
+       "finding_id": "fnd_59e7153533eeb4bb4cb7706b"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error",
+       "finding_id": "fnd_dc824500a267f1f810f146ad"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A9",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/A9",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "ERS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_9dcefa7e3fbb35b38ebb86c7"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ERS/A10",
+       "surface": "home:www.ers.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "ERS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail",
+       "finding_id": "fnd_dbaa2b039164b4094a2be7fc"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail",
+       "finding_id": "fnd_11c38c9bbc7585e314e57a4d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/B3",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/B3",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "ERS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail",
+       "finding_id": "fnd_198b1b472c0e3f4127042e2f"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail",
+       "finding_id": "fnd_9c5f9d883078868a65622fbb"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/D1",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/D1",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "ERS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error",
+       "finding_id": "fnd_21c50a200a1f2368fa86c750"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error",
+       "finding_id": "fnd_75f2ac02ff15ba0b90c09521"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/D4",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/D4",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "ERS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail",
+       "finding_id": "fnd_41093481c5d703c6cdc5fc57"
+      },
+      {
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail",
+       "finding_id": "fnd_46153ebe14800de5ca34fb65"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/F4",
+       "surface": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ERS/F4",
+       "surface": "scan-ers-flagship-2-agricultural-baseline-database",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "EIA",
+   "display_name": "Energy Information Administration",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "EIA",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_aa411ad3729a44f292e5b582"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A1",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "EIA",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_ffb62d9aca3a11f1cf6ef91a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A2",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "EIA",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_816c7e9f7ce4057b0b4156e7"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A3",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "EIA",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.eia.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_30d78580930819068515387b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "EIA/A4",
+       "surface": "home:www.eia.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "EIA",
+     "check": "A5",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.eia.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_611ee10b09b40031aafcea0a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "EIA/A5",
+       "surface": "home:www.eia.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "EIA",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_59b6ce5b051a8e3e316f98aa"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A6",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "EIA",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_61e12c7bef4cfb027620f205"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A8",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "EIA",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_0c747bffa1825d8b312d4987"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/A9",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "EIA",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.eia.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_a184edfbde19b9636cbcdf02"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "EIA/A10",
+       "surface": "home:www.eia.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "EIA",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error",
+       "finding_id": "fnd_533a86bcab5e7dce2a441be8"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/B3",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "EIA",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail",
+       "finding_id": "fnd_04c10bb32606a80b3588e9e1"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/D1",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "EIA",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail",
+       "finding_id": "fnd_6e65933ecf266713bd87958b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/D4",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "EIA",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail",
+       "finding_id": "fnd_ef9a80095dbc1b3f3c558196"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "EIA/F4",
+       "surface": "scan-eia-flagship-1-open-data",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "NASS",
+   "display_name": "National Agricultural Statistics Service",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "NASS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_7c9d919e8ee8e6aaf0413ee1"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_b80f6f97514a26278c1c6e92"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A1",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A1",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "NASS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_9aea236f4c2eb5f62e5fe3ed"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_6374481bb1ff9ad089934b41"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A2",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A2",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "NASS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_93452c6fe5ddfa38917eae74"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_feb612aaa735f1490624ec3a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A3",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A3",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "NASS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_878a4c4a775609da51254e93"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NASS/A4",
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "NASS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_3f0f9009cbf9a92868d96dea"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NASS/A5",
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "NASS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_66a8087f87493bdf0ec4fde2"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail",
+       "finding_id": "fnd_b5af1f1e2cb70a10c005faaa"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A6",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A6",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "NASS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_58c4b2139eb2b707998ea414"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail",
+       "finding_id": "fnd_9722a41a4ffc3f4c9995ef10"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A8",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A8",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "NASS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_26e52d35eaa17361a4528f9e"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_52f748c481a78b337dc7255b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A9",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/A9",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "NASS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_7d1fb0a8720958d871bd15e8"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NASS/A10",
+       "surface": "home:www.nass.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "NASS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_c1e2020768b2e920bb6bca83"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail",
+       "finding_id": "fnd_41127a954a42f5da432b67fd"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/B3",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/B3",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "NASS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_d2a320f5b50f53d3d1b571e1"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_11827b15a65a69d278b8b58c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/D1",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/D1",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "NASS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_dcd192334445f6509bc9e279"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_6b268058a226a3e1f7ed4f76"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/D4",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/D4",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "NASS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_38fdefbfa451412d7a6d8006"
+      },
+      {
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error",
+       "finding_id": "fnd_fd61ab6ae1152bc7567fe4f6"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/F4",
+       "surface": "scan-nass-flagship-1-data-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NASS/F4",
+       "surface": "scan-nass-flagship-2-livestock-county-estimates",
+       "verdict": "error"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "NAHMSAPHIS",
+   "display_name": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "NAHMSAPHIS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error",
+       "finding_id": "fnd_94a4dd59dfe21ab941ad8e2d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A1",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "NAHMSAPHIS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_ed6a468546baf7d88fd2fb7d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A2",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "NAHMSAPHIS",
+     "check": "A3",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "pass",
+       "finding_id": "fnd_71f9de1a4afdf0b4a13888a6"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A3",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "NAHMSAPHIS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_8a5cc8c2df620107bfcc42f8"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A4",
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "NAHMSAPHIS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_84d2dada8c099a1d05941993"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A5",
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "NAHMSAPHIS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_8f43a749b0e1284f8ef72043"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A6",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "NAHMSAPHIS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_16683cf8d2d34be873c31381"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A8",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "NAHMSAPHIS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error",
+       "finding_id": "fnd_c5e12d7b48315c58c2ee2b24"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A9",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "NAHMSAPHIS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_1a38983592039a1a465b3b20"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/A10",
+       "surface": "home:www.aphis.usda.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "NAHMSAPHIS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_00af8b2cadee3e7421bdb6e3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/B3",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "NAHMSAPHIS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_04b4cd49ba3b8eeb140e997f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/D1",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "NAHMSAPHIS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error",
+       "finding_id": "fnd_27d7f630e9df46258fd5cf3e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/D4",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "NAHMSAPHIS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail",
+       "finding_id": "fnd_b8ae84b8986f380fea784912"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NAHMSAPHIS/F4",
+       "surface": "flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "NCES",
+   "display_name": "National Center for Education Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "NCES",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error",
+       "finding_id": "fnd_b4bd49750d502bbca6048daf"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A1",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "NCES",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_b30c9877aa529a19f9656f12"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A2",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "NCES",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error",
+       "finding_id": "fnd_18731bdaaea718cfc5946411"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A3",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "NCES",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:nces.ed.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_df0525c01a21171544caa243"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCES/A4",
+       "surface": "home:nces.ed.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "NCES",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:nces.ed.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_5b893473ec705882daa36d2d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCES/A5",
+       "surface": "home:nces.ed.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "NCES",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_984b34b960e3a89f4d89bd67"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A6",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "NCES",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_9d3f361d2e2f12ce499c472a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A8",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "NCES",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_d4c09df6a25053fa2f472033"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/A9",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "NCES",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:nces.ed.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_44cbd90820645cca4f430dea"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCES/A10",
+       "surface": "home:nces.ed.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "NCES",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_561f22f0c46bf113e1bd1852"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/B3",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "NCES",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_77331355725440bcf19cb674"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/D1",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "NCES",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error",
+       "finding_id": "fnd_d238ca1ff1c98be820b72b44"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/D4",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "NCES",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail",
+       "finding_id": "fnd_55a863c3ef324df4ff51863e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCES/F4",
+       "surface": "flagship:nces.ed.gov/programs/digest/",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "NCHS",
+   "display_name": "National Center for Health Statistics",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "NCHS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error",
+       "finding_id": "fnd_5c661737c809ccc44d52cef9"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "error",
+       "finding_id": "fnd_88b555a0f0decabafbceedf3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A1",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A1",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "NCHS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_c86e9eb5a01c3c87f6135e09"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_2311796c91f856e204042ec7"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A2",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A2",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "NCHS",
+     "check": "A3",
+     "state": "partial",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error",
+       "finding_id": "fnd_a6dc46ddf49fe4c9acbb8ddd"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "pass",
+       "finding_id": "fnd_9604e9b8ed7952f8d470fcf1"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A3",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A3",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "NCHS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.cdc.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_4eb20b9e5c92d2c1797f659c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCHS/A4",
+       "surface": "home:www.cdc.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "NCHS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.cdc.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_e2a6776d8d69f942e186817b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCHS/A5",
+       "surface": "home:www.cdc.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "NCHS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_6806c7695e9b017a1c8a864e"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_56b296e5ef5e7866dab7e989"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A6",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A6",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "NCHS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_7b62b1099bbd00a837252775"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_7f877317200563df29edd8ea"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A8",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A8",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "NCHS",
+     "check": "A9",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "pass",
+       "finding_id": "fnd_850d72acc58236539cd1a7d4"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "pass",
+       "finding_id": "fnd_609b4b9a6b358e0544eb3c25"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A9",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "pass"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/A9",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "NCHS",
+     "check": "A10",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.cdc.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_8096fb77a7520f43a9c515d3"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCHS/A10",
+       "surface": "home:www.cdc.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "NCHS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_faeb2fdcef2780c3676d78d2"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_ac4f96306290e0dda883d6ce"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/B3",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/B3",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "NCHS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_61ec3bd65762fddd4819b423"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_b2ac991f733fa915926730f1"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/D1",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/D1",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "NCHS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error",
+       "finding_id": "fnd_a2acb1818d07cec50b588ee9"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "error",
+       "finding_id": "fnd_324db43da73c1c2915b30d09"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/D4",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/D4",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "NCHS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail",
+       "finding_id": "fnd_29266686b2a6a1500999cff7"
+      },
+      {
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail",
+       "finding_id": "fnd_0556d214a6374739fcdff17c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/F4",
+       "surface": "scan-nchs-flagship-1-data-briefs",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCHS/F4",
+       "surface": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "NCSES",
+   "display_name": "National Center for Science and Engineering Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "NCSES",
+     "check": "A1",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass",
+       "finding_id": "fnd_a559b76a9089cf202adc9f07"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A1",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "NCSES",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_02c2fe93f41d04bfe6493306"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A2",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "NCSES",
+     "check": "A3",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass",
+       "finding_id": "fnd_4c71c05aa16de0bb03668b5d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A3",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "NCSES",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_b458e7cb483811d4b81e0505"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCSES/A4",
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "NCSES",
+     "check": "A5",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_f2ea6ba09f279acef0182d07"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCSES/A5",
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "NCSES",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_3be52c243a8a34dd6330e2ae"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A6",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "NCSES",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_2702b07d5016b53483bac1db"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A8",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "NCSES",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "error",
+       "finding_id": "fnd_9c70358c960d789e4df34225"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/A9",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "NCSES",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_aee693c90412a56d2e3276ab"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "NCSES/A10",
+       "surface": "home:ncses.nsf.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "NCSES",
+     "check": "B3",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass",
+       "finding_id": "fnd_efd769acca30f1396aff38d2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/B3",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "NCSES",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_bb98e768f5c14c631f4dd337"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/D1",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "NCSES",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_63fbe7d754a128e4533ede53"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/D4",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "NCSES",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail",
+       "finding_id": "fnd_f2278f255730d4f200c9e48e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "NCSES/F4",
+       "surface": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "ORES",
+   "display_name": "Office of Research, Evaluation, and Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "ORES",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_e09c98072ee76f933bf9f346"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A1",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "ORES",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_97d8858561f8d415ef4b424e"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A2",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "ORES",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_ed8e0a898a260163f039f99a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A3",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "ORES",
+     "check": "A4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.ssa.gov",
+       "verdict": "error",
+       "finding_id": "fnd_958f76284b965163b4ca6ed2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ORES/A4",
+       "surface": "home:www.ssa.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "ORES",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.ssa.gov",
+       "verdict": "error",
+       "finding_id": "fnd_10d0398eef55502e71020da6"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ORES/A5",
+       "surface": "home:www.ssa.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "ORES",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_b44e442d958a232f033bf0c2"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A6",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "ORES",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_6742ecb016972891915a5d87"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A8",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "ORES",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_909730b4b0a03d33b0f3033d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/A9",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "ORES",
+     "check": "A10",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.ssa.gov",
+       "verdict": "error",
+       "finding_id": "fnd_8888093b92f65d5a5b81832b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "ORES/A10",
+       "surface": "home:www.ssa.gov",
+       "verdict": "error"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "ORES",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_f82f291100d68fd3ab01bbb8"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/B3",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "ORES",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_435a75bdfaacea1905cf235c"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/D1",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "ORES",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_2c8cbf70f67da0508647c135"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/D4",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "ORES",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error",
+       "finding_id": "fnd_8dda4a00cced9e32d32a4259"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "ORES/F4",
+       "surface": "flagship:www.ssa.gov/policy/docs/statcomps/supplement/",
+       "verdict": "error"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "SOI",
+   "display_name": "Statistics of Income",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "agency": "SOI",
+     "check": "A1",
+     "state": "partial",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_813e35d2e21266e36552e5b7"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "pass",
+       "finding_id": "fnd_e2bb52152be9104be2974055"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A1",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A1",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "SOI",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_8804a51d339110d9c5885aa9"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_5070335cd76b947689cce18b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A2",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A2",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "SOI",
+     "check": "A3",
+     "state": "partial",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_5792e867b652f2c0401faa0b"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "pass",
+       "finding_id": "fnd_d1788537d49b91a573e9404a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A3",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A3",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "SOI",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.irs.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_3a72a0e5af48cbb804a6613b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SOI/A4",
+       "surface": "home:www.irs.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "SOI",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.irs.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_61ac9581753d92b1edcc3138"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SOI/A5",
+       "surface": "home:www.irs.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "SOI",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_d76698889097bbe3e8f4a45a"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_772ff01206f13bfb18cfe168"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A6",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A6",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "SOI",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_00b561e2fcf74ac583f48d14"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_4648ae39088ccb4803c67208"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A8",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A8",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "SOI",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_0f7d6aa3d71225887f6932fd"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "error",
+       "finding_id": "fnd_13f423367fac7c6cc8a14545"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A9",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "error"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/A9",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "SOI",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.irs.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_8ac7181f1d35d97ce0a049d9"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SOI/A10",
+       "surface": "home:www.irs.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "SOI",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_6b4e5e73bd6af18d936fd17b"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_96bc75fdcd2d473e7820e7ab"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/B3",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/B3",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "SOI",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_4785a367ccc78ccf2b6ac27d"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_7d5686ec82bc33b4fff4bd5f"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/D1",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/D1",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "SOI",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_c879ca5406c3e05b291a8c5f"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_29ce279a0faad61cd641b35b"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/D4",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/D4",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "SOI",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_66af5b88f5a9a0f72d94f94d"
+      },
+      {
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail",
+       "finding_id": "fnd_8e6ea13859f9b2278ab7f63d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/F4",
+       "surface": "scan-soi-flagship-1-individual-tax-statistics",
+       "verdict": "fail"
+      },
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SOI/F4",
+       "surface": "scan-soi-flagship-2-business-tax-statistics",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "agency": "SAMHSACBHS",
+   "display_name": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "agency": "SAMHSACBHS",
+     "check": "A1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error",
+       "finding_id": "fnd_698ee688ccb8c336b7ddb1d0"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A1",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A2": {
+     "agency": "SAMHSACBHS",
+     "check": "A2",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_e412759a472677c24d506084"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A2",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A3": {
+     "agency": "SAMHSACBHS",
+     "check": "A3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error",
+       "finding_id": "fnd_dd21d947047d40865de31931"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A3",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A4": {
+     "agency": "SAMHSACBHS",
+     "check": "A4",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.samhsa.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_0851fe0fe1af62968b6c2875"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A4",
+       "surface": "home:www.samhsa.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "A5": {
+     "agency": "SAMHSACBHS",
+     "check": "A5",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "home:www.samhsa.gov",
+       "verdict": "fail",
+       "finding_id": "fnd_a024684c511812eb88c9553a"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A5",
+       "surface": "home:www.samhsa.gov",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A6": {
+     "agency": "SAMHSACBHS",
+     "check": "A6",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_8267e21b4d8542fc1c6399ea"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A6",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A8": {
+     "agency": "SAMHSACBHS",
+     "check": "A8",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_46f9471c31209d63d73df4de"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A8",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "A9": {
+     "agency": "SAMHSACBHS",
+     "check": "A9",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error",
+       "finding_id": "fnd_c5e9ae7f782c6cbfe29535f0"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A9",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error"
+      }
+     ]
+    },
+    "A10": {
+     "agency": "SAMHSACBHS",
+     "check": "A10",
+     "state": "pass",
+     "pages": [
+      {
+       "surface": "home:www.samhsa.gov",
+       "verdict": "pass",
+       "finding_id": "fnd_0ffcd2cc522011c24e8b014d"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_tierA_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/A10",
+       "surface": "home:www.samhsa.gov",
+       "verdict": "pass"
+      }
+     ]
+    },
+    "B3": {
+     "agency": "SAMHSACBHS",
+     "check": "B3",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_75858515b20097b2cd851a56"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/B3",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D1": {
+     "agency": "SAMHSACBHS",
+     "check": "D1",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_234ef339b34a9a7fd2c88c68"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/D1",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    },
+    "D4": {
+     "agency": "SAMHSACBHS",
+     "check": "D4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error",
+       "finding_id": "fnd_58187046d64f1c44ad517338"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/D4",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "error"
+      }
+     ]
+    },
+    "F4": {
+     "agency": "SAMHSACBHS",
+     "check": "F4",
+     "state": "fail",
+     "pages": [
+      {
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail",
+       "finding_id": "fnd_6048e64d4024658ac0d2a6e9"
+      }
+     ],
+     "locators": [
+      {
+       "kind": "matrix",
+       "path": "docs/reports/scan_matrix_product_2026-10-07_composite_d.json",
+       "cell": "SAMHSACBHS/F4",
+       "surface": "flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health",
+       "verdict": "fail"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "state_counts": {
+  "pass": 39,
+  "fail": 164,
+  "partial": 5,
+  "none": 0
+ },
+ "multi_page_agencies": [
+  "BEA",
+  "BJS",
+  "CENSUS",
+  "ERS",
+  "NASS",
+  "NCHS",
+  "SOI"
+ ],
+ "legend": {
+  "pass": "every data page meets the check",
+  "partial": "some data pages meet the check, some do not",
+  "fail": "no data page meets the check"
+ },
+ "footnote": "A check is pass where every one of an agency's data pages meets it, fail where none do, and partial where some do and some do not; a page that returned an access denial, an unconfirmable absence or a server error is counted as not meeting the check, and an agency with one data page can only pass or fail. The fix under a check is the action for the failing outcome the most agencies hit on that check across this measurement. Measured across all sixteen federal statistical agencies in October 2026.",
+ "presence_gate": {
+  "missing_plain_name": [],
+  "missing_fix_line": []
+ }
+}

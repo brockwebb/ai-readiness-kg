@@ -24,19 +24,33 @@ for _p in ("", "scripts", "assessment"):
 
 import dcat_faq_run as FR  # noqa: E402
 import summary_build as SB  # noqa: E402
+import summary_grid as GRID  # noqa: E402
 import summary_text_check as TC  # noqa: E402
 import summary_verify as SV  # noqa: E402
 
 SRC = REPO / "reports" / "summary" / "summary_source.yaml"
+GRID_JSON = REPO / "reports" / "summary" / "grid.json"
+
+
+def _src() -> dict:
+    return yaml.safe_load(SRC.read_text(encoding="utf-8"))
+
+
+def _grid() -> dict:
+    return json.loads(GRID_JSON.read_text(encoding="utf-8"))
 
 
 # --------------------------------------------------------------------------------- text check
 
 def test_text_check_passes_on_the_built_summary():
-    src = yaml.safe_load(SRC.read_text(encoding="utf-8"))
+    src = _src()
     manifest = json.loads((REPO / src["inputs"]["manifest"]).read_text(encoding="utf-8"))
-    md = SB.full_markdown(src, manifest)
-    assert TC.check(md) == [], "the shipped summary must pass its own text check"
+    grid = _grid()
+    # The text check reads the clean-text rendering of both pages plus the sources, as the build
+    # does; the PDF's raw typst carries the same human strings.
+    plain = SB.full_plaintext(src, grid, manifest)
+    assert TC.check(plain) == [], "the shipped summary must pass its own text check"
+    assert SB.text_findings(plain) == [], "the build's text check (plus lint) must also be clean"
 
 
 @pytest.mark.parametrize("bad,rule", [
@@ -47,6 +61,9 @@ def test_text_check_passes_on_the_built_summary():
     ("This is an AI readiness summary.", "ai_outside_title"),
     ("Artificial Intelligence is the point.", "ai_outside_title"),
     ("A dash — here.", "dash"),
+    ("It runs at tier M for everyone.", "tier_letter"),
+    ("Tier O needs a tool.", "tier_letter"),
+    ("RULE-A4-v1 measures the robots policy.", "rule_code"),
 ])
 def test_text_check_catches_each_forbidden_thing(bad, rule):
     md = f"# Title\n\nPrepared today.\n\n{bad}\n"
@@ -79,6 +96,86 @@ def test_factual_sentences_all_carry_markers():
     import concise_report_gate as G
     for s in SV.factual_sentences(src):
         assert G.marker_ids(s), f"a factual sentence with no claim marker: {s!r}"
+
+
+# -------------------------------------------------------------------------------- the page-2 grid
+
+def _matrices():
+    cycle = GRID.load_cycle()
+    return {"product": GRID.load_json(GRID.matrix_path("product", cycle)),
+            "tierA": GRID.load_json(GRID.matrix_path("tierA", cycle))}
+
+
+def _hand_state(agency: str, leg: str, source: str, matrices: dict) -> str:
+    """Recompute a cell's state by hand from the matrix: pass iff every page passes, fail iff
+    none do, partial otherwise (an access error is a page that did not meet the check)."""
+    verdicts = [r["verdicts"][leg] for r in matrices[source]["rows"]
+                if r["agency"] == agency and leg in r["verdicts"]]
+    passed = sum(1 for v in verdicts if v == "pass")
+    if not verdicts:
+        return "none"
+    if passed == len(verdicts):
+        return "pass"
+    if passed == 0:
+        return "fail"
+    return "partial"
+
+
+def test_grid_roundtrip_ten_random_cells():
+    import random
+    grid = _grid()
+    matrices = _matrices()
+    src_of = {c["leg"]: c["source_matrix"] for c in grid["columns"]}
+    cells = [(row["agency"], leg, cell)
+             for row in grid["rows"] for leg, cell in row["cells"].items()]
+    rng = random.Random(20261014)
+    for agency, leg, cell in rng.sample(cells, 10):
+        want = _hand_state(agency, leg, src_of[leg], matrices)
+        assert cell["state"] == want, f"{agency}/{leg}: grid.json {cell['state']}, by hand {want}"
+
+
+def test_every_grid_cell_carries_a_locator():
+    grid = _grid()
+    for row in grid["rows"]:
+        for leg, cell in row["cells"].items():
+            assert cell["locators"], f"{row['agency']}/{leg} has no locator"
+            for loc in cell["locators"]:
+                assert loc["kind"] == "matrix" and loc["path"] and loc["cell"]
+
+
+def test_grid_columns_have_plain_name_and_fix_line():
+    grid = _grid()
+    assert grid["presence_gate"]["missing_plain_name"] == []
+    assert grid["presence_gate"]["missing_fix_line"] == []
+    for c in grid["columns"]:
+        assert c["plain_name"] and c["fix_line"]
+
+
+def test_grid_excludes_declared_and_candidate_checks():
+    grid = _grid()
+    legs = {c["leg"] for c in grid["columns"]}
+    assert "A11-declared" not in legs and "A12" not in legs
+    assert "A11-declared" in grid["excluded"]["declared"]
+    assert "A12" in grid["excluded"]["candidate"]
+
+
+def test_grid_text_carries_no_digit_outside_page_counts_and_the_date():
+    """ADDENDUM §2: no digit on page two outside a row label's page count and the footnote date.
+    Checked over the grid's human strings (what the page renders), not the typst or page furniture."""
+    import re
+    grid = _grid()
+    strings = ([c["plain_name"] for c in grid["columns"]]
+               + [c["fix_line"] for c in grid["columns"]]
+               + list(grid["legend"].values()))
+    for s in strings:
+        assert not re.search(r"[0-9]", s), f"a digit in a grid string: {s!r}"
+    # row labels may carry a page count; strip "(N pages)" and assert nothing else has a digit
+    for row in grid["rows"]:
+        label = re.sub(r"\(\d+ pages\)", "", row["display_name"])
+        assert not re.search(r"[0-9]", label), f"a digit in a row label: {row['display_name']!r}"
+    # the footnote carries only the cycle date (a year)
+    others = re.sub(r"\b(in|of)\s+[A-Z][a-z]+\s+\d{4}\b", "", grid["footnote"])
+    assert not re.search(r"[0-9]", others), f"an unexpected digit in the footnote: {grid['footnote']!r}"
 
 
 # ------------------------------------------------------------------- build render (needs pandoc)

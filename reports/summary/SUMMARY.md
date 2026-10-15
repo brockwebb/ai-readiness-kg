@@ -1,28 +1,24 @@
 # SI readiness of federal statistical data: an executive summary
 
-Prepared 13 October 2026.
+Prepared 15 October 2026.
 
-SI readiness is how well an SI system, working on its own, can find an agency's data, understand it, and use it correctly. It has many parts, so each is measured on its own, and each can sit at a different level. The field moves fast, so this work holds to the fundamentals that limit what SI systems can do with federal data today. A fuller definition, covering how the data was made, where it came from, its date, and its terms of use, is in the appendix.
-
-## Why it matters
-
-SI readiness is wide: it runs across how data is published, how the web is used, which metadata standards apply, what policy requires, and how SI systems behave, and no one person holds all of it. People increasingly reach official statistics through SI systems, so when those systems cannot find or understand federal data, the public is left with stale or second-hand numbers. We meet an SI problem with SI: these systems helped build the work, and they are how the public now reaches the data.
+SI readiness is how well an SI system, one that finds, reads and uses data on its own, can reach an agency's data, understand it, and use it correctly. People increasingly reach official statistics through such systems, so when those systems cannot find or understand federal data, the public is left with stale or second-hand numbers. SI readiness runs across data publishing, web practice, metadata standards and policy at once and moves fast, so no one person holds all of it, and we meet an SI problem with SI.
 
 ## What we built
 
-This is a decision support system, not a site checker, and it works in three parts. It measures what a machine actually meets on an agency's site, rather than what the agency says about itself, and that measurement is the way in, not the point. It maps each result onto a readiness framework, built on the four qualities USAFacts set out, that data be accessible, understandable, accurate and open, with three more added, and puts every result on one standard scale, so agencies can be set side by side. It then says what to do, ordered by effort and by how much each fix would open up: the cheap, high-value fixes first, the larger ones planned, and the high-effort, low-value ones, and the merely temporary ones, set aside. How much a fix is worth is a rated judgment under a stated rubric, not a measurement.
+This is a decision support system, not a site checker: it measures what a machine actually meets on an agency's site, rather than what the agency says about itself. It maps each result onto a readiness framework, built on the four qualities the data nonprofit USAFacts set out (that data be accessible, understandable, accurate and open) with three more added, and puts every result on one standard scale so agencies can be set side by side. It then says what to fix first for the best value, the cheap high-value fixes before the larger ones, where how much a fix is worth is a rated judgment under a stated rubric, not a measurement.
 
-## Who can use it, and why the advice can be trusted
+## Who can use it, and why its advice can be trusted
 
-An executive, someone working anywhere in the data's life, a site administrator or a data producer can all ask it questions, get answers pitched at their own level, and see where their part fits the whole, so no one needs to be expert in every field it touches. The advice rests on a knowledge graph of the research, standards and policy, which an SI system reads to give answers with their sources attached, rather than off the cuff. When a source is overtaken, the graph keeps it as history but stops it shaping advice, so the work can also explain why an approach was tried and dropped.
+An executive, a site administrator, a data producer or anyone working in the data's life can ask it questions and get answers at their own level, so no one need be expert in every field it touches. The advice rests on a connected store of the research, standards and policy, which the system reads to give answers with their sources attached. When newer evidence replaces a source, the store keeps the old one as history but stops it shaping advice.
 
 ## Measured in three tiers, by who can run them
 
-The checks fall into three tiers by who can run them: a public tier that anyone can run with free, open tools; a tier that needs an agency to turn something on, often free to do; and a tier that needs paid tools. The public tier matters most, because it is what any SI system, and any member of the public, faces, not only the largest commercial crawlers. Each tier connects to the framework, so an agency can see how far the public tier alone carries it, and what turning a setting on, or buying a tool, would add.
+The checks fall into three tiers by who can run them: a public tier anyone can run with free, open tools; an agency-enabled tier that needs an agency to turn something on; and a paid-tool tier. The public tier matters most, because it is what any such system, and any member of the public, meets, not only the largest commercial crawlers. The grid on the next page runs the public tier across every agency, and three findings stand out below.
 
 ## What we found
 
-All 16 federal statistical agencies are now on this measurement. The results below come from the public tier, and three stand out, each with a free action that would move it. A plain, identified machine client is frequently refused before it can read anything. Much of what such a client looks for is not served at all. And resources that agencies do publish often cannot be reached by a machine that starts at the data page, because nothing links to them.
+This measurement covers all 16 federal statistical agencies. A plain, identified machine client is frequently refused before it can read anything, and much of what it looks for is not served at all. Resources that agencies do publish often cannot be reached by a machine that starts at the data page.
 
 ## One caution
 
@@ -30,29 +26,63 @@ Any single score can be gamed, so we design around what the public can actually 
 
 
 ```{=typst}
-#pagebreak()
+#pagebreak(weak: true)
+#page(flipped: true, margin: (x: 1.1cm, y: 1.0cm))[
+#align(center)[#text(size: 12pt, weight: "bold")[The public tier, agency by agency]]
+#v(4pt)
+#set text(size: 6pt)
+#table(
+  columns: (4.5cm,) + (1fr,)*13,
+  align: (left + horizon,) + (center + horizon,)*13,
+  stroke: 0.3pt + rgb("#bbbbbb"),
+  inset: 2.1pt,
+  table.header([*Agency*], [*Data offered in a machine format*], [*A documented machine interface*], [*A full dataset download*], [*Crawlers allowed to reach the data*], [*The data is listed for discovery*], [*Structured markup describes the data*], [*A machine readable release date*], [*A machine first entry point*], [*Data tools answer a machine*], [*Methodology in reachable structured text*], [*A machine readable licence*], [*Listed in a public inventory*], [*A machine readable change history*]),
+  [Bureau of Economic Analysis (2 pages)], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Bureau of Justice Statistics (2 pages)], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Bureau of Labor Statistics], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Bureau of the Census (2 pages)], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Bureau of Transportation Statistics], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Division of Research and Statistics, Microeconomic Surveys Unit], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Economic Research Service (2 pages)], [#text(fill: rgb("#c77d0a"))[◐]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#c77d0a"))[◐]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Energy Information Administration], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [National Agricultural Statistics Service (2 pages)], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [National Animal Health Monitoring System, Animal and Plant Health Inspection Service], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [National Center for Education Statistics], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [National Center for Health Statistics (2 pages)], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#c77d0a"))[◐]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [National Center for Science and Engineering Statistics], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Office of Research, Evaluation, and Statistics], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Statistics of Income (2 pages)], [#text(fill: rgb("#c77d0a"))[◐]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#c77d0a"))[◐]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]],
+  [Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#1b5e9c"))[●]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]], [#text(fill: rgb("#b22222"))[○]]
+)
+#v(6pt)
+#text(size: 7pt)[*The fix under each check.*]
+#v(2pt)
+#set text(size: 6.2pt)
+#grid(columns: (1fr, 1fr), gutter: 9pt, row-gutter: 2.4pt,
+  [*Data offered in a machine format.* Link a data file from the product page and serve it with its own media type.],
+  [*A documented machine interface.* Expose the product through a machine interface and publish its description.],
+  [*A full dataset download.* Link a bulk download of the product from the product page.],
+  [*Crawlers allowed to reach the data.* Serve a robots.txt that permits the data paths for the crawlers you want to allow.],
+  [*The data is listed for discovery.* List the product address in the discovery file that is already served.],
+  [*Structured markup describes the data.* Type the product page's existing markup as a dataset.],
+  [*A machine readable release date.* Publish a release date for the product.],
+  [*A machine first entry point.* Publish a machine-first entry point for the product.],
+  [*Data tools answer a machine.* Return a real status for routes that do not exist.],
+  [*Methodology in reachable structured text.* Link the methodology from the product page.],
+  [*A machine readable licence.* Publish a machine-readable licence for the product.],
+  [*Listed in a public inventory.* Add the product to the public data inventory already published.],
+  [*A machine readable change history.* Publish a version history for the product.],
+)
+#v(6pt)
+#text(size: 6.3pt)[*Key.* #text(fill: rgb("#1b5e9c"))[●] pass: every data page meets the check; #text(fill: rgb("#c77d0a"))[◐] partial: some data pages meet the check, some do not; #text(fill: rgb("#b22222"))[○] fail: no data page meets the check.]
+#v(3pt)
+#text(size: 6pt, style: "italic")[A check is pass where every one of an agency's data pages meets it, fail where none do, and partial where some do and some do not; a page that returned an access denial, an unconfirmable absence or a server error is counted as not meeting the check, and an agency with one data page can only pass or fail. The fix under a check is the action for the failing outcome the most agencies hit on that check across this measurement. Measured across all sixteen federal statistical agencies in October 2026.]
+]
 ```
-
-## The results, and the free actions that move them
-
-| What we looked at | What the machine met | A free action that moves it |
-| --- | --- | --- |
-| Reaching the data at all | 341 of 1,055 checks met an access denial, a 401, 403 or 429 reply, a robots rule, or a reset connection, and 177 passed. | Serve a plain, identified, robots-respecting client the pages it asks for. |
-| Finding what is published | 415 of the 1,055 checks found nothing served where a machine looks for it. | Publish the missing piece, such as a machine-readable licence. |
-| Reaching resources that do exist | Of 29 agency-and-object pairs where the object exists, a data interface, its terms, a change history or a data inventory, a machine that starts at the data page cannot reach 15; counted per page, 54 of 88 cannot be reached. | Link the object from the data page, or place it at the standard address a published standard defines. |
-| One publisher in focus: the Census Bureau | 18 of 39 published rows fail, and two of the fixes the record names, a machine-readable licence and a revision class on every changelog entry, sit in a notional effort band of hours and carry no cost. | Publish a machine-readable licence, and carry a revision class on every changelog entry. |
-
-Effort and cost are relative, notional estimates by type of fix, not a calendar or a budget.
 
 ```{=typst}
 #pagebreak()
 ```
-
-## The fuller definition
-
-SI readiness is how well a system that finds, reads and uses data on its own can reach an agency's data, understand it, and use it correctly, judged where real users and the tools they now use meet the data. It has several parts, each measured on its own and each able to sit at a different level. The first is discovery: the data, and the ways into it, can be found without anyone being told where they are. The second is access: a plain, identified machine client is served. The third is interpretation: the data is machine-readable and machine-understandable, with contextual metadata in standard formats. The fourth is fitness for use: how the data was made, where it came from, its date, and its terms of use are stated. The framework keeps the four qualities USAFacts set out, that data be accessible, understandable, accurate and open, and adds three more.
-
-The definition draws on the U.S. Department of Commerce guidance (machine-readable and machine-understandable, with contextual metadata in standard formats), NOAA NAO 216-128 and the World Bank (discoverable, and the ways in), the UN Statistical Commission (how the data was made, and its date), and USAFacts (the four qualities).
 
 ## Sources
 
@@ -66,4 +96,4 @@ The definition draws on the U.S. Department of Commerce guidance (machine-readab
 8. schema.org: WebAPI. Schema.org Community Group, n.d. <https://schema.org/WebAPI>
 9. RFC 8288: Web Linking. M. Nottingham, 2017. <https://www.rfc-editor.org/rfc/rfc8288>
 
-Measured across all 16 federal statistical agencies in September and October 2026. Every figure above traces to a registered result; the detailed report and the knowledge graph hold the evidence behind each one.
+Measured across all 16 federal statistical agencies in September and October 2026. Every mark in the grid traces to a cell of the published matrices for the cycle of record; the detailed report and the knowledge graph hold the evidence behind each one.

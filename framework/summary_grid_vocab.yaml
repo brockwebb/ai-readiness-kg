@@ -1,0 +1,91 @@
+# Plain-language names for the executive-summary grid (DN-014 ADDENDUM 01 §3, task
+# 2026-10-14_executive_summary_v3_grid). AUTHORED content, not tunable parameters: the strings a
+# reader sees in place of the record's codes. Applied to framework/ai_readiness_framework.json by
+# scripts/apply_grid_plain_names.py, through the single writer (framework_writeback.save), never
+# by hand. scripts/summary_grid.py reads the names back FROM the record, not from here.
+#
+# Constraints every string here already satisfies (the summary text check enforces them on the
+# built page): no indicator code (a letter A-G and one or two digits), no process word, no "AI"
+# outside a published title, no en/em dash, and — for a grid cell — no digit at all.
+
+# display_name on each measurement tier (the record's `tier` property values). DN-014 §5's three
+# tiers by who can run them; the grid shows the first.
+tier_display_names:
+  public: "public tier"
+  agency_instrumented: "agency-enabled tier"
+  paid: "paid-tool tier"
+
+# `declared: true` on every rule that records what an agency DECLARES rather than what a machine
+# met (ADDENDUM §2 and §3): A11 measures the declared layer only; E2/E4/E7/F1/F5 are
+# declaration-basis indicators. Excluded from the grid.
+declared_codes: [A11, E2, E4, E7, F1, F5]
+
+# plain_name (at most six words, what a machine MET, not the rule's mechanism) on every
+# public-tier rule the grid shows. These are the grid's 13 columns.
+plain_names:
+  A1: "Data offered in a machine format"
+  A2: "A documented machine interface"
+  A3: "A full dataset download"
+  A4: "Crawlers allowed to reach the data"
+  A5: "The data is listed for discovery"
+  A6: "Structured markup describes the data"
+  A8: "A machine readable release date"
+  A9: "A machine first entry point"
+  A10: "Data tools answer a machine"
+  B3: "Methodology in reachable structured text"
+  D1: "A machine readable licence"
+  D4: "Listed in a public inventory"
+  F4: "A machine readable change history"
+
+# fix_line (one imperative sentence, no codes) on every action a grid rule's failing outcomes map
+# to. The grid shows ONE per column: the fix for the outcome the most agencies hit on that check
+# (scripts/summary_grid.py picks it). Keyed by the record's Action node id.
+fix_lines:
+  # A1
+  act:a1-publish-a-structured-distribution: "Publish the product as a structured download beside the PDF."
+  act:a1-serve-the-data-files-with-their-own-media-type: "Link a data file from the product page and serve it with its own media type."
+  # A2
+  act:a2-serve-a-parseable-api-description-at-the-documented-path: "Serve a parseable interface description where the interface is documented."
+  act:a2-expose-an-api-and-publish-its-description: "Expose the product through a machine interface and publish its description."
+  # A3
+  act:a3-add-a-whole-product-download-beside-the-query-builder: "Add a whole-product download beside the query builder."
+  act:a3-publish-the-complete-file-not-a-sample: "Publish the complete product, not a sample extract."
+  act:a3-link-a-bulk-download-from-the-product-page: "Link a bulk download of the product from the product page."
+  # A4 (no "AI" on the page: the body uses "machine crawlers")
+  act:a4-serve-a-robots-txt-that-names-ai-crawlers: "Serve a robots.txt that permits the data paths for the crawlers you want to allow."
+  act:a4-allow-the-data-paths-for-named-ai-crawlers: "Allow the product's data paths for the machine crawlers you intend to serve."
+  # A5
+  act:a5-list-the-product-url-in-the-sitemap: "List the product address in the discovery file that is already served."
+  act:a5-publish-a-sitemap-and-point-robots-txt-at-it: "Publish a sitemap and point robots.txt at it."
+  # A6
+  act:a6-type-the-product-page-as-a-dataset: "Type the product page's existing markup as a dataset."
+  act:a6-embed-json-ld-on-the-product-page: "Embed structured markup describing the product on the product page."
+  act:a6-make-the-dataset-markup-conform-to-the-profile: "Make the dataset markup conform to the profile it declares."
+  # A8
+  act:a8-declare-the-product-vintage-in-the-markup: "Declare the product's vintage in the markup, not only in a file header."
+  act:a8-publish-a-release-date-for-the-product: "Publish a release date for the product."
+  act:a8-serve-a-stable-latest-url-on-the-product-host: "Serve a stable latest address for the product on its own host."
+  act:a8-make-the-latest-pointer-resolve: "Make the latest-vintage pointer resolve."
+  # A9
+  act:a9-return-a-machine-format-at-the-machine-path: "Return a machine format at the paths advertised for machines."
+  act:a9-publish-a-machine-first-entry-point: "Publish a machine-first entry point for the product."
+  # A10
+  act:a10-return-a-real-status-for-routes-that-do-not-exist: "Return a real status for routes that do not exist."
+  act:a10-make-the-product-deep-link-resolve: "Make the product's own deep link resolve."
+  act:a10-serve-the-product-content-before-javascript-runs: "Serve the product's content in the first response, before scripts run."
+  # B3
+  act:b3-serve-the-methodology-without-javascript: "Serve the methodology document without requiring a script to run."
+  act:b3-publish-the-methodology-in-structured-text: "Publish the methodology in structured text beside the PDF."
+  act:b3-link-the-methodology-from-the-product-page: "Link the methodology from the product page."
+  act:b3-publish-a-methodology-document-reachable-from-the-product: "Publish a methodology document reachable from the product surface."
+  # D1
+  act:d1-state-the-licence-as-an-identifier: "State the licence as an identifier, not as a sentence."
+  act:d1-publish-a-machine-readable-licence: "Publish a machine-readable licence for the product."
+  # D4
+  act:d4-make-the-catalog-conform-to-dcat-us: "Make the public data catalog conform to its published schema."
+  act:d4-add-the-product-to-the-public-data-inventory: "Add the product to the public data inventory already published."
+  act:d4-publish-a-data-json-inventory: "Publish a machine-readable data inventory on the host."
+  # F4
+  act:f4-carry-a-revision-class-on-every-changelog-entry: "Carry a revision class on every change-history entry."
+  act:f4-serve-the-changelog-in-a-machine-readable-format: "Serve the change history in a machine-readable format as well as a page."
+  act:f4-publish-a-version-history-endpoint: "Publish a version history for the product."

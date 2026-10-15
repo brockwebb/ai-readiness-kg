@@ -52,7 +52,7 @@ import dcat_faq_run as FR  # noqa: E402
 import summary_build as SB  # noqa: E402
 
 GENERATOR = "scripts/summary_verify.py"
-TASK = "cc_tasks/2026-10-12_executive_summary_from_brief_v2.md"
+TASK = "cc_tasks/2026-10-14_executive_summary_v3_grid.md"
 OUT = REPO / "reports" / "summary"
 SOURCE = OUT / "summary_source.yaml"
 RUN_DIR = OUT / "run"
@@ -104,9 +104,10 @@ Below is a two-page executive summary. Read it, and answer the questions using o
 2. {q2}
 3. {q3}
 4. {q4}
+5. {q5}
 
 Return ONLY a JSON object, with no prose before or after it and no code fence:
-{{"q1": "...", "q2": "...", "q3": "...", "q4": "..."}}
+{{"q1": "...", "q2": "...", "q3": "...", "q4": "...", "q5": "..."}}
 
 SUMMARY
 {report}"""
@@ -142,32 +143,28 @@ def load_names(src: dict) -> dict:
 
 
 def factual_sentences(src: dict) -> list[str]:
-    """Every reader-facing sentence of pages 1 and 2 that carries a claim marker, in order: the
-    page-1 result sentences, the page-2 intro, and the `found` cell of each table row."""
+    """Every reader-facing sentence that carries a claim marker, in order. Page two is now the
+    grid (its marks are computed from the matrices, not authored claim sentences), so the result
+    sentences are page one's; a page-2 `intro`, if the source ever carries one, is still read."""
     out = []
     for b in src["page1"]:
         for s in b.get("para", []):
             if G.marker_ids(s):
                 out.append(s)
-    p2 = src["page2"]
-    for s in p2.get("intro", []):
+    for s in (src.get("page2") or {}).get("intro", []) or []:
         if G.marker_ids(s):
             out.append(s)
-    for r in p2["table"]["rows"]:
-        if G.marker_ids(r["found"]):
-            out.append(r["found"])
     return out
 
 
 def all_body_sentences(src: dict) -> list[str]:
-    """Every reader-facing sentence of pages 1 and 2 (for the digit sweep over markerless ones)."""
+    """Every reader-facing authored sentence (for the digit sweep over markerless ones). The grid
+    is not authored prose; its digits (page counts, the cycle date) are checked on the page, not
+    here."""
     out = []
     for b in src["page1"]:
         out += b.get("para", [])
-    p2 = src["page2"]
-    out += p2.get("intro", [])
-    for r in p2["table"]["rows"]:
-        out.append(r["found"])
+    out += (src.get("page2") or {}).get("intro", []) or []
     return out
 
 
@@ -210,9 +207,10 @@ def parse_labels(text: str, n: int) -> list:
 
 def parse_reader(text: str) -> dict:
     obj = FR._json_payload(text)
-    if not isinstance(obj, dict) or not all(isinstance(obj.get(k), str) for k in ("q1", "q2", "q3", "q4")):
-        raise ValueError("reader answer lacks q1, q2, q3 or q4")
-    return {k: obj[k] for k in ("q1", "q2", "q3", "q4")}
+    keys = ("q1", "q2", "q3", "q4", "q5")
+    if not isinstance(obj, dict) or not all(isinstance(obj.get(k), str) for k in keys):
+        raise ValueError("reader answer lacks q1, q2, q3, q4 or q5")
+    return {k: obj[k] for k in keys}
 
 
 # ----------------------------------------------------------------------- interleave controls
@@ -304,7 +302,11 @@ class Runner:
         cited = list(dict.fromkeys(cited))
         prompt = CHECK_TEMPLATE.format(names=names_block(" ".join(stripped), self.names),
                                        claims=claim_block(cited, self.claims), sentences=lines)
-        rec = self.unit("check", 0, FR.sha(lines), prompt, "checker", CHECK_SHA,
+        # The unit key is the whole prompt, not the sentences alone: the CLAIMS and NAMES blocks
+        # are part of what the checker judges, so changing a sentence's citation (which the
+        # stripped sentence text does not show) must re-run the call, never reuse a stale verdict
+        # (§15 deterministic keys; a citation-only edit reused the prior verdict under the old key).
+        rec = self.unit("check", 0, FR.sha(prompt), prompt, "checker", CHECK_SHA,
                         lambda t: parse_labels(t, len(combined)))
         labels = rec["parsed"]
         control_rows, real_rows = [], []
@@ -343,7 +345,10 @@ class Runner:
             raise FR.StopRun(f"pilot projects {proj:,} tokens past the ceiling {self.rc['ceiling_tokens']:,}")
 
     def read(self, rnd: int) -> dict:
-        body = SB.body_markdown(self.src)
+        grid = json.loads((REPO / self.src["inputs"]["grid"]).read_text(encoding="utf-8"))
+        # The reader reads the CLEAN TEXT of both pages — page-1 prose and the grid as text — not
+        # the PDF's raw typst; the two carry the same human strings.
+        body = SB.body_plaintext(self.src, grid)
         # The reader sees clean prose with the page boundary marked in words, not the build
         # directive: the typst page break renders in the PDF, but Fable must see where page 1 ends
         # (without it, a reader guesses the split and misjudges what is on page 1).
@@ -392,7 +397,8 @@ class SummaryScriptedConsumer:
                             "claim_ids": [] if is_ctl else cid, "reason": "scripted"})
             text = json.dumps(arr)
         else:
-            text = json.dumps({"q1": "yes to all four.", "q2": "nothing.", "q3": "nothing.", "q4": "nothing."})
+            text = json.dumps({"q1": "yes to all four.", "q2": "nothing.", "q3": "nothing.",
+                               "q4": "nothing.", "q5": "none."})
         return Completion(text=text, model_id=self.model_id, usage={"inputTokens": 1, "outputTokens": 1})
 
 

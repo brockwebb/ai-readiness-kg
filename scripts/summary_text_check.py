@@ -47,9 +47,16 @@ def load_words(path: Path | None = None) -> dict:
 
 def _body_lines(text: str, skip_heading: str) -> list[tuple[int, str]]:
     """(1-based line number, line) for every line except those inside the skipped section, which
-    runs from its heading to the next heading of the same or a higher level, or end of file."""
-    out, skipping, skip_level = [], False, 0
+    runs from its heading to the next heading of the same or a higher level, or end of file, and
+    except the contents of a fenced code block (the PDF-only raw typst of the page-2 grid: its
+    human strings are checked through the clean-text rendering, not its typst directives)."""
+    out, skipping, skip_level, fenced = [], False, 0, False
     for n, line in enumerate(text.splitlines(), 1):
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
         m = re.match(r"^(#+)\s+(.*)$", line)
         if m:
             level, title = len(m.group(1)), m.group(2).strip()
@@ -70,6 +77,9 @@ def check(text: str, words: dict | None = None) -> list[dict]:
     code_re = re.compile(words["indicator_code_pattern"])
     ai_re = re.compile(words["ai_pattern"])
     dash_re = re.compile(words["dash_pattern"])
+    # DN-014 ADDENDUM 01 §3: tier letters and rule codes, forbidden with the indicator codes.
+    tier_re = re.compile(words["tier_letter_pattern"]) if words.get("tier_letter_pattern") else None
+    rule_re = re.compile(words["rule_code_pattern"]) if words.get("rule_code_pattern") else None
     skip = words.get("skip_section_heading") or "\x00"
     out = []
     for n, line in _body_lines(text, skip):
@@ -81,6 +91,14 @@ def check(text: str, words: dict | None = None) -> list[dict]:
         for m in code_re.finditer(bare):
             out.append({"rule": "indicator_code", "line": n, "match": m.group(0),
                         "context": bare[max(0, m.start() - 30): m.end() + 30].strip()})
+        if rule_re is not None:
+            for m in rule_re.finditer(bare):
+                out.append({"rule": "rule_code", "line": n, "match": m.group(0),
+                            "context": bare[max(0, m.start() - 30): m.end() + 30].strip()})
+        if tier_re is not None:
+            for m in tier_re.finditer(bare):
+                out.append({"rule": "tier_letter", "line": n, "match": m.group(0),
+                            "context": bare[max(0, m.start() - 30): m.end() + 30].strip()})
         for m in ai_re.finditer(bare):
             out.append({"rule": "ai_outside_title", "line": n, "match": m.group(0),
                         "context": bare[max(0, m.start() - 30): m.end() + 30].strip()})

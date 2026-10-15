@@ -332,7 +332,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         "recorded_by": "cc_tasks/2026-10-06_scoring_frontier_parent_host_counts.md"
       },
       "… 2 more (elided by mcp/airkg_doc.py, not by the tool)"
-    ]
+    ],
+    "plain_name": "The data is listed for discovery"
   },
   "spec": {
     "indicator_code": "A5",
