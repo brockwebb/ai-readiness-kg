@@ -363,14 +363,22 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
         {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
          "Action": 64, "AssessmentTool": 13, "Precondition": 19}
+    # 2026-10-15: the readiness diagnostic package (`cc_tasks/2026-10-15_readiness_diagnostic_
+    # package.md` Part A, DN-016 ruling 4) added 49 `EVIDENCED_BY` edges from the sixteen
+    # instrument MeasurementSpecs to the corpus documents each entry cites, written by
+    # `scripts/apply_instrument_fields.py` through the single writer. The skeleton authors only
+    # indicator-sourced EVIDENCED_BY, so these are preserved here: 8 -> 57.
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 8,
+        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 57,
          "REMEDIATES": 64, "REQUIRES": 37}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
          "actions", "actions_on_candidate_indicators", "tools", "preconditions", "requires",
-         "requires_on_candidate_indicators"}
+         "requires_on_candidate_indicators",
+         # The instrument's own evidence count (DN-016 ruling 4): EVIDENCED_BY edges from a
+         # MeasurementSpec, which the skeleton does not author.
+         "evidenced_by_spec"}
     # and nothing the skeleton authors is missing from the record
     assert not (gen_ids - {n["id"] for n in cur["nodes"]})
     assert not (gen_edges - {fw._edge_key(e) for e in cur["edges"]})

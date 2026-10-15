@@ -1,0 +1,35 @@
+{
+ "unit_id": "d277cc43ec8928d4",
+ "kind": "hostile",
+ "key": "D1",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "ab5b2b4e3b28ff194e70f22d65e0f4b1a82805c5b2b14a8ad052f16585617c2e",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Page or API terms name a recognised licence)\nCHECK: Page or API terms name a recognised licence\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Can a machine tell, from a recognised name, on what terms it may reuse the data?\nWhere we look: The licence field in the data page's markup, a licence link sent in the page's response headers, and, when an interface for developers is on record, that interface's terms page.\nWhat the client does: The public client opens the data page and reads its licence markup and any licence link in the response, and when a developer interface is on record it also opens that interface's terms page.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: A Data on the Web Best Practice asks that a licence be stated so a machine can find it; an OMB memo lets a federal agency meet the open-licence requirement by marking the asset public domain in its inventory; the US DCAT schema carries a licence-or-public-domain field; and the SPDX licence list supplies the recognised identifiers. The extra demand that a detected licence be given as an identifier rather than in words is the project's own rule.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: A public key could let the client reach a developer interface's terms page that is shown only to registered developers; the page-markup and response-header checks need no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You say this is 'Shown for transparency, not scored as a finding about the agency' and that it 'yields no pass, partial or fail about you', yet you still call it a 'CHECK', you still 'open the data page', 'read its licence markup', and open our developer 'terms page'. A check with no score is still a check, and the output will sit in a report next to the scored ones. Worse, your own text admits that 'The extra demand that a detected licence be given as an identifier rather than in words is the project's own rule.' Our data is U.S. government work, public domain under 17 U.S.C. 105. The OMB memo you cite yourselves says we 'meet the open-licence requirement by marking the asset public domain in its inventory'. We do that in our data.json inventory, not on every web page. So you are grading us, unscored or not, against a 'recognised name' rule you invented, on a page you chose, when the governing requirement is satisfied somewhere you are not looking. 'Where we look' names a page's 'markup' and 'response headers' and a developer 'terms page'. None of those is the inventory the memo points to. And 'No public tool runs this exact check' is not reassurance. It means nobody else has agreed this is a sensible thing to measure.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'SPDX licence list', 'US DCAT schema', 'licence-or-public-domain field', 'licence markup', 'a licence link sent in the page's response headers', and 'the public client'. A program office colleague does not know what SPDX or DCAT are, does not know what 'markup' on a web page means, has no idea a page can send a 'response header' containing a licence link, and will read 'the public client' as a member of the public rather than a piece of software. 'Rung two' and 'A public key' are also unexplained: a non-technical reader will assume 'public key' means encryption, not a registered API key for a developer portal.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"The 'not scored' framing is the trap. You are collecting the result anyway, in a form that will be lined up next to scored checks, so the room sees a blank or a 'not found' against our name and reads it as a failure regardless of the footnote. 'Shown for transparency' lets you publish the finding while disclaiming accountability for it. The 'rung two' paragraph tells me you intend to register for a key and crawl our developer terms page 'shown only to registered developers', which is a way of probing a gated page under cover of a readiness survey and then reporting what we say there. And the admission that the identifier rule is 'the project's own rule' reads like a placeholder: once enough agencies are shown missing an SPDX identifier, this becomes a scored check and the standard you wrote becomes the standard we failed. Cite the OMB memo and public domain in the heading, then quietly measure something the memo does not require.\"}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 950,
+  "cacheReadInputTokens": 14117,
+  "cacheCreationInputTokens": 24336,
+  "webSearchRequests": 0,
+  "costUSD": 0.53776925,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

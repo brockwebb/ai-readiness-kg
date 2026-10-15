@@ -1,0 +1,35 @@
+{
+ "unit_id": "4d1c0d5e3f88efc4",
+ "kind": "hostile",
+ "key": "A11-declared",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "36ee75b94b1ddcbe69241f4362e1ba2009b559814566136e5cbfe03153198d98",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check (no short name))\nCHECK: (no short name)  (a declaration, read but not scored)\n\nHow this check counts: A declaration: this records what the agency states, read but not scored.\nThe question: What does the host say in writing about letting crawlers reach the data page, in both places such a statement can live — the site's robots.txt file and the page's robots meta tags?\nWhere we look: At the site's robots.txt file and at the robots meta tags carried on the data page.\nWhat the client does: The public client asks for the robots.txt file and reads the data page's robots meta tags, then checks what each says about the same eight listed crawler names.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: An RFC on robots.txt defines the file and states plainly that its rules are not a form of access authorization, and Google's crawler documentation defines the robots meta tag and notes those settings can be followed only if crawlers are allowed to read the pages that carry them. This is a declaration: it records what the agency states, read but not scored.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"The item says it is 'read but not scored' and 'yields no pass, partial or fail about you,' yet the header calls it a 'readiness diagnostic' and the question asks what 'the host' says about 'letting crawlers reach the data page.' Putting our robots.txt and meta tags on a slide next to 'eight listed crawler names' is a scorecard whether or not you call it one: anyone in the room will read a Disallow line as 'this agency blocks AI.' Our robots.txt is set by the department's web and security office under federal web policy, not by the statistical program, so hanging it on 'the agency states' misattributes a hosting-level control to us. And the 'Why it matters' paragraph quotes an RFC saying robots.txt 'is not a form of access authorization,' which reads as a setup to argue our stated crawler rules are meaningless or that ignoring them is fine. Also, the check has '(no short name)' twice; you are presenting an unfinished item about my agency.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'robots.txt file,' 'robots meta tags,' 'crawlers,' 'RFC,' 'the public client,' 'the host,' and 'rung two' / 'needs no key' would all lose a non-technical colleague. Nobody in my program office knows what a meta tag is or what an RFC is, and 'rung two' is your internal jargon with no definition in the item. 'The same eight listed crawler names' is also unclear: listed where, and chosen by whom?\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"You are building a public record of which agencies 'block' which AI companies' crawlers, which is why you fixate on 'eight listed crawler names' rather than the general rules. 'Read but not scored' today becomes a scored item in the next version once the baseline is captured, and the 'not a form of access authorization' quote is pre-positioned to justify crawling our data regardless of what we wrote. 'No public tool runs this exact check' tells me you invented the instrument yourselves, so there is no neutral standard behind it, and 'What the client does' means your software is already hitting our site to collect this without asking us.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 731,
+  "cacheReadInputTokens": 14118,
+  "cacheCreationInputTokens": 24953,
+  "webSearchRequests": 0,
+  "costUSD": 0.5391595,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

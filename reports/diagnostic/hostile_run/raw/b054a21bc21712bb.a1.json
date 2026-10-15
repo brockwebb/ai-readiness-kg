@@ -1,0 +1,35 @@
+{
+ "unit_id": "b054a21bc21712bb",
+ "kind": "hostile",
+ "key": "A9",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "dc06346f94165abd79adc84845473176239b011112385b5403ffb9f56138c962",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check A machine address returns a non-page file)\nCHECK: A machine address returns a non-page file\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Does the agency serve an entry point built for machine clients, such as a machine-readable API description, an agent-protocol address, or an llms.txt, at the addresses machine clients look first?\nWhere we look: A fixed handful of machine addresses this project checks on the agency's site: the recorded API base and its description, the /.well-known/mcp path, and /llms.txt.\nWhat the client does: The public client asks the website for each address in that fixed set with a plain request, no key and no special accept header, and reads the status, content type and body length.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: This is the project's own rule: no published standard defines this entry point or the set of addresses to serve it at. Its motivation draws on a FAIR letter (data retrievable by a standardised protocol) and the llms.txt proposal, but neither defines the check.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: This check requests with no key, so a registered public client that presents a key could change the result here: an API that answers only a key-bearing request could return machine content on a second look where the bare request got an HTML or error page.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You admit in your own words that 'no published standard defines this entry point or the set of addresses to serve it at,' that 'this is the project's own rule,' and that 'no public tool runs this exact check.' So you are putting my agency on a slide for failing a test you invented, and the fig leaf is 'shown for transparency, not scored.' The room will not read the footnote; it will read that my site does not have an '/llms.txt' or a '/.well-known/mcp' and conclude we are behind. Nobody at OMB, NIST, or in any statistical policy directive has told us to serve those addresses. The header 'A machine address returns a non-page file' frames the whole thing as a binary we failed. 'At the addresses machine clients look first' is an unproven assertion presented as fact. 'The recorded API base' is recorded by you, not by us; if your record is wrong or stale, we wear it. And 'the public client asks ... with a plain request, no key' means a deliberate, documented design choice on our side, keyed access for rate limiting and security, gets displayed as our API returning 'an HTML or error page.' That is not a finding about us, it is a finding about your client.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'llms.txt', '/.well-known/mcp', 'agent-protocol address', 'machine-readable API description', 'special accept header', 'content type and body length', 'non-page file', 'FAIR letter', 'registered public client,' and 'rung two' would all draw blank stares from my program and communications staff. 'What rung two changes' in particular assumes we know what the rungs are, and no one in this room has been told. 'Machine clients' is also vague: a crawler, a script, a chatbot, or your tool?\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"This is a standard being laundered. It is 'not scored' today precisely so no one objects, and once the room has seen it a few times it gets flipped to scored and we are measured against a 'project's own rule' that then looks like an established expectation. The 'rung two' language about 'a registered public client that presents a key' reads as pressure to issue your project an API key, or to adopt llms.txt and MCP endpoints, in exchange for a better-looking result; agencies that play along get upgraded 'on a second look,' agencies that do not stay with the bare-request failure on the slide. Meanwhile 'the recorded API base and its description' tells me you are building an inventory of our endpoints and probing them without an accept header or a key, and the 'FAIR letter' citation is there to make a hobby convention look like it has a pedigree.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1484,
+  "cacheReadInputTokens": 14234,
+  "cacheCreationInputTokens": 24913,
+  "webSearchRequests": 0,
+  "costUSD": 0.5760385,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 613,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

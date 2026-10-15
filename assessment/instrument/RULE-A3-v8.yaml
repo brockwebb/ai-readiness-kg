@@ -119,13 +119,13 @@ plain:
     lives on the same website (up to twenty-five), makes one quick web request asking about that file's
     type, its size, and whether its address carries a query, at one request per second.
   pass: This data page links, on its own website, an archive file (named by its extension) or a file
-    that is not a web page, carries no query in its address, and is at least 50 KiB. It is not verified
+    that is not a web page, carries no query in its address, and is at least fifty kibibytes. It is not verified
     to be the complete product. Every data page that was looked at met this.
   partial: Some of the agency's data pages linked such a whole-product download and some did not.
   fail: 'Every linked file on the same website, in the page''s HTML as first served (a download behind
     a script-driven button or a form is not seen), was checked, and none is an archive or a non-web-page
-    file without a query of at least 50 KiB. The two tests are stand-ins: a link with a query may still
-    deliver the whole product, and a complete product smaller than 50 KiB fails the size floor. It is
+    file without a query of at least fifty kibibytes. The two tests are stand-ins: a link with a query may still
+    deliver the whole product, and a complete product smaller than fifty kibibytes fails the size floor. It is
     not a claim that the agency''s downloads are partial, nor that no bulk download exists elsewhere,
     such as a data portal, an FTP site, or a bulk endpoint on a data interface.'
   not_measured: 'The public client could not look at one or more of the linked files, for one of three
@@ -135,7 +135,7 @@ plain:
   why_it_matters: A Data on the Web Best Practice says to let consumers retrieve the full dataset with
     a single request, and an OMB memo says that where there is significant public interest in taking
     information off an agency's pages, the agency should strongly consider offering it in bulk; the
-    50 KiB floor and the query-means-filtered rule are the project's own choices.
+    fifty kibibytes floor and the query-means-filtered rule are the project's own choices.
   who_else: 'Google Lighthouse runs this kind of check: anyone can run its automated checks against
     a named page, its criteria are published, and a result comes back met, not met, or not applicable.
     It does not run this exact one.'

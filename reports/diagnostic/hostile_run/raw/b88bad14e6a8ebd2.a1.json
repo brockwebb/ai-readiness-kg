@@ -1,0 +1,35 @@
+{
+ "unit_id": "b88bad14e6a8ebd2",
+ "kind": "hostile",
+ "key": "F4",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "e784b4b10636bd236d2f08eafd88745f4c8f073f9770fe4b5780542b8515b2aa",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Change history served as a structured feed)\nCHECK: Change history served as a structured feed\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Can a machine learn what changed between releases from a structured change history?\nWhere we look: Each change-log or release-notes location on record for the agency.\nWhat the client does: The public client opens each recorded change-log location and reads what kind of document it sends and, for a feed, how many of its entries say what kind of change they record.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: A Data on the Web Best Practice asks for a complete version history that explains the changes in each version, and a published guide on data for developers asks for versioning so updates can be tracked over time. The added demands that the history come as a feed and that entries carry a change-type label are the project's own rules; neither source requires them.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You tell me it is 'not scored as a finding about the agency' and then you print it on the same page as everything that is scored, with the word 'CHECK' in capitals and a 'question' phrased so the answer about us is obviously no: 'Can a machine learn what changed between releases from a structured change history?' Nobody in this room is going to read 'Shown for transparency' and conclude anything except that we failed it. You also admit, in your own words, that 'the added demands that the history come as a feed and that entries carry a change-type label are the project's own rules; neither source requires them.' So you are measuring my agency against a requirement you invented, that no standard, no OMB guidance and no statute puts on us, and that you concede 'no public tool runs.' We publish release notes and revision notices because our users read them. We were never asked to publish them as a machine 'feed' with a 'change-type label,' and I object to being displayed, scored or not, against a rule whose only authority is 'this project chose.' Finally, 'each change-log or release-notes location on record for the agency' means your result depends entirely on what you happened to put 'on record.' If your list is wrong or stale, that is your error, not our gap.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'Structured feed' and 'what kind of document it sends' mean nothing to most of my staff; they will picture an email newsletter. 'Entries carry a change-type label' is undefined: label from what list, chosen by whom? 'Rung two' and 'needs no key' are your internal jargon; nobody outside your project knows what a rung is or what key is meant. 'Data on the Web Best Practice' and 'a published guide on data for developers' are not named, so a colleague cannot even look them up. And 'the public client' is ambiguous: a piece of software, or a member of the public?\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"An item that 'yields no pass, partial or fail' but is still run, still displayed and still described as something a machine 'learns' from is a placeholder for a score. You are collecting the data now, under the cover of 'transparency,' so that the day you decide your own rule deserves scoring you already have a baseline that shows every agency failing it. The sentence 'No public tool runs this exact check' reads to me as the real agenda: positioning your project as the only yardstick, with the standard set by 'rules this project chose,' so that compliance means adopting your feed format and your change-type vocabulary. And the fact that you count 'how many of its entries say what kind of change they record' tells me you intend to rank us on it later, whatever this page says today.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 930,
+  "cacheReadInputTokens": 14117,
+  "cacheCreationInputTokens": 24929,
+  "webSearchRequests": 0,
+  "costUSD": 0.5486292500000001,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 64,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

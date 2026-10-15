@@ -112,6 +112,6 @@ def test_no_banned_word_in_any_rendered_product():
         pytest.skip("diagnostic package not built yet (Part D)")
     bad = []
     for label, text in products:
-        for w, ctx in D.banned_hits(text):
+        for w, ctx in D.banned_hits_prose(text):
             bad.append(f"{label}: {w!r} in {ctx!r}")
     assert not bad, "banned words in a rendered product:\n  " + "\n  ".join(bad)

@@ -1,0 +1,37 @@
+{
+ "generated_by": "scripts/preface_critic_check.py",
+ "task": "cc_tasks/2026-10-15_instrument_specification_audit.md",
+ "model_id": "claude-sonnet-5-5",
+ "sentences": 40,
+ "real": 37,
+ "controls": 3,
+ "control_indices": [
+  10,
+  20,
+  30
+ ],
+ "controls_caught": [
+  10,
+  20,
+  30
+ ],
+ "controls_missed": [],
+ "unsupported_real_sentences": [
+  {
+   "n": 12,
+   "sentence": "It submits no form and solves no challenge: no CAPTCHA, no sign-in, no search box filled in.",
+   "reason": "Form submission, CAPTCHA and sign-in are covered, but 'no search box filled in' is not stated; it is only implied by 'submits no form', and a search box is not named."
+  },
+  {
+   "n": 17,
+   "sentence": "A rung that needs an agency to grant what a citizen cannot get for themselves is reported as not measured, refused — never scored.",
+   "reason": "The claim says such a rung is reported as not measured, refused. 'Never scored' is not stated, though it is arguably implied by 'not measured is never a fail'; the word 'scored' is a new fact."
+  },
+  {
+   "n": 37,
+   "sentence": "This is not a public league table, and it is not a campaign to make any agency open its site to anyone.",
+   "reason": "'Not a public league table' is supported, but 'not a campaign to make any agency open its site to anyone' changes the claim, which says 'not a campaign to open any site'. 'Make any agency open its site to anyone' adds detail not in the claim."
+  }
+ ],
+ "calibrated": true
+}

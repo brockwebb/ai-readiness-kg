@@ -1,0 +1,35 @@
+{
+ "unit_id": "b4346d3d71cf61f9",
+ "kind": "hostile",
+ "key": "A12",
+ "round": 3,
+ "attempt": 2,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "b11e47b055761e2f120bed835478f88a46975d8734c632c3fd4012a492142f26",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Host serves the path its robots.txt permits)\nCHECK: Host serves the path its robots.txt permits  (under review, not scored yet)\n\nHow this check counts: Under review: this check is not scored yet.\nThe question: Does the host actually serve the data page to an identified, compliant client when its own robots.txt says it may?\nWhere we look: At the site's robots.txt file and at the data page's web address, both requested as the same identified client.\nWhat the client does: The public client asks for the robots.txt file, then asks for the data page itself as the same identified client, and compares what robots.txt permits with what the host actually served.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: An RFC on robots.txt states that its rules are not a form of access authorization and are not a substitute for valid content security measures; the idea that a host's enforcement should match its declaration is this project's own construct. This check is under review and not scored yet.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"The whole premise is one you yourselves disown. 'Why it matters' admits the RFC says robots.txt rules 'are not a form of access authorization and are not a substitute for valid content security measures,' and then concedes 'the idea that a host's enforcement should match its declaration is this project's own construct.' So you are measuring us against a standard that the governing standard explicitly says does not exist, and you say so in the item. Robots.txt is a crawler courtesy file, not a service-level commitment; our CDN, WAF, and rate limiters are run by a shared services provider under a separate security policy, and they are supposed to block things robots.txt does not mention. If your 'identified, compliant client' gets a 403 from the WAF, that is the security control working, not the agency failing to 'actually serve' something it 'says it may.' The phrase 'what the host actually served' versus what 'its own robots.txt says it may' frames any mismatch as hypocrisy on our part. And the 'not scored yet' caveat is repeated three times, which tells me it will be scored, and we will have had no say in the definition.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'Identified, compliant client' is undefined: identified to whom, by what, compliant with what? Our web staff would ask what user-agent string this is and whether our firewall is supposed to know it. 'Rung two' and 'needs no key' mean nothing to anyone outside your project; a program analyst will not know what a rung is or what key is being referred to. 'RFC' is not a term most of our senior staff recognize. And 'the data page' is unclear: our site has thousands of pages, so which one is 'the data page' and who picked it?\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"You are building a blocklist audit. An 'identified' client requesting a page and recording whether it was served or blocked is, in plain terms, a test of whether our firewall is blocking bots, and it produces a record that says agency X blocks automated access it did not declare. 'Under review, not scored yet' is how you get it into the diagnostic without a fight now, and then the 'How this check counts' line changes later. 'No public tool runs this exact check' means you invented a measure nobody else uses, which is exactly what you would do if the goal were to produce a finding no agency can rebut with an outside reference. And 'compares what robots.txt permits with what the host actually served' reads like you are collecting evidence to argue that agencies should drop their bot protections for AI crawlers, with the security exposure landing on us.\"}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 847,
+  "cacheReadInputTokens": 39043,
+  "cacheCreationInputTokens": 0,
+  "webSearchRequests": 0,
+  "costUSD": 0.05213075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "unit_id": "aa0086e4fb2ffa34",
+ "kind": "hostile",
+ "key": "B3",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "94a43bdaa1ed3717a0860013ba21d6b940428faf4598ac5a1d1da5e4e22a7315",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Page links a methodology readable as text)\nCHECK: Page links a methodology readable as text\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Can a machine reach the methodology behind the data and read it as plain text, without having to run scripts?\nWhere we look: The data product page itself, and any link on it whose web address or wording contains the word \"methodology\" (up to twenty-five such links).\nWhat the client does: The public client opens the data page and then opens each of those methodology links to read what the document actually sends.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: A published guide on readable data documentation asks that text documentation, methodology included, be reachable by people and by web crawlers, and an OMB memo asks agencies to default web content to a plain web page rather than another format. The added rule that the text be readable before any script runs is the project's own reading of \"reachable by crawlers\", since many crawlers do not run scripts.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You say this is \\\"Shown for transparency, not scored as a finding about the agency\\\" and then you put it on a slide in front of this room with my agency's name next to it. If it \\\"yields no pass, partial or fail about you,\\\" why is it in a readiness diagnostic at all? You also concede in your own words that \\\"at least one part of this check rests on a rule this project chose, not a published standard\\\" and that the no-scripts requirement is \\\"the project's own reading\\\" of reachable by crawlers. So you are measuring us against your reading, not OMB's. The OMB memo you lean on asks for a plain web page instead of another format; it says nothing about pages rendering without scripts. Our site runs on a department-mandated content management system that renders with scripts. That is not my agency's decision. And your detection rule only looks for links whose address or wording contains \\\"the word 'methodology'\\\". Our methodology lives under Technical Documentation, Source and Accuracy Statements, and Survey Design. By your rule we would appear to publish no methodology at all, which is false. You even say \\\"No public tool runs this exact check,\\\" so nobody else thinks this is a standard either.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"\\\"What rung two changes: Nothing: this check needs no key.\\\" Nobody outside your team knows what a rung is or what key you mean. \\\"The public client\\\" is also unexplained; a colleague will read client as a customer. \\\"Readable before any script runs\\\" and \\\"web crawlers\\\" need plain words: a non-technical reader does not know that a page can send text that a program cannot see until code executes.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"You are soft-launching a rule. Today it is unscored \\\"for transparency\\\"; once the room has seen the list, the next version flips it to a fail and you point to the fact that we were already shown it. The real purpose is to build an inventory of which agencies' methodology documents can be scraped by crawlers that do not run scripts, meaning AI companies, and to hand it to them under the banner of readiness. Opening the data page and up to twenty-five methodology links on every product is a crawl of our site dressed up as a diagnostic. And the authority is a \\\"published guide\\\" you do not name, so the standard is whatever your project decides it is.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1550,
+  "cacheReadInputTokens": 14117,
+  "cacheCreationInputTokens": 24963,
+  "webSearchRequests": 0,
+  "costUSD": 0.58030925,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 788,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

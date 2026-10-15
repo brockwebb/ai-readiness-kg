@@ -1,0 +1,35 @@
+{
+ "unit_id": "73de5f240dd9b059",
+ "kind": "hostile",
+ "key": "A10",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "f89484ba9750bab1fa39286a77845fc57270dba452742664bba1731dda5e75e8",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Data tool answers with real status and content)\nCHECK: Data tool answers with real status and content\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Does the agency's interactive data tool answer a machine honestly — real content at a direct link, and a real \"not found\" error for a web address that does not exist?\nWhere we look: At the one interactive data tool the agency offers, looked at from the site level: its direct link to a product, and a made-up address beneath that tool.\nWhat the client does: The public client asks for the tool's direct link, then asks for a made-up address under the same tool that should not exist, and reads what each answer returns.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: An RFC defines what a real \"not found\" answer is, and Google's crawler documentation treats an \"OK\" page that is really an error as a problem, not a page; a Data on the Web Best Practice expects programmatic access to return the responses a client expects. The rule that at least two thousand characters be present before scripts run is the project's own choice.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"Start with the framing: 'Does the agency's interactive data tool answer a machine honestly.' The word 'honestly' implies that if our tool returns an OK page for a bad address we are being dishonest. That is a vendor platform behavior, not an editorial choice by my agency, and I will not have a slide put in front of this room suggesting we lie to machines. Second, 'the one interactive data tool the agency offers.' We offer several. Whoever picked 'the one' picked it, and the result will be read as a verdict on all of them. Third, 'a made-up address beneath that tool' that 'should not exist.' You invented a URL and now you are reporting how we handle your invention. Fourth, you admit the 'at least two thousand characters be present before scripts run' rule 'is the project's own choice,' and that 'No public tool runs this exact check.' So this is a homemade rule with a homemade threshold, built against a modern JavaScript application, and it is being shown to the room next to items that cite standards. Finally, 'Shown for transparency, not scored' is no comfort. It is still displayed with my agency's name on it, and nobody in this room will read the fine print about scoring.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'What rung two changes: Nothing: this check needs no key.' A non-technical colleague has no idea what 'rung two' is or what 'key' means here. 'The public client' is also unexplained; most people here will not know that means a piece of software and not a member of the public. 'An RFC defines what a real \\\"not found\\\" answer is' assumes everyone knows what an RFC is. 'Before scripts run' and 'two thousand characters' is pure jargon to a program manager, and 'Data on the Web Best Practice' reads like a generic phrase rather than the name of a specific W3C document. 'Looked at from the site level' is also unclear.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"'Not scored as a finding about your agency' today is the foot in the door. You show it 'for transparency' this round, build a baseline, and next round it becomes a pass, partial or fail with a history attached. The 'two thousand characters before scripts run' rule is the real trap: most agency data tools are JavaScript applications that render after scripts run, so this threshold is designed so they fail by construction, and the admission that it is 'the project's own choice' is cover rather than candor. 'Rung two' and 'needs no key' tell me there is a tiered scheme where later rungs do use keys, which means you intend to hit our authenticated APIs and report on those too. And the probe for 'a made-up address' looks like a crawler warm-up: you are checking whether our tool can be scraped at scale, dressed up as a 'not found' hygiene check.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1611,
+  "cacheReadInputTokens": 0,
+  "cacheCreationInputTokens": 39111,
+  "webSearchRequests": 0,
+  "costUSD": 0.8627900000000001,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 689,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

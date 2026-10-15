@@ -1,0 +1,35 @@
+{
+ "unit_id": "d02614239e0a8d76",
+ "kind": "hostile",
+ "key": "A8",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "b610bb4cc338b36b20d5cbd2619400149a9d6aedd30cfcdabe3dffcedac6f336",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Markup dates the data; a latest-version link resolves)\nCHECK: Markup dates the data; a latest-version link resolves\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Can a machine read which release of the data the page is showing, and follow a link to the latest release?\nWhere we look: The data page itself (its structured date markup and the server's last-modified header) and up to three links on the same site that point to the latest version.\nWhat the client does: The public client asks the website for the data page, reads its date markup and header, and follows up to three same-site latest-version links to see whether they resolve.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: A Data on the Web Best Practice asks that a machine be able to detect a dataset's version or date and refer to its latest version, and USAFacts' AI-ready data guide asks that the most recent update be retrievable by a machine; the requirement that a latest-version link actually resolve is the project's own rule.\nWho else runs this check: Google Lighthouse is the nearest precedent: anyone can run its automated page-level checks against a named page and get back met, not met, or not applicable against published criteria.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You say this is 'not scored as a finding about the agency' and then you put it on a slide with my agency's name on it, with 'Where we look' and 'What the client does' spelled out so everyone in the room can see we failed it anyway. 'Shown for transparency' is a failing grade with the number filed off. Second, you admit in your own words that 'the requirement that a latest-version link actually resolve is the project's own rule' — so you are testing us against something you made up, citing a 'Data on the Web Best Practice' and 'USAFacts' AI-ready data guide' as cover. USAFacts is a private nonprofit, not a standard-setting body, and a W3C best practice is not an OMB or NIST requirement my agency is bound to. Third, 'the server's last-modified header' is set by our hosting contractor, the CDN, and the CMS — not by the statistical program that publishes the data. If that header is wrong or missing you are blaming the statisticians for an IT configuration. Fourth, 'up to three links on the same site' — who picks the three? If your client picks three stale links on a legacy page and they don't 'resolve', that is your sampling, not our data. And 'Google Lighthouse is the nearest precedent' is a performance tool for web pages; it has nothing to do with dating statistical releases, so the comparison just borrows Google's credibility for your homemade rule.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'Structured date markup' — my program staff do not know what that is or whether our pages have it. 'The server's last-modified header' — nobody outside IT knows what a header is. 'Resolves' — a link 'resolving' is jargon; plain English would be 'the link works'. 'Same-site' — does that mean our domain, our bureau's subdomain, or anything under .gov? 'Rung two' and 'needs no key' — rungs of what ladder, and a key to what? Nothing on this item explains the ladder it belongs to. 'The public client' — which client, run by whom, from where?\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"This is a soft launch. You label it 'not scored' today so nobody objects in this meeting, then once the 'project's own rule' has been in the report for a few cycles it quietly becomes a scored criterion and we have already conceded it by not objecting. The 'rung two' and 'key' language gives it away: there is a ladder here, and the real agenda is pushing agencies toward keyed, machine-first access on a schedule we did not agree to. The USAFacts citation tells me who the audience really is — a private aggregator that wants our releases machine-retrievable on their terms, and this diagnostic is the lever to make agencies that don't comply look like they are hiding data. And 'follows up to three same-site latest-version links to see whether they resolve' is a trap: a bot crawling our site and reporting broken links lets you publish 'agency X's latest-release links are dead' without ever having to say we failed.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1476,
+  "cacheReadInputTokens": 14234,
+  "cacheCreationInputTokens": 24891,
+  "webSearchRequests": 0,
+  "costUSD": 0.5751985,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 485,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

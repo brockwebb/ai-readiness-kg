@@ -112,13 +112,13 @@ plain:
   pass: 'This check is under review and is not scored yet. What it would record as a pass: the robots.txt
     permits this client on the data page''s path and the host actually served the page to it.'
   partial: This check is under review and is not scored yet, so no result is given.
-  fail: 'It would record one of three things, named in the result: the host answered a refusal (401,
-    403 or 429) to this client''s request for the robots.txt file; the robots.txt permits the client
-    on the path and the host answered a refusal for that same path; or no robots.txt is served, which
-    under the standard declares permission and involves no contradiction (the page may well have been
-    served). Only the second is a host doing other than it declared, a 429 among those statuses is a
-    rate limit that may be temporary rather than a policy, a temporary error or server failure is never
-    a fail here, and it is about one identified client, not every crawler.'
+  fail: 'It would record one of three things, named in the result: the host answered a refusal to this
+    client''s request for the robots.txt file; the robots.txt permits the client on the path and the
+    host answered a refusal for that same path; or no robots.txt is served, which under the standard
+    declares permission and involves no contradiction (the page may well have been served). Only the
+    second is a host doing other than it declared; a rate-limit refusal may be temporary rather than
+    a policy; a temporary error or server failure is never a fail here; and it is about one identified
+    client, not every crawler.'
   not_measured: 'The public client could not settle the page, for one of three reasons: the host refused
     the identified client; the client''s own robots.txt compliance kept it from reading; or it could
     not confirm an absence, or a server or network error stopped it — here, no response to either request

@@ -55,3 +55,36 @@ reader:
   progress_every_units: 1
   run_dir: reports/instrument/run
   progress_log: logs/2026-10-15_instrument_read_progress.log
+
+# The hostile reader (DN-016 §3 / ruling 6; task b6c65bfe). The most hostile agency
+# representative in the room reads every DICTIONARY entry and the preface — the plain-language
+# diagnostic content, not the technical instrument entry — and answers three questions. Step 0 of
+# the task resolved the hostile reader to role `judge`: neither `judge` nor `critic` is Opus 5.5,
+# and the task's rule is to use `judge` in that case and record the pin as a premise found wrong.
+hostile_reader:
+  role: judge
+  call_class: judge
+  run_id: diagnostic_hostile_2026-10-15
+  ceiling_tokens: 3000000
+  timeout_seconds: 900
+  max_attempts: 3
+  max_wall_seconds: 3600
+  pilot_units: 1
+  progress_every_units: 1
+  run_dir: reports/diagnostic/hostile_run
+  progress_log: logs/2026-10-15_hostile_read_progress.log
+
+# The checker (role `critic`) that runs the planted-sentence and unsupported-sentence checks on
+# the preface, as they ran on the summary.
+critic:
+  role: critic
+  # Billed under call_class `judge` (its floor is in controls.yaml), as the summary's checker was
+  # (`scripts/summary_verify.py` uses one call_class for both the critic and judge roles). The
+  # role, not the call_class, selects the model (critic -> Sonnet 5.5).
+  call_class: judge
+  run_id: diagnostic_critic_2026-10-15b
+  ceiling_tokens: 1000000
+  timeout_seconds: 600
+  max_attempts: 3
+  run_dir: reports/diagnostic/critic_run
+  progress_log: logs/2026-10-15_critic_progress.log

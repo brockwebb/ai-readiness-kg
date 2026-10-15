@@ -1,0 +1,35 @@
+{
+ "unit_id": "7b70d24e089b182a",
+ "kind": "hostile",
+ "key": "A12",
+ "round": 2,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "52687edd2712d5edbdc3928ecd20ce8ef0e886b37f173ea31ac5d6245a4bc92d",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Host serves the path its robots.txt permits)\nCHECK: Host serves the path its robots.txt permits  (under review, not scored yet)\n\nHow this check counts: Under review: this check is not scored yet.\nThe question: Does the host actually serve the data page to an identified, compliant client when its own robots.txt says it may?\nWhere we look: At the site's robots.txt file and at the data page's web address, both requested as the same identified client.\nWhat the client does: The public client asks for the robots.txt file, then asks for the data page itself as the same identified client, and compares what robots.txt permits with what the host actually served.\nWhat passing looks like: This check is under review and is not scored yet. What it would record as a pass: the robots.txt permits this client on the data page's path and the host actually served the page to it.\nWhat partial, fail and not measured look like: Partial — This check is under review and is not scored yet, so no result is given. Fail — It would record one of three things, named in the result: the host answered a refusal to this client's request for the robots.txt file; the robots.txt permits the client on the path and the host answered a refusal for that same path; or no robots.txt is served, which under the standard declares permission and involves no contradiction (the page may well have been served). Only the second is a host doing other than it declared; a rate-limit refusal may be temporary rather than a policy; a temporary error or server failure is never a fail here; and it is about one identified client, not every crawler. Not measured — The public client could not settle the page, for one of three reasons: the host refused the identified client; the client's own robots.txt compliance kept it from reading; or it could not confirm an absence, or a server or network error stopped it — here, no response to either request or a server error on the page request.\nWhy it matters: An RFC on robots.txt states that its rules are not a form of access authorization and are not a substitute for valid content security measures; the idea that a host's enforcement should match its declaration is this project's own construct. This check is under review and not scored yet.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You admit in your own words that \\\"the idea that a host's enforcement should match its declaration is this project's own construct\\\" and that the RFC says robots.txt rules \\\"are not a form of access authorization.\\\" So you are grading my agency against a standard you invented and the standard itself disclaims. Worse, the only thing you call \\\"a host doing other than it declared\\\" is almost never the agency's doing: the refusal you would record comes from a department-wide WAF, a CDN, or a bot-management rule the security office runs under a federal mandate, and my web team cannot waive it for your bot. You also list \\\"no robots.txt is served\\\" under Fail while conceding it \\\"involves no contradiction (the page may well have been served)\\\"; a non-contradiction has no business in a Fail column. And \\\"it is about one identified client, not every crawler\\\" means my whole result rests on how one bot of yours happened to be treated on one day, while \\\"No public tool runs this exact check\\\" means nobody can independently reproduce it.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"\\\"Identified, compliant client\\\" is undefined: identified to whom, compliant with what? \\\"The public client could not settle the page\\\" means nothing to a non-technical reader; settle how? \\\"Rung two\\\" and \\\"this check needs no key\\\" refer to something outside this item that nobody in my shop has seen. \\\"The standard declares permission\\\" and \\\"RFC\\\" assume the reader knows which standard. \\\"Rate-limit refusal\\\" and \\\"could not confirm an absence\\\" are engineer shorthand.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"\\\"Under review, not scored yet\\\" reads as a holding pattern: you are collecting the results now so that when scoring switches on there is already a public list of agencies whose sites \\\"did other than they declared,\\\" and we will be the ones explaining it. The \\\"identified client\\\" is your crawler, so the real test is whether we let your bot through our WAF; this is a lever to make agencies whitelist AI scrapers under the banner of readiness. Naming the three failure cases \\\"in the result\\\" while admitting the construct is yours means the hypocrisy framing is the point, and \\\"No public tool runs this exact check\\\" means no one can audit you back.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1472,
+  "cacheReadInputTokens": 14234,
+  "cacheCreationInputTokens": 25093,
+  "webSearchRequests": 0,
+  "costUSD": 0.5790385,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 721,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

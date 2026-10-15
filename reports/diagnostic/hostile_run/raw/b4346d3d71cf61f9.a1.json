@@ -1,0 +1,35 @@
+{
+ "unit_id": "b4346d3d71cf61f9",
+ "kind": "hostile",
+ "key": "A12",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "b11e47b055761e2f120bed835478f88a46975d8734c632c3fd4012a492142f26",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Host serves the path its robots.txt permits)\nCHECK: Host serves the path its robots.txt permits  (under review, not scored yet)\n\nHow this check counts: Under review: this check is not scored yet.\nThe question: Does the host actually serve the data page to an identified, compliant client when its own robots.txt says it may?\nWhere we look: At the site's robots.txt file and at the data page's web address, both requested as the same identified client.\nWhat the client does: The public client asks for the robots.txt file, then asks for the data page itself as the same identified client, and compares what robots.txt permits with what the host actually served.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: An RFC on robots.txt states that its rules are not a form of access authorization and are not a substitute for valid content security measures; the idea that a host's enforcement should match its declaration is this project's own construct. This check is under review and not scored yet.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"The question asks whether the host 'actually serve[s] the data page ... when its own robots.txt says it may,' and the title says 'Host serves the path its robots.txt permits.' That framing treats my robots.txt as a promise I am now being held to. It is not. Your own 'Why it matters' admits robots.txt rules 'are not a form of access authorization and are not a substitute for valid content security measures,' and that 'the idea that a host's enforcement should match its declaration is this project's own construct.' So you concede the standard is invented, then name the check as if the agency is the one failing to live up to something. Robots.txt at most agencies is a crawl-courtesy file maintained by web ops; the WAF, CDN, rate limiter and bot-mitigation vendor are what actually decide who gets served, and those are often not even in my shop's control. If a bot-mitigation rule blocks your client, that is a security control doing its job, and the item records it as a mismatch between what I 'permit' and what I 'actually served.' Also, 'This check is not scored as a finding about your agency: it yields no pass, partial or fail about you' is doing a lot of work: the raw result still exists and will still be shown, and nobody in this room reads 'under review, not scored yet' as 'ignore this.'\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'identified, compliant client' and 'the same identified client' — identified to whom, how, and compliant with what? Nothing says what the client sends to identify itself. 'An RFC on robots.txt' — which one, and most of my colleagues do not know what an RFC is. 'Rung two' and 'this check needs no key' are unexplained; nobody outside your project knows what the rungs are or what key you mean. 'Host' and 'path' are used where a non-technical colleague would say 'website' and 'page.'\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"You are building an evidence base for 'agencies block legitimate automated access' while calling it unscored. The check already has a title phrased as a verdict ('Host serves the path its robots.txt permits'), a defined client, a defined comparison, and the only thing missing is the score. 'Under review' means the pass/fail arrives later, after we have signed off on the harmless-looking version. Second, 'No public tool runs this exact check' means you are the sole arbiter: nobody can reproduce it, so when it says we blocked you, our only recourse is your word. Third, the 'identified' client is a probe: you are fetching our data pages with a declared bot identity to see whether our bot-mitigation treats it differently from a browser, which is a test of our security posture dressed up as a readiness question, and the fact you had to cite the RFC saying robots.txt is not authorization tells me you already know that.\"}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 929,
+  "cacheReadInputTokens": 14118,
+  "cacheCreationInputTokens": 24925,
+  "webSearchRequests": 0,
+  "costUSD": 0.5484995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

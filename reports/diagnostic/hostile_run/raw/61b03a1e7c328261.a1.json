@@ -1,0 +1,35 @@
+{
+ "unit_id": "61b03a1e7c328261",
+ "kind": "hostile",
+ "key": "A13",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "673697e0aef97bf5b43662f478c817477ad7d6f4d4f6c49fa08f61c865fe48f5",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Page reaches the agency's API, terms, changelog, inventory)\nCHECK: Page reaches the agency's API, terms, changelog, inventory\n\nHow this check counts: Shown for transparency, not scored as a finding about the agency: at least one part of this check rests on a rule this project chose, not a published standard.\nThe question: Starting at one of the agency's data pages and knowing nothing else, can a machine client reach the four things an agency publishes for machines — its data service (its API), that service's terms, its changelog, and its data inventory?\nWhere we look: At one of the agency's data pages — its links and its response headers — and at the recorded locations where each of the four objects was reported to sit.\nWhat the client does: The public client makes no new request of its own; it reuses what other checks already fetched: the data page's links and headers, and whether each object was served where it was recorded.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: An RFC on API catalogs defines how a publisher announces its data service at a standard address, and an OMB memo requires each agency to post its data inventory at a set data.json address. Reaching the service's terms or changelog by an ordinary link, and combining the four objects into one result, are the project's own rules.\nWho else runs this check: No public tool runs this exact check.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You call these 'the four things an agency publishes for machines' as if that were settled. Two of the four are not. You admit it yourself: 'Reaching the service's terms or changelog by an ordinary link, and combining the four objects into one result, are the project's own rules.' So you invented a four-part bundle, then you check whether we meet it, and you put it on a slide labeled with my agency's name. Saying it is 'not scored as a finding about your agency' does not help when it is 'Shown for transparency' in the same report; the room will read a blank or a miss as a miss. The data.json requirement is an OMB obligation on the department, not on the statistical agency's own site, so I can be dinged for a file that legally sits at the parent department's address. And 'the recorded locations where each of the four objects was reported to sit' — reported by whom, when? If your project recorded it wrong, the result says we failed to serve it. 'Who else runs this check: No public tool runs this exact check' confirms nobody else would hold us to this.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'An RFC on API catalogs' — which RFC, and my program staff do not know what an RFC is or what a 'standard address' for an API catalog means. 'Response headers' means nothing to a non-technical colleague. 'Machine client' and 'public client' are undefined. 'Rung two' and 'needs no key' refer to some ladder in your framework that is not explained here. 'Data inventory' versus 'data.json address' — are those the same thing or two things? 'Changelog' is a developer word; our people say release notes or revision history.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"This is an unscored check today so nobody objects, and next version it becomes scored and we have already 'accepted' the four-object definition by not fighting it now. 'It reuses what other checks already fetched' means our site is being cross-examined across checks: the hidden purpose is to catch an inconsistency between what we told you our locations are and what the server actually did, so 'whether each object was served where it was recorded' is really a test of whether our own documentation is wrong. 'Combining the four objects into one result' is a composite designed so that missing one made-up item (a changelog nobody requires) drags the whole thing to a visible fail. And 'starting at one of the agency's data pages and knowing nothing else' is a setup: pick whichever page gives the worst answer and call it representative.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1258,
+  "cacheReadInputTokens": 14117,
+  "cacheCreationInputTokens": 25023,
+  "webSearchRequests": 0,
+  "costUSD": 0.56690925,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 448,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

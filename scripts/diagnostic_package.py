@@ -54,6 +54,20 @@ def banned_hits(text: str) -> list[tuple[str, str]]:
     return out
 
 
+#: Whitespace-delimited tokens that carry a slash: file paths, URLs, and the user-agent string
+#: `ai-readiness-kg-scanner/0.2 (+https://...)`. These are the "code paths" the vocabulary rule
+#: exempts (DN-016 ruling 1 / the task's Part B check): the preface MUST quote the exact
+#: user-agent so a security team finds every request in its logs, and that identifier contains
+#: "scanner" by construction. A banned word in ordinary prose has no slash and is still caught.
+_CODE_PATH_TOKEN = re.compile(r"\S*/\S*")
+
+
+def banned_hits_prose(text: str) -> list[tuple[str, str]]:
+    """`banned_hits` after removing code-path tokens (paths, URLs, the user-agent string). This
+    is the vocabulary test over a RENDERED PRODUCT, where those identifiers legitimately appear."""
+    return banned_hits(_CODE_PATH_TOKEN.sub(" ", text or ""))
+
+
 def load_vocab(path: Path = VOCAB_FILE) -> dict:
     v = yaml.safe_load(path.read_text(encoding="utf-8")).get("diagnostic_terms")
     if not v:

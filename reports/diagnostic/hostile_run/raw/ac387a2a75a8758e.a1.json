@@ -1,0 +1,35 @@
+{
+ "unit_id": "ac387a2a75a8758e",
+ "kind": "hostile",
+ "key": "A6",
+ "round": 3,
+ "attempt": 1,
+ "model_id": "claude-fable-5-1",
+ "role": "judge",
+ "input_sha256": "eebdb43d42b508540562d341b4e6051560b9f66769870be486b3d8002453c0da",
+ "template_sha256": "9cbb99c4dbd3f8e8fb1e73b974880b30aaec4b4eb01a4e06f8fbc5acae52f0eb",
+ "run_id": "diagnostic_hostile_2026-10-15",
+ "model_receipt": {
+  "requested": "claude-fable-5-1",
+  "served": "claude-fable-5-1",
+  "side_models": [],
+  "ok": true,
+  "effort": "high"
+ },
+ "prompt": "You are the single most hostile representative of a U.S. federal statistical agency\nin the room at a working group. Someone has built a \"readiness diagnostic\" that rates your\nagency's public website on whether machines can reach, read and use the data you publish, and is\nabout to show the room the item below. Read it as that hostile representative — skeptical,\nprotective of your agency, alert to being made to look bad — and answer three questions bluntly\nand specifically, quoting the item's words where you can:\n\n1. What in this item would you OBJECT to: a claim you find unfair or wrong, or that makes your\n   agency look bad for something you would say is not your fault or not your doing?\n2. What WORD or phrase here would you, or a non-technical colleague, not understand?\n3. What would you say we are SECRETLY DOING: what hidden agenda, trap, or gotcha would you\n   suspect behind this item?\n\nAnswer only from the item. For each question, \"raised\" is \"yes\" if you have a real objection /\nan unclear word / a suspicion, and \"no\" if you genuinely have none. Return ONLY a JSON object,\nno prose before or after and no code fence:\n{\"object_to\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"word_not_understood\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}, \"secretly_doing\": {\"raised\": \"yes\" or \"no\", \"text\": \"...\"}}\n\nITEM (check Page markup declares a named, described dataset)\nCHECK: Page markup declares a named, described dataset\n\nHow this check counts: Not scored as a finding about the agency: this version of the check measures something other than its question and is being revised.\nThe question: Does the data page's own markup tell a machine that the page describes a named, described dataset?\nWhere we look: The data page itself, reading the structured markup embedded in the page as it is served.\nWhat the client does: The public client asks the website for the data page once and reads the structured markup in what comes back, without running any of the page's scripts.\nHow a result is reported: This check is not scored as a finding about your agency: it yields no pass, partial or fail about you. What it examines is described under 'The question' and 'Where we look' above.\nWhy it matters: A W3C practice (the schema.org dataset vocabulary) lets a page declare itself a dataset with a name and description so search and answer engines recognise it, and USAFacts' AI-ready data guide asks publishers to align with standard schemas and well-structured metadata.\nWho else runs this check: Google Lighthouse is the nearest precedent: anyone can run its automated page-level checks against a named page and get back met, not met, or not applicable against published criteria.\nWhat rung two changes: Nothing: this check needs no key.",
+ "response_text": "{\"object_to\": {\"raised\": \"yes\", \"text\": \"You say this check 'measures something other than its question and is being revised' and 'yields no pass, partial or fail about you' — then why is it in the deck at all? Showing the room a check you admit is broken, under my agency's name, is a finding whether you score it or not. The substance is wrong too: 'a W3C practice (the schema.org dataset vocabulary)' is not a federal requirement. Our metadata obligation is DCAT-US in data.json under OMB's open data policy; you read 'the structured markup embedded in the page' and ignore the catalog we are actually required to publish, so a fully compliant agency comes up empty here. 'USAFacts' AI-ready data guide' is a private nonprofit's wish list, not authority over us. And 'without running any of the page's scripts' guarantees you miss markup our CMS or tag manager injects client-side — so the method, not the agency, produces the blank. Finally, 'the data page' — which one? We publish thousands; whoever picks the page picks the result.\"}, \"word_not_understood\": {\"raised\": \"yes\", \"text\": \"'Structured markup', 'schema.org dataset vocabulary', and 'the public client' mean nothing to my communications or program staff. 'What rung two changes: Nothing: this check needs no key' is unintelligible — what is rung two, what key, and why is a line about it attached to every item? 'Met, not met, or not applicable' and 'Google Lighthouse' also assume the reader runs web tooling, which most of this room does not.\"}, \"secretly_doing\": {\"raised\": \"yes\", \"text\": \"'Not scored as a finding about your agency' reads as a placeholder: the result is still being collected and displayed, so it is a shadow score that will be flipped on once the check is 'revised', and the agency names will already be attached to the history. Reading only 'the data page itself... as it is served' lets whoever selects the page pick a bad one and call it the agency's site. And by citing 'the schema.org dataset vocabulary' and 'USAFacts' AI-ready data guide' as the yardstick, you are laundering a private publisher's and Google's preferred format into a de facto federal standard, so agencies get pressured to adopt it without any OMB process.\"}}",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1469,
+  "cacheReadInputTokens": 14234,
+  "cacheCreationInputTokens": 24837,
+  "webSearchRequests": 0,
+  "costUSD": 0.5737685,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 729,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}
