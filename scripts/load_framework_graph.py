@@ -130,7 +130,10 @@ def load(session, g: dict) -> dict:
                 # admitted document with no Document node. Counted, never silently dropped.
                 counts["evidenced_by_missing_document"] += 1
                 continue
-            session.run(f"MATCH (i:AssessmentIndicator {{id: $f}}) "
+            # The source is an AssessmentIndicator (the construct is evidenced) or, since
+            # `cc_tasks/2026-10-15_readiness_diagnostic_package.md` Part A (DN-016 ruling 4), a
+            # MeasurementSpec (the instrument entry is evidenced by the corpus document it cites).
+            session.run(f"MATCH (i {{id: $f}}) WHERE i:AssessmentIndicator OR i:MeasurementSpec "
                         f"MATCH (d:Document {{doc_id: $d}}) "
                         f"MERGE (i)-[:EVIDENCED_BY]->(d)", f=e["from"], d=doc_id)
             counts["evidenced_by_resolved"] += 1

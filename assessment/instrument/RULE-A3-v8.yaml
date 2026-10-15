@@ -108,3 +108,35 @@ state_reason: >-
   request). The size floor and the query-string rule are test parameters chosen by this project,
   stated with their error modes (DN-015 §4); the pass claim says the file is not verified to be
   the whole product. On the cycle of record no grid page reached a fail on this check.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Can the whole dataset be retrieved in a single request, rather than assembled piece by piece
+    from many filtered queries?
+  where_we_look: On the agency's data page, and the files linked from that page that sit on the same
+    website as the page itself.
+  what_client_does: The public client opens the data page and then, for each file linked on it that
+    lives on the same website (up to twenty-five), makes one quick web request asking about that file's
+    type, its size, and whether its address carries a query, at one request per second.
+  pass: This data page links, on its own website, an archive file (named by its extension) or a file
+    that is not a web page, carries no query in its address, and is at least 50 KiB. It is not verified
+    to be the complete product. Every data page that was looked at met this.
+  partial: Some of the agency's data pages linked such a whole-product download and some did not.
+  fail: 'Every linked file on the same website, in the page''s HTML as first served (a download behind
+    a script-driven button or a form is not seen), was checked, and none is an archive or a non-web-page
+    file without a query of at least 50 KiB. The two tests are stand-ins: a link with a query may still
+    deliver the whole product, and a complete product smaller than 50 KiB fails the size floor. It is
+    not a claim that the agency''s downloads are partial, nor that no bulk download exists elsewhere,
+    such as a data portal, an FTP site, or a bulk endpoint on a data interface.'
+  not_measured: 'The public client could not look at one or more of the linked files, for one of three
+    reasons: the host refused the identified client; the client''s own compliance with the site''s robots.txt
+    kept it from the file; or it could not confirm the absence because the page carried more same-website
+    links than the cap of twenty-five, or a server or network error occurred.'
+  why_it_matters: A Data on the Web Best Practice says to let consumers retrieve the full dataset with
+    a single request, and an OMB memo says that where there is significant public interest in taking
+    information off an agency's pages, the agency should strongly consider offering it in bulk; the
+    50 KiB floor and the query-means-filtered rule are the project's own choices.
+  who_else: 'Google Lighthouse runs this kind of check: anyone can run its automated checks against
+    a named page, its criteria are published, and a result comes back met, not met, or not applicable.
+    It does not run this exact one.'
+  rung_two_changes: 'Nothing: this check needs no key.'

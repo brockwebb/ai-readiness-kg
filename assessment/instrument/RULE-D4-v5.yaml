@@ -114,3 +114,30 @@ state_reason: >-
   Each branch rewards or penalizes a behavior M-25-05 requires of federal agencies (a complete,
   schema-conforming inventory at data.json). The URL-match membership rule is a test property
   (DN-015 §4) and its false-negative mode is stated in the fail claim.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Is this data product listed, in a valid record, in the agency's public data inventory?
+  where_we_look: The agency's public data inventory at each location on record for it — its own data.json
+    file, or a catalog recorded for the agency.
+  what_client_does: The public client opens the inventory at each recorded location, checks it against
+    the federal metadata schema, and looks for a record that names this data page's address.
+  pass: Every data page that was looked at appears in a record that names its address in a DCAT-US address
+    field, inside an inventory that conforms to the federal metadata schema.
+  partial: Some of the agency's data pages that were looked at met this and some did not.
+  fail: 'For every data page looked at, one of three things named in the result''s reason: the recorded
+    inventory was read and no record names this page''s address; or the page is listed but the inventory
+    as a whole fails the schema, possibly in an unrelated record; or no inventory is served at any recorded
+    address. It is not a claim that the dataset is missing from the inventory under some other address,
+    nor that the agency has no inventory at an address not on record for it, such as a parent department''s.'
+  not_measured: 'The public client could not finish looking at one or more pages, for one of three reasons:
+    the host turned the identified client away; the client''s own honoring of the site''s robots.txt
+    stopped it reading the inventory; or a recorded inventory could not be confirmed, or a starting
+    source was not searched, because of a server or network error.'
+  why_it_matters: An OMB memo requires each agency to keep a complete data inventory of all its data
+    assets, in JSON, conforming to the federal metadata schema and hosted at the agency's data.json
+    address, and the US DCAT schema (Project Open Data) defines the record's address fields. The rule
+    for deciding that a given page is a given record — matching its address in the record's address
+    fields — is the project's own.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

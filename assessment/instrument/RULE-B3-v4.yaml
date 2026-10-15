@@ -119,3 +119,32 @@ state_reason: >-
   this project's reading of "accessible to web crawlers" and which no cited source states (the
   same pattern that makes A10's shell branch project-defined). A rule version that judged the text
   after rendering, or dropped the pre-script condition, would make the check specified.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Can a machine reach the methodology behind the data and read it as plain text, without having
+    to run scripts?
+  where_we_look: The data product page itself, and any link on it whose web address or wording contains
+    the word "methodology" (up to 25 such links).
+  what_client_does: The public client opens the data page and then opens each of those methodology links
+    to read what the document actually sends.
+  pass: Every data page that was looked at links to a methodology document served as a web page or plain
+    text, readable before any script runs, with enough text and not mostly links.
+  partial: Some of the agency's data pages that were looked at met this and some did not.
+  fail: 'For every data page looked at, no methodology link (up to 25 followed) led to a document meeting
+    the project''s text measures: at least 2000 visible characters before any script runs and no more
+    than a quarter of the text sitting in links. A short but readable page, or a chapter hub, can fall
+    short of those measures. It is not a claim that the methodology needs scripts or cannot be read,
+    nor that the agency publishes no methodology: one linked under another name, such as "technical
+    documentation" or "about the data", is simply not found.'
+  not_measured: 'The public client could not finish looking at one or more pages, for one of three reasons:
+    the host turned the identified client away; the client''s own honoring of the site''s robots.txt
+    stopped it reading the page; or a server or network error, or methodology links it could not follow,
+    left the result unconfirmed.'
+  why_it_matters: A published guide on readable data documentation asks that text documentation, methodology
+    included, be reachable by people and by web crawlers, and an OMB memo asks agencies to default web
+    content to a plain web page rather than another format. The added rule that the text be readable
+    before any script runs is the project's own reading of "reachable by crawlers", since many crawlers
+    do not run scripts.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

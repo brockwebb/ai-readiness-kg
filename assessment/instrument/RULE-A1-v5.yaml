@@ -107,3 +107,35 @@ state_reason: >-
   structured format; not PDF only). The frame (this page's on-host links) and the media-type list
   are test properties stated above (DN-015 §4); the claims are bounded to them. On the cycle of
   record no grid page reached a fail on this check: every non-pass was not measured.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Is the data offered in a structured, machine-readable file a computer can read directly,
+    such as CSV, JSON or a spreadsheet, rather than only as a PDF that has to be re-parsed?
+  where_we_look: On the agency's data page, and the files linked from that page that sit on the same
+    website as the page itself.
+  what_client_does: The public client opens the data page and then, for each file linked on it that
+    lives on the same website (up to twenty-five), makes one quick web request asking the server what
+    that file is, at a pace of one request per second.
+  pass: 'A link on this data page, on the page''s own website, returned a file that the server labeled
+    by its media type, or the address named by its file extension, as a structured data format: CSV,
+    JSON, XML, spreadsheet or Parquet. Every data page that was looked at met this.'
+  partial: Some of the agency's data pages linked such a structured file and some did not.
+  fail: 'Every linked file on the same website, in the page''s HTML as first served (files built by
+    scripts or reached through a form are not seen), was checked, and none was labeled by its media
+    type or its file extension as a structured data format. It is not a claim that the page links no
+    structured file at all (a real data file served with a generic label and no extension is missed),
+    nor that the agency publishes no machine-readable data: data offered on another website, such as
+    a data portal or an API, or reached only through a query tool, is outside this page''s same-website
+    links.'
+  not_measured: 'The public client could not look at one or more of the linked files, for one of three
+    reasons: the host refused the identified client; the client''s own compliance with the site''s robots.txt
+    kept it from the file; or it could not confirm the absence because the page carried more same-website
+    links than the cap of twenty-five, or a server or network error occurred.'
+  why_it_matters: USAFacts' AI-ready data guide says to publish datasets in common structured formats
+    (JSON, CSV, machine-readable Excel) and avoid PDFs, an OMB memo requires public data assets to be
+    machine-readable, and a Data on the Web Best Practice asks for a machine-readable standardized format.
+  who_else: 'Google Lighthouse runs this kind of check: anyone can run its automated checks against
+    a named page, its criteria are published, and a result comes back met, not met, or not applicable.
+    It does not run this exact one.'
+  rung_two_changes: 'Nothing: this check needs no key.'

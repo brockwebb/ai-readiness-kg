@@ -131,3 +131,30 @@ state_reason: >-
   listed. The check is also a declaration presented on the v3 grid as what a machine met. A new
   rule version would list the answer-engine tokens, read the training tokens separately as a
   declared preference, and treat an absent robots.txt as permission.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Does the host's stated policy in its robots.txt allow the crawlers that answer engines use
+    to fetch the data page?
+  where_we_look: The single robots.txt file at the root of the agency's website, taken one host per
+    agency.
+  what_client_does: The public client asks the website once for its robots.txt file and reads, for each
+    of eight named crawler tokens, whether the stated rules allow the data page's path.
+  pass: The host's robots.txt, as stated, allows each of eight listed crawler tokens to fetch the data
+    page's path. Every data page that was looked at met this.
+  partial: For some of the agency's data pages the stated policy allowed all eight listed crawler tokens
+    and for some it did not.
+  fail: 'Either the host serves no robots.txt, which under the robots.txt standard actually permits
+    every crawler, or its robots.txt tells at least one of the listed crawler tokens not to fetch the
+    path. Neither is a claim that crawlers cannot reach the data: robots.txt is a stated policy, not
+    a barrier, and telling a training-only crawler not to fetch does not keep a page out of answer engines.'
+  not_measured: 'The public client could not read the robots.txt, for one of three reasons: the host
+    refused the identified client (three of sixteen hosts on the cycle of record); the client''s own
+    compliance with the site''s robots.txt kept it from the file; or it could not confirm the file''s
+    state because of a server or network error.'
+  why_it_matters: An OMB memo asks agencies to use robots.txt so their pages can be found, and the crawler
+    vendors' own pages say robots.txt is how a site controls which of their crawlers fetch it; reading
+    a disallow of these particular eight tokens as a failure is the project's own rule, and the project
+    has marked this check not yet valid.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

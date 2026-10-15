@@ -82,3 +82,32 @@ state_reason: >-
   The construct has no published definition, and the decision rule (any non-HTML 2xx at a
   project-chosen probe set) is the project's. It is a frontier leg by its own record; it stays in
   the detailed report as such and comes off page two.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Does the agency serve an entry point built for machine clients, such as a machine-readable
+    API description, an agent-protocol address, or an llms.txt, at the addresses machine clients look
+    first?
+  where_we_look: 'A fixed handful of machine addresses this project checks on the agency''s site: the
+    recorded API base and its description, the /.well-known/mcp path, and /llms.txt.'
+  what_client_does: The public client asks the website for each address in that fixed set with a plain
+    request, no key and no special accept header, and reads the status, content type and body length.
+  pass: For every data page looked at, at least one of the addresses this project checks returned content
+    that is not an HTML page.
+  partial: For some of the agency's data pages at least one checked address returns non-HTML content
+    and for some none does.
+  fail: For every data page looked at, none of the handful of addresses this project checks, by a plain
+    request with no key and no accept header, returned non-HTML content. The recorded API address may
+    be stale or wrong, and an API that answers a bare request with an HTML page or an error page fails
+    the same way; it is not a claim that the agency has no API, that its API is down, or that it lacks
+    machine access.
+  not_measured: 'The public client could not read one or more addresses, for one of three reasons: the
+    host refused the identified client, the client''s own robots.txt compliance kept it from reading,
+    or the recorded API base could not be reached to confirm an absence, a server or network error.'
+  why_it_matters: 'This is the project''s own rule: no published standard defines this entry point or
+    the set of addresses to serve it at. Its motivation draws on a FAIR letter (data retrievable by
+    a standardised protocol) and the llms.txt proposal, but neither defines the check.'
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'This check requests with no key, so a registered public client that presents a
+    key could change the result here: an API that answers only a key-bearing request could return machine
+    content on a second look where the bare request got an HTML or error page.'

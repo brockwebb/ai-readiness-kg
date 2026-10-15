@@ -119,9 +119,13 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
     assert got_nodes == dict(want_nodes)
 
     want_edges = collections.Counter(e["type"] for e in doc["edges"])
+    # MeasurementSpec joined the edge-source labels with the readiness diagnostic package
+    # (`cc_tasks/2026-10-15_readiness_diagnostic_package.md` Part A, DN-016 ruling 4): a spec
+    # now carries its own EVIDENCED_BY edges to the corpus documents its entry cites.
     got_edges = {r["t"]: r["c"] for r in graph.run(
         "MATCH (a)-[x]->(b) WHERE a:AssessmentCriterion OR a:AssessmentConstruct "
-        "OR a:AssessmentIndicator OR a:Action RETURN type(x) AS t, count(*) AS c")}
+        "OR a:AssessmentIndicator OR a:Action OR a:MeasurementSpec "
+        "RETURN type(x) AS t, count(*) AS c")}
     assert got_edges == dict(want_edges)
 
 

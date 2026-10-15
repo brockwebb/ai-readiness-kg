@@ -163,3 +163,38 @@ state_reason: >-
   branches penalize a behavior no source requires: having no OpenAPI document at the recorded
   base, which an agency with a fully documented API in another form also does. Every v3 grid fail
   on this column rests on one of them, so the column's fails do not carry a published claim.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Does the agency publish a machine-readable description of its data interface, so that a
+    program can learn the available calls and build one without a person first reading the documentation?
+  where_we_look: At the data-interface address recorded for the agency in the project's records (read
+    from the agency's own pages or seeded from a named source such as a developer page or a public catalog),
+    and any description document recorded beside that address.
+  what_client_does: The public client makes one web request to the recorded address and reads whether
+    what comes back is a machine-readable description, meaning a document carrying the OpenAPI or the
+    Swagger marker, at one request per second and never a path the site's robots.txt disallows.
+  pass: A machine-readable OpenAPI or Swagger description document is served at the data-interface address
+    recorded for this agency, and the result names that address. Every address that was looked at met
+    this.
+  partial: Some of the recorded addresses served such a description and some did not.
+  fail: No OpenAPI or Swagger document was found at the data-interface addresses recorded for this agency;
+    where no address is recorded at all, the fail says only that none was found in the sources searched.
+    It is not a claim that the agency has no data interface, that its interface is undocumented, that
+    it publishes no machine-readable description anywhere (a description at a developer page, or in
+    another format such as a catalog document at the interface's root, is not looked for), or that its
+    interface refuses programs.
+  not_measured: 'The public client could not look at one or more recorded addresses, for one of three
+    reasons: the host refused the identified client; the client''s own compliance with the site''s robots.txt
+    kept it from the recorded address; or it could not confirm an absence because a recorded address
+    was left unverified or a seed source unsearched, or a server or network error occurred.'
+  why_it_matters: A W3C practice says to provide complete information on the web about an interface
+    so that machines can read it, and USAFacts' AI-ready data guide calls for data interfaces; requiring
+    the description to be OpenAPI and to sit at the recorded address is the project's own rule, and
+    the project has marked this check not yet valid.
+  who_else: 'Google Lighthouse runs this kind of check: anyone can run its automated checks against
+    a named page, its criteria are published, and a result comes back met, not met, or not applicable.
+    It does not run this exact one.'
+  rung_two_changes: The description document is usually public and needs no key; but this check reads
+    the recorded data-interface address, which could itself require a key, so registering as a member
+    of the public and presenting one could let the client reach a document a bare request cannot.

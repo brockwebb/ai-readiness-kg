@@ -106,3 +106,30 @@ state_reason: >-
   pass requires, and one fail branch penalizes, content before JavaScript, which no cited source
   asks of a data tool and Google's own documentation says it renders. On the cycle of record the
   one grid fail is a soft 404 (specified), but every grid pass rests on the project-defined floor.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Does the agency's interactive data tool answer a machine honestly — real content at a direct
+    link, and a real "not found" error for a web address that does not exist?
+  where_we_look: 'At the one interactive data tool the agency offers, looked at from the site level:
+    its direct link to a product, and a made-up address beneath that tool.'
+  what_client_does: The public client asks for the tool's direct link, then asks for a made-up address
+    under the same tool that should not exist, and reads what each answer returns.
+  pass: The direct link came back as a working page carrying at least 2,000 characters of text before
+    any script ran, and the made-up address correctly came back as an error rather than a normal "OK"
+    page.
+  partial: Some of the agency's data pages that were looked at met this and some did not.
+  fail: 'One of three things, named in the result: a made-up address came back as a normal "OK" page
+    instead of an error (which may be a platform or vendor default rather than the agency''s choice);
+    the direct link itself came back as an error; or fewer than 2,000 characters of text were present
+    before scripts ran. It is not a claim that the tool is unusable in a browser or by a crawler that
+    runs JavaScript, nor a finding about the agency''s intent.'
+  not_measured: 'The public client could not look at one or more pages, for one of three reasons: the
+    host refused the identified client; the client''s own robots.txt compliance kept it from reading
+    the page; or it could not confirm an absence, or a server or network error stopped it.'
+  why_it_matters: An RFC defines what a real "not found" answer is, and Google's crawler documentation
+    treats an "OK" page that is really an error as a problem, not a page; a Data on the Web Best Practice
+    expects programmatic access to return the responses a client expects. The rule that at least 2,000
+    characters be present before scripts run is the project's own choice.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

@@ -77,7 +77,11 @@ COUNTS_BASIS = (
     "indicators and their constructs (DD-054: the framework does not adopt what the "
     "instrument found about itself without the operator); candidate_indicators counts them. "
     "Counts of the instrument (measurement_specs, collectors_none_known, "
-    "specs_with_recorded_decision) include every spec, adopted or not. rules_built is a fact "
+    "specs_with_recorded_decision, evidenced_by_spec) include every spec, adopted or not; "
+    "evidenced_by_spec is the instrument's own EVIDENCED_BY edges from a MeasurementSpec to the "
+    "corpus documents its entry cites (DN-016 ruling 4), kept separate from the framework's "
+    "construct-evidence count evidenced_by, which is indicator-sourced and candidate-excluded. "
+    "rules_built is a fact "
     "about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES "
     "edges whose indicator is part of the framework and actions_on_candidate_indicators "
     "counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the "
@@ -105,8 +109,17 @@ def recount(g: dict) -> dict:
         return sum(1 for n in nodes if label in n["labels"]
                    and not (exclude_candidates and n["id"] in cand))
 
+    ind_ids = {n["id"] for n in nodes if "AssessmentIndicator" in n["labels"]}
+    spec_ids = {n["id"] for n in nodes if "MeasurementSpec" in n["labels"]}
+
     def n_edge(etype: str) -> int:
-        return sum(1 for e in edges if e["type"] == etype and e["from"] not in cand)
+        """Edges of this type whose source is a framework INDICATOR (candidates excluded).
+        Keyed on the indicator source, not the type alone, so that spec-sourced EVIDENCED_BY
+        edges (DN-016 ruling 4) are not folded into the framework's construct-evidence count:
+        that would adopt candidate A12/A13's instrument evidence into a headline number the way
+        DD-054 forbids. Those are counted separately as `evidenced_by_spec`."""
+        return sum(1 for e in edges if e["type"] == etype and e["from"] in ind_ids
+                   and e["from"] not in cand)
 
     specs = [n["properties"] for n in nodes if "MeasurementSpec" in n["labels"]]
     inds = [n for n in nodes if "AssessmentIndicator" in n["labels"]]
@@ -117,6 +130,9 @@ def recount(g: dict) -> dict:
         "indicators": n_label("AssessmentIndicator", True),
         "evidenced_by": n_edge("EVIDENCED_BY"),
         "evidenced_by_internal": n_edge("EVIDENCED_BY_INTERNAL"),
+        # ---- the instrument's own evidence: every spec, adopted or not (like measurement_specs) ----
+        "evidenced_by_spec": sum(1 for e in edges if e["type"] == "EVIDENCED_BY"
+                                 and e["from"] in spec_ids),
         "gaps": sum(1 for n in nodes if n["properties"].get("gap") and n["id"] not in cand),
         "indicators_measured": sum(
             1 for n in inds if n["properties"].get("measurement_status") == "measured"

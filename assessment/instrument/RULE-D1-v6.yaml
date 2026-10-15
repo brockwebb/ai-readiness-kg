@@ -107,3 +107,33 @@ state_reason: >-
   harness itself detected, for a wording requirement no cited source makes (3 grid pages on the
   cycle of record rest on it). The check also omits the place federal guidance names, the
   inventory, so its no-licence claim is bounded to three other places.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Can a machine tell, from a recognised name, on what terms it may reuse the data?
+  where_we_look: The licence field in the data page's markup, a licence link sent in the page's response
+    headers, and, when an interface for developers is on record, that interface's terms page.
+  what_client_does: The public client opens the data page and reads its licence markup and any licence
+    link in the response, and when a developer interface is on record it also opens that interface's
+    terms page.
+  pass: Every data page that was looked at names a licence by a recognised identifier in at least one
+    of those places.
+  partial: Some of the agency's data pages that were looked at met this and some did not.
+  fail: 'For every data page looked at, none of the places read names a licence by a recognised identifier:
+    the page''s markup, its licence link header, and the developer-interface terms page only when a
+    terms address is on record for the agency (when none is on record, that place was not read). It
+    is not a claim that the data is unlicensed or restricted: federal data is generally public domain,
+    and the agency''s own data inventory, where federal guidance says the status may be recorded, is
+    not read by this check.'
+  not_measured: 'The public client could not finish looking at one or more pages, for one of three reasons:
+    the host turned the identified client away; the client''s own honoring of the site''s robots.txt
+    stopped it reading the page; or the developer-interface terms address was not yet settled, or a
+    server or network error left the result unconfirmed.'
+  why_it_matters: A Data on the Web Best Practice asks that a licence be stated so a machine can find
+    it; an OMB memo lets a federal agency meet the open-licence requirement by marking the asset public
+    domain in its inventory; the US DCAT schema carries a licence-or-public-domain field; and the SPDX
+    licence list supplies the recognised identifiers. The extra demand that a detected licence be given
+    as an identifier rather than in words is the project's own rule.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: A public key could let the client reach a developer interface's terms page that
+    is shown only to registered developers; the page-markup and response-header checks need no key.

@@ -102,3 +102,29 @@ state_reason: >-
   The pass and the no-changelog branches follow DWBP BP 8. Two fail branches penalize behaviors
   no source requires (a history published as a page rather than a feed; entries without a change
   type). On the cycle of record 9 of the 18 grid-page fails on this check rest on the page branch.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Can a machine learn what changed between releases from a structured change history?
+  where_we_look: Each change-log or release-notes location on record for the agency.
+  what_client_does: The public client opens each recorded change-log location and reads what kind of
+    document it sends and, for a feed, how many of its entries say what kind of change they record.
+  pass: Every data page that was looked at has a change history served as a JSON, Atom or RSS feed,
+    with at least half its entries saying what kind of change they record.
+  partial: Some of the agency's data pages that were looked at met this and some did not.
+  fail: 'For every data page looked at, no such feed was found at the recorded locations: there is no
+    change history there, or there is one published as an ordinary web page, or its entries do not say
+    what kind of change they are, or the recorded locations were missing or wrong. The project''s format
+    and labelling floors decide two of these, so a precise web-page change log that a machine can read,
+    and that a Data on the Web Best Practice accepts, still fails here. A fail is not a claim that the
+    version history is absent, incomplete or unreadable, nor that the agency does not publish revisions.'
+  not_measured: 'The public client could not finish looking at one or more pages, for one of three reasons:
+    the host turned the identified client away; the client''s own honoring of the site''s robots.txt
+    stopped it reading the page; or a starting source was not searched, or a server or network error
+    left the result unconfirmed.'
+  why_it_matters: A Data on the Web Best Practice asks for a complete version history that explains
+    the changes in each version, and a published guide on data for developers asks for versioning so
+    updates can be tracked over time. The added demands that the history come as a feed and that entries
+    carry a change-type label are the project's own rules; neither source requires them.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

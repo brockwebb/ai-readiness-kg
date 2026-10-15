@@ -91,3 +91,45 @@ fix_lines:
   act:f4-carry-a-revision-class-on-every-changelog-entry: "Carry a revision class on every change-history entry."
   act:f4-serve-the-changelog-in-a-machine-readable-format: "Serve the change history in a machine-readable format as well as a page."
   act:f4-publish-a-version-history-endpoint: "Publish a version history for the product."
+
+# ---------------------------------------------------------------------------------------------
+# The readiness diagnostic package's rendered vocabulary (DN-016 ruling 1; task b6c65bfe). Every
+# render of the package (the Word dictionary, the deck, the preface) reads these, so the terms
+# change in one place. The run is a *readiness diagnostic*; its unit is a *check* (DN-015's noun);
+# the thing that runs it is the *public client*. The words "scan", "probe", "crawl" and "audit"
+# do NOT appear in any rendered product (the code keeps `scan` in its paths); `forbidden_words`
+# is read by the vocabulary test, scripts/diagnostic_package.py::banned_hits.
+diagnostic_terms:
+  run: "readiness diagnostic"
+  unit: "check"
+  actor: "public client"
+  forbidden_words: [scan, probe, crawl, audit]
+  # A check whose instrument plain name (from the audit, used by the summary grid) carries a
+  # forbidden word gets a diagnostic-only name here, by leg. A9's instrument name is "A probed
+  # machine address returns non-HTML content"; "probed" is forbidden in a rendered product, so
+  # the diagnostic renders the name below. The instrument entry and the summary grid are
+  # unchanged — this override is the diagnostic package's rendered term (DN-016 ruling 1).
+  plain_name_overrides:
+    A9: "A machine address returns a non-page file"
+  # DN-015 §6: four states, named in plain words. "not measured" carries its three reasons.
+  states:
+    pass: "every one of the agency's data pages that was looked at met the check"
+    partial: "some data pages met it and some did not"
+    fail: "every data page that was looked at did not meet the check"
+    not_measured:
+      label: "not measured"
+      meaning: >-
+        the public client could not look at one or more pages, so neither "every page passes"
+        nor "every page fails" is established
+      reasons:
+        - "the host refused the identified client"
+        - "the client's own robots.txt compliance kept it from reading the page"
+        - "it could not confirm an absence, or a server or network error stopped it"
+  # DN-016 ruling 2: the client ladder.
+  rungs:
+    rung_one: >-
+      anonymous, no key, honours robots.txt, one request per check per surface at the standing
+      rate limit — the least privileged client the public has
+    rung_two: >-
+      registered as any member of the public registers, presenting a key obtained by open
+      registration (a good-faith handshake, not a block); specified now, measured in its own cycle

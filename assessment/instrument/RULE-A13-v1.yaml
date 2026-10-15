@@ -144,3 +144,36 @@ state_reason: >-
   all, so their fail branches rest on the project's own notion of discoverability; the four-object
   composite is the project's too. The task's premise named two invented branches (terms and
   changelog reachability); this entry finds those two and the link branch beneath all four.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: Starting at one of the agency's data pages and knowing nothing else, can a machine client
+    reach the four things an agency publishes for machines — its data service (its API), that service's
+    terms, its changelog, and its data inventory?
+  where_we_look: At one of the agency's data pages — its links and its response headers — and at the
+    recorded locations where each of the four objects was reported to sit.
+  what_client_does: 'The public client makes no new request of its own; it reuses what other checks
+    already fetched: the data page''s links and headers, and whether each object was served where it
+    was recorded.'
+  pass: Every object the agency is shown to publish is either linked from this data page or sits at
+    its published standard address.
+  partial: Some of the agency's data pages that were looked at reached every published object and some
+    did not.
+  fail: At least one object the agency is shown to publish (named in the result) is neither linked from
+    this data page nor at a standard address the check looked at — the inventory at /data.json on the
+    data page's own host (an inventory on the main www site while the page sits on a subdomain is not
+    matched there), or the API catalog at /.well-known/api-catalog. For the service's terms and the
+    changelog no published standard exists, so a fail on either rests only on this project's "must be
+    linked" rule and breaks no published convention. It is not a claim that the object is missing, nor
+    that a client told where to look cannot use it.
+  not_measured: 'The public client could not settle one or more objects, for one of three reasons: the
+    host refused the identified client; the client''s own robots.txt compliance kept it from reading;
+    or it could not confirm an absence, or a server or network error stopped it — here, an object whose
+    existence was not settled, a page not served or its links not read, or an API catalog address no
+    collector has fetched yet.'
+  why_it_matters: An RFC on API catalogs defines how a publisher announces its data service at a standard
+    address, and an OMB memo requires each agency to post its data inventory at a set data.json address.
+    Reaching the service's terms or changelog by an ordinary link, and combining the four objects into
+    one result, are the project's own rules.
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'

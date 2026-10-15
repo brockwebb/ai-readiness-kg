@@ -122,3 +122,30 @@ state_reason: >-
   declaration, reported as one. Two of its fail branches carry A4's defects (an absent robots.txt
   read as a restriction; training opt-outs read as access refusals), so as a readiness verdict it
   contradicts the sources it cites. The meta-robots branch is sound.
+
+# Plain-language fields (DN-016 §3; task b6c65bfe). Authored for the diagnostic package.
+plain:
+  question: What does the host say in writing about letting crawlers reach the data page, in both places
+    such a statement can live — the site's robots.txt file and the page's robots meta tags?
+  where_we_look: At the site's robots.txt file and at the robots meta tags carried on the data page.
+  what_client_does: The public client asks for the robots.txt file and reads the data page's robots
+    meta tags, then checks what each says about the same eight listed crawler names.
+  pass: 'This records what the agency declares; it is read but not scored. What it records as permitting:
+    both the robots.txt and the page''s meta tags, as written, allow each of the eight listed crawler
+    names.'
+  partial: This is a declaration that is read but not scored, so no partial result is given.
+  fail: 'It records one of three things, named in the result: the robots.txt disallows a listed name
+    (for five of the eight names that is a request not to use content for training, not a block on reading);
+    the page''s meta tags restrict it; or no robots.txt is served at all, which declares no restriction
+    and under the standard permits every crawler. A fail is therefore not a finding that the agency
+    declared a policy restricting crawler access, and it is about declared policy only, not about whether
+    any crawler is actually served or refused.'
+  not_measured: 'The declared layer could not be looked at, for one of three reasons: the host refused
+    the identified client; the client''s own robots.txt compliance kept it from reading the page; or
+    it could not confirm an absence, or a server or network error stopped it.'
+  why_it_matters: 'An RFC on robots.txt defines the file and states plainly that its rules are not a
+    form of access authorization, and Google''s crawler documentation defines the robots meta tag and
+    notes those settings can be followed only if crawlers are allowed to read the pages that carry them.
+    This is a declaration: it records what the agency states, read but not scored.'
+  who_else: No public tool runs this exact check.
+  rung_two_changes: 'Nothing: this check needs no key.'
