@@ -47,8 +47,16 @@ A separate two- or three-paragraph narrative, `reports/summary/USAFACTS_NOTE.md`
 ## Prior art
 
 ### External
-- Accessibility conformance reports (VPAT/ACR) use a three-state conformance scale per criterion: supports, partially supports, does not support. The grid's cell states follow it.
-- The waffle chart (square pie) and isotype pictograms for §6's first item.
+
+The grid's three-state cell (pass / partial / fail) follows accessibility conformance reporting: a VPAT/ACR scores each criterion supports / partially supports / does not support. The waffle chart (square pie) and isotype pictograms are the prior art for the parked item in §6. Both are published external practice, not research held in the squiddy library; the library searches below return only off-topic rows (web-agent accessibility trees, data-pipeline conformance, LLM evaluation scales), so each is recorded as a failed search, exactly as DN-014's external search was.
+
+- library receipt: query "accessibility conformance report three-state scale supports partially supports does not support VPAT" | release library_graph_20261012_sq013_01_2026-10-12.json sha256:0989759c402ca41472806bdf9ab47529ba2eb5a6b25d0e75c1a6e29e650d4275 | rows lesson:2026-02-22_arXiv_2504_21024#p15:361:1330-1663, lesson:2026-02-22_arXiv_2504_21024#p17:398:1368-1450, lesson:2026-02-22_arXiv_2504_21024#p4:95:2139-2478, lesson:2026-08-25_arXiv_2512_03541#p12:127:1084-1133, lesson:2026-08-25_arXiv_2512_03541#p27:327:0-98, lesson:2026-08-25_arXiv_2512_03541#p5:38:140-354
+- library receipt: query "waffle chart square pie isotype pictogram part-to-whole proportion visualization" | release library_graph_20261012_sq013_01_2026-10-12.json sha256:0989759c402ca41472806bdf9ab47529ba2eb5a6b25d0e75c1a6e29e650d4275 | rows lesson:2026-02-22_arXiv_2505_24876#p45:889:417-814, lesson:2026-02-22_arXiv_2505_24876#p45:893:1166-1330, lesson:2026-02-22_arXiv_2505_24876#p45:892:1001-1164, lesson:2026-02-22_arXiv_2505_02484#p202:2764:160-309
 
 ### Internal
-- DN-010 (decision support; "value", not "impact"), DN-013 (the concise report), the v2 RESULT (`cc_tasks/2026-10-12_executive_summary_from_brief_v2_RESULT.md`): its capability table and Fable rounds stand.
+
+The addendum follows DN-010 (decision support; "value", not "impact") and DN-013 (the concise report), and its changes to page two build on the v2 summary (task 14d163b7), whose capability table and Fable rounds stand. DN-010 and DN-013 are under `docs/design/` and resolve; the v2 RESULT lives under `cc_tasks/`, which is outside the prior-art internal roots (`prior_art.internal.default_include` in seldon.yaml), so its search reaches nothing and is recorded as such.
+
+- internal receipt: query "DN-010" | repo ai-readiness-kg@e25d7af310ad9e9a1bdc07a3dafd441cb485f392 | hits docs/design/2026-10-02_DN-010_value_effort_matrix_decision_support.md:1
+- internal receipt: query "DN-013 concise report" | repo ai-readiness-kg@580fbdd9976cfc4e70085dd1f355c27828f8ce39 | hits docs/design/2026-10-06_DN-013_parallelism_known_endpoints_and_prose.md:29
+- internal receipt: query "executive_summary_from_brief_v2_RESULT" | repo ai-readiness-kg@d067e6960d8666adb0dcfca6f8837602deb81866 | hits none
