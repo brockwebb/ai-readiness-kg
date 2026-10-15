@@ -1,0 +1,124 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. A declaration: it records what
+# the host DECLARES (robots.txt and meta-robots), not what a machine met. The second of the two
+# declarations among the site-level checks (with A4); excluded from the v3 grid as declared.
+order: 15
+rule_id: RULE-A11-declared-v2
+leg: A11-declared
+indicator: ind:A11
+code: assessment/harness/scan/rules/rule_a11_declared_v2.py
+matrix: tierA (site level; the declared layer of the A11 declared / enforced / observed triad)
+on_v3_grid: false
+declaration: true
+plain_name: null   # the indicator's other two layers are agency-enabled; no plain name is set from one layer
+
+question:
+  text: >-
+    What does the host declare about crawler access to the data page, in both places a
+    declaration can live (robots.txt and the page's robots meta tag)? A declaration is the
+    publisher's stated policy; it is half of the question whether crawlers are let in, and the
+    half that can be read from outside.
+  established_by:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§1; §2.2"}
+    - {doc_id: cloudflare-ai-crawl-control-manage-crawlers, section: "Manage AI crawlers (allow or block per crawler)"}
+
+expected_behavior:
+  text: >-
+    This is a declaration check: it states what the host declares, and its expected behavior is the
+    declaration's meaning. RFC 9309: the rules are not a form of access authorization (§1, quoted),
+    and a robots.txt the server reports as unavailable lets the crawler access any resources
+    (§2.3.1.3, quoted). Google: the robots meta tag's noindex rule applies to search engine
+    crawlers, and such settings can be followed only if crawlers are allowed to access the pages
+    that carry them (quoted). OpenAI: disallowing GPTBot means content should not be used in
+    training, and allowing OAI-SearchBot helps a site appear in search results (quoted). Anthropic:
+    restricting ClaudeBot signals exclusion from model training (quoted). Reading a training opt-out
+    as a restriction on answers is not supported by these sources.
+  sources:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§1; §2.3.1.3"}
+    - {url: "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag", section: "Using the robots meta tag"}
+    - {doc_id: openai-crawlers-bots, section: "GPTBot; OAI-SearchBot"}
+    - {doc_id: anthropic-crawler-support-article, section: "ClaudeBot"}
+  quotes:
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "then the crawler MAY access any resources on the server."
+    - source: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag
+      quote: "rule applies to search engine crawlers"
+    - source: openai-crawlers-bots
+      quote: "Disallowing GPTBot indicates a site's content should not be used in training generative AI foundation models."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "These rules are not a form of access authorization."
+    - source: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag
+      quote: "these settings can be read and followed only if crawlers are allowed to access the pages that include these settings"
+    - source: openai-crawlers-bots
+      quote: "To help ensure your site appears in search results, we recommend allowing OAI-SearchBot in your site's robots.txt file"
+    - source: anthropic-crawler-support-article
+      quote: "it signals that the site's future materials should be excluded from our AI model training"
+    - source: cloudflare-ai-crawl-control-manage-crawlers
+      quote: "For each AI crawler, you can choose to allow or block access."
+
+test:
+  client: "the harness's identified client"
+  request: "GET /robots.txt; read the data page's robots meta tags"
+  reads: "per-token verdicts for the same eight tokens as A4; restricting meta-robots tokens"
+  decision_rule:
+    - "fail: `nothing is DECLARED: no robots.txt is served`"
+    - "fail: `robots.txt DISALLOWS the product path for {k} of {n} AI-crawler user agents`"
+    - "fail: `robots.txt permits every AI crawler but the product page's meta-robots directives restrict it`"
+    - "pass: `both declared-layer sources permit`"
+  parameters:
+    - "params.a4_crawlers.user_agents (the A4 list)"
+  recognized_method: "Parsing robots.txt per RFC 9309 and reading the meta tag as Google defines it are the declarations' own semantics."
+  recognized_method_sources:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.2"}
+
+branches:
+  - id: pass_both_permit
+    verdict: pass
+    reason_match: "both declared-layer sources permit"
+    behavior: "both declarations permit every listed token"
+    sources: [{doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.2"}]
+    state: specified
+  - id: fail_nothing_declared
+    verdict: fail
+    reason_match: "nothing is DECLARED"
+    behavior: "penalizes no robots.txt, which RFC 9309 reads as permitting everything"
+    sources: [{doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.3.1.3 (contradicts the branch)"}]
+    state: invalid
+  - id: fail_token_disallowed
+    verdict: fail
+    reason_match: "robots.txt DISALLOWS the product path"
+    behavior: "penalizes a training opt-out as if it were a refusal of access"
+    sources: [{doc_id: openai-crawlers-bots, section: "GPTBot (contradicts the branch)"}]
+    state: invalid
+  - id: fail_meta_restricts
+    verdict: fail
+    reason_match: "meta-robots directives restrict it"
+    behavior: "the page declares noindex or a similar restriction"
+    sources: [{url: "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag", section: "Using the robots meta tag"}]
+    state: specified
+not_measured: "the declared layer could not be observed (refusal)"
+
+claims:
+  pass: "Both the host's robots.txt and the page's robots meta tags, as declared, permit each of the eight listed crawler tokens."
+  fail: "One of three things, named in the reason: the robots.txt disallows a listed token (for five of the eight tokens that is a training opt-out, not a restriction on answers); the page's robots meta tags restrict it; or no robots.txt is served, which declares no restriction at all and under the standard permits every crawler. A fail is therefore not a claim that the agency declared a policy restricting crawler access. It is about declared policy only, not about whether any crawler is served or refused."
+  neither: "Nothing about enforcement (A12) or observed crawler traffic (agency-enabled)."
+
+confounds:
+  - cause: "the same token-list and absent-file problems as A4"
+    distinguished: "no"
+
+fix_line_check:
+  action: none (declared; not a grid column)
+  verdict: not_applicable
+
+state: invalid
+reader_invalid:
+  round: 2
+  unit_id: 434bceb917bac0ab
+  reason: "Most attributions are backed: 'not a form of access authorization' (RFC 9309), 'can be read and followed only if crawlers are allowed to access the pages' (Google), the GPTBot training and OAI-SearchBot search-results statements (OpenAI), and the ClaudeBot training-exclusion signal (Anthropic) all appear verbatim, and the closing inference about answers is presented as the project's own reading. Two attributions outrun the quoted passages. The text says RFC 9309 §2.3.1.3 holds that 'a robots.txt the server reports as unavailable' lets the crawler access any resources (and the fail_nothing_declared branch and the claims rest on this), but the quoted fragment is only the consequent 'then the crawler MAY access any resources on the server' with no condition shown; the 'unavailable' antecedent is supplied by the writer. Likewise the text says the Google 'noindex rule applies to search engine crawlers', but the quote is only 'rule applies to search engine crawlers', so which rule is asserted by the writer, not the passage."
+state_reason: >-
+  Invalid by DN-015 §7: the reader answered no to question 1 in both rounds (its round-2 reason is
+  recorded under reader_invalid). The defect it names is in this entry's quoting of its sources,
+  not shown to be in the rule; before the reading, the writer's assessment was: state invalid. A
+  declaration, reported as one. Two of its fail branches carry A4's defects (an absent robots.txt
+  read as a restriction; training opt-outs read as access refusals), so as a readiness verdict it
+  contradicts the sources it cites. The meta-robots branch is sound.

@@ -1,0 +1,813 @@
+{
+ "generated_by": "scripts/instrument_read.py",
+ "task": "cc_tasks/2026-10-15_instrument_specification_audit.md",
+ "reads": [
+  {
+   "rule_id": "RULE-A1-v5",
+   "round": 1,
+   "unit_id": "79ce03e1e9908bcf",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "de3839c2a141c0db611460b8cb32a84fc7ed22505834b412af0381f3a57d198f",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Two of the three attributions are supported: the W3C passage backs 'machine-readable, standardized data format', the M-25-05 passage backs the quoted definition of machine-readable, and the USAFacts passage backs the format list and the PDF exclusion. But the sentence 'For federal public data assets this is required', attributed to M-25-05 §5(a)(i), has no quoted passage: the only M-25-05 quote is the definition, and the §5(a)(i) 'agencies must make each of their public data assets machine-readable' text appears only as the writer's paraphrase in the Established-by line, not in the verbatim passages. The 'quoting the Evidence Act' attribution is likewise unquoted. The project's own choices (the media-type list, the 25-link cap) are correctly labeled as chosen by this project."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims close the main misreading (data on another host, an API or a query tool), but the fail claim says none of the links 'returned a structured data format' while the pass claim and the test say the format is 'declared' by Content-Type or href extension. A reader who knows the agency's page links a real CSV served as application/octet-stream with no extension could read a fail as 'this page links no structured file' when the test only established that no link was declared structured; the confounds admit this case is missed but the CLAIMS do not carry the 'declared' qualifier into the fail."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "DWBP is used throughout (Best Practice 12, DWBP's test) but never expanded as the W3C Data on the Web Best Practices; the Evidence Act is cited as the origin of the machine-readable definition without being named or identified. Other terms (SI client, harness, on-host, HEAD/GET, media type, Parquet, the params keys) are either project-defined or standard for a technically literate reader.",
+     "terms": [
+      "DWBP",
+      "Evidence Act"
+     ]
+    }
+   },
+   "tokens": 42993
+  },
+  {
+   "rule_id": "RULE-A1-v5",
+   "round": 2,
+   "unit_id": "7ef7069b8d4813e8",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "bef859880dd14b507080269124e64f1d2599693b89500859da72be9e5eb26591",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each requirement the expected-behavior text attributes to a source is matched by a quoted passage: the DWBP 'machine-readable, standardized data format' wording, the M-25-05 'Agencies must make each of their public data assets machine-readable' mandate and its 'easily processed by a computer without human intervention' definition, and USAFacts' JSON/CSV/machine-readable Excel list with the instruction to avoid PDFs. The one element no source defines, the concrete list of structured media types (text/csv, application/json, geo+json, parquet, xls/xlsx, xml), is stated plainly as 'chosen by this project'."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims close the main misreadings (off-host portals and APIs, query tools, generic media types, incompleteness of the file), but they assert that 'every on-host link on this data page was checked' without saying the harness reads only the static HTML it fetched. A reader who knows the page offers CSV downloads through script-rendered buttons or form posts would read the fail as 'those downloads are not structured' when the harness never saw them. A smaller gap: the pass claim counts a file 'named by extension', while the test's pass text says the verdict is classified on the response, not the href, so a reader cannot tell whether an href ending in .csv that returns text/html passes or fails."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The entry leans on 'DWBP Best Practice 12' and 'DWBP's test' but never expands DWBP (W3C Data on the Web Best Practices); the citation id 'w3c-dwbp-2017' hints at W3C but does not define the acronym. All other terms (HEAD/GET, 405/501, Content-Type, media type, robots.txt, Parquet, params.*) are either project-defined or standard for a technically literate reader.",
+     "terms": [
+      "DWBP"
+     ]
+    }
+   },
+   "tokens": 43544
+  },
+  {
+   "rule_id": "RULE-A10-v3",
+   "round": 1,
+   "unit_id": "6259e347b547c780",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "4022f3edc230afd0eb3a2e4191424323594874c2678b7910e863d070616d226e",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "The two requirements the text attributes to sources are backed by quoted passages: the 404 definition is the verbatim RFC 9110 §15.5.5 sentence, and 'a 200 whose content says the page is an error is a soft 404 which Google treats as an error' is supported by 'Search Console will show a soft 404 error'. The deep-link-served requirement is not attributed to any source in the text. The pre-JavaScript content requirement is said plainly to have no cited source and the 2000-character floor is marked 'chosen by this project', with the branches table repeating 'Source: none'. Two small assertions go beyond the quoted passages but are not stated as source requirements: the '(or 410)' alternative is not in the RFC quote, and 'the app-shell model it describes is supported' is not in the Google quote (which only says 200 pages are queued for rendering); both are used to loosen, not tighten, what is demanded."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "Two misreadings stay open. First, the fail claim says 'the deep link's content arrives only by JavaScript', but the test only establishes that fewer than 2000 visible characters were present before scripts ran; a server-rendered page with a short real text body (say 1200 characters plus a data table built by script) would fail and a reader would take the published claim as proof the page is an empty client-rendered shell, which was not measured. The claims disclaim usability by browsers and rendering crawlers but do not disclaim this. Second, the question frames the check as whether the tool answers 'honestly', and the confounds admit a CDN or framework default soft 404 is not distinguished; the claims do not say a fail is not a claim about the agency's own configuration choice, so a reader who knows the agency could read a soft-404 fail as agency-side misconfiguration or deception rather than an edge-platform default."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Error-shell tokens' names what the harness reads in the invalid route's body but the entry never says which strings count or how they bear on the decision rule, which uses only the status. 'Visible characters before JavaScript' is the quantity the 2000 floor is applied to, yet the entry does not say how visibility is decided without a renderer (text nodes only, excluding script/style/nav, whitespace handling), and the entry itself concedes there is no published method. 'App-shell model' is used as the basis for saying the client-rendered pattern is supported, but is neither defined nor quoted. Soft 404, deep link, SI client, harness and the other project terms are defined in the entry or the project glossary.",
+     "terms": [
+      "error-shell tokens",
+      "visible characters (before JavaScript)",
+      "app-shell model"
+     ]
+    }
+   },
+   "tokens": 43605
+  },
+  {
+   "rule_id": "RULE-A11-declared-v2",
+   "round": 1,
+   "unit_id": "129aca4cfbb0e8ef",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "0d650c5179b1c230f15c26399f0898d0872ae27429061d6199d85993a631e8f8",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Three attributions lack a supporting passage. (1) The text says RFC 9309 §1 holds that 'the rules are not access authorization'; the only RFC quote is 'then the crawler MAY access any resources on the server', which supports the unavailable-robots.txt point (§2.3.1.3) but says nothing about authorization. (2) The text says training-crawler tokens are opt-outs 'not from answers' and attributes this to OpenAI and Anthropic; the OpenAI quote only says disallowing GPTBot means content should not be used in training, and no Anthropic passage is quoted at all (Anthropic is not even in the cited-sources list). (3) The Google clause 'that are allowed to fetch the page' goes beyond the quoted 'rule applies to search engine crawlers'. The cloudflare source named under the question also has no quoted passage. None of these parts is marked as the project's own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim is a disjunction ('one of the declarations restricts a listed token, or no robots.txt is served'), and the grid shows only pass/fail, so a reader cannot tell which branch fired. The claims close off enforcement and observed traffic, but they leave open the reading that the agency has declared a policy restricting AI crawler access. That reading is wrong on two fail branches the entry itself flags as contradicted by their sources: an absent robots.txt declares nothing and per RFC 9309 permits everything, and a GPTBot-style disallow is a training opt-out, not a refusal of access. The claims call a fail 'a statement about declared policy only' without saying that a fail can mean no restrictive policy was declared at all."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The entry leans on other checks by code (A4 for the token list and its confounds, A12 for enforcement) and on 'agency-enabled' for observed crawler traffic, none of which the entry or the project's shared definitions explain. The eight crawler tokens are never named. 'Declared-layer sources' is used in the pass rule without definition, 'restricting' meta-robots tokens is not enumerated (the branch mentions only noindex 'or a similar restriction'), 'product path' is not tied to the defined 'data page', and the parameter key is a rule-code identifier with no explanation.",
+     "terms": [
+      "A4",
+      "the eight listed crawler tokens / the A4 list",
+      "A12",
+      "agency-enabled",
+      "declared-layer sources",
+      "restricting meta-robots tokens",
+      "product path",
+      "params.a4_crawlers.user_agents"
+     ]
+    }
+   },
+   "tokens": 42664
+  },
+  {
+   "rule_id": "RULE-A11-declared-v2",
+   "round": 2,
+   "unit_id": "434bceb917bac0ab",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "670ea29da6eba10537ede4beccf3028ed044e3cd1620f86a3ce4664af27237f8",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Most attributions are backed: 'not a form of access authorization' (RFC 9309), 'can be read and followed only if crawlers are allowed to access the pages' (Google), the GPTBot training and OAI-SearchBot search-results statements (OpenAI), and the ClaudeBot training-exclusion signal (Anthropic) all appear verbatim, and the closing inference about answers is presented as the project's own reading. Two attributions outrun the quoted passages. The text says RFC 9309 §2.3.1.3 holds that 'a robots.txt the server reports as unavailable' lets the crawler access any resources (and the fail_nothing_declared branch and the claims rest on this), but the quoted fragment is only the consequent 'then the crawler MAY access any resources on the server' with no condition shown; the 'unavailable' antecedent is supplied by the writer. Likewise the text says the Google 'noindex rule applies to search engine crawlers', but the quote is only 'rule applies to search engine crawlers', so which rule is asserted by the writer, not the passage."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The open misreading is: 'this agency has declared a policy that blocks AI crawlers from its data page.' The grid shows one FAIL verdict per agency, but the rule reaches FAIL by three heterogeneous routes, one of which (no robots.txt served) the entry itself says declares no restriction at all and under the standard permits every crawler, and another of which (a Disallow for a training-only token) the entry says is not a restriction on answers. Only the reason text separates these, and the claims say the route is 'named in the reason', not in the verdict. The disclaimer 'a fail is therefore not a claim that the agency declared a policy restricting crawler access' does not close the gap and is internally inconsistent: for the three non-training tokens (e.g. a search crawler), a robots.txt Disallow is exactly a declared restriction on that crawler's access, so the disclaimer is false for one of the fail branches and over-broad for the others. A reader who knows the agency serves no robots.txt, or opts out of training only, can read FAIL as a declared block that the test did not find."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The test reads 'the same eight tokens as A4' and the claims refer to 'each of the eight listed crawler tokens' and 'five of the eight tokens', but the entry never lists the tokens, says which five are training opt-outs, or which three are not; A4 is only a leg code, and its parameter value is not stated here although the project convention says a params.* value is stated where it matters. 'Restricting meta-robots tokens' is not defined (noindex is given as one example, 'or a similar restriction' is left open). 'Agency-enabled', used to name what a traffic observation would be, is not defined anywhere in the entry or the project glossary. 'Declared layer' is used in a pass branch's reason text without being defined, though a reader can infer it means robots.txt plus the meta tag.",
+     "terms": [
+      "the eight tokens / the A4 list (params.a4_crawlers.user_agents)",
+      "the five tokens that are training opt-outs",
+      "restricting meta-robots tokens",
+      "agency-enabled",
+      "declared layer / declared-layer sources"
+     ]
+    }
+   },
+   "tokens": 45275
+  },
+  {
+   "rule_id": "RULE-A12-v3",
+   "round": 1,
+   "unit_id": "2e051a1b32ba6ea7",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "d34c489fbb088da743158e554a72f94c0a63eb79cd78e4c6c35599a37e9c6709",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The not-access-control claim (§1, §3) and the 'MAY access any resources on the server' claim are supported by quoted passages, and the coherence requirement is plainly labeled the project's own construct. But the expected-behavior text attributes to RFC 9309 §2.3.1.3 that 'a 4xx makes the file \"unavailable\"', quoting 'unavailable' as verbatim; no quoted passage contains 'unavailable' or '4xx', and the quoted fragment 'then the crawler MAY access...' lacks its antecedent, so the 4xx-equals-permission condition the fail_nothing_declared branch is judged against rests on text not shown."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The question frames the check as 'does the host enforce what it declares', and a reader seeing FAIL will read it as the host contradicting its own robots.txt. The claims do list 'or serves no robots.txt' as a fail condition, but they do not say which branch fired, and they do not say that the no-robots.txt case involves no contradiction at all: under the entry's own reading of RFC 9309 a missing file declares permission, and the data page may have been served. So a fail on fail_nothing_declared can be misread as 'the host blocks what it permits' when the host permitted and served everything. Secondarily, 'refused' is decided by params.manners.unobservable_statuses, which the project elsewhere defines as not-measured and never a fail, so a reader cannot tell whether a FAIL was a refusal or a transient error; the claims do not close that either."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Edge' and 'enforced layer' are used without definition beyond a Cloudflare citation title. 'Verdict' is a harness output whose values are never stated. The 'params.manners' parameter path is referenced but not explained. 'unobservable_statuses' is glossed as refusal statuses, which conflicts with the project-wide definition of unobservable as error / not measured, never a fail, leaving a new reader unable to tell which statuses produce a fail.",
+     "terms": [
+      "edge / at the edge",
+      "verdict (robots.txt verdict for this client)",
+      "params.manners.user_agent / params.manners.unobservable_statuses",
+      "unobservable_statuses used as 'refusal statuses'"
+     ]
+    }
+   },
+   "tokens": 42711
+  },
+  {
+   "rule_id": "RULE-A12-v3",
+   "round": 2,
+   "unit_id": "1113d8cecb43f281",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "ce419dc716f5172c4287634a0610659625fa564bf2c9d105fadf71e9fbfed971",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Every requirement the expected-behavior text attributes to RFC 9309 is matched by a quoted passage: rules are not access authorization, not a substitute for content security measures, the definition of 'unavailable' with the HTTP 400-499 example, and that the crawler MAY then access any resources. The declaration–enforcement coherence the check actually measures is stated plainly to be the project's own construct with no source. The Cloudflare page named in the question header has no quoted passage, but the expected-behavior text attributes no requirement to it, so nothing unsupported is claimed as a source's requirement."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims count HTTP 429 as a refusal status that produces a fail while also saying a transient error is never a fail. 429 is a rate-limit response and is often transient, so a reader who knows the agency could read a 429-based fail as the host deliberately denying or blocking the scanner, a policy claim the test did not make. The claims otherwise close the main misreadings: they enumerate the three fail reasons, state that only the permitted-but-refused branch is a host doing other than it declares, say a missing robots.txt fail involves no contradiction, and limit the claim to this one identified client."
+    },
+    "q3": {
+     "answer": "no",
+     "why": "Harness, SI system, data page, identified client, refusal status, params.* and DN-012 are covered by the project-wide definitions; 'edge' is ordinary CDN/WAF vocabulary for a technically literate reader; and the robots.txt permit verdict and the 401/403/429 refusal set are explained within the entry itself.",
+     "terms": []
+    }
+   },
+   "tokens": 43404
+  },
+  {
+   "rule_id": "RULE-A13-v1",
+   "round": 1,
+   "unit_id": "33d4eaab200725be",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "6637718347b0a9d28ce2e44b0c9ac28d0c2afc7a9fab18ba0abd1f404525e89e",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The /.well-known/api-catalog convention and the data.json address are supported by the quotes. But the expected behavior states, as RFC 9727's requirement, that the publisher may alternatively 'send a Link header with rel=\"api-catalog\"'. The quoted §3 passage only says the relation 'identifies a target resource that represents a list of APIs'; it does not mention a Link header, and the §2 quote makes the well-known URI mandatory ('SHALL resolve'), so the either/or framing is the writer's, not the source's. 'Comprehensive' is also not in the M-25-05 quote. The terms/changelog/hyperlink gaps are correctly declared undefined."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says the named object is 'neither linked from this data page nor at a convention address the harness checked'. For the API's terms and the changelog no convention address exists, so a fail on those objects rests solely on the project's own link criterion, yet the claim text does not say so. A reader who knows the agency could read such a fail as a breach of a published convention (RFC 9727 or M-25-05) when none governs those two objects. The 'reachable from another page' misreading is closed; this one is not."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The test section refers to other checks by code (A2, D1, F4, D4) and to a 'shared link probe' and 'Observations other legs made' without saying what a leg or Observation is; 'surface' is used for the thing receiving the verdict without definition; 'complete search' decides not_applicable vs error but is not defined; 'body' is ambiguous (agency? HTTP body?); 'composite' names the combining rule without explanation; the params paths are internal identifiers.",
+     "terms": [
+      "leg / legs",
+      "Observations",
+      "link_probe",
+      "A2, D1, F4, D4",
+      "surface (the surface's verdict)",
+      "complete search",
+      "the body (the body's recorded locations)",
+      "composite",
+      "params.manners.user_agent / params.discoverability.convention"
+     ]
+    }
+   },
+   "tokens": 43839
+  },
+  {
+   "rule_id": "RULE-A13-v1",
+   "round": 2,
+   "unit_id": "5f05fedf04b917a5",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "a9e8569a0a8113e290b0372b986c0380466dd2d33fdfcc09b677c7fdae33e5de",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each requirement the expected-behavior text attributes to a source has a matching quoted passage: the GET to /.well-known/api-catalog returning an API catalog document (RFC 9727 'SHALL resolve an HTTPS GET request...'), the optional api-catalog link relation in header or content (RFC 9727 'could include the api-catalog link relation in the HTTP header and/or content payload'), and the inventory at www.[agency].gov/data.json (M-25-05 'each agency must post the inventory ... to www.[agency].gov/data.json'). The parts no source defines (reaching the API's terms or changelog, and an ordinary hyperlink from a data page as the discovery mechanism) are stated plainly as the project's own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims close the main misreadings (object missing, reachable from another page, project-only criterion for terms and changelog), but they say a fail means the object is not 'at a convention address the harness checked' without stating that the checked address can differ from the published one. The test checks /data.json at the product host's root and requires /.well-known/api-catalog to be served as application/linkset+json. A reader who knows the agency posts data.json at www.[agency].gov while its data pages live on a subdomain, or serves an api-catalog with another media type, could read a fail as a claim that the agency has breached M-25-05 or RFC 9727 at its published address, which the test did not check in that form."
+    },
+    "q3": {
+     "answer": "no",
+     "why": "Terms outside the project's defined vocabulary are either standard (Link header, link relation, application/linkset+json, 404/410) or explained where they appear: 'link probe' is described as the product page fetch with its link set and response headers, 'not_applicable' is given its condition in the decision rule, and the leg codes A2, D1, F4, D4 are covered by the defined meaning of codes in a test field. 'Read whole' and 'composite' are plain-language uses understandable from context.",
+     "terms": []
+    }
+   },
+   "tokens": 44493
+  },
+  {
+   "rule_id": "RULE-A2-v6",
+   "round": 1,
+   "unit_id": "ad7b2a5d0540d553",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "89aea4ad8b9ed8ab18933a1fea71e59fa30413667549440a1ca746203a8f1aa6",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Three requirements are attributed to sources the quoted passages do not support. (1) 'builds the API on Web standards (Best Practice 24)': no passage from BP 24 is quoted at all. (2) 'documents every call, its parameters and what it returns' is attributed to BP 25, but the only BP 25 passage quoted says 'Provide complete information on the Web about your API'; the call/parameter/return detail is the writer's gloss (the BP 25 test text appears only in the TEST section, not among the quoted passages). (3) 'reachable from the catalog or available at the API endpoint URIs it lists' is attributed to RFC 9727 §4.1, but the quoted passage covers only availability at the listed endpoint URIs ('they SHOULD make that metadata available at the API endpoint URIs they have listed'), not reachability from the catalog, and speaks of 'metadata', not a description. The OAS quote supports the discover-and-understand sentence, and the closing sentence plainly states what no source requires, which is correct practice; the `openapi`/`swagger` REQUIRED fields are cited but not quoted, though the expected-behavior text does not itself assert them as a requirement."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim is scoped to OpenAPI/Swagger at 'the API addresses recorded for this agency' and disclaims 'no API', 'undocumented', and 'refuses scripts', but it does not say the fail is not a claim that the agency publishes no machine-readable description at all, which is the check's own QUESTION and the natural reading of a fail. A reader who knows the agency serves an OpenAPI document at a developer portal, or a DCAT description at the API root, will read the fail as 'no machine-readable description', and the CONFOUNDS section concedes both cases are 'indistinguishable from an undocumented API in the cell'. The opening is widest for the third branch, which fails when 'no API recorded for the agency at all': the fail then asserts absence at a set of addresses the reader cannot see and that may be empty, and the BRANCHES text itself admits it 'reads no documented API though only OpenAPI at recorded addresses was looked for'. The claims never name the recorded addresses, so the reader cannot tell whether the place they know of was probed."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The entry leans on configuration keys and internal identifiers that are neither defined in the project glossary nor explained inline: 'declared_locations' is used where the glossary says 'recorded location' without saying they are the same thing; '_existence.remainder' is the sole definition of the error branch and is opaque; 'model_knowledge' and 'repo' as seed sources do not say what is searched or how; 'A6' is referenced as another check's construct with no description; 'DWBP' is used as a bare acronym; BP 23 is invoked in the TEST section but is not among the cited best practices; 'cell' and 'probed path' are used as if defined. OAS, DCAT, RFC 9727 and Dataset Search are adequately explained in the entry.",
+     "terms": [
+      "declared_locations (targets.yaml) versus the project-defined 'recorded location'",
+      "_existence.remainder",
+      "seed source values model_knowledge and repo",
+      "params.manners.user_agent",
+      "A6 check",
+      "DWBP (never expanded; only the citation key w3c-dwbp-2017 appears)",
+      "BP 23",
+      "cell / grid cell",
+      "probed path versus recorded location"
+     ]
+    }
+   },
+   "tokens": 46938
+  },
+  {
+   "rule_id": "RULE-A2-v6",
+   "round": 2,
+   "unit_id": "59931b9f008537a3",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "a9af7f607ff395560823cbc1731882e92a14bda58a3caaec72eb5220b5c25a02",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Nearly every attribution is backed by a quoted passage: DWBP's 'complete information on the Web', its How-to-Test wording on calls/parameters/returns, its 'enables machines' outcome, OAS's 'humans and computers' purpose, and both RFC 9727 clauses (RECOMMENDED OpenAPI links; SHOULD make metadata available at listed endpoint URIs). The project's own additions (OpenAPI-only, at the recorded base) are stated plainly as the project's own. One attributed claim is not in the passages: that the `openapi` field is 'required' by OAS. The quoted OAS text only says the string MUST be the version number; 'REQUIRED' appears solely in the writer's citation label for §4.1.1, not in any verbatim quote. Since the pass branch rests on presence of that field, the requiredness is a source claim that should be quoted."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims close the main misreadings (no API, undocumented API, no machine-readable description anywhere, scripts refused, key required). One remains open: that the agency's actual API base was among the addresses probed. A fail is phrased as 'at the API addresses recorded for this agency', and recorded locations may be seeded from a model's knowledge or a catalog rather than read from the agency; the no-description branch reason ('no OpenAPI/JSON API description served at any probed path') does not name the paths, unlike the pass reason. A reader who knows where the agency's API really lives could take the fail as 'our API base was checked and had no description' when a different or stale address was the one probed."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "`_existence.remainder` is given as the error condition's name with no definition. `targets.yaml declared_locations` is a file and field name that is only loosely mappable to the defined term 'recorded location'. 'Probed path' in the fail reason is not tied to 'recorded location' (are probed paths exactly the recorded locations, or more?). 'Cell' (the cell's reason) is inferable from 'published grid' but never defined. Other project terms (harness, recorded location, seed source, leg, branch, refused, robots_disallowed, DCAT, Dataset Search) are defined in the preamble or explained within the entry.",
+     "terms": [
+      "_existence.remainder",
+      "targets.yaml declared_locations",
+      "probed path",
+      "cell"
+     ]
+    }
+   },
+   "tokens": 46335
+  },
+  {
+   "rule_id": "RULE-A3-v8",
+   "round": 1,
+   "unit_id": "d3aea4f77952082d",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "0986425994d8be4031e4d48033049231785b4bb2ac5d7a7e3c2c8b602a902de2",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The DWBP sentence is quoted verbatim and supported. The M-23-22 requirement is not: the expected behavior states it as 'where there is public interest in scraping an agency's pages, the agency should make the information available ... in bulk', but the quoted passage is only the fragment 'making that information available as machine-readable data that can be accessed in bulk'. The scraping-interest condition and the 'should' obligation are the writer's addition, not shown in any passage. The dcat-us-1-1-schema source is also listed with no quoted passage, though the expected-behavior text attributes no requirement to it. The project does say plainly that the size-floor and archive proxy are its own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says none of the links is 'an unfiltered file of at least 50 KiB', but 'unfiltered' is defined only in the TEST as 'no query string in the URL'. A reader who knows the agency could read a fail on the filtered-queries branch as a finding that the agency's downloads are partial extracts, when the harness only saw a query string on a URL that may deliver the whole product. Likewise a fail on the floor branch can be read as 'no whole-dataset download is offered' when a complete file under 50 KiB may be linked; the CLAIMS text does not say the floor is a proxy that rejects small complete products (only the CONFOUNDS section admits this). The claims do close the off-page misreading (portal, FTP, API bulk endpoint)."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'DWBP' is used as a bare acronym in the expected behavior and test sections and is never expanded (only the source id 'w3c-dwbp-2017' hints at W3C Data on the Web Best Practices). The DCAT-US citation 'distribution / downloadURL' is given with no passage or explanation of what the schema fields are or why they bear on the check. The confounds notation 'Distinguished: no' / 'Distinguished: yes: error' is project shorthand whose meaning (whether the harness can tell the confound apart from a true fail) must be inferred. Other terms (HEAD, Content-Type, query string, KiB, on-host) are standard for a technically literate reader, and the project-defined terms are supplied.",
+     "terms": [
+      "DWBP",
+      "dcat-us-1-1-schema (distribution / downloadURL)",
+      "Distinguished: no / yes (confounds notation)"
+     ]
+    }
+   },
+   "tokens": 43628
+  },
+  {
+   "rule_id": "RULE-A3-v8",
+   "round": 2,
+   "unit_id": "f65960ddf737124e",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "4b45851b6f888e5a434adcdcc38b4291bda0b9a552ec432af587c332caa92449",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Both requirements the expected-behavior text attributes to a source are backed by a quoted passage: the DWBP sentence is quoted verbatim, and the M-23-22 sentence is a near-verbatim rendering of the third quoted passage (only 'its web pages'/'it should' differ from 'web pages'/'the agency should'). The size floor and the archive/unfiltered-file proxy are stated plainly as this project's own ('chosen by this project'; 'The proxy is this project's; no published method exists'). The only unsupported attribution is in the QUESTION block, not the expected behavior: the usafacts guide is said to call for 'RESTful APIs for real-time and bulk retrieval' with no quoted passage, so that citation is unverified here."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The claims close the main misreadings (fail is not a claim that downloads are partial, that no bulk file exists on another host, or that a query-string link is not the whole product), but the fail claim 'Every on-host link on this data page was checked' is stated without saying how links are found or what counts as checked. A reader who knows the page offers its full file through a script-driven download button, a form submission, or a link rendered by JavaScript could read a fail as 'this page offers no whole-product download', a statement the test did not make, since the harness only sees links in the fetched HTML. Likewise a server that answers HEAD with 405 or a mislabeled Content-Type (a CSV served as text/html) produces 'no whole-product download linked', and nothing in the claims says such a response is excluded, so the reader cannot tell a genuine absence from a HEAD refusal or mislabeling."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'DWBP' (and the source key 'w3c-dwbp-2017') is used throughout without ever being expanded to Data on the Web Best Practices; a reader new to the project can infer W3C but not the document. Everything else is either defined in the project glossary (SI client, harness, error, complete search) or standard HTTP vocabulary (HEAD, Content-Type, query string) a technically literate reader knows.",
+     "terms": [
+      "DWBP"
+     ]
+    }
+   },
+   "tokens": 44185
+  },
+  {
+   "rule_id": "RULE-A4-v1",
+   "round": 1,
+   "unit_id": "1d965e343cd06acb",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "a778dd2861fc43e90c853f77311a02adb98f267619b94533ac1fecfb0df18ff9",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Several statements attributed to sources have no supporting quoted passage. (a) 'rules are matched per user-agent product token (§2.2)' is attributed to RFC 9309 but no §2.2 passage is quoted; only §2.3.1.3 and §1 are. (b) 'Googlebot governs Search and its AI features (Google)' rests on a quote that names neither Googlebot nor AI features; the passage says only that something 'is the control ... for Search'. (c) The RFC quote supports 'MAY access any resources' but not the '(a 4xx)' gloss. (d) CCBot is listed among crawlers whose use 'is defined by each vendor' as training or grounding, yet no Common Crawl source is cited or quoted. (e) 'A ready publisher permits the crawlers of the answer engines it wants to be read by' is presented without attribution and is not plainly marked as the project's own construct, though the final clause about training crawlers is correctly flagged as undefined by any source."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim closes the main misreadings: it states that no robots.txt permits every crawler under the standard, that robots.txt is a declaration and not a barrier, that disallowing a training crawler does not keep a page out of answer engines, and that nothing is claimed about edge enforcement (A12) or about tokens not on the list, naming Googlebot and OAI-SearchBot explicitly. The two fail messages also differ, so a reader can tell the no-robots case from the disallow case. The only residual is that the claims do not say the fail is not an M-23-22 compliance finding, but the fail text itself asserts no policy violation."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'protego' is named as the parser with no description of what it is or which standard it implements. 'A12' is referenced three times as the check that observes enforcement but is never identified beyond its label. The '`refused` error class' is invoked as part of the harness's error taxonomy without being defined in the entry or the project glossary given, which lists 'access denial' but not 'refused'. Other terms (product token, grounding, data page, cell, edge) are either defined in the project glossary, in the cited RFC, or are ordinary technical usage.",
+     "terms": [
+      "protego",
+      "A12",
+      "refused error class"
+     ]
+    }
+   },
+   "tokens": 44890
+  },
+  {
+   "rule_id": "RULE-A4-v1",
+   "round": 2,
+   "unit_id": "0ad7dc0ad861a291",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "c7841051cc19afc8c8fc2d231a24cfb9b51f48c02b4d753e1995435cf34711bf",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each requirement attributed to a source matches a quoted passage: RFC 9309 case-insensitive group matching (§2.2 quote), 400-499 status and 'MAY access any resources' (§2.3.1.3 quotes), 'not a form of access authorization' (§1 quote); Google's Googlebot-as-control and Google-Extended-for-training-and-grounding (both quoted); OpenAI's GPTBot training opt-out and OAI-SearchBot recommendation (both quoted); Anthropic's ClaudeBot training-exclusion signal (quoted). CCBot is stated plainly to have no source, the absence of any readiness requirement is stated, and the project's own reading is marked as its own. The only gloss beyond the quotes is the word 'ChatGPT' before 'search results' in the OpenAI sentence; the quote says only 'search results'. That names the vendor's own search rather than adding a requirement, so it does not make the expected behavior the writer's."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The claims state the fail as an explicit disjunction (no robots.txt served, or at least one listed token disallowed on the path), say outright that neither branch claims crawlers cannot reach the data, note that absence of robots.txt permits every crawler under the standard, say that disallowing a training crawler does not keep a page out of answer engines, and exclude edge refusal (A12) and unlisted tokens including Googlebot and OAI-SearchBot. The likely misreadings for a reader who knows the agency (the agency is shut out of answer engines; the agency is blocking crawlers; the agency's search visibility is affected) are each closed in the claims text. The confounds section additionally admits the cell cannot distinguish a training-only opt-out from a block, so that limit is disclosed rather than left for the reader to infer."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'protego' is named as the parser without saying what it is (a Python robots.txt parsing library). The '`refused` error class' is invoked as the place where edge refusals are recorded, but the project definitions only define 'error / not measured' generically and never name a 'refused' class. 'Construct' is used in a measurement-theory sense ('the check's own construct') without definition. 'Cell' refers to the published grid's per-agency, per-check entry, which the definitions imply via 'cycle of record' but never define. The remaining terms (product token, user-agent token, SI system, leg, A12, data page, M-23-22) are either defined by the project or explained in the entry's own text.",
+     "terms": [
+      "protego",
+      "`refused` error class",
+      "construct",
+      "cell"
+     ]
+    }
+   },
+   "tokens": 46188
+  },
+  {
+   "rule_id": "RULE-A5-v2",
+   "round": 1,
+   "unit_id": "df372028c562e6a8",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "943f5924e3a1c90e22bb77f206d55b28f553386aadb138e86421038b2cd1d985",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Two attributions outrun the quoted passages. (a) The entry says the sitemaps protocol defines the sitemap's 'declaration in robots.txt' and its scope as 'on one host'; the only sitemaps-protocol quote is 'The location of a Sitemap file determines the set of URLs that can be included in that Sitemap', which supports a location-bound scope but says nothing about robots.txt declaration or a single-host limit (the robots.txt section is named in 'Cited sources' but never quoted). (b) The entry says Google 'states that a large site benefits from a sitemap that lists the pages the owner wants found, and that a small, comprehensively linked site may not need one'; the Google quotes are only the truncated 'You might not need a sitemap if' and 'in most cases, your site will benefit from having a sitemap', which contain no large/small-site conditions, no 'comprehensively linked' condition, and nothing about listing the pages the owner wants found. The M-23-22 attribution is supported. The entry does not mark the unsupported parts as the project's own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says 'none lists this data page's address', but the Parameters restrict a match to exact equality with the URL 'as the frame records it', and the Confounds admit that a sitemap listing the page under a trailing slash, redirect target or query-string variant is scored as a fail. A reader who knows the agency's sitemap does list the page (in a variant form) would read the fail as a claim that the page is absent from the sitemap, a claim the test does not make; the Claims section never states the exact-string condition. A second opening: the served-but-not-listed branch fires when only llms.txt is served, so a reader could take a fail as 'the agency's sitemap omits the page' when the agency serves no sitemap at all and llms.txt by design does not enumerate pages; the Claims text ('The host's sitemaps (and any llms.txt) were read') does not separate these cases."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Frame' is used as the authority for the data page's canonical URL but is defined nowhere in the entry or the project glossary given. 'llms.txt' is referred to by 'its proposal' without saying what it is or whose proposal. The test requests '/.well-known/ discovery paths' without naming which well-known paths are probed, so the reader cannot tell what counts as a served discovery file. 'Reason' (in 'only in its reason's URLs') refers to an output field of the verdict that the entry never introduces. 'ultimate-sitemap-parser' is named as the parser with no indication that it is a third-party library or how it treats sitemap indexes, which bears on what 'any served sitemap' covers.",
+     "terms": [
+      "frame (\"as the frame records it\")",
+      "llms.txt",
+      "/.well-known/ discovery paths (which paths)",
+      "reason / \"its reason's URLs\"",
+      "ultimate-sitemap-parser"
+     ]
+    }
+   },
+   "tokens": 41817
+  },
+  {
+   "rule_id": "RULE-A5-v2",
+   "round": 2,
+   "unit_id": "fedcfb6d6ebe3468",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "8a3a7a914f84bfc70c2320e2c3db501c33c28de718342ddcdc006402dd879091",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each attributed requirement maps to a quoted passage: the M-23-22 'best practices ... including using sitemaps' sentence; the protocol's location-bounds-URLs, robots.txt declaration, and single-host passages; Google's 'which pages and files you think are important', the 'about 500 pages or fewer' and 'comprehensively linked' conditions, and the large-site linking difficulty. The one premise no source supplies (that a data page is among the pages the owner thinks important) is explicitly labelled the framework's own. The only looseness is that the writer joins Google's separate 'small' and 'comprehensively linked' bullets with 'that is', which the passages neither confirm nor contradict as conjunctive; it does not add a requirement."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim enumerates the three ways a fail arises (exact-form URL not listed, only llms.txt served, no sitemap at the standard probed locations), says the reason text names which, and expressly disclaims the likely misreadings: that the page is absent in every URL form, that search engines cannot find it, that it is unindexed, or anything about sitemaps on other hosts. The test's parameter line and the confounds list repeat the exact-match limitation, so a reader who knows the page is listed with a trailing slash or as a redirect target is told the fail is only about the recorded form."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Frame' is not among the project-wide definitions (harness, surface, data page, recorded location are) and the entry does not say what it is or how its recorded URL differs from the data page's URL. The well-known paths and the llms.txt proposal are relied on for a fail branch but never specified or cited. The parser is named without saying what it does (e.g. whether it follows sitemap indexes), which matters for the 'sitemaps were read' claim.",
+     "terms": [
+      "frame (in 'as the frame records it')",
+      "/.well-known/ discovery paths (which paths are probed is unstated)",
+      "llms.txt / 'its proposal' (described in passing, no source cited)",
+      "ultimate-sitemap-parser (named library, not described)"
+     ]
+    }
+   },
+   "tokens": 44490
+  },
+  {
+   "rule_id": "RULE-A6-v2",
+   "round": 1,
+   "unit_id": "10b2da6cf638fba3",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "1fad3aff7160e2d360c8215fbbcbad0f0d3e0df4b2c43a395377a0769af31375",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Three parts of the expected behavior are attributed to sources with no supporting quoted passage. (a) 'Schema.org defines the Dataset type' cites schema-org-dataset, but no passage from that source is quoted at all. (b) 'DCAT 3 defines dcat:Dataset with dct:title and dct:description' cites w3c-dcat-3, but no passage from that source is quoted; the only DCAT mention is Google's phrase 'or equivalent structures represented in W3C's Data Catalog Vocabulary (DCAT) format', which says nothing about title or description. (c) 'in JSON-LD, RDFa or Microdata' is stated as part of the sourced requirement, but no passage names any serialization format. The claim that Google's required properties are name and description is only indirectly supported: the quoted passages give a 'required properties' sentence plus two property glosses ('A short summary describing a dataset', 'A descriptive name of a dataset') without naming the properties or saying they are the required ones. None of these gaps is marked as the project's own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says the markup 'does not declare a dataset with a name and description'. But the fail_shapes_violated branch validates against dcat_ap_min, which also requires dcat:accessURL on any dcat:Distribution. A page whose markup declares a Dataset with both name and description, but includes a Distribution lacking accessURL, fails this check. A reader who knows the agency's page carries a complete Dataset name and description would read the fail as saying those are missing, which the test did not find. The claims never mention the Distribution/accessURL requirement, so this misreading is left open. (The JavaScript-injection and other-pages readings are closed by the 'as served before any script runs' and 'other pages may carry the markup' wording.)"
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'extruct' is named as the extraction mechanism with no description of what it is. 'the surface is not HTML' uses 'surface' as a project term that is not among the defined project terms and is not explained. 'dcat_ap_min' is described as a minimal subset, but the 'AP' (DCAT Application Profile) is never expanded or explained, so the reader cannot tell what the shapes are a subset of. SHACL, Rich Results Test, JSON-LD, Microdata and RDFa are either explained in the entry or standard enough for a technically literate reader.",
+     "terms": [
+      "extruct",
+      "surface",
+      "dcat_ap_min / DCAT-AP"
+     ]
+    }
+   },
+   "tokens": 43113
+  },
+  {
+   "rule_id": "RULE-A6-v2",
+   "round": 2,
+   "unit_id": "6ae94d3f41cdbf22",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "0dae377d825b32b62210fa0cdf24f32c64eeb4ddec74d50f5b9d655699b70210",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Most of the expected behavior is backed by passages: the recommendation to add structured data to canonical pages, the DCAT equivalence, the eligibility requirement, the description and name property texts, and the schema.org definition. But the text attributes to Google, marked '(quoted)', that markup is read 'in JSON-LD (preferred), RDFa or Microdata'. No passage mentions JSON-LD or any preference; the only syntax passage says the schema.org vocabulary 'can also be used in RDFa 1.1 or Microdata syntaxes', which implies an unnamed primary syntax but does not name it or call it preferred. Secondarily, 'name' is quoted only as 'A descriptive name of a dataset.'; the passages show only description under the 'Required properties' heading, so name's status as required is asserted rather than shown."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says the page 'does not declare a dataset', but the test's parameters list the recognized dataset types as 'schema.org Dataset or DataCatalog' while the shapes separately validate dcat:Dataset, and the expected behavior says Google reads DCAT as equivalent. A reader who knows the agency's page carries DCAT (dcat:Dataset) markup, or markup injected by script, could read a fail with reason 'markup present but no Dataset/DataCatalog type' or 'no JSON-LD, microdata or RDFa on the product page' as a claim that the page declares no dataset in any vocabulary or at all. The claims qualify 'as served before any script runs' but do not say which vocabularies count as declaring a dataset, so the DCAT-only misreading stays open, and the branch reason strings carry neither qualification."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "extruct is named as the extraction tool with no description of what it is. dcat_ap_min is described as a minimal subset but the 'AP' (DCAT Application Profile) it is a subset of is never expanded or named. Rich Results Test and Dataset Search are Google products referred to by name only, with no statement that they are Google's testing tool and dataset search engine. SHACL, JSON-LD, RDFa and Microdata are standard enough for a technically literate reader, and SHACL is briefly defined in the entry.",
+     "terms": [
+      "extruct",
+      "dcat_ap_min / DCAT-AP",
+      "Rich Results Test",
+      "Dataset Search"
+     ]
+    }
+   },
+   "tokens": 44650
+  },
+  {
+   "rule_id": "RULE-A8-v4",
+   "round": 1,
+   "unit_id": "22445538dbb82d71",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "2109ec25b41c134aa666822e1d71e02e86b8a598de9e439a9e4cfea500f789b0",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The expected behavior attributes to DCAT-US a field name and definition (modified, \"Most recent date on which the dataset was changed\"), but no quoted passage from dcat-us-1-1-schema appears; that requirement rests on the writer's citation alone. Secondarily, the claim that the series has a URI for 'the latest version' (Best Practice 11) is only partly supported: the quoted passage says agents will be able to refer to 'the latest version', but the word URI appears only in the writer's title line for BP 11, not in any quoted passage. BP 7 (version number or date, machine-detectable) and the RFC 9110 Last-Modified description are supported by the quotes."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says the page carries 'no working latest-version link on its host', but the test only recognizes three pointer patterns (link rel latest-version/last/canonical, hrefs containing /latest or /current, anchors reading 'latest' or 'most recent') and follows at most three. A reader could take a fail as 'the page has no latest-version link' when the page may link to its newest release under other wording or beyond the third pointer. Likewise 'does not carry a release date in its markup' can be read as 'no machine-readable date or version at all', whereas the harness reads only dateModified, datePublished and temporalCoverage: a markup version number (which BP 7 explicitly allows) or a date in another field (e.g., dcterms or meta tags) is not read and is not excluded in the claims. Cross-host latest links are also excluded by the test; the claims mention 'on its host' but do not say that a working latest link on another agency host yields a fail."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Vintage' and 'latest-vintage pointer' are used throughout the decision rule as if synonymous with release date and latest-version link but are never defined. 'Surface' ('no declared release or modification date on the surface') is used without definition; it seems to mean the data page plus its followed pointers but that is not stated. The acronyms DWBP (W3C Data on the Web Best Practices) and DCAT-US are not expanded anywhere in the entry.",
+     "terms": [
+      "vintage / latest-vintage pointer",
+      "surface",
+      "DWBP",
+      "DCAT-US"
+     ]
+    }
+   },
+   "tokens": 43265
+  },
+  {
+   "rule_id": "RULE-A8-v4",
+   "round": 2,
+   "unit_id": "4c3df7f918ba03c7",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "4e2fa833c86c2dce87342b90e5344abc037fcdc675e554ff53d1bb71d0b90a7a",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each requirement the expected-behavior text attributes to a source is backed by a quoted passage: a detectable version number or date (DWBP 'Assign and indicate a version number or date' and the 'Check if a computer application can automatically detect' test), URIs for versions and series enabling 'the latest version' (DWBP 'Assign URIs to individual versions... overall series' and the 'software agents will be able to refer to... the latest version' passage), the DCAT-US modified definition (quoted verbatim), and the RFC 9110 Last-Modified definition (quoted verbatim). The contrast 'not the release the data belongs to' is an inference from the RFC quote rather than a requirement, and the parts no source defines, the resolving latest-version pointer test and the temporalCoverage branch, are stated plainly as this project's own ('No published test exists... is this project's'; branch 'Source: none', 'project_defined'). The only loose end is the label 'Last Update', which appears in the citation descriptor rather than a quoted passage, but it names the field rather than adding a requirement."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim is confined to the observation: no date in the three named markup fields, or a date present but none of up to three recognised same-host latest links resolves. It then explicitly lists what a fail does not assert: that the agency does not date or version its releases, and that version numbers, dates in other markup fields, visible text, PDFs, catalog records (the data.json confound), differently worded links, links beyond the third, or links on another host were read. 'Neither claims' rules out any reading about date correctness or data currency, and the project's error-not-fail rule keeps access denials and robots blocks out of the fail column. A reader who knows the agency has a dated page or a latest URL elsewhere is told directly that those were not measured."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Vintage' and 'latest-vintage pointer' carry the decision-rule reason text but are defined neither in the entry nor in the project glossary; a reader outside federal statistics will not know it means a data release or reference period, and the entry itself uses 'release', 'version' and 'vintage' interchangeably. 'Markup' is never pinned to a syntax, so a new reader cannot tell whether a dateModified in a meta tag, microdata or JSON-LD would be read. DWBP and DCAT-US appear only as citation keys and are never expanded (Data on the Web Best Practices; the U.S. DCAT metadata schema).",
+     "terms": [
+      "vintage",
+      "latest-vintage pointer",
+      "markup (which syntaxes count: JSON-LD, microdata, meta tags)",
+      "DWBP",
+      "DCAT-US"
+     ]
+    }
+   },
+   "tokens": 44943
+  },
+  {
+   "rule_id": "RULE-A9-v2",
+   "round": 1,
+   "unit_id": "d9e5a46fb3d5e858",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "304e0185d1d68e43b74f577a2ab4fd4057dd6b6655e26c4fe0419d26e4745fa1",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "The EXPECTED BEHAVIOR attributes no requirement to any source: it says plainly that no published standard defines a machine-first entry point or its address set, labels OAS a specification and llms.txt a proposal, and says /.well-known/mcp has no source in the corpus; 'Cited sources: none' and the empty passage list match this. One tension to note: the QUESTION's 'Established by' line names llmstxt-proposal and FAIR A1 as establishing the check, yet no passage is quoted for either and the expected-behavior text disowns them, so that line is unsupported, but it is not stated as a source requirement inside the expected behavior."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim disclaims 'no API or no machine access', but the fail message 'none of the probed machine-first paths is served, the declared API base included' invites a reader to conclude the agency's own API is down or broken. The test only issued plain GETs to a fixed set of paths with no Accept header, key or documented path, so an API that content-negotiates to HTML for a bare browser-like request, returns an HTML error page without credentials, or sits at a recorded location that is stale or wrong will all fail identically. The CLAIMS do not say the recorded API base may be wrong or that the probe set is a handful of guessed addresses, and the second confound (entry point outside the probe set) is admitted undistinguished, so 'the agency's declared API does not work' remains an open misreading."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "MCP is never expanded or described, so a reader cannot tell what protocol /.well-known/mcp is meant to serve; 'agent-protocol endpoint' in the QUESTION is not defined or tied to any probe; 'the corpus' in 'has no source in the corpus' refers to a project source collection that the entry and the project glossary never define; and 'Established by' is a label whose meaning (motivation, citation, or requirement) is left unclear and conflicts with 'Cited sources: none'. OpenAPI/OAS, llms.txt (glossed as a proposal), 'registered well-known URI', 2xx and Content-Type are recognizable to a technically literate reader.",
+     "terms": [
+      "MCP (/.well-known/mcp)",
+      "agent-protocol endpoint",
+      "corpus",
+      "Established by"
+     ]
+    }
+   },
+   "tokens": 42549
+  },
+  {
+   "rule_id": "RULE-B3-v4",
+   "round": 1,
+   "unit_id": "8a63121ad54ae500",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "d764bf9cdf19b619f6d5e108fe4027ac12ed8be180379ee01fd02b2a88f8f132",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The HTML half is supported: the M-23-22 passage says non-HTML content only when a specific user need necessitates it, which matches 'publishes documents in HTML unless a specific user need requires another format'. The USAFacts half is partly unsupported: the quoted passages support 'accessible to both humans and web crawlers' (§4) and that models need collection methodology as context (§2), but no quoted passage says methodology must be 'easily retrievable'. That phrase is attributed to USAFacts §2 in both the expected behavior and the fail_no_methodology_link branch ('§2 (easily retrievable documentation)'), yet it appears in neither quoted passage; nor is the 'disclose methodologies' wording the QUESTION attributes to §2 quoted. The 'readable without running scripts' element is not attributed to a source in the expected-behavior text, and the test section says the token and thresholds are the project's own, which is stated plainly."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says no methodolog-linked document is 'readable as text without scripts', and it rightly closes the 'agency publishes no methodology' misreading by naming other link labels and other pages. But it leaves open a misreading of the two threshold branches: a document that is served as HTML and fully readable without scripts still fails if it has under 2000 visible characters or a link density above 0.25 (fail_thin_or_navigation), so a reader could take a fail as 'the methodology page needs scripts or is unreadable' when it is a readable chapter-hub or short page the project's own thresholds rejected as navigation. The claims never mention the character minimum, the density ceiling, or the 25-link cap (a methodology link beyond the 25th matching link is never followed), so a fail can be misread as a claim about readability rather than about the project's thresholds and link budget."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Link density' is a threshold (0.25) but the ratio is never defined (links per character? anchor-text share of visible text?). 'Product surface' appears in two fail strings and is not among the project-defined terms (the project defines 'data page' / 'product page', not 'surface'). 'Structured-text' in the fail_no_structured_text branch is undefined, and it is unclear how that branch differs from the PDF-only and not-retrievable-without-JS branches. 'Visible characters before JavaScript' is used as a measured quantity without saying how visibility is determined by a client that has no renderer.",
+     "terms": [
+      "link density",
+      "product surface",
+      "structured-text methodology document",
+      "visible characters before JavaScript"
+     ]
+    }
+   },
+   "tokens": 42918
+  },
+  {
+   "rule_id": "RULE-B3-v4",
+   "round": 2,
+   "unit_id": "4f6a1bbea7f0755b",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "b18c64dfd8b76325569389dc5fa88f5e9d848ae7f19f08804021ead493159b9d",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Every requirement the expected-behavior text attributes to a source has a matching quoted passage: the 'Machine Understandable with Easily Retrievable' heading, 'AI models need context... collection methodology', 'Disclose methodologies for derived or transformed datasets', 'accessible to both humans and AI/web crawlers', and M-23-22's 'non-HTML format only if necessitated by a specific user need'. The one requirement no passage supports, readability without running scripts, is stated plainly as the project's own reading with 'no source states it', and the 2000-character and 0.25 link-density thresholds are declared as chosen by the project in the test field rather than attributed to a source."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim is scoped to what the harness did: links whose address or text contains 'methodolog', up to 25 followed, judged against the project's own thresholds. It states explicitly that a readable short page or a chapter hub can fail, that a fail is not a claim the methodology needs scripts or is unreadable, and not a claim the agency publishes no methodology, naming the other-name cases (technical documentation, about the data, another page) as unfound rather than absent. The confounds section reinforces this by admitting the token predicate misses renamed documents on 12 of 23 pages. The remaining reasonable misreadings are closed."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The fail branch 'no structured-text methodology document' and reason text 'no structured-text methodology document reachable' use 'structured-text' without defining it; the branch gloss ('nothing readable as text') suggests it means HTML or plain text as opposed to PDF or binary, but that is inferred, not stated, and 'structured' could equally be read as schema-marked content. 'Link density' is given a threshold (0.25) and the claims paraphrase it as 'no more than a quarter of its text in links', but the entry never states how it is computed (anchor characters over visible characters, or link count over words), so a reader cannot reproduce the measurement from the entry. The other project-specific terms (SI client, harness, data page, product surface, error, complete search, params) are covered by the project's glossary, and 'visible characters before JavaScript' is adequately conveyed by 'no renderer' plus the pass claim's 'before any script runs'.",
+     "terms": [
+      "structured-text",
+      "link density"
+     ]
+    }
+   },
+   "tokens": 43710
+  },
+  {
+   "rule_id": "RULE-D1-v6",
+   "round": 1,
+   "unit_id": "b581868acd4a8485",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "bb21caae9e619a76586ba2980f2b772412faa5a607f45298972aa36563f25bcc",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "The first sentence attributes to DWBP Best Practice 4 that 'the publisher provides a link to or copy of the licence', but the only DWBP passage quoted is the test ('Check if a user agent can automatically detect or discover the data license of the dataset'); nothing quoted mentions a link or a copy. The M-25-05 and DCAT-US statements are supported by their passages (with a small stretch: M-25-05 says agencies 'may satisfy' the requirement via the inventory, the entry says the status 'is indicated' there), and the recognised-identifier requirement is plainly marked as no source's. The unsupported 'link to or copy of' clause is the defect."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The fail claim says 'none of those three places names a licence by a recognised identifier', but the API terms page is only fetched 'when an API is recorded'. When no API location was recorded, the third place was never read, yet the fail claim still asserts something about it. A reader who knows the agency's API terms page states public domain could take the fail as a claim that page lacks a licence identifier, when the harness never visited it. The claims close the other misreadings (unlicensed data, visible page text, the inventory) but do not say that an unrecorded API means the third place was not checked."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Markup license field' never says which markup (schema.org JSON-LD, microdata, meta tag) or which property is read, so a new reader cannot tell what a page must carry to pass. 'data.json' appears in the confounds without being tied to the 'comprehensive data inventory' named elsewhere. 'No in the cell' presumes the reader knows the published grid's cell versus reason distinction, which the entry does not explain. DWBP, DCAT-US and SPDX appear only as citation slugs and are never expanded.",
+     "terms": [
+      "markup license field",
+      "data.json",
+      "the cell",
+      "DWBP",
+      "DCAT-US",
+      "SPDX"
+     ]
+    }
+   },
+   "tokens": 43812
+  },
+  {
+   "rule_id": "RULE-D1-v6",
+   "round": 2,
+   "unit_id": "2f67f91237aa627f",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "03994cc055ae080be949af82cdd50f633e7ead8138626c13fd2376098b2ba669",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Each requirement the expected-behavior text attributes to a source is backed by a quoted passage: the DWBP 'provide a link to or copy of the license agreement' and its 'automatically detect or discover' test, the M-25-05 statement that the inventory may indicate public-domain status, and the DCAT-US 'license or non-license (i.e. Public Domain) status' field. The one requirement no source supports, that the licence be a recognised identifier rather than words, is stated plainly as the project's own, and the free-text branch lists its source as none. The spdx-license-list and usafacts citations carry no quoted passage, but the expected-behavior text attributes no requirement to them."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim names exactly the places read (markup field, Link header, and the API terms page only when an address is recorded), states the criterion (a recognised identifier, not any licence statement), says it is not a claim that the data is unlicensed or restricted, notes federal data is generally public domain, and says the data inventory where M-25-05 places the statement is not read. The 'neither claims' line also excludes licences in visible page text. A reader who knows the agency's data.json or footer says 'public domain' is told those were not read, and a worded licence is covered by the identifier criterion, so the obvious misreadings are closed."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Markup license field' is never specified: a new reader cannot tell whether it means a schema.org/JSON-LD license property, a Dublin Core or DCAT meta element, or any attribute named license, which matters because it is the main place read. 'The cell' in the free-text confound ('no in the cell') is used without definition; it is inferable as one body-by-check entry of the published grid from the cycle-of-record definition, but is not stated. Other terms (SI client, harness, recorded location, branch, reason text, DN-012, Link header rel=license, data.json, SPDX) are either project-defined or standard for a technically literate reader.",
+     "terms": [
+      "markup license field",
+      "cell"
+     ]
+    }
+   },
+   "tokens": 43693
+  },
+  {
+   "rule_id": "RULE-D4-v5",
+   "round": 1,
+   "unit_id": "5a1aa2501081ee10",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "22400905344410e70ce57e277ab5a11367651b2a1ca77af19ef1445984500ada",
+   "answers": {
+    "q1": {
+     "answer": "no",
+     "why": "Three requirements are attributed to sources without a supporting quoted passage. (a) 'in JSON ... hosts it at www.[agency].gov/data.json', attributed to M-25-05 §4(a) and §5(b)(ii): no quoted passage mentions JSON or a data.json location. (b) 'DCAT-US 1.1 defines the record and its fields (identifier, landingPage, distribution accessURL and downloadURL)': the dcat-us-1-1-schema source is cited but no passage from it is quoted at all. (c) 'a public data asset disseminated through the Federal Data Catalog is listed with the URL where it may be accessed': the quote supports only 'including in the agency's comprehensive data inventory the URL or persistent identifier'; the Federal Data Catalog condition is not in any passage. Supported parts: 'comprehensive data inventory of all its data assets' and 'using the OMB-approved metadata schema'. The entry does plainly mark the URL-field membership rule as the project's own."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The single fail claim folds three different conditions into one sentence, leading with 'no record names this data page's address' and relegating 'the inventory is invalid, or none is served' to a parenthetical. A per-agency FAIL therefore does not disclose which branch fired, so a reader who knows the product is in the agency's data.json can read FAIL as 'the product is not listed' when the actual cause is a schema violation anywhere in the catalog, possibly in an unrelated record. Second, the no-catalog branch only tests the recorded locations; a reader who knows the agency's inventory lives elsewhere (for example in a parent department's data.json) can read FAIL as 'the agency has no inventory'. The claims say 'recorded inventory' and 'nothing about other catalogs' but never state that a fail does not assert the agency lacks an inventory at an unrecorded location. The claim text is also internally inconsistent: it says the inventory 'was read' while one branch is that none is served."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The test validates against the 'Project Open Data v1.1 JSON schema', the pass and fail messages name a '{profile} schema', the claims say 'the federal metadata schema', and the expected behavior names DCAT-US 1.1; the entry never says these are the same thing or what {profile} can be. 'Federal Data Catalog' is used as if it were a defined place but is not identified (Data.gov is named only in the question). The fail message counts 'declared inventories' while the project defines 'recorded location'; whether these are the same is unstated. 'Seed source' appears in the error branch; the project definition says a recorded location may be 'seeded from a named source' but never defines what searching a seed source means or which sources count.",
+     "terms": [
+      "{profile}",
+      "Project Open Data v1.1 JSON schema (relation to DCAT-US 1.1 and 'the federal metadata schema')",
+      "Federal Data Catalog",
+      "declared inventories (versus recorded location)",
+      "seed source"
+     ]
+    }
+   },
+   "tokens": 44128
+  },
+  {
+   "rule_id": "RULE-D4-v5",
+   "round": 2,
+   "unit_id": "7b91a562c544a5bf",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "6257c533355b5761b3bb63ff0ecf69dee58f2bc902bcffc039950e22e1cdd937",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "Every requirement attributed to M-25-05 (comprehensive inventory of all data assets, JSON format, OMB-approved schema on resources.data.gov, hosting at www.[agency].gov/data.json, inclusion of the URL or persistent identifier when disseminating via the Federal Data Catalog) has a matching verbatim passage. The DCAT-US passage supports 'human-friendly page' for the landing field. The membership rule (URL match in identifier, landingPage, accessURL, downloadURL) is explicitly labeled 'chosen by this project' and 'this project's'. Two soft spots fall short of misattribution: the tail 'where the asset may be accessed' is the writer's gloss beyond the truncated 'URL or persistent identifier' quote, and the DCAT-US quote is cut off before naming the landingPage field, so the field name rests on the citation locator rather than the quoted text."
+    },
+    "q2": {
+     "answer": "no",
+     "why": "The fail claim enumerates all three fail branches and ties each to the cell's reason text, explicitly disclaims the two natural misreadings (the dataset may be listed under a different landing-page address; the agency may have an inventory at an address not recorded, e.g. a parent department's), notes that a schema failure may come from an unrelated record, and states that nothing is claimed about other catalogs such as Data.gov. The one undistinguished confound (record names a catalog page or DOI instead of the measured page) is named in the claims as not being asserted, so a reader who reads the claims cannot take a fail as 'the dataset is not in the inventory' or 'the agency has no inventory'."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "The test validates against the 'Project Open Data v1.1 JSON schema', the reason strings say '{profile} schema', the claims say 'federal metadata schema', and the sources say DCAT-US 1.1; the entry never states these are the same thing or what values {profile} takes. 'Federal Data Catalog' is quoted from M-25-05 but never identified (it is Data.gov). accessURL and downloadURL are named as 'DCAT-US URL fields' without saying they live on distributions rather than the dataset record, which matters for how a page URL is matched. The fail reason uses 'declared inventories' where the rest of the project vocabulary says 'recorded location'; the two are not stated to be equivalent. The URL-matching rule (exact string vs normalized for scheme, host, trailing slash) is also unstated, though that is an unspecified parameter rather than a term.",
+     "terms": [
+      "{profile}",
+      "Project Open Data v1.1 JSON schema (relation to DCAT-US 1.1 / 'federal metadata schema')",
+      "Federal Data Catalog",
+      "accessURL / downloadURL",
+      "declared inventories"
+     ]
+    }
+   },
+   "tokens": 45039
+  },
+  {
+   "rule_id": "RULE-F4-v5",
+   "round": 1,
+   "unit_id": "bc04966529609563",
+   "model_id": "claude-fable-5-1",
+   "entry_sha256": "77559790d62e7f9dfe12d3afeee766419941b0b688ef4eb39b69b58564854332",
+   "answers": {
+    "q1": {
+     "answer": "yes",
+     "why": "The two requirements attributed to sources are each backed by a quoted passage: DWBP's 'complete version history that explains the changes made in each version' is quoted verbatim, and USAFacts' 'versioning so AI developers can track updates over time' matches 'versioning that lets developers track updates'. The feed-format and revision-class requirements are stated plainly as not coming from either source, and the Parameters line says both were chosen by this project. The only unquoted wording is the purpose clause 'so that humans and software agents can understand how versions differ', which is a rationale rather than a requirement, and the second DWBP passage ('describing precisely how each version differs') covers its substance."
+    },
+    "q2": {
+     "answer": "yes",
+     "why": "The check's headline question is 'Can a machine learn what changed between releases?', so a grid FAIL reads as 'no, a machine cannot learn what changed'. But a fail is also triggered by the project's own format and classification floors: an agency with a complete, precise changelog as an HTML page, or a JSON/Atom feed whose entries lack a revision-class field, fails even though an SI client can read it and DWBP Best Practice 8 is satisfied. The fail claim lists these causes and disclaims only 'does not publish revisions'; it never says a fail is not a claim that the version history is absent, incomplete, or unreadable by machines. The confounds section confirms the human-readable page is 'distinguished in the reason only; the cell fails it', so a reader seeing the cell, not the reason, is left open to that misreading. A second gap: 'no changelog ... at a recorded location' can be read as 'the agency has no changelog' when the harness simply held no or wrong recorded locations."
+    },
+    "q3": {
+     "answer": "yes",
+     "why": "'Revision class' is the pivot of two branches and the 0.5 floor, yet the entry never says what field names or values count as one (e.g. 'revision', 'correction', 'new release'), or how it is detected in a JSON versus Atom/RSS entry. 'DWBP' is used repeatedly but never expanded as the W3C Data on the Web Best Practices; the citation key w3c-dwbp-2017 hints at it but does not define it. The other terms (SI client, data page, harness, recorded location, cycle of record) are covered by the project's standing definitions, and the machine-readable types are enumerated in Parameters.",
+     "terms": [
+      "revision class / revision-class field",
+      "DWBP"
+     ]
+    }
+   },
+   "tokens": 43627
+  }
+ ],
+ "model_id": "claude-fable-5-1",
+ "updated_at": "2026-10-15T13:39:27.994297+00:00"
+}

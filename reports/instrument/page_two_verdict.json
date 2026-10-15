@@ -1,0 +1,1186 @@
+{
+ "generated_by": "scripts/instrument.py",
+ "task": "cc_tasks/2026-10-15_instrument_specification_audit.md",
+ "cycle": "scan_2026-10-07_composite_d",
+ "grid": "reports/summary/grid.json",
+ "cells": 208,
+ "agencies": 16,
+ "n_checks": 13,
+ "v3_states": {
+  "fail": 164,
+  "pass": 39,
+  "partial": 5
+ },
+ "four_states": {
+  "could_not_measure": 86,
+  "pass": 39,
+  "fail": 83
+ },
+ "cells_changing_state": 86,
+ "moves": {
+  "fail->could_not_measure": 81,
+  "fail->fail": 83,
+  "partial->could_not_measure": 5,
+  "pass->pass": 39
+ },
+ "could_not_measure": 86,
+ "could_not_measure_by_agency": {
+  "BLS": 13,
+  "ORES": 13,
+  "BTS": 12,
+  "EIA": 7,
+  "NASS": 7,
+  "BEA": 6,
+  "ERS": 5,
+  "SAMHSACBHS": 4,
+  "CENSUS": 3,
+  "NAHMSAPHIS": 3,
+  "NCES": 3,
+  "NCHS": 3,
+  "SOI": 3,
+  "BJS": 2,
+  "DRSMSU": 1,
+  "NCSES": 1
+ },
+ "could_not_measure_by_check": {
+  "A1": 14,
+  "A3": 13,
+  "A9": 11,
+  "D4": 11,
+  "A2": 7,
+  "D1": 5,
+  "A6": 4,
+  "A8": 4,
+  "B3": 4,
+  "F4": 4,
+  "A4": 3,
+  "A5": 3,
+  "A10": 3
+ },
+ "not_measured_pages_by_class": {
+  "access_denial": 48,
+  "unconfirmed_absence": 40,
+  "robots_kept_scanner_out": 22
+ },
+ "checks": [
+  {
+   "leg": "A1",
+   "rule_id": "RULE-A1-v5",
+   "state": "specified",
+   "declaration": false,
+   "on_page_two": true,
+   "plain_name": "Page links a structured data file",
+   "pages_by_branch_state": {
+    "specified": 4
+   }
+  },
+  {
+   "leg": "A2",
+   "rule_id": "RULE-A2-v6",
+   "state": "invalid",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "OpenAPI description served at the recorded API address",
+   "pages_by_branch_state": {
+    "project_defined": 13
+   }
+  },
+  {
+   "leg": "A3",
+   "rule_id": "RULE-A3-v8",
+   "state": "specified",
+   "declaration": false,
+   "on_page_two": true,
+   "plain_name": "Page links an archive or large unfiltered file",
+   "pages_by_branch_state": {
+    "specified": 6
+   }
+  },
+  {
+   "leg": "A4",
+   "rule_id": "RULE-A4-v1",
+   "state": "invalid",
+   "declaration": true,
+   "on_page_two": false,
+   "plain_name": "robots.txt permits eight listed crawler tokens",
+   "pages_by_branch_state": {
+    "specified": 12,
+    "invalid": 1
+   }
+  },
+  {
+   "leg": "A5",
+   "rule_id": "RULE-A5-v2",
+   "state": "specified",
+   "declaration": false,
+   "on_page_two": true,
+   "plain_name": "The site's sitemap lists the data page",
+   "pages_by_branch_state": {
+    "specified": 13
+   }
+  },
+  {
+   "leg": "A6",
+   "rule_id": "RULE-A6-v2",
+   "state": "invalid",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Page markup declares a named, described dataset",
+   "pages_by_branch_state": {
+    "specified": 19
+   }
+  },
+  {
+   "leg": "A8",
+   "rule_id": "RULE-A8-v4",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Markup dates the data; a latest-version link resolves",
+   "pages_by_branch_state": {
+    "specified": 19
+   }
+  },
+  {
+   "leg": "A9",
+   "rule_id": "RULE-A9-v2",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "A probed machine address returns non-HTML content",
+   "pages_by_branch_state": {
+    "project_defined": 8
+   }
+  },
+  {
+   "leg": "A10",
+   "rule_id": "RULE-A10-v3",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Data tool answers with real status and content",
+   "pages_by_branch_state": {
+    "project_defined": 12,
+    "specified": 1
+   }
+  },
+  {
+   "leg": "B3",
+   "rule_id": "RULE-B3-v4",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Page links a methodology readable as text",
+   "pages_by_branch_state": {
+    "project_defined": 7,
+    "specified": 12
+   }
+  },
+  {
+   "leg": "D1",
+   "rule_id": "RULE-D1-v6",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Page or API terms name a recognised licence",
+   "pages_by_branch_state": {
+    "specified": 13,
+    "project_defined": 3
+   }
+  },
+  {
+   "leg": "D4",
+   "rule_id": "RULE-D4-v5",
+   "state": "specified",
+   "declaration": false,
+   "on_page_two": true,
+   "plain_name": "Agency's data.json inventory lists this page, validly",
+   "pages_by_branch_state": {
+    "specified": 7
+   }
+  },
+  {
+   "leg": "F4",
+   "rule_id": "RULE-F4-v5",
+   "state": "project_defined",
+   "declaration": false,
+   "on_page_two": false,
+   "plain_name": "Change history served as a structured feed",
+   "pages_by_branch_state": {
+    "specified": 9,
+    "project_defined": 9
+   }
+  }
+ ],
+ "kept_on_page_two": [
+  "A1",
+  "A3",
+  "A5",
+  "D4"
+ ],
+ "removed_from_page_two": [
+  "A2",
+  "A4",
+  "A6",
+  "A8",
+  "A9",
+  "A10",
+  "B3",
+  "D1",
+  "F4"
+ ],
+ "page_two_after": {
+  "cells": 64,
+  "states": {
+   "could_not_measure": 41,
+   "fail": 15,
+   "pass": 8
+  }
+ },
+ "rows": [
+  {
+   "agency": "BEA",
+   "display_name": "Bureau of Economic Analysis",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "BJS",
+   "display_name": "Bureau of Justice Statistics",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "BLS",
+   "display_name": "Bureau of Labor Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    }
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "display_name": "Bureau of the Census",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "BTS",
+   "display_name": "Bureau of Transportation Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A9": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A10": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    }
+   }
+  },
+  {
+   "agency": "DRSMSU",
+   "display_name": "Division of Research and Statistics, Microeconomic Surveys Unit",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A8": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "ERS",
+   "display_name": "Economic Research Service",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "partial",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "partial",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "EIA",
+   "display_name": "Energy Information Administration",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "NASS",
+   "display_name": "National Agricultural Statistics Service",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    }
+   }
+  },
+  {
+   "agency": "NAHMSAPHIS",
+   "display_name": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "NCES",
+   "display_name": "National Center for Education Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "NCHS",
+   "display_name": "National Center for Health Statistics",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "partial",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A10": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "NCSES",
+   "display_name": "National Center for Science and Engineering Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "ORES",
+   "display_name": "Office of Research, Evaluation, and Statistics",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    }
+   }
+  },
+  {
+   "agency": "SOI",
+   "display_name": "Statistics of Income",
+   "page_count": 2,
+   "cells": {
+    "A1": {
+     "v3": "partial",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "partial",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  },
+  {
+   "agency": "SAMHSACBHS",
+   "display_name": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
+   "page_count": 1,
+   "cells": {
+    "A1": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A2": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A3": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A4": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "A5": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A6": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A8": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "A9": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "A10": {
+     "v3": "pass",
+     "four_state": "pass"
+    },
+    "B3": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D1": {
+     "v3": "fail",
+     "four_state": "fail"
+    },
+    "D4": {
+     "v3": "fail",
+     "four_state": "could_not_measure"
+    },
+    "F4": {
+     "v3": "fail",
+     "four_state": "fail"
+    }
+   }
+  }
+ ]
+}

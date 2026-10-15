@@ -1,0 +1,110 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 4
+rule_id: RULE-A3-v8
+leg: A3
+indicator: ind:A3
+code: assessment/harness/scan/rules/rule_a3_v8.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Page links an archive or large unfiltered file"
+
+question:
+  text: >-
+    Can the whole dataset be retrieved in one request? An SI client that must assemble a product
+    from many filtered queries makes many calls, can miss parts, and cannot tell when it has all
+    of it; a bulk file answers that in one request.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: provide RESTful APIs for real-time and bulk retrieval"}
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4: make information available as machine-readable data that can be accessed in bulk"}
+
+expected_behavior:
+  text: >-
+    "Enable consumers to retrieve the full dataset with a single request" (DWBP Best Practice 17,
+    quoted). M-23-22 §III.4 adds, for federal sites: if an agency detects significant public
+    interest in scraping information from its web pages, it should strongly consider making that
+    information available as machine-readable data that can be accessed in bulk (quoted).
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 17: Provide bulk download"}
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4 Information and Services That Are Discoverable and Optimized for Search"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Enable consumers to retrieve the full dataset with a single request."
+    - source: omb-m-23-22-digital-first-public-experience
+      quote: "making that information available as machine-readable data that can be accessed in bulk"
+    - source: omb-m-23-22-digital-first-public-experience
+      quote: "If an agency detects significant public interest in scraping information from web pages, the agency should strongly consider making that information available as machine-readable data that can be accessed in bulk"
+
+test:
+  client: "the harness's identified, robots-compliant client; HEAD per link, same host only, cap 25"
+  request: "GET the data page; HEAD each on-host link"
+  reads: "each linked response's Content-Type, Content-Length, extension, and whether the URL carries a query string"
+  decision_rule:
+    - "pass: `whole-product download linked from the product page: {url} (archive)` (zip, gz, tgz, tar, 7z, bz2 by extension)"
+    - "pass: `... (unfiltered file of {n} bytes)`: not filtered by a query, at least 51,200 bytes, and not an HTML page"
+    - "fail: `{n} download link(s) are filtered queries, not whole-product downloads`"
+    - "fail: `the largest linked download is below the 51200-byte whole-product floor`"
+    - "fail: `no whole-product download linked from the product page`"
+  parameters:
+    - "min_bulk_bytes 51,200 (50 KiB), chosen by this project; a query string marks a download as filtered"
+  recognized_method: >-
+    DWBP's test is "Check if the full dataset can be retrieved with a single request". The
+    harness cannot know the full dataset's extent, so it uses a proxy: an archive, or an unfiltered
+    non-HTML file over a size floor. The proxy is this project's; no published method exists for
+    deciding from outside that a file is the whole of a statistical product.
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 17, How to Test"}
+
+branches:
+  - id: pass_archive_or_large_file
+    verdict: pass
+    reason_match: "whole-product download linked from the product page"
+    behavior: "the page links an archive or a large unfiltered file, the observable form of a bulk download"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 17"}]
+    state: specified
+  - id: fail_only_filtered_queries
+    verdict: fail
+    reason_match: "are filtered queries, not whole-product downloads"
+    behavior: "the only downloads are query-filtered extracts, not the full dataset in one request"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 17"}]
+    state: specified
+  - id: fail_below_floor
+    verdict: fail
+    reason_match: "below the .*-byte whole-product floor"
+    behavior: "the largest linked file is smaller than the floor, read as not the full dataset"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 17"}]
+    state: specified
+  - id: fail_no_download
+    verdict: fail
+    reason_match: "no whole-product download linked from the product page"
+    behavior: "no download of any kind is linked from the page on its own host"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 17"}]
+    state: specified
+not_measured: "refused, robots_disallowed, every link unobserved, or more on-host links than the cap (`absence not established`): 17 of 23 data pages on the cycle of record"
+
+claims:
+  pass: "This data page links, on its own host, an archive file (by extension) or a file that is not an HTML page, carries no query string in its address, and is at least 50 KiB. It is not verified to be the complete product."
+  fail: "Every on-host link in this data page's HTML, as served before any script runs, was checked (a download offered through a script-driven button or a form post is not seen), and none is an archive or a non-HTML file without a query string of at least 50 KiB. The two tests are proxies: a link with a query string may still deliver the whole product, and a complete product smaller than 50 KiB fails the size floor. It is not a claim that the agency's downloads are partial, nor that no bulk download exists elsewhere (a data portal, an FTP site, an API bulk endpoint)."
+  neither: "Nothing about whether the file is complete or current, or whether bulk access exists off this page."
+
+confounds:
+  - cause: "a small product whose complete file is under 50 KiB"
+    distinguished: "no: a fail on the floor branch; the reason names the floor so a reader can see it"
+  - cause: "a large file that is one table of many (a pass that is not the full dataset)"
+    distinguished: "no"
+  - cause: "bulk files offered on another host"
+    distinguished: "no: off-host links are out of scope"
+  - cause: "more on-host links than the cap; refusal; robots"
+    distinguished: "yes: error"
+
+fix_line_check:
+  action: act:a3-link-a-bulk-download-from-the-product-page
+  fix_line: "Link a bulk download of the product from the product page."
+  verdict: consistent
+
+state: specified
+state_reason: >-
+  Each branch rewards or penalizes the behavior DWBP BP 17 defines (the full dataset in one
+  request). The size floor and the query-string rule are test parameters chosen by this project,
+  stated with their error modes (DN-015 §4); the pass claim says the file is not verified to be
+  the whole product. On the cycle of record no grid page reached a fail on this check.

@@ -1,0 +1,165 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. The API advertisement check: the
+# v3 grid's column "A documented machine interface". The task requires this entry to settle four
+# points in writing; they are `settles` below.
+order: 2
+rule_id: RULE-A2-v6
+leg: A2
+indicator: ind:A2
+code: assessment/harness/scan/rules/rule_a2_v6.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "OpenAPI description served at the recorded API address"
+
+question:
+  text: >-
+    Does the agency publish a machine-readable description of its data API? An SI client that is
+    to call an API rather than scrape pages needs to know the calls, their parameters and what
+    they return; a description a program can read lets it build the call without a person
+    reading documentation first.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: provide RESTful APIs for real-time and bulk retrieval; encourage AI developers to cite official endpoints (e.g., APIs)"}
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 25: Provide complete documentation for your API (intended outcome: it will also enable machines to access the API documentation)"}
+
+expected_behavior:
+  text: >-
+    A publisher that offers an API provides complete information about it on the Web (DWBP Best
+    Practice 25), and DWBP's test for that practice is that every call is described, with its
+    required and optional parameters and what it returns (quoted). DWBP adds that complete
+    documentation also enables machines to access it (quoted). The OpenAPI Specification defines a
+    description that lets humans and computers discover and understand a service's capabilities, and
+    its required `openapi` field is defined as "the version number of the OpenAPI Specification that the OpenAPI document uses" (OAS 3.2.0 §1, §4.1.1, quoted). Where a publisher announces its APIs through an RFC 9727 API catalog, the catalog is
+    RECOMMENDED to include links to the OpenAPI definitions, and metadata not in the catalog SHOULD
+    be available at the API endpoint URIs it lists (RFC 9727 §4.1, quoted). No source requires a
+    description to be OpenAPI rather than another format, or requires it at the API's base address
+    when no API catalog is published; those requirements in this check's fail branches are the
+    project's own.
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 25 (statement, intended outcome, How to Test)"}
+    - {doc_id: openapi-specification-core, section: "§1 (What is the OpenAPI Specification); §4.1.1 Fixed Fields (`openapi` REQUIRED)"}
+    - {doc_id: rfc-9727-api-catalog, section: "§4.1 API Catalog Contents"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Provide complete information on the Web about your API."
+    - source: w3c-dwbp-2017
+      quote: "It will also enables machines to access the API documentation in order to help developers build API client software."
+    - source: openapi-specification-core
+      quote: "allows both humans and computers to discover and understand the capabilities of a service"
+    - source: rfc-9727-api-catalog
+      quote: "they SHOULD make that metadata available at the API endpoint URIs they have listed"
+    - source: w3c-dwbp-2017
+      quote: "Check that every call enabled by your API is described in your documentation. Make sure you provide details of what parameters are required or optional and what each call returns."
+    - source: openapi-specification-core
+      quote: "This string MUST be the version number of the OpenAPI Specification that the OpenAPI document uses."
+    - source: rfc-9727-api-catalog
+      quote: "It is RECOMMENDED that the API catalog also includes useful metadata, such as usage policies, API version information, links to the OpenAPI Specification [OAS] definitions for each API"
+
+test:
+  client: "the harness's identified, robots-compliant client (params.manners.user_agent), one request per second per host; it never fetches a path robots.txt disallows for it"
+  request: "GET the API base recorded for the agency in targets.yaml declared_locations (read from the agency's own pages, or seeded from a named source) and any description document recorded beside it"
+  reads: "whether the response is a document carrying the `openapi` field (OpenAPI 3.x) or the `swagger` field (Swagger 2.0)"
+  decision_rule:
+    - "pass: `machine-readable API description at {url} (OpenAPI {version})` when a recorded location serves a document with `openapi` or `swagger`"
+    - "fail: `the API is present: a JSON document is served at the declared API base ... but it does not parse as an API description`"
+    - "fail: `a document is served at {url} but it does not parse as an API description; a JSON content type alone is not a description`"
+    - "fail: `no OpenAPI/JSON API description served at any probed path` (every recorded location observed and every seed source searched)"
+    - "error: a recorded location not verified, or a seed source not searched (`_existence.remainder`)"
+  parameters:
+    - "params.existence.seed_sources: model_knowledge, repo, developer_page, catalog.data.gov, api.data.gov"
+  recognized_method: >-
+    DWBP's own tests for the expected behavior are: "Check if a test client can simulate calls and
+    the API returns the expected responses" (BP 23) and "Check that every call enabled by your API
+    is described in your documentation" (BP 25). The harness does neither: it makes no call to the
+    API and reads no human documentation. It checks one thing OAS defines (is this document an
+    OpenAPI description?) at one place no source requires (the recorded base). There is no
+    published conformance test for "the agency publishes a machine-readable API description".
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 23 How to Test; Best Practice 25 How to Test"}
+
+settles:
+  search_engine_location_is_not_the_behavior: >-
+    Whether a search engine can find an agency's API is not what this check measures and not what
+    it claims. The check asks whether a description document is served at the recorded API
+    address. An API that every search engine indexes can fail it; an API no search engine has
+    seen can pass it.
+  dataset_search_depends_on_markup: >-
+    Google's Dataset Search finds datasets through schema.org Dataset markup, or equivalent W3C
+    DCAT structures, on the pages that describe them (google-dataset-structured-data, "Our approach
+    to dataset discovery": "We can understand structured data in web pages about datasets, using
+    either schema.org Dataset markup, or equivalent structures represented in W3C's Data Catalog
+    Vocabulary (DCAT) format"). That is the A6 check's construct, on the data page; it is not what
+    this check reads, and an OpenAPI description does not enter Dataset Search.
+  robots_is_declared_policy_firewall_is_enforcement: >-
+    robots.txt is a declaration: "These rules are not a form of access authorization" (RFC 9309
+    §1), and the protocol "is not a substitute for valid content security measures" (§3). A host
+    that answers 403 to an identified client is enforcing, at the edge, whatever its robots.txt
+    says. They are two observations. The harness records them separately: a path robots.txt
+    disallows for the scanner is never requested and is recorded `robots_disallowed`; a 401, 403
+    or 429 on a permitted path is recorded `refused` (errors.py); both are `error` on this check,
+    never fail. On the cycle of record 7 of the 23 data pages returned `robots_disallowed` here
+    and 1 returned `refused`.
+  data_page_not_api_endpoint: >-
+    The harness measures what a client meets at the data page and the recorded API address with
+    one identified client. It does not call the API's data endpoints, and it does not test
+    whether a script calling the API with or without a key is refused. No cell of this check says
+    anything about whether the API serves scripts.
+
+branches:
+  - id: pass_openapi_at_recorded_location
+    verdict: pass
+    reason_match: "machine-readable API description at"
+    behavior: "an OpenAPI or Swagger description is served where the API is recorded"
+    sources: [{doc_id: openapi-specification-core, section: "§4.1.1"}, {doc_id: w3c-dwbp-2017, section: "Best Practice 25"}]
+    state: specified
+  - id: fail_json_at_base_not_openapi
+    verdict: fail
+    reason_match: "(the API is present: a JSON document is served|does not parse as an API description; a JSON content type alone)"
+    behavior: "the API exists and its base serves JSON that is not OpenAPI/Swagger; penalizes a description in another format, or one published elsewhere (a developer page, a catalog), which no source forbids"
+    sources: none
+    state: project_defined
+  - id: fail_no_description_found
+    verdict: fail
+    reason_match: "no OpenAPI/JSON API description served at any probed path"
+    behavior: "no OpenAPI or Swagger document at any recorded API location, or no API recorded for the agency at all; reads 'no documented API' though only OpenAPI at recorded addresses was looked for"
+    sources: none
+    state: project_defined
+not_measured: "`robots_disallowed` (the scanner's robots compliance kept it from the recorded address), `refused` (401/403/429 to the identified client), or a recorded location not verified / a seed source not searched"
+
+claims:
+  pass: "An OpenAPI or Swagger description document is served at the API address recorded for this agency (the address is named in the cell's reason)."
+  fail: "No OpenAPI or Swagger document was found at the API addresses recorded for this agency; where no API address is recorded at all, the fail says only that none was found in the sources searched. A fail is not a claim that the agency has no API, that its API is undocumented, that it publishes no machine-readable description anywhere (a description at a developer portal, or in another format such as a catalog document at the API root, is not looked for), or that its API refuses scripts. Two of the cycle's fails say in their own reason that the API is present, and three more found a document at the API address that is not OpenAPI."
+  neither: "Nothing about whether the API works, whether its human documentation is complete, whether search engines or Dataset Search can find it, or whether a key is required."
+
+confounds:
+  - cause: "the agency documents its API in human-readable pages or in a non-OpenAPI machine format (for example a DCAT discovery document at the API root)"
+    distinguished: "no: both are fail on this check, indistinguishable from an undocumented API in the cell"
+  - cause: "the description is published at a developer page or a catalog, not the recorded base"
+    distinguished: "no, unless that address is the recorded location"
+  - cause: "the host's firewall refuses the identified client"
+    distinguished: "yes: `refused`, an error, never fail"
+  - cause: "robots.txt disallows the recorded address for the scanner"
+    distinguished: "yes: `robots_disallowed`, an error, never fail"
+  - cause: "the API requires a key"
+    distinguished: "not tested: the harness does not call the API"
+
+fix_line_check:
+  action: act:a2-expose-an-api-and-publish-its-description
+  fix_line: "Expose the product through a machine interface and publish its description."
+  verdict: rewritten
+  new_fix_line: "Publish a machine-readable description of the data interface where the interface is served."
+  note: "The old line tells an agency with an API to expose one; the expected behavior (DWBP BP 25, RFC 9727 §4.1) is a description where the API is served."
+
+state: invalid
+reader_invalid:
+  round: 2
+  unit_id: 59931b9f008537a3
+  reason: "Nearly every attribution is backed by a quoted passage: DWBP's 'complete information on the Web', its How-to-Test wording on calls/parameters/returns, its 'enables machines' outcome, OAS's 'humans and computers' purpose, and both RFC 9727 clauses (RECOMMENDED OpenAPI links; SHOULD make metadata available at listed endpoint URIs). The project's own additions (OpenAPI-only, at the recorded base) are stated plainly as the project's own. One attributed claim is not in the passages: that the `openapi` field is 'required' by OAS. The quoted OAS text only says the string MUST be the version number; 'REQUIRED' appears solely in the writer's citation label for §4.1.1, not in any verbatim quote. Since the pass branch rests on presence of that field, the requiredness is a source claim that should be quoted."
+state_reason: >-
+  Invalid by DN-015 §7: the reader answered no to question 1 in both rounds (its round-2 reason is
+  recorded under reader_invalid). The defect it names is in this entry's quoting of its sources,
+  not shown to be in the rule; before the reading, the writer's assessment was: state
+  project_defined. The pass branch is published (an OpenAPI description is the OAS-defined machine
+  description, and serving it where the API lives is what RFC 9727 §4.1 recommends). Both fail
+  branches penalize a behavior no source requires: having no OpenAPI document at the recorded
+  base, which an agency with a fully documented API in another form also does. Every v3 grid fail
+  on this column rests on one of them, so the column's fails do not carry a published claim.

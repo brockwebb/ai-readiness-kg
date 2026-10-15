@@ -1,0 +1,84 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. FRONTIER leg (as_of 2026-01).
+order: 9
+rule_id: RULE-A9-v2
+leg: A9
+indicator: ind:A9
+code: assessment/harness/scan/rules/rule_a9_v2.py
+matrix: product (frontier, DN-012 d4)
+on_v3_grid: true
+declaration: false
+plain_name: "A probed machine address returns non-HTML content"
+
+question:
+  text: >-
+    Does the agency serve an entry point built for machine clients (an API description, an
+    agent-protocol endpoint, an llms.txt) where such clients look first? Agents increasingly look
+    for these before reading pages.
+  established_by:
+    - {doc_id: llmstxt-proposal, section: "Proposal: a /llms.txt markdown file to provide LLM-friendly content"}
+    - {doc_id: wilkinson-2016-fair-guiding-principles, section: "A1: (meta)data retrievable by their identifier using a standardised communications protocol"}
+
+expected_behavior:
+  text: >-
+    No published standard defines a "machine-first entry point" or names the set of addresses a
+    ready publisher serves one at. Its parts have separate sources of unequal standing: an
+    OpenAPI description (OAS, a specification), /llms.txt (a proposal, llmstxt.org), and
+    /.well-known/mcp, which is not a registered well-known URI and has no source in the corpus.
+  sources: none
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET a fixed set of probe paths: the recorded API base and its description, /.well-known/mcp, /llms.txt"
+  reads: "status, Content-Type, body length"
+  decision_rule:
+    - "pass: `machine-first entry point served at {url}` when any probe returns a 2xx non-HTML body"
+    - "fail: `{n} probed path(s) answer with HTML rather than a machine format`"
+    - "fail: `none of the {n} probed machine-first paths is served, the declared API base included`"
+  parameters:
+    - "the probe set is this project's"
+  recognized_method: "None published; the probe set and the any-non-HTML-2xx rule are this project's."
+  recognized_method_sources: none
+
+branches:
+  - id: pass_any_non_html_2xx
+    verdict: pass
+    reason_match: "machine-first entry point served at"
+    behavior: "any probe returns non-HTML content (any JSON at the API base, any llms.txt) "
+    sources: none
+    state: project_defined
+  - id: fail_html_only
+    verdict: fail
+    reason_match: "answer with HTML rather than a machine format"
+    behavior: "the probed addresses answer with HTML"
+    sources: none
+    state: project_defined
+  - id: fail_none_served
+    verdict: fail
+    reason_match: "probed machine-first paths is served"
+    behavior: "none of the probed addresses is served"
+    sources: none
+    state: project_defined
+not_measured: "refused, robots_disallowed, or the recorded API base not probed (15 of 23 data pages on the cycle of record)"
+
+claims:
+  pass: "At least one of the addresses this project probes (the recorded API base and its description, /.well-known/mcp, /llms.txt) returned content that is not an HTML page."
+  fail: "None of the handful of addresses this project probes, by plain GET with no key and no Accept header, returned non-HTML content. The recorded API address may be stale or wrong, and an API that answers a bare request with an HTML page or an error page fails the same way. It is not a claim that the agency has no API, that its API is down, or that it lacks machine access."
+  neither: "Nothing about whether the content found is useful, documented or an entry point in any published sense."
+
+confounds:
+  - cause: "the API base returns any JSON at all (an error message, a catalog)"
+    distinguished: "no: it passes"
+  - cause: "the agency publishes its machine entry point at an address outside the probe set"
+    distinguished: "no"
+
+fix_line_check:
+  action: act:a9-publish-a-machine-first-entry-point
+  fix_line: "Publish a machine-first entry point for the product."
+  verdict: consistent
+  note: "Consistent with the check, which is itself project_defined; the line names no published target."
+
+state: project_defined
+state_reason: >-
+  The construct has no published definition, and the decision rule (any non-HTML 2xx at a
+  project-chosen probe set) is the project's. It is a frontier leg by its own record; it stays in
+  the detailed report as such and comes off page two.

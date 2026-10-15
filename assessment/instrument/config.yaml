@@ -1,0 +1,57 @@
+# Configuration for the instrument specification (DN-015; task db464d5f). Read by
+# scripts/instrument.py and scripts/instrument_read.py. Entries are the RULE-*.yaml files beside
+# this one; this file is not an entry.
+
+inputs:
+  grid: reports/summary/grid.json            # the v3 grid: its cycle, columns, cells and pages
+  manifest: corpus/manifest.json             # a `doc_id:` source must be an admitted document here
+  receipts: assessment/instrument/standards_receipts.yaml   # a `url:` source must be a receipt here
+  dn015: docs/design/2026-10-15_DN-015_instrument_specification.md
+
+outputs:
+  dir: reports/instrument
+  instrument_md: INSTRUMENT.md
+  instrument_pdf: INSTRUMENT.pdf
+  verdict_md: PAGE_TWO_VERDICT.md
+  verdict_pdf: PAGE_TWO_VERDICT.pdf
+  verdict_json: page_two_verdict.json
+  build_report: build_report.json
+
+# DN-015 §2: every entry carries these. Nested keys are checked one level down.
+required_fields:
+  top: [rule_id, leg, indicator, code, question, expected_behavior, test, branches, claims, confounds, state, state_reason, fix_line_check]
+  question: [text, established_by]
+  expected_behavior: [text, sources]
+  test: [client, request, reads, decision_rule, recognized_method]
+  claims: [pass, fail, neither]
+  branch: [id, verdict, reason_match, behavior, sources, state]
+
+states: [specified, project_defined, invalid, retired]
+# DN-015 §3: a check's state is the weakest of its branches'. Lower index is weaker.
+state_order: [invalid, project_defined, specified]
+
+# DN-015 §6: how an `error` finding is classed for the "could not measure" counts. First match on
+# the finding's reason wins; anything unmatched is `other_error`, counted and named, never folded.
+not_measured_classes:
+  access_denial: ["refused", "the host answered HTTP 4"]
+  robots_kept_scanner_out: ["robots_disallowed"]
+  unconfirmed_absence: ["absence not established", "cannot be established", "existence not settled", "were UNOBSERVED", "not established"]
+  server_or_network_error: ["connection_reset", "timeout", "HTTP 5", "dns", "unknown"]
+
+# The task's write-back (Part C) caps a plain name at this many words.
+plain_name_max_words: 8
+
+# The reader (Part B; DN-015 §7). Fable, role `judge`, one round per entry, a second only on a "no"
+# to the first question. Checkpointed per ~/GitHub/CLAUDE.md §15.
+reader:
+  role: judge
+  call_class: judge
+  run_id: instrument_spec_2026-10-15
+  ceiling_tokens: 3000000
+  timeout_seconds: 900
+  max_attempts: 2
+  max_wall_seconds: 5400
+  pilot_units: 1
+  progress_every_units: 1
+  run_dir: reports/instrument/run
+  progress_log: logs/2026-10-15_instrument_read_progress.log

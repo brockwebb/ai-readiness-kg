@@ -1,0 +1,127 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 8
+rule_id: RULE-A8-v4
+leg: A8
+indicator: ind:A8
+code: assessment/harness/scan/rules/rule_a8_v4.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Markup dates the data; a latest-version link resolves"
+
+question:
+  text: >-
+    Can a machine tell which release of the data it is reading, and find the latest one? An SI
+    client that cannot read a release date may quote a superseded figure as current; one that
+    cannot find the latest release cannot correct itself.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: ensure metadata, including the most recent data update, are programmatically retrievable"}
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 7 (Intended Outcome: humans and software agents will easily be able to determine which version of a dataset they are working with)"}
+
+expected_behavior:
+  text: >-
+    Each dataset carries a version number or date that a computer application can detect (DWBP Best
+    Practice 7 and its test, quoted). URIs are assigned to individual versions and to the overall
+    series, so agents can refer to "the latest version" (Best Practice 11, quoted). DCAT-US names
+    the date as Last Update: "Most recent date on which the dataset was changed, updated or
+    modified" (quoted). An HTTP Last-Modified header is a different fact: the time the origin server
+    believes the selected representation was last modified (RFC 9110 §8.8.2, quoted), not the
+    release the data belongs to.
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 7: Provide a version indicator; Best Practice 11: Assign URIs to dataset versions and series"}
+    - {doc_id: dcat-us-1-1-schema, section: "modified (Last Update)"}
+    - {url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§8.8.2 Last-Modified"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Assign and indicate a version number or date for each dataset."
+    - source: w3c-dwbp-2017
+      quote: "Check if a computer application can automatically detect/discover and process the unique version number or date of a dataset or distribution."
+    - source: w3c-dwbp-2017
+      quote: "Humans and software agents will be able to refer to specific versions of a dataset and to concepts such as a 'dataset series' and 'the latest version'."
+    - source: https://www.rfc-editor.org/rfc/rfc9110.txt
+      quote: "provides a timestamp indicating the date and time at which the origin server believes the selected representation was last modified"
+    - source: dcat-us-1-1-schema
+      quote: "Most recent date on which the dataset was changed, updated or modified."
+    - source: w3c-dwbp-2017
+      quote: "Assign URIs to individual versions of datasets as well as to the overall series."
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET the data page; follow up to three same-host latest-version pointers (link rel latest-version/last/canonical, hrefs with /latest or /current, anchors reading latest or most recent)"
+  reads: "markup fields dateModified, datePublished, temporalCoverage; the Last-Modified header; each pointer's status"
+  decision_rule:
+    - "pass: `markup declares the vintage via {field} and the latest-vintage pointer resolves`"
+    - "fail: `only an HTTP Last-Modified header ... a fact about the file, not a declared product vintage`"
+    - "fail: `no declared release or modification date on the surface`"
+    - "fail: `markup declares the vintage via {field}, but the surface offers no latest-vintage pointer on its own host`"
+    - "fail: `... but none of the {n} latest-vintage pointer(s) resolves`"
+  parameters:
+    - "markup_fields includes temporalCoverage, which schema.org defines as the period the data covers, not a release date"
+  recognized_method: >-
+    DWBP's test is "Check if a computer application can automatically detect/discover and process
+    the unique version number or date of a dataset or distribution", which reading markup fields
+    implements. No published test exists for the latest-version pointer; following the page's own
+    latest links and requiring a 2xx is this project's.
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 7, How to Test"}
+
+branches:
+  - id: pass_dated_and_latest_resolves
+    verdict: pass
+    reason_match: "declares the vintage via (dateModified|datePublished) and the latest-vintage pointer resolves"
+    behavior: "a machine-readable release date and a resolving latest-version link"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 7; Best Practice 11"}]
+    state: specified
+  - id: pass_via_temporal_coverage
+    verdict: pass
+    reason_match: "declares the vintage via temporalCoverage and the latest-vintage pointer resolves"
+    behavior: "credits the period the data covers as if it were a release date"
+    sources: none
+    state: project_defined
+  - id: fail_only_last_modified
+    verdict: fail
+    reason_match: "only an HTTP Last-Modified header"
+    behavior: "the only date is the server's representation timestamp"
+    sources: [{url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§8.8.2"}, {doc_id: w3c-dwbp-2017, section: "Best Practice 7"}]
+    state: specified
+  - id: fail_no_date
+    verdict: fail
+    reason_match: "no declared release or modification date on the surface"
+    behavior: "no machine-readable date at all"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 7"}]
+    state: specified
+  - id: fail_no_or_broken_latest_pointer
+    verdict: fail
+    reason_match: "(offers no latest-vintage pointer|none of the .* latest-vintage pointer\\(s\\) resolves)"
+    behavior: "dated, but no resolving latest-version link on the host"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 11"}]
+    state: specified
+not_measured: "refused or robots_disallowed (4 of 23 data pages), or a latest pointer that was not observed"
+
+claims:
+  pass: "The data page's markup carries a release or modification date (in dateModified or datePublished; or temporalCoverage, a branch this entry marks project-defined), and a latest-version link on the same host, recognised by its link relation, address or anchor text, resolves."
+  fail: "The data page's markup does not carry a date in the three fields read (dateModified, datePublished, temporalCoverage), or carries one but none of up to three recognised latest-version links on its own host resolves. It is not a claim that the agency does not date or version its releases: a version number, a date in another markup field, in visible text, a PDF or a catalog record, and a latest link worded otherwise, beyond the third, or on another host are not read."
+  neither: "Nothing about whether the date is correct or the data current."
+
+confounds:
+  - cause: "the date is in visible text or a table caption, not in markup"
+    distinguished: "no: a fail"
+  - cause: "the date is in the agency's data.json record (DCAT-US modified)"
+    distinguished: "no: the inventory is not read by this check"
+  - cause: "a pass resting on temporalCoverage"
+    distinguished: "yes, in the reason (the field is named); the branch is project_defined"
+
+fix_line_check:
+  action: act:a8-publish-a-release-date-for-the-product
+  fix_line: "Publish a release date for the product."
+  verdict: rewritten
+  new_fix_line: "Publish the product's release date in the page's structured markup."
+  note: "DWBP BP 7's test is that a computer application can detect the date; the old line is satisfied by a date in prose, which this check does not read."
+
+state: project_defined
+state_reason: >-
+  Four branches are published (DWBP BP 7 and BP 11; RFC 9110 for the Last-Modified distinction).
+  One pass branch credits schema.org temporalCoverage, the period the data covers, as a release
+  date, which no source supports. On the cycle of record the one grid pass names dateModified,
+  so no grid cell rests on that branch, but the check as specified can produce one; a rule
+  version that drops temporalCoverage from the date fields would make the check specified.

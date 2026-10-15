@@ -1,0 +1,109 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 3
+rule_id: RULE-A1-v5
+leg: A1
+indicator: ind:A1
+code: assessment/harness/scan/rules/rule_a1_v5.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Page links a structured data file"
+
+question:
+  text: >-
+    Is the data offered in a structured, machine-readable format? An SI client can read a CSV,
+    JSON or spreadsheet file directly; a PDF table has to be extracted and re-parsed, which is where
+    numbers are misread.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: publish datasets in common structured formats (JSON, CSV, machine-readable Excel); avoid documents (PDFs) that need to be processed and parsed"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§5(a)(i) Machine-Readable: agencies must make each of their public data assets machine-readable"}
+
+expected_behavior:
+  text: >-
+    The publisher makes the data available in a machine-readable, standardized data format (DWBP
+    Best Practice 12, quoted). For federal public data assets this is required: "Agencies must make
+    each of their public data assets machine-readable" (M-25-05 §5(a)(i), quoted), and machine-
+    readable means a format that can be easily processed by a computer without human intervention
+    (M-25-05, quoted). USAFacts names the formats: JSON, CSV, machine-readable Excel, and not PDF
+    (quoted).
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 12: Use machine-readable standardized data formats"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "Definitions (machine-readable); §5(a)(i) Machine-Readable"}
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible, How?"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Make data available in a machine-readable, standardized data format that is well suited to its intended or potential use."
+    - source: usafacts-ai-ready-data-guide
+      quote: "Publish datasets in common structured formats (JSON, CSV, machine-readable Excel). Avoid documents (PDFs) that need to be processed and parsed."
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "data in a format that can be easily processed by a computer without human intervention"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "Agencies must make each of their public data assets machine-readable."
+
+test:
+  client: "the harness's identified, robots-compliant client; HEAD per link (GET on 405/501), one request per second per host"
+  request: "GET the data page; HEAD every link on it whose host is the page's own host (params.link_probe: same_host_only true), up to a cap of 25; a search that left candidates unprobed returns error, not fail"
+  reads: "each linked response's Content-Type, and the href's extension"
+  decision_rule:
+    - "pass: `structured data SERVED at {url} ({type}); classified on the response, not on the href`"
+    - "fail: `only PDF served; first: {url}` (every on-host candidate probed, none structured, a PDF among them)"
+    - "fail: `no probed link serves a structured content type` (every on-host candidate probed)"
+  parameters:
+    - "structured media types: text/csv, application/json, application/geo+json, parquet, Excel (xls, xlsx), application/xml, text/xml; chosen by this project from USAFacts' list and common data formats"
+    - "link cap 25 per page (params.link_probe.max_links_probed); a page with more on-host links than probed returns error"
+  recognized_method: >-
+    DWBP's test for Best Practice 12 is "Check if the data format conforms to a known
+    machine-readable data format specification". The harness reads the format the server
+    declares (the registered media type) rather than validating the file, which is a weaker form
+    of the same test; it is the method a client uses to decide how to parse a response.
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 12, How to Test"}
+    - {url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§8.3 Content-Type"}
+
+branches:
+  - id: pass_structured_served
+    verdict: pass
+    reason_match: "structured data SERVED at"
+    behavior: "the data page links a file served with a structured data media type"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 12"}, {doc_id: usafacts-ai-ready-data-guide, section: "§1"}]
+    state: specified
+  - id: fail_only_pdf
+    verdict: fail
+    reason_match: "only PDF served"
+    behavior: "the only data documents linked from the page are PDFs"
+    sources: [{doc_id: usafacts-ai-ready-data-guide, section: "§1 (avoid PDFs that need to be processed and parsed)"}, {doc_id: w3c-dwbp-2017, section: "Best Practice 12"}]
+    state: specified
+  - id: fail_no_structured_link
+    verdict: fail
+    reason_match: "no probed link serves a structured content type"
+    behavior: "no link on the page, on its own host, serves a structured data format"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 12"}]
+    state: specified
+not_measured: "the page refused (`refused`) or kept from the scanner by robots.txt (`robots_disallowed`); every link unobserved; more on-host links than the cap of 25, so the absence is unconfirmed (`absence not established`): 19 of the 23 data pages on the cycle of record, 15 of them an unconfirmed absence"
+
+claims:
+  pass: "A link on this data page, on the page's own host, returned a file that the server declared (by media type) or the address named (by extension) as a structured data format: CSV, JSON, XML, spreadsheet or Parquet."
+  fail: "Every on-host link in this data page's HTML, as served before any script runs, was checked (links built by scripts or reached by form posts are not seen), and none was declared, by its media type or its file extension, as a structured data format. It is not a claim that the page links no structured file (a real data file served with a generic media type and no extension is missed), nor that the agency publishes no machine-readable data: data offered on another host (a data portal, an API) or reached only through a query tool is outside this page's on-host links."
+  neither: "Nothing about whether the structured file is complete, current, documented, or the same data the page shows."
+
+confounds:
+  - cause: "the data is on another host (for example data.census.gov, api.bls.gov) and the page links there"
+    distinguished: "no: off-host links are outside the probe's scope and do not count; a fail stands"
+  - cause: "the page has more on-host links than the probe cap"
+    distinguished: "yes: error `absence not established`, never fail"
+  - cause: "the server declares a wrong media type for a real data file (for example application/octet-stream)"
+    distinguished: "partly: the href extension is also read; an extensionless file with a generic type is missed"
+  - cause: "the firewall refuses the client, or robots.txt disallows it"
+    distinguished: "yes: error"
+
+fix_line_check:
+  action: act:a1-serve-the-data-files-with-their-own-media-type
+  fix_line: "Link a data file from the product page and serve it with its own media type."
+  verdict: consistent
+
+state: specified
+state_reason: >-
+  Every branch rewards or penalizes a behavior DWBP BP 12, M-25-05 and USAFacts define (data in a
+  structured format; not PDF only). The frame (this page's on-host links) and the media-type list
+  are test properties stated above (DN-015 §4); the claims are bounded to them. On the cycle of
+  record no grid page reached a fail on this check: every non-pass was not measured.

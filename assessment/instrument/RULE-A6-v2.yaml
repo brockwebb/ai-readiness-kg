@@ -1,0 +1,127 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 7
+rule_id: RULE-A6-v2
+leg: A6
+indicator: ind:A6
+code: assessment/harness/scan/rules/rule_a6_v2.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Page markup declares a named, described dataset"
+
+question:
+  text: >-
+    Does the data page carry structured markup that tells a machine it describes a dataset? Search
+    engines' dataset indexes, and answer engines that draw on them, recognise a dataset page by its
+    schema.org Dataset or DCAT markup; without it the page is read as an ordinary web page.
+  established_by:
+    - {doc_id: google-dataset-structured-data, section: "Datasets are easier to find in Dataset Search when you provide supporting information ... as structured data"}
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§2 Understandable: well-structured documentation and metadata; align with standard schemas"}
+
+expected_behavior:
+  text: >-
+    Google recommends adding structured data about a dataset to its canonical page, and reads it as
+    schema.org Dataset markup or equivalent W3C DCAT structures (quoted), in JSON-LD (preferred),
+    RDFa or Microdata (quoted). Google's required properties for a Dataset include description ("A
+    short summary describing a dataset") and name ("A descriptive name of a dataset"), and it must
+    include the required properties to be eligible for display (quoted). Schema.org defines Dataset
+    as "A body of structured information describing some topic(s) of interest" (quoted).
+  sources:
+    - {doc_id: google-dataset-structured-data, section: "Our approach to dataset discovery; Structured data type definitions, Dataset, Required properties"}
+    - {doc_id: schema-org-dataset, section: "Dataset"}
+  quotes:
+    - source: google-dataset-structured-data
+      quote: "We recommend that you add structured data about a dataset to the canonical pages."
+    - source: google-dataset-structured-data
+      quote: "or equivalent structures represented in W3C's Data Catalog Vocabulary (DCAT) format"
+    - source: google-dataset-structured-data
+      quote: "You must include the required properties for your content to be eligible for display as a rich result."
+    - source: google-dataset-structured-data
+      quote: "A short summary describing a dataset."
+    - source: google-dataset-structured-data
+      quote: "A descriptive name of a dataset."
+    - source: google-dataset-structured-data
+      quote: "Required properties --description | A short summary describing a dataset."
+    - source: google-dataset-structured-data
+      quote: "The same schema.org vocabulary can also be used in RDFa 1.1 or Microdata syntaxes."
+    - source: schema-org-dataset
+      quote: "A body of structured information describing some topic(s) of interest."
+
+test:
+  client: "the harness's identified, robots-compliant client; one GET of the data page; no JavaScript executed"
+  request: "GET the data page; extract JSON-LD, Microdata and RDFa with extruct"
+  reads: "the types declared, and a SHACL validation of the graph against shapes/dcat_ap_min.ttl (schema:Dataset needs name and description; dcat:Dataset needs dct:title and dct:description; dcat:Distribution needs dcat:accessURL)"
+  decision_rule:
+    - "pass: `markup declares {type} and the graph conforms to the dcat_ap_min shapes`"
+    - "fail: `markup present ({counts}) but no Dataset/DataCatalog type`"
+    - "fail: `no JSON-LD, microdata or RDFa on the product page`"
+    - "fail: `markup declares {type} but violates the dcat_ap_min shapes`"
+    - "not_applicable: the surface is not HTML"
+  parameters:
+    - "dataset types: schema.org Dataset or DataCatalog; shapes: the stated minimal subset dcat_ap_min, equal to Google's two required Dataset properties plus DCAT's title, description and accessURL"
+  recognized_method: >-
+    Google's documented test is its Rich Results Test, which checks the same required
+    properties; SHACL is the W3C language for validating an RDF graph against shapes. The harness
+    applies the required properties through SHACL. It does not render JavaScript, while Google's
+    crawler does, so markup injected by script is not seen.
+  recognized_method_sources:
+    - {doc_id: google-dataset-structured-data, section: "How to add structured data (Rich Results Test)"}
+    - {url: "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics", section: "How Google processes JavaScript"}
+
+branches:
+  - id: pass_dataset_conforms
+    verdict: pass
+    reason_match: "and the graph conforms to the"
+    behavior: "Dataset markup with the required properties"
+    sources: [{doc_id: google-dataset-structured-data, section: "Required properties"}]
+    state: specified
+  - id: fail_markup_without_dataset_type
+    verdict: fail
+    reason_match: "but no Dataset/DataCatalog type"
+    behavior: "the page carries markup that does not declare a dataset"
+    sources: [{doc_id: google-dataset-structured-data, section: "Our approach to dataset discovery"}]
+    state: specified
+  - id: fail_no_markup
+    verdict: fail
+    reason_match: "no JSON-LD, microdata or RDFa on the product page"
+    behavior: "the page carries no structured markup at all"
+    sources: [{doc_id: google-dataset-structured-data, section: "Our approach to dataset discovery"}]
+    state: specified
+  - id: fail_shapes_violated
+    verdict: fail
+    reason_match: "but violates the"
+    behavior: "Dataset markup lacking a required property"
+    sources: [{doc_id: google-dataset-structured-data, section: "Required properties"}]
+    state: specified
+not_measured: "refused, robots_disallowed, or markup declared but the graph could not be loaded for validation (4 of 23 data pages on the cycle of record)"
+
+claims:
+  pass: "The data page's own markup, as served before any script runs, declares a dataset with a name and a description (and any distribution it declares carries an access address)."
+  fail: "The data page's markup, as served before any script runs, does not declare a dataset, or declares one that fails the minimal shapes: a name or description missing, or a declared distribution without an access address (the reason names the violation). It is not a claim that a dataset declared with a name and description is missing when the failing shape is the distribution's, nor that the agency's datasets are absent from Dataset Search: catalog pages, data.gov records and other pages may carry the markup."
+  neither: "Nothing about the quality or completeness of the description beyond the required properties, or about markup on other pages."
+
+confounds:
+  - cause: "markup injected by JavaScript after load"
+    distinguished: "no: the harness does not render; a fail"
+  - cause: "the dataset is described on a catalog or landing page other than this data page"
+    distinguished: "no: one page is read"
+  - cause: "a DataCatalog type with no Dataset in the graph"
+    distinguished: "no: the shapes target Dataset and Distribution only, so a DataCatalog alone passes unvalidated"
+
+fix_line_check:
+  action: act:a6-type-the-product-page-as-a-dataset
+  fix_line: "Type the product page's existing markup as a dataset."
+  verdict: consistent
+
+state: invalid
+reader_invalid:
+  round: 2
+  unit_id: 6ae94d3f41cdbf22
+  reason: "Most of the expected behavior is backed by passages: the recommendation to add structured data to canonical pages, the DCAT equivalence, the eligibility requirement, the description and name property texts, and the schema.org definition. But the text attributes to Google, marked '(quoted)', that markup is read 'in JSON-LD (preferred), RDFa or Microdata'. No passage mentions JSON-LD or any preference; the only syntax passage says the schema.org vocabulary 'can also be used in RDFa 1.1 or Microdata syntaxes', which implies an unnamed primary syntax but does not name it or call it preferred. Secondarily, 'name' is quoted only as 'A descriptive name of a dataset.'; the passages show only description under the 'Required properties' heading, so name's status as required is asserted rather than shown."
+state_reason: >-
+  Invalid by DN-015 §7: the reader answered no to question 1 in both rounds (its round-2 reason is
+  recorded under reader_invalid). The defect it names is in this entry's quoting of its sources,
+  not shown to be in the rule; before the reading, the writer's assessment was: state specified.
+  Each branch rewards or penalizes the behavior Google's dataset documentation defines (schema.org
+  Dataset or DCAT markup with name and description on the page that describes the dataset). The
+  no-render limit and the DataCatalog gap are stated confounds.

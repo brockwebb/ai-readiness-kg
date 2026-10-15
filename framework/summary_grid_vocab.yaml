@@ -20,22 +20,24 @@ tier_display_names:
 # declaration-basis indicators. Excluded from the grid.
 declared_codes: [A11, E2, E4, E7, F1, F5]
 
-# plain_name (at most six words, what a machine MET, not the rule's mechanism) on every
-# public-tier rule the grid shows. These are the grid's 13 columns.
+# plain_name on every public-tier rule the grid shows (the grid's 13 columns). Rewritten by task
+# db464d5f (DN-015) from each instrument entry's `claims.pass`, so a name states only what a pass
+# asserts, at most eight words; the entries in assessment/instrument/ are the source, and
+# scripts/apply_instrument_state.py refuses to write while this file disagrees with them.
 plain_names:
-  A1: "Data offered in a machine format"
-  A2: "A documented machine interface"
-  A3: "A full dataset download"
-  A4: "Crawlers allowed to reach the data"
-  A5: "The data is listed for discovery"
-  A6: "Structured markup describes the data"
-  A8: "A machine readable release date"
-  A9: "A machine first entry point"
-  A10: "Data tools answer a machine"
-  B3: "Methodology in reachable structured text"
-  D1: "A machine readable licence"
-  D4: "Listed in a public inventory"
-  F4: "A machine readable change history"
+  A1: "Page links a structured data file"
+  A2: "OpenAPI description served at the recorded API address"
+  A3: "Page links an archive or large unfiltered file"
+  A4: "robots.txt permits eight listed crawler tokens"
+  A5: "The site's sitemap lists the data page"
+  A6: "Page markup declares a named, described dataset"
+  A8: "Markup dates the data; a latest-version link resolves"
+  A9: "A probed machine address returns non-HTML content"
+  A10: "Data tool answers with real status and content"
+  B3: "Page links a methodology readable as text"
+  D1: "Page or API terms name a recognised licence"
+  D4: "Agency's data.json inventory lists this page, validly"
+  F4: "Change history served as a structured feed"
 
 # fix_line (one imperative sentence, no codes) on every action a grid rule's failing outcomes map
 # to. The grid shows ONE per column: the fix for the outcome the most agencies hit on that check
@@ -46,7 +48,7 @@ fix_lines:
   act:a1-serve-the-data-files-with-their-own-media-type: "Link a data file from the product page and serve it with its own media type."
   # A2
   act:a2-serve-a-parseable-api-description-at-the-documented-path: "Serve a parseable interface description where the interface is documented."
-  act:a2-expose-an-api-and-publish-its-description: "Expose the product through a machine interface and publish its description."
+  act:a2-expose-an-api-and-publish-its-description: "Publish a machine-readable description of the data interface where the interface is served."
   # A3
   act:a3-add-a-whole-product-download-beside-the-query-builder: "Add a whole-product download beside the query builder."
   act:a3-publish-the-complete-file-not-a-sample: "Publish the complete product, not a sample extract."
@@ -63,7 +65,7 @@ fix_lines:
   act:a6-make-the-dataset-markup-conform-to-the-profile: "Make the dataset markup conform to the profile it declares."
   # A8
   act:a8-declare-the-product-vintage-in-the-markup: "Declare the product's vintage in the markup, not only in a file header."
-  act:a8-publish-a-release-date-for-the-product: "Publish a release date for the product."
+  act:a8-publish-a-release-date-for-the-product: "Publish the product's release date in the page's structured markup."
   act:a8-serve-a-stable-latest-url-on-the-product-host: "Serve a stable latest address for the product on its own host."
   act:a8-make-the-latest-pointer-resolve: "Make the latest-vintage pointer resolve."
   # A9
@@ -80,7 +82,7 @@ fix_lines:
   act:b3-publish-a-methodology-document-reachable-from-the-product: "Publish a methodology document reachable from the product surface."
   # D1
   act:d1-state-the-licence-as-an-identifier: "State the licence as an identifier, not as a sentence."
-  act:d1-publish-a-machine-readable-licence: "Publish a machine-readable licence for the product."
+  act:d1-publish-a-machine-readable-licence: "State the product's licence or public domain status in its machine-readable metadata."
   # D4
   act:d4-make-the-catalog-conform-to-dcat-us: "Make the public data catalog conform to its published schema."
   act:d4-add-the-product-to-the-public-data-inventory: "Add the product to the public data inventory already published."

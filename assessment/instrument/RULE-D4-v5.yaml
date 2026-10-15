@@ -1,0 +1,116 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 13
+rule_id: RULE-D4-v5
+leg: D4
+indicator: ind:D4
+code: assessment/harness/scan/rules/rule_d4_v5.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Agency's data.json inventory lists this page, validly"
+
+question:
+  text: >-
+    Is the data product listed in the agency's public data inventory? Data.gov harvests agency
+    inventories, and catalog-driven discovery (and SI clients that use catalogs to verify a source)
+    find a product only if its record is there.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: maintain centralized data catalogs (e.g., expanded and improved data.gov) to simplify discovery and verification"}
+    - {doc_id: foundations-for-evidence-based-policymaking-act-of-2018-evid, section: "44 U.S.C. §3511 comprehensive data inventory"}
+
+expected_behavior:
+  text: >-
+    Each agency develops and maintains a comprehensive data inventory of all data assets it
+    maintains (M-25-05, quoted), in the JSON format (quoted), conforming to the metadata schema
+    approved by OMB on resources.data.gov (quoted), hosted at www.[agency].gov/data.json (quoted).
+    When an agency disseminates a public data asset through the Federal Data Catalog, it includes in
+    the inventory the URL or persistent identifier where the asset may be accessed (quoted). DCAT-US
+    1.1 defines the record's landingPage field for a dataset's human-friendly page (quoted).
+  sources:
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a) Comprehensive Data Inventories; §5(b)(ii)"}
+    - {doc_id: dcat-us-1-1-schema, section: "Dataset fields: identifier, landingPage, distribution"}
+  quotes:
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "develop and maintain a comprehensive data inventory that accounts for all data assets"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "must employ the metadata schema approved by OMB and available on resources.data.gov"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "including in the agency's comprehensive data inventory the URL or persistent identifier"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "Each agency is required to develop and maintain a comprehensive data inventory of all data assets maintained by the agency."
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "commonly known as the JSON format"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "host it publicly on the agency's website at the address: www.[agency].gov/data.json"
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "When an agency chooses to disseminate a public data asset through the Federal Data Catalog, they do so by including in the agency's comprehensive data inventory the URL or persistent identifier"
+    - source: dcat-us-1-1-schema
+      quote: "This field is not intended for an agency's homepage (e.g. www.agency.gov), but rather if a dataset has a human-friendly"
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET the inventory at each location recorded for the agency (its own data.json, or a recorded catalog); validate it against the Project Open Data v1.1 JSON schema"
+  reads: "whether any record names the data page's URL in identifier, landingPage, accessURL or downloadURL; schema violations"
+  decision_rule:
+    - "pass: `the product appears in {url} in {n} record(s) naming it in a DCAT-US URL field, and the catalog conforms to the {profile} schema`"
+    - "fail: `the product appears in {url} but the catalog violates the {profile} schema`"
+    - "fail: `a catalog is served at {url} but the product is not in it`"
+    - "fail: `no public data.json catalog served at any of the {n} declared inventories`"
+    - "error: a recorded inventory not verified, or a seed source not searched"
+  parameters:
+    - "membership: the data page's URL appears in one of four DCAT-US URL fields; chosen by this project"
+  recognized_method: >-
+    Validating the catalog against the published JSON schema is the schema's own conformance
+    test. No published method decides that a given web page is a given inventory record; matching
+    its URL in the record's URL fields is this project's.
+  recognized_method_sources:
+    - {doc_id: dcat-us-1-1-schema, section: "the Project Open Data v1.1 schema"}
+
+branches:
+  - id: pass_listed_and_valid
+    verdict: pass
+    reason_match: "the product appears in .* naming it in a DCAT-US URL field"
+    behavior: "the product has a record in a schema-valid inventory"
+    sources: [{doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)"}, {doc_id: dcat-us-1-1-schema, section: "schema"}]
+    state: specified
+  - id: fail_catalog_invalid
+    verdict: fail
+    reason_match: "but the catalog violates the"
+    behavior: "the inventory does not conform to the required schema"
+    sources: [{doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§5(b)(ii) (must employ the metadata schema approved by OMB)"}]
+    state: specified
+  - id: fail_product_absent
+    verdict: fail
+    reason_match: "but the product is not in it"
+    behavior: "the inventory has no record naming the product's page"
+    sources: [{doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a) (all data assets)"}]
+    state: specified
+  - id: fail_no_catalog
+    verdict: fail
+    reason_match: "no public data.json catalog served at any of the"
+    behavior: "no inventory served at any recorded location"
+    sources: [{doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)(iii); §5(b)(ii)"}]
+    state: specified
+not_measured: "the recorded inventory could not be verified, or a seed source was not searched (16 of 23 data pages on the cycle of record)"
+
+claims:
+  pass: "The agency's recorded inventory has a record that names this data page's address in identifier, landingPage, accessURL or downloadURL, and the inventory conforms to the federal metadata schema."
+  fail: "One of three things, named in the cell's reason: the recorded inventory was read and no record names this data page's address; or the page is listed but the inventory as a whole fails the schema (possibly in an unrelated record); or no inventory is served at any recorded address. It is not a claim that the dataset is missing from the inventory under another address (a record whose landing page differs from this page is not matched), nor that the agency has no inventory at an address not recorded for it (a parent department's, for example)."
+  neither: "Nothing about the quality of the record, or about other catalogs."
+
+confounds:
+  - cause: "the dataset's record names a different landing page (a catalog page, a DOI) than the data page measured"
+    distinguished: "no: a fail on the absent branch"
+  - cause: "the inventory is large and its fetch timed out or was refused"
+    distinguished: "yes: error"
+
+fix_line_check:
+  action: act:d4-add-the-product-to-the-public-data-inventory
+  fix_line: "Add the product to the public data inventory already published."
+  verdict: consistent
+
+state: specified
+state_reason: >-
+  Each branch rewards or penalizes a behavior M-25-05 requires of federal agencies (a complete,
+  schema-conforming inventory at data.json). The URL-match membership rule is a test property
+  (DN-015 §4) and its false-negative mode is stated in the fail claim.

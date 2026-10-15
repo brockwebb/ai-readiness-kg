@@ -1,0 +1,146 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. The first entry: it reuses the
+# v2 summary task's audit of this rule (cc_tasks/2026-10-12_executive_summary_from_brief_v2_RESULT.md
+# Step 1) and corrects it at the branch level.
+order: 1
+rule_id: RULE-A13-v1
+leg: A13
+indicator: ind:A13
+code: assessment/harness/scan/rules/rule_a13.py
+matrix: product (candidate, DD-054; enters no score and was not a v3 grid column)
+on_v3_grid: false
+declaration: false
+plain_name: "Page reaches the agency's API, terms, changelog, inventory"
+
+question:
+  text: >-
+    Can a machine client that starts at a data page, and knows nothing else, reach the four objects
+    an agency publishes for machines (its API, the API's terms, its changelog, its data inventory)?
+    An SI client usually arrives at a data page from a search result; if the objects behind it
+    cannot be reached from there, the client cannot use them, however well they are built.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: maintain centralized data catalogs to simplify discovery; encourage AI developers to cite official endpoints (e.g., APIs)"}
+    - {doc_id: rfc-9727-api-catalog, section: "§1 Introduction: APIs must be discovered before they may be used"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)(iii) Public Dissemination: the inventory hosted at www.[agency].gov/data.json"}
+
+expected_behavior:
+  text: >-
+    Two published discovery conventions exist for two of the four objects. For the API: a publisher
+    supporting RFC 9727 resolves a GET to /.well-known/api-catalog with an API catalog document
+    (§2), and may also include the api-catalog link relation in the HTTP header or content of its
+    pages (§3, quoted). For the inventory: each agency must post its inventory to
+    www.[agency].gov/data.json (M-25-05 §5(b)(ii)). No published source defines how a client
+    starting at a data page should reach the API's terms or the changelog, and none names an
+    ordinary hyperlink from a data page as the discovery mechanism for any of the four objects;
+    those parts of this check are the project's own.
+  sources:
+    - {doc_id: rfc-9727-api-catalog, section: "§2 Using the api-catalog well-known URI; §3 The api-catalog link relation"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)(iii); §5(b)(ii) (www.[agency].gov/data.json)"}
+  quotes:
+    - source: rfc-9727-api-catalog
+      quote: "SHALL resolve an HTTPS GET request to /.well-known/api-catalog and return an API catalog document"
+    - source: rfc-9727-api-catalog
+      quote: "This identifies a target resource that represents a list of APIs available from the Publisher of the link context."
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "each agency must post the inventory in JSON format, or a successor format, to www.[agency].gov/data.json"
+    - source: rfc-9727-api-catalog
+      quote: "the Publisher \"example\" could include the api-catalog link relation in the HTTP header and/or content payload"
+
+test:
+  client: "the harness's identified, robots-compliant client (params.manners.user_agent); no request of its own: it consumes Observations other legs made (CONSUMES = link_probe, A2, D1, F4, D4)"
+  request: "none new; the product page fetch of the shared link probe (its link set and response headers) and the A2, D1, F4, D4 fetches of the body's recorded locations"
+  reads: "the product page's hrefs and Link header; the recorded location of each object and whether it was served"
+  decision_rule:
+    - "per object: `not_applicable` when the object is not shown to exist over a complete search; `error` when existence is not settled or the page was not read"
+    - "`pass` — the object exists ... and either one of its recorded URLs is among the product page's links ... or it sits at a documented convention location"
+    - "`fail` — the object exists, the page was read whole, and neither holds"
+    - "The surface's verdict is the first that applies of: any object `fail`; any `error`; any `pass`; otherwise `not_applicable`"
+  parameters:
+    - "convention locations: /.well-known/api-catalog served as application/linkset+json; Link rel=api-catalog; /data.json at the product host's root (params.discoverability.convention)"
+  recognized_method: >-
+    RFC 9727 defines its own client behavior (GET /.well-known/api-catalog; read the Link header),
+    and the harness's convention branches follow it. The /data.json branch follows M-25-05's
+    address. There is no published method for "reachable from a data page by a link", and none for
+    combining four objects into one verdict; both are this project's.
+  recognized_method_sources:
+    - {doc_id: rfc-9727-api-catalog, section: "§2; §4.2 (Linkset format)"}
+
+branches:
+  - id: pass_every_object_reachable
+    verdict: pass
+    reason_match: "^every object that exists is reachable from the product page"
+    behavior: "every object shown to exist is reached, by a link (project-defined) or a convention address (published); the surface pass can rest on the link branch alone"
+    sources: none
+    state: project_defined
+  - id: fail_any_object_unreachable
+    verdict: fail
+    reason_match: "^an object that exists is not reachable from the product page"
+    behavior: "any one object, including the API's terms or the changelog, is neither linked nor at a convention address; rests on the project's composite and on per-object fails of which none is fully published"
+    sources: none
+    state: project_defined
+object_branches:
+  # Per-object branches of `per_object` (rule_a13.py). The surface Finding combines them, so they
+  # are recorded here and attributed through the surface branches below.
+  - id: api_by_convention
+    verdict: pass
+    reason_match: "the API: (the product page sends Link rel|an API catalog is served)"
+    behavior: "the API is announced by RFC 9727's well-known URI or link relation"
+    sources: [{doc_id: rfc-9727-api-catalog, section: "§2, §3"}]
+    state: specified
+  - id: inventory_by_convention
+    verdict: pass
+    reason_match: "the inventory: at the convention location"
+    behavior: "the inventory is at /data.json on the data page's host"
+    sources: [{doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)(iii)"}]
+    state: specified
+  - id: any_object_by_link
+    verdict: pass
+    reason_match: "linked from the product page"
+    behavior: "an object is reachable by an ordinary hyperlink on the data page"
+    sources: none
+    state: project_defined
+  - id: terms_or_changelog_unreachable
+    verdict: fail
+    reason_match: "(the API's terms|the changelog): exists at .* is not reachable"
+    behavior: "the API's terms or the changelog exist and the data page does not link them; no source says they should be reachable from a data page"
+    sources: none
+    state: project_defined
+  - id: api_or_inventory_unreachable
+    verdict: fail
+    reason_match: "(the API|the inventory): exists at .* is not reachable"
+    behavior: "the API exists and neither an api-catalog nor a link reaches it; or the inventory exists and is not at /data.json nor linked. The convention half is published; the 'or a link' half that would rescue it is not, so the fail rests on a project-defined alternative"
+    sources: [{doc_id: rfc-9727-api-catalog, section: "§2, §3"}, {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§4(a)(iii)"}]
+    state: project_defined
+  - id: composite
+    verdict: fail
+    reason_match: "an object that exists is not reachable from the product page"
+    behavior: "the surface verdict is fail if any one object fails (precedence fail > error > pass > not_applicable)"
+    sources: none
+    state: project_defined
+not_measured: "per-object `error`: existence not settled (a recorded location unverified, seed sources not searched), the page not served or its links not read, or the api-catalog location not fetched (no collector fetches it yet, so the API's convention branch is `error` wherever the API is not linked)"
+
+claims:
+  pass: "Every object the agency is shown to publish is either linked from this data page or sits at its published convention address."
+  fail: "At least one object the agency is shown to publish (named in the reason) is neither linked from this data page nor at a convention address the harness checked: /data.json at the root of the data page's own host (an inventory at www.[agency].gov while the data page is on a subdomain is not matched there) and /.well-known/api-catalog served as application/linkset+json. For the API's terms and the changelog no published convention exists, so a fail on either rests only on this project's link criterion and is not a breach of any published convention. It is not a claim that the object is missing, nor that a client told where to look cannot use it."
+  neither: "Nothing about whether the objects work, are documented, or are reachable from any other page on the site; nothing about pages the harness did not read."
+
+confounds:
+  - cause: "the object is linked from a different page (a developer page, a site footer) rather than this data page"
+    distinguished: "no: the harness reads one page's links; a reader cannot tell 'unreachable' from 'reachable elsewhere'"
+  - cause: "the api-catalog location was never fetched"
+    distinguished: "yes: the API's convention branch returns error 'was not fetched', not fail"
+  - cause: "the recorded location of the object is wrong or stale"
+    distinguished: "partly: a recorded location that answered 404/410 counts as no object; a seeded but unverified location is error"
+
+fix_line_check:
+  action: none (candidate, no grid column)
+  verdict: not_applicable
+
+state: project_defined
+state_reason: >-
+  The v2 audit said no branch is invented; at the branch level three are. The two published
+  branches are the convention addresses (RFC 9727 for the API, /data.json for the inventory). The
+  link-reachability branch (an ordinary hyperlink from the data page) has no published definition
+  for any object, and the terms and changelog objects have no published discovery convention at
+  all, so their fail branches rest on the project's own notion of discoverability; the four-object
+  composite is the project's too. The task's premise named two invented branches (terms and
+  changelog reachability); this entry finds those two and the link branch beneath all four.

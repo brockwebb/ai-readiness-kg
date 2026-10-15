@@ -1,0 +1,121 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 11
+rule_id: RULE-B3-v4
+leg: B3
+indicator: ind:B3
+code: assessment/harness/scan/rules/rule_b3_v4.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Page links a methodology readable as text"
+
+question:
+  text: >-
+    Can a machine reach the methodology behind the data and read it? An SI client explaining a
+    figure needs how it was collected and estimated; a methodology it cannot reach, or can reach
+    only as a PDF or behind a script, is context it will not use.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§2 Understandable: AI models need context such as collection methodology; disclose methodologies; §4 Open: ensure text documentation (data dictionaries, methodology) is accessible to both humans and AI/web crawlers"}
+
+expected_behavior:
+  text: >-
+    USAFacts' criterion 2 is that data be "Machine Understandable with Easily Retrievable"
+    documentation (quoted heading); AI models need context such as collection methodology (quoted),
+    agencies should disclose methodologies for derived or transformed datasets (quoted), and text
+    documentation, methodology included, should be accessible to both humans and AI/web crawlers
+    (§4, quoted). M-23-22 §III.9.b: an agency should develop online content in a non-HTML format
+    only if a specific user need requires it (quoted). That the methodology should be readable
+    without running scripts is this project's reading of "accessible to web crawlers", many of which
+    do not run scripts; no source states it.
+  sources:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§2 Understandable; §4 Open"}
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.9.b Software Development Principles: Default to HTML"}
+  quotes:
+    - source: usafacts-ai-ready-data-guide
+      quote: "Ensure text documentation (data dictionaries, methodology) are accessible to both humans and AI/web crawlers."
+    - source: usafacts-ai-ready-data-guide
+      quote: "AI models need context—such as variable definitions, collection methodology, and version history"
+    - source: omb-m-23-22-digital-first-public-experience
+      quote: "An agency should develop online content in a non-HTML format only if necessitated by a specific user need."
+    - source: usafacts-ai-ready-data-guide
+      quote: "Data Must Be Machine Understandable with Easily Retrievable"
+    - source: usafacts-ai-ready-data-guide
+      quote: "Disclose methodologies for derived or transformed datasets, ensuring clarity on how figures are generated."
+
+test:
+  client: "the harness's identified, robots-compliant client; no renderer"
+  request: "GET the data page; follow every link whose address or anchor text contains the token `methodolog` (up to 25)"
+  reads: "each followed document's Content-Type, visible characters before JavaScript, and link density"
+  decision_rule:
+    - "pass: `methodology served as text/html at {url} and retrievable without JS: {n} visible characters, link density {d}`"
+    - "fail: `no link to a methodology document from the product surface`"
+    - "fail: `a methodology document is served at {url} but is not retrievable without JS: {why}`"
+    - "fail: `methodology is PDF-only: {url}`"
+    - "fail: `no structured-text methodology document reachable from the product surface`"
+  parameters:
+    - "link token `methodolog`; min_visible_chars 2000; max_link_density 0.25; all chosen by this project"
+  recognized_method: >-
+    None published. Following the page's methodology links and reading the document as a
+    non-rendering crawler would is the direct reading of USAFacts §4; the token and the two
+    thresholds are this project's.
+  recognized_method_sources: none
+
+branches:
+  - id: pass_html_methodology
+    verdict: pass
+    reason_match: "methodology served as .* and retrievable without JS"
+    behavior: "a methodology document in HTML or text, readable without running scripts; the HTML part is M-23-22's and the without-scripts part is the project's reading"
+    sources: none
+    state: project_defined
+  - id: fail_no_methodology_link
+    verdict: fail
+    reason_match: "no link to a methodology document from the product surface"
+    behavior: "the data page links no document whose address or text says methodology"
+    sources: [{doc_id: usafacts-ai-ready-data-guide, section: "§2 heading (Easily Retrievable documentation)"}]
+    state: specified
+  - id: fail_thin_or_navigation
+    verdict: fail
+    reason_match: "is not retrievable without JS"
+    behavior: "penalizes a methodology page with too little text before scripts run, or mostly links; no source asks for content before scripts"
+    sources: none
+    state: project_defined
+  - id: fail_pdf_only
+    verdict: fail
+    reason_match: "methodology is PDF-only"
+    behavior: "the methodology is published only as a PDF"
+    sources: [{doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.9.b Default to HTML"}]
+    state: specified
+  - id: fail_no_structured_text
+    verdict: fail
+    reason_match: "no structured-text methodology document reachable"
+    behavior: "followed methodology links lead to nothing readable as text"
+    sources: [{doc_id: usafacts-ai-ready-data-guide, section: "§4"}]
+    state: specified
+not_measured: "refused or robots_disallowed (4 of 23 data pages on the cycle of record), or methodology links left unfollowed"
+
+claims:
+  pass: "A link on this data page whose address or text contains 'methodolog' leads to an HTML or text document with at least 2000 visible characters before any script runs and no more than a quarter of its text in links."
+  fail: "No link on this data page whose address or text contains 'methodolog' (up to 25 such links followed) leads to a document meeting the project's text thresholds: at least 2000 visible characters before scripts run and link density at most 0.25. A readable short page or a chapter hub can fail those thresholds. It is not a claim that the methodology needs scripts or is unreadable, nor that the agency publishes no methodology: one linked as 'technical documentation', 'about the data' or from another page is not found."
+  neither: "Nothing about the methodology's quality or completeness."
+
+confounds:
+  - cause: "the methodology is linked under another name (technical documentation, survey design, about the data)"
+    distinguished: "no: the token predicate misses it and the no-link branch fails (12 of 23 data pages on the cycle of record took that branch)"
+  - cause: "a methodology hub page that is mostly links to chapters"
+    distinguished: "partly: the link-density ceiling fails it as navigation"
+  - cause: "refusal, robots"
+    distinguished: "yes: error"
+
+fix_line_check:
+  action: act:b3-link-the-methodology-from-the-product-page
+  fix_line: "Link the methodology from the product page."
+  verdict: consistent
+
+state: project_defined
+state_reason: >-
+  Three branches follow published behaviors: a methodology linked from the data page (USAFacts
+  §2), not PDF only (M-23-22 §III.9.b), readable as text (USAFacts §4). The pass branch and the
+  thin-or-navigation fail require the methodology to be readable before any script runs, which is
+  this project's reading of "accessible to web crawlers" and which no cited source states (the
+  same pattern that makes A10's shell branch project-defined). A rule version that judged the text
+  after rendering, or dropped the pre-script condition, would make the check specified.

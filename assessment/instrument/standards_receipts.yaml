@@ -1,0 +1,42 @@
+# Standards fetched for the instrument entries (DN-015 §2): every `url:` source in an entry
+# resolves to a line here. Copied verbatim from logs/2026-10-15_instrument_fetch.jsonl, written by
+# scripts/fetch_allowlisted.py under the task's Network allowlist; the bodies sit in
+# corpus/staging/instrument_standards/ (gitignored) and are identified by sha256.
+task: cc_tasks/2026-10-15_instrument_specification_audit.md
+fetch_log: logs/2026-10-15_instrument_fetch.jsonl
+receipts:
+  - url: https://www.rfc-editor.org/rfc/rfc9110.txt
+    stored_at: corpus/staging/instrument_standards/rfc9110.txt
+    status: 200
+    bytes: 502941
+    sha256: "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+  - url: https://www.rfc-editor.org/rfc/rfc8288.txt
+    stored_at: corpus/staging/instrument_standards/rfc8288.txt
+    status: 200
+    bytes: 50797
+    sha256: "820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d"
+  - url: https://developers.google.com/search/docs/crawling-indexing/http-network-errors
+    status: 301
+    note: "redirect; the body is stored under the target's receipt below"
+    bytes: 283
+    sha256: "cc0f648893b67f4f74b7a857813712198f02595d5d1e502241dcdcc58f2f2d3b"
+  - url: https://developers.google.com/crawling/docs/troubleshooting/http-status-codes
+    stored_at: corpus/staging/instrument_standards/http-network-errors
+    status: 200
+    bytes: 73962
+    sha256: "9699c03bd4a4499d4049bca88110e8ce7d7fd3dfd7d32b287e7e6d57abf776f7"
+  - url: https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+    stored_at: corpus/staging/instrument_standards/javascript-seo-basics
+    status: 200
+    bytes: 221709
+    sha256: "4127b5072b933b69ebd7f8cb097b61318770c43ff922e2e4456f86e45e8d5fc7"
+  - url: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+    stored_at: corpus/staging/instrument_standards/overview
+    status: 200
+    bytes: 174492
+    sha256: "cdf543153c5d7ee2cb69ad0b990b4333c750698b2a41110b8e988d21af856dff"
+  - url: https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag
+    stored_at: corpus/staging/instrument_standards/robots-meta-tag
+    status: 200
+    bytes: 207942
+    sha256: "e9db097220174c7d06f61e3638986c3766b2ec47a09ee3aab88688cd969e26a5"

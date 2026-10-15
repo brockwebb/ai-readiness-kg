@@ -1,0 +1,109 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 12
+rule_id: RULE-D1-v6
+leg: D1
+indicator: ind:D1
+code: assessment/harness/scan/rules/rule_d1_v6.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Page or API terms name a recognised licence"
+
+question:
+  text: >-
+    Can a machine tell on what terms it may use the data? An SI client, or the developer behind
+    it, needs to know the data may be reused; for federal data that is usually public domain, but
+    a client cannot assume what is not stated.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§4 Open: use clear, permissive licenses (CC0, ODC-BY)"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§5(a)(v) Open License; public domain status indicated in the comprehensive data inventory"}
+
+expected_behavior:
+  text: >-
+    "Provide a link to or copy of the license agreement that controls use of the data" (DWBP Best
+    Practice 4, quoted), and its test is whether a user agent can automatically detect or discover
+    the licence (quoted). For federal public data assets an agency may satisfy the open-licence
+    requirement by indicating, in its comprehensive data inventory, that the asset is in the public
+    domain (M-25-05 §5(a)(v), quoted); the DCAT-US `license` field carries "the license or non-
+    license (i.e. Public Domain) status" (quoted). No cited source requires the licence to be stated
+    as an identifier from a recognised list rather than in words; that requirement, in the free-text
+    branch, is the project's own.
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 4: Provide data license information"}
+    - {doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, section: "§5(a)(v) Open License"}
+    - {doc_id: dcat-us-1-1-schema, section: "license"}
+    - {doc_id: spdx-license-list, section: "license identifiers"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Check if a user agent can automatically detect or discover the data license of the dataset."
+    - source: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+      quote: "Agencies may satisfy this requirement by indicating, in the comprehensive data inventory, that the data asset is in the public domain"
+    - source: dcat-us-1-1-schema
+      quote: "The license or non-license (i.e. Public Domain) status with which the dataset or API has been published."
+    - source: w3c-dwbp-2017
+      quote: "Provide a link to or copy of the license agreement that controls use of the data."
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET the data page; read its markup license field and any HTTP Link header; GET the API terms page at its recorded location when an API is recorded"
+  reads: "whether any of the three carries a recognised licence identifier (Creative Commons, SPDX, opensource.org, usa.gov/government-works, opendefinition.org URLs; tokens CC0, CC-BY, PUBLIC DOMAIN, U.S. GOVERNMENT WORK, MIT, APACHE-2.0, ODC-BY)"
+  decision_rule:
+    - "pass: `markup licence field carries {how}` / `HTTP Link header rel=... points at {how}` / `the terms endpoint {url} states {how}`"
+    - "fail: `a licence statement is present at {where} but its value is free text, not a recognised identifier`"
+    - "fail: `no licence in the product page's markup, in an HTTP Link header, or at a recorded API terms endpoint`"
+  parameters:
+    - "recognised prefixes and tokens: params.d1_licence, chosen by this project"
+  recognized_method: >-
+    DWBP's test is "Check if a user agent can automatically detect or discover the data license
+    of the dataset", which reading the markup field and the Link header implements. The
+    harness does not read the data inventory, where M-25-05 places the federal statement.
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 4, How to Test"}
+
+branches:
+  - id: pass_recognised_identifier
+    verdict: pass
+    reason_match: "(markup licence field carries|HTTP Link header rel=|the terms endpoint .* states)"
+    behavior: "a machine-detectable licence statement naming a recognised licence"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 4"}]
+    state: specified
+  - id: fail_free_text
+    verdict: fail
+    reason_match: "free text, not a recognised identifier"
+    behavior: "penalizes a licence the harness detected but that is worded rather than identified; DWBP BP 4 asks only that it be detectable"
+    sources: none
+    state: project_defined
+  - id: fail_no_licence
+    verdict: fail
+    reason_match: "no licence in the product page's markup"
+    behavior: "no licence statement in the page's markup, Link header or recorded API terms"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 4"}]
+    state: specified
+not_measured: "refused or robots_disallowed (5 of 23 data pages), or the API-terms source not settled (2)"
+
+claims:
+  pass: "This data page's markup, its HTTP Link header, or the agency's recorded API terms page names a licence by a recognised identifier."
+  fail: "None of the places read names a licence by a recognised identifier: the page's markup, its Link header, and the API terms page only when an API terms address is recorded for the agency (when none is, that place was not read). It is not a claim that the data is unlicensed or restricted: federal data is generally public domain, and the agency's data inventory, where federal guidance says the status may be recorded, is not read by this check."
+  neither: "Nothing about the licence's terms, or about licences stated in page text or in the inventory."
+
+confounds:
+  - cause: "the licence or public-domain status is stated in the data.json inventory record"
+    distinguished: "no: not read"
+  - cause: "a licence stated in visible page text or a footer link without rel=license"
+    distinguished: "no: a fail"
+  - cause: "a worded licence ('Public data, free to use')"
+    distinguished: "yes in the reason (free-text branch), no in the cell"
+
+fix_line_check:
+  action: act:d1-publish-a-machine-readable-licence
+  fix_line: "Publish a machine-readable licence for the product."
+  verdict: rewritten
+  new_fix_line: "State the product's licence or public domain status in its machine-readable metadata."
+  note: "M-25-05 lets a federal agency satisfy the requirement by indicating public domain status; the old line implies a licence must be adopted."
+
+state: project_defined
+state_reason: >-
+  The pass and no-licence branches follow DWBP BP 4. The free-text branch fails a licence the
+  harness itself detected, for a wording requirement no cited source makes (3 grid pages on the
+  cycle of record rest on it). The check also omits the place federal guidance names, the
+  inventory, so its no-licence claim is bounded to three other places.

@@ -1,0 +1,101 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. A candidate (DD-054): enters no
+# score. Not a declaration itself: it compares the declaration with what the host DID.
+order: 16
+rule_id: RULE-A12-v3
+leg: A12
+indicator: ind:A12
+code: assessment/harness/scan/rules/rule_a12_v3.py
+matrix: tierA (candidate, DD-054)
+on_v3_grid: false
+declaration: false
+plain_name: "Host serves the path its robots.txt permits"
+
+question:
+  text: >-
+    Does the host enforce what it declares? A host whose robots.txt permits an identified,
+    compliant client and whose edge then refuses that client tells SI systems one thing and does
+    another; the refusal, not the declaration, decides what they can read.
+  established_by:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§1 (rules are not a form of access authorization); §3"}
+    - {doc_id: cloudflare-ai-crawl-control-manage-crawlers, section: "blocking crawlers at the edge"}
+
+expected_behavior:
+  text: >-
+    RFC 9309 separates the two layers: its rules are not a form of access authorization, and it is
+    not a substitute for valid content security measures (§1, §3, quoted). It defines "unavailable":
+    the server responds with a status indicating the robots.txt resource is unavailable, in HTTP the
+    400-499 range (quoted), and then the crawler MAY access any resources on the server (quoted). No
+    cited source states that a publisher's enforcement should agree with its declaration; that
+    coherence is this project's construct.
+  sources: none
+  quotes:
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "These rules are not a form of access authorization."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "The Robots Exclusion Protocol is not a substitute for valid content security measures."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "then the crawler MAY access any resources on the server."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "\"Unavailable\" means the crawler tries to fetch the robots.txt file and the server responds with status codes indicating that the resource in question is unavailable."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "For example, in the context of HTTP, such status codes are in the 400-499 range."
+
+test:
+  client: "the harness's identified client (params.manners.user_agent)"
+  request: "GET /robots.txt; GET the data page's path as the same client"
+  reads: "robots.txt status and verdict for this client; the probe's status"
+  decision_rule:
+    - "fail: `the host answered HTTP {s} to /robots.txt itself`"
+    - "fail: `no robots.txt served (HTTP {s}), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with`"
+    - "fail: `robots.txt PERMITS {ua} for {url} and the host answered HTTP {s} to that same path`"
+    - "pass: `robots.txt permits {ua} for {url} and the host served it`"
+  parameters:
+    - "refusal statuses: params.manners.unobservable_statuses"
+  recognized_method: "None published for declaration–enforcement coherence; the paired request is this project's."
+  recognized_method_sources: none
+
+branches:
+  - id: fail_robots_refused
+    verdict: fail
+    reason_match: "to /robots.txt itself"
+    behavior: "the host refuses the client at /robots.txt"
+    sources: none
+    state: project_defined
+  - id: fail_nothing_declared
+    verdict: fail
+    reason_match: "nothing is DECLARED for this client"
+    behavior: "penalizes a missing robots.txt, which RFC 9309 reads as declaring permission"
+    sources: [{doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.3.1.3 (contradicts the branch)"}]
+    state: invalid
+  - id: fail_permitted_but_refused
+    verdict: fail
+    reason_match: "the declared and enforced layers disagree"
+    behavior: "permitted in robots.txt, refused at the edge"
+    sources: none
+    state: project_defined
+  - id: pass_coherent
+    verdict: pass
+    reason_match: "the declared and enforced layers agree"
+    behavior: "permitted and served"
+    sources: none
+    state: project_defined
+not_measured: "no response to either request; a 5xx on the probe"
+
+claims:
+  pass: "The host's robots.txt permits this scanner on the data page's path, and the host served the path to it."
+  fail: "One of three things, named in the reason: the host answered a refusal status (401, 403 or 429) to this scanner's request for /robots.txt; robots.txt permits the scanner on the path and the host answered a refusal status for that path; or no robots.txt is served, which under RFC 9309 declares permission and involves no contradiction (the page may have been served). Only the second is a host doing other than it declares, and a 429 among those statuses is a rate limit that may be transient rather than a policy. A transient error or server failure is never a fail here. It is a claim about one identified client, not about every crawler."
+  neither: "Nothing about other clients, including browsers and named answer-engine crawlers."
+
+confounds:
+  - cause: "the edge refuses this scanner's user agent specifically (an unknown bot) while admitting named crawlers"
+    distinguished: "no"
+
+fix_line_check:
+  action: none (candidate; not a grid column)
+  verdict: not_applicable
+
+state: invalid
+state_reason: >-
+  The coherence construct has no published definition, and one fail branch reads a missing
+  robots.txt as "nothing declared" where RFC 9309 reads it as permission. The refusal it records
+  is real and is already recorded as the `refused` error class on every other check.

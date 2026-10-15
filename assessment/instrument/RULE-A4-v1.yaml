@@ -1,0 +1,133 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B. One of the two declarations
+# among the site-level checks: it reads robots.txt, which is what a host DECLARES, and nothing a
+# machine met at the edge.
+order: 5
+rule_id: RULE-A4-v1
+leg: A4
+indicator: ind:A4
+code: assessment/harness/scan/rules/rule_a4.py
+matrix: tierA (site level, one host per agency)
+on_v3_grid: true
+declaration: true
+plain_name: "robots.txt permits eight listed crawler tokens"
+
+question:
+  text: >-
+    Does the host's declared crawler policy let SI systems' crawlers fetch the data page? Answer
+    engines that ground on the live web honor robots.txt; a page their crawler is told not to
+    fetch is not read by that engine.
+  established_by:
+    - {doc_id: google-ai-features-and-your-website, section: "Controlling your content in AI features in Search: robots.txt directives for Googlebot is the control"}
+    - {doc_id: openai-crawlers-bots, section: "OAI-SearchBot: to help ensure your site appears in search results, allow OAI-SearchBot in robots.txt"}
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4: agencies should employ best practices to improve crawling or indexing, including robots.txt files"}
+
+expected_behavior:
+  text: >-
+    What robots.txt means is defined by RFC 9309: crawlers match the group for their product token
+    case-insensitively and obey its rules (§2.2, quoted); a robots.txt that answers with a status in
+    the 400-499 range is "unavailable", and then the crawler MAY access any resources on the server
+    (§2.3.1.3, quoted); the rules are not a form of access authorization (§1, quoted). Which token
+    governs which use is stated by each vendor: Google says robots.txt directives for Googlebot are
+    the control for how a site is crawled for Search, into which its AI features are built, and that
+    Google-Extended limits AI training and grounding in other systems (quoted); OpenAI says
+    disallowing GPTBot means content should not be used in training, and recommends allowing OAI-
+    SearchBot to appear in ChatGPT search results (quoted); Anthropic says restricting ClaudeBot
+    signals exclusion from model training (quoted). CCBot has no source in the corpus. None of these
+    sources states a readiness requirement to permit any token. This project's reading, marked as
+    its own: a publisher that wants to be read by answer engines permits their search crawlers;
+    whether it permits training crawlers is a separate choice that no cited source treats as a
+    failure.
+  sources:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§1; §2.2; §2.3.1.3 'Unavailable' Status"}
+    - {doc_id: google-ai-features-and-your-website, section: "Controlling your content in AI features in Search"}
+    - {doc_id: openai-crawlers-bots, section: "OAI-SearchBot; GPTBot"}
+    - {doc_id: anthropic-crawler-support-article, section: "ClaudeBot"}
+  quotes:
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "then the crawler MAY access any resources on the server."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "These rules are not a form of access authorization."
+    - source: google-ai-features-and-your-website
+      quote: "is the control for site owners to manage access to how their sites are crawled for Search"
+    - source: google-ai-features-and-your-website
+      quote: "To limit AI training and grounding in some of Google's other systems, read more about Google-Extended"
+    - source: openai-crawlers-bots
+      quote: "Disallowing GPTBot indicates a site's content should not be used in training generative AI foundation models."
+    - source: openai-crawlers-bots
+      quote: "To help ensure your site appears in search results, we recommend allowing OAI-SearchBot in your site's robots.txt file"
+    - source: anthropic-crawler-support-article
+      quote: "it signals that the site's future materials should be excluded from our AI model training"
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "Crawlers MUST use case-insensitive matching to find the group that matches the product token and then obey the rules of the group."
+    - source: rfc-9309-robots-exclusion-protocol
+      quote: "For example, in the context of HTTP, such status codes are in the 400-499 range."
+    - source: google-ai-features-and-your-website
+      quote: "AI is built into Search and integral to how Search functions, which is why robots.txt directives for Googlebot is the control for site owners to manage access to how their sites are crawled for Search."
+
+test:
+  client: "the harness's identified client; GET /robots.txt once per host"
+  request: "GET https://<host>/robots.txt, parsed with protego"
+  reads: "for each of eight user-agent tokens, whether the rules allow the data page's path"
+  decision_rule:
+    - "pass: `robots.txt allows the product path for all {n} AI-crawler user agents`"
+    - "fail: `no robots.txt served; retrieval is permitted by default but nothing is declared for AI crawlers`"
+    - "fail: `robots.txt disallows the product path for {tokens}`"
+  parameters:
+    - "params.a4_crawlers.user_agents: GPTBot, ClaudeBot, Claude-Web, PerplexityBot, Google-Extended, CCBot, Bingbot, Applebot-Extended; chosen by this project. Neither Googlebot nor OAI-SearchBot, the two tokens their vendors name as the controls for appearing in AI answers, is on the list"
+  recognized_method: >-
+    Parsing robots.txt per RFC 9309 and evaluating the path per token is the protocol's own
+    procedure and is correctly done. What it yields is the host's declared policy, not whether a
+    crawler can reach the page (that is enforcement, observed by A12 and by the `refused` error
+    class).
+  recognized_method_sources:
+    - {doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.2 The Allow and Disallow Lines"}
+
+branches:
+  - id: pass_all_listed_allowed
+    verdict: pass
+    reason_match: "robots.txt allows the product path for all"
+    behavior: "the declared policy permits every listed token on the data path"
+    sources: [{doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.2"}]
+    state: specified
+  - id: fail_no_robots_txt
+    verdict: fail
+    reason_match: "no robots.txt served"
+    behavior: "penalizes serving no robots.txt; under RFC 9309 §2.3.1.3 that permits every crawler, so the check's own construct (crawlers allowed) is met while the cell reads fail. M-23-22 asks agencies to use robots.txt, which is a different construct (declaration practice)"
+    sources: [{doc_id: rfc-9309-robots-exclusion-protocol, section: "§2.3.1.3 (contradicts the branch)"}]
+    state: invalid
+  - id: fail_some_token_disallowed
+    verdict: fail
+    reason_match: "robots.txt disallows the product path for"
+    behavior: "penalizes disallowing any listed token, five of which (GPTBot, ClaudeBot, Google-Extended, CCBot, Applebot-Extended) their vendors define as training opt-outs, not as exclusion from answers"
+    sources: [{doc_id: openai-crawlers-bots, section: "GPTBot (contradicts the branch)"}, {doc_id: anthropic-crawler-support-article, section: "ClaudeBot (contradicts the branch)"}, {doc_id: google-ai-features-and-your-website, section: "Google-Extended (contradicts the branch)"}]
+    state: invalid
+not_measured: "robots.txt could not be observed (the host refused the client: 3 of 16 hosts on the cycle of record)"
+
+claims:
+  pass: "The host's robots.txt, as declared, permits each of eight listed crawler tokens to fetch the data page's path."
+  fail: "Either the host serves no robots.txt (which, under the robots.txt standard, permits every crawler), or its robots.txt tells at least one listed crawler not to fetch the path. Neither is a claim that crawlers cannot reach the data: robots.txt is a declaration, not a barrier, and disallowing a training crawler does not keep a page out of answer engines."
+  neither: "Nothing about whether a crawler is actually served or refused at the edge (A12), or about crawlers not on the list, including Googlebot and OAI-SearchBot."
+
+confounds:
+  - cause: "the host blocks crawlers at a firewall or CDN while robots.txt permits them"
+    distinguished: "no: this check passes; the refusal is A12's observation"
+  - cause: "the host opts out of training crawlers only, while permitting search crawlers"
+    distinguished: "no: fail, indistinguishable in the cell from a host that blocks answer engines"
+  - cause: "no robots.txt at all"
+    distinguished: "no: fail, though the standard reads it as permission"
+
+fix_line_check:
+  action: act:a4-serve-a-robots-txt-that-names-ai-crawlers
+  fix_line: "Serve a robots.txt that permits the data paths for the crawlers you want to allow."
+  verdict: consistent
+  note: "Consistent with M-23-22's robots.txt practice; it does not respond to a readiness failure under RFC 9309, and the check is off page two (state invalid)."
+
+state: invalid
+state_reason: >-
+  Both fail branches enforce a behavior their own cited sources say is not the construct. A
+  missing robots.txt permits every crawler (RFC 9309 §2.3.1.3), and five of the eight listed
+  tokens are training controls whose vendors say disallowing them keeps content out of training,
+  not out of answers; the two tokens their vendors name as the answer-engine controls are not
+  listed. The check is also a declaration presented on the v3 grid as what a machine met. A new
+  rule version would list the answer-engine tokens, read the training tokens separately as a
+  declared preference, and treat an absent robots.txt as permission.

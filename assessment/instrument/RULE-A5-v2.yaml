@@ -1,0 +1,118 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 6
+rule_id: RULE-A5-v2
+leg: A5
+indicator: ind:A5
+code: assessment/harness/scan/rules/rule_a5_v2.py
+matrix: tierA (site level, one host per agency)
+on_v3_grid: true
+declaration: false
+plain_name: "The site's sitemap lists the data page"
+
+question:
+  text: >-
+    Is the data page listed in the host's sitemap? Search engines and answer engines discover
+    pages by following links and reading sitemaps; on a large site, a page a sitemap omits can go
+    undiscovered, and an SI client cannot cite a page its retrieval layer never found.
+  established_by:
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4: agencies should employ best practices to improve crawling or indexing of web content, including using sitemaps"}
+    - {doc_id: sitemaps-protocol, section: "Sitemaps are a way for webmasters to inform search engines about pages on their sites that are available for crawling"}
+
+expected_behavior:
+  text: >-
+    Federal agencies should employ best practices to improve crawling or indexing, including
+    sitemaps (M-23-22 §III.4, quoted). The sitemaps protocol defines the file: its location bounds
+    the URLs it may list, it may be declared in robots.txt, and it is expected to list URLs from a
+    single host only (quoted). Google defines what a sitemap is for: it "tells search engines which
+    pages and files you think are important in your site" (quoted); a site of about 500 pages or
+    fewer that is comprehensively linked might not need one, and on large sites it is harder to make
+    sure every page is linked (quoted). The check takes an agency's data page to be among the pages
+    its owner thinks important; that premise is the framework's, not a source's.
+  sources:
+    - {doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4"}
+    - {doc_id: sitemaps-protocol, section: "Sitemap file location; Specifying the Sitemap location in your robots.txt file"}
+    - {url: "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview", section: "Do I need a sitemap?"}
+  quotes:
+    - source: omb-m-23-22-digital-first-public-experience
+      quote: "Agencies should employ best practices to improve crawling or indexing of web content, including using sitemaps, robots.txt files"
+    - source: sitemaps-protocol
+      quote: "The location of a Sitemap file determines the set of URLs that can be included in that Sitemap."
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "You might not need a sitemap if"
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "in most cases, your site will benefit from having a sitemap"
+    - source: sitemaps-protocol
+      quote: "You can specify the location of the Sitemap using a robots.txt file."
+    - source: sitemaps-protocol
+      quote: "a Sitemap is expected to have URLs from a single host only"
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "You might not need a sitemap if: Your site is \"small\". By small, we mean about 500 pages or fewer on your site."
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "Your site is comprehensively linked internally."
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "Your site is large. Generally, on large sites it's more difficult to make sure that every page is linked by at least one other page on the site."
+    - source: https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+      quote: "A sitemap tells search engines which pages and files you think are important in your site"
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET /sitemap.xml, /sitemap_index.xml, the sitemap(s) robots.txt declares (same site only), /llms.txt and /.well-known/ discovery paths; parse sitemaps with ultimate-sitemap-parser"
+  reads: "whether any served sitemap lists the data page's URL"
+  decision_rule:
+    - "pass: `sitemap at {url} lists the product URL`"
+    - "fail: `discovery files served ({urls}) but none lists the product URL`"
+    - "fail: `no sitemap, llms.txt or well-known discovery file served`"
+    - "not_applicable: the host declares a sitemap on another site, which the harness records and does not fetch"
+  parameters:
+    - "a URL matches when it equals the data page's URL as the frame records it"
+  recognized_method: >-
+    Reading the sitemap and looking for the URL is what a crawler does with it (sitemaps
+    protocol). No published method defines a pass/fail for "the page is listed"; the harness's
+    rule (listed or not) is the direct reading.
+  recognized_method_sources:
+    - {doc_id: sitemaps-protocol, section: "XML tag definitions (<loc>)"}
+
+branches:
+  - id: pass_listed_in_sitemap
+    verdict: pass
+    reason_match: "sitemap at .* lists the product URL"
+    behavior: "a sitemap served on the host lists the data page"
+    sources: [{doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4"}, {doc_id: sitemaps-protocol, section: "protocol"}]
+    state: specified
+  - id: fail_served_but_not_listed
+    verdict: fail
+    reason_match: "discovery files served .* but none lists the product URL"
+    behavior: "the host serves a sitemap or llms.txt that does not list the data page"
+    sources: [{doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4"}, {url: "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview", section: "Do I need a sitemap?"}]
+    state: specified
+  - id: fail_no_discovery_file
+    verdict: fail
+    reason_match: "no sitemap, llms.txt or well-known discovery file served"
+    behavior: "the host serves no sitemap at the probed locations"
+    sources: [{doc_id: omb-m-23-22-digital-first-public-experience, section: "§III.4"}]
+    state: specified
+not_measured: "every discovery probe refused or unobserved (3 of 16 hosts on the cycle of record), or a probe unobserved while none found the page"
+
+claims:
+  pass: "A sitemap served on the agency's host lists this data page's address, exactly as the harness records it."
+  fail: "The host's sitemaps were read and none lists this data page's address in exactly the form the harness records (a trailing slash, redirect target or query-string variant does not match), or the only discovery file served is an llms.txt (which by its proposal summarises a site rather than listing every page), or no sitemap is served at the standard locations. The reason names which. It is not a claim that the page is absent from the sitemap in every form, nor that search engines cannot find the page: well-linked pages are found without a sitemap."
+  neither: "Nothing about whether the page is indexed by any engine, or about sitemaps on other hosts."
+
+confounds:
+  - cause: "the sitemap lists the page under a different URL form (trailing slash, redirect target, query string)"
+    distinguished: "no: a fail"
+  - cause: "the only discovery file served is llms.txt, which by its proposal summarises a site rather than listing every page"
+    distinguished: "no: the served-but-not-listed branch does not separate llms.txt from a sitemap in its verdict, only in its reason's URLs"
+  - cause: "the sitemap is declared on another site"
+    distinguished: "yes: not_applicable"
+
+fix_line_check:
+  action: act:a5-list-the-product-url-in-the-sitemap
+  fix_line: "List the product address in the discovery file that is already served."
+  verdict: consistent
+
+state: specified
+state_reason: >-
+  Each branch rewards or penalizes the behavior M-23-22 §III.4 asks of federal sites (use
+  sitemaps), read by the sitemaps protocol's own semantics. The URL-form and llms.txt confounds
+  are stated; the fail claim says discovery does not depend on a sitemap alone.

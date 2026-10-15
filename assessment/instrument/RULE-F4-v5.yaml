@@ -1,0 +1,104 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 14
+rule_id: RULE-F4-v5
+leg: F4
+indicator: ind:F4
+code: assessment/harness/scan/rules/rule_f4_v5.py
+matrix: product
+on_v3_grid: true
+declaration: false
+plain_name: "Change history served as a structured feed"
+
+question:
+  text: >-
+    Can a machine learn what changed between releases? An SI client holding last month's figure
+    needs to know it was revised, and why; without a change history it cannot tell a revision
+    from an error.
+  established_by:
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible: implement versioning so AI developers can track updates over time; §2: version history"}
+
+expected_behavior:
+  text: >-
+    The publisher provides a complete version history that explains the changes made in each
+    version, so that humans and software agents can understand how versions differ (DWBP Best
+    Practice 8); USAFacts asks for versioning that lets developers track updates. Neither
+    requires the history in a feed format (JSON, Atom, RSS) or each entry to carry a revision
+    class.
+  sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 8: Provide version history"}
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§1 Accessible"}
+  quotes:
+    - source: w3c-dwbp-2017
+      quote: "Provide a complete version history that explains the changes made in each version."
+    - source: w3c-dwbp-2017
+      quote: "Check that a list of published versions is available as well as a change log describing precisely how each version differs from the previous one."
+    - source: usafacts-ai-ready-data-guide
+      quote: "Implement versioning so AI developers can track updates over time."
+
+test:
+  client: "the harness's identified, robots-compliant client"
+  request: "GET each changelog location recorded for the agency"
+  reads: "Content-Type (JSON, Atom or RSS counts as machine-readable); for a feed, the share of entries carrying a revision-class field"
+  decision_rule:
+    - "pass: `machine-readable changelog at {url}; {k} of {n} entries carry a revision class` (at least half)"
+    - "fail: `a machine-readable changelog is served ... but only {p} of its {n} entries carry a revision class (floor 50%)`"
+    - "fail: `a changelog page is served at {url} but not in a machine-readable content type`"
+    - "fail: `no changelog or release-notes endpoint served at a recorded location`"
+  parameters:
+    - "machine-readable types application/json, application/atom+xml, application/rss+xml; revision-class floor 0.5; both chosen by this project"
+  recognized_method: >-
+    DWBP's test is "Check that a list of published versions is available as well as a change log
+    describing precisely how each version differs". The harness checks for the change log at
+    recorded locations, then adds a format and a classification requirement that test does not
+    contain.
+  recognized_method_sources:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 8, How to Test"}
+
+branches:
+  - id: pass_classified_feed
+    verdict: pass
+    reason_match: "machine-readable changelog at"
+    behavior: "a version history exists (as a classified feed)"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 8"}]
+    state: specified
+  - id: fail_entries_unclassified
+    verdict: fail
+    reason_match: "entries carry a revision class \\(floor"
+    behavior: "penalizes a feed whose entries do not carry a change-type field"
+    sources: none
+    state: project_defined
+  - id: fail_changelog_is_a_page
+    verdict: fail
+    reason_match: "a changelog page is served at"
+    behavior: "penalizes a version history published as a web page rather than a feed"
+    sources: none
+    state: project_defined
+  - id: fail_no_changelog
+    verdict: fail
+    reason_match: "no changelog or release-notes endpoint served"
+    behavior: "no version history at any recorded location"
+    sources: [{doc_id: w3c-dwbp-2017, section: "Best Practice 8"}]
+    state: specified
+not_measured: "refused or robots_disallowed (3 of 23 data pages), or a seed source not searched (2)"
+
+claims:
+  pass: "A change history is served at a location recorded for the agency as a JSON, Atom or RSS feed, and at least half its entries say what kind of change they record."
+  fail: "No such feed was found at the recorded locations: there is no change history at them, or there is one published as a web page (9 of 23 data pages on the cycle of record), or its entries are unclassified, or the recorded locations were missing or wrong. The project's format and classification floors decide two of these; a precise HTML changelog that a machine can read and DWBP Best Practice 8 accepts still fails. A fail is not a claim that the version history is absent, incomplete or unreadable, nor that the agency does not publish revisions."
+  neither: "Nothing about revision notices in release text or methodology."
+
+confounds:
+  - cause: "a complete, human-readable revision history page"
+    distinguished: "in the reason only; the cell fails it"
+  - cause: "revisions announced in each release's notes rather than a central history"
+    distinguished: "no"
+
+fix_line_check:
+  action: act:f4-publish-a-version-history-endpoint
+  fix_line: "Publish a version history for the product."
+  verdict: consistent
+
+state: project_defined
+state_reason: >-
+  The pass and the no-changelog branches follow DWBP BP 8. Two fail branches penalize behaviors
+  no source requires (a history published as a page rather than a feed; entries without a change
+  type). On the cycle of record 9 of the 18 grid-page fails on this check rest on the page branch.

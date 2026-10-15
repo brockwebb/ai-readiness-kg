@@ -1,0 +1,108 @@
+# Instrument entry (DN-015 §2). Authored by task db464d5f, Part B.
+order: 10
+rule_id: RULE-A10-v3
+leg: A10
+indicator: ind:A10
+code: assessment/harness/scan/rules/rule_a10_v3.py
+matrix: tierA (site level, one interactive data tool per agency)
+on_v3_grid: true
+declaration: false
+plain_name: "Data tool answers with real status and content"
+
+question:
+  text: >-
+    Does the agency's interactive data tool answer a machine client honestly: real content at a
+    deep link, and a real error for a route that does not exist? An SI client that receives HTTP
+    200 with an error page, or an empty shell that needs a browser to fill, records a page that
+    is not there or reads nothing.
+  established_by:
+    - {doc_id: w3c-dwbp-2017, section: "Best Practice 23 (programmatic access returns expected responses)"}
+    - {doc_id: usafacts-ai-ready-data-guide, section: "§4 Open: ensure text documentation is accessible to both humans and AI/web crawlers"}
+
+expected_behavior:
+  text: >-
+    A route that does not exist answers 404 (or 410): "the origin server did not find a current
+    representation for the target resource" (RFC 9110 §15.5.5). A 200 whose content says the page
+    is an error is a soft 404, which Google treats as an error, not a page. A deep link to the
+    product is served (not 4xx/5xx). No cited source requires a data tool's content to be present
+    before JavaScript runs: Google's own crawler renders JavaScript ("Googlebot queues all pages
+    with a 200 HTTP status code for rendering"), and the app-shell model it describes is supported.
+  sources:
+    - {url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§15.5.5 404 Not Found"}
+    - {url: "https://developers.google.com/crawling/docs/troubleshooting/http-status-codes", section: "200 (success): soft 404 error"}
+    - {url: "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics", section: "How Google processes JavaScript; app shell model"}
+  quotes:
+    - source: https://www.rfc-editor.org/rfc/rfc9110.txt
+      quote: "indicates that the origin server did not find a current representation for the target resource"
+    - source: https://developers.google.com/crawling/docs/troubleshooting/http-status-codes
+      quote: "Search Console will show a soft 404 error"
+    - source: https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+      quote: "Googlebot queues all pages with a 200 HTTP status code for rendering"
+
+test:
+  client: "the harness's identified, robots-compliant client; no renderer (params.a10_soft404.renderer: none)"
+  request: "GET the tool's deep link; GET the same tool with the suffix /__ai-readiness-kg-probe-404__"
+  reads: "both statuses; error-shell tokens in the invalid route's body; visible characters in the deep link before JavaScript"
+  decision_rule:
+    - "fail: `soft-404: {url} returns HTTP 200 for a route that should not exist`"
+    - "fail: `the product deep link itself returns HTTP {status}`"
+    - "fail: `the deep link returns HTTP {status} but carries only {n} visible characters before JavaScript runs (floor 2000): the page is a client-rendered shell`"
+    - "pass: `deep link HTTP {s}; invalid route correctly HTTP {s}; {n} visible characters present before JS`"
+  parameters:
+    - "min_pre_js_visible_chars 2000, chosen by this project"
+  recognized_method: >-
+    Requesting a route known not to exist and reading the status is the standard soft-404 probe
+    (it is what Search Console reports). Counting visible characters before JavaScript has no
+    published method or threshold.
+  recognized_method_sources:
+    - {url: "https://developers.google.com/crawling/docs/troubleshooting/http-status-codes", section: "soft 404"}
+
+branches:
+  - id: fail_soft_404
+    verdict: fail
+    reason_match: "soft-404:"
+    behavior: "HTTP 200 for a route that does not exist"
+    sources: [{url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§15.5.5"}, {url: "https://developers.google.com/crawling/docs/troubleshooting/http-status-codes", section: "soft 404"}]
+    state: specified
+  - id: fail_deep_link_error
+    verdict: fail
+    reason_match: "the product deep link itself returns HTTP"
+    behavior: "the product's own deep link is not served"
+    sources: [{url: "https://www.rfc-editor.org/rfc/rfc9110.txt", section: "§15 status codes"}]
+    state: specified
+  - id: fail_client_rendered_shell
+    verdict: fail
+    reason_match: "the page is a client-rendered shell"
+    behavior: "penalizes a tool whose content arrives by JavaScript; the cited crawler documentation supports that model"
+    sources: none
+    state: project_defined
+  - id: pass_all_three
+    verdict: pass
+    reason_match: "invalid route correctly HTTP"
+    behavior: "real 404, served deep link, and at least 2000 visible characters before JavaScript; the last condition has no source"
+    sources: none
+    state: project_defined
+not_measured: "refused (3 of 16 hosts on the cycle of record), or either probe unobserved"
+
+claims:
+  pass: "The tool's deep link was served with at least 2000 characters of text before any script ran, and a made-up route under the tool returned a non-200 status."
+  fail: "One of three things, named in the reason: a made-up route under the tool returned HTTP 200 (a soft 404, which may be a platform or CDN default rather than the agency's choice); the deep link itself returned an error status; or fewer than 2000 visible characters were present before scripts ran (a short page with a script-built table fails the same way as an empty shell). It is not a claim that the tool is unusable by a browser or by a crawler that renders JavaScript, nor a finding about the agency's intent."
+  neither: "Nothing about the tool's API, its data, or what a rendering client sees."
+
+confounds:
+  - cause: "a tool built as a single-page application that renders correctly in a browser and in Googlebot"
+    distinguished: "no: the shell branch fails it"
+  - cause: "a soft 404 served by a CDN or framework default rather than the agency's choice"
+    distinguished: "no; it is still what a client receives"
+
+fix_line_check:
+  action: act:a10-return-a-real-status-for-routes-that-do-not-exist
+  fix_line: "Return a real status for routes that do not exist."
+  verdict: consistent
+
+state: project_defined
+state_reason: >-
+  The soft-404 and deep-link branches are published (RFC 9110; Google's soft-404 definition). The
+  pass requires, and one fail branch penalizes, content before JavaScript, which no cited source
+  asks of a data tool and Google's own documentation says it renders. On the cycle of record the
+  one grid fail is a soft 404 (specified), but every grid pass rests on the project-defined floor.

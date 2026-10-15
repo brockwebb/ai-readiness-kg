@@ -221,7 +221,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A1'] = RULE-A1-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Data offered in a machine format"
+    "plain_name": "Page links a structured data file"
    }
   },
   {
@@ -305,7 +305,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A2'] = RULE-A2-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "A documented machine interface"
+    "plain_name": "OpenAPI description served at the recorded API address"
    }
   },
   {
@@ -421,7 +421,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A3'] = RULE-A3-v8 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "A full dataset download"
+    "plain_name": "Page links an archive or large unfiltered file"
    }
   },
   {
@@ -537,7 +537,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Crawlers allowed to reach the data"
+    "plain_name": "robots.txt permits eight listed crawler tokens"
    }
   },
   {
@@ -653,7 +653,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "The data is listed for discovery"
+    "plain_name": "The site's sitemap lists the data page"
    }
   },
   {
@@ -769,7 +769,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Structured markup describes the data"
+    "plain_name": "Page markup declares a named, described dataset"
    }
   },
   {
@@ -919,7 +919,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "A machine readable release date"
+    "plain_name": "Markup dates the data; a latest-version link resolves"
    }
   },
   {
@@ -1021,7 +1021,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A9'] = RULE-A9-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "A machine first entry point"
+    "plain_name": "A probed machine address returns non-HTML content"
    }
   },
   {
@@ -1137,7 +1137,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Data tools answer a machine"
+    "plain_name": "Data tool answers with real status and content"
    }
   },
   {
@@ -1556,7 +1556,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B3'] = RULE-B3-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Methodology in reachable structured text"
+    "plain_name": "Page links a methodology readable as text"
    }
   },
   {
@@ -2014,7 +2014,7 @@
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_verify.md"
     },
-    "plain_name": "A machine readable licence"
+    "plain_name": "Page or API terms name a recognised licence"
    }
   },
   {
@@ -2299,7 +2299,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D4'] = RULE-D4-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "Listed in a public inventory"
+    "plain_name": "Agency's data.json inventory lists this page, validly"
    }
   },
   {
@@ -2824,7 +2824,7 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['F4'] = RULE-F4-v5 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "plain_name": "A machine readable change history"
+    "plain_name": "Change history served as a structured feed"
    }
   },
   {
@@ -3261,7 +3261,9 @@
     "signal": "HTTP GET the product page; extract every download link; for each, HEAD and read Content-Type and file extension. Structured iff any of csv/json/parquet/xlsx/xml; PDF-only iff every link is application/pdf.",
     "collector": "httpx",
     "evidence_kind": "response headers + link list + body sha256",
-    "prior_art": "`usafacts-ai-ready-data-guide`"
+    "prior_art": "`usafacts-ai-ready-data-guide`",
+    "instrument_state": "specified",
+    "instrument_entry": "assessment/instrument/RULE-A1-v5.yaml"
    }
   },
   {
@@ -3279,7 +3281,9 @@
     "collector": "httpx",
     "evidence_kind": "OpenAPI document + response headers",
     "fuji_metric": "FsF-A1-03D",
-    "prior_art": "`w3c-dwbp-2017`"
+    "prior_art": "`w3c-dwbp-2017`",
+    "instrument_state": "invalid",
+    "instrument_entry": "assessment/instrument/RULE-A2-v6.yaml"
    }
   },
   {
@@ -3296,7 +3300,9 @@
     "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
     "collector": "scrapy",
     "evidence_kind": "link graph + Content-Length per candidate",
-    "prior_art": "`w3c-dwbp-2017`"
+    "prior_art": "`w3c-dwbp-2017`",
+    "instrument_state": "specified",
+    "instrument_entry": "assessment/instrument/RULE-A3-v8.yaml"
    }
   },
   {
@@ -3321,7 +3327,9 @@
      "alternative": "Read A4 as a compliance question and absence becomes `pass`. If the operator prefers that reading it is a `v2`, not an edit.",
      "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
-    }
+    },
+    "instrument_state": "invalid",
+    "instrument_entry": "assessment/instrument/RULE-A4-v1.yaml"
    }
   },
   {
@@ -3346,7 +3354,9 @@
      "alternative": "Treat llms.txt as an alternative satisfier. That is a change to what the indicator MEANS, not to how it is measured, and belongs to the operator.",
      "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
-    }
+    },
+    "instrument_state": "specified",
+    "instrument_entry": "assessment/instrument/RULE-A5-v2.yaml"
    }
   },
   {
@@ -3364,7 +3374,9 @@
     "collector": "extruct + pyshacl",
     "evidence_kind": "extracted graph + SHACL report",
     "fuji_metric": "FsF-F4-01M, FsF-I1-01M",
-    "prior_art": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`"
+    "prior_art": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`",
+    "instrument_state": "invalid",
+    "instrument_entry": "assessment/instrument/RULE-A6-v2.yaml"
    }
   },
   {
@@ -3381,7 +3393,9 @@
     "signal": "Read Last-Modified and any dcterms:modified / schema.org dateModified in the markup; test whether a latest-vintage pointer resolves.",
     "collector": "httpx + extruct",
     "evidence_kind": "headers + markup date fields",
-    "prior_art": "`w3c-dwbp-2017`"
+    "prior_art": "`w3c-dwbp-2017`",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-A8-v4.yaml"
    }
   },
   {
@@ -3408,7 +3422,9 @@
      "alternative": "Parse the descriptor (validate as OpenAPI / MCP / llms.txt). Worth doing when A9 stops being frontier and enters a score; until then it would buy precision nobody is reading.",
      "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
-    }
+    },
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-A9-v2.yaml"
    }
   },
   {
@@ -3425,7 +3441,9 @@
     "signal": "For an interactive data tool: request a deep link and an invalid route; compare status codes and pre-JS HTML; a soft-404 is HTTP 200 with an error shell. Render once to compare pre- and post-JS DOM.",
     "collector": "lighthouse",
     "evidence_kind": "status codes + raw HTML + rendered DOM",
-    "prior_art": "internal draft: FSS Machine Diagnostic spec (operator-held)"
+    "prior_art": "internal draft: FSS Machine Diagnostic spec (operator-held)",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-A10-v3.yaml"
    }
   },
   {
@@ -3442,7 +3460,9 @@
     "signal": "The DECLARED layer only: robots.txt and meta-robots directives for the product path. The enforced and observed layers need edge/WAF logs and are agency_instrumented.",
     "collector": "protego",
     "evidence_kind": "robots.txt + meta-robots + per-UA declared verdict",
-    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `cloudflare-ai-crawl-control-manage-crawlers`"
+    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `cloudflare-ai-crawl-control-manage-crawlers`",
+    "instrument_state": "invalid",
+    "instrument_entry": "assessment/instrument/RULE-A11-declared-v2.yaml"
    }
   },
   {
@@ -3460,7 +3480,9 @@
     "collector": "httpx",
     "evidence_kind": "Content-Type + body sha256",
     "prior_art": "`fcsm-25-03`",
-    "note": "NOT in the task's §3 list; derived from the framework as public-tier and AUTO/DOC. Reported as a discrepancy."
+    "note": "NOT in the task's §3 list; derived from the framework as public-tier and AUTO/DOC. Reported as a discrepancy.",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-B3-v4.yaml"
    }
   },
   {
@@ -3496,7 +3518,9 @@
     "collector": "extruct + httpx",
     "evidence_kind": "licence field + resolution verdict",
     "fuji_metric": "FsF-R1.1-01M",
-    "prior_art": "`odcs-open-data-contract-standard`"
+    "prior_art": "`odcs-open-data-contract-standard`",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-D1-v6.yaml"
    }
   },
   {
@@ -3513,7 +3537,9 @@
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
     "evidence_kind": "catalog document + validation report + membership verdict",
-    "prior_art": "`dcat-us-1-1-schema`; `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove`"
+    "prior_art": "`dcat-us-1-1-schema`; `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove`",
+    "instrument_state": "specified",
+    "instrument_entry": "assessment/instrument/RULE-D4-v5.yaml"
    }
   },
   {
@@ -3584,7 +3610,9 @@
     "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
     "collector": "httpx",
     "evidence_kind": "changelog document + parse verdict",
-    "prior_art": "`usafacts-ai-ready-data-guide`"
+    "prior_art": "`usafacts-ai-ready-data-guide`",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-F4-v5.yaml"
    }
   },
   {
@@ -3674,7 +3702,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A12'] = RULE-A12-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A12`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "A CANDIDATE indicator (DD-054): its rule runs and enters no framework numerator until the operator adopts it."
+    "tier_note": "A CANDIDATE indicator (DD-054): its rule runs and enters no framework numerator until the operator adopts it.",
+    "plain_name": "Host serves the path its robots.txt permits"
    }
   },
   {
@@ -3692,7 +3721,9 @@
     "signal": "Per host: GET /robots.txt and parse it; then GET the product path under the identified UA. Coherent iff robots.txt permits the path for this UA AND the host serves it. Incoherent iff robots.txt permits and the host answers a status in `manners.unobservable_statuses` (401/403/407/429). A robots.txt that DISALLOWS the path is not incoherence — it is A4's measurement, and this indicator is `not_applicable` there.",
     "evidence_kind": "robots.txt body + per-UA verdict + the response status for the same path",
     "prior_art": "RFC 9309 (what a declaration means); `cloudflare-ai-crawl-control-manage-crawlers` (what an enforcing layer does)",
-    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md"
+    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
+    "instrument_state": "invalid",
+    "instrument_entry": "assessment/instrument/RULE-A12-v3.yaml"
    }
   },
   {
@@ -3856,7 +3887,7 @@
     },
     "authored_by": "cc_tasks/2026-09-17_prescription_layer.md",
     "withdrawn_when_declared": "api_base",
-    "fix_line": "Expose the product through a machine interface and publish its description."
+    "fix_line": "Publish a machine-readable description of the data interface where the interface is served."
    }
   },
   {
@@ -4340,7 +4371,7 @@
      "bodies_failing_now_caveat": "a per-LEG count. `A8`'s rule has 4 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
     },
     "authored_by": "cc_tasks/2026-09-17_prescription_layer.md",
-    "fix_line": "Publish a release date for the product."
+    "fix_line": "Publish the product's release date in the page's structured markup."
    }
   },
   {
@@ -5099,7 +5130,7 @@
     },
     "authored_by": "cc_tasks/2026-09-17_prescription_layer.md",
     "technique_class_reason": "the licence is a value written into markup and a catalogue record the host already serves, not a file of its own",
-    "fix_line": "Publish a machine-readable licence for the product."
+    "fix_line": "State the product's licence or public domain status in its machine-readable metadata."
    }
   },
   {
@@ -6840,7 +6871,8 @@
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['A13'] = RULE-A13-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A13`",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "plain_name": "Page reaches the agency's API, terms, changelog, inventory"
    }
   },
   {
@@ -6858,7 +6890,9 @@
     "signal": "Per surface, per object (the API, its terms, its changelog, the inventory): pass when an object that exists (an Observation at a recorded location served it, or the record says verified) has a recorded URL among the product page's links, on-host or off-host and past the link probe's cap, or sits at a convention location (the well-known api-catalog URI served as a Linkset, or a `Link: rel=\"api-catalog\"` header, RFC 9727; the data.json inventory at the host root, OMB M-13-13); fail when it exists, the page was read whole and neither holds; error when existence is not settled, the page was not read, or the API's convention location was not fetched; not_applicable when no object is shown to exist. The surface's verdict is the first of fail, error, pass, not_applicable that any object returns.",
     "evidence_kind": "the product page's link set and response headers, plus the recorded locations and the fetches of them",
     "prior_art": "W3C DWBP 2017 (data discoverable by machines); OMB M-13-13 and DCAT-US 1.1 (the data.json inventory at the host root); RFC 9727 (api-catalog); RFC 8288 (Link header)",
-    "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md"
+    "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
+    "instrument_state": "project_defined",
+    "instrument_entry": "assessment/instrument/RULE-A13-v1.yaml"
    }
   },
   {

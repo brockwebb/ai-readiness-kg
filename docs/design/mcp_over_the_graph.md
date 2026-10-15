@@ -333,7 +333,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       },
       "… 2 more (elided by mcp/airkg_doc.py, not by the tool)"
     ],
-    "plain_name": "The data is listed for discovery"
+    "plain_name": "The site's sitemap lists the data page"
   },
   "spec": {
     "indicator_code": "A5",
@@ -353,6 +353,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
       "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
     },
+    "instrument_state": "specified",
+    "instrument_entry": "assessment/instrument/RULE-A5-v2.yaml",
     "id": "spec:A5",
     "locator": {
       "kind": "record",
