@@ -1,0 +1,28 @@
+{
+ "generated_by": "scripts/usafacts_note_verify.py",
+ "task": "cc_tasks/2026-10-14_usafacts_note.md",
+ "updated_at": "2026-10-15T12:23:18.624457+00:00",
+ "reads": [
+  {
+   "round": 1,
+   "unit_id": "0b2220b8e7f4ab55",
+   "model_id": "claude-fable-5-1",
+   "note_sha256": "f8a8e226d397e3c0667d39410b0b4ca1a51e2e213f2c6506aa7eddb07f95100b",
+   "answers": {
+    "q1": "Mostly yes. The reader can learn that all four USAFacts qualities (accessible, understandable, accurate, open) were kept as the top-level headings, that three areas were added (a standing loop that re-tests how well machines read the data, treating each data release like a software deployment, and official-statistics concerns such as whether a margin of error survives machine restatement), that a list of website checks became runnable tests (machine format, documented interface and full download, crawler access, discovery listing and structured markup, machine-readable release date and licence, public inventory entry, reachable account of how the data was made), and that accuracy did not become a test because it needs question-and-answer scoring of each product and waits on funded tooling. Two things they cannot learn: which of the listed tests sits under which of the three measurable qualities, and which specific finer points of those qualities were left as unscored open gaps, since the note says only that 'a few' exist without naming them.",
+    "q2": "Terms used without explanation that such a reader would not already know: 'the public tier' (and 'public-tier grid'), 'the connected store', and 'the readiness framework record' in the closing line, all of which are project-internal names never defined on the page; and in the sources, 'SDMX' is the one acronym not expanded (the others, AI RMF, ODCS, SLSA, DCAT, FCSM, are spelled out in their titles). Everything else in the body, such as crawlers, structured markup, machine-readable licence, data contracts, and software supply chains, is ordinary CIO vocabulary."
+   }
+  },
+  {
+   "round": 2,
+   "unit_id": "e930112a9c70fc2c",
+   "model_id": "claude-fable-5-1",
+   "note_sha256": "7933c178e68b993f9b1ff668be6c21c607b546c857949e32fc8256d5f8e91962",
+   "answers": {
+    "q1": "Yes, for the most part. The note tells that reader that all four USAFacts qualities (accessible, understandable, accurate, open) were kept verbatim as the top-level headings of the readiness framework; that three areas were added that the guide lacks (a standing loop that re-tests how well SI systems read the data; treating each data release like a software deployment; concerns specific to official statistics, e.g. whether a margin of error survives machine restatement), each grounded in named published standards; that many of the four qualities became free, permissionless, machine-runnable checks against agency websites (machine format; documented machine interface and full download; crawler access; discovery listing and structured markup; machine-readable release date and licence; public inventory entry; reachable plain account of how the data was made); and that accuracy did not become such a check because it needs question-and-answer scoring of each product and so waits on funded tooling, while a few finer points of the other qualities are left as unscored open gaps. What the reader could not learn: which specific tests hang under which of the three measured qualities (the mapping is asserted, not shown); which 'finer points' are the open gaps, or which quality each belongs to; whether any of the three added areas produced a runnable test or whether they remain only standards-backed headings (the listed tests all read as belonging to the four qualities); which standard underpins which added area; and what the 'detailed measures' under each heading actually are, since the note points to a detailed report for that.",
+    "q2": "SI (as in 'SI systems'): used throughout and never expanded or defined on the page. Everything else in the body (crawlers, machine-readable licence, structured markup, data contracts, software supply chains, margin of error, public inventory, official statistics) is ordinary CIO or plain-English vocabulary. In the Sources list a few acronyms and bodies are also left unexplained: SDMX (never expanded), Bitol, and OpenSSF; the others (ODCS, SLSA, DCAT, FCSM, AI RMF) are expanded in place, and NIST and W3C are names a CIO would know."
+   }
+  }
+ ],
+ "model_id": "claude-fable-5-1"
+}

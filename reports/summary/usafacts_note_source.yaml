@@ -1,0 +1,215 @@
+# The USAFacts note: how USAFacts' four-quality frame was operationalized, in plain narrative.
+# Authored by Opus 4.8 (role `author`) for cc_tasks/2026-10-14_usafacts_note.md, under
+# DN-014 ADDENDUM 01 §5. Read by scripts/usafacts_note_build.py (the Markdown and the PDF) and
+# scripts/usafacts_note_verify.py (Fable's reading).
+#
+# Two halves.
+#   `derivation:` is Part A: every fact the note rests on, derived from the record and the graph,
+#   each with a `locator`. Nothing here is recalled from memory of what USAFacts says; it comes
+#   from the corpus document, the framework record, and the published grid.
+#   `paragraphs:` is Part B: the note's prose. Each sentence is either a `fact` (it carries a
+#   `locator` into the evidence) or `kind: context` (a transition or a definition that states
+#   nothing checkable). The build refuses to write unless every fact sentence resolves.
+#
+# A locator ref is one of:
+#   record:<node_id>[#<prop>]  a node (and optionally a property) in the framework record
+#   doc:<doc_id>               a document in the corpus manifest
+#   grid:<leg>                 a public-tier column of the published grid
+#   grid:presence_gate         the grid's presence gate, which must be clean
+#   grid:columns               the grid has public-tier columns
+#   grid:maps_to_criteria      every grid column traces to a record criterion
+#   file:<path>[#L<n>]         a repository file (optionally with at least n lines)
+
+title: "How USAFacts' four qualities became something a machine can measure"
+prepared: "15 October 2026"
+
+inputs:
+  manifest: corpus/manifest.json
+  framework_record: framework/ai_readiness_framework.json
+  grid: reports/summary/grid.json
+  vocabulary: ontology/vocabulary_proposals_epoch2.yaml
+
+# ------------------------------------------------------------------------- Part A: the derivation
+derivation:
+
+  # 1. Which of the seven criteria rest on USAFacts' four qualities.
+  # The four qualities are the names of the four backbone criteria, kept verbatim. The project
+  # record carries the attribution in the vocabulary (the four facets are cited to the USAFacts
+  # Detailed User Guide) and in the criteria names themselves. The relationship is carried by the
+  # criterion identity and the project vocabulary, NOT by an EVIDENCED_BY edge: no criterion node
+  # has a direct evidence edge, and the indicators under A-D are evidenced by the technical
+  # standards that operationalize each quality (RFCs, DCAT, schema.org, sitemaps), not by USAFacts.
+  four_qualities_from_usafacts:
+    source_document: usafacts-fde-standards-detailed
+    source_locator:
+      - doc:usafacts-fde-standards-detailed
+      - file:ontology/vocabulary_proposals_epoch2.yaml#L54
+    criteria:
+      - {quality: accessible,     record: "crit:A", name: ACCESSIBLE,     locator: ["record:crit:A#name"]}
+      - {quality: understandable, record: "crit:B", name: UNDERSTANDABLE, locator: ["record:crit:B#name"]}
+      - {quality: accurate,       record: "crit:C", name: ACCURATE,       locator: ["record:crit:C#name"]}
+      - {quality: open,           record: "crit:D", name: OPEN,           locator: ["record:crit:D#name"]}
+
+  # 2. Which three criteria were added, and the sources each one cites.
+  three_added:
+    - record: "crit:E"
+      name: "TEVV loop"
+      plain: "a standing loop that tests and re-tests how well systems read the data"
+      sources: [nist-ai-risk-management-framework-ai-rmf, nist-generative-ai-profile-ai-600-1, sainz-2023-llm-data-contamination, webb-2026-state-fidelity-validity]
+      locator: ["record:crit:E", "doc:nist-ai-risk-management-framework-ai-rmf"]
+    - record: "crit:F"
+      name: "release engineering"
+      plain: "treating each data release the way careful software teams treat a deployment"
+      sources: [odcs-open-data-contract-standard, slsa-specification-v1-0, usafacts-ai-ready-data-guide]
+      locator: ["record:crit:F", "doc:odcs-open-data-contract-standard", "doc:slsa-specification-v1-0", "doc:usafacts-ai-ready-data-guide"]
+    - record: "crit:G"
+      name: "FSS-derived constructs"
+      plain: "concerns particular to official statistics, such as whether a margin of error survives a machine's restatement"
+      sources: [w3c-dcat-3, sdmx-3-0-section-1-framework, fcsm-23-02-a-framework-for-data-quality-case-studies, usafacts-ai-ready-data-guide]
+      locator: ["record:crit:G", "doc:w3c-dcat-3", "doc:sdmx-3-0-section-1-framework", "doc:usafacts-ai-ready-data-guide"]
+
+  # 3. Which USAFacts qualities became checks the public tier runs, and which did not and why.
+  became_public_checks:
+    note: >-
+      The public-tier grid runs thirteen checks. Twelve operationalize the four USAFacts
+      qualities (nine under Accessible, one under Understandable, two under Open); the thirteenth
+      (a machine-readable change history) operationalizes the added release area.
+    checks:
+      - {leg: A1,  quality: accessible,     plain_name: "Data offered in a machine format",         locator: ["grid:A1"]}
+      - {leg: A2,  quality: accessible,     plain_name: "A documented machine interface",           locator: ["grid:A2"]}
+      - {leg: A3,  quality: accessible,     plain_name: "A full dataset download",                  locator: ["grid:A3"]}
+      - {leg: A4,  quality: accessible,     plain_name: "Crawlers allowed to reach the data",       locator: ["grid:A4"]}
+      - {leg: A5,  quality: accessible,     plain_name: "The data is listed for discovery",         locator: ["grid:A5"]}
+      - {leg: A6,  quality: accessible,     plain_name: "Structured markup describes the data",     locator: ["grid:A6"]}
+      - {leg: A8,  quality: accessible,     plain_name: "A machine readable release date",          locator: ["grid:A8"]}
+      - {leg: A9,  quality: accessible,     plain_name: "A machine first entry point",              locator: ["grid:A9"]}
+      - {leg: A10, quality: accessible,     plain_name: "Data tools answer a machine",              locator: ["grid:A10"]}
+      - {leg: B3,  quality: understandable, plain_name: "Methodology in reachable structured text", locator: ["grid:B3"]}
+      - {leg: D1,  quality: open,           plain_name: "A machine readable licence",               locator: ["grid:D1"]}
+      - {leg: D4,  quality: open,           plain_name: "Listed in a public inventory",             locator: ["grid:D4"]}
+      - {leg: F4,  quality: "(added: release engineering)", plain_name: "A machine readable change history", locator: ["grid:F4"]}
+
+  did_not_become_public_checks:
+    accuracy:
+      record: "crit:C"
+      reason: >-
+        Accuracy asks whether a system that reads the data restates it correctly. That can be
+        judged only by putting a set of questions to each product and scoring the answers for
+        faithfulness, not by reading a website, so it is an evaluation that waits on funded
+        tooling and runs in no public-tier check.
+      locator: ["record:crit:C", "record:ind:C1#tier", "record:ind:C2#tier", "record:ind:C3#tier"]
+    gaps:
+      note: >-
+        A few finer points of the four qualities could not be made into a runnable test at all,
+        for want of a settled method or a public signal to read. They are marked openly as gaps
+        rather than scored.
+      indicators:
+        - {record: "ind:A7", under: accessible,     locator: ["record:ind:A7#gap"]}
+        - {record: "ind:B5", under: understandable, locator: ["record:ind:B5#gap"]}
+        - {record: "ind:B6", under: understandable, locator: ["record:ind:B6#gap"]}
+        - {record: "ind:C3", under: accurate,       locator: ["record:ind:C3#gap"]}
+        - {record: "ind:D2", under: open,           locator: ["record:ind:D2#gap"]}
+
+  # 4. The measurement result.
+  result:
+    claim: "Every check the public tier runs traces back to a criterion of the framework."
+    locator: ["grid:presence_gate", "grid:columns", "grid:maps_to_criteria"]
+
+# --------------------------------------------------------------------------- Part B: the note
+# Each paragraph is a list of sentences. A `fact` carries a `locator`; a `context` sentence does
+# not. The reader-facing text is the sentence text, joined with spaces, one paragraph per block.
+paragraphs:
+  - - text: >-
+        The data nonprofit USAFacts set out four qualities that public data should have if it is
+        to be usable by SI systems, the software that now finds, reads and uses data on its own:
+        that it be accessible, understandable, accurate, and open.
+      kind: fact
+      locator: ["doc:usafacts-fde-standards-detailed", "file:ontology/vocabulary_proposals_epoch2.yaml#L54"]
+    - text: >-
+        This work keeps those four qualities as the backbone of its readiness framework, each one
+        a top-level heading left as USAFacts wrote it, under which the detailed measures hang.
+      kind: fact
+      locator: ["record:crit:A#name", "record:crit:B#name", "record:crit:C#name", "record:crit:D#name", "file:ontology/vocabulary_proposals_epoch2.yaml#L57"]
+
+  - - text: >-
+        To those four it added three areas the guide does not cover: a standing loop that tests
+        and re-tests how well SI systems read the data, the practice of treating every data
+        release the way careful software teams treat a deployment, and a set of concerns
+        particular to official statistics, such as whether a margin of error still travels with a
+        figure once a machine restates it.
+      kind: fact
+      locator: ["record:crit:E", "record:crit:F", "record:crit:G"]
+    - text: >-
+        Each added area rests on named, published standards rather than on assertion, among them
+        the national framework for managing the risks of these systems, open standards for data
+        contracts and software supply chains, and the catalog, exchange, and data-quality
+        standards of the statistical community, alongside USAFacts' own later guidance.
+      kind: fact
+      locator: ["doc:nist-ai-risk-management-framework-ai-rmf", "doc:odcs-open-data-contract-standard", "doc:slsa-specification-v1-0", "doc:w3c-dcat-3", "doc:sdmx-3-0-section-1-framework", "doc:fcsm-25-03", "doc:usafacts-ai-ready-data-guide"]
+    - text: >-
+        Many of the four qualities became tests a machine can run against an agency's website
+        today, with no permission and no paid tools: whether the data is offered in a machine
+        format, whether a documented machine interface and a full download exist, whether crawlers
+        are allowed to reach it, whether it is listed for discovery and described in structured
+        markup, whether it carries a machine-readable release date and a machine-readable licence,
+        whether it is entered in a public inventory, and whether a plain account of how it was made
+        can be reached from the data page.
+      kind: fact
+      locator: ["grid:A1", "grid:A2", "grid:A3", "grid:A4", "grid:A5", "grid:A6", "grid:A8", "grid:A9", "grid:A10", "grid:B3", "grid:D1", "grid:D4"]
+    - text: >-
+        One of the four did not become such a test: accuracy asks whether a system that reads the
+        data restates it correctly, which can be judged only by putting questions to each product
+        and scoring the answers, not by reading a website, so it waits on funded tooling.
+      kind: fact
+      locator: ["record:crit:C", "record:ind:C1#tier", "record:ind:C2#tier", "record:ind:C3#tier"]
+    - text: >-
+        A few finer points of the other qualities could not be made into a runnable test at all,
+        for want of a settled method or a public signal to read, and these are marked plainly as
+        open gaps rather than scored.
+      kind: fact
+      locator: ["record:ind:A7#gap", "record:ind:B5#gap", "record:ind:B6#gap", "record:ind:D2#gap"]
+
+  - - text: >-
+        The result is that every one of those tests, the ones anyone can run from the open web,
+        traces back to one of the framework's qualities or added areas, so a machine's real
+        experience of an agency's website can be read in the very terms USAFacts set out, and
+        measured the same way for all 16 federal statistical agencies.
+      kind: fact
+      locator: ["grid:presence_gate", "grid:columns", "grid:maps_to_criteria"]
+
+# ------------------------------------------------------------------------------- sources (after)
+# DN-014 ADDENDUM 01 §5: cite USAFacts' detailed user guide by title. The build renders each title
+# from the manifest; a title's dash is normalised to a colon by the shared source renderer, so the
+# Sources section stays free of the dash the operator bars.
+sources:
+  heading: "Sources"
+  entries:
+    - {id: usafacts-fde-standards-detailed}
+    - {id: usafacts-ai-ready-data-guide}
+    - {id: nist-ai-risk-management-framework-ai-rmf}
+    - {id: odcs-open-data-contract-standard}
+    - {id: slsa-specification-v1-0}
+    - {id: w3c-dcat-3}
+    - {id: sdmx-3-0-section-1-framework}
+    - {id: fcsm-25-03}
+  provenance: >-
+    Derived from the project's readiness framework and its current public-web measurements across
+    all 16 federal statistical agencies in September and October 2026. The detailed report holds
+    the evidence behind each check.
+
+# --------------------------------------------------------------- Fable's reading (two questions)
+# DN-014 ADDENDUM 01 §5 and the task's Part B: Fable (role `judge`) reads the built note in a fresh
+# context and answers two questions. Editorial review, not a measurement. At most two rounds.
+reader:
+  questions:
+    q1: "A reader who already knows USAFacts' guide to AI-ready data reads this note. Does the note let that reader learn what this work did with the guide: which of the four qualities it kept, what it added, what became measurable, and what did not? Answer and name anything they could not learn."
+    q2: "Name every term on the page that a chief information officer new to the term SI would not already know. List each such term, or say none."
+
+run:
+  reader_role: judge
+  call_class: judge
+  run_id: usafacts_note_2026-10-15
+  ceiling_tokens: 800000
+  timeout_seconds: 900
+  max_attempts: 2
+  max_wall_seconds: 3600
