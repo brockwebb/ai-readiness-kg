@@ -21,7 +21,8 @@
   "tools": 13,
   "preconditions": 19,
   "requires": 37,
-  "requires_on_candidate_indicators": 0
+  "requires_on_candidate_indicators": 0,
+  "evidenced_by_spec": 49
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -3263,7 +3264,25 @@
     "evidence_kind": "response headers + link list + body sha256",
     "prior_art": "`usafacts-ai-ready-data-guide`",
     "instrument_state": "specified",
-    "instrument_entry": "assessment/instrument/RULE-A1-v5.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A1-v5.yaml",
+    "rf_question": "Is the data offered in a structured, machine-readable file a computer can read directly, such as CSV, JSON or a spreadsheet, rather than only as a PDF that has to be re-parsed?",
+    "rf_where_we_look": "On the agency's data page, and the files linked from that page that sit on the same website as the page itself.",
+    "rf_what_client_does": "The public client opens the data page and then, for each file linked on it that lives on the same website (up to twenty-five), makes one quick web request asking the server what that file is, at a pace of one request per second.",
+    "rf_pass": "A link on this data page, on the page's own website, returned a file that the server labeled by its media type, or the address named by its file extension, as a structured data format: CSV, JSON, XML, spreadsheet or Parquet. Every data page that was looked at met this.",
+    "rf_partial": "Some of the agency's data pages linked such a structured file and some did not.",
+    "rf_fail": "Every linked file on the same website, in the page's HTML as first served (files built by scripts or reached through a form are not seen), was checked, and none was labeled by its media type or its file extension as a structured data format. It is not a claim that the page links no structured file at all (a real data file served with a generic label and no extension is missed), nor that the agency publishes no machine-readable data: data offered on another website, such as a data portal or an API, or reached only through a query tool, is outside this page's same-website links.",
+    "rf_not_measured": "The public client could not look at one or more of the linked files, for one of three reasons: the host refused the identified client; the client's own compliance with the site's robots.txt kept it from the file; or it could not confirm the absence because the page carried more same-website links than the cap of twenty-five, or a server or network error occurred.",
+    "rf_why_it_matters": "USAFacts' AI-ready data guide says to publish datasets in common structured formats (JSON, CSV, machine-readable Excel) and avoid PDFs, an OMB memo requires public data assets to be machine-readable, and a Data on the Web Best Practice asks for a machine-readable standardized format.",
+    "rf_who_else": "Google Lighthouse runs this kind of check: anyone can run its automated checks against a named page, its criteria are published, and a result comes back met, not met, or not applicable. It does not run this exact one.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Is the data offered in a structured, machine-readable format? An SI client can read a CSV, JSON or spreadsheet file directly; a PDF table has to be extracted and re-parsed, which is where numbers are misread.",
+    "rf_state": "specified",
+    "rf_plain_name": "Page links a structured data file",
+    "rf_fix_line": "Link a data file from the product page and serve it with its own media type.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Make data available in a machine-readable, standardized data format that is well suited to its intended or potential use.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Publish datasets in common structured formats (JSON, CSV, machine-readable Excel). Avoid documents (PDFs) that need to be processed and parsed.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"data in a format that can be easily processed by a computer without human intervention\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"Agencies must make each of their public data assets machine-readable.\"}]",
+    "rf_standards_urls": [
+     "https://www.rfc-editor.org/rfc/rfc9110.txt"
+    ]
    }
   },
   {
@@ -3283,7 +3302,22 @@
     "fuji_metric": "FsF-A1-03D",
     "prior_art": "`w3c-dwbp-2017`",
     "instrument_state": "invalid",
-    "instrument_entry": "assessment/instrument/RULE-A2-v6.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A2-v6.yaml",
+    "rf_question": "Does the agency publish a machine-readable description of its data interface, so that a program can learn the available calls and build one without a person first reading the documentation?",
+    "rf_where_we_look": "At the data-interface address recorded for the agency in the project's records (read from the agency's own pages or seeded from a named source such as a developer page or a public catalog), and any description document recorded beside that address.",
+    "rf_what_client_does": "The public client makes one web request to the recorded address and reads whether what comes back is a machine-readable description, meaning a document carrying the OpenAPI or the Swagger marker, at one request per second and never a path the site's robots.txt disallows.",
+    "rf_pass": "A machine-readable OpenAPI or Swagger description document is served at the data-interface address recorded for this agency, and the result names that address. Every address that was looked at met this.",
+    "rf_partial": "Some of the recorded addresses served such a description and some did not.",
+    "rf_fail": "No OpenAPI or Swagger document was found at the data-interface addresses recorded for this agency; where no address is recorded at all, the fail says only that none was found in the sources searched. It is not a claim that the agency has no data interface, that its interface is undocumented, that it publishes no machine-readable description anywhere (a description at a developer page, or in another format such as a catalog document at the interface's root, is not looked for), or that its interface refuses programs.",
+    "rf_not_measured": "The public client could not look at one or more recorded addresses, for one of three reasons: the host refused the identified client; the client's own compliance with the site's robots.txt kept it from the recorded address; or it could not confirm an absence because a recorded address was left unverified or a seed source unsearched, or a server or network error occurred.",
+    "rf_why_it_matters": "A W3C practice says to provide complete information on the web about an interface so that machines can read it, and USAFacts' AI-ready data guide calls for data interfaces; requiring the description to be OpenAPI and to sit at the recorded address is the project's own rule, and the project has marked this check not yet valid.",
+    "rf_who_else": "Google Lighthouse runs this kind of check: anyone can run its automated checks against a named page, its criteria are published, and a result comes back met, not met, or not applicable. It does not run this exact one.",
+    "rf_rung_two_changes": "The description document is usually public and needs no key; but this check reads the recorded data-interface address, which could itself require a key, so registering as a member of the public and presenting one could let the client reach a document a bare request cannot.",
+    "rf_hypothesis": "Does the agency publish a machine-readable description of its data API? An SI client that is to call an API rather than scrape pages needs to know the calls, their parameters and what they return; a description a program can read lets it build the call without a person reading documentation first.",
+    "rf_state": "invalid",
+    "rf_plain_name": "OpenAPI description served at the recorded API address",
+    "rf_fix_line": "Publish a machine-readable description of the data interface where the interface is served.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide complete information on the Web about your API.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"It will also enables machines to access the API documentation in order to help developers build API client software.\"}, {\"source\": \"openapi-specification-core\", \"quote\": \"allows both humans and computers to discover and understand the capabilities of a service\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"they SHOULD make that metadata available at the API endpoint URIs they have listed\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check that every call enabled by your API is described in your documentation. Make sure you provide details of what parameters are required or optional and what each call returns.\"}, {\"source\": \"openapi-specification-core\", \"quote\": \"This string MUST be the version number of the OpenAPI Specification that the OpenAPI document uses.\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"It is RECOMMENDED that the API catalog also includes useful metadata, such as usage policies, API version information, links to the OpenAPI Specification [OAS] definitions for each API\"}]"
    }
   },
   {
@@ -3302,7 +3336,22 @@
     "evidence_kind": "link graph + Content-Length per candidate",
     "prior_art": "`w3c-dwbp-2017`",
     "instrument_state": "specified",
-    "instrument_entry": "assessment/instrument/RULE-A3-v8.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A3-v8.yaml",
+    "rf_question": "Can the whole dataset be retrieved in a single request, rather than assembled piece by piece from many filtered queries?",
+    "rf_where_we_look": "On the agency's data page, and the files linked from that page that sit on the same website as the page itself.",
+    "rf_what_client_does": "The public client opens the data page and then, for each file linked on it that lives on the same website (up to twenty-five), makes one quick web request asking about that file's type, its size, and whether its address carries a query, at one request per second.",
+    "rf_pass": "This data page links, on its own website, an archive file (named by its extension) or a file that is not a web page, carries no query in its address, and is at least fifty kibibytes. It is not verified to be the complete product. Every data page that was looked at met this.",
+    "rf_partial": "Some of the agency's data pages linked such a whole-product download and some did not.",
+    "rf_fail": "Every linked file on the same website, in the page's HTML as first served (a download behind a script-driven button or a form is not seen), was checked, and none is an archive or a non-web-page file without a query of at least fifty kibibytes. The two tests are stand-ins: a link with a query may still deliver the whole product, and a complete product smaller than fifty kibibytes fails the size floor. It is not a claim that the agency's downloads are partial, nor that no bulk download exists elsewhere, such as a data portal, an FTP site, or a bulk endpoint on a data interface.",
+    "rf_not_measured": "The public client could not look at one or more of the linked files, for one of three reasons: the host refused the identified client; the client's own compliance with the site's robots.txt kept it from the file; or it could not confirm the absence because the page carried more same-website links than the cap of twenty-five, or a server or network error occurred.",
+    "rf_why_it_matters": "A Data on the Web Best Practice says to let consumers retrieve the full dataset with a single request, and an OMB memo says that where there is significant public interest in taking information off an agency's pages, the agency should strongly consider offering it in bulk; the fifty kibibytes floor and the query-means-filtered rule are the project's own choices.",
+    "rf_who_else": "Google Lighthouse runs this kind of check: anyone can run its automated checks against a named page, its criteria are published, and a result comes back met, not met, or not applicable. It does not run this exact one.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Can the whole dataset be retrieved in one request? An SI client that must assemble a product from many filtered queries makes many calls, can miss parts, and cannot tell when it has all of it; a bulk file answers that in one request.",
+    "rf_state": "specified",
+    "rf_plain_name": "Page links an archive or large unfiltered file",
+    "rf_fix_line": "Link a bulk download of the product from the product page.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Enable consumers to retrieve the full dataset with a single request.\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"making that information available as machine-readable data that can be accessed in bulk\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"If an agency detects significant public interest in scraping information from web pages, the agency should strongly consider making that information available as machine-readable data that can be accessed in bulk\"}]"
    }
   },
   {
@@ -3329,7 +3378,22 @@
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
     },
     "instrument_state": "invalid",
-    "instrument_entry": "assessment/instrument/RULE-A4-v1.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A4-v1.yaml",
+    "rf_question": "Does the host's stated policy in its robots.txt allow the crawlers that answer engines use to fetch the data page?",
+    "rf_where_we_look": "The single robots.txt file at the root of the agency's website, taken one host per agency.",
+    "rf_what_client_does": "The public client asks the website once for its robots.txt file and reads, for each of eight named crawler tokens, whether the stated rules allow the data page's path.",
+    "rf_pass": "The host's robots.txt, as stated, allows each of eight listed crawler tokens to fetch the data page's path. Every data page that was looked at met this.",
+    "rf_partial": "For some of the agency's data pages the stated policy allowed all eight listed crawler tokens and for some it did not.",
+    "rf_fail": "Either the host serves no robots.txt, which under the robots.txt standard actually permits every crawler, or its robots.txt tells at least one of the listed crawler tokens not to fetch the path. Neither is a claim that crawlers cannot reach the data: robots.txt is a stated policy, not a barrier, and telling a training-only crawler not to fetch does not keep a page out of answer engines.",
+    "rf_not_measured": "The public client could not read the robots.txt, for one of three reasons: the host refused the identified client (three of sixteen hosts on the cycle of record); the client's own compliance with the site's robots.txt kept it from the file; or it could not confirm the file's state because of a server or network error.",
+    "rf_why_it_matters": "An OMB memo asks agencies to use robots.txt so their pages can be found, and the crawler vendors' own pages say robots.txt is how a site controls which of their crawlers fetch it; reading a disallow of these particular eight tokens as a failure is the project's own rule, and the project has marked this check not yet valid.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Does the host's declared crawler policy let SI systems' crawlers fetch the data page? Answer engines that ground on the live web honor robots.txt; a page their crawler is told not to fetch is not read by that engine.",
+    "rf_state": "invalid",
+    "rf_plain_name": "robots.txt permits eight listed crawler tokens",
+    "rf_fix_line": "Serve a robots.txt that permits the data paths for the crawlers you want to allow.",
+    "rf_requirements": "[{\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"then the crawler MAY access any resources on the server.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"These rules are not a form of access authorization.\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"is the control for site owners to manage access to how their sites are crawled for Search\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"To limit AI training and grounding in some of Google's other systems, read more about Google-Extended\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"Disallowing GPTBot indicates a site's content should not be used in training generative AI foundation models.\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"To help ensure your site appears in search results, we recommend allowing OAI-SearchBot in your site's robots.txt file\"}, {\"source\": \"anthropic-crawler-support-article\", \"quote\": \"it signals that the site's future materials should be excluded from our AI model training\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"Crawlers MUST use case-insensitive matching to find the group that matches the product token and then obey the rules of the group.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"For example, in the context of HTTP, such status codes are in the 400-499 range.\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"AI is built into Search and integral to how Search functions, which is why robots.txt directives for Googlebot is the control for site owners to manage access to how their sites are crawled for Search.\"}]"
    }
   },
   {
@@ -3356,7 +3420,25 @@
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
     },
     "instrument_state": "specified",
-    "instrument_entry": "assessment/instrument/RULE-A5-v2.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A5-v2.yaml",
+    "rf_question": "Is the agency's data page listed in a sitemap served on the agency's own website?",
+    "rf_where_we_look": "The sitemap files at the standard locations on the agency's own site (a sitemap, a sitemap index, and any sitemap the site's robots.txt names on that same site), plus an llms.txt and the well-known discovery paths.",
+    "rf_what_client_does": "The public client asks the website for each of those discovery files and reads whether any of them lists the data page's web address.",
+    "rf_pass": "Every data page looked at was found listed: a sitemap served on the agency's own site carries the page's address exactly as the diagnostic records it.",
+    "rf_partial": "Some of the agency's data pages are listed in a served sitemap and some are not.",
+    "rf_fail": "For every data page looked at, the sitemaps served on the agency's own site were read and none lists the page's address in exactly the recorded form (a trailing slash, redirect target or query-string variant does not match), or the only discovery file served is an llms.txt (which by its proposal summarises a site rather than listing every page), or no sitemap is served at the standard locations; the reason names which. It is not a claim that the page is absent from the sitemap in every form, nor that search engines cannot find the page, because well-linked pages are found without a sitemap.",
+    "rf_not_measured": "The public client could not read one or more of the discovery files, for one of three reasons: the host refused the identified client, the client's own robots.txt compliance kept it from reading the file, or it could not confirm an absence or hit a server or network error.",
+    "rf_why_it_matters": "An OMB memo asks federal agencies to use sitemaps so their web content is easier to find, and a W3C practice (the sitemaps protocol) defines the sitemap file; the premise that an agency's data page is among the pages its owner thinks important is the project's own.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Is the data page listed in the host's sitemap? Search engines and answer engines discover pages by following links and reading sitemaps; on a large site, a page a sitemap omits can go undiscovered, and an SI client cannot cite a page its retrieval layer never found.",
+    "rf_state": "specified",
+    "rf_plain_name": "The site's sitemap lists the data page",
+    "rf_fix_line": "List the product address in the discovery file that is already served.",
+    "rf_requirements": "[{\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"Agencies should employ best practices to improve crawling or indexing of web content, including using sitemaps, robots.txt files\"}, {\"source\": \"sitemaps-protocol\", \"quote\": \"The location of a Sitemap file determines the set of URLs that can be included in that Sitemap.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"You might not need a sitemap if\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"in most cases, your site will benefit from having a sitemap\"}, {\"source\": \"sitemaps-protocol\", \"quote\": \"You can specify the location of the Sitemap using a robots.txt file.\"}, {\"source\": \"sitemaps-protocol\", \"quote\": \"a Sitemap is expected to have URLs from a single host only\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"You might not need a sitemap if: Your site is \\\"small\\\". By small, we mean about 500 pages or fewer on your site.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"Your site is comprehensively linked internally.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"Your site is large. Generally, on large sites it's more difficult to make sure that every page is linked by at least one other page on the site.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview\", \"quote\": \"A sitemap tells search engines which pages and files you think are important in your site\"}]",
+    "rf_standards_urls": [
+     "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview"
+    ]
    }
   },
   {
@@ -3376,7 +3458,25 @@
     "fuji_metric": "FsF-F4-01M, FsF-I1-01M",
     "prior_art": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`",
     "instrument_state": "invalid",
-    "instrument_entry": "assessment/instrument/RULE-A6-v2.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A6-v2.yaml",
+    "rf_question": "Does the data page's own markup tell a machine that the page describes a named, described dataset?",
+    "rf_where_we_look": "The data page itself, reading the structured markup embedded in the page as it is served.",
+    "rf_what_client_does": "The public client asks the website for the data page once and reads the structured markup in what comes back, without running any of the page's scripts.",
+    "rf_pass": "Every data page looked at carried markup, as served before any script runs, that declares a dataset with a name and a description (and any distribution it declares carries an access address).",
+    "rf_partial": "Some of the agency's data pages carry conforming dataset markup and some do not.",
+    "rf_fail": "For every data page looked at, the markup as served before any script runs does not declare a dataset, or declares one that fails the minimal shapes (a name or description missing, or a declared distribution without an access address); the reason names the violation. It is not a claim that a dataset declared with a name and description is missing when the failing shape is the distribution's, nor that the agency's datasets are absent from dataset search, because catalog pages, data.gov records and other pages may carry the markup.",
+    "rf_not_measured": "The public client could not read one or more pages, for one of three reasons: the host refused the identified client, the client's own robots.txt compliance kept it from reading the page, or the markup was declared but its graph could not be loaded to confirm the result, a server or network error.",
+    "rf_why_it_matters": "A W3C practice (the schema.org dataset vocabulary) lets a page declare itself a dataset with a name and description so search and answer engines recognise it, and USAFacts' AI-ready data guide asks publishers to align with standard schemas and well-structured metadata.",
+    "rf_who_else": "Google Lighthouse is the nearest precedent: anyone can run its automated page-level checks against a named page and get back met, not met, or not applicable against published criteria.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Does the data page carry structured markup that tells a machine it describes a dataset? Search engines' dataset indexes, and answer engines that draw on them, recognise a dataset page by its schema.org Dataset or DCAT markup; without it the page is read as an ordinary web page.",
+    "rf_state": "invalid",
+    "rf_plain_name": "Page markup declares a named, described dataset",
+    "rf_fix_line": "Type the product page's existing markup as a dataset.",
+    "rf_requirements": "[{\"source\": \"google-dataset-structured-data\", \"quote\": \"We recommend that you add structured data about a dataset to the canonical pages.\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"or equivalent structures represented in W3C's Data Catalog Vocabulary (DCAT) format\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"You must include the required properties for your content to be eligible for display as a rich result.\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"A short summary describing a dataset.\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"A descriptive name of a dataset.\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"Required properties --description | A short summary describing a dataset.\"}, {\"source\": \"google-dataset-structured-data\", \"quote\": \"The same schema.org vocabulary can also be used in RDFa 1.1 or Microdata syntaxes.\"}, {\"source\": \"schema-org-dataset\", \"quote\": \"A body of structured information describing some topic(s) of interest.\"}]",
+    "rf_standards_urls": [
+     "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics"
+    ]
    }
   },
   {
@@ -3395,7 +3495,25 @@
     "evidence_kind": "headers + markup date fields",
     "prior_art": "`w3c-dwbp-2017`",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-A8-v4.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A8-v4.yaml",
+    "rf_question": "Can a machine read which release of the data the page is showing, and follow a link to the latest release?",
+    "rf_where_we_look": "The data page itself (its structured date markup and the server's last-modified header) and up to three links on the same site that point to the latest version.",
+    "rf_what_client_does": "The public client asks the website for the data page, reads its date markup and header, and follows up to three same-site latest-version links to see whether they resolve.",
+    "rf_pass": "Every data page looked at carried a release or modification date in its markup (in the dateModified or datePublished field, or in temporalCoverage, a case this diagnostic marks as its own choice), and a latest-version link on the same site resolved.",
+    "rf_partial": "Some of the agency's data pages are dated in markup with a resolving same-site latest-version link and some are not.",
+    "rf_fail": "For every data page looked at, the markup does not carry a date in the three fields read (dateModified, datePublished, temporalCoverage), or carries one but none of up to three recognised same-site latest-version links resolves. It is not a claim that the agency does not date or version its releases: a version number, a date in another markup field, in visible text, a PDF or a catalog record, and a latest link worded otherwise, beyond the third, or on another site are not read.",
+    "rf_not_measured": "The public client could not read one or more pages, for one of three reasons: the host refused the identified client, the client's own robots.txt compliance kept it from reading the page, or a latest-version link could not be confirmed, a server or network error.",
+    "rf_why_it_matters": "A Data on the Web Best Practice asks that a machine be able to detect a dataset's version or date and refer to its latest version, and USAFacts' AI-ready data guide asks that the most recent update be retrievable by a machine; the requirement that a latest-version link actually resolve is the project's own rule.",
+    "rf_who_else": "Google Lighthouse is the nearest precedent: anyone can run its automated page-level checks against a named page and get back met, not met, or not applicable against published criteria.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Can a machine tell which release of the data it is reading, and find the latest one? An SI client that cannot read a release date may quote a superseded figure as current; one that cannot find the latest release cannot correct itself.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Markup dates the data; a latest-version link resolves",
+    "rf_fix_line": "Publish the product's release date in the page's structured markup.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Assign and indicate a version number or date for each dataset.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check if a computer application can automatically detect/discover and process the unique version number or date of a dataset or distribution.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Humans and software agents will be able to refer to specific versions of a dataset and to concepts such as a 'dataset series' and 'the latest version'.\"}, {\"source\": \"https://www.rfc-editor.org/rfc/rfc9110.txt\", \"quote\": \"provides a timestamp indicating the date and time at which the origin server believes the selected representation was last modified\"}, {\"source\": \"dcat-us-1-1-schema\", \"quote\": \"Most recent date on which the dataset was changed, updated or modified.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Assign URIs to individual versions of datasets as well as to the overall series.\"}]",
+    "rf_standards_urls": [
+     "https://www.rfc-editor.org/rfc/rfc9110.txt"
+    ]
    }
   },
   {
@@ -3424,7 +3542,22 @@
      "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
     },
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-A9-v2.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A9-v2.yaml",
+    "rf_question": "Does the agency serve an entry point built for machine clients, such as a machine-readable API description, an agent-protocol address, or an llms.txt, at the addresses machine clients look first?",
+    "rf_where_we_look": "A fixed handful of machine addresses this project checks on the agency's site: the recorded API base and its description, the /.well-known/mcp path, and /llms.txt.",
+    "rf_what_client_does": "The public client asks the website for each address in that fixed set with a plain request, no key and no special accept header, and reads the status, content type and body length.",
+    "rf_pass": "For every data page looked at, at least one of the addresses this project checks returned content that is not an HTML page.",
+    "rf_partial": "For some of the agency's data pages at least one checked address returns non-HTML content and for some none does.",
+    "rf_fail": "For every data page looked at, none of the handful of addresses this project checks, by a plain request with no key and no accept header, returned non-HTML content. The recorded API address may be stale or wrong, and an API that answers a bare request with an HTML page or an error page fails the same way; it is not a claim that the agency has no API, that its API is down, or that it lacks machine access.",
+    "rf_not_measured": "The public client could not read one or more addresses, for one of three reasons: the host refused the identified client, the client's own robots.txt compliance kept it from reading, or the recorded API base could not be reached to confirm an absence, a server or network error.",
+    "rf_why_it_matters": "This is the project's own rule: no published standard defines this entry point or the set of addresses to serve it at. Its motivation draws on a FAIR letter (data retrievable by a standardised protocol) and the llms.txt proposal, but neither defines the check.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "This check requests with no key, so a registered public client that presents a key could change the result here: an API that answers only a key-bearing request could return machine content on a second look where the bare request got an HTML or error page.",
+    "rf_hypothesis": "Does the agency serve an entry point built for machine clients (an API description, an agent-protocol endpoint, an llms.txt) where such clients look first? Agents increasingly look for these before reading pages.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "A probed machine address returns non-HTML content",
+    "rf_fix_line": "Publish a machine-first entry point for the product.",
+    "rf_requirements": "[]"
    }
   },
   {
@@ -3443,7 +3576,27 @@
     "evidence_kind": "status codes + raw HTML + rendered DOM",
     "prior_art": "internal draft: FSS Machine Diagnostic spec (operator-held)",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-A10-v3.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A10-v3.yaml",
+    "rf_question": "Does the agency's interactive data tool answer a machine honestly — real content at a direct link, and a real \"not found\" error for a web address that does not exist?",
+    "rf_where_we_look": "At the one interactive data tool the agency offers, looked at from the site level: its direct link to a product, and a made-up address beneath that tool.",
+    "rf_what_client_does": "The public client asks for the tool's direct link, then asks for a made-up address under the same tool that should not exist, and reads what each answer returns.",
+    "rf_pass": "The direct link came back as a working page carrying at least two thousand characters of text before any script ran, and the made-up address correctly came back as an error rather than a normal \"OK\" page.",
+    "rf_partial": "Some of the agency's data pages that were looked at met this and some did not.",
+    "rf_fail": "One of three things, named in the result: a made-up address came back as a normal \"OK\" page instead of an error (which may be a platform or vendor default rather than the agency's choice); the direct link itself came back as an error; or fewer than two thousand characters of text were present before scripts ran. It is not a claim that the tool is unusable in a browser or by a crawler that runs JavaScript, nor a finding about the agency's intent.",
+    "rf_not_measured": "The public client could not look at one or more pages, for one of three reasons: the host refused the identified client; the client's own robots.txt compliance kept it from reading the page; or it could not confirm an absence, or a server or network error stopped it.",
+    "rf_why_it_matters": "An RFC defines what a real \"not found\" answer is, and Google's crawler documentation treats an \"OK\" page that is really an error as a problem, not a page; a Data on the Web Best Practice expects programmatic access to return the responses a client expects. The rule that at least two thousand characters be present before scripts run is the project's own choice.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Does the agency's interactive data tool answer a machine client honestly: real content at a deep link, and a real error for a route that does not exist? An SI client that receives HTTP 200 with an error page, or an empty shell that needs a browser to fill, records a page that is not there or reads nothing.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Data tool answers with real status and content",
+    "rf_fix_line": "Return a real status for routes that do not exist.",
+    "rf_requirements": "[{\"source\": \"https://www.rfc-editor.org/rfc/rfc9110.txt\", \"quote\": \"indicates that the origin server did not find a current representation for the target resource\"}, {\"source\": \"https://developers.google.com/crawling/docs/troubleshooting/http-status-codes\", \"quote\": \"Search Console will show a soft 404 error\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics\", \"quote\": \"Googlebot queues all pages with a 200 HTTP status code for rendering\"}]",
+    "rf_standards_urls": [
+     "https://www.rfc-editor.org/rfc/rfc9110.txt",
+     "https://developers.google.com/crawling/docs/troubleshooting/http-status-codes",
+     "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics"
+    ]
    }
   },
   {
@@ -3462,7 +3615,23 @@
     "evidence_kind": "robots.txt + meta-robots + per-UA declared verdict",
     "prior_art": "`rfc-9309-robots-exclusion-protocol`; `cloudflare-ai-crawl-control-manage-crawlers`",
     "instrument_state": "invalid",
-    "instrument_entry": "assessment/instrument/RULE-A11-declared-v2.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A11-declared-v2.yaml",
+    "rf_question": "What does the host say in writing about letting crawlers reach the data page, in both places such a statement can live — the site's robots.txt file and the page's robots meta tags?",
+    "rf_where_we_look": "At the site's robots.txt file and at the robots meta tags carried on the data page.",
+    "rf_what_client_does": "The public client asks for the robots.txt file and reads the data page's robots meta tags, then checks what each says about the same eight listed crawler names.",
+    "rf_pass": "This records what the agency declares; it is read but not scored. What it records as permitting: both the robots.txt and the page's meta tags, as written, allow each of the eight listed crawler names.",
+    "rf_partial": "This is a declaration that is read but not scored, so no partial result is given.",
+    "rf_fail": "It records one of three things, named in the result: the robots.txt disallows a listed name (for five of the eight names that is a request not to use content for training, not a block on reading); the page's meta tags restrict it; or no robots.txt is served at all, which declares no restriction and under the standard permits every crawler. A fail is therefore not a finding that the agency declared a policy restricting crawler access, and it is about declared policy only, not about whether any crawler is actually served or refused.",
+    "rf_not_measured": "The declared layer could not be looked at, for one of three reasons: the host refused the identified client; the client's own robots.txt compliance kept it from reading the page; or it could not confirm an absence, or a server or network error stopped it.",
+    "rf_why_it_matters": "An RFC on robots.txt defines the file and states plainly that its rules are not a form of access authorization, and Google's crawler documentation defines the robots meta tag and notes those settings can be followed only if crawlers are allowed to read the pages that carry them. This is a declaration: it records what the agency states, read but not scored.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "What does the host declare about crawler access to the data page, in both places a declaration can live (robots.txt and the page's robots meta tag)? A declaration is the publisher's stated policy; it is half of the question whether crawlers are let in, and the half that can be read from outside.",
+    "rf_state": "invalid",
+    "rf_requirements": "[{\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"then the crawler MAY access any resources on the server.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag\", \"quote\": \"rule applies to search engine crawlers\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"Disallowing GPTBot indicates a site's content should not be used in training generative AI foundation models.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"These rules are not a form of access authorization.\"}, {\"source\": \"https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag\", \"quote\": \"these settings can be read and followed only if crawlers are allowed to access the pages that include these settings\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"To help ensure your site appears in search results, we recommend allowing OAI-SearchBot in your site's robots.txt file\"}, {\"source\": \"anthropic-crawler-support-article\", \"quote\": \"it signals that the site's future materials should be excluded from our AI model training\"}, {\"source\": \"cloudflare-ai-crawl-control-manage-crawlers\", \"quote\": \"For each AI crawler, you can choose to allow or block access.\"}]",
+    "rf_standards_urls": [
+     "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag"
+    ]
    }
   },
   {
@@ -3482,7 +3651,22 @@
     "prior_art": "`fcsm-25-03`",
     "note": "NOT in the task's §3 list; derived from the framework as public-tier and AUTO/DOC. Reported as a discrepancy.",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-B3-v4.yaml"
+    "instrument_entry": "assessment/instrument/RULE-B3-v4.yaml",
+    "rf_question": "Can a machine reach the methodology behind the data and read it as plain text, without having to run scripts?",
+    "rf_where_we_look": "The data product page itself, and any link on it whose web address or wording contains the word \"methodology\" (up to twenty-five such links).",
+    "rf_what_client_does": "The public client opens the data page and then opens each of those methodology links to read what the document actually sends.",
+    "rf_pass": "Every data page that was looked at links to a methodology document served as a web page or plain text, readable before any script runs, with enough text and not mostly links.",
+    "rf_partial": "Some of the agency's data pages that were looked at met this and some did not.",
+    "rf_fail": "For every data page looked at, no methodology link (up to twenty-five followed) led to a document meeting the project's text measures: at least two thousand visible characters before any script runs and no more than a quarter of the text sitting in links. A short but readable page, or a chapter hub, can fall short of those measures. It is not a claim that the methodology needs scripts or cannot be read, nor that the agency publishes no methodology: one linked under another name, such as \"technical documentation\" or \"about the data\", is simply not found.",
+    "rf_not_measured": "The public client could not finish looking at one or more pages, for one of three reasons: the host turned the identified client away; the client's own honoring of the site's robots.txt stopped it reading the page; or a server or network error, or methodology links it could not follow, left the result unconfirmed.",
+    "rf_why_it_matters": "A published guide on readable data documentation asks that text documentation, methodology included, be reachable by people and by web crawlers, and an OMB memo asks agencies to default web content to a plain web page rather than another format. The added rule that the text be readable before any script runs is the project's own reading of \"reachable by crawlers\", since many crawlers do not run scripts.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Can a machine reach the methodology behind the data and read it? An SI client explaining a figure needs how it was collected and estimated; a methodology it cannot reach, or can reach only as a PDF or behind a script, is context it will not use.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Page links a methodology readable as text",
+    "rf_fix_line": "Link the methodology from the product page.",
+    "rf_requirements": "[{\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Ensure text documentation (data dictionaries, methodology) are accessible to both humans and AI/web crawlers.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"AI models need context—such as variable definitions, collection methodology, and version history\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"An agency should develop online content in a non-HTML format only if necessitated by a specific user need.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Data Must Be Machine Understandable with Easily Retrievable\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Disclose methodologies for derived or transformed datasets, ensuring clarity on how figures are generated.\"}]"
    }
   },
   {
@@ -3520,7 +3704,22 @@
     "fuji_metric": "FsF-R1.1-01M",
     "prior_art": "`odcs-open-data-contract-standard`",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-D1-v6.yaml"
+    "instrument_entry": "assessment/instrument/RULE-D1-v6.yaml",
+    "rf_question": "Can a machine tell, from a recognised name, on what terms it may reuse the data?",
+    "rf_where_we_look": "The licence field in the data page's markup, a licence link sent in the page's response headers, and, when an interface for developers is on record, that interface's terms page.",
+    "rf_what_client_does": "The public client opens the data page and reads its licence markup and any licence link in the response, and when a developer interface is on record it also opens that interface's terms page.",
+    "rf_pass": "Every data page that was looked at names a licence by a recognised identifier in at least one of those places.",
+    "rf_partial": "Some of the agency's data pages that were looked at met this and some did not.",
+    "rf_fail": "For every data page looked at, none of the places read names a licence by a recognised identifier: the page's markup, its licence link header, and the developer-interface terms page only when a terms address is on record for the agency (when none is on record, that place was not read). It is not a claim that the data is unlicensed or restricted: federal data is generally public domain, and the agency's own data inventory, where federal guidance says the status may be recorded, is not read by this check.",
+    "rf_not_measured": "The public client could not finish looking at one or more pages, for one of three reasons: the host turned the identified client away; the client's own honoring of the site's robots.txt stopped it reading the page; or the developer-interface terms address was not yet settled, or a server or network error left the result unconfirmed.",
+    "rf_why_it_matters": "A Data on the Web Best Practice asks that a licence be stated so a machine can find it; an OMB memo lets a federal agency meet the open-licence requirement by marking the asset public domain in its inventory; the US DCAT schema carries a licence-or-public-domain field; and the SPDX licence list supplies the recognised identifiers. The extra demand that a detected licence be given as an identifier rather than in words is the project's own rule.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "A public key could let the client reach a developer interface's terms page that is shown only to registered developers; the page-markup and response-header checks need no key.",
+    "rf_hypothesis": "Can a machine tell on what terms it may use the data? An SI client, or the developer behind it, needs to know the data may be reused; for federal data that is usually public domain, but a client cannot assume what is not stated.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Page or API terms name a recognised licence",
+    "rf_fix_line": "State the product's licence or public domain status in its machine-readable metadata.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check if a user agent can automatically detect or discover the data license of the dataset.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"Agencies may satisfy this requirement by indicating, in the comprehensive data inventory, that the data asset is in the public domain\"}, {\"source\": \"dcat-us-1-1-schema\", \"quote\": \"The license or non-license (i.e. Public Domain) status with which the dataset or API has been published.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide a link to or copy of the license agreement that controls use of the data.\"}]"
    }
   },
   {
@@ -3539,7 +3738,22 @@
     "evidence_kind": "catalog document + validation report + membership verdict",
     "prior_art": "`dcat-us-1-1-schema`; `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove`",
     "instrument_state": "specified",
-    "instrument_entry": "assessment/instrument/RULE-D4-v5.yaml"
+    "instrument_entry": "assessment/instrument/RULE-D4-v5.yaml",
+    "rf_question": "Is this data product listed, in a valid record, in the agency's public data inventory?",
+    "rf_where_we_look": "The agency's public data inventory at each location on record for it — its own data.json file, or a catalog recorded for the agency.",
+    "rf_what_client_does": "The public client opens the inventory at each recorded location, checks it against the federal metadata schema, and looks for a record that names this data page's address.",
+    "rf_pass": "Every data page that was looked at appears in a record that names its address in a DCAT-US address field, inside an inventory that conforms to the federal metadata schema.",
+    "rf_partial": "Some of the agency's data pages that were looked at met this and some did not.",
+    "rf_fail": "For every data page looked at, one of three things named in the result's reason: the recorded inventory was read and no record names this page's address; or the page is listed but the inventory as a whole fails the schema, possibly in an unrelated record; or no inventory is served at any recorded address. It is not a claim that the dataset is missing from the inventory under some other address, nor that the agency has no inventory at an address not on record for it, such as a parent department's.",
+    "rf_not_measured": "The public client could not finish looking at one or more pages, for one of three reasons: the host turned the identified client away; the client's own honoring of the site's robots.txt stopped it reading the inventory; or a recorded inventory could not be confirmed, or a starting source was not searched, because of a server or network error.",
+    "rf_why_it_matters": "An OMB memo requires each agency to keep a complete data inventory of all its data assets, in JSON, conforming to the federal metadata schema and hosted at the agency's data.json address, and the US DCAT schema (Project Open Data) defines the record's address fields. The rule for deciding that a given page is a given record — matching its address in the record's address fields — is the project's own.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Is the data product listed in the agency's public data inventory? Data.gov harvests agency inventories, and catalog-driven discovery (and SI clients that use catalogs to verify a source) find a product only if its record is there.",
+    "rf_state": "specified",
+    "rf_plain_name": "Agency's data.json inventory lists this page, validly",
+    "rf_fix_line": "Add the product to the public data inventory already published.",
+    "rf_requirements": "[{\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"develop and maintain a comprehensive data inventory that accounts for all data assets\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"must employ the metadata schema approved by OMB and available on resources.data.gov\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"including in the agency's comprehensive data inventory the URL or persistent identifier\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"Each agency is required to develop and maintain a comprehensive data inventory of all data assets maintained by the agency.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"commonly known as the JSON format\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"host it publicly on the agency's website at the address: www.[agency].gov/data.json\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"When an agency chooses to disseminate a public data asset through the Federal Data Catalog, they do so by including in the agency's comprehensive data inventory the URL or persistent identifier\"}, {\"source\": \"dcat-us-1-1-schema\", \"quote\": \"This field is not intended for an agency's homepage (e.g. www.agency.gov), but rather if a dataset has a human-friendly\"}]"
    }
   },
   {
@@ -3612,7 +3826,22 @@
     "evidence_kind": "changelog document + parse verdict",
     "prior_art": "`usafacts-ai-ready-data-guide`",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-F4-v5.yaml"
+    "instrument_entry": "assessment/instrument/RULE-F4-v5.yaml",
+    "rf_question": "Can a machine learn what changed between releases from a structured change history?",
+    "rf_where_we_look": "Each change-log or release-notes location on record for the agency.",
+    "rf_what_client_does": "The public client opens each recorded change-log location and reads what kind of document it sends and, for a feed, how many of its entries say what kind of change they record.",
+    "rf_pass": "Every data page that was looked at has a change history served as a JSON, Atom or RSS feed, with at least half its entries saying what kind of change they record.",
+    "rf_partial": "Some of the agency's data pages that were looked at met this and some did not.",
+    "rf_fail": "For every data page looked at, no such feed was found at the recorded locations: there is no change history there, or there is one published as an ordinary web page, or its entries do not say what kind of change they are, or the recorded locations were missing or wrong. The project's format and labelling floors decide two of these, so a precise web-page change log that a machine can read, and that a Data on the Web Best Practice accepts, still fails here. A fail is not a claim that the version history is absent, incomplete or unreadable, nor that the agency does not publish revisions.",
+    "rf_not_measured": "The public client could not finish looking at one or more pages, for one of three reasons: the host turned the identified client away; the client's own honoring of the site's robots.txt stopped it reading the page; or a starting source was not searched, or a server or network error left the result unconfirmed.",
+    "rf_why_it_matters": "A Data on the Web Best Practice asks for a complete version history that explains the changes in each version, and a published guide on data for developers asks for versioning so updates can be tracked over time. The added demands that the history come as a feed and that entries carry a change-type label are the project's own rules; neither source requires them.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Can a machine learn what changed between releases? An SI client holding last month's figure needs to know it was revised, and why; without a change history it cannot tell a revision from an error.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Change history served as a structured feed",
+    "rf_fix_line": "Publish a version history for the product.",
+    "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide a complete version history that explains the changes made in each version.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check that a list of published versions is available as well as a change log describing precisely how each version differs from the previous one.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Implement versioning so AI developers can track updates over time.\"}]"
    }
   },
   {
@@ -3723,7 +3952,21 @@
     "prior_art": "RFC 9309 (what a declaration means); `cloudflare-ai-crawl-control-manage-crawlers` (what an enforcing layer does)",
     "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
     "instrument_state": "invalid",
-    "instrument_entry": "assessment/instrument/RULE-A12-v3.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A12-v3.yaml",
+    "rf_question": "Does the host actually serve the data page to an identified, compliant client when its own robots.txt says it may?",
+    "rf_where_we_look": "At the site's robots.txt file and at the data page's web address, both requested as the same identified client.",
+    "rf_what_client_does": "The public client asks for the robots.txt file, then asks for the data page itself as the same identified client, and compares what robots.txt permits with what the host actually served.",
+    "rf_pass": "This check is under review and is not scored yet. What it would record as a pass: the robots.txt permits this client on the data page's path and the host actually served the page to it.",
+    "rf_partial": "This check is under review and is not scored yet, so no result is given.",
+    "rf_fail": "It would record one of three things, named in the result: the host answered a refusal to this client's request for the robots.txt file; the robots.txt permits the client on the path and the host answered a refusal for that same path; or no robots.txt is served, which under the standard declares permission and involves no contradiction (the page may well have been served). Only the second is a host doing other than it declared; a rate-limit refusal may be temporary rather than a policy; a temporary error or server failure is never a fail here; and it is about one identified client, not every crawler.",
+    "rf_not_measured": "The public client could not settle the page, for one of three reasons: the host refused the identified client; the client's own robots.txt compliance kept it from reading; or it could not confirm an absence, or a server or network error stopped it — here, no response to either request or a server error on the page request.",
+    "rf_why_it_matters": "An RFC on robots.txt states that its rules are not a form of access authorization and are not a substitute for valid content security measures; the idea that a host's enforcement should match its declaration is this project's own construct. This check is under review and not scored yet.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Does the host enforce what it declares? A host whose robots.txt permits an identified, compliant client and whose edge then refuses that client tells SI systems one thing and does another; the refusal, not the declaration, decides what they can read.",
+    "rf_state": "invalid",
+    "rf_plain_name": "Host serves the path its robots.txt permits",
+    "rf_requirements": "[{\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"These rules are not a form of access authorization.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"The Robots Exclusion Protocol is not a substitute for valid content security measures.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"then the crawler MAY access any resources on the server.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"\\\"Unavailable\\\" means the crawler tries to fetch the robots.txt file and the server responds with status codes indicating that the resource in question is unavailable.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"For example, in the context of HTTP, such status codes are in the 400-499 range.\"}]"
    }
   },
   {
@@ -6892,7 +7135,21 @@
     "prior_art": "W3C DWBP 2017 (data discoverable by machines); OMB M-13-13 and DCAT-US 1.1 (the data.json inventory at the host root); RFC 9727 (api-catalog); RFC 8288 (Link header)",
     "recorded_by": "cc_tasks/2026-10-07_seed_known_locations_and_split_discoverability.md",
     "instrument_state": "project_defined",
-    "instrument_entry": "assessment/instrument/RULE-A13-v1.yaml"
+    "instrument_entry": "assessment/instrument/RULE-A13-v1.yaml",
+    "rf_question": "Starting at one of the agency's data pages and knowing nothing else, can a machine client reach the four things an agency publishes for machines — its data service (its API), that service's terms, its changelog, and its data inventory?",
+    "rf_where_we_look": "At one of the agency's data pages — its links and its response headers — and at the recorded locations where each of the four objects was reported to sit.",
+    "rf_what_client_does": "The public client makes no new request of its own; it reuses what other checks already fetched: the data page's links and headers, and whether each object was served where it was recorded.",
+    "rf_pass": "Every object the agency is shown to publish is either linked from this data page or sits at its published standard address.",
+    "rf_partial": "Some of the agency's data pages that were looked at reached every published object and some did not.",
+    "rf_fail": "At least one object the agency is shown to publish (named in the result) is neither linked from this data page nor at a standard address the check looked at — the inventory at /data.json on the data page's own host (an inventory on the main www site while the page sits on a subdomain is not matched there), or the API catalog at /.well-known/api-catalog. For the service's terms and the changelog no published standard exists, so a fail on either rests only on this project's \"must be linked\" rule and breaks no published convention. It is not a claim that the object is missing, nor that a client told where to look cannot use it.",
+    "rf_not_measured": "The public client could not settle one or more objects, for one of three reasons: the host refused the identified client; the client's own robots.txt compliance kept it from reading; or it could not confirm an absence, or a server or network error stopped it — here, an object whose existence was not settled, a page not served or its links not read, or an API catalog address no collector has fetched yet.",
+    "rf_why_it_matters": "An RFC on API catalogs defines how a publisher announces its data service at a standard address, and an OMB memo requires each agency to post its data inventory at a set data.json address. Reaching the service's terms or changelog by an ordinary link, and combining the four objects into one result, are the project's own rules.",
+    "rf_who_else": "No public tool runs this exact check.",
+    "rf_rung_two_changes": "Nothing: this check needs no key.",
+    "rf_hypothesis": "Can a machine client that starts at a data page, and knows nothing else, reach the four objects an agency publishes for machines (its API, the API's terms, its changelog, its data inventory)? An SI client usually arrives at a data page from a search result; if the objects behind it cannot be reached from there, the client cannot use them, however well they are built.",
+    "rf_state": "project_defined",
+    "rf_plain_name": "Page reaches the agency's API, terms, changelog, inventory",
+    "rf_requirements": "[{\"source\": \"rfc-9727-api-catalog\", \"quote\": \"SHALL resolve an HTTPS GET request to /.well-known/api-catalog and return an API catalog document\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"This identifies a target resource that represents a list of APIs available from the Publisher of the link context.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"each agency must post the inventory in JSON format, or a successor format, to www.[agency].gov/data.json\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"the Publisher \\\"example\\\" could include the api-catalog link relation in the HTTP header and/or content payload\"}]"
    }
   },
   {
@@ -10238,9 +10495,401 @@
    "properties": {
     "doc_id": "rfc-9727-api-catalog"
    }
+  },
+  {
+   "from": "spec:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9727-api-catalog",
+   "properties": {
+    "doc_id": "rfc-9727-api-catalog"
+   }
+  },
+  {
+   "from": "spec:A13",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openapi-specification-core",
+   "properties": {
+    "doc_id": "openapi-specification-core"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9727-api-catalog",
+   "properties": {
+    "doc_id": "rfc-9727-api-catalog"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:google-ai-features-and-your-website",
+   "properties": {
+    "doc_id": "google-ai-features-and-your-website"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openai-crawlers-bots",
+   "properties": {
+    "doc_id": "openai-crawlers-bots"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:anthropic-crawler-support-article",
+   "properties": {
+    "doc_id": "anthropic-crawler-support-article"
+   }
+  },
+  {
+   "from": "spec:A5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "spec:A5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:sitemaps-protocol",
+   "properties": {
+    "doc_id": "sitemaps-protocol"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:google-dataset-structured-data",
+   "properties": {
+    "doc_id": "google-dataset-structured-data"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:schema-org-dataset",
+   "properties": {
+    "doc_id": "schema-org-dataset"
+   }
+  },
+  {
+   "from": "spec:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "spec:A9",
+   "type": "EVIDENCED_BY",
+   "to": "doc:llmstxt-proposal",
+   "properties": {
+    "doc_id": "llmstxt-proposal"
+   }
+  },
+  {
+   "from": "spec:A9",
+   "type": "EVIDENCED_BY",
+   "to": "doc:wilkinson-2016-fair-guiding-principles",
+   "properties": {
+    "doc_id": "wilkinson-2016-fair-guiding-principles"
+   }
+  },
+  {
+   "from": "spec:A10",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A10",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:B3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:B3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:spdx-license-list",
+   "properties": {
+    "doc_id": "spdx-license-list"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:foundations-for-evidence-based-policymaking-act-of-2018-evid",
+   "properties": {
+    "doc_id": "foundations-for-evidence-based-policymaking-act-of-2018-evid"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "spec:F4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "spec:F4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
+   "properties": {
+    "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openai-crawlers-bots",
+   "properties": {
+    "doc_id": "openai-crawlers-bots"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "EVIDENCED_BY",
+   "to": "doc:anthropic-crawler-support-article",
+   "properties": {
+    "doc_id": "anthropic-crawler-support-article"
+   }
+  },
+  {
+   "from": "spec:A12",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "spec:A12",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
+   "properties": {
+    "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
   }
  ],
- "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision) include every spec, adopted or not. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. tools and preconditions count the requirements layer's AssessmentTool and Precondition nodes, which belong to no indicator and so have no candidate split; requires counts REQUIRES edges from the framework's indicators and requires_on_candidate_indicators the rest, on the same DD-054 split. Regenerated by scripts/framework_writeback.py::recount on every write-back.",
+ "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision, evidenced_by_spec) include every spec, adopted or not; evidenced_by_spec is the instrument's own EVIDENCED_BY edges from a MeasurementSpec to the corpus documents its entry cites (DN-016 ruling 4), kept separate from the framework's construct-evidence count evidenced_by, which is indicator-sourced and candidate-excluded. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. tools and preconditions count the requirements layer's AssessmentTool and Precondition nodes, which belong to no indicator and so have no candidate split; requires counts REQUIRES edges from the framework's indicators and requires_on_candidate_indicators the rest, on the same DD-054 split. Regenerated by scripts/framework_writeback.py::recount on every write-back.",
  "measurement_tiers": {
   "public": {
    "display_name": "public tier"

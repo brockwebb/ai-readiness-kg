@@ -3,7 +3,7 @@ generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_r
   whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
   the generator.'
 cycle_of_record: scan_2026-10-07_composite_d
-framework_record_commit: 1201f8f20bbc
+framework_record_commit: 902a28ab2248
 claims:
 - id: CL-001
   key: q1.partition
@@ -2416,8 +2416,8 @@ claims:
   key: q5.evidence_coverage
   question: Q5
   text: 'Evidence coverage in the record: 12 of 50 indicator evidence cells carry a pinpoint locator;
-    40 of 160 `EVIDENCED_BY` edges point at a located document; 14 indicators have no `EVIDENCED_BY` edge;
-    and 90 of the 287 admitted documents are cited by one.'
+    40 of 209 `EVIDENCED_BY` edges point at a located document; 14 indicators have no `EVIDENCED_BY` edge;
+    and 92 of the 287 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2481,11 +2481,11 @@ claims:
     source: AssessmentIndicator nodes in the record
   - value: '40'
     source: EVIDENCED_BY edges whose document has a locator in the cell
-  - value: '160'
+  - value: '209'
     source: EVIDENCED_BY edges in the record
   - value: '14'
     source: indicators with no EVIDENCED_BY edge
-  - value: '90'
+  - value: '92'
     source: admitted documents cited by an EVIDENCED_BY edge
   - value: '287'
     source: manifest entries with screening.decision included
@@ -6578,4 +6578,8 @@ tables:
     documents: 2
   - first_admitted: '2026-10-11'
     documents: 5
-  q5_numbers_that_differ_from_the_pack: []
+  q5_numbers_that_differ_from_the_pack:
+  - number: EVIDENCED_BY edges
+    pack: '160'
+    pack_source: 'C_provenance.md: EVIDENCED_BY edges in the record'
+    script: 209
