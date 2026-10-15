@@ -149,3 +149,8 @@ prior_art:
   ref: ../seldon/seldon.yaml#prior_art
   gate:
     baseline: docs/design/AD-036_baseline.txt
+
+# AD-037-R6 (c) (seldon SEL-006 Part C, Issue f6c69653): `seldon cc register` refuses a task with no
+# `**Parts:**` header (`parts_undeclared`). Tasks registered before the gate are baseline.
+qc:
+  parts_baseline: docs/evidence/sel006/parts_baseline.txt
