@@ -53,6 +53,26 @@ TASK = "cc_tasks/2026-10-15_readiness_diagnostic_package.md"
 PLAIN_FIELDS = ["question", "where_we_look", "what_client_does", "pass", "partial", "fail",
                 "not_measured", "why_it_matters", "who_else", "rung_two_changes"]
 
+#: The readiness brief's short fields (`cc_tasks/2026-10-16_readiness_brief.md` Part A), authored
+#: in a sidecar beside the entries so the reader-verified RULE-*.yaml are not edited for a
+#: presentation field. Every leg carries all four; written as `rf_<key>`.
+BRIEF_FIELDS_FILE = REPO / "assessment" / "instrument" / "brief_fields.yaml"
+BRIEF_FIELDS = ["name_brief", "ask_plain", "tells_plain", "why_short"]
+
+
+def load_brief_fields(path: Path = BRIEF_FIELDS_FILE) -> dict:
+    """`{leg: {field: text}}` from the sidecar; `{}` when the file is absent (the write-back then
+    behaves exactly as before it existed). A present file must cover every field it names."""
+    if not path.is_file():
+        return {}
+    import yaml
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    for leg, block in data.items():
+        missing = [f for f in BRIEF_FIELDS if not str((block or {}).get(f) or "").strip()]
+        if missing:
+            raise SystemExit(f"FATAL: {path.name} {leg} is missing {missing}; nothing written")
+    return data
+
 
 def _corpus_ids(e: dict) -> list[str]:
     """Every corpus `doc_id` the entry cites, deduped, in first-seen order."""
@@ -104,9 +124,15 @@ def _fix_line(e: dict) -> str | None:
     return None
 
 
-def wanted(entries: list) -> dict:
+def wanted(entries: list, brief: dict | None = None) -> dict:
     """`{spec_id: {props}}` and the list of `EVIDENCED_BY` edges the specs should carry."""
     props, edges = {}, []
+    brief = brief or {}
+    if brief:
+        legs = {e["leg"] for e in entries}
+        if set(brief) != legs:
+            raise SystemExit(f"FATAL: {BRIEF_FIELDS_FILE.name} legs != entry legs: "
+                             f"missing {sorted(legs - set(brief))}, extra {sorted(set(brief) - legs)}")
     for e in entries:
         sid = f"spec:{e['leg']}"
         plain = e.get("plain") or {}
@@ -115,6 +141,8 @@ def wanted(entries: list) -> dict:
             raise SystemExit(f"FATAL: {e['rule_id']} has no plain block or is missing {missing}; "
                              "author it (DN-016 §3) before the write-back")
         p = {f"rf_{k}": plain[k] for k in PLAIN_FIELDS}
+        if brief:
+            p.update({f"rf_{k}": brief[e["leg"]][k] for k in BRIEF_FIELDS})
         p["rf_hypothesis"] = (e.get("question") or {}).get("text")
         p["rf_state"] = e.get("state")
         if e.get("plain_name"):
@@ -165,6 +193,7 @@ def apply(g: dict, w: dict) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=TASK, help="the task file the write-back event names")
     fw.add_force_args(ap)
     a = ap.parse_args(argv)
     cfg = INS.load_config()
@@ -173,14 +202,16 @@ def main(argv=None) -> int:
     if problems:
         raise SystemExit("FATAL: the entries do not pass `instrument.py check`; nothing written:\n  "
                          + "\n  ".join(problems))
-    w = wanted(entries)
+    brief = load_brief_fields()
+    w = wanted(entries, brief)
     g = fw.load()
     if g is None:
         raise SystemExit("FATAL: framework record not found")
     rep = apply(g, w)
     urls = sorted({u for p in w["props"].values() for u in p.get("rf_standards_urls", [])})
-    ev = fw.save(g, script=SCRIPT, task=TASK,
-                 changes={"applied": "reader-facing instrument fields and spec EVIDENCED_BY edges (DN-016 ruling 4)",
+    ev = fw.save(g, script=SCRIPT, task=a.task,
+                 changes={"applied": "reader-facing instrument fields and spec EVIDENCED_BY edges (DN-016 ruling 4)"
+                                     + (" plus the readiness brief fields " + ", ".join("rf_" + f for f in BRIEF_FIELDS) if brief else ""),
                           "specs_updated": sorted(w["props"]), "evidenced_by_edges_added": len(rep["edges_added"]),
                           "standards_urls_as_property": urls},
                  dry_run=a.dry_run, **fw.force_kwargs(a))
