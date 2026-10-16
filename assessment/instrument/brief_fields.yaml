@@ -15,85 +15,87 @@
 #               words or "this project's rule" (rf_why_short)
 #
 # Style (task, "Vocabulary and style"): no banned word, no dash used as a dash, no bare digit, no
-# phrase repeated across rows, no glossary-only word.
+# phrase repeated across rows, no glossary-only word. Revised once after the critic's page-one
+# reading (reports/diagnostic/brief/critic_run/critic_reading.json): each word it flagged as not
+# understood is replaced or explained in place where the field carries it.
 
 A1:
-  name_brief: "Data offered as a file a program can read"
-  ask_plain: "The data page, and the files it links to on the same website."
-  tells_plain: "Whether the numbers come as a spreadsheet, CSV or JSON file, not only as a PDF."
-  why_short: "An OMB memo requires public data to be machine-readable, and USAFacts' guide says to avoid PDF-only release."
+  name_brief: Data offered as a file a program can read
+  ask_plain: The data page, and the files it links to on the same website.
+  tells_plain: Whether the numbers come as a spreadsheet, CSV or JSON file, not only as a PDF.
+  why_short: An OMB memo requires public data to be readable by programs, and USAFacts' guide says to avoid PDF-only release.
 A2:
-  name_brief: "A published description of the data interface"
-  ask_plain: "The address of the agency's data interface, and any description file kept beside it."
-  tells_plain: "Whether a program can learn the interface's calls without a person reading the manual first."
-  why_short: "A W3C practice asks for interface details that machines can read; the required file format is this project's rule."
+  name_brief: A published description of the agency's data service
+  ask_plain: The address of the agency's data service for programs, and any file kept beside it that lists the requests it accepts.
+  tells_plain: Whether a program can learn what to ask for without a person reading the manual first.
+  why_short: A World Wide Web Consortium practice asks for service details that programs can read; the required file format is this project's rule.
 A3:
-  name_brief: "The whole dataset in one download"
-  ask_plain: "Links on the data page to a single archive or complete file of the dataset."
-  tells_plain: "Whether someone can take all of it at once instead of piecing it together query by query."
-  why_short: "The W3C's data guidance asks that a full dataset come in one request, and an OMB memo urges bulk access."
+  name_brief: The whole dataset in one download
+  ask_plain: Links on the data page to one zipped or complete file holding the whole dataset.
+  tells_plain: Whether someone can take all of it at once instead of piecing it together query by query.
+  why_short: The World Wide Web Consortium's data guidance asks that a full dataset come in one request, and an OMB memo urges offering whole datasets for download.
 A4:
-  name_brief: "What robots.txt lets answer-engine crawlers fetch"
-  ask_plain: "The site's robots.txt file, which search engines also request as a matter of course."
-  tells_plain: "Whether the site's written policy lets the crawlers behind answer engines reach the data page."
-  why_short: "An OMB memo asks agencies to use robots.txt; treating certain blocks as failures is this project's rule."
+  name_brief: Whether the site's visitor rules let AI tools in
+  ask_plain: The site's instructions file for automated visitors (robots.txt), which search engines also request as a matter of course.
+  tells_plain: Whether those instructions let the tools behind AI search reach the data page.
+  why_short: An OMB memo tells agencies to use this file so pages can be found; treating certain blocks as failures is this project's rule.
 A5:
-  name_brief: "The data page is in the site's sitemap"
-  ask_plain: "The site's sitemap files, the list of pages search engines routinely ask every site for."
-  tells_plain: "Whether the agency has listed the data page among the pages it wants found."
-  why_short: "An OMB memo asks agencies to publish sitemaps, following the published sitemaps protocol."
+  name_brief: The data page is in the site's list of pages
+  ask_plain: The site's list of its own pages (its sitemap), which search engines routinely ask every site for.
+  tells_plain: Whether the agency has listed the data page among the pages it wants found.
+  why_short: An OMB memo asks agencies to publish such lists, in the published standard format.
 A6:
-  name_brief: "The page labels itself as a dataset"
-  ask_plain: "The data page itself, reading the descriptive labels built into its code for search engines."
-  tells_plain: "Whether a search or answer engine can recognise the page as a named, described dataset."
-  why_short: "The schema.org dataset vocabulary defines these labels, and USAFacts' guide asks for standard metadata."
+  name_brief: The page labels itself as a dataset
+  ask_plain: The data page itself, reading the hidden labels that tell search engines what the page is.
+  tells_plain: Whether a search engine or AI tool can recognise the page as a named, described dataset.
+  why_short: A shared labelling scheme used by the major search engines (schema.org) defines these labels, and USAFacts' guide asks for standard metadata.
 A8:
-  name_brief: "The release date, and a link to the latest release"
-  ask_plain: "Date labels in the data page's code, and up to three links that point to the latest version."
-  tells_plain: "Whether a program can tell which release it is reading and find a newer one."
-  why_short: "A W3C practice asks that a dataset's version be detectable; requiring the link to work is this project's rule."
+  name_brief: The release date, and a link to the latest release
+  ask_plain: Date labels in the data page's code, and up to three links that point to the latest version.
+  tells_plain: Whether a program can tell which release it is reading and find a newer one.
+  why_short: Guidance from the World Wide Web Consortium says a dataset's version should be detectable; requiring the link to work is this project's rule.
 A9:
-  name_brief: "A front door built for programs"
-  ask_plain: "A few fixed addresses where programs look first, such as /llms.txt and the interface's description."
-  tells_plain: "Whether the agency offers a starting point designed for software rather than for people."
-  why_short: "This project's rule: no published standard defines such a starting point yet."
+  name_brief: A front door built for programs
+  ask_plain: A few fixed addresses where programs look first, such as /llms.txt and the data service's description.
+  tells_plain: Whether the agency offers a starting point designed for software rather than for people.
+  why_short: 'This project''s rule: no published standard defines such a starting point yet.'
 A10:
-  name_brief: "The interactive data tool answers honestly"
-  ask_plain: "A direct link into the agency's interactive data tool, and a made-up address beneath it."
-  tells_plain: "Whether the tool returns real content, and a real \"not found\" for an address that does not exist."
-  why_short: "An internet standard defines a \"not found\" answer; the minimum amount of readable text is this project's rule."
+  name_brief: The interactive data tool answers honestly
+  ask_plain: A direct link into the agency's interactive data tool, and a made-up address beneath it.
+  tells_plain: Whether the tool returns real content, and a real "not found" for an address that does not exist.
+  why_short: An internet standard defines a "not found" answer; the minimum amount of readable text is this project's rule.
 A11-declared:
-  name_brief: "What the site states about crawler access"
-  ask_plain: "The site's robots.txt file and the robots tags carried on the data page."
-  tells_plain: "What the agency has put in writing about which crawlers may read the page."
-  why_short: "The robots.txt standard defines the file and says it is not a lock; this records a statement and is not scored."
+  name_brief: What the site states about automated access
+  ask_plain: The site's instructions to automated visitors, and the matching tags carried on the data page.
+  tells_plain: What the agency has put in writing about which automated visitors may read the page.
+  why_short: The internet standard for that instructions file says it is not a lock; this records a statement and is not scored.
 A12:
-  name_brief: "The site serves what its robots.txt permits"
-  ask_plain: "The robots.txt file, then the data page, both requested under the same fixed name."
-  tells_plain: "Whether the site actually delivers a page its own stated policy allows."
-  why_short: "Comparing what a site says with what it does is this project's own idea, still under review."
+  name_brief: The site serves what its own rules permit
+  ask_plain: Those same visitor instructions, then the data page, both requested under one fixed name.
+  tells_plain: Whether the site actually delivers a page its own stated policy allows.
+  why_short: Comparing what a site says with what it does is this project's own idea, still under review.
 A13:
-  name_brief: "From a data page to the interface, terms, change log and inventory"
-  ask_plain: "Links on one data page, and the known addresses of the agency's interface, its terms of use, its change log and its data inventory."
-  tells_plain: "Whether a program that starts on a data page can find everything the agency offers for machines."
-  why_short: "A web standard sets an address for listing interfaces, and an OMB memo fixes where the inventory lives; joining the four is this project's rule."
+  name_brief: From a data page to the data service, terms, change log and inventory
+  ask_plain: Links on one data page, and the known addresses of the agency's data service, its terms of use, its change log and its data inventory.
+  tells_plain: Whether a program that starts on a data page can find everything the agency offers for machines.
+  why_short: A web standard sets an address for listing data services, and an OMB memo fixes where the inventory lives; joining the four is this project's rule.
 B3:
-  name_brief: "The methods are readable as plain text"
-  ask_plain: "The data page and up to twenty-five of its links that mention methodology."
-  tells_plain: "Whether a program can read how the numbers were made without running the page's scripts."
-  why_short: "A published documentation guide asks that methods be reachable by crawlers; the no-scripts reading is this project's rule."
+  name_brief: The methods are readable as plain text
+  ask_plain: The data page and up to twenty-five of its links that mention methodology.
+  tells_plain: Whether a program can read how the numbers were made without running the programs built into the page.
+  why_short: A published documentation guide asks that methods be reachable by automated visitors; the no-scripts reading is this project's rule.
 D1:
-  name_brief: "The terms of reuse, under a recognised name"
-  ask_plain: "The licence named in the page's own description and, where one exists, the data interface's terms page."
-  tells_plain: "Whether a program can tell, from a standard licence name, how it may reuse the data."
-  why_short: "W3C guidance asks for a stated licence; demanding a standard licence identifier is this project's rule."
+  name_brief: The terms of reuse, under a recognised name
+  ask_plain: The licence named in the page's own description and, where one exists, the data service's terms page.
+  tells_plain: Whether a program can tell, from a standard licence name, how it may reuse the data.
+  why_short: The web's standards body asks for a stated licence; demanding a standard licence identifier is this project's rule.
 D4:
-  name_brief: "The product is listed in the agency's data inventory"
-  ask_plain: "The agency's public data inventory file, called data.json, at each address on record for it."
-  tells_plain: "Whether the product has a valid entry there, so a catalog can find it."
-  why_short: "An OMB memo requires every agency to keep a complete data inventory at that address."
+  name_brief: The product is listed in the agency's data inventory
+  ask_plain: The agency's public data inventory file, called data.json, at each address on record for it.
+  tells_plain: Whether the product has a valid entry there, so a catalog can find it.
+  why_short: An OMB memo requires every agency to keep a complete data inventory at that address.
 F4:
-  name_brief: "A change history a program can follow"
-  ask_plain: "The agency's change log or release notes, at each address on record."
-  tells_plain: "Whether a program can learn what changed between releases from a structured feed."
-  why_short: "The W3C asks publishers for a full version history; requiring it as a feed is this project's rule."
+  name_brief: A change history a program can follow
+  ask_plain: The agency's change log or release notes, at each address on record.
+  tells_plain: Whether software can see what changed between releases from a structured list of changes.
+  why_short: The World Wide Web Consortium asks publishers for a full version history; requiring it in a fixed structured form is this project's rule.

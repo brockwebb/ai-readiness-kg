@@ -3286,7 +3286,7 @@
     "rf_name_brief": "Data offered as a file a program can read",
     "rf_ask_plain": "The data page, and the files it links to on the same website.",
     "rf_tells_plain": "Whether the numbers come as a spreadsheet, CSV or JSON file, not only as a PDF.",
-    "rf_why_short": "An OMB memo requires public data to be machine-readable, and USAFacts' guide says to avoid PDF-only release."
+    "rf_why_short": "An OMB memo requires public data to be readable by programs, and USAFacts' guide says to avoid PDF-only release."
    }
   },
   {
@@ -3322,10 +3322,10 @@
     "rf_plain_name": "OpenAPI description served at the recorded API address",
     "rf_fix_line": "Publish a machine-readable description of the data interface where the interface is served.",
     "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide complete information on the Web about your API.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"It will also enables machines to access the API documentation in order to help developers build API client software.\"}, {\"source\": \"openapi-specification-core\", \"quote\": \"allows both humans and computers to discover and understand the capabilities of a service\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"they SHOULD make that metadata available at the API endpoint URIs they have listed\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check that every call enabled by your API is described in your documentation. Make sure you provide details of what parameters are required or optional and what each call returns.\"}, {\"source\": \"openapi-specification-core\", \"quote\": \"This string MUST be the version number of the OpenAPI Specification that the OpenAPI document uses.\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"It is RECOMMENDED that the API catalog also includes useful metadata, such as usage policies, API version information, links to the OpenAPI Specification [OAS] definitions for each API\"}]",
-    "rf_name_brief": "A published description of the data interface",
-    "rf_ask_plain": "The address of the agency's data interface, and any description file kept beside it.",
-    "rf_tells_plain": "Whether a program can learn the interface's calls without a person reading the manual first.",
-    "rf_why_short": "A W3C practice asks for interface details that machines can read; the required file format is this project's rule."
+    "rf_name_brief": "A published description of the agency's data service",
+    "rf_ask_plain": "The address of the agency's data service for programs, and any file kept beside it that lists the requests it accepts.",
+    "rf_tells_plain": "Whether a program can learn what to ask for without a person reading the manual first.",
+    "rf_why_short": "A World Wide Web Consortium practice asks for service details that programs can read; the required file format is this project's rule."
    }
   },
   {
@@ -3361,9 +3361,9 @@
     "rf_fix_line": "Link a bulk download of the product from the product page.",
     "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Enable consumers to retrieve the full dataset with a single request.\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"making that information available as machine-readable data that can be accessed in bulk\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"If an agency detects significant public interest in scraping information from web pages, the agency should strongly consider making that information available as machine-readable data that can be accessed in bulk\"}]",
     "rf_name_brief": "The whole dataset in one download",
-    "rf_ask_plain": "Links on the data page to a single archive or complete file of the dataset.",
+    "rf_ask_plain": "Links on the data page to one zipped or complete file holding the whole dataset.",
     "rf_tells_plain": "Whether someone can take all of it at once instead of piecing it together query by query.",
-    "rf_why_short": "The W3C's data guidance asks that a full dataset come in one request, and an OMB memo urges bulk access."
+    "rf_why_short": "The World Wide Web Consortium's data guidance asks that a full dataset come in one request, and an OMB memo urges offering whole datasets for download."
    }
   },
   {
@@ -3406,10 +3406,10 @@
     "rf_plain_name": "robots.txt permits eight listed crawler tokens",
     "rf_fix_line": "Serve a robots.txt that permits the data paths for the crawlers you want to allow.",
     "rf_requirements": "[{\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"then the crawler MAY access any resources on the server.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"These rules are not a form of access authorization.\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"is the control for site owners to manage access to how their sites are crawled for Search\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"To limit AI training and grounding in some of Google's other systems, read more about Google-Extended\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"Disallowing GPTBot indicates a site's content should not be used in training generative AI foundation models.\"}, {\"source\": \"openai-crawlers-bots\", \"quote\": \"To help ensure your site appears in search results, we recommend allowing OAI-SearchBot in your site's robots.txt file\"}, {\"source\": \"anthropic-crawler-support-article\", \"quote\": \"it signals that the site's future materials should be excluded from our AI model training\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"Crawlers MUST use case-insensitive matching to find the group that matches the product token and then obey the rules of the group.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"For example, in the context of HTTP, such status codes are in the 400-499 range.\"}, {\"source\": \"google-ai-features-and-your-website\", \"quote\": \"AI is built into Search and integral to how Search functions, which is why robots.txt directives for Googlebot is the control for site owners to manage access to how their sites are crawled for Search.\"}]",
-    "rf_name_brief": "What robots.txt lets answer-engine crawlers fetch",
-    "rf_ask_plain": "The site's robots.txt file, which search engines also request as a matter of course.",
-    "rf_tells_plain": "Whether the site's written policy lets the crawlers behind answer engines reach the data page.",
-    "rf_why_short": "An OMB memo asks agencies to use robots.txt; treating certain blocks as failures is this project's rule."
+    "rf_name_brief": "Whether the site's visitor rules let AI tools in",
+    "rf_ask_plain": "The site's instructions file for automated visitors (robots.txt), which search engines also request as a matter of course.",
+    "rf_tells_plain": "Whether those instructions let the tools behind AI search reach the data page.",
+    "rf_why_short": "An OMB memo tells agencies to use this file so pages can be found; treating certain blocks as failures is this project's rule."
    }
   },
   {
@@ -3455,10 +3455,10 @@
     "rf_standards_urls": [
      "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview"
     ],
-    "rf_name_brief": "The data page is in the site's sitemap",
-    "rf_ask_plain": "The site's sitemap files, the list of pages search engines routinely ask every site for.",
+    "rf_name_brief": "The data page is in the site's list of pages",
+    "rf_ask_plain": "The site's list of its own pages (its sitemap), which search engines routinely ask every site for.",
     "rf_tells_plain": "Whether the agency has listed the data page among the pages it wants found.",
-    "rf_why_short": "An OMB memo asks agencies to publish sitemaps, following the published sitemaps protocol."
+    "rf_why_short": "An OMB memo asks agencies to publish such lists, in the published standard format."
    }
   },
   {
@@ -3498,9 +3498,9 @@
      "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics"
     ],
     "rf_name_brief": "The page labels itself as a dataset",
-    "rf_ask_plain": "The data page itself, reading the descriptive labels built into its code for search engines.",
-    "rf_tells_plain": "Whether a search or answer engine can recognise the page as a named, described dataset.",
-    "rf_why_short": "The schema.org dataset vocabulary defines these labels, and USAFacts' guide asks for standard metadata."
+    "rf_ask_plain": "The data page itself, reading the hidden labels that tell search engines what the page is.",
+    "rf_tells_plain": "Whether a search engine or AI tool can recognise the page as a named, described dataset.",
+    "rf_why_short": "A shared labelling scheme used by the major search engines (schema.org) defines these labels, and USAFacts' guide asks for standard metadata."
    }
   },
   {
@@ -3541,7 +3541,7 @@
     "rf_name_brief": "The release date, and a link to the latest release",
     "rf_ask_plain": "Date labels in the data page's code, and up to three links that point to the latest version.",
     "rf_tells_plain": "Whether a program can tell which release it is reading and find a newer one.",
-    "rf_why_short": "A W3C practice asks that a dataset's version be detectable; requiring the link to work is this project's rule."
+    "rf_why_short": "Guidance from the World Wide Web Consortium says a dataset's version should be detectable; requiring the link to work is this project's rule."
    }
   },
   {
@@ -3587,7 +3587,7 @@
     "rf_fix_line": "Publish a machine-first entry point for the product.",
     "rf_requirements": "[]",
     "rf_name_brief": "A front door built for programs",
-    "rf_ask_plain": "A few fixed addresses where programs look first, such as /llms.txt and the interface's description.",
+    "rf_ask_plain": "A few fixed addresses where programs look first, such as /llms.txt and the data service's description.",
     "rf_tells_plain": "Whether the agency offers a starting point designed for software rather than for people.",
     "rf_why_short": "This project's rule: no published standard defines such a starting point yet."
    }
@@ -3668,10 +3668,10 @@
     "rf_standards_urls": [
      "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag"
     ],
-    "rf_name_brief": "What the site states about crawler access",
-    "rf_ask_plain": "The site's robots.txt file and the robots tags carried on the data page.",
-    "rf_tells_plain": "What the agency has put in writing about which crawlers may read the page.",
-    "rf_why_short": "The robots.txt standard defines the file and says it is not a lock; this records a statement and is not scored."
+    "rf_name_brief": "What the site states about automated access",
+    "rf_ask_plain": "The site's instructions to automated visitors, and the matching tags carried on the data page.",
+    "rf_tells_plain": "What the agency has put in writing about which automated visitors may read the page.",
+    "rf_why_short": "The internet standard for that instructions file says it is not a lock; this records a statement and is not scored."
    }
   },
   {
@@ -3709,8 +3709,8 @@
     "rf_requirements": "[{\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Ensure text documentation (data dictionaries, methodology) are accessible to both humans and AI/web crawlers.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"AI models need context—such as variable definitions, collection methodology, and version history\"}, {\"source\": \"omb-m-23-22-digital-first-public-experience\", \"quote\": \"An agency should develop online content in a non-HTML format only if necessitated by a specific user need.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Data Must Be Machine Understandable with Easily Retrievable\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Disclose methodologies for derived or transformed datasets, ensuring clarity on how figures are generated.\"}]",
     "rf_name_brief": "The methods are readable as plain text",
     "rf_ask_plain": "The data page and up to twenty-five of its links that mention methodology.",
-    "rf_tells_plain": "Whether a program can read how the numbers were made without running the page's scripts.",
-    "rf_why_short": "A published documentation guide asks that methods be reachable by crawlers; the no-scripts reading is this project's rule."
+    "rf_tells_plain": "Whether a program can read how the numbers were made without running the programs built into the page.",
+    "rf_why_short": "A published documentation guide asks that methods be reachable by automated visitors; the no-scripts reading is this project's rule."
    }
   },
   {
@@ -3765,9 +3765,9 @@
     "rf_fix_line": "State the product's licence or public domain status in its machine-readable metadata.",
     "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check if a user agent can automatically detect or discover the data license of the dataset.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"Agencies may satisfy this requirement by indicating, in the comprehensive data inventory, that the data asset is in the public domain\"}, {\"source\": \"dcat-us-1-1-schema\", \"quote\": \"The license or non-license (i.e. Public Domain) status with which the dataset or API has been published.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide a link to or copy of the license agreement that controls use of the data.\"}]",
     "rf_name_brief": "The terms of reuse, under a recognised name",
-    "rf_ask_plain": "The licence named in the page's own description and, where one exists, the data interface's terms page.",
+    "rf_ask_plain": "The licence named in the page's own description and, where one exists, the data service's terms page.",
     "rf_tells_plain": "Whether a program can tell, from a standard licence name, how it may reuse the data.",
-    "rf_why_short": "W3C guidance asks for a stated licence; demanding a standard licence identifier is this project's rule."
+    "rf_why_short": "The web's standards body asks for a stated licence; demanding a standard licence identifier is this project's rule."
    }
   },
   {
@@ -3896,8 +3896,8 @@
     "rf_requirements": "[{\"source\": \"w3c-dwbp-2017\", \"quote\": \"Provide a complete version history that explains the changes made in each version.\"}, {\"source\": \"w3c-dwbp-2017\", \"quote\": \"Check that a list of published versions is available as well as a change log describing precisely how each version differs from the previous one.\"}, {\"source\": \"usafacts-ai-ready-data-guide\", \"quote\": \"Implement versioning so AI developers can track updates over time.\"}]",
     "rf_name_brief": "A change history a program can follow",
     "rf_ask_plain": "The agency's change log or release notes, at each address on record.",
-    "rf_tells_plain": "Whether a program can learn what changed between releases from a structured feed.",
-    "rf_why_short": "The W3C asks publishers for a full version history; requiring it as a feed is this project's rule."
+    "rf_tells_plain": "Whether software can see what changed between releases from a structured list of changes.",
+    "rf_why_short": "The World Wide Web Consortium asks publishers for a full version history; requiring it in a fixed structured form is this project's rule."
    }
   },
   {
@@ -4023,8 +4023,8 @@
     "rf_state": "invalid",
     "rf_plain_name": "Host serves the path its robots.txt permits",
     "rf_requirements": "[{\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"These rules are not a form of access authorization.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"The Robots Exclusion Protocol is not a substitute for valid content security measures.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"then the crawler MAY access any resources on the server.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"\\\"Unavailable\\\" means the crawler tries to fetch the robots.txt file and the server responds with status codes indicating that the resource in question is unavailable.\"}, {\"source\": \"rfc-9309-robots-exclusion-protocol\", \"quote\": \"For example, in the context of HTTP, such status codes are in the 400-499 range.\"}]",
-    "rf_name_brief": "The site serves what its robots.txt permits",
-    "rf_ask_plain": "The robots.txt file, then the data page, both requested under the same fixed name.",
+    "rf_name_brief": "The site serves what its own rules permit",
+    "rf_ask_plain": "Those same visitor instructions, then the data page, both requested under one fixed name.",
     "rf_tells_plain": "Whether the site actually delivers a page its own stated policy allows.",
     "rf_why_short": "Comparing what a site says with what it does is this project's own idea, still under review."
    }
@@ -7210,10 +7210,10 @@
     "rf_state": "project_defined",
     "rf_plain_name": "Page reaches the agency's API, terms, changelog, inventory",
     "rf_requirements": "[{\"source\": \"rfc-9727-api-catalog\", \"quote\": \"SHALL resolve an HTTPS GET request to /.well-known/api-catalog and return an API catalog document\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"This identifies a target resource that represents a list of APIs available from the Publisher of the link context.\"}, {\"source\": \"m-25-05-phase-2-implementation-of-the-evidence-act-open-gove\", \"quote\": \"each agency must post the inventory in JSON format, or a successor format, to www.[agency].gov/data.json\"}, {\"source\": \"rfc-9727-api-catalog\", \"quote\": \"the Publisher \\\"example\\\" could include the api-catalog link relation in the HTTP header and/or content payload\"}]",
-    "rf_name_brief": "From a data page to the interface, terms, change log and inventory",
-    "rf_ask_plain": "Links on one data page, and the known addresses of the agency's interface, its terms of use, its change log and its data inventory.",
+    "rf_name_brief": "From a data page to the data service, terms, change log and inventory",
+    "rf_ask_plain": "Links on one data page, and the known addresses of the agency's data service, its terms of use, its change log and its data inventory.",
     "rf_tells_plain": "Whether a program that starts on a data page can find everything the agency offers for machines.",
-    "rf_why_short": "A web standard sets an address for listing interfaces, and an OMB memo fixes where the inventory lives; joining the four is this project's rule."
+    "rf_why_short": "A web standard sets an address for listing data services, and an OMB memo fixes where the inventory lives; joining the four is this project's rule."
    }
   },
   {
