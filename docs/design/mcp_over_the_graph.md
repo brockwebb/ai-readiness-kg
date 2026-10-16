@@ -374,6 +374,10 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "rf_standards_urls": [
       "https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview"
     ],
+    "rf_name_brief": "The data page is in the site's sitemap",
+    "rf_ask_plain": "The site's sitemap files, the list of pages search engines routinely ask every site for.",
+    "rf_tells_plain": "Whether the agency has listed the data page among the pages it wants found.",
+    "rf_why_short": "An OMB memo asks agencies to publish sitemaps, following the published sitemaps protocol.",
     "id": "spec:A5",
     "locator": {
       "kind": "record",
