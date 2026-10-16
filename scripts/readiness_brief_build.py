@@ -94,6 +94,12 @@ MARKERS = {"scored": "Scored", "shown": "Not scored, shown for openness",
 #: Dashes used as dashes, and the banned words (the vocabulary engine of diagnostic_package).
 _DASHES = re.compile("[–—]| -- ")
 
+#: A memo cited by number and short title ("OMB memo M-25-05, Phase 2 Implementation of the
+#: Evidence Act,"). A citation is a name: the same memo cited in two rows is not a repeated
+#: phrase, and the digits in its number and title are not stray numbers. Stripped before the
+#: digit and repeated-phrase audits only.
+_CITATION = re.compile(r"OMB memo M-\d{2}-\d{2}, [^,]+,")
+
 
 # ------------------------------------------------------------------------------------- the record
 
@@ -552,7 +558,7 @@ def build_docx(src: dict, rows: list, res: dict, api: list, path: Path) -> None:
         new = doc.add_section()  # a new section starts its own page; no page break before it
         new.orientation = WD_ORIENT.LANDSCAPE
         new.page_width, new.page_height = sec.page_height, sec.page_width
-        new.top_margin = new.bottom_margin = Inches(0.3)
+        new.top_margin = new.bottom_margin = Inches(0.22)
         new.left_margin = new.right_margin = Inches(0.3)
         para(src["api_heading"], bold=True, size=12, color=ORANGE, after=1)
         para(src["api_note"], size=9, color=GREY, after=3)
@@ -804,7 +810,7 @@ def digit_audit(src_text: str, rows: list) -> list[str]:
             bad.append(f"page one: stray number {m.group(0)!r} outside a result token")
     for r in rows:
         for k in ("name", "ask", "tells", "why"):
-            for m in B._BARE.finditer(str(r[k])):
+            for m in B._BARE.finditer(_CITATION.sub(" ", str(r[k]))):
                 bad.append(f"{r['leg']} {k}: bare number {m.group(0)!r}")
     return bad
 
@@ -816,7 +822,7 @@ def repeated_phrase_audit(rows: list, n: int = 6) -> list[str]:
     bad = []
     for r in rows:
         for k in ("ask", "tells", "why"):
-            words = re.findall(r"[a-z0-9.']+", str(r[k]).lower())
+            words = re.findall(r"[a-z0-9.']+", _CITATION.sub(" ", str(r[k])).lower())
             for i in range(len(words) - n + 1):
                 sh = " ".join(words[i:i + n])
                 if sh in seen and seen[sh] != r["leg"]:

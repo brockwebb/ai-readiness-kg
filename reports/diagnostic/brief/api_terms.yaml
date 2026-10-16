@@ -259,15 +259,14 @@ bodies:
     - url: https://www.census.gov/data/developers/guidance/api-user-guide.Example_API_Queries.html
       passage: api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&HISP=2&for=state:*&key=your key here
   how_called:
-    value: Key required on all data queries, passed in the URL as &key=; up to 50 variables per query.
+    value: 'Two Census pages conflict. Query Limits page (revised May 14, 2026): a key is required on all data queries, in the URL. API User Guide PDF (January 2021): up to 500 queries per IP address per day without a key.'
     sources:
     - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
       passage: An API key must be used with all data queries made to the Census Data API.
     - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
       passage: The key will be part of your data request URL string.
-    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
-      passage: You can include up to 50 variables in a single API query.
-    note: Query Limits page last revised May 14, 2026. A web search snippet described an older 500 queries per IP per day keyless allowance, but no fetched Census page states it, so it is not used.
+    - url: https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf
+      passage: You can include up to 50 variables in a single API query and can make up to 500 queries per IP address per day. More than 500 queries per IP address per day requires that you register for a Census key.
   key_obtained:
     value: Free pop-up form; email must end .com, .net, .org, .gov or .edu; agree to terms; a person must click the emailed link to register (activate) the key. Other form fields not stated.
     sources:
@@ -280,9 +279,12 @@ bodies:
     - url: https://api.census.gov/data/key_signup.html
       passage: I agree to the terms of service
   key_changes:
-    value: No keyless tier is stated; the key is required for every data query.
-    url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
-    passage: An API key must be used with all data queries made to the Census Data API.
+    value: Per the 2021 User Guide PDF, a key lifts the 500 queries per IP address per day limit; the 2026 Query Limits page requires a key for every query, so states no keyless tier.
+    sources:
+    - url: https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf
+      passage: More than 500 queries per IP address per day requires that you register for a Census key. That key will be part of your data request URL string.
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+      passage: An API key must be used with all data queries made to the Census Data API.
   api_data_gov:
     value: not stated
     note: Key is requested at api.census.gov/data/key_signup.html; no fetched page mentions api.data.gov.
@@ -320,6 +322,8 @@ bodies:
   - https://api.census.gov/data.json
   - https://www.census.gov/data/datasets.html
   - https://www.census.gov/programs-surveys/acs.html
+  - https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf
+  revised_2026-10-16: 'operator-directed recheck: help.html and key_signup.html state no limit; the conflict is between the Query Limits page and the 2021 PDF user guide'
 - body: DRSMSU
   name: Division of Research and Statistics, Microeconomic Surveys Unit
   api:

@@ -377,7 +377,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "rf_name_brief": "The data page is in the site's list of pages",
     "rf_ask_plain": "The site's list of its own pages (its sitemap), which search engines routinely ask every site for.",
     "rf_tells_plain": "Whether the agency has listed the data page among the pages it wants found.",
-    "rf_why_short": "An OMB memo asks agencies to publish such lists, in the published standard format.",
+    "rf_why_short": "OMB memo M-23-22, Delivering a Digital-First Public Experience, asks agencies to publish such lists, in the published standard format.",
     "id": "spec:A5",
     "locator": {
       "kind": "record",
