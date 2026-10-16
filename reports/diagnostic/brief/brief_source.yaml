@@ -1,0 +1,58 @@
+# The readiness brief, page one (cc_tasks/2026-10-16_readiness_brief.md Part A).
+#
+# AUTHORING SOURCE for the brief's prose. scripts/readiness_brief_build.py renders it into the
+# Markdown, the Word document and the deck. Every number is a {{result:NAME:value}} token the
+# build computes from the record, the frame, the harness configuration or reports/summary/grid.json
+# and REFUSES to render if the stated value disagrees (the pattern of preface_source.yaml). The
+# results tokens are registered as Seldon Results by the build's --register step before the
+# brief cites them. Words the critic's page-one reading flagged as not understood are replaced
+# here (critic_run/critic_reading.json); the user-agent string cannot be, as sites log it. The user-agent string is validated against the configuration line it quotes.
+#
+# Tokens used below:
+#   rate_per_second_per_host         requests per second per host the public client holds to
+#   readiness_brief_checks_total     checks in the readiness diagnostic
+#   readiness_brief_checks_scored    checks scored on the cycle of record (specified, not a declaration)
+#   readiness_brief_cells_total      agency results on the scored checks (bodies x scored checks)
+#   readiness_brief_cells_pass / _partial / _fail / _not_measured   those results by state
+#   readiness_brief_bodies_wholly_not_measured   bodies with no scored check measured
+
+title: "A readiness diagnostic of federal statistical websites"
+subtitle: "Brief for the working group, 16 October 2026"
+
+why:
+  - heading: "No new burden."
+    text: "The diagnostic uses what agencies already publish on their public websites. It needs no survey, no data call and no agency staff time."
+  - heading: "The public data user is the customer."
+    text: "A machine is now one of the main ways members of the public reach federal data, so the diagnostic takes the machine's view as the public's proxy, to show what their experience is and how it could improve."
+  - heading: "Anyone can do this."
+    text: "Any member of the public with a laptop can make the same requests. The diagnostic writes the questions and the method down, so the answer does not depend on who asks."
+
+user_agent:
+  string: "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)"
+  config_file: "assessment/harness/scan/params.yaml"
+  config_line: 144
+
+who:
+  - "The public client is the program that makes the requests, acting only as any member of the public could. It identifies itself by one fixed name in every request, so a site's own logs show each request it made:"
+  - "It makes no more than {{result:rate_per_second_per_host:1}} request per second to any one website, and waits longer when a site asks it to."
+who_note: "The name still carries the project's earlier word for the client; it is kept unchanged so that one log search finds every request."
+
+never_heading: "What the public client never does"
+never:
+  - "No sign-in or password."
+  - "No form filled in."
+  - "No \"are you human\" test passed, and no block worked around."
+  - "No program built into a page is run."
+  - "Nothing taken beyond what the page itself serves."
+not_measured_line: "Not measured means the client could not look, and the footnote says why. It is never counted as a fail."
+
+checks_heading: "The checks"
+checks_intro: "The diagnostic runs {{result:readiness_brief_checks_total:16}} checks. Of these, {{result:readiness_brief_checks_scored:4}} are scored; the rest are shown so the method is open, and produce no finding about an agency."
+
+results_heading: "Results by agency"
+results_summary: "Across the {{result:readiness_brief_cells_total:64}} agency results on the scored checks, {{result:readiness_brief_cells_pass:8}} pass, {{result:readiness_brief_cells_partial:0}} are partial, {{result:readiness_brief_cells_fail:15}} fail and {{result:readiness_brief_cells_not_measured:41}} are not measured; for {{result:readiness_brief_bodies_wholly_not_measured:3}} agencies no scored check could be measured."
+reference_hosts_line: "Reference hosts, shown for comparison and counted in no total above."
+
+api_heading: "Each body's public data interface"
+api_note: "Confirmed from each agency's own pages on 16 October 2026; desk research, not a measured check."
+api_pending: "The table of each body's public data interface follows next week."

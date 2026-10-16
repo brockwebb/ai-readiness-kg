@@ -1,0 +1,169 @@
+{
+ "generated_by": "scripts/readiness_brief_build.py",
+ "task": "cc_tasks/2026-10-16_readiness_brief.md",
+ "cycle": "scan_2026-10-07_composite_d",
+ "values": {
+  "rate_per_second_per_host": 1,
+  "user_agent": "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)",
+  "readiness_brief_checks_total": 16,
+  "readiness_brief_checks_scored": 4,
+  "readiness_brief_cells_total": 64,
+  "readiness_brief_cells_pass": 8,
+  "readiness_brief_cells_partial": 0,
+  "readiness_brief_cells_fail": 15,
+  "readiness_brief_cells_not_measured": 41,
+  "readiness_brief_bodies_wholly_not_measured": 3
+ },
+ "tokens_used": [
+  "rate_per_second_per_host",
+  "readiness_brief_bodies_wholly_not_measured",
+  "readiness_brief_cells_fail",
+  "readiness_brief_cells_not_measured",
+  "readiness_brief_cells_partial",
+  "readiness_brief_cells_pass",
+  "readiness_brief_cells_total",
+  "readiness_brief_checks_scored",
+  "readiness_brief_checks_total"
+ ],
+ "registered": [
+  {
+   "name": "readiness_brief_cells_total",
+   "value": 64,
+   "status": "registered",
+   "id": "3c1b2349-232c-4400-86b0-b1eeadc9bda4"
+  },
+  {
+   "name": "readiness_brief_cells_pass",
+   "value": 8,
+   "status": "registered",
+   "id": "47bc0f65-51d6-42de-ac57-535ee3174add"
+  },
+  {
+   "name": "readiness_brief_cells_partial",
+   "value": 0,
+   "status": "registered",
+   "id": "972c595a-24c3-4490-9b2b-0679d15a75ef"
+  },
+  {
+   "name": "readiness_brief_cells_fail",
+   "value": 15,
+   "status": "registered",
+   "id": "09ca072b-7593-443b-92fb-aaa513e2afc0"
+  },
+  {
+   "name": "readiness_brief_cells_not_measured",
+   "value": 41,
+   "status": "registered",
+   "id": "1863e47d-5073-4d19-8c48-119a6e3997d0"
+  },
+  {
+   "name": "readiness_brief_bodies_wholly_not_measured",
+   "value": 3,
+   "status": "registered",
+   "id": "d6c6a0ad-8e55-4786-9bec-22571269e86d"
+  }
+ ],
+ "counts": {
+  "cells_total": 64,
+  "pass": 8,
+  "partial": 0,
+  "fail": 15,
+  "not_measured": 41
+ },
+ "wholly_not_measured": [
+  "BLS",
+  "BTS",
+  "ORES"
+ ],
+ "receipts": {
+  "wanted": 1952,
+  "found": 1952,
+  "statuses_cited": {
+   "403": 25
+  }
+ },
+ "footnotes": [
+  [
+   "a",
+   "The client could not confirm that the item is absent."
+  ],
+  [
+   "b",
+   "The website refused the identified client (HTTP 403)."
+  ],
+  [
+   "c",
+   "The site's robots.txt asked the client not to fetch the page."
+  ],
+  [
+   "d",
+   "Reference hosts are checked at the site level only, so this page-level check is not run on them."
+  ]
+ ],
+ "groups": {
+  "Accessible": [
+   "A1",
+   "A3",
+   "A5",
+   "A2",
+   "A4",
+   "A6",
+   "A8",
+   "A9",
+   "A10",
+   "A11-declared",
+   "A12",
+   "A13"
+  ],
+  "Understandable": [
+   "B3"
+  ],
+  "Open": [
+   "D4",
+   "D1"
+  ],
+  "Release": [
+   "F4"
+  ]
+ },
+ "api_rows": 0,
+ "products": [
+  {
+   "name": "READINESS_BRIEF.md",
+   "md_sha256": "80c9d9eeb0fbe7fd8e9473da6a6f2f4261cd8934a1e3bc56057110be13b9e0d1"
+  },
+  {
+   "name": "READINESS_BRIEF.docx",
+   "md_sha256": "80c9d9eeb0fbe7fd8e9473da6a6f2f4261cd8934a1e3bc56057110be13b9e0d1",
+   "sha256": "3d77ac8c96503e2d363c6cb1a4165852ef576b28e51f125d9a9c0302e88f66b8",
+   "pages": 3
+  },
+  {
+   "name": "READINESS_BRIEF.pptx",
+   "md_sha256": "80c9d9eeb0fbe7fd8e9473da6a6f2f4261cd8934a1e3bc56057110be13b9e0d1",
+   "sha256": "e42eb95ab33906d2e4873991226655cf6ca27c348dcf8f7f8186a22ab99ea385",
+   "slides": 7
+  }
+ ],
+ "checks": {
+  "docx_pages": 3,
+  "pptx_slides": 7,
+  "digit_audit": [],
+  "font_colour_audit": {
+   "docx": [],
+   "pptx": []
+  },
+  "vocabulary": {
+   "markdown": [],
+   "docx": [],
+   "pptx": []
+  },
+  "dashes": {
+   "markdown": [],
+   "docx": [],
+   "pptx": []
+  },
+  "repeated_phrases": []
+ },
+ "failures": []
+}
