@@ -358,7 +358,7 @@ def api_rows(api: dict | None) -> list[dict]:
 
 API_COLUMNS = [("body", "Body"), ("api", "API"), ("how_called", "How a machine calls it"),
                ("key_obtained", "How a key is obtained"), ("key_changes", "What a key changes"),
-               ("announced", "Where it is announced to machines")]
+               ("announced", "Announced to machines: developer page / data.json / api-catalog / data page link")]
 
 
 # ----------------------------------------------------------------------------------- markdown
@@ -549,18 +549,26 @@ def build_docx(src: dict, rows: list, res: dict, api: list, path: Path) -> None:
 
     # page four, when Part B landed
     if api:
-        page_break()
-        new = doc.add_section()
+        new = doc.add_section()  # a new section starts its own page; no page break before it
         new.orientation = WD_ORIENT.LANDSCAPE
         new.page_width, new.page_height = sec.page_height, sec.page_width
-        new.top_margin = new.bottom_margin = Inches(0.5)
-        new.left_margin = new.right_margin = Inches(0.5)
+        new.top_margin = new.bottom_margin = Inches(0.3)
+        new.left_margin = new.right_margin = Inches(0.3)
         para(src["api_heading"], bold=True, size=12, color=ORANGE, after=1)
         para(src["api_note"], size=9, color=GREY, after=3)
-        aw = [1.1, 1.7, 1.6, 1.9, 1.7, 2.0]
-        t = table([h for _, h in API_COLUMNS], aw, size=7)
+        aw = [0.7, 2.05, 2.0, 2.2, 2.05, 1.4]
+        t = table([h for _, h in API_COLUMNS], aw, size=6.5)
+        # tight cell margins so nineteen rows fit one landscape page
+        tblPr = t._tbl.tblPr
+        mar = OxmlElement("w:tblCellMar")
+        for side, w in (("top", "0"), ("bottom", "0"), ("left", "45"), ("right", "45")):
+            el = OxmlElement(f"w:{side}")
+            el.set(qn("w:w"), w)
+            el.set(qn("w:type"), "dxa")
+            mar.append(el)
+        tblPr.append(mar)
         for a in api:
-            add_row(t, [a[k] for k, _ in API_COLUMNS], aw, size=6.5, bold_first=True)
+            add_row(t, [a[k] for k, _ in API_COLUMNS], aw, size=5.5, bold_first=True)
     doc.save(str(path))
 
 
@@ -722,9 +730,9 @@ def build_pptx(src: dict, rows: list, res: dict, api: list, path: Path) -> int:
     # 7 the API table, or a slide saying it follows
     s = slide(src["api_heading"])
     if api:
-        body(s, [(src["api_note"], False, B.GREY, -4)], top=0.95, height=0.4)
+        body(s, [(src["api_note"], False, B.GREY, -5)], top=0.8, height=0.35)
         table(s, [h for _, h in API_COLUMNS], [[a[k] for k, _ in API_COLUMNS] for a in api],
-              [1.3, 2.3, 2.0, 2.5, 2.2, 2.2], top=1.35, size=6, head_size=8)
+              [0.9, 2.5, 2.3, 2.6, 2.3, 1.9], top=1.15, size=5, head_size=6, row_h=0.12)
     else:
         body(s, [(src["api_pending"], False, B.BLACK, 2)], top=2.8)
     prs.save(str(path))

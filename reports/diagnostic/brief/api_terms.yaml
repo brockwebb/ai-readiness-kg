@@ -1,0 +1,1101 @@
+generated_by: scripts/api_terms_check.py
+task: cc_tasks/2026-10-16_readiness_brief.md
+fetched_on: '2026-10-16'
+method: desk research from each agency's own .gov pages (WebSearch to find, WebFetch to read), verbatim passages; not a measured check by the public client
+bodies:
+- body: BEA
+  name: Bureau of Economic Analysis
+  api:
+    value: BEA Data Retrieval API, single base https://apps.bea.gov/api/data
+    url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+    passage: 'The URI 2 of the API is: https://apps.bea.gov/api/data. All API access is through this URI; no other paths are used.'
+    note: Quoted from the PDF user guide dated April 20, 2026 (fetched with WebFetch, text extracted locally). The HTML guide URL https://apps.bea.gov/api/bea_web_service_api_user_guide.htm returned a Page Not Found page.
+  how_called:
+    value: Key (36-character UserID) required in the query string on every request; limits per user of 100 requests, 100 MB and 30 errors per minute, HTTP 429 when exceeded.
+    sources:
+    - url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+      passage: The minimum parameters for every request include the UserID and the name of the method being invoked.
+    - url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+      passage: 'There are three standard limits applied for all API user accounts: Number of requests per minute (100), and/or Data volume retrieved per minute (100 MB), and/or Errors per minute (30)'
+  key_obtained:
+    value: Name or organization name, a valid non-disposable email, and agreeing to terms of service; a person must click the emailed link before the UserID is activated.
+    sources:
+    - url: https://apps.bea.gov/api/signup/
+      passage: Please provide your name (or organization name), a valid email address, and agree to the published terms of service.
+    - url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+      passage: After completing the registration form an email is sent containing the assigned UserID, and a link that completes the registration process. Assigned UserIDs are activated when the link has been clicked.
+    - url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+      passage: To prevent abuse, BEA does not permit users to register for an API key with a disposable email address
+  key_changes:
+    value: There is no keyless tier; the key is the only way to use the API at all.
+    url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+    passage: The API is available to registered users on the BEA public web site. Before using the API, users must obtain a unique 36-character UserID by registering at https:/apps.bea.gov/api/signup/.
+  api_data_gov:
+    value: 'no'
+    url: https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+    passage: Before using the API, users must obtain a unique 36-character UserID by registering at https:/apps.bea.gov/api/signup/.
+    note: Registration is on BEA's own apps.bea.gov signup; neither the guide nor the signup page mentions api.data.gov.
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.bea.gov/developers
+      note: 301 redirect to https://www.bea.gov/resources/for-developers, a 'For Developers' page linking the API signup; https://www.bea.gov/developer redirects to the same page
+    data_json_lists_api:
+      value: 'yes'
+      url: https://apps.bea.gov/data.json
+      note: www.bea.gov/data.json 301s here; 26 entries, 12 have distributions with format API, but accessURL is the signup page http://www.bea.gov/api/signup/index.cfm, not the base apps.bea.gov/api/data. Commerce data.json exceeded the 10 MB fetch limit, not inspected.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.bea.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'yes'
+      url: https://www.bea.gov/open-data
+      note: link 'View the API Site' to https://apps.bea.gov/API/signup/; https://www.bea.gov/itable also links it under Tools
+  pages_searched:
+  - https://apps.bea.gov/api/bea_web_service_api_user_guide.htm
+  - https://apps.bea.gov/API/bea_web_service_api_user_guide.htm
+  - https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
+  - https://apps.bea.gov/api/signup/
+  - https://www.bea.gov/developers
+  - https://www.bea.gov/developer
+  - https://www.bea.gov/resources/for-developers
+  - https://www.bea.gov/.well-known/api-catalog
+  - https://www.bea.gov/data.json
+  - https://apps.bea.gov/data.json
+  - https://www.commerce.gov/data.json
+  - https://www.bea.gov/open-data
+  - https://www.bea.gov/itable
+- body: BJS
+  name: Bureau of Justice Statistics
+  api:
+    value: NCVS API (also a NIBRS National Estimates API), base https://api.ojp.gov/bjsdataset/v1/; formerly https://data.ojp.usdoj.gov/resource/ on Socrata SODA
+    sources:
+    - url: https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+      passage: Path = https://api.ojp.gov/bjsdataset/v1/
+    - url: https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+      passage: In July of 2025, changes were made to specific endpoints. All datasets remain available using modified endpoint locations described in the access instructions below.
+    - url: https://bjs.ojp.gov/document/ncvs_kc_api_transcript.pdf
+      passage: The NCVS API is available through the Socrata Open Data API or SODA API. It is a RESTful web service that gives users the ability to download shortened modified versions of the NCVS public use files.
+    - url: https://bjs.ojp.gov/data/data-analysis-tools
+      passage: This tool provides access to National Incident-Based Reporting System (NIBRS) National Estimates datasets
+  how_called:
+    value: 'no key stated: a query is endpoint plus format plus parameters; default cap of 1,000 records, raised with a Limit parameter'
+    sources:
+    - url: https://bjs.ojp.gov/document/ncvs_kc_api_transcript.pdf
+      passage: To access data from an NCVS Select dataset through the NCVS API, your query must include an endpoint, desired format and other parameters such as specific variables or cases that meet certain conditions. The endpoint consists of the base URL and the database identifier.
+    - url: https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+      passage: By default the NCVS API returns a maximum of 1,000 records.
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://bjs.ojp.gov/developer
+      note: HTTP 404; https://bjs.ojp.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: not determined
+      url: https://www.justice.gov/data.json
+      note: 'file is 10,455,121 characters; first 100,000 read: BJS entries point only at ICPSR DOIs, no API format or api.ojp.gov URL; remainder too large to inspect'
+    well_known_api_catalog:
+      value: 'no'
+      url: https://bjs.ojp.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://bjs.ojp.gov/data/topic
+      note: neither listed page (data/topic, programs/dicra) links to an API; the API is linked from https://bjs.ojp.gov/data/data-analysis-tools, which is not a listed page
+  pages_searched:
+  - https://bjs.ojp.gov/developer
+  - https://bjs.ojp.gov/developers
+  - https://bjs.ojp.gov/.well-known/api-catalog
+  - https://www.justice.gov/data.json
+  - https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+  - https://bjs.ojp.gov/document/ncvs_kc_api_transcript.pdf
+  - https://bjs.ojp.gov/data/data-analysis-tools
+  - https://bjs.ojp.gov/data/topic
+  - https://bjs.ojp.gov/programs/dicra
+  - https://api.ojp.gov/ (returns only heading APIM02)
+  - https://data.ojp.usdoj.gov/ (DNS ENOTFOUND)
+- body: BLS
+  name: Bureau of Labor Statistics
+  api:
+    value: BLS Public Data API, versions 1.0 and 2.0; v2 base https://api.bls.gov/publicAPI/v2/ (timeseries/data/, timeseries/popular, surveys)
+    sources:
+    - url: https://www.bls.gov/developers/
+      passage: The BLS Public Data API is currently available in two versions.
+    - url: https://www.bls.gov/developers/api_signature_v2.htm
+      passage: https://api.bls.gov/publicAPI/v2/timeseries/data/
+  how_called:
+    value: 'Version 1.0: no key, 25 queries daily, 25 series and 10 years per query. Version 2.0: registration key required in requests, 500 queries daily, 50 series, 20 years.'
+    sources:
+    - url: https://www.bls.gov/developers/
+      passage: Version 1.0 is a more limited API that does not require registration and is open for public use.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Registration is required for Version 2.0 of the BLS Public Data API.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Registered users may request up to 500 queries daily. Unregistered users may request up to 25 queries daily.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Registered users may request up to 50 series per query. Unregistered users may request up to 25 series per query.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Registered users may request up to 20 years per query. Unregistered users may request up to 10 years per query.
+    - url: https://www.bls.gov/developers/api_signature_v2.htm
+      passage: To retrieve these optional parameters, users must include their assigned registration key.
+  key_obtained:
+    value: Registration form asks organization name and email, a CAPTCHA, and agreeing to Terms of Service; the key arrives by email, so a person must open that email. No activation link stated.
+    sources:
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: To register, go to the BLS Public Data API 2.0 registration page, and enter your email address and organization name.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Complete the CAPTCHA.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: You will receive an email from labstat@bls.gov with your registration key.
+    - url: https://data.bls.gov/registrationEngine/
+      passage: Please type in the numerals seen in the image to register to use the BLS Data API. This will only take a moment.
+    - url: https://data.bls.gov/registrationEngine/
+      passage: I agree to the Terms of Service
+  key_changes:
+    value: 'Key unlocks Version 2.0: higher query, series and year limits, plus net and percent changes, calculations and annual averages.'
+    sources:
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: API Version 2.0 requires registration, and it offers greater query limits.
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Net and percent changes are not available via API Version 1.0.
+    - url: https://www.bls.gov/developers/
+      passage: Version 2.0 requires registration and allows users to access more data more frequently.
+    - url: https://www.bls.gov/developers/
+      passage: Users may add calculations and annual averages to requests
+    - url: https://www.bls.gov/developers/api_faqs.htm
+      passage: Be sure to use this registration key in your requests to receive the expanded access that Version 2.0 provides.
+  api_data_gov:
+    value: 'no'
+    url: https://www.bls.gov/developers/api_faqs.htm
+    passage: You will receive an email from labstat@bls.gov with your registration key.
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.bls.gov/developers/
+      note: /developers/ serves the Public Data API page; https://www.bls.gov/developer returned HTTP 404
+    data_json_lists_api:
+      value: 'no'
+      url: https://www.bls.gov/data.json
+      note: DCAT-US 3.0 inventory, 31 entries read in full, no accessURL/downloadURL/describedBy points at api.bls.gov
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.bls.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'yes'
+      url: https://www.bls.gov/cpi/
+      note: menu link 'Public Data API' to /developers/home.htm
+  pages_searched:
+  - https://www.bls.gov/developers/api_faqs.htm
+  - https://www.bls.gov/developers/
+  - https://www.bls.gov/developer
+  - https://www.bls.gov/.well-known/api-catalog
+  - https://www.bls.gov/developers/api_signature_v2.htm
+  - https://data.bls.gov/registrationEngine/
+  - https://www.bls.gov/data.json
+  - https://www.bls.gov/cpi/
+- body: BTS
+  name: Bureau of Transportation Statistics
+  api:
+    value: 'not determined: www.bts.gov refused every fetch (HTTP 403); its data portal data.bts.gov answered a request without a key, but no BTS page read states API terms'
+    url: https://data.bts.gov/
+    passage: Developers
+    note: 'Every www.bts.gov URL tried returned HTTP 403 Forbidden to WebFetch, so BTS''s main-site pages could not be read. The passage is the link text only; the page has no sentence about API access. Observed probe, not a page statement: https://data.bts.gov/resource/crem-w557.json?$limit=1 returned JSON data.'
+    note_original_value: No API documented on any BTS page fetched. data.bts.gov (Socrata) carries a 'Developers' nav link to http://dev.socrata.com, a non-.gov host not fetched.
+  how_called:
+    value: not stated
+    note: No fetched BTS page states key or token terms. The keyless probe of https://data.bts.gov/resource/crem-w557.json?$limit=1 returned data with no authentication, which is observed behavior, not a stated term.
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: not determined
+      url: https://www.bts.gov/developers
+      note: HTTP 403 Forbidden, as were https://www.bts.gov/developer and every other www.bts.gov URL tried (site blocks the fetcher). https://data.bts.gov/developers returned HTTP 404.
+    data_json_lists_api:
+      value: not determined
+      url: https://data.bts.gov/data.json
+      note: www.bts.gov/data.json and www.transportation.gov/data.json both HTTP 403. data.bts.gov/data.json (first 100k of 541k chars read) lists downloadURLs under /api/v3/views/<id>/export.csv, not the SODA /resource API; no format API entries seen.
+    well_known_api_catalog:
+      value: not determined
+      url: https://www.bts.gov/.well-known/api-catalog
+      note: HTTP 403 Forbidden; whole www.bts.gov host returned 403 to the fetcher
+    data_page_links:
+      value: not determined
+      url: https://www.bts.gov/topics/national-transportation-statistics
+      note: HTTP 403 Forbidden. Data portal dataset page https://data.bts.gov/d/crem-w557 links 'Developers' to http://dev.socrata.com only.
+  pages_searched:
+  - https://www.bts.gov/developers
+  - https://www.bts.gov/developer
+  - https://www.bts.gov/topics/national-transportation-statistics
+  - https://www.bts.gov/newsroom/bts-socrata-data-platform
+  - https://www.bts.gov/.well-known/api-catalog
+  - https://www.bts.gov/data.json
+  - https://bts.gov/
+  - https://www.transportation.gov/data.json
+  - https://data.bts.gov/
+  - https://data.bts.gov/d/crem-w557
+  - https://data.bts.gov/data.json
+  - https://data.bts.gov/developers
+  - https://data.bts.gov/resource/crem-w557.json?$limit=1
+- body: CENSUS
+  name: Bureau of the Census
+  api:
+    value: Census Data API, host api.census.gov/data (dataset paths appended, e.g. api.census.gov/data/2019/pep/charagegroups)
+    sources:
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Example_API_Queries.html
+      passage: 'Start your query with the host name:'
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Example_API_Queries.html
+      passage: api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&HISP=2&for=state:*&key=your key here
+  how_called:
+    value: Key required on all data queries, passed in the URL as &key=; up to 50 variables per query.
+    sources:
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+      passage: An API key must be used with all data queries made to the Census Data API.
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+      passage: The key will be part of your data request URL string.
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+      passage: You can include up to 50 variables in a single API query.
+    note: Query Limits page last revised May 14, 2026. A web search snippet described an older 500 queries per IP per day keyless allowance, but no fetched Census page states it, so it is not used.
+  key_obtained:
+    value: Free pop-up form; email must end .com, .net, .org, .gov or .edu; agree to terms; a person must click the emailed link to register (activate) the key. Other form fields not stated.
+    sources:
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.API_Key.html
+      passage: Make sure the email address you use to request the key has an extension of .com, .net, .org, .gov, or .edu.
+    - url: https://www.census.gov/data/developers/guidance/api-user-guide.API_Key.html
+      passage: You will receive an email with your key code in the message and a link to register it.
+    - url: https://www.census.gov/data/developers.html
+      passage: Watch this video to learn how to get your key, activate it, and use it within your API queries.
+    - url: https://api.census.gov/data/key_signup.html
+      passage: I agree to the terms of service
+  key_changes:
+    value: No keyless tier is stated; the key is required for every data query.
+    url: https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+    passage: An API key must be used with all data queries made to the Census Data API.
+  api_data_gov:
+    value: not stated
+    note: Key is requested at api.census.gov/data/key_signup.html; no fetched page mentions api.data.gov.
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.census.gov/developers
+      note: serves the 'Developers' Census Data API hub; https://www.census.gov/developer serves the same page
+    data_json_lists_api:
+      value: 'yes'
+      url: https://api.census.gov/data.json
+      note: www.census.gov/data.json 301s to the API's own DCAT discovery catalog; accessURLs point at api.census.gov/data/..., e.g. http://api.census.gov/data/1990/cps/basic/jan. File is 5.2M chars; first 100k read.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.census.gov/.well-known/api-catalog
+      note: HTTP 403 Forbidden, nothing served; other www.census.gov pages fetched normally in the same session
+    data_page_links:
+      value: 'yes'
+      url: https://www.census.gov/programs-surveys/acs.html
+      note: nav link 'Developers' to https://www.census.gov/data/developers.html; https://www.census.gov/data/datasets.html has the same link
+  pages_searched:
+  - https://www.census.gov/data/developers/guidance/api-user-guide/help.html
+  - https://api.census.gov/data/key_signup.html
+  - https://www.census.gov/developers
+  - https://www.census.gov/developer
+  - https://www.census.gov/data/developers/guidance/api-user-guide.Query_Limits.html
+  - https://www.census.gov/data/developers/guidance/api-user-guide.API_Key.html
+  - https://www.census.gov/data/developers/api-key.html
+  - https://www.census.gov/data/developers/guidance/api-user-guide.Help_&_Contact_Us.html
+  - https://www.census.gov/data/developers/guidance/api-user-guide.What_is_the_API.html
+  - https://www.census.gov/data/developers/guidance/api-user-guide.Example_API_Queries.html
+  - https://www.census.gov/data/developers.html
+  - https://www.census.gov/.well-known/api-catalog
+  - https://www.census.gov/data.json
+  - https://api.census.gov/data.json
+  - https://www.census.gov/data/datasets.html
+  - https://www.census.gov/programs-surveys/acs.html
+- body: DRSMSU
+  name: Division of Research and Statistics, Microeconomic Surveys Unit
+  api:
+    value: no Board API found; for Data Download Program series the Board points to the St. Louis Fed's FRED API (api.stlouisfed.org). SCF is not a DDP release; offered as file downloads
+    sources:
+    - url: https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+      passage: To facilitate automated downloads of DDP data, FRED offers two APIs.
+    - url: https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+      passage: https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&api_key=abcdefghijklmnopqrstuvwxyz123456&file_type=json
+    - url: https://www.federalreserve.gov/data/data-download-fred-information.htm
+      passage: FRED's API Version 2 allows account holders to retrieve observations for all FRED and DDP series in any release in bulk
+    - url: https://www.federalreserve.gov/datadownload/help/default.htm
+      passage: The "Direct download for automated systems" link on the page is the URL that can be used by computer programs
+  how_called:
+    value: 'FRED API: key required, sent in the address (api_key=) or, for Version 2, in an HTTP header'
+    sources:
+    - url: https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+      passage: https://api.stlouisfed.org/fred/series?series_id=DGS10&api_key=abcdefghijklmnopqrstuvwxyz123456&file_type=json
+    - url: https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+      passage: This request assumes the API key has been set in an HTTP header.
+  key_obtained:
+    value: register a FRED user account with the St. Louis Fed; what registration asks for and any email step are not stated on federalreserve.gov
+    sources:
+    - url: https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+      passage: Users must register for their own API key with FRED.
+    - url: https://www.federalreserve.gov/data/data-download-fred-information.htm
+      passage: Users interested in using this new feature to make data requests will need an API key, which can be requested via a FRED user account.
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.federalreserve.gov/developer
+      note: HTTP 404; https://www.federalreserve.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: 'no'
+      url: https://www.federalreserve.gov/data.json
+      note: 'all 315,141 characters read in four chunks: every distribution null, no webService field, no API URL; SCF entry FRBCNA35 accessURL is the scfindex.htm landing page'
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.federalreserve.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.federalreserve.gov/econres/scfindex.htm
+      note: SCF page links file downloads, SDA tool and DDP (site menu), no API or developer page
+  pages_searched:
+  - https://www.federalreserve.gov/developer
+  - https://www.federalreserve.gov/developers
+  - https://www.federalreserve.gov/.well-known/api-catalog
+  - https://www.federalreserve.gov/data.json
+  - https://www.federalreserve.gov/econres/scfindex.htm
+  - https://www.federalreserve.gov/data/data-download-fred-information.htm
+  - https://www.federalreserve.gov/data/ddp-fred-user-guide.htm
+  - https://www.federalreserve.gov/datadownload/help/default.htm
+  - https://www.federalreserve.gov/datadownload/
+- body: EIA
+  name: Energy Information Administration
+  api:
+    value: EIA Open Data API (APIv2), base address https://api.eia.gov/v2/
+    url: https://www.eia.gov/opendata/documentation.php
+    passage: The first node in the route is the version of the API we wish to use. ... https://api.eia.gov/v2/API_route?api_key=xxxxxx
+  how_called:
+    value: Key required on every call, passed in the URL as api_key; not read from HTTP headers. Requests must be throttled; per-second and per-hour numbers not stated
+    url: https://www.eia.gov/opendata/documentation.php
+    passage: To call our API, you must use the unique API key assigned to you. To use an API key, place it as a parameter after the route. Note that our API Key must always appear in the URL; it will not be detected in the HTTP headers. ... these programs must throttle the number of the requests they make per second and per hour. ... If you exceed these tolerances, your API key will be automatically but temporarily suspended,
+  key_obtained:
+    value: Form asks first name, last name, email, user category, reason for use, and agreement to terms; key is sent by email, so a person must open that email. No activation link stated
+    url: https://www.eia.gov/opendata/register.php
+    passage: Your API key will be sent to your email address as well as any required API notifications.
+    note: 'Form field labels as served: First Name; Last Name; Email; Category that best describes you/your organization; Reason to use this API; API Terms of Service with checkbox ''I agree to these terms of service.'' The fetch reported no activation or confirmation-link step on the page.'
+  key_changes:
+    value: No key, no API access; the key is the unit EIA throttles and can suspend. Bulk download needs no key. No tiered limits stated
+    sources:
+    - url: https://www.eia.gov/opendata/documentation.php
+      passage: To call our API, you must use the unique API key assigned to you. ... If you exceed these tolerances, your API key will be automatically but temporarily suspended,
+    - url: https://www.eia.gov/opendata/register.php
+      passage: An API key is not required to use the bulk download facility.
+  api_data_gov:
+    value: 'no'
+    url: https://www.eia.gov/opendata/register.php
+    passage: Your API key will be sent to your email address as well as any required API notifications.
+    note: EIA issues its own key from its own register.php form; neither register.php nor documentation.php mentions api.data.gov.
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.eia.gov/developer
+      note: 'Serves a page headed ''Developer'': ''Our API allows customers to more easily access EIA''s public data.'' https://www.eia.gov/developers returned HTTP 404.'
+    data_json_lists_api:
+      value: 'yes'
+      url: https://www.energy.gov/data.json
+      note: Read in full (885,630 chars, 9 offset reads). Dozens of entries carry accessURL https://api.eia.gov/category?api_key=YOUR_API_KEY_HERE&category_id=..., e.g. 'State Energy Data System (SEDS) Application Programming Interface (API)'. These point at the retired APIv1 category route, not /v2/; no entry points at api.eia.gov/v2 or eia.gov/opendata.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.eia.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'yes'
+      url: https://www.eia.gov/opendata/browser/
+      note: Links 'Open Data' to /opendata/ described as 'EIA's free and open data available as API, Excel add-in, bulk files, and widgets'. https://www.eia.gov/survey/ showed no API link in the first 100,000 of 150,808 chars.
+  pages_searched:
+  - https://www.eia.gov/opendata/register.php
+  - https://www.eia.gov/opendata/
+  - https://www.eia.gov/opendata/documentation.php
+  - https://www.eia.gov/developer
+  - https://www.eia.gov/developers
+  - https://www.eia.gov/.well-known/api-catalog
+  - https://www.energy.gov/data.json
+  - https://www.eia.gov/opendata/browser/
+  - https://www.eia.gov/survey/
+  - https://www.eia.gov/opendata/faqs.php (HTTP 503 twice, not read)
+  - https://www.eia.gov/developer/ (HTTP 503 on second fetch)
+- body: ERS
+  name: Economic Research Service
+  api:
+    value: ERS Data APIs (ARMS Data API), REST base https://api.ers.usda.gov/data/ with GraphQL at https://api.ers.usda.gov/data/arms/graphql
+    sources:
+    - url: https://www.ers.usda.gov/developer/data-apis
+      passage: The Data APIs provide programmatic access to select data sets.
+    - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+      passage: 'Rest API endpoint: https://api.ers.usda.gov/data/'
+  how_called:
+    value: Key required, passed in the URL as api_key; no limit stated by ERS
+    sources:
+    - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+      passage: GET https://api.ers.usda.gov/data/arms/state?api_key=YOUR_API_KEY
+    - url: https://www.ers.usda.gov/developer/data-apis
+      passage: To use the APIs, you must register for a key using the form below
+  key_obtained:
+    value: api.data.gov signup form asks name and a valid email; key is sent automatically to that email, so a person must open it. No activation link stated
+    sources:
+    - url: https://www.ers.usda.gov/developer/data-apis
+      passage: Registering is simple—just provide your name and valid email address.
+    - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+      passage: Once users have completed the signup requirements, the API key will be automatically sent to the user-provided email address. A valid email address is required to obtain a key.
+  key_changes:
+    value: Key is required for access, lets ERS notify users of API changes, and works across Open Government APIs on the shared service. No limits stated
+    sources:
+    - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+      passage: API keys provide a means to notify users of changes in the APIs.
+    - url: https://www.ers.usda.gov/developer
+      passage: Register for a key using the form below and gain universal access to any Open Government data using the service.
+  api_data_gov:
+    value: 'yes'
+    sources:
+    - url: https://www.ers.usda.gov/developer
+      passage: ERS uses the shared, interagency service api.data.gov to provide an optimized experience for users.
+    - url: https://www.ers.usda.gov/developer/data-apis/arms-data-api
+      passage: Users of the ARMS data API are required to sign up for an API key using the form provided by api.data.gov below
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.ers.usda.gov/developer
+      note: Serves 'Developer | Economic Research Service' with links to Data APIs (/developer/data-apis). https://www.ers.usda.gov/developers also served the same Developer page.
+    data_json_lists_api:
+      value: not determined
+      url: https://www.usda.gov/data.json
+      note: HTTP 403 to the fetch tool at https://www.usda.gov/data.json and https://usda.gov/data.json; https://www.ers.usda.gov/data.json returned HTTP 404.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.ers.usda.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.ers.usda.gov/data-products/agricultural-baseline-database
+      note: No link to an API or developer page; nearest is 'Custom Queries'. https://www.ers.usda.gov/data-products?type=downloadable-data-files also has no API or developer link.
+  pages_searched:
+  - https://www.ers.usda.gov/developer
+  - https://www.ers.usda.gov/developers
+  - https://www.ers.usda.gov/developer/data-apis
+  - https://www.ers.usda.gov/developer/data-apis/arms-data-api
+  - https://www.ers.usda.gov/developer/api-terms-of-service
+  - https://www.ers.usda.gov/.well-known/api-catalog
+  - https://www.ers.usda.gov/data-products/agricultural-baseline-database
+  - https://www.ers.usda.gov/data-products?type=downloadable-data-files
+  - https://www.ers.usda.gov/data.json
+  - https://www.usda.gov/data.json
+  - https://usda.gov/data.json
+- body: NAHMSAPHIS
+  name: National Animal Health Monitoring System, Animal and Plant Health Inspection Service
+  api:
+    value: no public API found
+    url: https://www.aphis.usda.gov/nahms
+    passage: If you cannot reach any of the NAHMS content (for example, questionnaires, study reports, study dashboards, informational sheets, and informational graphics)
+    note: NAHMS pages offer PDF reports, study dashboards and special tabulations by email request to nahms@usda.gov; no page fetched mentions an API, developer resource or machine-readable download. A WebSearch of site:aphis.usda.gov for a NAHMS data API returned no API documentation. https://www.usda.gov/developer (USDA developer page) returned HTTP 403 to the fetch tool, so whether it lists any NAHMS service is not determined.
+  how_called:
+    value: not stated
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.aphis.usda.gov/developer
+      note: HTTP 404; https://www.aphis.usda.gov/developers also HTTP 404.
+    data_json_lists_api:
+      value: not determined
+      url: https://www.usda.gov/data.json
+      note: HTTP 403 to the fetch tool at https://www.usda.gov/data.json and https://usda.gov/data.json; https://www.aphis.usda.gov/data.json returned HTTP 404. No API was found to look for in any case.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.aphis.usda.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+      note: Served the NAHMS page with no API, developer or download link (only PDFs and an email request route). https://www.aphis.usda.gov/data-visualization-tools links five NAHMS dashboards, none offering an API.
+  pages_searched:
+  - https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+  - https://www.aphis.usda.gov/nahms
+  - https://www.aphis.usda.gov/data-visualization-tools
+  - https://www.aphis.usda.gov/livestock-poultry-disease/nahms/studies/sheep-death-dashboard
+  - https://www.aphis.usda.gov/developer
+  - https://www.aphis.usda.gov/developers
+  - https://www.aphis.usda.gov/.well-known/api-catalog
+  - https://www.aphis.usda.gov/data.json
+  - https://www.usda.gov/data.json
+  - https://usda.gov/data.json
+  - https://www.usda.gov/developer (HTTP 403)
+  - 'WebSearch: site:aphis.usda.gov NAHMS data API'
+  - 'WebSearch: APHIS public API developer site:usda.gov'
+- body: NASS
+  name: National Agricultural Statistics Service
+  api:
+    value: Quick Stats API, base address https://quickstats.nass.usda.gov/api/ (resources api_GET, get_param_values, get_counts)
+    sources:
+    - url: https://www.nass.usda.gov/developer/index.php
+      passage: This API provides direct access to the statistical information contained in our on-line Quick Stats database.
+    - url: https://quickstats.nass.usda.gov/api/
+      passage: https://quickstats.nass.usda.gov/api/api_GET/?key=api key&commodity_desc=CORN&year__GE=2012&state_alpha=VA&format=JSON
+  how_called:
+    value: Key required, passed in the URL as key=. Each request returns at most 50,000 records; no rate limit stated
+    url: https://quickstats.nass.usda.gov/api/
+    passage: you must first agree to the NASS Terms of Service and obtain an API key ... Your request will return a maximum of 50,000 data records.
+  key_obtained:
+    value: Form asks email (required) and name/organization (optional), plus agreeing to the Terms of Service; key arrives by email, no activation link stated
+    url: https://quickstats.nass.usda.gov/api/
+    passage: To obtain an API key, please submit the form below then you will receive the key in your email. ... Once you request the API key, we will email it and you can proceed immediately.
+    note: 'Form fields as served: Name/Organization (optional); Email Address (required); Terms of Service Yes/No; optional email-updates checkbox.'
+  key_changes:
+    value: not stated
+    note: The page says requests without a valid key return 'unauthorized'; it states no different limits or features for keyed use, and the 50,000-record cap applies to all requests.
+  api_data_gov:
+    value: not stated
+    note: NASS issues the key from its own form on quickstats.nass.usda.gov/api/; the page does not mention api.data.gov.
+  announced:
+    developer_page:
+      value: 'yes'
+      url: https://www.nass.usda.gov/developer
+      note: Serves 'USDA - National Agricultural Statistics Service - Developers', which links Quick Stats API at http://quickstats.nass.usda.gov/api. https://www.nass.usda.gov/developers returned HTTP 404.
+    data_json_lists_api:
+      value: not determined
+      url: https://www.usda.gov/data.json
+      note: HTTP 403 to the fetch tool at https://www.usda.gov/data.json and https://usda.gov/data.json; https://www.nass.usda.gov/data.json returned HTTP 404.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.nass.usda.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'yes'
+      url: https://www.nass.usda.gov/Data_and_Statistics/index.php
+      note: Links 'Application Programming Interfaces (APIs)' to /developer/index.php under 'For Developers and Data Users'; Quick Stats links go to the site root, not /api. https://www.nass.usda.gov/datasets has the same developer link.
+  pages_searched:
+  - https://quickstats.nass.usda.gov/api/
+  - https://www.nass.usda.gov/developer
+  - https://www.nass.usda.gov/developer/index.php
+  - https://www.nass.usda.gov/developers
+  - https://www.nass.usda.gov/.well-known/api-catalog
+  - https://www.nass.usda.gov/Data_and_Statistics/index.php
+  - https://www.nass.usda.gov/datasets
+  - https://www.usda.gov/data.json
+  - https://usda.gov/data.json
+  - https://www.usda.gov/sites/default/files/documents/data.json
+  - https://www.nass.usda.gov/data.json
+- body: NCES
+  name: National Center for Education Statistics
+  api:
+    value: No NCES data API documented on NCES pages; EDGE geodata are offered as GIS web services via an off-site ArcGIS Open Data site. ED's College Scorecard API (https://api.data.gov/ed/collegescorecard/v1/schools) is departmental, not NCES
+    sources:
+    - url: https://nces.ed.gov/programs/edge/Geographic/SchoolLocations
+      passage: The geographic data are provided for download as shapefiles and are also directly accessible as GIS web services.
+    - url: https://collegescorecard.ed.gov/data/api-documentation/
+      passage: 'All API requests are made to the following base URL: https://api.data.gov/ed/collegescorecard/v1/schools'
+  how_called:
+    value: 'NCES EDGE services: not stated. College Scorecard (ED, not NCES): key required on every request, passed in the address as api_key; default 1,000 requests per IP address per hour'
+    sources:
+    - url: https://collegescorecard.ed.gov/data/api-documentation/
+      passage: To use the College Scorecard API you must have an API key.
+    - url: https://collegescorecard.ed.gov/data/api-documentation/
+      passage: https://api.data.gov/ed/collegescorecard/v1/schools?api_key=YOUR_API_KEY&{parameters}
+    - url: https://collegescorecard.ed.gov/data/api-documentation/
+      passage: The default rate limit is 1,000 requests per IP address per hour.
+  key_obtained:
+    value: 'College Scorecard: security challenge, then a registration form (fields not stated); the key is emailed, so a person must open an email to receive it. NCES: not stated'
+    url: https://collegescorecard.ed.gov/data/api-documentation/
+    passage: First, please complete the security challenge below. Second, use the form below to complete the registration process and receive your API key. The key will be emailed to you.
+  key_changes:
+    value: not stated; College Scorecard has no keyless tier, the key is required for all requests
+    url: https://collegescorecard.ed.gov/data/api-documentation/
+    passage: Keep your API key secure as it is required for all API requests.
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://nces.ed.gov/developer
+      note: HTTP 404; https://nces.ed.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: not determined
+      url: https://www.ed.gov/data.json
+      note: HTTP 403 to the fetcher (also https://ed.gov/data.json); https://nces.ed.gov/data.json HTTP 404
+    well_known_api_catalog:
+      value: 'no'
+      url: https://nces.ed.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://nces.ed.gov/programs/digest/
+      note: no API, web service or developer link; only table pages, dashboard and PDFs
+  pages_searched:
+  - https://nces.ed.gov/developer
+  - https://nces.ed.gov/developers
+  - https://nces.ed.gov/.well-known/api-catalog
+  - https://nces.ed.gov/data.json
+  - https://www.ed.gov/data.json
+  - https://ed.gov/data.json
+  - https://nces.ed.gov/programs/digest/
+  - https://nces.ed.gov/programs/edge/
+  - https://nces.ed.gov/programs/edge/Geographic/SchoolLocations
+  - https://nces.ed.gov/opengis/rest/services
+  - https://nces.ed.gov/opengis/rest/services?f=json
+  - https://nces.ed.gov/opengis/rest/services/Postsecondary_School_Locations/EDGE_GEOCODE_POSTSECONDARYSCH_1920/MapServer
+  - https://nces.ed.gov/admindata/
+  - https://data.ed.gov/
+  - https://collegescorecard.ed.gov/data/api-documentation/
+- body: NCHS
+  name: National Center for Health Statistics
+  api:
+    value: CDC WONDER API, POST to https://wonder.cdc.gov/controller/datarequest/[database ID]; national NVSS data only. data.cdc.gov (Socrata) is also used, but its API terms are only on non-.gov dev.socrata.com
+    sources:
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: Access data in the WONDER online databases immediately with automated data queries in XML format over HTTP
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: https://wonder.cdc.gov/controller/datarequest/[database ID]
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: only national data are available for query by the API.
+    - url: https://data.cdc.gov/
+      passage: Help and Resources
+  how_called:
+    value: 'WONDER: no key described; POST request with XML, and consent to data use restrictions required in each request. data.cdc.gov app token terms: not stated on .gov pages'
+    sources:
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: Send a POST request to the WONDER.cdc.gov web server.
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: Consent to abide by the data use restrictions is required
+    - url: https://wonder.cdc.gov/wonder/help/wonder-api.html
+      passage: Please don't run multiple instances simultaneously.
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.cdc.gov/developer
+      note: HTTP 404; https://www.cdc.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: not determined
+      url: https://www.hhs.gov/data.json
+      note: HTTP 403 to the fetcher; https://www.cdc.gov/data.json HTTP 404
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.cdc.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.cdc.gov/nchs/nvss/vsrr.htm
+      note: links CDC WONDER home (https://wonder.cdc.gov/) but not the API or its help page; https://www.cdc.gov/nchs/products/databriefs.htm has no API link
+  pages_searched:
+  - https://www.cdc.gov/developer
+  - https://www.cdc.gov/developers
+  - https://www.cdc.gov/.well-known/api-catalog
+  - https://www.cdc.gov/data.json
+  - https://www.hhs.gov/data.json
+  - https://www.cdc.gov/nchs/nvss/vsrr.htm
+  - https://www.cdc.gov/nchs/products/databriefs.htm
+  - https://wonder.cdc.gov/wonder/help/WONDER-API.html
+  - https://wonder.cdc.gov/wonder/help/wonder-api.html
+  - https://data.cdc.gov/
+  - https://open.cdc.gov/apis.html
+- body: NCSES
+  name: National Center for Science and Engineering Statistics
+  api:
+    value: no public API found; NCSES offers interactive web tools (Data Explorer, Chart Builder, Table Builder on ncsesdata.nsf.gov) and file downloads, none documented as an API
+    sources:
+    - url: https://ncses.nsf.gov/explore-data/microdata
+      passage: Discover and analyze NCSES data through our collection of interactive data tools, profiles, and related resources.
+    - url: https://nsf-gov-resources.nsf.gov/files/data.json
+      passage: Interactive web application for making tables and graphs
+  how_called:
+    value: not stated
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://ncses.nsf.gov/developer
+      note: HTTP 404; https://ncses.nsf.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: 'no'
+      url: https://www.nsf.gov/data.json
+      note: 301 to https://nsf-gov-resources.nsf.gov/files/data.json (DCAT-US 3.0), read in full; NCSES entries list only HTML tools and file downloads; API entries are NSF GRFP and Award Search, not NCSES; https://ncses.nsf.gov/data.json HTTP 404
+    well_known_api_catalog:
+      value: 'no'
+      url: https://ncses.nsf.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://ncses.nsf.gov/pubs/nsf26321
+      note: no API, developer or web service link; links only RSS and interactive tools; same result on https://ncses.nsf.gov/explore-data/microdata and https://ncses.nsf.gov/explore-data
+  pages_searched:
+  - https://ncses.nsf.gov/developer
+  - https://ncses.nsf.gov/developers
+  - https://ncses.nsf.gov/.well-known/api-catalog
+  - https://ncses.nsf.gov/explore-data
+  - https://ncses.nsf.gov/pubs/nsf26321
+  - https://ncses.nsf.gov/explore-data/microdata
+  - https://ncses.nsf.gov/data.json
+  - https://www.nsf.gov/data.json
+  - https://nsf-gov-resources.nsf.gov/files/data.json
+- body: ORES
+  name: Office of Research, Evaluation, and Statistics
+  api:
+    value: 'not determined: www.ssa.gov returned HTTP 403 Forbidden to every WebFetch request, so no SSA page could be read'
+  how_called:
+    value: 'not determined: no SSA page could be fetched (HTTP 403)'
+  key_obtained:
+    value: 'not determined: no SSA page could be fetched (HTTP 403)'
+  key_changes:
+    value: 'not determined: no SSA page could be fetched (HTTP 403)'
+  api_data_gov:
+    value: 'not determined: no SSA page could be fetched (HTTP 403)'
+  announced:
+    developer_page:
+      value: not determined
+      url: https://www.ssa.gov/developer
+      note: HTTP 403 Forbidden; https://www.ssa.gov/developers also 403; https://best.ssa.gov/developer 301-redirects to https://www.ssa.gov/developer; https://ssa.gov/developer failed TLS (unable to verify the first certificate). Search results (not evidence) show a page titled SSA Developer Support at ssa.gov/developer.
+    data_json_lists_api:
+      value: not determined
+      url: https://www.ssa.gov/data.json
+      note: HTTP 403 Forbidden
+    well_known_api_catalog:
+      value: not determined
+      url: https://www.ssa.gov/.well-known/api-catalog
+      note: HTTP 403 Forbidden; the 403 does not distinguish absent from blocked
+    data_page_links:
+      value: not determined
+      url: https://www.ssa.gov/policy/docs/statcomps/supplement/
+      note: HTTP 403 Forbidden
+  pages_searched:
+  - https://www.ssa.gov/developer (403)
+  - https://www.ssa.gov/developers (403)
+  - https://ssa.gov/developer (TLS certificate error)
+  - https://best.ssa.gov/developer (301 to https://www.ssa.gov/developer)
+  - https://www-origin.ssa.gov/developer (connection refused)
+  - https://www-origin.ssa.gov/data/ (connection refused)
+  - https://www.ssa.gov/.well-known/api-catalog (403)
+  - https://www.ssa.gov/data.json (403)
+  - https://www.ssa.gov/data/ (403)
+  - https://www.ssa.gov/open/data/ (403)
+  - https://www.ssa.gov/data/OASDIBeneficiariesbyState.htm (403)
+  - https://www.ssa.gov/data/OASDIBeneficiariesbyTotal.htm (403)
+  - https://www.ssa.gov/data/materials/SSA-Open-Data-Explainer.pdf (403)
+  - https://www.ssa.gov/policy/docs/statcomps/supplement/ (403)
+- body: SAMHSACBHS
+  name: Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality
+  api:
+    value: FindTreatment.gov API (SAMHSA CBHSQ, BHSIS), JSON GET at https://{host}/locator/exportsAsJson/v2, e.g. https://findtreatment.gov/locator/exportsAsJson/; documented only in a PDF developer guide v1.12 (August 17, 2026). No NSDUH data API found
+    sources:
+    - url: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+      passage: 'URL: https://{host}/locator/exportsAsJson/v2[?querystring]'
+    - url: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+      passage: The purpose of this document is to provide instructions to the approved user on how to use FindTreatment.gov API.
+  how_called:
+    value: No key or token appears in the guide or its sample URLs; plain query string parameters; page size capped at 2000. The guide addresses an 'approved user' but describes no approval step
+    sources:
+    - url: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+      passage: Maximum limit for pageSize is 2000.
+    - url: https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+      passage: The purpose of this document is to provide instructions to the approved user on how to use FindTreatment.gov API.
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.samhsa.gov/developer
+      note: HTTP 404; https://www.samhsa.gov/developers also HTTP 404; https://findtreatment.gov/developer returns only the app shell, no developer content
+    data_json_lists_api:
+      value: not determined
+      url: https://www.samhsa.gov/data.json
+      note: HTTP 500; department file https://www.hhs.gov/data.json HTTP 403 to the fetcher
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.samhsa.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health
+      note: links FindTreatment.gov website, data files and the Data Analysis System, not the API or developer guide; https://findtreatment.gov/ home shows no API link
+  pages_searched:
+  - https://www.samhsa.gov/developer
+  - https://www.samhsa.gov/developers
+  - https://www.samhsa.gov/.well-known/api-catalog
+  - https://www.samhsa.gov/data.json
+  - https://www.hhs.gov/data.json
+  - https://www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health
+  - https://findtreatment.gov/
+  - https://findtreatment.gov/developer
+  - https://findtreatment.gov/assets/FindTreatment-Developer-Guide.pdf
+  - https://api.data.gov/docs/samhsa/
+  - https://api.data.gov/docs/
+- body: SOI
+  name: Statistics of Income
+  api:
+    value: no public API found; SOI states its data are available in electronic format and printed publications, and some files are for sale
+    url: https://www.irs.gov/statistics/soi-tax-stats-products-and-services
+    passage: The data are available in electronic format and in printed publications.
+  how_called:
+    value: not stated
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.irs.gov/developer
+      note: HTTP 404; https://www.irs.gov/developers also HTTP 404
+    data_json_lists_api:
+      value: not determined
+      url: https://www.treasury.gov/data.json
+      note: Treasury DCAT catalog is 497,466 characters; first 100,000 read showed no IRS or SOI entry and no webService or API format; remainder not inspected. No SOI API exists to list.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.irs.gov/.well-known/api-catalog
+      note: HTTP 404
+    data_page_links:
+      value: 'no'
+      url: https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics
+      note: neither data page mentions or links to an API, web service or developer page; business page offers only an XLS and PDF downloads
+  pages_searched:
+  - https://www.irs.gov/developer
+  - https://www.irs.gov/developers
+  - https://www.irs.gov/.well-known/api-catalog
+  - https://www.treasury.gov/data.json
+  - https://www.irs.gov/statistics/soi-tax-stats-products-and-services
+  - https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics
+  - https://www.irs.gov/statistics/soi-tax-stats-business-tax-statistics
+  - 'WebSearch: site:irs.gov SOI tax stats API (no result mentions an API)'
+- body: GSA
+  name: General Services Administration
+  api:
+    value: 'Many GSA APIs listed at open.gsa.gov/api, served under https://api.gsa.gov/; example: Per Diem API at https://api.gsa.gov/travel/perdiem/v2/'
+    sources:
+    - url: https://open.gsa.gov/
+      passage: Explore and access GSA data via dynamic web services.
+    - url: https://open.gsa.gov/api/perdiem/
+      passage: 'This API has six primary endpoints: https://api.gsa.gov/travel/perdiem/v2/rates/city/{city}/state/{ST}/year/{year}'
+  how_called:
+    value: Key required on every request, in the x-api-key header or as ?api_key= in the address; DEMO_KEY allowed for samples on some pages
+    sources:
+    - url: https://open.gsa.gov/api/perdiem/
+      passage: To begin using this API, you will need to register for an API Key. After registration, you will need to provide this API key in the `x-api-key` HTTP header or append it to the API URL with every request, e.g., ?api_key={api_key}.
+    - url: https://open.gsa.gov/api/datadotgov/
+      passage: API key from api.data.gov. For sample purposes, you can use `DEMO_KEY` as an API key.
+  key_obtained:
+    value: api.data.gov form asks first name, last name, email (use description optional); key is e-mailed; a person must click the emailed verification before an unverified key works
+    sources:
+    - url: https://api.data.gov/static/javascripts/signup_embed.js
+      passage: '"First Name" (required); "Last Name" (required); "Email" (required); "How will you use the APIs? (optional)"; "has been e-mailed to you. You can use your API key to begin making web service requests immediately."'
+    - url: https://api.data.gov/docs/developer-manual/
+      passage: The API key supplied has not been verified yet. Please check your e-mail to verify the API key.
+    note: Field labels come from the signup embed script; the signup pages themselves render only 'Loading signup form...' without JavaScript. Whether verification is enforced depends on the server's verify_email option.
+  key_changes:
+    value: A personal key gets the default 1,000 requests per hour versus DEMO_KEY's 30 per hour and 50 per day per IP; higher limits by emailing GSA
+    sources:
+    - url: https://open.gsa.gov/api/perdiem/
+      passage: The default rate limit is 1,000 hits per hour. If you need to request a rate limit change, please email us at digitalteam@gsa.gov.
+    - url: https://api.data.gov/docs/developer-manual/
+      passage: 'Rate limits may vary by service, but the defaults are: Hourly Limit: 1,000 requests per hour ... The rate limits for the `DEMO_KEY` are: Hourly Limit: 30 requests per IP address per hour Daily Limit: 50 requests per IP address per day'
+  api_data_gov:
+    value: 'yes'
+    url: https://open.gsa.gov/api/datadotgov/
+    passage: API key from api.data.gov. For sample purposes, you can use `DEMO_KEY` as an API key.
+    note: The Per Diem page itself does not name api.data.gov; it embeds a signup form and states the api.data.gov default limit (1,000 per hour).
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.gsa.gov/developer
+      note: HTTP 404; https://www.gsa.gov/developers also 404; https://open.gsa.gov/developer also 404
+    data_json_lists_api:
+      value: 'yes'
+      url: https://open.gsa.gov/data.json
+      note: www.gsa.gov/data.json 301s to open.gsa.gov/data.json (DCAT-US 3.0, 756,340 chars, read in 8 WebFetch slices). Entries such as 'Site Scanning API' and 'Regulations.gov API' point at open.gsa.gov/api/ doc pages, not api.gsa.gov bases; no Per Diem API entry seen.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.gsa.gov/.well-known/api-catalog
+      note: HTTP 404; https://open.gsa.gov/.well-known/api-catalog also 404
+    data_page_links:
+      value: 'yes'
+      url: https://open.gsa.gov/
+      note: Navigation 'APIs' and button 'Explore APIs' link to /api (the API directory)
+  pages_searched:
+  - https://open.gsa.gov/
+  - https://open.gsa.gov/api/
+  - https://open.gsa.gov/api/perdiem/
+  - https://open.gsa.gov/api/datadotgov/
+  - https://open.gsa.gov/developer
+  - https://www.gsa.gov/developer
+  - https://www.gsa.gov/developers
+  - https://www.gsa.gov/.well-known/api-catalog
+  - https://open.gsa.gov/.well-known/api-catalog
+  - https://www.gsa.gov/data.json
+  - https://open.gsa.gov/data.json
+  - https://api.data.gov/
+  - https://api.data.gov/docs/
+  - https://api.data.gov/docs/rate-limits/
+  - https://api.data.gov/docs/developer-manual/
+  - https://api.data.gov/signup/
+  - https://api.data.gov/static/javascripts/signup_embed.js
+- body: NIST
+  name: National Institute of Standards and Technology
+  api:
+    value: NIST Public Data Repository (PDR) search API, 'RMM APIs', at https://data.nist.gov/rmm/records (docs https://data.nist.gov/rmm); files under https://data.nist.gov/od/ds/
+    sources:
+    - url: https://www.nist.gov/metis/developer-tools
+      passage: The PDR provides a rich API for searching for data products which is described in detail in the PDR’s API documentation.
+    - url: https://data.nist.gov/pdr/about
+      passage: Records may be searched via the API
+    - url: https://data.nist.gov/rmm
+      passage: RMM APIs
+    note: 'Fetched as https://www.nist.gov/node/1856841, which shows https://www.nist.gov/metis/developer-tools; its ''API documentation'' link goes to https://data.nist.gov/rmm, which renders only the title without JavaScript. NVD API (nvd.nist.gov) terms could not be read: every NVD page fetched returned only the title ''NVD - Home''.'
+  how_called:
+    value: not stated; no page fetched states a key requirement, and an unauthenticated request to https://data.nist.gov/rmm/records?size=1 returned JSON records
+    url: https://data.nist.gov/rmm/records?size=1
+    passage: '{"ResultCount":1467,"ResultData":[{"@context":["https://data.nist.gov/od/dm/nerdm-pub-context.jsonld"'
+    note: The passage is the live response (no key sent), not a stated term. The METIS developer-tools page does not mention authentication, keys or rate limits.
+  key_obtained:
+    value: not stated
+  key_changes:
+    value: not stated
+  api_data_gov:
+    value: not stated
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.nist.gov/developers
+      note: /developers HTTP 404; https://www.nist.gov/developer returned HTTP 503 on two tries (not determined for that path). The nearest developer page is https://www.nist.gov/metis/developer-tools.
+    data_json_lists_api:
+      value: not determined
+      url: https://www.nist.gov/data.json
+      note: DCAT POD v1.1 catalog of 10,003,178 characters; first 100,000 read show no data.nist.gov/rmm entry, rest too large to inspect. https://data.nist.gov/data.json is HTTP 404.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.nist.gov/.well-known/api-catalog
+      note: HTTP 404; https://data.nist.gov/.well-known/api-catalog also 404
+    data_page_links:
+      value: 'yes'
+      url: https://data.nist.gov/pdr/about
+      note: The data.nist.gov root renders only the title 'NIST Data Repository Page' without JavaScript; its About page links 'Records may be searched via the API' to https://data.nist.gov/sdp/#/api. https://www.nist.gov/data links the portal but mentions no API.
+  pages_searched:
+  - https://data.nist.gov
+  - https://data.nist.gov/pdr/about
+  - https://data.nist.gov/rmm
+  - https://data.nist.gov/rmm/records?size=1
+  - https://data.nist.gov/data.json
+  - https://data.nist.gov/.well-known/api-catalog
+  - https://www.nist.gov/node/1856841
+  - https://www.nist.gov/data
+  - https://www.nist.gov/developer
+  - https://www.nist.gov/developers
+  - https://www.nist.gov/data.json
+  - https://www.nist.gov/.well-known/api-catalog
+  - https://nvd.nist.gov/developers
+  - https://nvd.nist.gov/developers/start-here
+  - https://nvd.nist.gov/developers/request-an-api-key
+  - https://nvd.nist.gov/developers/vulnerabilities
+  - https://nvd.nist.gov/general/news/changes-to-feeds-and-apis
+- body: data.gov
+  name: data.gov
+  api:
+    value: 'Data.gov Catalog API, two stated routes: keyed v4 at https://api.gsa.gov/technology/datagov/v4/ (replaces CKAN API) and the catalog app''s public JSON API at https://catalog.data.gov (/search)'
+    sources:
+    - url: https://resources.data.gov/catalog-api/
+      passage: 'Base URL: https://api.gsa.gov/technology/datagov/v4/ ... Note: This API replaces the previous CKAN-based API.'
+    - url: https://www.data.gov/user-guide/
+      passage: The catalog application provides a public JSON API; authentication is not required. The current API documentation is available at https://resources.data.gov/catalog-api/.
+    - url: https://catalog.data.gov/openapi.json
+      passage: '"title":"Datagov Catalog" ... servers: "https://catalog.data.gov" ... paths include "/search", "/api/organizations", "/api/dataset/{slug_or_id}"'
+    note: 'The two official pages conflict: the user guide says no authentication, while the documentation it points to says every request needs an api.data.gov key. catalog.data.gov/openapi.json defines no security scheme. Old CKAN path https://catalog.data.gov/api/3 returns HTTP 404.'
+  how_called:
+    value: Through api.gsa.gov v4, key required in the X-Api-Key header (DEMO_KEY for exploring); directly on catalog.data.gov, no key
+    sources:
+    - url: https://resources.data.gov/catalog-api/
+      passage: 'All requests must include an API key issued through api.data.gov. ... Sign up for a free API key and include it in the X-Api-Key header with every request. ... For initial exploration, you can use DEMO_KEY without signing up:'
+    - url: https://www.data.gov/user-guide/
+      passage: The catalog application provides a public JSON API; authentication is not required.
+  key_obtained:
+    value: api.data.gov signup (first name, last name, email); key is e-mailed and a person must complete the email verification before the key works
+    sources:
+    - url: https://resources.data.gov/catalog-api/
+      passage: Your API key has not been verified yet. Check your email to complete signup.
+    - url: https://api.data.gov/static/javascripts/signup_embed.js
+      passage: '"First Name" (required); "Last Name" (required); "Email" (required); "How will you use the APIs? (optional)"; "has been e-mailed to you. You can use your API key to begin making web service requests immediately."'
+  key_changes:
+    value: A personal key lifts DEMO_KEY's much lower limits to the api.data.gov default of 1,000 requests per hour; higher limits by emailing datagovhelp@gsa.gov
+    sources:
+    - url: https://resources.data.gov/catalog-api/
+      passage: DEMO_KEY has much lower rate limits and is not suitable for production use or automated queries. ... If you exceed your limit, you will receive an HTTP 429 Too Many Requests response. The block lifts automatically after one hour. ... If you need higher limits, contact us at datagovhelp@gsa.gov.
+    - url: https://api.data.gov/docs/developer-manual/
+      passage: 'Rate limits may vary by service, but the defaults are: Hourly Limit: 1,000 requests per hour ... The rate limits for the `DEMO_KEY` are: Hourly Limit: 30 requests per IP address per hour Daily Limit: 50 requests per IP address per day'
+    note: resources.data.gov names the X-RateLimit-Limit and X-RateLimit-Remaining headers but no number; the 1,000/hour figure is api.data.gov's default, which it says may vary by service.
+  api_data_gov:
+    value: 'yes'
+    url: https://resources.data.gov/catalog-api/
+    passage: This API is accessed through api.data.gov, which manages API keys, rate limiting, and usage tracking.
+  announced:
+    developer_page:
+      value: 'no'
+      url: https://www.data.gov/developers/
+      note: HTTP 404; https://www.data.gov/developer also 404. API docs live at https://resources.data.gov/catalog-api/, linked from the user guide.
+    data_json_lists_api:
+      value: 'no'
+      url: https://www.data.gov/data.json
+      note: HTTP 404; catalog.data.gov/data.json also 404. GSA's inventory https://open.gsa.gov/data.json has a 'Data.gov CKAN API' entry, but its accessURL is the stale http://www.data.gov/developers/apis, not the v4 or catalog.data.gov base.
+    well_known_api_catalog:
+      value: 'no'
+      url: https://www.data.gov/.well-known/api-catalog
+      note: HTTP 404; https://catalog.data.gov/.well-known/api-catalog also 404
+    data_page_links:
+      value: 'no'
+      url: https://catalog.data.gov/
+      note: No link to an API, API docs or a developer page; only 'Data.gov on Github'. www.data.gov home also has no API link; its User Guide does.
+  pages_searched:
+  - https://www.data.gov/
+  - https://www.data.gov/user-guide/
+  - https://www.data.gov/developers/
+  - https://www.data.gov/developer
+  - https://www.data.gov/data.json
+  - https://www.data.gov/.well-known/api-catalog
+  - https://catalog.data.gov/
+  - https://catalog.data.gov/openapi.json
+  - https://catalog.data.gov/api/3
+  - https://catalog.data.gov/docs
+  - https://catalog.data.gov/data.json
+  - https://catalog.data.gov/.well-known/api-catalog
+  - https://resources.data.gov/catalog-api/
+  - https://open.gsa.gov/api/datadotgov/
+  - https://open.gsa.gov/data.json
+  - https://api.data.gov/docs/developer-manual/
+  - https://api.data.gov/signup/
+  - https://api.data.gov/static/javascripts/signup_embed.js

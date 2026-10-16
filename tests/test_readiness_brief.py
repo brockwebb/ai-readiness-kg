@@ -81,3 +81,23 @@ def test_check_table_style_guards(record):
     for r in rows:
         for k in ("name", "ask", "tells", "why"):
             assert not D.banned_hits_prose(r[k]) and not RB.dash_hits(r[k])
+
+
+def test_api_terms_pass_their_check_and_bls_states_both_versions():
+    import yaml
+    import api_terms_check as AT
+    doc = yaml.safe_load(AT.API_TERMS.read_text(encoding="utf-8"))
+    assert AT.check(doc) == []
+    bls = next(r for r in doc["bodies"] if r["body"] == "BLS")
+    assert "1.0" in bls["how_called"]["value"] and "2.0" in bls["how_called"]["value"]
+    assert len(AT.table_rows(doc)) == 19
+
+
+def test_api_terms_check_refuses_an_unsourced_term():
+    import copy
+    import yaml
+    import api_terms_check as AT
+    doc = copy.deepcopy(yaml.safe_load(AT.API_TERMS.read_text(encoding="utf-8")))
+    row = next(r for r in doc["bodies"] if r["body"] == "EIA")
+    row["key_changes"] = {"value": "a key doubles the limit"}
+    assert any("EIA.key_changes" in p for p in AT.check(doc))
