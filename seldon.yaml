@@ -40,7 +40,7 @@ dispatch:
   # is recorded once on the log, and every pass halts until the file is removed.
   #
   # Read on EVERY pass, never cached. A bool, not a string: a truthy "false" is refused.
-  enabled: true
+  enabled: false
 
   # The branch a pass may dispatch on. Any other branch fails c7, together with a dirty tree.
   branch: main
