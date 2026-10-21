@@ -1,0 +1,7 @@
+# Manifest fields the ledger is allowed to disagree with, per document id (squiddy gates.load_allowlist).
+#
+# Empty, deliberately (squiddy SQ-019; docs/evidence/sq019/catalog_mapping.md in squiddy). Each Document carries its
+# whole dixie record under ONE property, `dixie_record`, declared in schema/ai_readiness.yaml and projected onto the
+# node verbatim by emit.py, so it never disagrees with the ledger and needs no mute. An entry here would be a decision
+# to stop noticing drift on the one property whose drift would mean the catalog record was lost.
+allow: {}

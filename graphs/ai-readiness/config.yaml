@@ -1,0 +1,268 @@
+# squiddy-generated: graph config | spec sha256 3f788db3d23f8d4acf39b9e4a275bfe98bd1aefedde07b8a294c67885025ac81
+# Do not edit. Edit the spec and re-run `squiddy init`; `squiddy init --check` reports drift.
+#
+# Rendered by `squiddy init` from graph.yaml. Every value here is either a choice in
+# that spec or a default in squiddy/init_defaults.yaml, which carries the comment that
+# records where each number came from. `engine.gates` is absent on purpose: Part A of
+# K-001 measured it as the one config block no kit module reads.
+#
+# TWO TOP-LEVEL BLOCKS (S-001 finding 3): `engine:` is what the kit reads and every key
+# in it is a kit contract; `domain:` is this graph's vocabulary and the kit reads nothing
+# from it except by a key the graph's own emitter names. `identity:` is required of every
+# graph by docs/OD-4_identity_spine.md section 5.
+
+engine:
+  ledger:
+    segment_max_bytes: 40000000
+  paths:
+    manifest: corpus/manifest.yaml
+    events: ledger/open.jsonl
+    corpus_dir: corpus
+    parsed_dir: corpus/parsed
+    resolved_dir: corpus/resolved
+    exports_dir: exports
+    evidence_dir: evidence
+    acquisition_state: corpus/acquisition_state.json
+    allowlist: corpus/manifest_property_allowlist.yaml
+  manifest:
+    profile: squiddy-manifest
+    stages:
+    - cataloged
+    - acquired
+    - admitting
+    - in_graph
+    - assess_queue
+    dispositions:
+    - active
+    - metadata_only
+    - reference
+    - excluded:out_of_scope
+    - excluded:deferred
+    - excluded:document_removed
+    in_graph_stage: in_graph
+    admitting_stage: admitting
+    retire_removed_max_fraction: 0.1
+  acquire:
+    timeout_seconds: 60
+    max_retries: 4
+    retry_backoff_seconds: 3
+    inter_request_delay_seconds: 0.4
+    min_valid_bytes: 10000
+    min_text_chars: 1200
+    max_bytes: 104857600
+    host_delay_seconds:
+      export.arxiv.org: 3.0
+      arxiv.org: 3.0
+    title_match_floor: 0.6
+    resolvers:
+      work:
+      - crossref
+      - openalex
+      standard:
+      - url
+      software:
+      - github
+    user_agent: squiddy/0.1 (https://github.com/brockwebb/squiddy; graph ai_readiness)
+  assess:
+    criterion: local_file_present
+    cited_in_field: cited_in
+    prose_extensions:
+    - md
+    - txt
+    min_local_text_chars: 40
+  write:
+    schema_version: '1'
+    shared_classes: []
+    primary_class_by_kind:
+      document: Document
+    identifier_keys: []
+  export:
+    kgx:
+      knowledge_level: knowledge_assertion
+      agent_type: automated_agent
+      category_map:
+        Standard: biolink:InformationContentEntity
+        Claim: biolink:InformationContentEntity
+      predicate_map:
+        Cites: biolink:cites
+        Supersedes: biolink:superseded_by
+      primary_knowledge_source: infores:squiddy-ai_readiness
+    artifact_stem: ai_readiness_graph
+  gates:
+    schema_closed: true
+    dangling:
+      legs:
+      - edge_endpoints
+      - superseded_by
+  preview:
+    pause: false
+  serve:
+    registry: ../registry
+    currency_edges:
+    - Supersedes
+    text_fields:
+      Standard:
+      - name
+      Claim:
+      - claim_text
+      Concept:
+      - name
+      - description
+      Document:
+      - title
+      Definition:
+      - term
+      - verbatim_text
+      Construct:
+      - name
+      - description
+      Instrument:
+      - name
+      Measure:
+      - text
+      Framework:
+      - name
+      Practice:
+      - text
+      Tool:
+      - name
+      Platform:
+      - name
+    backend: export
+    concept_edge:
+      class: Mentions
+      direction: in
+  extract:
+    enabled: true
+    client: claude_cli_max_oauth
+    roles:
+      extractor: extractor
+      rater: rater
+      adjudicator: adjudicator
+    concurrency: 4
+    max_concurrency: 8
+    min_concurrency: 1
+    rate_limit_backoff_seconds: 60
+    retries: 2
+    retry_backoff_seconds: 5
+    timeout_seconds: 300
+    max_turns: 4
+    cost_ledger: cost_ledger.jsonl
+    rater_sample: 20
+    pilot:
+      grounding_rate_min: 0.98
+      protocol_failure_rate_max: 0.02
+      rater_agreement_min: 0.85
+    text_reader: text_reader.py
+  lessons:
+    id_prefix: lesson
+    doc_kind: lab_note
+    filename_pattern: ^\d{4}-\d{2}-\d{2}_[A-Za-z0-9][A-Za-z0-9_-]*\.md$
+    required:
+    - source_conversation
+    - project
+    - kind
+    - stated_by
+    kinds:
+    - decision
+    - defect
+    - result
+    - citation
+    stated_by:
+    - operator
+    - assistant
+    dir: lessons
+    cataloged_by: squiddy init (ai_readiness)
+  graph:
+    name: ai_readiness
+    prefix: ai_readiness
+    schema: schema/ai_readiness.yaml
+    generated_module: schema/generated/ai_readiness_pydantic.py
+    generated_json_schema: schema/generated/ai_readiness.schema.json
+    emitter: emit.py
+  projection:
+    backends:
+    - name: networkx
+      enabled: true
+  policy:
+    provenance: public_only
+    allowed_provenance_flags:
+    - public
+    - public_metadata_only
+  intake:
+  - source: dixie
+    manifest: /Users/brock/GitHub/ai-readiness-kg/corpus/manifest.json
+  - source: inbox
+    dir: intake/inbox
+  visibility: private
+identity:
+  prefix: ai_readiness
+  registers_slice: true
+  consumes_bridges: true
+  currency_sweep: weekly
+domain:
+  airkg:
+    repo: /Users/brock/GitHub/ai-readiness-kg
+    python: /opt/anaconda3/bin/python
+    edge_without_span_max_share: 0.01
+  airkg_schema:
+    class_of:
+      Document: Document
+      Definition: Definition
+      Concept: Concept
+      Construct: Construct
+      Instrument: Instrument
+      Measure: Measure
+      Claim: Claim
+      Standard: Standard
+      Framework: Framework
+      Practice: Practice
+      Tool: Tool
+      Platform: Platform
+      defines: Defines
+      mentions: Mentions
+      asserts: Asserts
+      about: About
+      operationalizes: Operationalizes
+      operationalized_by: OperationalizedBy
+      measures: Measures
+      grounds: Grounds
+      extends: Extends
+      conflicts_with: ConflictsWith
+      cites: Cites
+      builds_on: BuildsOn
+      implements: Implements
+      uses_measure: UsesMeasure
+      has_component: HasComponent
+      subtype_of: SubtypeOf
+      precedes: Precedes
+      recommends: Recommends
+      supported_by: SupportedBy
+      implemented_by: ImplementedBy
+      consumes: Consumes
+      applies_to: AppliesTo
+      targets: Targets
+      supersedes: Supersedes
+    source_schema: /Users/brock/GitHub/ai-readiness-kg/kg/schema.yaml
+    source_schema_sha256: 240a3d60f039c4a3ecd1fe3e3e9488be98b77461bd223936ba9b09f7b8380093
+    source_schema_version: 0.4.0
+    assessment_node_types:
+    - Action
+    - AssessmentConstruct
+    - AssessmentCriterion
+    - AssessmentIndicator
+    - AssessmentTool
+    - Finding
+    - MeasurementSpec
+    - Observation
+    - Precondition
+    assessment_edge_types:
+    - DECOMPOSES_INTO
+    - EVIDENCED_BY
+    - EVIDENCED_BY_INTERNAL
+    - MEASURED_BY
+    - OBSERVED_ON
+    - REMEDIATES
+    - REQUIRES
+    - RULED_BY
+    - SUPPORTS

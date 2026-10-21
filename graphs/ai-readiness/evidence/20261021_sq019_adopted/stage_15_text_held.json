@@ -1,0 +1,35 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "text_held",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.conformance",
+    "run",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--export",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261021_sq019_adopted_2026-10-21.json",
+    "--scope",
+    "graph",
+    "--gate",
+    "text_held",
+    "--controls",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261021_sq019_adopted/text_held_20261021_sq019_adopted.json"
+  ],
+  "wall_seconds": 1.26,
+  "finished_utc": "2026-10-21T20:32:35.120188+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[N/A    ] 32 text_held  (the graph declares no `engine.acquire.text_routes` (ACQ-001), so no admit recorded a text expectation (DN-032 R-147); admitted 287, text held 184, not held 103: nothing checked is not a pass)",
+    "[control caught ] 32 text_held"
+  ],
+  "first_line": "[N/A    ] 32 text_held  (the graph declares no `engine.acquire.text_routes` (ACQ-001), so no admit recorded a text expectation (DN-032 R-147); admitted 287, text held 184, not held 103: nothing checked is not a pass)"
+}

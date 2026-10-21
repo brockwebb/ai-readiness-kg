@@ -1,0 +1,29 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "halts",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "halts",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--mutate",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261021_sq019_catalog/halts_20261021_sq019_catalog.json"
+  ],
+  "wall_seconds": 0.97,
+  "finished_utc": "2026-10-21T20:25:32.819352+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[halts] 287 in-graph entr(y|ies), 0 with an acquire halt: CLEAN",
+    "[halts] positive control: FIRED"
+  ],
+  "first_line": "[halts] 287 in-graph entr(y|ies), 0 with an acquire halt: CLEAN"
+}

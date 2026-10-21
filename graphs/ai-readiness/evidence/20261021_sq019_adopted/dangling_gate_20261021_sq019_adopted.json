@@ -1,0 +1,27 @@
+{
+  "real": {
+    "clean": true,
+    "findings": [],
+    "legs": [
+      "edge_endpoints",
+      "superseded_by"
+    ],
+    "nodes": 28862,
+    "edges": 31142
+  },
+  "legs": [
+    "edge_endpoints",
+    "superseded_by"
+  ],
+  "positive_control": {
+    "fired": true,
+    "legs": [
+      "edge_endpoints",
+      "superseded_by"
+    ],
+    "findings": [
+      "edge-endpoint: Defines advancing-american-ai-act-ndaa-fy2023-div-g -> node-that-does-not-exist (missing ['node-that-does-not-exist']; event bb4f103597a341b68ebdd467bff42d95)",
+      "superseded_by: event 468b22c9aa364f51a78d59223dffa945 names 'event-that-does-not-exist', which is not in the ledger"
+    ]
+  }
+}

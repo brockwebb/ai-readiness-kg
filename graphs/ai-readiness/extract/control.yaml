@@ -1,0 +1,10 @@
+# graphs/ai-readiness/extract/control.yaml: this graph's control file (squiddy SQ-019). It holds one block today.
+#
+# index: the kit's `index` unit operation (S-016; DN-025 R-110), read by squiddy/index.py. NOT BUILT FOR THIS GRAPH,
+# and said so rather than defaulted. SQ-019 admits ai-readiness-kg's catalog and extracted items (DN-049 R-208) and
+# serves the release export only (`serve.backend: export`); the factory's `index` valve is closed. The retrieval index
+# over the held texts, and the extraction daemon's control plane, are for a later task: the extraction pilot is
+# SQ-021 (R-211), and no maintenance job is registered for this graph.
+index:
+  not_applicable: true
+  why: "SQ-019 admits the catalog and the extracted items and serves the release export only; no retrieval index is built (factory valve `index: closed`); the extraction daemon and its pilot are SQ-021's (DN-049 R-211)"

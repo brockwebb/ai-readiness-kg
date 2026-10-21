@@ -168,6 +168,17 @@ def replay(tag: str | None = None) -> Iterator[dict]:
 
     Fail loud on a corrupt line — a silently skipped event is a silently wrong projection
     (standard 4)."""
+    for _shard, _lineno, event in replay_located(tag):
+        yield event
+
+
+def replay_located(tag: str | None = None) -> Iterator[tuple[Path, int, dict]]:
+    """``replay(tag)`` with each event's shard and line number: ``(shard path, line, event)``.
+
+    The one reader of the shards. ``replay`` is this with the location dropped, so a caller that
+    needs to say which shard an event came from (squiddy's adopter, task squiddy SQ-019, which
+    stamps every admitted item with its batch) reads the same events in the same order and
+    cannot become a second parser of the log."""
     for shard in shards(tag):
         with shard.open(encoding="utf-8") as fh:
             for lineno, line in enumerate(fh, 1):
@@ -175,6 +186,6 @@ def replay(tag: str | None = None) -> Iterator[dict]:
                 if not line:
                     continue
                 try:
-                    yield json.loads(line)
+                    yield shard, lineno, json.loads(line)
                 except json.JSONDecodeError as exc:
                     raise ValueError(f"corrupt event at {shard.name}:{lineno}: {exc}") from exc

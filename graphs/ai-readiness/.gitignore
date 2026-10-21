@@ -1,0 +1,26 @@
+# graphs/ai-readiness: a squiddy graph (squiddy SQ-019). The rules are arnold's for its graphs (arnold/.gitignore,
+# the KG-001 block), scoped to this directory: the ledger, manifest, spec, configs, candidates and evidence records are
+# tracked; bulky or local artifacts (texts, exports, the adopted extraction records, which the adopter rebuilds
+# deterministically from ai-readiness-kg's event log, the served query log) are not.
+corpus/*
+!corpus/manifest.yaml
+!corpus/candidates/
+!corpus/manifest_property_allowlist.yaml
+!corpus/identifier_abstentions.jsonl
+ledger/*.bak-*
+ledger/snapshots/
+exports/*.json
+exports/*.jsonl
+evidence/*/*.rows.jsonl
+work/
+texts/
+extract/records/
+extract/raw/
+extract/meter.jsonl
+extract/daemon.*
+factory/queries.jsonl
+__pycache__/
+# R-212: a file dropped in the inbox is a document, held where it lands like ai-readiness-kg's corpus files (whose
+# bytes stay local and whose provenance is the catalog); the directory itself is kept by its .gitkeep
+intake/inbox/*
+!intake/inbox/.gitkeep

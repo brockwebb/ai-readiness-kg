@@ -1,0 +1,15 @@
+# The Squiddy commit this graph was built with (squiddy SQ-019), in the form arnold/governed/squiddy.pin uses
+# (AD-030-R17; SEL-001).
+#
+# What the pin binds is the kit's `squiddy/` package tree at this commit, tree 5263885f980be750cd13610fe821f737bbf43ef5:
+# a later Squiddy commit that leaves that tree byte-identical is the same kit, so the dispatcher's rebase of SQ-019's
+# branch onto main, which re-hashes the commit, does not change what was pinned unless main changed `squiddy/`.
+#
+# NO KIT PASS IS RECORDED FOR IT YET. `squiddy kit record-pass` runs the full suite three times on a clean clone, and on
+# 2026-10-21 one test (`test_x001_conformance.py::test_code_gate_passes_on_the_kit_as_it_stands[harvest_walk_complete]`)
+# failed on Seldon's working tree for every kit commit, the untouched base included (SQ-019 RESULT). Re-pin to a commit
+# with a recorded pass before anything admits through `squiddy admit` (whose stage 0 reads the pass); SQ-022, which
+# builds this graph's database, is the next task to touch it.
+
+SQUIDDY_COMMIT=bc68c879c7a25452a8c0ed02b46cabfb1b361376
+SQUIDDY_VERSION=0.8.0

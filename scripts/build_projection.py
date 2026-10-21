@@ -510,12 +510,12 @@ QUALIFIED_EDGE_ITEM_PROPERTIES = ("grounding_span_to", "kind", "source", "adjudi
 
 def kg_events():
     """The KG replay's event stream: the untagged log, then the edge events of the
-    `CROSS_DOCUMENT_EDGE_TAGS` shards — after every node, so both endpoints exist."""
-    yield from eventlog.replay()
-    for tag in CROSS_DOCUMENT_EDGE_TAGS:
-        for ev in eventlog.replay(tag=tag):
-            if ev.get("event_type") == "edge_asserted":
-                yield ev
+    `CROSS_DOCUMENT_EDGE_TAGS` shards — after every node, so both endpoints exist. It is
+    `kg_events_located` (below `build`; squiddy SQ-019) with each event's shard dropped, so
+    the projection and squiddy's adopter cannot enumerate the log two ways. Kept this length:
+    `docs/brief/` cites `build` by line."""
+    for _shard, ev in kg_events_located():
+        yield ev
 
 
 def project_edge(session, ev: dict, document_ids: set[str], aliases: dict[str, str],
@@ -529,8 +529,8 @@ def project_edge(session, ev: dict, document_ids: set[str], aliases: dict[str, s
     edge joins two nodes that exist or it is refused, with the reason passed to `note`."""
     et = ev.get("event_type")
     p = ev["payload"] if et == "edge_asserted" else ev
-    rel = p.get("type") if et == "edge_asserted" else p.get("edge")
-    if rel not in edge_whitelist:
+    rel = edge_rel(ev, edge_whitelist)
+    if rel is None:
         counts["skipped_unknown_edge_type"] += 1
         return
     prov = (p.get("provenance") or ev.get("provenance") or {})
@@ -597,19 +597,13 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
               "unresolved_ambiguous_across_assertions": 0}
     prog = progress if progress is not None else Progress()
     prog.phase("prepass")
-    superseded, aliases = read_overlays()
-    quarantined = quarantined_batches()
-    bulk = bulk_purposes()
+    # WHICH events project is `ReplaySelection`'s, shared with squiddy's adopter (SQ-019)
+    sel = ReplaySelection()
+    aliases, quarantined = sel.aliases, sel.quarantined
     if quarantined:
         print(f"acceptance sampling: {len(quarantined)} batch(es) quarantined out of the "
               f"graph: {sorted(quarantined)}")
-    _old_instr: dict[tuple, set] = {}   # (doc_id, sha) -> old Instrument item ids (Lane 2)
-    document_ids: set[str] = set()
-    n_events = 0                        # the kg_replay/overlays loop total, counted for free
-    for ev in eventlog.replay():
-        n_events += 1
-        if ev.get("event_type") == "manifest_add":
-            document_ids.add(ev["payload"]["doc_id"])
+    document_ids, n_events = sel.document_ids, sel.n_events
     # the overlays pass reads the untagged log only; the KG pass reads it plus the edges of
     # the cross-document shards, so its total is larger by exactly those
     n_kg_events = sum(1 for _ in kg_events())
@@ -749,8 +743,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
     for i, ev in enumerate(kg_events(), 1):
         prog.tick(i, counts)
         et = ev.get("event_type")
-        if not is_projectable(ev, quarantined, bulk):
-            counts["skipped_non_graph_purpose"] += 1
+        skip = sel.skip_reason(ev)
+        if skip == "skipped_non_graph_purpose":
+            counts[skip] += 1
             continue
         ann = annotation_update(ev)
         if ann is not None:
@@ -759,22 +754,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
                         id=doc_id, value=value)
             counts["annotations"] += 1
             continue
-        if et in ("node_asserted", "edge_asserted"):
-            src_sha = (ev.get("provenance") or {}).get("source_sha256")
-            skey = (ev.get("doc_id"), src_sha)
-            if skey in superseded:
-                strata = superseded[skey]
-                if strata is None:                      # whole-extraction supersede
-                    counts["skipped_superseded_extraction"] += 1
-                    continue
-                # stratum-scoped (v0.3.4, Lane 2): node events precede their edges in a
-                # shard, so the per-extraction instrument-id set is complete before any
-                # instrument-anchored edge of the same extraction is examined.
-                if et == "node_asserted" and (ev.get("payload") or {}).get("type") == "Instrument":
-                    _old_instr.setdefault(skey, set()).add((ev.get("payload") or {}).get("id"))
-                if stratum_superseded(ev, strata, _old_instr.get(skey, set())):
-                    counts["skipped_superseded_stratum"] += 1
-                    continue
+        if skip is not None:                            # a superseded extraction or stratum
+            counts[skip] += 1
+            continue
         if et == "manifest_add":
             p = ev["payload"]
             session.run(
@@ -791,21 +773,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
             counts["documents"] += 1
         elif et == "node_asserted":
             p = ev["payload"]
-            label = p.get("type")
-            if label not in kg_labels:
+            label = node_label(ev, kg_labels)
+            if label is None:
                 continue
-            prov = ev.get("provenance", {})
-            props = _scalar_props(p.get("item", {}))
-            props.update({
-                "prov_model_id": prov.get("model_id"),
-                "prov_prompt_version": prov.get("prompt_version"),
-                "prov_schema_version": prov.get("schema_version"),
-                "prov_corpus_epoch": prov.get("corpus_epoch"),
-                "prov_source_sha256": prov.get("source_sha256"),
-                "prov_extraction_event_id": prov.get("extraction_event_id"),
-                "prov_wasDerivedFrom": ev.get("doc_id"),
-            })
-            props.update({"id": p["id"], "doc_id": ev.get("doc_id")})
+            props = node_props(ev)
             _key = node_key(ev.get("doc_id"), p["id"])
             session.run(
                 f"MERGE (n:{label} {{key: $key}}) SET n += $props",
@@ -820,7 +791,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
     # Repair overlays (task 2026-08-22_faithfulness_probe Phase 7) are applied LAST so they
     # win over the original assertion regardless of shard order. Never mutate the log.
     prog.phase("overlays", total=n_events, counts=counts)
-    for i, ev in enumerate(eventlog.replay(), 1):
+    for i, ev in repair_overlays(kg_labels):
         prog.tick(i, counts)
         et = ev.get("event_type")
         if et == "grounding_relocated":
@@ -846,10 +817,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
                             key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"],
                             old=ev["old_span"], m=ev["method"], kg=kg_labels)
             counts["overlays_relocated"] += 1
-        elif et == "attribute_nulled":
+        elif et == "attribute_nulled":              # NULLABLE_ATTRIBUTES: repair_overlays' filter
             attr = ev["attribute"]
-            if attr not in NULLABLE_ATTRIBUTES:
-                continue
             session.run(f"MATCH (n {{key: $key}}) WHERE any(l IN labels(n) WHERE l IN $kg) "
                         f"SET n.{attr} = null, n.nulled_attributes = coalesce(n.nulled_attributes, []) + $attr",
                         key=node_key(ev["doc_id"], ev["item_id"]), attr=attr, kg=kg_labels)
@@ -861,28 +830,148 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
     # carries a `restoration_class_accepted` event for the class (the ≥0.90 fact-level
     # acceptance gate) — applied after the null overlays so an accepted restoration wins.
     prog.phase("restorations", counts=counts)
-    accepted_classes = {ev.get("restoration_class") for ev in eventlog.replay()
-                        if ev.get("event_type") == "restoration_class_accepted"}
-    if "restoration_v2" in accepted_classes:
-        for i, ev in enumerate(eventlog.replay(tag="restoration_v2"), 1):
-            prog.tick(i, counts)
-            if ev.get("event_type") != "attribute_restored":
-                continue
-            attr = ev["attribute"]
-            if attr not in NULLABLE_ATTRIBUTES:
-                continue
-            session.run(f"MATCH (n {{key: $key}}) WHERE any(l IN labels(n) WHERE l IN $kg) "
-                        f"SET n.{attr} = $value, "
-                        f"n.restored_attributes = coalesce(n.restored_attributes, []) + $attr",
-                        key=node_key(ev["doc_id"], ev["item_id"]), value=ev.get("value"),
-                        attr=attr, kg=kg_labels)
-            counts["overlays_restored"] += 1
+    for i, ev in accepted_restorations():
+        prog.tick(i, counts)
+        attr = ev["attribute"]
+        session.run(f"MATCH (n {{key: $key}}) WHERE any(l IN labels(n) WHERE l IN $kg) "
+                    f"SET n.{attr} = $value, "
+                    f"n.restored_attributes = coalesce(n.restored_attributes, []) + $attr",
+                    key=node_key(ev["doc_id"], ev["item_id"]), value=ev.get("value"),
+                    attr=attr, kg=kg_labels)
+        counts["overlays_restored"] += 1
 
     # After the whole pass, so a node asserted five times produces one write and a node whose
     # assertions disagree produces none. See `_resolutions` above.
     _write_resolutions()
     _flag_thin_spans()
     return counts
+
+
+def node_props(ev: dict) -> dict:
+    """The properties one `node_asserted` event SETs on its node (`SET n += $props` in `build`):
+    the asserted item flattened by `_scalar_props`, the provenance stamp, and the ids. Factored
+    out with the selection (squiddy SQ-019) so the adopter carries what this projection writes."""
+    p = ev["payload"]
+    prov = ev.get("provenance", {})
+    props = _scalar_props(p.get("item", {}))
+    props.update({
+        "prov_model_id": prov.get("model_id"),
+        "prov_prompt_version": prov.get("prompt_version"),
+        "prov_schema_version": prov.get("schema_version"),
+        "prov_corpus_epoch": prov.get("corpus_epoch"),
+        "prov_source_sha256": prov.get("source_sha256"),
+        "prov_extraction_event_id": prov.get("extraction_event_id"),
+        "prov_wasDerivedFrom": ev.get("doc_id"),
+    })
+    props.update({"id": p["id"], "doc_id": ev.get("doc_id")})
+    return props
+
+
+def kg_events_located():
+    """`kg_events()` with each event's shard file stem: `(stem, event)`, the same events in the
+    same order. squiddy's adopter stamps every item it admits with the batch it came from (task
+    squiddy SQ-019), and reads it here rather than enumerating the shards a second way."""
+    for shard, _line, ev in eventlog.replay_located():
+        yield shard.stem, ev
+    for tag in CROSS_DOCUMENT_EDGE_TAGS:
+        for shard, _line, ev in eventlog.replay_located(tag=tag):
+            if ev.get("event_type") == "edge_asserted":
+                yield shard.stem, ev
+
+
+class ReplaySelection:
+    """WHICH EVENTS THE KG REPLAY PROJECTS, decided without a database.
+
+    Factored out of `build()` (task squiddy SQ-019, Part B step 3) so that squiddy's adopter,
+    which admits this graph's extracted items into the kit, enumerates exactly the items this
+    projection writes by calling this code rather than re-implementing it. `build()` calls the
+    same object, so the two cannot disagree; the RESULT of that task records a whole-log
+    recording-session fingerprint of `build()` taken before and after the factoring, equal.
+
+    The prepass reads the overlays (`read_overlays`), the quarantined acceptance-sampling
+    batches and the bulk-class purposes, and the manifested document ids; `skip_reason` then
+    answers, per event and in replay order, the counts key `build()` skips it under, or None.
+    It carries state (the superseded extraction's Instrument ids, Lane 2), so events must be
+    asked in replay order, once each.
+    """
+
+    def __init__(self):
+        self.superseded, self.aliases = read_overlays()
+        self.quarantined = quarantined_batches()
+        self.bulk = bulk_purposes()
+        self._old_instr: dict[tuple, set] = {}   # (doc_id, sha) -> old Instrument item ids (Lane 2)
+        self.document_ids: set[str] = set()
+        self.n_events = 0                        # the kg_replay/overlays loop total, counted for free
+        for ev in eventlog.replay():
+            self.n_events += 1
+            if ev.get("event_type") == "manifest_add":
+                self.document_ids.add(ev["payload"]["doc_id"])
+
+    def skip_reason(self, ev: dict) -> str | None:
+        """The `build()` counts key this event is skipped under, or None when it projects."""
+        if not is_projectable(ev, self.quarantined, self.bulk):
+            return "skipped_non_graph_purpose"
+        et = ev.get("event_type")
+        if et in ("node_asserted", "edge_asserted"):
+            src_sha = (ev.get("provenance") or {}).get("source_sha256")
+            skey = (ev.get("doc_id"), src_sha)
+            if skey in self.superseded:
+                strata = self.superseded[skey]
+                if strata is None:                      # whole-extraction supersede
+                    return "skipped_superseded_extraction"
+                # stratum-scoped (v0.3.4, Lane 2): node events precede their edges in a
+                # shard, so the per-extraction instrument-id set is complete before any
+                # instrument-anchored edge of the same extraction is examined.
+                if et == "node_asserted" and (ev.get("payload") or {}).get("type") == "Instrument":
+                    self._old_instr.setdefault(skey, set()).add((ev.get("payload") or {}).get("id"))
+                if stratum_superseded(ev, strata, self._old_instr.get(skey, set())):
+                    return "skipped_superseded_stratum"
+        return None
+
+
+def node_label(ev: dict, kg_labels) -> str | None:
+    """The KG label a `node_asserted` event projects under, or None when its type is not one."""
+    label = (ev.get("payload") or {}).get("type")
+    return label if label in kg_labels else None
+
+
+def edge_rel(ev: dict, edge_whitelist) -> str | None:
+    """The relationship type an `edge_asserted` or `curated_promotion` event projects as, or None
+    when it is not on the schema's edge whitelist."""
+    et = ev.get("event_type")
+    p = ev["payload"] if et == "edge_asserted" else ev
+    rel = p.get("type") if et == "edge_asserted" else p.get("edge")
+    return rel if rel in edge_whitelist else None
+
+
+def repair_overlays(kg_labels):
+    """The repair overlays `build()` applies after the KG pass, in order: `(index, event)` for
+    every `grounding_relocated`, and every `attribute_nulled` whose attribute may be cleared
+    (`NULLABLE_ATTRIBUTES`). `index` is the event's 1-based position in the untagged replay,
+    which is what the progress line counts."""
+    for i, ev in enumerate(eventlog.replay(), 1):
+        et = ev.get("event_type")
+        if et == "grounding_relocated":
+            yield i, ev
+        elif et == "attribute_nulled" and ev["attribute"] in NULLABLE_ATTRIBUTES:
+            yield i, ev
+
+
+def accepted_restorations():
+    """Restoration v2 — GATE BEFORE WIRE (task 2026-08-26_overnight_burn Lane 4): `(index,
+    event)` for each `attribute_restored` event in the tagged shard batch-014_restoration_v2
+    whose attribute may be set, and only when the untagged log carries a
+    `restoration_class_accepted` event for the class. Nothing when it does not."""
+    accepted_classes = {ev.get("restoration_class") for ev in eventlog.replay()
+                        if ev.get("event_type") == "restoration_class_accepted"}
+    if "restoration_v2" not in accepted_classes:
+        return
+    for i, ev in enumerate(eventlog.replay(tag="restoration_v2"), 1):
+        if ev.get("event_type") != "attribute_restored":
+            continue
+        if ev["attribute"] not in NULLABLE_ATTRIBUTES:
+            continue
+        yield i, ev
 
 
 def is_thin_span(span, name) -> bool:

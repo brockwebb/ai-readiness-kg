@@ -1,0 +1,31 @@
+{
+  "stage": 13,
+  "sub": null,
+  "label": "13",
+  "name": "export",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.export",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--version",
+    "20261021_sq019_catalog",
+    "--date",
+    "2026-10-21"
+  ],
+  "wall_seconds": 0.63,
+  "finished_utc": "2026-10-21T20:25:28.204359+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "built graph from the ledger: 287 nodes / 0 edges in 0.38s; position 288 event(s), last 698b9b90e4974e5793147715ae0ecfe8 (R-207)",
+    "wrote ai_readiness_graph_20261021_sq019_catalog_2026-10-21.json (1,172,687 bytes); KGX 287 nodes, 0 edges",
+    "  round trip OK: 287 nodes and 0 edges identical",
+    "published -> /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph.json"
+  ],
+  "first_line": "built graph from the ledger: 287 nodes / 0 edges in 0.38s; position 288 event(s), last 698b9b90e4974e5793147715ae0ecfe8 (R-207)"
+}

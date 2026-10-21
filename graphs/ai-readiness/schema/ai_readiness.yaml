@@ -1,0 +1,3267 @@
+# squiddy-generated: LinkML schema | spec sha256 3f788db3d23f8d4acf39b9e4a275bfe98bd1aefedde07b8a294c67885025ac81
+# Do not edit. Edit the spec and re-run `squiddy init`; `squiddy init --check` reports drift.
+id: https://github.com/brockwebb/ai-readiness-kg/graphs/ai-readiness/schema
+name: ai_readiness
+title: the AI-readiness corpus graph (ai-readiness-kg on the kit)
+description: >-
+  ai-readiness-kg's corpus-derived layer on the kit: one Document per dixie catalog entry the kit
+  admits, and the definitions, concepts, constructs, instruments, measures, claims, standards,
+  frameworks, practices, tools and platforms its extractions asserted, each re-grounded in the
+  text it was extracted from and carrying its original provenance. The assessment layer (criteria,
+  indicators, observations, findings, actions) stays in ai-readiness-kg and reads this graph by
+  doc_id.
+version: 0.1.0
+license: MIT
+
+prefixes:
+  ai_readiness: https://github.com/brockwebb/ai-readiness-kg/graphs/ai-readiness/
+  squiddy: https://github.com/brockwebb/squiddy/schema/core/
+  linkml: https://w3id.org/linkml/
+  cito: http://purl.org/spar/cito/
+  fabio: http://purl.org/spar/fabio/
+  prov: http://www.w3.org/ns/prov#
+default_prefix: ai_readiness
+default_range: string
+
+imports:
+  - linkml:types
+  # `init` rewrites this line for the graph it is writing: relative when the graph lives
+  # inside the kit checkout (what graphs/biblio and graphs/library carry), absolute
+  # otherwise, because a checkout-relative import cannot resolve from a graph that lives
+  # anywhere else (K-001 Part B finding).
+  - /Users/brock/GitHub/squiddy/squiddy/schema/core
+
+slots:
+  text:
+    description: The located text, verbatim from the parsed intermediate.
+
+classes:
+  # ---- node classes ----
+  Document:
+    is_a: Node
+    description: A manifest entry. Primary source only.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:63 (node_types.Document)'
+    - 'slot doc_id: source ai-readiness-kg/kg/schema.yaml:66 (the key: id = doc_id, R-209)'
+    - 'slot title: source ai-readiness-kg/kg/schema.yaml:67'
+    - 'slots source_url, local_path, sha256, disposition: source squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md
+      R-208 (the catalog)'
+    slots:
+    - doc_id
+    - title
+    - source_url
+    - local_path
+    - sha256
+    - disposition
+    attributes:
+      authors:
+        description: '`authors` of the source Document'
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:68'
+      pub_date:
+        description: '`pub_date` of the source Document'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:69'
+      source_type:
+        description: '`source_type` of the source Document'
+        equals_string_in:
+        - federal
+        - academic
+        - industry
+        - standard
+        - intergovernmental
+        - practitioner
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:70 (values :92)'
+      primary_url:
+        description: '`primary_url` of the source Document'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:71'
+      content_hash:
+        description: '`content_hash` of the source Document'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:72'
+      manifest_event_id:
+        description: '`manifest_event_id` of the source Document'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:73'
+      is_platform_operator:
+        description: '`is_platform_operator` of the source Document'
+        range: boolean
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:74'
+      construct_arm:
+        description: '`construct_arm` of the source Document'
+        equals_string_in:
+        - publication_actionability
+        - training_data_readiness
+        - org_maturity
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:75 (values :98)'
+      grounding_surface:
+        description: '`grounding_surface` of the source Document'
+        equals_string_in:
+        - document
+        - transcript
+        - slides
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:76 (values :101)'
+      dixie_record:
+        description: the WHOLE dixie catalog entry, as JSON (identity, acquisition, integrity, screening
+          with history, lifecycle, files, provenance_sources, extra)
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (the catalog,
+          every entry kept)'
+      dixie_decision:
+        description: dixie's screening decision
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208; squiddy/dixie.yaml'
+      dixie_rationale:
+        description: dixie's screening rationale, verbatim
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208; squiddy/dixie.yaml'
+      doc_type:
+        description: 'dixie''s `identity.doc_type`, verbatim. Not `source_type`: that is the source graph''s
+          manifest_add field, with a closed list one included entry''s dixie value (`platform`) is outside'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208; ai-readiness-kg
+          corpus/manifest.json `identity.doc_type`'
+
+  Definition:
+    is_a: Node
+    description: A verbatim definition of a term as given by one source.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:103 (node_types.Definition)'
+    slots:
+    - doc_id
+    attributes:
+      term:
+        description: '`term` of the source Definition'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:106'
+      verbatim_text:
+        description: '`verbatim_text` of the source Definition'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:107'
+      grounding_text:
+        description: '`grounding_span` of the source Definition'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:108; renamed from `grounding_span`'
+      normative_status:
+        description: '`normative_status` of the source Definition'
+        equals_string_in:
+        - statute
+        - policy
+        - standard
+        - academic
+        - industry
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:109 (values :118)'
+      as_of_date:
+        description: '`as_of_date` of the source Definition'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:110'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Concept:
+    is_a: Node
+    description: Any substantive idea a document uses. Exhaustive layer, extracted first-class from event
+      one.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:120 (node_types.Concept)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Concept'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:123'
+      aliases:
+        description: '`aliases` of the source Concept'
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:124'
+      description:
+        description: '`description` of the source Concept'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:125'
+      grounding_text:
+        description: '`grounding_span` of the source Concept'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:126; renamed from `grounding_span`'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Construct:
+    is_a: Node
+    description: A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept
+      promoted to measurability.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:133 (node_types.Construct)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Construct'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:136'
+      description:
+        description: '`description` of the source Construct'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:137'
+      measurement_notes:
+        description: '`measurement_notes` of the source Construct'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:138'
+      grounding_text:
+        description: the verbatim quote the item was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Instrument:
+    is_a: Node
+    description: An existing assessment, survey, index, or benchmark.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:144 (node_types.Instrument)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Instrument'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:147'
+      owner:
+        description: '`owner` of the source Instrument'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:148'
+      year:
+        description: '`year` of the source Instrument'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:149'
+      instrument_method:
+        description: '`method` of the source Instrument'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:150; renamed from `method`'
+      grounding_spans:
+        description: '`grounding_spans` of the source Instrument'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:151'
+      grounding_text:
+        description: the verbatim quote the item was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Measure:
+    is_a: Node
+    description: An individual item or metric inside an Instrument.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:159 (node_types.Measure)'
+    slots:
+    - doc_id
+    attributes:
+      text:
+        description: '`text` of the source Measure'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:162'
+      response_type:
+        description: '`response_type` of the source Measure'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:163'
+      grounding_text:
+        description: '`grounding_span` of the source Measure'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:164; renamed from `grounding_span`'
+      tier:
+        description: '`tier` of the source Measure'
+        equals_string_in:
+        - public
+        - agency_instrumented
+        - paid
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:165 (values :176)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Claim:
+    is_a: Node
+    description: A falsifiable assertion a document makes (X improves Y, A requires B).
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:178 (node_types.Claim)'
+    slots:
+    - doc_id
+    attributes:
+      claim_text:
+        description: '`claim_text` of the source Claim'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:181'
+      grounding_text:
+        description: '`grounding_span` of the source Claim'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:182; renamed from `grounding_span`'
+      claim_type:
+        description: '`claim_type` of the source Claim'
+        equals_string_in:
+        - empirical
+        - normative
+        - speculative
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:183 (values :191)'
+      evidence_grade:
+        description: '`evidence_grade` of the source Claim'
+        equals_string_in:
+        - peer_reviewed_experiment
+        - platform_official
+        - measured_practitioner
+        - practitioner_assertion
+        - inference
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:184 (values :199)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Standard:
+    is_a: Node
+    description: A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP).
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:206 (node_types.Standard)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Standard'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:209'
+      version:
+        description: '`version` of the source Standard'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:210'
+      steward:
+        description: '`steward` of the source Standard'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:211'
+      as_of_date:
+        description: '`as_of_date` of the source Standard'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:212'
+      grounding_text:
+        description: the verbatim quote the item was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Framework:
+    is_a: Node
+    description: A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:219 (node_types.Framework)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Framework'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:222'
+      owner:
+        description: '`owner` of the source Framework'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:223'
+      year:
+        description: '`year` of the source Framework'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:224'
+      grounding_text:
+        description: the verbatim quote the item was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Practice:
+    is_a: Node
+    description: A normative recommendation a source makes about how to publish, structure, expose, or maintain
+      data or content for machine consumers.
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:231 (node_types.Practice)'
+    slots:
+    - doc_id
+    attributes:
+      text:
+        description: '`text` of the source Practice'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:234'
+      grounding_text:
+        description: '`grounding_span` of the source Practice'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:235; renamed from `grounding_span`'
+      as_of_date:
+        description: '`as_of_date` of the source Practice'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:236'
+      scope:
+        description: '`scope` of the source Practice'
+        equals_string_in:
+        - dataset
+        - api
+        - bulk_file
+        - tool
+        - content
+        - advisory
+        - site
+        - any
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:237 (values :245)'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Tool:
+    is_a: Node
+    description: Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker,
+      GoAccess, Spectral, extruct, GSA Site Scanning engine, DAP).
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:247 (node_types.Tool)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:250'
+      steward:
+        description: '`steward` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:251'
+      license:
+        description: '`license` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:252'
+      url:
+        description: '`url` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:253'
+      as_of_date:
+        description: '`as_of_date` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:254'
+      grounding_text:
+        description: '`grounding_span` of the source Tool'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:255; renamed from `grounding_span`'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Platform:
+    is_a: Node
+    description: A machine consumer whose behavior is targeted or described (Google Search, Bing, a named
+      crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls).
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:264 (node_types.Platform)'
+    slots:
+    - doc_id
+    attributes:
+      name:
+        description: '`name` of the source Platform'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:267'
+      operator:
+        description: '`operator` of the source Platform'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:268'
+      as_of_date:
+        description: '`as_of_date` of the source Platform'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:269'
+      grounding_text:
+        description: '`grounding_span` of the source Platform'
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:270; renamed from `grounding_span`'
+      item_id:
+        description: the item's id inside its document; the graph key is `<doc_id>::<item_id>`
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py:457 (node_key, DD-020)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      grounding_relocated_from:
+        description: the quote before a `grounding_relocated` overlay moved it
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      grounding_relocation_method:
+        description: how the overlay relocated the quote
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      nulled_attributes:
+        description: attributes an `attribute_nulled` overlay cleared
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (repair overlays)'
+      restored_attributes:
+        description: attributes an accepted `attribute_restored` overlay set
+        multivalued: true
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (accepted restorations)'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  # ---- edge classes ----
+  Defines:
+    is_a: Edge
+    description: '(Document)-[:DEFINES]->(Definition): Source gives this definition (pairs: Document->Definition)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:292 (edge_types.defines); pairs :295'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Mentions:
+    is_a: Edge
+    description: '(Document)-[:MENTIONS]->(Concept): Concept appears substantively (not keyword match) (pairs:
+      Document->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:298 (edge_types.mentions); pairs :301'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Asserts:
+    is_a: Edge
+    description: '(Document)-[:ASSERTS]->(Claim): Source makes this claim (pairs: Document->Claim)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:304 (edge_types.asserts); pairs :307'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  About:
+    is_a: Edge
+    description: '(Claim)-[:ABOUT]->(Concept): What the claim concerns (pairs: Claim->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:310 (edge_types.about); pairs :313'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Operationalizes:
+    is_a: Edge
+    description: '(Instrument)-[:OPERATIONALIZES]->(Construct): Instrument measures this dimension (pairs:
+      Instrument->Construct)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:316 (edge_types.operationalizes); pairs :319'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  OperationalizedBy:
+    is_a: Edge
+    description: '(Framework)-[:OPERATIONALIZED_BY]->(Instrument): The framework is operationalized by this
+      instrument — the instrument is the framework''s measuring apparatus, not merely a thing it mentions
+      (pairs: Framework->Instrument)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:322 (edge_types.operationalized_by); pairs :333'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Measures:
+    is_a: Edge
+    description: '(Measure | Instrument)-[:MEASURES]->(Construct | Concept): Item- or instrument-level mapping
+      to the construct/concept it measures (pairs: Measure->Construct; Measure->Concept; Instrument->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:337 (edge_types.measures); pairs :342'
+    - 'external_alignment: http://www.w3.org/ns/sosa/observes'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Grounds:
+    is_a: Edge
+    description: '(Construct)-[:GROUNDS]->(Definition): Construct''s authority traces to this definition
+      (pairs: Construct->Definition)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:346 (edge_types.grounds); pairs :349'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Extends:
+    is_a: Edge
+    description: '(Definition | Framework)-[:EXTENDS]->(Definition | Framework): Builds on, adds to (pairs:
+      Definition->Definition; Framework->Framework)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:352 (edge_types.extends); pairs :356'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  ConflictsWith:
+    is_a: Edge
+    description: '(Definition | Claim)-[:CONFLICTS_WITH]->(Definition | Claim): Incompatible. The "no shared
+      definition" evidence layer (pairs: Definition->Definition; Claim->Claim)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:359 (edge_types.conflicts_with); pairs :363'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Cites:
+    is_a: Edge
+    description: '(Document)-[:CITES]->(Document): Citation within the corpus (pairs: Document->Document)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:367 (edge_types.cites); pairs :370'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  BuildsOn:
+    is_a: Edge
+    description: '(Standard | Framework)-[:BUILDS_ON]->(Standard | Framework): e.g. FCSM 25-03 builds_on
+      OPEN Gov Data Act (pairs: Standard->Standard; Standard->Framework; Framework->Standard; Framework->Framework)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:373 (edge_types.builds_on); pairs :377'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Implements:
+    is_a: Edge
+    description: '(Standard)-[:IMPLEMENTS]->(Concept): Spec realizes a concept (pairs: Standard->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:380 (edge_types.implements); pairs :383'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  UsesMeasure:
+    is_a: Edge
+    description: '(Instrument)-[:USES_MEASURE]->(Measure): Instrument uses this measure/item (pairs: Instrument->Measure)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:387 (edge_types.uses_measure); pairs :390'
+    - 'external_alignment: https://www.w3.org/ns/sosa/'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  HasComponent:
+    is_a: Edge
+    description: '(Framework | Concept)-[:HAS_COMPONENT]->(Concept): Framework/Concept has this component
+      part (part-whole, not subclass) (pairs: Framework->Concept; Concept->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:394 (edge_types.has_component); pairs :398'
+    - 'external_alignment: http://purl.obolibrary.org/obo/BFO_0000051'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  SubtypeOf:
+    is_a: Edge
+    description: '(Concept)-[:SUBTYPE_OF]->(Concept): Concept is a subtype (subclass) of another concept
+      (pairs: Concept->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:402 (edge_types.subtype_of); pairs :406'
+    - 'external_alignment: http://www.w3.org/2000/01/rdf-schema#subClassOf'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Precedes:
+    is_a: Edge
+    description: '(Concept)-[:PRECEDES]->(Concept): Concept precedes another (ordinal/temporal precedence)
+      (pairs: Concept->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:410 (edge_types.precedes); pairs :413'
+    - 'external_alignment: http://purl.obolibrary.org/obo/BFO_0000063'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Recommends:
+    is_a: Edge
+    description: '(Document)-[:RECOMMENDS]->(Practice): Source makes this normative recommendation (pairs:
+      Document->Practice)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:418 (edge_types.recommends); pairs :421'
+    - 'external_alignment: http://www.w3.org/ns/prov#wasAttributedTo'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  SupportedBy:
+    is_a: Edge
+    description: '(Practice)-[:SUPPORTED_BY]->(Claim): The practice rests on this claim (the claim''s evidence_grade
+      is the strength behind the recommendation, DD-010) (pairs: Practice->Claim)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:425 (edge_types.supported_by); pairs :428'
+    - 'external_alignment: http://www.w3.org/ns/prov#wasDerivedFrom'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  ImplementedBy:
+    is_a: Edge
+    description: '(Measure)-[:IMPLEMENTED_BY]->(Tool): This software computes / runs the measure (pairs:
+      Measure->Tool)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:432 (edge_types.implemented_by); pairs :435'
+    - 'external_alignment: https://www.w3.org/ns/sosa/madeBySensor'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Consumes:
+    is_a: Edge
+    description: '(Platform)-[:CONSUMES]->(Standard): Platform reads / honors this spec (pairs: Platform->Standard)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:439 (edge_types.consumes); pairs :442'
+    - 'external_alignment: http://purl.org/dc/terms/conformsTo'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  AppliesTo:
+    is_a: Edge
+    description: '(Practice | Measure)-[:APPLIES_TO]->(Concept): Practice/Measure targets this asset class
+      or concept (pairs: Practice->Concept; Measure->Concept)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:446 (edge_types.applies_to); pairs :452'
+    - 'external_alignment: http://purl.org/dc/terms/subject'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Targets:
+    is_a: Edge
+    description: '(Practice)-[:TARGETS]->(Platform): Practice is aimed at this machine consumer (pairs:
+      Practice->Platform)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:456 (edge_types.targets); pairs :459'
+    - 'external_alignment: https://schema.org/audience'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  Supersedes:
+    is_a: Edge
+    description: '(Document)-[:SUPERSEDES]->(Document): Newer document replaces an earlier version (pairs:
+      Document->Document)'
+    comments:
+    - 'source: ai-readiness-kg/kg/schema.yaml:463 (edge_types.supersedes); pairs :468'
+    - 'external_alignment: http://purl.org/dc/terms/replaces'
+    slots:
+    - doc_id
+    attributes:
+      grounding_text:
+        description: the verbatim quote the edge was extracted on
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:477 (provenance_required)'
+      location:
+        description: section heading or page as available
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:478'
+      anchor:
+        description: the locator the extractor returned (the anchor contract, v0.3.7)
+        comments:
+        - 'source: ai-readiness-kg/kg/extraction/anchors.py:348'
+      extraction_event_id:
+        description: the extraction run that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:479'
+      prov_model_id:
+        description: the model that asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:480; ai-readiness-kg/scripts/build_projection.py build
+          (`prov_model_id`)'
+      prov_prompt_version:
+        description: the prompt version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_prompt_version`)'
+      prov_schema_version:
+        description: the source schema version the item was extracted under
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:481; ai-readiness-kg/scripts/build_projection.py build'
+      prov_corpus_epoch:
+        description: the corpus epoch of the extraction
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_corpus_epoch`)'
+      prov_source_sha256:
+        description: sha256 of the ORIGINAL source file the item was extracted from (DN-049 Amendment)
+        comments:
+        - 'source: ai-readiness-kg/scripts/build_projection.py build (`prov_source_sha256`)'
+      prov_timestamp:
+        description: when the extraction asserted the item
+        comments:
+        - 'source: ai-readiness-kg/kg/schema.yaml:482'
+      chunk_id:
+        description: the chunk the item was asserted from; absent for a whole-document extraction
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      batch:
+        description: the event shard the asserting event came from (its file stem)
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 2'
+      source_changed:
+        description: the source file's current sha256 differs from `prov_source_sha256`; the item grounds
+          against the text it was extracted from
+        range: boolean
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 and its Amendment'
+      span_ambiguous:
+        description: the quote occurs more than once in its chunk; the occurrence nearest the item's anchor
+          or location was taken
+        range: boolean
+        comments:
+        - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+      source_item:
+        description: 'the projected item whole, as JSON: every property it carries, listed in the schema
+          or not'
+        comments:
+        - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited
+          to fit)'
+
+  # ---- the container the export validates ----
+  Ai_readinessGraph:
+    tree_root: true
+    description: The graph as two lists, the shape of the node-link export.
+    attributes:
+      nodes:
+        range: Node
+        multivalued: true
+        inlined_as_list: true
+      edges:
+        range: Edge
+        multivalued: true
+        inlined_as_list: true
