@@ -133,7 +133,9 @@ def rendered_checkout(tmp_path) -> tuple[Path, str]:
     for a in (["init", "-b", "main"], ["config", "user.email", "t@t"],
               ["config", "user.name", "t"]):
         subprocess.run(["git", *a], cwd=p, check=True, capture_output=True)
-    (p / ".gitignore").write_text(".seldon/\nlogs/\n", encoding="utf-8")
+    # `.claude/` as in the real checkout's `.gitignore`: c11 (seldon FRICTION-002, every task's
+    # criterion) requires the CLI's worktree directory to be ignored.
+    (p / ".gitignore").write_text(".seldon/\nlogs/\n.claude/\n", encoding="utf-8")
     (p / "controls.yaml").write_text((REPO / "controls.yaml").read_text(encoding="utf-8"),
                                      encoding="utf-8")
     # The real block, with `enabled` forced true: c8 is a property of the switch, not of the

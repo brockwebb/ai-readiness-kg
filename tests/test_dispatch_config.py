@@ -485,12 +485,15 @@ def test_the_pass_commits_the_dispatchers_lines_and_registered_files_before_the_
     """The ordering decision 3 re-reads the gate against: the dispatcher's own leftover lines
     and any registered-but-uncommitted Desktop file are committed BEFORE `_cadence` looks at
     the tree, so neither can be the dirt that blocks a tick. Read from the installed source,
-    because the ordering is the claim."""
+    because the ordering is the claim.
+
+    Since seldon AD-038-R1 (FRICTION-001 A, 3f19acf) both sweeps are one call, `_reconcile`,
+    which commits every dirty path of machine-written governed state by class, not by writer;
+    the claim is unchanged and now reads as `_reconcile` before `_cadence`."""
     import inspect
     from seldon.commands import dispatch as CMD
     src = inspect.getsource(CMD._pass)
     body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
-    own = body.index("_record_own_lines(")
-    registered = body.index("_commit_registered(")
+    reconcile = body.index("_reconcile(")
     cadence = body.index("_cadence(")
-    assert own < registered < cadence, (own, registered, cadence)
+    assert reconcile < cadence, (reconcile, cadence)
