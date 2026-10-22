@@ -1,0 +1,138 @@
+# SQ-022 Part C: the pre-registered parity set (squiddy DN-049 R-210 as amended; squiddy
+# cc_tasks/2026-10-22_SQ-022_ai_readiness_graph_in_its_own_neo4j_database_parity_proved_consumer_repointed.md).
+#
+# COMMITTED BEFORE ANY ANSWER FROM THE NEW DATABASE (`ai-readiness`) WAS READ, and never edited after (squiddy
+# docs/S-008_rules.md). A correction is a new file beside this one, with its reason, and both are reported.
+#
+# WHAT RUNS. Every airkg verb with fixed arguments, drawn from the server's own tests (tests/test_mcp_server.py) and its
+# documentation generator (mcp/airkg_doc.py), plus `run_cypher`'s corpus queries: the Cypher scripts/run_kg_questions.py
+# issues through mcp/airkg_tools.Graph (the assessment build's corpus reads, R-210 first clause), the two corpus queries
+# the docs record, and one count per corpus label and per corpus edge type.
+#
+# TWO CONFIGURATIONS, one verb layer (mcp/airkg_tools.Tools):
+#   old: assessment layer and corpus layer both read from `seldon-ai-readiness-kg` (today's server).
+#   new: assessment layer from `seldon-ai-readiness-kg`; corpus layer (get_document, search_text's definition layer,
+#        and run_cypher's corpus queries) from `ai-readiness`. The assessment layer reaches the corpus only at Document
+#        by doc_id (EVIDENCED_BY, EVIDENCED_BY_INTERNAL, OBSERVED_ON), so only the corpus side changes. get_evidence
+#        reads no corpus label (Finding -> SUPPORTS <- Observation; `surface_doc_id` is a string, never traversed), so
+#        it has no corpus side and runs on the assessment database in both.
+# Every call runs in a fresh Tools per configuration, from one process, in the order listed.
+#
+# THE TWO STORES NAME PROPERTIES DIFFERENTLY, by the transcription (squiddy tools/sq019_transcribe_schema.py, recorded
+# on every slot), and nothing else differs by design. The new configuration's corpus reads use the kit's names; the
+# answers are compared after this map is applied to the NEW side (kit name -> old name):
+dialect:
+  node_key: {old: key, new: id}                       # `<doc_id>::<item_id>`; a Document's is its doc_id in both
+  quote: {old: grounding_span, new: grounding_text}  # the verbatim quote; the kit's `grounding_span` is the located span
+  renamed_properties:                                 # kit -> old, for properties(n) maps
+    grounding_text: grounding_span
+    instrument_method: method
+    extraction_event_id: prov_extraction_event_id
+    item_id: id
+  # run_cypher's corpus queries are written in the old store's names; the new configuration runs each with these
+  # textual substitutions, and only these (word-bounded, on the property access `.<name>`):
+  cypher_rewrite:
+    ".key": ".id"
+    ".grounding_span": ".grounding_text"
+
+# CANONICALIZATION, applied to both sides before comparing:
+canonicalize:
+  # names of the store that answered: different by construction, never compared
+  store_identity_fields: [database]
+  store_identity_locators: "a locator {kind: graph, id_property: database} is compared without its id"
+  # properties that point into a store's OWN ledger or are its merge bookkeeping: the old store's event ids and its
+  # `key` (= its merge key, equal to `id`); the kit's ledger stamps (asserted_at, prov_wasGeneratedBy, provided_by,
+  # category, squiddy_class, status, method, prov_extractor*, prov_run_id, name on a Document, batch, chunk_id,
+  # source_item, source_changed, span_ambiguous, span_raw_equal, grounding_span as offsets). Excluded from
+  # properties(n) maps on both sides; listed so that no other property is.
+  store_bookkeeping_properties:
+    old: [key, prov_manifest_event]
+    new: [asserted_at, prov_wasGeneratedBy, provided_by, category, squiddy_class, status, method, prov_extractor,
+          prov_extractor_version, prov_run_id, batch, chunk_id, source_item, source_changed, span_ambiguous,
+          span_raw_equal, grounding_span, prov_timestamp]
+  # a property the NEW side holds and the old does not is an addition and is reported, not counted as a difference:
+  # parity is that every answer the old store gave, the new store gives
+  new_only_properties: reported
+  lists: "sorted by their canonical JSON wherever the verb or query does not ORDER BY; ORDER BY lists keep order"
+  locators: "compared by (kind, label, id) after the dialect map; id_property is store dialect"
+
+# TRACING. A difference is TRACED when every item behind it is a kept-out item, by key, in squiddy
+# docs/evidence/sq022/adopt/kept_out.jsonl (the R-217 re-admission's list; SQ-019's is docs/evidence/sq019/), or a
+# DI-003 derived edge declared in the kit graph's config (this graph declares none). "The items behind" a difference:
+#   - a count: the symmetric difference of the two stores' item sets under the same pattern, by key;
+#   - a list of rows: the rows on one side only, by their node key (or edge triple);
+#   - a limited list: a row on the new side only is DISPLACED (traced) when the old store holds it too beyond the limit
+#     and every old-side-only row is traced;
+#   - a property value: never traced by an item; an untraced difference.
+# An item present in the NEW store and absent from the OLD is never traced (nothing kept out explains an addition) and is
+# reported as such. Pass: untraced = 0 for every call. Untraced > 0 is the task's stop before Part D.
+kept_out: /Users/brock/GitHub/squiddy/docs/evidence/sq022/adopt/kept_out.jsonl
+
+calls:
+  # ---------------------------------------------------------------- assessment layer (both configurations: old db)
+  - {id: V01, verb: get_overview, args: {}, source: "tests/test_mcp_server.py (overview tests); mcp/airkg_doc.py:36"}
+  - {id: V02, verb: get_indicator, args: {code: A1}, source: "tests/test_mcp_server.py:245"}
+  - {id: V03, verb: get_indicator, args: {code: A5}, source: "mcp/airkg_doc.py:72"}
+  - {id: V04, verb: get_indicator, args: {code: ZZ9}, source: "tests/test_mcp_server.py:263"}
+  - {id: V05, verb: get_body, args: {name: BEA}, source: "tests/test_mcp_server.py:279"}
+  - {id: V06, verb: get_body, args: {name: NOSUCH}, source: "tests/test_mcp_server.py:300"}
+  - {id: V07, verb: get_prescriptions, args: {}, source: "mcp/airkg_doc.py:36"}
+  - {id: V08, verb: get_prescriptions, args: {body: BEA}, source: "tests/test_mcp_server.py:326"}
+  - {id: V09, verb: get_prescriptions, args: {leg: A5}, source: "tests/test_mcp_server.py:333"}
+  - {id: V10, verb: get_requirements, args: {}, source: "tests/test_mcp_server.py:466"}
+  - {id: V11, verb: get_requirements, args: {indicator: C4}, source: "mcp/airkg_doc.py:77"}
+  - {id: V12, verb: get_requirements, args: {body: BEA}, source: "tests/test_mcp_server.py:465"}
+  - {id: V13, verb: get_evidence, args: {finding_id: fnd_000000000000000000000000}, source: "tests/test_mcp_server.py:374"}
+  # the test's own argument: the first leg's Finding of get_body("BEA"), resolved at run time from the OLD answer
+  - {id: V14, verb: get_evidence, args: {finding_id: {from: V05, path: "legs[0].finding_id"}},
+     source: "tests/test_mcp_server.py:467"}
+  - {id: V15, verb: get_cycle_of_record, args: {}, source: "mcp/airkg_server.py:247; tests/test_mcp_server.py"}
+  - {id: V16, verb: run_cypher, args: {query: "MATCH (i:AssessmentIndicator) RETURN i.code AS code ORDER BY code"},
+     source: "tests/test_mcp_server.py:432 (assessment; pattern as the test's)"}
+  - {id: V17, verb: run_cypher, args: {query: "MATCH (f:Finding) RETURN count(f) AS n"},
+     source: "tests/test_mcp_server.py:438 (assessment)"}
+  - {id: V18, verb: run_cypher, args: {query: "MATCH (r:Rule {current: true}) RETURN r.rule_id AS rule_id ORDER BY rule_id"},
+     source: "tests/test_mcp_server.py:471 (assessment)"}
+  # ---------------------------------------------------------------- corpus layer (new configuration: ai-readiness)
+  - {id: V19, verb: get_document, args: {doc_id: w3c-dwbp-2017}, source: "tests/test_mcp_server.py:381"}
+  - {id: V20, verb: get_document, args: {doc_id: rfc-9309-robots-exclusion-protocol}, source: "mcp/airkg_doc.py:81"}
+  - {id: V21, verb: get_document, args: {doc_id: no-such-document-here}, source: "tests/test_mcp_server.py:389"}
+  - {id: V22, verb: search_text, args: {q: machine-readable}, source: "tests/test_mcp_server.py:394"}
+  - {id: V23, verb: search_text, args: {q: sitemap, limit: 3}, source: "mcp/airkg_doc.py:83"}
+  # the same two searches unlimited, so a limited list's displacement can be traced against the whole set
+  - {id: V24, verb: search_text, args: {q: machine-readable, limit: 10000}, source: "V22 unlimited (tracing aid)"}
+  - {id: V25, verb: search_text, args: {q: sitemap, limit: 10000}, source: "V23 unlimited (tracing aid)"}
+  # run_cypher, the assessment build's corpus reads (scripts/run_kg_questions.py; $params inlined as literals)
+  - {id: C01, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py epoch()",
+     args: {query: "MATCH (d:Document) WHERE d.doc_id IS NOT NULL RETURN d.doc_id AS id, coalesce(d.content_hash, '') AS h ORDER BY id"}}
+  - {id: C02, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py epoch()",
+     args: {query: "MATCH (d:Definition) WITH count(d) AS defs MATCH (i:Instrument) RETURN defs, count(i) AS instruments"}}
+  - {id: C03, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q1_CYPHER",
+     args: {query: "MATCH (d:Definition) WHERE toLower(coalesce(d.term, '')) =~ '.*\\\\b(ai|artificial intelligence)[- ]read(y|iness)\\\\b.*' OR toLower(coalesce(d.term, '')) =~ '.*\\\\bread(y|iness) for (ai|artificial intelligence)\\\\b.*' OPTIONAL MATCH (doc:Document)-[:DEFINES]->(d) RETURN properties(d) AS p, doc IS NOT NULL AS defines_edge"}}
+  - {id: C04, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q1_TEXT_NET_CYPHER",
+     args: {query: "MATCH (d:Definition) WHERE (toLower(d.verbatim_text) =~ '(?s).*\\\\b(ai|artificial intelligence)[- ]read(y|iness)\\\\b.*' OR toLower(d.verbatim_text) =~ '(?s).*\\\\bread(y|iness) for (ai|artificial intelligence)\\\\b.*') AND NOT (toLower(coalesce(d.term, '')) =~ '.*\\\\b(ai|artificial intelligence)[- ]read(y|iness)\\\\b.*' OR toLower(coalesce(d.term, '')) =~ '.*\\\\bread(y|iness) for (ai|artificial intelligence)\\\\b.*') RETURN d.key AS key, d.term AS term ORDER BY key"}}
+  - {id: C05, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q2_STRUCTURE_CYPHER",
+     args: {query: "OPTIONAL MATCH (c:Construct) WITH count(c) AS constructs OPTIONAL MATCH (:Construct)-[g:GROUNDS]->(:Definition) WITH constructs, count(g) AS grounds OPTIONAL MATCH (d:Definition)-[x]-(k:Concept) RETURN constructs, grounds, count(x) AS definition_concept_edges"}}
+  - {id: C06, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q3_CYPHER",
+     args: {query: "MATCH (a)-[r:CONFLICTS_WITH]->(b) RETURN labels(a)[0] AS label, properties(a) AS a, properties(b) AS b, r.prov_method AS method"}}
+  - {id: C07, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q4_CYPHER",
+     args: {query: "MATCH (i:Instrument) WHERE toLower(i.name) =~ '.*(readiness|ai-ready|ai ready).*' OPTIONAL MATCH (i)-[:MEASURES]->(c:Concept) WITH i, collect(DISTINCT c.name) AS direct OPTIONAL MATCH (i)-[:USES_MEASURE]->(m:Measure) OPTIONAL MATCH (m)-[:MEASURES]->(mc:Concept) RETURN properties(i) AS p, direct, count(DISTINCT m) AS measures, collect(DISTINCT mc.name) AS via_measures"}}
+  - {id: C08, verb: run_cypher, layer: corpus, source: "scripts/run_kg_questions.py Q4_STRUCTURE_CYPHER",
+     args: {query: "OPTIONAL MATCH (:Instrument)-[o:OPERATIONALIZES]->() WITH count(o) AS operationalizes OPTIONAL MATCH (:Framework)-[f:OPERATIONALIZED_BY]->(:Instrument) RETURN operationalizes, count(f) AS operationalized_by"}}
+  # the docs' corpus queries (docs/evidence/kg_questions.md; kg/schema.yaml's twin note)
+  - {id: C09, verb: run_cypher, layer: corpus, source: "kg/schema.yaml (the (:Document)-[:ASSERTS]->(:Concept) twin note)",
+     args: {query: "MATCH (:Document)-[:ASSERTS]->(:Concept) RETURN count(*) AS n"}}
+  - {id: C10, verb: run_cypher, layer: corpus, source: "docs/evidence/kg_questions.md (Definition with no DEFINES edge)",
+     args: {query: "MATCH (d:Definition) WHERE NOT ()-[:DEFINES]->(d) RETURN count(d) AS n"}}
+  # one count per corpus label and per corpus edge type (kg/schema.yaml node_types and edge_types)
+  - {id: C11, verb: run_cypher, layer: corpus, source: "kg/schema.yaml node_types",
+     count_per: label,
+     labels: [Document, Definition, Concept, Construct, Instrument, Measure, Claim, Standard, Framework, Practice, Tool, Platform]}
+  - {id: C12, verb: run_cypher, layer: corpus, source: "kg/schema.yaml edge_types",
+     count_per: type,
+     types: [DEFINES, MENTIONS, ASSERTS, ABOUT, OPERATIONALIZES, OPERATIONALIZED_BY, MEASURES, GROUNDS, EXTENDS,
+             CONFLICTS_WITH, CITES, BUILDS_ON, IMPLEMENTS, USES_MEASURE, HAS_COMPONENT, SUBTYPE_OF, PRECEDES, RECOMMENDS,
+             SUPPORTED_BY, IMPLEMENTED_BY, CONSUMES, APPLIES_TO, TARGETS, SUPERSEDES]}
+  # C11's and C12's run_cypher text is `MATCH (n:<Label>) RETURN count(n) AS n` and
+  # `MATCH (a)-[e:<TYPE>]->(b) WHERE NOT a:AssessmentIndicator AND NOT a:Observation AND NOT a:Finding RETURN count(e) AS n`
+  # (the old store's SUPERSEDES also serves the assessment layer; that clause keeps the corpus edge only)
