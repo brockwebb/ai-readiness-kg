@@ -1,4 +1,4 @@
-# squiddy-generated: graph config | spec sha256 3f788db3d23f8d4acf39b9e4a275bfe98bd1aefedde07b8a294c67885025ac81
+# squiddy-generated: graph config | spec sha256 27242c710413ec1d9dd1622f97a4e94856bdd7f6ae07b3da93b0841596032b35
 # Do not edit. Edit the spec and re-run `squiddy init`; `squiddy init --check` reports drift.
 #
 # Rendered by `squiddy init` from graph.yaml. Every value here is either a choice in
@@ -24,6 +24,8 @@ engine:
     evidence_dir: evidence
     acquisition_state: corpus/acquisition_state.json
     allowlist: corpus/manifest_property_allowlist.yaml
+  parse:
+    table_linearisation: rows
   manifest:
     profile: squiddy-manifest
     stages:
@@ -128,10 +130,11 @@ engine:
       - name
       Platform:
       - name
-    backend: export
+    backend: neo4j
     concept_edge:
       class: Mentions
       direction: in
+    database: ai-readiness
   extract:
     enabled: true
     client: claude_cli_max_oauth
@@ -184,6 +187,12 @@ engine:
     backends:
     - name: networkx
       enabled: true
+    - name: neo4j
+      enabled: true
+      database: ai-readiness
+      uri_env: NEO4J_URI
+      user_env: NEO4J_USER
+      pass_env: NEO4J_PASS
   policy:
     provenance: public_only
     allowed_provenance_flags:

@@ -117,6 +117,9 @@ def emit_extraction(entry: dict, rows: list[dict], graph, classes: dict) -> list
               "source_item": json.dumps(c["props"], ensure_ascii=False, sort_keys=True),
               "batch": a.get("batch"), "chunk_id": a.get("chunk_id"),
               "source_changed": bool(a.get("source_changed")), "span_ambiguous": bool(a.get("span_ambiguous")),
+              # squiddy DN-049 ADDENDUM 01 R-217: `false` when the span was located only under the declared
+              # normalization; a row without it is verbatim and its item carries no flag (SQ-022)
+              "span_raw_equal": a.get("span_raw_equal"),
               "prov_timestamp": a.get("timestamp"), **_stamp(r)}
         if c["kind"] == "node":
             kw["id"] = c["key"]

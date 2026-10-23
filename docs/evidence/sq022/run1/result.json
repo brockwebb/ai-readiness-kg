@@ -1,0 +1,105 @@
+{
+ "queries": "docs/evidence/sq022/parity_queries.yaml",
+ "queries_sha256": "345c9ef85489993e3d2491101098adf04cdeee30eddbf251701d00c9dcbd9761",
+ "kept_out": "/Users/brock/GitHub/squiddy/.claude/worktrees/cozy-herding-magpie/docs/evidence/sq022/adopt/kept_out.jsonl",
+ "kept_out_sha256": "e9e4e0252d2892cb6d2806c5ac088ffe56b4a88b74316251d44d7887f9b7d21e",
+ "databases": {
+  "assessment": "seldon-ai-readiness-kg",
+  "corpus_old": "seldon-ai-readiness-kg",
+  "corpus_new": "ai-readiness"
+ },
+ "calls": 71,
+ "seconds": 16.2,
+ "table": {
+  "get_overview": {
+   "calls": 1,
+   "equal": 1,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_indicator": {
+   "calls": 3,
+   "equal": 3,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_body": {
+   "calls": 2,
+   "equal": 2,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_prescriptions": {
+   "calls": 3,
+   "equal": 3,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_requirements": {
+   "calls": 3,
+   "equal": 3,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_evidence": {
+   "calls": 2,
+   "equal": 2,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_cycle_of_record": {
+   "calls": 1,
+   "equal": 1,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "run_cypher (assessment)": {
+   "calls": 3,
+   "equal": 3,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "get_document": {
+   "calls": 3,
+   "equal": 1,
+   "traced": 0,
+   "untraced": 2,
+   "items_traced": 8,
+   "differences_untraced": 7
+  },
+  "search_text": {
+   "calls": 4,
+   "equal": 4,
+   "traced": 0,
+   "untraced": 0,
+   "items_traced": 0,
+   "differences_untraced": 0
+  },
+  "run_cypher (corpus)": {
+   "calls": 46,
+   "equal": 9,
+   "traced": 11,
+   "untraced": 26,
+   "items_traced": 6576,
+   "differences_untraced": 36943
+  }
+ },
+ "untraced_calls": 28,
+ "pass": false
+}

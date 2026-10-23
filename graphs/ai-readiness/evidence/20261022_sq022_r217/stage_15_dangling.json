@@ -1,0 +1,31 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "dangling",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python3.12",
+    "-m",
+    "squiddy.gates",
+    "dangling",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--mutate",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261022_sq022_r217/dangling_gate_20261022_sq022_r217.json"
+  ],
+  "wall_seconds": 5.79,
+  "finished_utc": "2026-10-22T22:25:37.833111+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[dangling] ledger: CLEAN (30857 nodes, 34021 edges; legs edge_endpoints, superseded_by)",
+    "[dangling] positive control: FIRED on every seeded defect the declared legs cover",
+    "  - (mutant) edge-endpoint: Defines advancing-american-ai-act-ndaa-fy2023-div-g -> node-that-does-not-exist (missing ['node-that-does-not-exist']; event 7a7f7aa2ae884fd18481bab58e709e24)",
+    "  - (mutant) superseded_by: event 022ff718249d45a48488fc1f1d880f89 names 'event-that-does-not-exist', which is not in the ledger"
+  ],
+  "first_line": "[dangling] ledger: CLEAN (30857 nodes, 34021 edges; legs edge_endpoints, superseded_by)"
+}

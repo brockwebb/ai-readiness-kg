@@ -1149,6 +1149,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "A12",
     "… 1 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
+  "corpus_database": "seldon-ai-readiness-kg",
   "locators": [
     {
       "kind": "graph",
@@ -1207,6 +1208,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "Action.title/description (record)",
     "… 2 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
+  "corpus_database": "seldon-ai-readiness-kg",
   "locators": [
     {
       "kind": "record_key",
@@ -1372,6 +1374,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
   "truncated": false,
   "max_rows": 200,
   "database": "seldon-ai-readiness-kg",
+  "layer": "assessment",
   "projection_gate": "green",
   "locator": {
     "kind": "graph",

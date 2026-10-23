@@ -1,0 +1,26 @@
+# SQ-022 Part C, ERRATUM 01 to parity_queries.yaml (committed 8ce578c1, not edited).
+#
+# WHAT WAS WRONG. The pre-registered `dialect` mapped the two stores' PROPERTY names and left out their RELATIONSHIP
+# TYPE names. The old store types an edge by the source schema's name, upper-cased (`MENTIONS`, `APPLIES_TO`;
+# scripts/build_projection.py `edge_rel(...).upper()`); the kit types it by the transcribed class (`Mentions`,
+# `AppliesTo`; squiddy `neo4j_store.write_projection` writes `d["type"]`, the LinkML class). Found by run 1
+# (docs/evidence/sq022/run1/differences.jsonl): every C12 count read 0 edges on the new side against 34,021 edges in
+# the database, and every corpus query that matches a relationship type (C03 `defines_edge`, C05, C06, C07 `direct`,
+# `measures`, `via_measures`, C09, C10) read nothing there.
+#
+# WHAT CHANGES. One mapping, added to `dialect`, and applied wherever a relationship type is named: run_cypher's corpus
+# queries (each `:<TYPE>` inside a relationship pattern `[...]`), C12's per-type counts, and the tracing triples (a new
+# side triple is reported under the old store's type name, so it meets the kept-out list's key). The mapping is NOT
+# retyped here: it is the kit graph's own `domain.airkg_schema.class_of` (graphs/ai-readiness/config.yaml, written by
+# squiddy tools/sq019_transcribe_schema.py), source type -> class, upper-cased on the old side.
+#
+# WHAT DOES NOT CHANGE. The calls, their arguments, the property dialect, the canonicalization and the tracing rule.
+# Run 1 stays as evidence and is reported beside run 2; this erratum is applied by scripts/sq022_parity.py when present.
+erratum_of: parity_queries.yaml
+committed_base: 8ce578c1
+found_by: docs/evidence/sq022/run1/differences.jsonl
+dialect_add:
+  relationship_types:
+    from: graphs/ai-readiness/config.yaml#domain.airkg_schema.class_of
+    old: "<source type>.upper()"
+    new: "<class_of[source type]>"

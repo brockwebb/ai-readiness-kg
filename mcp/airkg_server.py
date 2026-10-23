@@ -258,17 +258,21 @@ def _register(mcp: FastMCP, t: T.Tools) -> None:
         return t.get_cycle_of_record()
 
     @mcp.tool(annotations={"readOnlyHint": True, "title": "Run read-only Cypher"})
-    def run_cypher(query: str) -> dict:
+    def run_cypher(query: str, layer: str = "assessment") -> dict:
         """The escape hatch for questions the nine verbs above do not cover. READ-ONLY.
 
         Any write clause (CREATE/MERGE/SET/DELETE/REMOVE/DROP/FOREACH/LOAD CSV) or any
         procedure outside the read allow-list comes back as a `refused` message rather than an
-        error. Scoped to this project's database and capped at 200 rows.
+        error. Capped at 200 rows.
+
+        `layer` picks the database: `assessment` (default: the framework, cycles, Findings,
+        Observations) or `corpus` (Documents, Definitions, Concepts, Claims and the other
+        extracted labels). The answer names the `database` that served it.
 
         The result carries `projection_gate`: when it is not `green`, an answer about the
         framework labels is not the record.
         """
-        return t.run_cypher(query)
+        return t.run_cypher(query, layer=layer)
 
     # Registration order is the listing order, and `TOOL_ORDER` is what `get_overview`
     # advertises; a tool registered here and missing there would be a tool no overview names.

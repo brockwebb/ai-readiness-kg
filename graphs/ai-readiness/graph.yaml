@@ -4,12 +4,15 @@
 # A graph that existed before the kit joins it by ADMISSION: its dixie catalog is projected into the kit's manifest
 # (the `dixie` intake source), its extracted items enter through `squiddy extract ingest` re-grounded with zero model
 # calls (squiddy `tools/l002_adopt.py`, the `airkg` mapping), and its assessment layer stays in ai-readiness-kg, which
-# reads this graph by `Document.doc_id` (R-209). The Neo4j database and the parity gate are SQ-022's (R-210); this graph
-# serves its release export only.
+# reads this graph by `Document.doc_id` (R-209). SQ-022 (R-210 as amended) gave it its own Neo4j database, `ai-readiness`,
+# loaded by ledger replay and proved by the parity gate; the old `seldon-ai-readiness-kg` keeps its nodes and Seldon's.
 #
 # GENERATED IN TWO PARTS. Everything down to `domain.airkg` is written by hand (squiddy
 # docs/evidence/sq019/ai_readiness_graph_head.yaml, kept verbatim); `domain.airkg_schema` and `classes:` are transcribed
 # from ai-readiness-kg/kg/schema.yaml by squiddy tools/sq019_transcribe_schema.py, a source line on every class and slot.
+# SQ-022 (cc_tasks/2026-10-22_SQ-022_..._consumer_repointed.md) keeps this head at squiddy
+# docs/evidence/sq022/ai_readiness_graph_head.yaml: `version` 0.2.0 for R-217's `span_raw_equal` slot (DN-049 ADDENDUM
+# 01; an added optional slot, a minor version), and Part B's own database (below, `serve`).
 #
 # `scope.topic` is ai-readiness-kg/README.md lines 3-5 VERBATIM: the graph's own statement of what it answers. The
 # operator has stated no separate scope for it on the kit; this is the nearest record in his project.
@@ -26,7 +29,7 @@ description: >-
   platforms its extractions asserted, each re-grounded in the text it was extracted from and carrying its original
   provenance. The assessment layer (criteria, indicators, observations, findings, actions) stays in ai-readiness-kg
   and reads this graph by doc_id.
-version: 0.1.0
+version: 0.2.0
 namespace: https://github.com/brockwebb/ai-readiness-kg/graphs/ai-readiness/
 # The kit's core schema at its canonical checkout, as arnold-evidence's schema imports it. Left to `init`, the import is
 # the absolute path of whichever kit checkout ran it, and SQ-019 ran in a worktree that is removed after its merge.
@@ -37,7 +40,11 @@ scope:
     definitions work. It answers, with citations a stranger can verify:
 store: ledger
 serve:
-  backend: export
+  # SQ-022 Part B (DN-049 R-210 as amended): the graph's own database, by the kit's rule (DI-004: one database per
+  # graph; DI-005: never `seldon-*`). Neo4j names allow letters, digits, dots and dashes, not underscores, so the name
+  # is the graph directory's and not `ai_readiness`. The export is still cut by every release.
+  backend: neo4j
+  database: ai-readiness
   # X-001 item 19 (squiddy.serve.concept_edge): this graph's concept edge is the source graph's `mentions`,
   # (Document)-[:MENTIONS]->(Concept), which reaches a Concept INWARD; the base schema's Mentions runs the other way
   concept_edge: {class: Mentions, direction: in}
@@ -331,6 +338,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -439,6 +454,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -546,6 +569,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -660,6 +691,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -770,6 +809,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -887,6 +934,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -998,6 +1053,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -1104,6 +1167,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -1220,6 +1291,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -1335,6 +1414,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -1442,6 +1529,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     grounding_relocated_from:
       description: the quote before a `grounding_relocated` overlay moved it
       comments:
@@ -1532,6 +1627,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1605,6 +1708,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1678,6 +1789,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1750,6 +1869,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1822,6 +1949,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1895,6 +2030,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -1969,6 +2112,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2041,6 +2192,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2114,6 +2273,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2187,6 +2354,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2260,6 +2435,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2333,6 +2516,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2405,6 +2596,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2478,6 +2677,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2552,6 +2759,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2625,6 +2840,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2699,6 +2922,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2772,6 +3003,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2846,6 +3085,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2919,6 +3166,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -2992,6 +3247,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -3066,6 +3329,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -3139,6 +3410,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
@@ -3213,6 +3492,14 @@ classes:
       range: boolean
       comments:
       - 'source: squiddy cc_tasks/2026-10-21_SQ-019_ai_readiness_kg_onto_the_kit.md Part B step 3'
+    span_raw_equal:
+      description: 'false: the quote was located in the text of record only under the declared normalization (squiddy.grounding.normalize:
+        NFKC, de-hyphenated line breaks, whitespace runs to one space; DI-027), and the span is the raw text the
+        match covers; absent: located verbatim (every item admitted before R-217 was)'
+      range: boolean
+      comments:
+      - 'source: squiddy docs/design/2026-10-22_DN-049_ADDENDUM_01_span_grounding_under_declared_normalization.md
+        R-217'
     source_item:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:

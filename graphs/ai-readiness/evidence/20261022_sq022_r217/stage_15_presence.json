@@ -1,0 +1,29 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "presence",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python3.12",
+    "-m",
+    "squiddy.gates",
+    "presence",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--mutate",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261022_sq022_r217/presence_20261022_sq022_r217.json"
+  ],
+  "wall_seconds": 2.34,
+  "finished_utc": "2026-10-22T22:25:45.053305+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[presence] 287 primary node(s), 287 in-graph entr(y|ies): CLEAN",
+    "[presence] positive control: FIRED on both directions"
+  ],
+  "first_line": "[presence] 287 primary node(s), 287 in-graph entr(y|ies): CLEAN"
+}

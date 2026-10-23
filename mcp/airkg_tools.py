@@ -87,6 +87,18 @@ FRAMEWORK_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentInd
 ADDRESSABLE_LABELS = FRAMEWORK_LABELS + (
     "AssessmentInternalRef", "Finding", "Observation", "Rule", "Document", "Definition")
 
+#: The addressable labels the CORPUS layer holds: a `graph` or `document` locator naming one resolves against the
+#: corpus reader (squiddy SQ-022; DN-049 R-209, R-210), every other label against the project database.
+CORPUS_LABELS = ("Document", "Definition")
+
+#: How each store names the two corpus properties the verbs read. The project database is the old projection
+#: (`scripts/build_projection.py`: `key` is the `<doc_id>::<item_id>` merge key, `grounding_span` the quote); the kit
+#: graph keeps the same key as `id` and the quote as `grounding_text`, because its `grounding_span` is the LOCATED span
+#: (squiddy tools/sq019_transcribe_schema.py, recorded on every slot). A verb reads through the dialect of the
+#: database its corpus reader is bound to, so its answer has one shape whichever store served it.
+CORPUS_DIALECTS = {"project": {"key": "key", "quote": "grounding_span"},
+                   "kit": {"key": "id", "quote": "grounding_text"}}
+
 #: `corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 12 '...': "..."` —
 #: the shape `scripts/tag_prescriptions.py` writes every technique source in.
 _TECHNIQUE = re.compile(r"^(?P<path>\S+)\s+\(doc_id\s+`(?P<doc_id>[^`]+)`\)"
@@ -104,10 +116,16 @@ class Graph:
     server carries). The keyword rail is the caller's belt and lives in `run_cypher`.
     """
 
-    def __init__(self, database: str | None = None):
-        self.database = guard.assert_allowed_db(database or guard.project_database())
+    def __init__(self, database: str | None = None, layer: str = "assessment"):
+        self.layer = layer
+        self.database = guard.assert_allowed_db(database or guard.project_database(), layer)
         self._driver = None
         self._error = None
+
+    @property
+    def dialect(self) -> dict:
+        """The corpus property names of the store this reader is bound to (`CORPUS_DIALECTS`)."""
+        return CORPUS_DIALECTS["kit" if self.database == guard.corpus_database() else "project"]
 
     def driver(self):
         """The driver, built once, on first use.
@@ -153,7 +171,7 @@ class Graph:
                 import yaml
                 from neo4j import GraphDatabase
                 cfg = yaml.safe_load((REPO / "seldon.yaml").read_text(encoding="utf-8"))
-                guard.assert_allowed_db(str(cfg["neo4j"]["database"]))   # belt 2
+                guard.assert_allowed_db(self.database, self.layer)       # belt 2
                 self._driver = GraphDatabase.driver(cfg["neo4j"]["uri"],
                                                     auth=(user, password))
                 with self._driver.session(database=self.database) as s:
@@ -285,8 +303,12 @@ class Tools:
     and no module another caller shares is touched.
     """
 
-    def __init__(self, graph: Graph | None = None, run: Path | str | None = None):
+    def __init__(self, graph: Graph | None = None, run: Path | str | None = None, corpus: Graph | None = ...):
         self.graph = graph
+        #: the CORPUS layer's reader (get_document, search_text's definitions, run_cypher with layer="corpus"). By
+        #: default the assessment reader itself, the one database this server read before squiddy SQ-022; the server
+        #: passes the kit graph's reader once the parity set has passed (docs/evidence/sq022/parity_queries.yaml).
+        self.corpus = graph if corpus is ... else corpus
         self._record = None
         self._publication = None
         self.run = Path(run).resolve() if run else None
@@ -1167,13 +1189,13 @@ class Tools:
 
     def get_document(self, doc_id: str) -> dict:
         """A corpus document by doc_id: its provenance, and what the graph hangs off it."""
-        if self.graph is None or not self.graph.available():
+        if self.corpus is None or not self.corpus.available():
             return {"error": "Neo4j unreachable: the corpus layer is a projection of the "
                              "event log and this server did not guess it", "locators": []}
-        rows, _ = self.graph.read(
+        rows, _ = self.corpus.read(
             "MATCH (d:Document {doc_id: $id}) RETURN properties(d) AS p", limit=2, id=doc_id)
         if not rows:
-            near, _ = self.graph.read(
+            near, _ = self.corpus.read(
                 "MATCH (d:Document) WHERE d.doc_id CONTAINS $frag "
                 "RETURN d.doc_id AS id ORDER BY d.doc_id", limit=10,
                 frag=doc_id.split("-")[0])
@@ -1181,15 +1203,18 @@ class Tools:
                     "nearest": [r["id"] for r in near],
                     "locators": [graph_loc("Document", "doc_id", doc_id)]}
         p = dict(rows[0]["p"])
-        counts, _ = self.graph.read(
+        counts, _ = self.corpus.read(
             "MATCH (n) WHERE n.doc_id = $id AND NOT n:Document "
             "RETURN labels(n)[0] AS l, count(*) AS c", limit=50, id=doc_id)
-        ev, _ = self.graph.read(
+        # the assessment layer reaches the corpus only at Document by doc_id, and stays in the project database
+        ev, _ = (self.graph.read(
             "MATCH (i:AssessmentIndicator)-[:EVIDENCED_BY]->(d:Document {doc_id: $id}) "
             "RETURN i.code AS code ORDER BY i.code", limit=100, id=doc_id)
+            if self.graph is not None and self.graph.available() else ([], False))
         return {**p, "doc_id": doc_id,
                 "counts": {"definitions": 0, **{r["l"].lower() + "s": r["c"] for r in counts}},
                 "evidences_indicators": [r["code"] for r in ev],
+                "corpus_database": self.corpus.database,
                 "locators": [graph_loc("Document", "doc_id", doc_id), document_loc(doc_id)]}
 
     # -- 8. search_text -----------------------------------------------------------------
@@ -1226,26 +1251,29 @@ class Tools:
                                  "locator": document_loc(doc_id, section, path) if doc_id
                                  else rec_loc(n["id"])})
         graph_hits = 0
-        if self.graph is not None and self.graph.available():
-            rows, _ = self.graph.read(
+        corpus_up = self.corpus is not None and self.corpus.available()
+        if corpus_up:
+            key = self.corpus.dialect["key"]       # a property name from a closed set, never a payload value
+            rows, _ = self.corpus.read(
                 "MATCH (d:Definition) WHERE toLower(d.verbatim_text) CONTAINS $q "
                 "   OR toLower(coalesce(d.term, '')) CONTAINS $q "
-                "RETURN d.key AS key, d.term AS term, d.verbatim_text AS text, "
+                f"RETURN d.{key} AS key, d.term AS term, d.verbatim_text AS text, "
                 "       d.doc_id AS doc_id, d.location AS section "
-                "ORDER BY d.key", limit=limit, q=needle)
+                f"ORDER BY d.{key}", limit=limit, q=needle)
             graph_hits = len(rows)
             for r in rows:
                 hits.append({"kind": "definition", "code": r["term"], "text": r["text"],
                              "doc_id": r["doc_id"], "section": r["section"],
-                             "locator": graph_loc("Definition", "key", r["key"])})
+                             "locator": graph_loc("Definition", key, r["key"])})
         return {"query": q, "hits": hits[:limit], "n_hits": len(hits),
                 "truncated": len(hits) > limit,
                 "searched": ["AssessmentIndicator.indicator (record)",
                              "Action.title/description (record)",
                              "Action.technique_source (record)",
                              "Definition.verbatim_text/term (graph)"
-                             if graph_hits or (self.graph and self.graph.available())
+                             if graph_hits or corpus_up
                              else "Definition (SKIPPED: Neo4j unreachable)"],
+                "corpus_database": self.corpus.database if self.corpus is not None else None,
                 "locators": [rec_key_loc("nodes")]}
 
     # -- 9. get_cycle_of_record ---------------------------------------------------------
@@ -1313,20 +1341,27 @@ class Tools:
 
     # -- 10. run_cypher ------------------------------------------------------------------
 
-    def run_cypher(self, query: str) -> dict:
-        """The escape hatch, read-only. A write is refused with a sentence, not an exception."""
+    def run_cypher(self, query: str, layer: str = "assessment") -> dict:
+        """The escape hatch, read-only. A write is refused with a sentence, not an exception.
+
+        `layer` picks the reader: `assessment` (the framework, cycles, Findings, Observations; the default, as before)
+        or `corpus` (Documents, Definitions and the other extracted labels). The answer names the database."""
+        if layer not in guard.LAYERS:
+            return {"refused": f"refused: layer {layer!r} is not one of {guard.LAYERS}",
+                    "database": None}
+        g = self.graph if layer == "assessment" else self.corpus
         refused = guard.refusal(query)
         if refused is not None:
-            return {"refused": refused, "database": (self.graph.database if self.graph
+            return {"refused": refused, "database": (g.database if g
                                                      else guard.project_database())}
-        if self.graph is None or not self.graph.available():
-            return {"error": "Neo4j unreachable", "database": guard.project_database()}
-        rows, truncated = self.graph.read(query)
+        if g is None or not g.available():
+            return {"error": "Neo4j unreachable", "database": g.database if g else guard.project_database()}
+        rows, truncated = g.read(query)
         return {"rows": rows, "row_count": len(rows), "truncated": truncated,
-                "max_rows": guard.MAX_ROWS, "database": self.graph.database,
+                "max_rows": guard.MAX_ROWS, "database": g.database, "layer": layer,
                 "projection_gate": self.projection_gate()["status"],
                 "locator": {"kind": "graph", "label": "*", "id_property": "database",
-                            "id": self.graph.database}}
+                            "id": g.database}}
 
     # ------------------------------------------------------------------ the resolver
 
@@ -1389,15 +1424,18 @@ class Tools:
                     return _no(f"{loc['path']} does not hash to {loc.get('sha256')}")
                 return _yes(f"{loc['path']} ({got['bytes']} bytes, sha256 verified)")
             if kind == "graph":
-                if self.graph is None or not self.graph.available():
+                g = self.corpus if loc.get("label") in CORPUS_LABELS else self.graph
+                if g is None or not g.available():
                     return _no("Neo4j unreachable; a graph locator cannot be resolved")
                 if loc.get("label") == "*":
-                    return _yes(f"database {self.graph.database}")
+                    known = {x.database for x in (self.graph, self.corpus) if x is not None}
+                    return (_yes(f"database {loc.get('id')}") if loc.get("id") in known
+                            else _no(f"database {loc.get('id')!r} is not one this server reads ({sorted(known)})"))
                 if loc.get("label") not in ADDRESSABLE_LABELS:
                     return _no(f"`{loc.get('label')}` is not a label this server addresses "
                                f"({', '.join(ADDRESSABLE_LABELS)}); a label cannot be a query "
                                f"parameter, so it comes from a closed set or not at all")
-                rows, _ = self.graph.read(
+                rows, _ = g.read(
                     f"MATCH (n:{loc['label']}) WHERE n[$k] = $v RETURN count(n) AS c",
                     limit=1, k=loc["id_property"], v=loc["id"])
                 return (_yes(f"{loc['label']} {loc['id']}") if rows and rows[0]["c"]
@@ -1417,8 +1455,8 @@ class Tools:
                                                               errors="replace"):
                         return _no(f"{loc['path']} does not contain `{section}`")
                     return _yes(f"{loc['path']}" + (f" ({section})" if section else ""))
-                if self.graph is not None and self.graph.available():
-                    rows, _ = self.graph.read(
+                if self.corpus is not None and self.corpus.available():
+                    rows, _ = self.corpus.read(
                         "MATCH (d:Document {doc_id: $id}) RETURN count(d) AS c",
                         limit=1, id=doc_id)
                     if rows and rows[0]["c"]:

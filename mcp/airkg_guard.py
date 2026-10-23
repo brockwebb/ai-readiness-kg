@@ -114,12 +114,49 @@ def project_database() -> str:
     return db
 
 
-def assert_allowed_db(db: str) -> str:
-    """Refuse any database but this project's. Fails LOUD, at startup, so a mis-scoped server
-    never serves: there is no client yet to return a message to."""
-    allowed = project_database()
-    if db != allowed:
+#: The corpus graph on the squiddy kit, whose rendered config declares its own database (squiddy SQ-022; DN-049
+#: R-210 as amended). Read from there, never a literal here, for the same reason `project_database` reads seldon.yaml.
+KIT_GRAPH_CONFIG = REPO / "graphs" / "ai-readiness" / "config.yaml"
+
+#: The two layers a reader may serve. `assessment`: the framework, the cycles, the Findings and Observations, which
+#: stay in the project database. `corpus`: the Documents, Definitions and the other extracted labels, which the kit
+#: graph holds in its own database since SQ-022 (R-209: the kit carries what is extracted from documents).
+LAYERS = ("assessment", "corpus")
+
+
+def corpus_database() -> str:
+    """The ONE database the CORPUS verbs may read: the kit graph's `engine.projection.backends[neo4j].database`.
+
+    Refuses a `seldon-*` name, as the kit does (DI-005), so the corpus layer can never be pointed back at a project
+    database by an edit to the kit config."""
+    import yaml
+    cfg = yaml.safe_load(KIT_GRAPH_CONFIG.read_text(encoding="utf-8"))
+    dbs = [b.get("database") for b in cfg["engine"]["projection"]["backends"]
+           if b.get("name") == "neo4j" and b.get("enabled")]
+    if len(dbs) != 1 or not isinstance(dbs[0], str) or not dbs[0].strip():
+        raise SystemExit(f"FATAL: {KIT_GRAPH_CONFIG} declares no single enabled neo4j database")
+    if dbs[0].startswith("seldon-") or dbs[0] == "wintermute-intake":
+        raise SystemExit(f"FATAL: {KIT_GRAPH_CONFIG} names protected database '{dbs[0]}' for the corpus layer")
+    return dbs[0]
+
+
+def allowed_database(layer: str) -> str:
+    if layer not in LAYERS:
+        raise SystemExit(f"FATAL: unknown layer {layer!r}; one of {LAYERS}")
+    return project_database() if layer == "assessment" else corpus_database()
+
+
+def assert_allowed_db(db: str, layer: str = "assessment") -> str:
+    """Refuse any database but the one this layer may read. Fails LOUD, at startup, so a mis-scoped server never
+    serves: there is no client yet to return a message to.
+
+    The assessment layer may read only the project database; the corpus layer may read only the kit graph's database
+    or, until a caller passes the kit's, the project database it was projected into before SQ-022 (the old corpus labels
+    stay there, unchanged and readable: R-210 as amended). Nothing else, for either."""
+    allowed = {project_database()} if layer == "assessment" else {corpus_database(), project_database()}
+    if layer not in LAYERS or db not in allowed:
         raise SystemExit(
-            f"FATAL: refusing Neo4j database '{db}' — this server is scoped to "
-            f"'{allowed}' (seldon.yaml:neo4j.database) and to no other graph")
+            f"FATAL: refusing Neo4j database '{db}' for the {layer} layer — this server's {layer} reads are "
+            f"scoped to {sorted(allowed)} (seldon.yaml:neo4j.database; graphs/ai-readiness/config.yaml) and to no "
+            f"other graph")
     return db
