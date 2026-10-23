@@ -1,4 +1,4 @@
-# graphs/ai-readiness/extract/control.yaml: this graph's control file (squiddy SQ-019). It holds one block today.
+# graphs/ai-readiness/extract/control.yaml: this graph's control file (squiddy SQ-019, SQ-021).
 #
 # index: the kit's `index` unit operation (S-016; DN-025 R-110), read by squiddy/index.py. NOT BUILT FOR THIS GRAPH,
 # and said so rather than defaulted. SQ-019 admits ai-readiness-kg's catalog and extracted items (DN-049 R-208) and
@@ -8,3 +8,139 @@
 index:
   not_applicable: true
   why: "SQ-019 admits the catalog and the extracted items and serves the release export only; no retrieval index is built (factory valve `index: closed`); the extraction daemon and its pilot are SQ-021's (DN-049 R-211)"
+  # SQ-021 Part A (SQ-028R R-216): the text every claim of this graph is an offset into is the declared text reader's
+  # one page (`engine.extract.text_reader`: ai-readiness-kg's `doc_text`, the substrate body or the canonical file),
+  # which is `pages` as `squiddy.text_of_record` defines it (the reader's page text, the daemon's grounding text).
+  # NOT `parsed`, which the task named: `parsed` is the parse intermediate's `plain_text` at `corpus/parsed/<id>.json`,
+  # and this graph holds none (its admission projects dixie's catalog and parses nothing into structure), so a
+  # `parsed` index would refuse every entry. Recorded in SQ-021's RESULT as a premise found wrong.
+  text_of_record: pages
+
+# ---- SQ-021 (DN-049 R-211): the extraction pilot, PRE-REGISTERED ----------------------------------------------------
+#
+# Committed before the first model call of the pilot (docs/S-008_rules.md: a pre-registration is committed BEFORE what
+# it governs is computed and never edited after). Read by squiddy `tools/sq021_pilot.py`; every number and rule the
+# pilot uses is here or in the kit config the comment names, and nothing in the tool chooses one.
+#
+# THE INSTRUMENT. R-211: "a model change is a new extraction instrument". Each arm is ai-readiness-kg's own chunk
+# protocol, `scripts/run_profiles.yaml` profile `bulk_v038` (prompt v0.3.8, template and chunker config pinned by
+# sha256, the anchor contract, the parser, DD-024's bulk semantic-edge refusal), run by `airkg_chunk_worker.py` in
+# ai-readiness-kg's interpreter, with ONE variable changed: the model, named here by its seldon registry ROLE and
+# resolved through the lock (MODEL-001; never an alias or id here). The old instrument is the same protocol on
+# claude-opus-5 (the 2,718 raw responses under `events/raw/bulk_v038/`); its responses on the pilot's chunks are
+# re-parsed by the same worker and grounded by the same harness, so the yield comparison (R-39) is like for like.
+# The model call goes through the kit's transport (`squiddy.model_client.ClaudeCLIClient`) and the kit's spend
+# governor, never through ai-readiness-kg's `model_stub`.
+pilot_arms:
+  task: cc_tasks/2026-10-22_SQ-021_extraction_pilot_for_the_ai_readiness_graph_then_its_first_new_document.md
+  worker: airkg_chunk_worker.py
+  profile: bulk_v038
+  old_instrument:
+    raw_dir: events/raw/bulk_v038      # relative to domain.airkg.repo
+    model: claude-opus-5               # the id the old raws record (an observation of history, not a model choice)
+  arms:
+    S:
+      role: extractor                  # the kit's extractor role: sonnet family (seldon models/registry.yaml)
+    H:
+      # The haiku-family first tier. The registry holds no extraction role in the haiku family; `background` is its
+      # haiku role, whose recorded uses are the CLI's side calls and ai-readiness-kg's cleanup and control work. Named
+      # here rather than adding a role to seldon's registry inside this task (a third repository); a registry role of
+      # its own for an adopted haiku extraction tier is the follow-up the RESULT files.
+      role: background
+  # The transport, both arms alike. minimal_scaffold: the operator's SessionStart hook injects a skills preamble into
+  # every `claude -p` child (H-004 ADDENDUM 01 R-21), which is process no record would carry. no_nonessential_traffic:
+  # the side-model call (H-005 Part A). timeout_seconds: the old instrument's per-chunk timeout (chunked_pilot
+  # `_extract_one`, 900). retries: run_pool's in-unit retries; with the call itself that is calls_per_unit (spend.yaml 2).
+  transport:
+    minimal_scaffold: true
+    no_nonessential_traffic: true
+    timeout_seconds: 900
+    max_turns: 4
+    retries: 1
+    retry_backoff_seconds: 5
+    rate_limit_backoff_seconds: 60
+  # ADDENDUM 01 item 4: both arms run concurrently, each its own process and its own spend job; within an arm, this
+  # many calls in flight (the kit's engine.extract.max_concurrency).
+  in_flight: 8
+  # THE UNITS. Chunks the old instrument extracted (a raw response under old_instrument.raw_dir, model and prompt
+  # version as recorded) of in-graph documents whose `doc_type` (the dixie record's `identity.doc_type`) is a listed
+  # class, whose chunk, as the pinned chunker cuts the document now, has the start and end the raw recorded, whose
+  # source file's sha256 is the one the raw recorded, and that are not oversize. `units_per_arm` is spend.yaml's
+  # pilot_max_units (20): floor(20 / 3) per class, the remainder to the classes in the order listed. One generator,
+  # `random.Random(seed)`, consumed in a fixed order: per class in the order listed, the class's documents sorted then
+  # shuffled, then each document's chunks sorted then shuffled; then round-robin over the documents, each turn taking
+  # that document's next chunk whose old response parses to a complete envelope (a chunk that does not is skipped and
+  # listed), until the class's quota. So a class's chunks come from as many documents as it has. (`tools.sq021_pilot
+  # draw`; the draw is written once and never redrawn.)
+  units:
+    classes: [academic, federal, standard]
+    units_per_arm: 20
+    seed: "sq021-pilot:2026-10-22"
+  # THE POSITIVE CONTROL (the kit's DI-100, in this protocol's terms). Two synthetic units through the same prompt
+  # builder and parser: the boilerplate chunk as it is, which must yield ZERO typed items (nodes and edges after parse;
+  # mention stubs are allowed, as the prompt asks for them), and the same chunk with the planted sentence appended to
+  # its body, which must yield at least one item that grounds AND whose located span is the planted sentence. The
+  # boilerplate chunk is chosen because the old instrument, on its raw response, yields zero typed items there
+  # (measured 2026-10-22 before this block was written: 0 nodes, 0 edges, 1 mention). The planted sentence must not
+  # occur in the document (the tool refuses otherwise).
+  control:
+    doc_id: aggarwal-2024-geo-generative-engine-optimization
+    chunk_id: "aggarwal-2024-geo-generative-engine-optimization#c0021"
+    planted_sentence: "We define a machine-actionable dataset as a dataset whose metadata a software agent can parse without human interpretation."
+  # THE LINES. The thresholds are the kit's pilot gate as this graph's config renders it (config.yaml
+  # engine.extract.pilot: grounding_rate_min, protocol_failure_rate_max, rater_agreement_min) and are read from there,
+  # never restated. Every line is computed PER CLASS AND ARM (R-211: a tier is adopted for a document class only if it
+  # passes on that class); the control is per arm and gates every class of the arm.
+  #   grounding_rate     grounded / (grounded + ungrounded) over the items the arm returned on the class's units.
+  #                      Returned: every node and edge the response emits in a node or edge layer, except DD-024's
+  #                      refused semantic edges, diversions (proposed_relationships) and mention stubs, which the
+  #                      protocol defines as not items. Ungrounded: quarantined at parse for a span reason (classes in
+  #                      `span_classes`), or surviving parse with a quote the kit's harness does not locate in the
+  #                      document text inside the chunk's window (squiddy `tools/l002_adopt.ground`, the rule every
+  #                      item of this graph was admitted by). Quarantined for any other reason (schema, endpoint,
+  #                      property): excluded, as R-79 excludes quarantine, and reported as `schema_rejected_share`.
+  #   protocol_failure_rate  failed calls / calls: unparseable, empty, rate, task_failed, truncated (output at or
+  #                      over `truncation_share` of the call's max output tokens), auth. A quota stop is not a
+  #                      failure: the unit is not done and the same command resumes it (ADDENDUM 01 item 3).
+  #   positive_control   both halves, as above.
+  #   rater_agreement    the kit's: the share of the sampled grounded items the rater answers yes on BOTH questions
+  #                      before adjudication; the adjudicator rules each disagreement (reported as
+  #                      agreement_after_adjudication, as the kit's gate does).
+  # Recorded, ungated: yield (R-39: grounded items per 1,000 characters of the chunk body, end minus start) against the
+  # old instrument's on the same chunks; weighted tokens per call and per chunk (spend.yaml weights) against the old
+  # instrument's on the same chunks and SQ-018R's 55.7K per chunk.
+  lines:
+    span_classes: [anchor_not_located, span_partial, missing_span, span_not_in_source, semantic_endpoint_unnamed,
+                   semantic_span_structural]
+    truncation_share: 0.95
+  # THE RATER SAMPLE. The kit's rater_sample (config.yaml engine.extract.rater_sample, 20) per gate, and the gate is per
+  # class and arm, so 20 per class and arm. The rule is the kit's (`squiddy.extract.SAMPLE_RULE`) with the item's own
+  # id for the claim id, since several typed items can share one span: the grounded items sorted by sha256 of
+  # `item:<arm>:<chunk_id>:<kind>:<key>`, the first N (every one when fewer).
+  # The rater is the registry's `judge` role (fable family), not the kit's default `rater` (sonnet): a sonnet rater
+  # would rate arm S's own output, and a model rating its own generations favours them (Panickssery, Bowman and Feng,
+  # "LLM Evaluators Recognize and Favor Their Own Generations", NeurIPS 2024; the self-enhancement bias of Zheng et al.,
+  # "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena", NeurIPS 2023); ai-readiness-kg keeps its raters off the
+  # extractor's model for that reason (kg/extraction/model_config.yaml). fable is neither arm's family. The
+  # adjudicator is the kit's (`adjudicator`, opus family): it is not an extraction arm (operator, 2026-10-17), it judges.
+  rating:
+    rater_role: judge
+    adjudicator_role: adjudicator
+    rater_prompt: prompts/sq021_rater.md
+    adjudicator_prompt: prompts/sq021_adjudicator.md
+    rubric_version: sq021-rater/1
+  # THE ADOPTION RULE (Part C). For each class, the arms in ascending order of measured weighted tokens per chunk on
+  # the class's units (FrugalGPT's cascade: cheapest first; a tie puts H first), and the first that passes every line is
+  # adopted for the class. A class where neither passes stays closed, with every failing line named.
+  adoption:
+    order_by: weighted_tokens_per_chunk
+    tie_first: H
+  # CEILINGS (constitution 15.5), per spend job, in weighted tokens and seconds. The token cap is spend.yaml's
+  # job_token_cap_default; the wall clock is an hour per arm. Crossing one stops new calls, lets in-flight calls land in
+  # the checkpoint, and exits non-zero naming it.
+  ceilings:
+    extract_tokens_weighted: 2000000
+    rating_tokens_weighted: 2000000
+    wall_seconds: 3600
+  progress_every_seconds: 60
+  evidence_dir: evidence/sq021       # relative to the graph root
