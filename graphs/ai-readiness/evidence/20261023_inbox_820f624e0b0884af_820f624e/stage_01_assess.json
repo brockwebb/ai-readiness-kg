@@ -1,0 +1,54 @@
+{
+  "stage": 1,
+  "sub": null,
+  "label": "01",
+  "name": "assess",
+  "question": "Does this entry belong here, and on what basis?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.assess",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--id",
+    "inbox_820f624e0b0884af",
+    "--apply",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/assessment_inbox_820f624e0b0884af.json"
+  ],
+  "wall_seconds": 0.0,
+  "finished_utc": "2026-10-23T09:00:34.441892+00:00",
+  "defect_of_record": "v7.7 (fss-policy-kg): a rescinded memorandum was nearly admitted because the free in-corpus check was not run",
+  "output_tail": [],
+  "noop": {
+    "admission_id": "adm-20261023T045444Z-134012bb",
+    "completed_utc": "2026-10-23T07:05:20.697845+00:00",
+    "evidence": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e",
+    "why": "already completed under this admission id, and its trace re-checks (DN-043 R-183, DN-046 R-202)"
+  },
+  "trace": {
+    "inputs": [],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/assessment_inbox_820f624e0b0884af.json",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/assessment_inbox_820f624e0b0884af.json",
+        "sha256": "ad75d50de79976ecdd808cf076d5243907794c5af1ff1ac1211fad74250841b5"
+      },
+      {
+        "kind": "file",
+        "spec": "manifest:/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness:inbox_820f624e0b0884af:disposition",
+        "graph": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "entry": "inbox_820f624e0b0884af",
+        "field": "disposition",
+        "sha256": "86a3d4125c91d4621cfc34f7d2ac1f2fb7df908cae63aef232d0b9e0713171db"
+      }
+    ]
+  },
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/assessment_inbox_820f624e0b0884af.json": "ad75d50de79976ecdd808cf076d5243907794c5af1ff1ac1211fad74250841b5"
+  }
+}

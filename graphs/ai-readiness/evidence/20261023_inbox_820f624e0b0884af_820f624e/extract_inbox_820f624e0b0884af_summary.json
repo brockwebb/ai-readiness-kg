@@ -1,0 +1,49 @@
+{
+  "doc_id": "inbox_820f624e0b0884af",
+  "run_id": "extract_20261023T050545_508e2cd3",
+  "protocol": {
+    "protocol": "bulk_v038",
+    "prompt_version": "0.3.8",
+    "schema_version": "0.4.0",
+    "template_sha256": "0c6fee1d8d4a4e42f197744c8c92f2f4d8c8dee6cf75470e63648bb21d0b9410",
+    "class": "standard",
+    "tier_arm": "H",
+    "role": "background",
+    "tier_evidence": "evidence/sq021/pilot_gate.json",
+    "tier_decided_at": "2026-10-23T02:37:21.953380+00:00"
+  },
+  "model_role": "background",
+  "segments": 45,
+  "calls": 45,
+  "by_status": {
+    "grounded": 164,
+    "kept_out": 65,
+    "ungrounded": 3
+  },
+  "claims_returned": 167,
+  "grounded": 164,
+  "grounding_rate": 0.9820359281437125,
+  "protocol_failures": 0,
+  "protocol_failure_rate": 0.0,
+  "usage": {
+    "input_tokens": 90,
+    "output_tokens": 213088,
+    "cache_read_input_tokens": 98568,
+    "cache_creation_input_tokens": 343350,
+    "overhead_input_tokens": 0,
+    "overhead_output_tokens": 0
+  },
+  "billable_shaped_tokens": 213178,
+  "resolved_models": [
+    "claude-haiku-5-5"
+  ],
+  "wall_seconds": 137.86,
+  "workers_achieved": 8,
+  "calls_by_status": {
+    "ok": 45
+  },
+  "spend_node": "sq021_pilot_extract",
+  "resumed_calls": 0,
+  "calls_this_session": 45,
+  "cost_ledger_row": "extract_20261023T050545_508e2cd3"
+}

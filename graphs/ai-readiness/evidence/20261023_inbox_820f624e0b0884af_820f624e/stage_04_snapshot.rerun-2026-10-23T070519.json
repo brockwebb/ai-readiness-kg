@@ -1,0 +1,26 @@
+{
+  "stage": 4,
+  "sub": null,
+  "label": "04",
+  "name": "snapshot",
+  "question": "Can we get back?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.cli",
+    "snapshot",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness"
+  ],
+  "wall_seconds": 0.07,
+  "finished_utc": "2026-10-23T05:25:55.060213+00:00",
+  "defect_of_record": "TEVV safeguard 2, 2026-06-22 (DI-014)",
+  "output_tail": [
+    "restore point: /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/ledger/open.jsonl at 368109 bytes, last line sha256 a10bccf65305ec2b (DN-044 R-195)"
+  ],
+  "first_line": "restore point: /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/ledger/open.jsonl at 368109 bytes, last line sha256 a10bccf65305ec2b (DN-044 R-195)",
+  "verdict": true
+}

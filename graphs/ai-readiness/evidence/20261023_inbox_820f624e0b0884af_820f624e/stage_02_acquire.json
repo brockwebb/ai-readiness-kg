@@ -1,0 +1,54 @@
+{
+  "stage": 2,
+  "sub": null,
+  "label": "02",
+  "name": "acquire",
+  "question": "Is this the right record, and are these bytes the document?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.acquire",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--id",
+    "inbox_820f624e0b0884af",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/acquire_inbox_820f624e0b0884af.json"
+  ],
+  "wall_seconds": 0.0,
+  "finished_utc": "2026-10-23T09:00:35.240682+00:00",
+  "defect_of_record": "S-002: 5 of 18 automatic resolutions were wrong; a publisher's own open-access URL served HTML",
+  "output_tail": [],
+  "noop": {
+    "admission_id": "adm-20261023T045444Z-134012bb",
+    "completed_utc": "2026-10-23T07:05:21.461480+00:00",
+    "evidence": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e",
+    "why": "already completed under this admission id, and its trace re-checks (DN-043 R-183, DN-046 R-202)"
+  },
+  "trace": {
+    "inputs": [],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/acquire_inbox_820f624e0b0884af.json",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/acquire_inbox_820f624e0b0884af.json",
+        "sha256": "30c2666eb960f9645d04458c77fe74f8042ef6b4f46a6d2359fdd709efeb74a4"
+      },
+      {
+        "kind": "file",
+        "spec": "doc:/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness:inbox_820f624e0b0884af",
+        "graph": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "doc": "inbox_820f624e0b0884af",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/intake/inbox/rfc8288.txt",
+        "sha256": "820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d"
+      }
+    ]
+  },
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/acquire_inbox_820f624e0b0884af.json": "30c2666eb960f9645d04458c77fe74f8042ef6b4f46a6d2359fdd709efeb74a4",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/intake/inbox/rfc8288.txt": "820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d"
+  }
+}

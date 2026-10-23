@@ -1,0 +1,68 @@
+{
+  "stage": 11,
+  "sub": "a",
+  "label": "11a",
+  "name": "commit",
+  "question": "Are the proposals the preview showed now in the ledger, with their stamps and spans, and nothing else?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.write",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--id",
+    "inbox_820f624e0b0884af",
+    "--claims",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl",
+    "--scratch",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/commit_scratch.jsonl",
+    "--before",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/commit_before.json"
+  ],
+  "wall_seconds": 7.26,
+  "finished_utc": "2026-10-23T05:08:11.664152+00:00",
+  "defect_of_record": "OD-5 (DI-135): the write path is the only way in, and it runs after the rendering, never before",
+  "output_tail": [
+    "inbox_820f624e0b0884af: 232 segment(s) extracted, 164 grounded proposal(s) -> appending 164 event(s) under run_id=commit_20261023T050808_228b0729: About 27, Claim 30, Concept 83, Definition 9, Practice 2, Standard 13",
+    "  node Claim                  8049 ->   8079 measured   +30 expected   +30  OK",
+    "  node Concept               13523 ->  13606 measured   +83 expected   +83  OK",
+    "  node Definition             2799 ->   2808 measured    +9 expected    +9  OK",
+    "  node Practice               1739 ->   1741 measured    +2 expected    +2  OK",
+    "  node Standard               1350 ->   1363 measured   +13 expected   +13  OK",
+    "  edge About                  6848 ->   6875 measured   +27 expected   +27  OK"
+  ],
+  "first_line": "inbox_820f624e0b0884af: 232 segment(s) extracted, 164 grounded proposal(s) -> appending 164 event(s) under run_id=commit_20261023T050808_228b0729: About 27, Claim 30, Concept 83, Definition 9, Practice 2, Standard 13",
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/commit_scratch.jsonl": "59bea85749ee5e02dcf61bf731c7f5452e3ba6d06a48be70863b8b73ef706527"
+  },
+  "trace": {
+    "inputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl",
+        "sha256": "02f30a91ae758b8e538180dad9e3a037aea73a6a02bfde96b287794ed9a67ea5"
+      }
+    ],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/commit_scratch.jsonl",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/commit_scratch.jsonl",
+        "sha256": "59bea85749ee5e02dcf61bf731c7f5452e3ba6d06a48be70863b8b73ef706527"
+      },
+      {
+        "kind": "ledger",
+        "spec": "ledger:/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "graph": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "events": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/ledger/open.jsonl",
+        "start": 162568888,
+        "end": 162936159,
+        "sha256": "59bea85749ee5e02dcf61bf731c7f5452e3ba6d06a48be70863b8b73ef706527"
+      }
+    ]
+  }
+}

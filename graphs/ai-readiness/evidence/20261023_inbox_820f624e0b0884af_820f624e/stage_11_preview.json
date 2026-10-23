@@ -1,0 +1,73 @@
+{
+  "stage": 11,
+  "sub": null,
+  "label": "11",
+  "name": "preview",
+  "question": "What is about to be committed, shown before it is?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.preview",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--id",
+    "inbox_820f624e0b0884af",
+    "--scratch",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/scratch_events.jsonl",
+    "--out",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/preview_inbox_820f624e0b0884af.md",
+    "--extract",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl"
+  ],
+  "wall_seconds": 0.05,
+  "finished_utc": "2026-10-23T09:12:15.898439+00:00",
+  "defect_of_record": "the acceptance bar (DI-135): extraction shown for a nod before commit",
+  "output_tail": [
+    "# Preview: assertions for `inbox_820f624e0b0884af` before commit",
+    "1 deterministic assertion(s) in this run's slice. Each row is one event; the grounding span column is filled by an extraction stage and is empty for deterministic assertions.",
+    "| kind | class | key | properties | method | grounding span |",
+    "|---|---|---|---|---|---|",
+    "| node | Document | `inbox_820f624e0b0884af` | doc_id=inbox_820f624e0b0884af, title=Web Linking (RFC 8288), local_path=intake/inbox/rfc8288.txt, sha256=820f624e0b0884af5c732e8087a65182452e49f2, disposition=reference, doc_type=standard | manifest |  |",
+    "## Proposed by extraction",
+    "232 segment(s) extracted: 164 grounded, 65 kept_out, 3 ungrounded. Located spans are cut from the parsed text by the harness; the model supplied a locator. **will be committed: 164** (status `proposed`, stage 11a); everything else is recorded in the evidence file and never enters the ledger.",
+    "| kind | class | segment | claim kind | located text | extractor | grounding span |",
+    "|---|---|---|---|---|---|---|",
+    "| proposed | Claim | None None | Standard | Internet Engineering Task Force (IETF)                     M. Nottingham Request for Comments: 8288                                  October 2017 Obsoletes: 5988 Category: Standards Track |  | [6:193] sha256 a9f8b5b7e921 |",
+    "| proposed | Claim | None None | Concept | This specification defines a model for the relationships between    resources on the Web (\"links\") and the type of those relationships    (\"link relation types\"). |  | [268:430] sha256 7fd7059b6fde |",
+    "| proposed | Claim | None None | Concept | This specification defines a model for the relationships between    resources on the Web (\"links\") and the type of those relationships    (\"link relation types\"). |  | [268:430] sha256 7fd7059b6fde |",
+    "| proposed | Claim | None None | Concept | It also defines the serialisation of such links in HTTP headers with    the Link header field. |  | [435:529] sha256 5bf6748bcc34 |",
+    "| proposed | Claim | None None | Concept | It also defines the serialisation of such links in HTTP headers with    the Link header field. |  | [435:529] sha256 5bf6748bcc34 |",
+    "| proposed | Claim | None None | Concept | This document is a product of the Internet Engineering Task Force    (IETF). |  | [605:681] sha256 10e473f3ef71 |",
+    "| proposed | Claim | None None | Definition | This specification defines a model for the relationships between    resources on the Web (\"links\") and the type of those relationships    (\"link relation types\"). |  | [268:430] sha256 7fd7059b6fde |",
+    "| proposed | Claim | None None | Concept | This specification defines a model for the relationships between    resources on the Web (\"links\") and the type of those relationships    (\"link relation types\"). |  | [5629:5791] sha256 7fd7059b6fde |",
+    "| proposed | Claim | None None | Concept | This specification defines a model for the relationships between    resources on the Web (\"links\") and the type of those relationships    (\"link relation types\"). |  | [5629:5791] sha256 7fd7059b6fde |",
+    "| proposed | Claim | None None | Concept | Furthermore, Section 3 defines an HTTP header field for conveying    such links. |  | [6018:6098] sha256 41fc05f8b1b0 |",
+    "...",
+    "preview written to /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/preview_inbox_820f624e0b0884af.md"
+  ],
+  "first_line": "# Preview: assertions for `inbox_820f624e0b0884af` before commit",
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/preview_inbox_820f624e0b0884af.md": "034180eafb7503d093824bac058b579d0f83464b0c51992a8bfedb4b96da53ef"
+  },
+  "trace": {
+    "inputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/extract_inbox_820f624e0b0884af.jsonl",
+        "sha256": "02f30a91ae758b8e538180dad9e3a037aea73a6a02bfde96b287794ed9a67ea5"
+      }
+    ],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/preview_inbox_820f624e0b0884af.md",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/preview_inbox_820f624e0b0884af.md",
+        "sha256": "034180eafb7503d093824bac058b579d0f83464b0c51992a8bfedb4b96da53ef"
+      }
+    ]
+  }
+}

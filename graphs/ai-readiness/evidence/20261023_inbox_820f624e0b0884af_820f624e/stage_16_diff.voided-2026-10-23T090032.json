@@ -1,0 +1,42 @@
+{
+  "stage": 16,
+  "sub": null,
+  "label": "16",
+  "name": "diff",
+  "question": "What changed since the last release?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.release_diff",
+    "--prev",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261022_sq022_r217_2026-10-22.json",
+    "--new",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json",
+    "--out",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md"
+  ],
+  "wall_seconds": 3.88,
+  "finished_utc": "2026-10-23T07:27:32.535869+00:00",
+  "defect_of_record": "v7.7 (fss-policy-kg): a pinned oracle had been stale for three releases because nobody re-derived it",
+  "output_tail": [
+    "wrote /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md: nodes 30,857 -> 30,995, edges 34,021 -> 34,048"
+  ],
+  "first_line": "wrote /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md: nodes 30,857 -> 30,995, edges 34,021 -> 34,048",
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md": "14410dee96b470d7f5cdef0960d2b9ef1944569bf99c18ea7df0611b10ad47d1"
+  },
+  "trace": {
+    "inputs": [],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/diff_20261022_sq022_r217_20261023_inbox_820f624e0b0884af_820f624e.md",
+        "sha256": "14410dee96b470d7f5cdef0960d2b9ef1944569bf99c18ea7df0611b10ad47d1"
+      }
+    ]
+  }
+}

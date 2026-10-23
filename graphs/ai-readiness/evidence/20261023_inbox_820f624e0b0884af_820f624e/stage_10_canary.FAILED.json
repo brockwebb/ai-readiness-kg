@@ -1,0 +1,37 @@
+{
+  "stage": 10,
+  "sub": null,
+  "label": "10",
+  "name": "canary",
+  "question": "Did exactly that change, and nothing else?",
+  "pass": false,
+  "decision_stop": false,
+  "returncode": 1,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.canary",
+    "check",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--before",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json",
+    "--table",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/expected_delta.json"
+  ],
+  "wall_seconds": 2.56,
+  "finished_utc": "2026-10-23T05:36:52.410077+00:00",
+  "defect_of_record": "2026-06-22 (fss-policy-kg): an orphan authority from an incremental build that kept every entry's agency",
+  "output_tail": [
+    "node Claim                  8049 ->   8079 measured   +30 expected    +0  *** MISMATCH",
+    "node Concept               13523 ->  13606 measured   +83 expected    +0  *** MISMATCH",
+    "node Definition             2799 ->   2808 measured    +9 expected    +0  *** MISMATCH",
+    "node Document                287 ->    288 measured    +1 expected    +1  OK",
+    "node Practice               1739 ->   1741 measured    +2 expected    +0  *** MISMATCH",
+    "node Standard               1350 ->   1363 measured   +13 expected    +0  *** MISMATCH",
+    "edge About                  6848 ->   6875 measured   +27 expected    +0  *** MISMATCH",
+    "CANARY: RED"
+  ],
+  "first_line": "node Claim                  8049 ->   8079 measured   +30 expected    +0  *** MISMATCH",
+  "verdict": true
+}

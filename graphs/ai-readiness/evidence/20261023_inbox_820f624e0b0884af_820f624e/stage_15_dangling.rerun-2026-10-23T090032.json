@@ -1,0 +1,32 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "dangling",
+  "question": "Does every pointer land, and does the gate fire when one does not?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "dangling",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--mutate",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/dangling_gate_20261023_inbox_820f624e0b0884af_820f624e.json"
+  ],
+  "wall_seconds": 4.67,
+  "finished_utc": "2026-10-23T07:27:28.617368+00:00",
+  "defect_of_record": "DI-052: a supersession target that was cataloged broke both backends differently on the same log",
+  "output_tail": [
+    "[dangling] ledger: CLEAN (30995 nodes, 34048 edges; legs edge_endpoints, superseded_by)",
+    "[dangling] positive control: FIRED on every seeded defect the declared legs cover",
+    "  - (mutant) edge-endpoint: Defines advancing-american-ai-act-ndaa-fy2023-div-g -> node-that-does-not-exist (missing ['node-that-does-not-exist']; event 3b6691551a7a43dbb79034f74d7d2477)",
+    "  - (mutant) superseded_by: event 16fa3b7ebd214562b4f2733dd1d9161c names 'event-that-does-not-exist', which is not in the ledger"
+  ],
+  "first_line": "[dangling] ledger: CLEAN (30995 nodes, 34048 edges; legs edge_endpoints, superseded_by)",
+  "verdict": true
+}

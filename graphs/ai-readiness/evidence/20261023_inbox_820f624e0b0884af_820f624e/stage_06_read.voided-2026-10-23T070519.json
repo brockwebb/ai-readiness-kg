@@ -1,0 +1,72 @@
+{
+  "stage": 6,
+  "sub": null,
+  "label": "06",
+  "name": "read",
+  "question": "What does the entry assert, and did it produce its own node?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.write",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--id",
+    "inbox_820f624e0b0884af",
+    "--scratch",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/scratch_events.jsonl",
+    "--before",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json"
+  ],
+  "wall_seconds": 0.0,
+  "finished_utc": "2026-10-23T05:26:06.373307+00:00",
+  "defect_of_record": "v7.10 (fss-policy-kg): a document was appended with zero segments and every later gate passed on nothing",
+  "output_tail": [],
+  "noop": {
+    "admission_id": "adm-20261023T045444Z-134012bb",
+    "completed_utc": "2026-10-23T04:55:08.828147+00:00",
+    "evidence": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e",
+    "why": "already completed under this admission id, and its trace re-checks (DN-043 R-183, DN-046 R-202)"
+  },
+  "trace": {
+    "inputs": [
+      {
+        "kind": "file",
+        "spec": "doc:/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness:inbox_820f624e0b0884af",
+        "graph": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "doc": "inbox_820f624e0b0884af",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/intake/inbox/rfc8288.txt",
+        "sha256": "820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d"
+      }
+    ],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json",
+        "sha256": "d74f3d2c8a716adf7628c1d8edc8e0e29a99970ea6eea68dfad0ef559a31104d"
+      },
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before_ids.json",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before_ids.json",
+        "sha256": "6ef0522786f87a0712546f96a5f9c1cdc2493e13426bc9a65532552797971eab"
+      },
+      {
+        "kind": "ledger",
+        "spec": "ledger:/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "graph": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+        "events": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/ledger/open.jsonl",
+        "start": 162568050,
+        "end": 162568888,
+        "sha256": "0e0f2f560f1636ef1321a01f3f44c8b8bdb4643a750bf4f032f2aebf6d68e1fd"
+      }
+    ]
+  },
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json": "d74f3d2c8a716adf7628c1d8edc8e0e29a99970ea6eea68dfad0ef559a31104d",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before_ids.json": "6ef0522786f87a0712546f96a5f9c1cdc2493e13426bc9a65532552797971eab"
+  }
+}

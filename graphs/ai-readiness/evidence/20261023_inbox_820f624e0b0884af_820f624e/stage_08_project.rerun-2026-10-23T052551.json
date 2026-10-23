@@ -1,0 +1,28 @@
+{
+  "stage": 8,
+  "sub": null,
+  "label": "08",
+  "name": "project",
+  "question": "Does the ledger replay into every enabled backend?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.project",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--counts",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/after.json"
+  ],
+  "wall_seconds": 627.63,
+  "finished_utc": "2026-10-23T05:05:41.442515+00:00",
+  "defect_of_record": "v7.4 (fss-policy-kg): a canary run before the reload reads pre-admission numbers and passes for the wrong reason",
+  "output_tail": [
+    "projected 64892 events: 30858 nodes, 34021 edges, 0 dangling edge(s)",
+    "neo4j: {'database': 'ai-readiness', 'nodes': 30858, 'edges': 34021, 'reset': 'create_or_replace_database', 'edition': 'enterprise'}"
+  ],
+  "first_line": "projected 64892 events: 30858 nodes, 34021 edges, 0 dangling edge(s)",
+  "verdict": true
+}

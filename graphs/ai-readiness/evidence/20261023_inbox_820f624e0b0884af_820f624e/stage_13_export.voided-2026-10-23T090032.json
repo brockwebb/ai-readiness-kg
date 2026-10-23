@@ -1,0 +1,45 @@
+{
+  "stage": 13,
+  "sub": null,
+  "label": "13",
+  "name": "export",
+  "question": "Does the artifact reload into an identical shape?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.export",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--version",
+    "20261023_inbox_820f624e0b0884af_820f624e",
+    "--date",
+    "2026-10-23"
+  ],
+  "wall_seconds": 8.55,
+  "finished_utc": "2026-10-23T07:27:16.087217+00:00",
+  "defect_of_record": "E1b-serve-surface (fss-policy-kg): the served copy drifts from the build",
+  "output_tail": [
+    "built graph from the ledger: 30,995 nodes / 34,048 edges in 2.28s; position 65056 event(s), last 0b3fc01ae87948b4976e4c4447851c92 (R-207)",
+    "wrote ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json (144,317,578 bytes); KGX 30995 nodes, 34048 edges",
+    "  round trip OK: 30,995 nodes and 34,048 edges identical",
+    "published -> /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph.json"
+  ],
+  "first_line": "built graph from the ledger: 30,995 nodes / 34,048 edges in 2.28s; position 65056 event(s), last 0b3fc01ae87948b4976e4c4447851c92 (R-207)",
+  "outputs": {
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json": "19868d207a830fa610be5518566cc1ae9ca09b1c2661d2cda08734f54de50eb1"
+  },
+  "trace": {
+    "inputs": [],
+    "outputs": [
+      {
+        "kind": "file",
+        "spec": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json",
+        "path": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json",
+        "sha256": "19868d207a830fa610be5518566cc1ae9ca09b1c2661d2cda08734f54de50eb1"
+      }
+    ]
+  }
+}

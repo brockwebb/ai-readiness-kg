@@ -1,0 +1,26 @@
+{
+  "stage": 0,
+  "sub": null,
+  "label": "00",
+  "name": "kit-pass",
+  "question": "Has the kit commit this graph is pinned to passed its full suite on a clean clone, and is it the kit running?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.kitpass",
+    "check",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness"
+  ],
+  "wall_seconds": 0.08,
+  "finished_utc": "2026-10-23T07:05:19.935167+00:00",
+  "defect_of_record": "2026-10-04 handoff 4.B (SQ-008 F3, SEL-002 G1): every admission ran the 13-minute kit suite; SQ-014 Part B rows 17, 18",
+  "output_tail": [
+    "kit pass: 37dc1c373999 (/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/squiddy.pin) passed 3 clean run(s), seeds [4166050963, 4271101769, 1864119766], recorded 2026-10-23T07:01:39.716176+00:00 for commit 37dc1c373999; the running squiddy/ is its tree 5082b48ea55c"
+  ],
+  "first_line": "kit pass: 37dc1c373999 (/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/squiddy.pin) passed 3 clean run(s), seeds [4166050963, 4271101769, 1864119766], recorded 2026-10-23T07:01:39.716176+00:00 for commit 37dc1c373999; the running squiddy/ is its tree 5082b48ea55c",
+  "verdict": true
+}

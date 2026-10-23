@@ -1,0 +1,31 @@
+{
+  "stage": 10,
+  "sub": null,
+  "label": "10",
+  "name": "canary",
+  "question": "Did exactly that change, and nothing else?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.canary",
+    "check",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--before",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/before.json",
+    "--table",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/work/admit_adm-20261023T045444Z-134012bb_inbox_820f624e0b0884af/expected_delta.json"
+  ],
+  "wall_seconds": 2.52,
+  "finished_utc": "2026-10-23T07:16:18.496492+00:00",
+  "defect_of_record": "2026-06-22 (fss-policy-kg): an orphan authority from an incremental build that kept every entry's agency",
+  "output_tail": [
+    "node Document                287 ->    288 measured    +1 expected    +1  OK",
+    "CANARY: GREEN"
+  ],
+  "first_line": "node Document                287 ->    288 measured    +1 expected    +1  OK",
+  "verdict": true
+}

@@ -1,0 +1,36 @@
+{
+  "stage": 12,
+  "sub": null,
+  "label": "12",
+  "name": "check-after",
+  "question": "Does it still agree with itself?",
+  "pass": false,
+  "decision_stop": false,
+  "returncode": 1,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "drift",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--when",
+    "after"
+  ],
+  "wall_seconds": 7.56,
+  "finished_utc": "2026-10-23T05:08:19.264815+00:00",
+  "defect_of_record": "S-005: the served copy is behind by exactly this admission until the export republishes it",
+  "output_tail": [
+    "[drift] manifest leg: CLEAN",
+    "[drift] backend leg: 6 divergence(s) (compared replay against 1 server backend(s))",
+    "  - node-count: 'Claim' live=8049 replay=8079 (ai-readiness)",
+    "  - node-count: 'Concept' live=13523 replay=13606 (ai-readiness)",
+    "  - node-count: 'Definition' live=2799 replay=2808 (ai-readiness)",
+    "  - node-count: 'Practice' live=1739 replay=1741 (ai-readiness)",
+    "  - node-count: 'Standard' live=1350 replay=1363 (ai-readiness)",
+    "  - rel-count: 'About' live=6848 replay=6875 (ai-readiness)",
+    "*** DRIFT DETECTED ***"
+  ],
+  "first_line": "[drift] manifest leg: CLEAN",
+  "verdict": true
+}

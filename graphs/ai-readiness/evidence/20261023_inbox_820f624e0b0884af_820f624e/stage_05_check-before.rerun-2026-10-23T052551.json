@@ -1,0 +1,30 @@
+{
+  "stage": 5,
+  "sub": null,
+  "label": "05",
+  "name": "check-before",
+  "question": "Do the catalog, the ledger and the served export all say the same thing?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "drift",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--when",
+    "before"
+  ],
+  "wall_seconds": 10.14,
+  "finished_utc": "2026-10-23T04:55:04.427906+00:00",
+  "defect_of_record": "task 721953b6 (fss-policy-kg): a direct write vanished on the next reload and was caught by a human",
+  "output_tail": [
+    "[drift] manifest leg: CLEAN",
+    "[drift] served-export leg: CLEAN (compared the replay of the ledger's first 64890 of 64891 event(s) (recorded position) against ai_readiness_graph.json)",
+    "CLEAN: manifest == ledger == served export."
+  ],
+  "first_line": "[drift] manifest leg: CLEAN",
+  "verdict": true
+}

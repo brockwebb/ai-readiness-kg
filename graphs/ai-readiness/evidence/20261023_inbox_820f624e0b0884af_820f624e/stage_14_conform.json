@@ -1,0 +1,30 @@
+{
+  "stage": 14,
+  "sub": null,
+  "label": "14",
+  "name": "conform",
+  "question": "Does the export conform to the declared schema?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "schema",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--export",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261023_inbox_820f624e0b0884af_820f624e_2026-10-23.json",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261023_inbox_820f624e0b0884af_820f624e/schema_gate_20261023_inbox_820f624e0b0884af_820f624e.json"
+  ],
+  "wall_seconds": 7.66,
+  "finished_utc": "2026-10-23T09:23:27.732443+00:00",
+  "defect_of_record": "S-003: 19 disagreements between an export and its documentation, one a live cross-backend asymmetry",
+  "output_tail": [
+    "[schema] validated 30995 nodes and 34048 links against ai_readiness.schema.json: 0 distinct failure row(s)"
+  ],
+  "first_line": "[schema] validated 30995 nodes and 34048 links against ai_readiness.schema.json: 0 distinct failure row(s)",
+  "verdict": true
+}

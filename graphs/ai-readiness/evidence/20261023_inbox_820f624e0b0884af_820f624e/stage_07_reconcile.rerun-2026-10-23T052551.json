@@ -1,0 +1,27 @@
+{
+  "stage": 7,
+  "sub": null,
+  "label": "07",
+  "name": "reconcile",
+  "question": "Does the ledger say what the catalog says?",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "manifest",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness"
+  ],
+  "wall_seconds": 4.87,
+  "finished_utc": "2026-10-23T04:55:13.733112+00:00",
+  "defect_of_record": "v7.7 (fss-policy-kg): 118 documents drifted; a currency status the catalog denied was served for three months",
+  "output_tail": [
+    "[drift] manifest leg: CLEAN",
+    "(manifest leg only; not a full gate result)"
+  ],
+  "first_line": "[drift] manifest leg: CLEAN",
+  "verdict": true
+}
