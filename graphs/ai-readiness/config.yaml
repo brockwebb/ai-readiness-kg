@@ -1,4 +1,4 @@
-# squiddy-generated: graph config | spec sha256 27242c710413ec1d9dd1622f97a4e94856bdd7f6ae07b3da93b0841596032b35
+# squiddy-generated: graph config | spec sha256 3db45c1c1e25cecd6fca096bc39df003640ab96cf30ccfe107e97dd7ffa72521
 # Do not edit. Edit the spec and re-run `squiddy init`; `squiddy init --check` reports drift.
 #
 # Rendered by `squiddy init` from graph.yaml. Every value here is either a choice in
@@ -157,6 +157,7 @@ engine:
       protocol_failure_rate_max: 0.02
       rater_agreement_min: 0.85
     text_reader: text_reader.py
+    protocol: extract_protocol.py
   lessons:
     id_prefix: lesson
     doc_kind: lab_note
@@ -203,6 +204,7 @@ engine:
     manifest: /Users/brock/GitHub/ai-readiness-kg/corpus/manifest.json
   - source: inbox
     dir: intake/inbox
+    kind: document
   visibility: private
 identity:
   prefix: ai_readiness

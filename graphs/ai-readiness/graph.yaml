@@ -64,6 +64,12 @@ serve:
 intake:
   - source: dixie
     manifest: /Users/brock/GitHub/ai-readiness-kg/corpus/manifest.json
+  # SQ-021 Part D (DN-049 R-212): the inbox, declared here with this graph's one manifest kind. Rendered by default
+  # (`squiddy init`), it catalogued a dropped file as kind `work`, which this graph's emitter refuses (`emit.emit`:
+  # the one manifest kind is `document`). A dropped file's class for extraction is its `doc_type` (`extract_protocol`).
+  - source: inbox
+    dir: intake/inbox
+    kind: document
 assess:
   criterion: local_file_present
 write:
@@ -81,6 +87,9 @@ visibility: private
 extract:
   enabled: true
   text_reader: text_reader.py
+  # SQ-021 (DN-049 R-211): this graph's own extraction protocol (squiddy `extract.graph_protocol`): ai-readiness-kg's
+  # chunk protocol on the tier the pilot adopted per document class (extract/control.yaml `tiers`)
+  protocol: extract_protocol.py
 domain:
   airkg:
     repo: /Users/brock/GitHub/ai-readiness-kg

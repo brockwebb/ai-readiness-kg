@@ -43,7 +43,14 @@ def _setup(repo: str):
     return cp
 
 
-def _doc_path(repo: str, doc_id: str) -> Path:
+def _doc_path(repo: str, doc_id: str, paths: dict | None = None) -> Path:
+    """The document's file: the caller's (`paths`, for a document the kit catalogued and ai-readiness-kg's queue does
+    not hold, SQ-021 Part D), else the queue's canonical path, the file every old extraction read."""
+    if (paths or {}).get(doc_id):
+        p = Path(paths[doc_id])
+        if not p.is_file():
+            raise SystemExit(f"FATAL: {doc_id}: {p} does not exist")
+        return p
     from kg import queue
     entry = queue.included_documents().get(doc_id)
     if entry is None:
@@ -55,10 +62,10 @@ def _doc_path(repo: str, doc_id: str) -> Path:
     return p if p.is_absolute() else Path(repo) / p
 
 
-def _chunks(cp, repo: str, doc_id: str):
+def _chunks(cp, repo: str, doc_id: str, paths: dict | None = None):
     import run_bulk_extraction as rbe
     from kg.extraction import chunker
-    path = _doc_path(repo, doc_id)
+    path = _doc_path(repo, doc_id, paths)
     text = rbe.doc_text(path, doc_id)
     return path, text, list(chunker.chunk_document(doc_id, text))
 
@@ -80,7 +87,7 @@ def cmd_units(req: dict) -> dict:
            "schema_version": eventlog.schema_version(), "template": str(tpl),
            "template_sha256": hashlib.sha256(tpl.read_bytes()).hexdigest(), "docs": {}}
     for d in req["doc_ids"]:
-        path, text, cs = _chunks(cp, req["repo"], d)
+        path, text, cs = _chunks(cp, req["repo"], d, req.get("paths"))
         title = d.replace("-", " ")
         chunks = []
         for c in cs:
@@ -97,7 +104,7 @@ def cmd_units(req: dict) -> dict:
     # the control's items in the text the model was shown, never in the document.
     out["synthetic"] = []
     for s in req.get("synthetic") or []:
-        _path, _text, cs = _chunks(cp, req["repo"], s["doc_id"])
+        _path, _text, cs = _chunks(cp, req["repo"], s["doc_id"], req.get("paths"))
         base = next((c for c in cs if c.chunk_id == s["chunk_id"]), None)
         if base is None:
             raise SystemExit(f"FATAL: control chunk {s['chunk_id']} is not a chunk of {s['doc_id']} as cut now")
@@ -120,7 +127,7 @@ def cmd_parse(req: dict) -> dict:
     from kg import queue
     document_ids = set(queue.included_documents())
     d = req["doc_id"]
-    _path, text, cs = _chunks(cp, req["repo"], d)
+    _path, text, cs = _chunks(cp, req["repo"], d, req.get("paths"))
     by_id = {c.chunk_id: c for c in cs}
     results = []
     for r in req["responses"]:

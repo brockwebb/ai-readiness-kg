@@ -43,7 +43,8 @@ def manifest_projection(entry: dict, graph) -> dict:
              "authors": [str(a) for a in ident.get("authors_or_org") or []] or None,
              "pub_date": None if ident.get("pub_year") is None else str(ident["pub_year"]),
              "primary_url": ident.get("source_url"), "content_hash": ident.get("sha256"),
-             "doc_type": ident.get("doc_type"), "dixie_record": entry.get("dixie_record"),
+             # SQ-021: an inbox entry has no dixie record; its class is the entry's own `doc_type`
+             "doc_type": ident.get("doc_type") or entry.get("doc_type"), "dixie_record": entry.get("dixie_record"),
              "dixie_decision": entry.get("dixie_decision"), "dixie_rationale": entry.get("dixie_rationale")}
     return {k: v for k, v in props.items() if v is not None}
 

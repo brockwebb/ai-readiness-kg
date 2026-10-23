@@ -9252,3 +9252,25 @@ documents:
     verification_status: "verified"
     dixie_record: '{"acquisition": {"acquired_at": "2026-09-02T21:35:40.996194+00:00", "acquired_by": "scripts/harvest_triage.py", "method": "httpx-pdf"}, "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness", "extra": {"added_in": "g1eval-2026-09-02", "integrity_by_file": {"corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf": {"checked_at": "2026-09-02T21:35:41.018460+00:00", "checks": [{"check": "magic_bytes", "detail": "claimed pdf, detected pdf", "outcome": "pass"}, {"check": "size_sanity", "detail": "852648 bytes vs floor 7000", "outcome": "pass"}, {"check": "content_smoke", "detail": "19 pages, extractable text present", "outcome": "pass"}], "path": "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf", "verdict": "pass"}}, "notes": ["Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to ''is this number attached to the right qualifier''. Admitted for the metric decomposition; the LOOMSUM generator itself is a method."], "observed_files": {"corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf": {"claimed_type": "pdf", "detected_type": "pdf", "sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074", "size": 852648}}}, "files": {"alternates": [], "quarantined": []}, "identity": {"acquisition_channel": null, "authors_or_org": ["Meng Zhou", "Wenhao You", "Wei Yuan"], "canonical_path": "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf", "doc_type": "academic", "pub_year": "2026", "sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074", "source_url": "https://arxiv.org/abs/2609.00241", "title": "LOOMSUM: Weaving Quantitative and Narrative Evidence for Faithful Long Text-Table Summarization"}, "integrity": {"checked_at": "2026-09-02T21:35:41.018460+00:00", "checks": [{"check": "magic_bytes", "detail": "claimed pdf, detected pdf", "outcome": "pass"}, {"check": "size_sanity", "detail": "852648 bytes vs floor 7000", "outcome": "pass"}, {"check": "content_smoke", "detail": "19 pages, extractable text present", "outcome": "pass"}], "status": "verified"}, "lifecycle": {"stage": "verified"}, "provenance_sources": ["g1_eval_prior_art_2026-09-02", "candidate_register"], "screening": {"decided_at": "2026-09-02", "decided_by": "cc", "decision": "included", "history": [{"decided_at": "2026-09-02T21:35:37.689677+00:00", "decided_by": "cc", "decision": "included", "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to ''is this number attached to the right qualifier''."}], "identity_gate": {"checked": [], "failures": [], "passed": true}, "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)"}}'
     cataloged_by: squiddy catalog --from dixie:/Users/brock/GitHub/ai-readiness-kg/corpus/manifest.json (SQ-019, DN-049 R-208)
+
+# files dropped in the inbox by hand (DN-049 R-212); each waits on its provenance stub
+
+  - id: inbox_820f624e0b0884af
+    doc_type: "standard"
+    kind: document
+    stage: cataloged
+    disposition: reference
+    title: "Web Linking (RFC 8288)"
+    local_path: intake/inbox/rfc8288.txt
+    sha256: 820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d
+    bytes: 50797
+    observed_at: '2026-10-23T02:47:59.542434+00:00'
+    acquisition: manual
+    acquisition_status: acquired
+    verification_status: declared
+    provenance_flag: public
+    inbox_source_url: "https://www.rfc-editor.org/rfc/rfc8288.txt"
+    inbox_obtained_from: "ai-readiness-kg corpus/staging/instrument_standards/rfc8288.txt (staged 2026-10-15; no acquisition record found in ai-readiness-kg's candidate register, cc_tasks or handoffs)"
+    inbox_licence: "IETF Trust Legal Provisions Relating to IETF Documents under BCP 78, as the document's own Copyright Notice states (https://trustee.ietf.org/license-info)"
+    inbox_stated_by: "assistant (squiddy SQ-021 session, 2026-10-23), from the file's header and Copyright Notice"
+    cataloged_by: squiddy intake inbox (DN-049 R-212)
