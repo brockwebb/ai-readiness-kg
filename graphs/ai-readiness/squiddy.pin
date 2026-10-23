@@ -1,18 +1,19 @@
 # The Squiddy commit this graph is built with, in the form arnold/governed/squiddy.pin uses (AD-030-R17; SEL-001).
 # Re-pinned by squiddy SQ-021 (2026-10-23) from SUITE-001's 540333f3 (tree 38d4201f): SQ-021 added
 # `engine.extract.protocol` to stage 10a (squiddy/extract.py), which this graph declares, so its admissions need the
-# kit that has it; and the commit stage that brings the graph's Neo4j database level with the ledger (SQ-021 Part D). Before that, SUITE-001 had re-pinned it from SQ-019's bc68c879 (tree 5263885f), which had no pass.
+# kit that has it; and the commit stage that brings the graph's Neo4j database level with the ledger, and the admission plan that names the export and diff the run writes (SQ-021 Part D). Before that, SUITE-001 had re-pinned it from SQ-019's bc68c879 (tree 5263885f), which had no pass.
 #
-# What the pin binds is the kit's `squiddy/` package tree at this commit, tree 5082b48ea55c5f48ee89dff9fee61a2c397987b6:
+# What the pin binds is the kit's `squiddy/` package tree at this commit, tree 219962268aa34b8130824e937c4520214de72766:
 # a later Squiddy commit that leaves that tree byte-identical is the same kit (governed/check_pin.py `kit_matches`).
 # The commit is SQ-021's worktree branch commit (worktree-compressed-shimmying-hearth), not a main commit: the session
 # merges nothing, and the dispatcher's rebase re-hashes it. `kit_matches` needs the pinned commit's object in the
 # checkout, which a rebased-away commit keeps only until git prunes it, so this pin is to be moved to the merge
 # commit on main once SQ-021 lands (the follow-up its RESULT names; SUITE-001 did the same for SQ-019's pin).
 #
-# KIT PASS: squiddy kit/ledger/passes.jsonl, `kit_suite_pass` for commit 37dc1c3739994ae84ae67507d4c2c8e9cc185406,
-# package_tree 5082b48e: three clean-clone runs (seeds 4166050963, 4271101769, 1864119766), 2,231 passed, 0 failed
-# each, recorded on the SQ-021 branch. (The intermediate pin 9237654, tree b86cc562, had its own pass, squiddy 34348a0.)
+# KIT PASS: squiddy kit/ledger/passes.jsonl, `kit_suite_pass` for commit 933153d2cb6acff437d5c16da3a2fd77c4147a98,
+# package_tree 21996226: three clean-clone runs (seeds 564044170, 501466466, 2587014683), 2,232 passed, 0 failed each,
+# recorded on the SQ-021 branch (squiddy 3d41fff). The intermediate pins 9237654 (tree b86cc562) and 37dc1c3 (tree
+# 5082b48e) had their own passes (squiddy 34348a0, d674c72).
 
-SQUIDDY_COMMIT=37dc1c3739994ae84ae67507d4c2c8e9cc185406
+SQUIDDY_COMMIT=933153d2cb6acff437d5c16da3a2fd77c4147a98
 SQUIDDY_VERSION=0.8.0
