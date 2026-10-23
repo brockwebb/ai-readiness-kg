@@ -1,0 +1,46 @@
+{
+ "declare": {
+  "approval_dir": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/extract",
+  "bands": {
+   "stop": 0.2,
+   "warn": 0.1
+  },
+  "basis": {
+   "cache_window_seconds": 300.0,
+   "file": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/sq021/rate/dry_run_rate.json",
+   "n": 60,
+   "pricing": "every call cold (spacing outside the cache window, or not declared)",
+   "rate_cold": 3392.667,
+   "rate_warm": 3392.667,
+   "sha256": "7163f921c9a92bb120d00c4eab2a305f019ea50cbe0db9bbad69bbc46adf9171",
+   "source": "dry_run",
+   "spacing_seconds": null,
+   "weights_basis": "Anthropic API list-price ratios (assumption; the Max plan's limit accounting is not published)"
+  },
+  "call_cap": 120,
+  "estimate": 203560.0,
+  "floor": 203560.0,
+  "graph": "ai_readiness",
+  "host": "HexagonMBP.local",
+  "job": "sq021:rate:S:claude-fable-5-1",
+  "lane": "ai_readiness:sq021",
+  "model": "claude-fable-5-1",
+  "node": "sq021_pilot_rate",
+  "pid": 72478,
+  "profile": "scaffold=minimal,nonessential=off,effort=high,session=fresh,system=e3b0c442",
+  "record": "declare",
+  "token_cap": 2000000.0,
+  "ts": "2026-10-23T02:33:56.271995+00:00",
+  "units": 60,
+  "weights": {
+   "cache_read": 0.1,
+   "cache_write": 1.25,
+   "input": 1.0,
+   "output": 5.0
+  }
+ },
+ "role": "judge",
+ "model": "claude-fable-5-1",
+ "profile": "scaffold=minimal,nonessential=off,effort=high,session=fresh,system=e3b0c442",
+ "cli": "/Users/brock/.local/share/seldon/claude-cli/2.1.309/node_modules/.bin/claude"
+}

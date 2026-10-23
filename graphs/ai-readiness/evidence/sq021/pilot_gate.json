@@ -1,0 +1,1933 @@
+{
+ "computed_at": "2026-10-23T02:37:21.953380+00:00",
+ "thresholds": {
+  "grounding_rate_min": 0.98,
+  "protocol_failure_rate_max": 0.02,
+  "rater_agreement_min": 0.85,
+  "rater_sample": 20
+ },
+ "table": [
+  {
+   "class": "academic",
+   "order": [
+    "S",
+    "H"
+   ],
+   "adopted": null,
+   "role": null,
+   "closed_because": [
+    "S failed grounding_rate 0.9277 (needs >= 0.98); protocol_failure_rate 0.1429 (needs <= 0.02)",
+    "H failed protocol_failure_rate 0.1429 (needs <= 0.02)"
+   ]
+  },
+  {
+   "class": "federal",
+   "order": [
+    "S",
+    "H"
+   ],
+   "adopted": null,
+   "role": null,
+   "closed_because": [
+    "S failed grounding_rate 0.9221 (needs >= 0.98)",
+    "H failed grounding_rate 0.885 (needs >= 0.98)"
+   ]
+  },
+  {
+   "class": "standard",
+   "order": [
+    "S",
+    "H"
+   ],
+   "adopted": "H",
+   "role": "background",
+   "closed_because": null
+  }
+ ],
+ "detail": {
+  "academic": {
+   "S": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 0.927710843373494,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": false,
+      "detail": "77 grounded of 83 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.14285714285714285,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": false,
+      "detail": "1 of 7 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 0.95,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "19 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": false,
+    "rating": {
+     "sampled": 20,
+     "yes": 19,
+     "agreement": 0.95,
+     "agreement_after_adjudication": 0.95,
+     "disagreements": 1,
+     "rows": [
+      {
+       "id": "item:S:sainz-2023-llm-data-contamination#c0005:edge:sainz-2023-llm-data-contamination|cites|sainz-2023-llm-data-contamination::kaplan-2020-scaling-laws-neural-lm",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is the reference list, and the Kaplan et al. 2020 entry 'Scaling laws for neural language models' is a cited work, with the span naming that cited paper's title."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::cl1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts 'We find that GPT-4 extracts more numbers when prompted properly' as an empirical finding of the paper, and the span is the sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|asserts|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm5",
+       "rater": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The span names the claim verbatim but attributes it to Kuznets (1950) as reported view, so the document itself does not assert it."
+       },
+       "adjudicator": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The span states the claim verbatim but attributes it to Kuznets (1950) as a reported view, so the document does not itself assert it, though the span is the text that names it."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|asserts|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk states in the document's own voice that the total survey error of an estimate is considered an indicator of data quality, and the span is that verbatim sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::cl4",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's contributions list explicitly asserts that Cohere and GPT-3.5 cannot perform long-form multimodal summarization as an empirical demonstration, and the span is that exact bullet."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::con3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses 'sampling errors' as a concept in its uncertainty categorisation and the span explicitly states they apply only to sample surveys, matching the description."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sainz-2023-llm-data-contamination#c0005:edge:sainz-2023-llm-data-contamination|cites|sainz-2023-llm-data-contamination::honovich-2022-unnatural-instructions",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is the reference list of the Sainz 2023 paper and includes the Honovich et al. 2022 'Unnatural instructions' entry, so the document cites that work and the span names it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::con6",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk introduces 'epistemic' uncertainty as a concept and defines it as numbers we do not currently know but could know with a more complete information set, and the span names epistemic uncertainty directly, though the name 'Epistemic' is truncated from 'epistemic uncertainty'."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|cites|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::boumans-2012",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly cites Boumans (2012) in the span, so the document-cites-Boumans edge is stated and the span names it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm1|about|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::con2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that total survey error is an indicator of data quality, so the claim is about the concept 'total survey error', and the span is the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::cl6",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk asserts, as a forward-looking claim with a citation, that governance frameworks grow more sophisticated as retail organizations gain AI maturity, and the span is exactly that sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|cites|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::piccolo-simone-2019",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span explicitly refers the reader to Piccolo and Simone (2019), which is a citation of that work by the document."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready::cl1|about|bandi-2025-metadata-ai-ready::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk makes the claim verbatim in the conclusion and it is plainly about metadata, so both the typed edge and the quoted span are supported."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::cl5",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's contributions list explicitly asserts, as an empirical finding from the authors' comparison, that Claude shows a stronger ability to use numbers and seems to recognize important information, and the span is the bullet that states it (though the claim_text omits the subject 'Claude' and the evidence_grade is a categorization rather than stated text)."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that measuring total survey error is difficult in practice, and the span is the sentence making that assertion with its stated reason."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|asserts|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that sampling errors apply only to sample surveys, and the span is the verbatim sentence making that assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|cites|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::manski-2015",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span is an in-text citation of Manski (2015) by the document, directly stating the cites relationship."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk treats metadata as a central concept it uses throughout, and the span explicitly names it and characterizes it as a strategic asset fundamental to AI readiness."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::clm1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts, following Groves and Lyberg (2010), that total survey error is considered an indicator of data quality, and the span is that exact verbatim sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::con3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses 'numeric hallucination' as a concept the paper taxonomizes, and the span explicitly names it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 7,
+     "chunks_parsed": 6,
+     "grounded": 77,
+     "ungrounded": 6,
+     "schema_rejected": 0,
+     "non_item_dropped": 0,
+     "refused_semantic": 0,
+     "mentions": 11,
+     "diverted": 0,
+     "chars": 14386,
+     "span_normalized": 0,
+     "failure_task_failed": 1,
+     "protocol_failures": 1,
+     "ungrounded_anchor_not_located": 6,
+     "units": 7,
+     "grounding_rate": 0.927710843373494,
+     "protocol_failure_rate": 0.14285714285714285,
+     "schema_rejected_share": 0.0,
+     "yield_per_1000_chars": 3.6602177116509007,
+     "weighted_tokens": 170305.8,
+     "weighted_per_call": 24329.4,
+     "weighted_per_chunk": 24329.4
+    }
+   },
+   "H": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 0.9827586206896551,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": true,
+      "detail": "57 grounded of 58 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.14285714285714285,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": false,
+      "detail": "1 of 7 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 1.0,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "20 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": false,
+    "rating": {
+     "sampled": 20,
+     "yes": 20,
+     "agreement": 1.0,
+     "agreement_after_adjudication": 1.0,
+     "disagreements": 0,
+     "rows": [
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready::claim-1|about|bandi-2025-metadata-ai-ready::concept-metadata",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly makes the claim that metadata is a strategic asset fundamental to AI readiness, and the claim is plainly about the concept metadata, with the span being the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::claim-gpt-4-extracts-more-numbers",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk states 'We find that GPT-4 extracts more numbers when prompted properly' as an empirical finding, and the span verbatim contains that assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready|mentions|bandi-2025-metadata-ai-ready::concept-knowledge-graphs",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly names knowledge graphs as one of the integrated architectural frameworks in the paper's blueprint, and the span contains that mention verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready|mentions|bandi-2025-metadata-ai-ready::concept-metadata",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is the document's own conclusion discussing metadata throughout, and the span explicitly names metadata as a concept the study addresses."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::claim-1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The conclusion explicitly asserts, as the study's established position, that metadata is a strategic asset fundamental to AI readiness rather than merely a technical requirement, and the span is the verbatim sentence making that claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready::claim-2|about|bandi-2025-metadata-ai-ready::concept-metadata",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts the claim that the metadata–AI relationship creates virtuous cycles, and the claim is plainly about metadata, with the span being the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:edge:cao-2024-multimodal-long-form-summarization-financial-reports::claim-gpt-4-extracts-more-numbers|about|cao-2024-multimodal-long-form-summarization-financial-reports::concept-gpt-4",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts the claim that GPT-4 extracts more numbers when prompted properly, and the claim is explicitly about GPT-4, with the span stating it verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready|asserts|bandi-2025-metadata-ai-ready::claim-1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The conclusion explicitly states the study has established metadata as a strategic asset fundamental to AI readiness rather than merely a technical requirement, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics|asserts|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::claim-hard-to-gauge",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk asserts in the authors' own voice that without measurement it is hard if not impossible to gauge the consequences of uncertainties, and the span is exactly that sentence, though the claim label is truncated and omits the 'without measurement' condition and object."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::claim-2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The conclusion directly asserts that metadata and AI form virtuous cycles as an uncited general claim, and the span is the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:edge:bandi-2025-metadata-ai-ready|asserts|bandi-2025-metadata-ai-ready::claim-2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The conclusion directly asserts that the metadata-AI relationship creates virtuous cycles, and the span is the exact sentence making that claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::framework-morgenstern-sources",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly presents Morgenstern (1950) as a framework distinguishing ten sources of uncertainty, with owner and year read directly from the text, and the span states exactly that."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:node:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::concept-aleatory-uncertainty",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly introduces 'aleatory uncertainty' as a concept defined by fundamental indeterminacy or randomness in the world and later notes it generally relates to future events, and the span names and defines it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::concept-metadata",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The conclusion explicitly frames metadata as a strategic asset fundamental to AI readiness, and the span is the sentence that states exactly that."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::concept-cohere",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk names Cohere as a model and states it cannot perform long-form multimodal summarization, and the span is the exact sentence making that assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:bandi-2025-metadata-ai-ready#c0010:node:bandi-2025-metadata-ai-ready::concept-ai-readiness",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk treats AI readiness as a concept the paper is about and states metadata is fundamental to it, and the span names and asserts exactly that; the alias 'AI-ready data' appears in the text only in reference [1]'s title, a minor stretch but not invented."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:node:cao-2024-multimodal-long-form-summarization-financial-reports::concept-gpt-4",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk treats GPT-4 as a model whose number extraction and tabular number usage are measured and compared, and the span explicitly names GPT-4 and states those measurements."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:edge:cao-2024-multimodal-long-form-summarization-financial-reports::claim-claude-stronger-number-ability|about|cao-2024-multimodal-long-form-summarization-financial-reports::concept-claude",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly claims Claude demonstrates a stronger ability to use numbers and seems to recognize important information, and the span is the sentence stating that claim about Claude."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0004:edge:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::claim-survey-error-difficult|about|mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::concept-total-survey-error",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk asserts as its own claim that measuring total survey error is difficult, and the claim is directly about the concept of total survey error, with the span stating exactly this."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:cao-2024-multimodal-long-form-summarization-financial-reports#c0003:edge:cao-2024-multimodal-long-form-summarization-financial-reports|asserts|cao-2024-multimodal-long-form-summarization-financial-reports::claim-gpt-4-extracts-more-numbers",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states as a finding that GPT-4 extracts more numbers when prompted properly, and the span is the exact sentence making that claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 7,
+     "chunks_parsed": 6,
+     "grounded": 57,
+     "ungrounded": 1,
+     "schema_rejected": 10,
+     "non_item_dropped": 0,
+     "refused_semantic": 0,
+     "mentions": 8,
+     "diverted": 1,
+     "chars": 14386,
+     "span_normalized": 0,
+     "failure_task_failed": 1,
+     "protocol_failures": 1,
+     "ungrounded_anchor_not_located": 1,
+     "units": 7,
+     "grounding_rate": 0.9827586206896551,
+     "protocol_failure_rate": 0.14285714285714285,
+     "schema_rejected_share": 0.14705882352941177,
+     "yield_per_1000_chars": 2.709511812520797,
+     "weighted_tokens": 301691.0,
+     "weighted_per_call": 43098.7,
+     "weighted_per_chunk": 43098.7
+    }
+   }
+  },
+  "federal": {
+   "S": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 0.922077922077922,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": false,
+      "detail": "71 grounded of 77 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.0,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": true,
+      "detail": "0 of 7 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 1.0,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "20 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": false,
+    "rating": {
+     "sampled": 20,
+     "yes": 20,
+     "agreement": 1.0,
+     "agreement_after_adjudication": 1.0,
+     "disagreements": 0,
+     "rows": [
+      {
+       "id": "item:S:fcsm-2024-b3-3-fairness-project#c0001:edge:fcsm-2024-b3-3-fairness-project|asserts|fcsm-2024-b3-3-fairness-project::k1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The document directly states in the span that the Evidence Act requires a comprehensive federal data catalog, so the text asserts this claim and the span is its evidence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::d_fn",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly defines 'false negative (a miss)' in the context of NHCS-NDI record linkage, and the span is the verbatim sentence giving that definition; 'normative_status' is a schema-level classification rather than a fabricated textual property."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:dcat-us-3-m-25-05-crosswalk#c0004:edge:dcat-us-3-m-25-05-crosswalk|asserts|dcat-us-3-m-25-05-crosswalk::cl2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The crosswalk text states that contactPoint or publisher either one meets the requirement if the agency owns the data asset, and the span contains that statement verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk presents Relevance as a Utility dimension of the FCSM Framework assessed for the NCHS LMFs, citing over 1,000 publications and approved researcher proposals as evidence, and the span names it directly."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::cl2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly asserts as a forward-looking key feature that DCAT-US v3 will overcome DCAT v1.1's geospatial limitations, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:dcat-us-3-m-25-05-crosswalk#c0004:node:dcat-us-3-m-25-05-crosswalk::c2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses 'publisher' as a named DCAT-US metadata property that satisfies a requirement when the agency owns the data asset, and the span explicitly names it in that role."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::c_fp",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly defines a false positive (false match) as the matching process mistakenly concluding an NHCS record and an NDI record belong to the same person, and the span is that exact definitional sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::d_fp",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly defines a false positive as a false match where NHCS and NDI records are wrongly concluded to belong to the same person, and the span is that verbatim definition sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:dcat-us-3-m-25-05-crosswalk#c0004:edge:dcat-us-3-m-25-05-crosswalk|asserts|dcat-us-3-m-25-05-crosswalk::cl1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's crosswalk cell states that the rightsholder property meets the requirement if the agency does not own the data asset, and the span contains that statement verbatim, though the claim label drops the 'rightsholder' subject."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-2024-b3-3-fairness-project#c0001:edge:fcsm-2024-b3-3-fairness-project::k1|about|fcsm-2024-b3-3-fairness-project::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The bullet directly asserts that the Evidence Act requires a comprehensive federal data catalog, so the claim is made and it is about the concept of a federal data catalog, with the span stating it verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::s3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span names the Project Open Data Metadata Standard as a standard used by Data.gov and gives the DCAT-US v1.1 alias and version directly in the text."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:edge:fcsm-23-02-a-framework-for-data-quality-case-studies|asserts|fcsm-23-02-a-framework-for-data-quality-case-studies::k3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that production of the most recent NCHS LMFs took approximately 9 months, and the span contains that exact statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses FAIRness as a central concept and later expands it as Findability, Accessibility, Interoperability, and Reusability, and the span names FAIRness as the project's goal, though the alias expansion appears in a later sentence rather than the span itself."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::cl_pii",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states as fact (citing the NCHS methodology report) that some participating hospitals did not include the PII required for linkage, and the span is the sentence making that assertion, though the claim_text is truncated mid-sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::c4",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses disclosure risk as a data quality attribute the FCSM Framework offers opportunities to evaluate, and the span states exactly that."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:edge:fcsm-19-01-transparent-reporting-for-integrated-data-quality::cl_thresh|about|fcsm-19-01-transparent-reporting-for-integrated-data-quality::c_linkage",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk states, within its discussion of the linkage process and its probabilistic matching thresholds, that the thresholds were set at the level producing the lowest estimated total error, and the span is the sentence making that claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:edge:fcsm-19-01-transparent-reporting-for-integrated-data-quality|defines|fcsm-19-01-transparent-reporting-for-integrated-data-quality::d_fp",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly defines a false positive as a false match where the matching process wrongly concludes two records belong to the same person, and the span is that definitional sentence verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:edge:fcsm-23-02-a-framework-for-data-quality-case-studies|asserts|fcsm-23-02-a-framework-for-data-quality-case-studies::k1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states that the volume of publications indicates the LMF data are highly relevant to the NCHS data user community, and the span contains that exact assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::s1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk presents DCAT-US v3.0 Schema as a draft federal metadata standard (a DCAT profile), the name, version 3.0, and alias DCAT-US v3 all appear verbatim in the text, and the span explicitly names the standard."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:usdc-mcp-federal-open-data-pilot-2026#c0035:edge:usdc-mcp-federal-open-data-pilot-2026|asserts|usdc-mcp-federal-open-data-pilot-2026::cl4",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that the USAspending API has over a hundred endpoints, and the span is the sentence making that assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 7,
+     "chunks_parsed": 7,
+     "grounded": 71,
+     "ungrounded": 6,
+     "schema_rejected": 12,
+     "non_item_dropped": 0,
+     "refused_semantic": 0,
+     "mentions": 19,
+     "diverted": 4,
+     "chars": 20768,
+     "span_normalized": 0,
+     "ungrounded_span_partial": 5,
+     "ungrounded_span_not_found": 1,
+     "units": 7,
+     "grounding_rate": 0.922077922077922,
+     "protocol_failure_rate": 0.0,
+     "schema_rejected_share": 0.1348314606741573,
+     "yield_per_1000_chars": 3.4187211093990757,
+     "weighted_tokens": 208056.2,
+     "weighted_per_call": 29722.3,
+     "weighted_per_chunk": 29722.3
+    }
+   },
+   "H": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 0.8849557522123894,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": false,
+      "detail": "100 grounded of 113 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.0,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": true,
+      "detail": "0 of 7 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 1.0,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "20 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": false,
+    "rating": {
+     "sampled": 20,
+     "yes": 20,
+     "agreement": 1.0,
+     "agreement_after_adjudication": 1.0,
+     "disagreements": 0,
+     "rows": [
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::concept-geospatial-data",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk repeatedly uses geospatial data as a concept and the span explicitly states DCAT-US v3 will document it without a separate federal standard, matching the description."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::con-rdc",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk names NCHS Research Data Centers (RDCs) as the secure locations where the linked file is made available for research use, and the span explicitly states this."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::claim-lmf-production",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that producing the most recent NCHS LMFs took approximately 9 months, an empirical claim stated by the practitioners describing their implementation, and the span contains that exact statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:edge:fcsm-19-01-transparent-reporting-for-integrated-data-quality|asserts|fcsm-19-01-transparent-reporting-for-integrated-data-quality::clm-pii-safeguards",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that NCHS provides confidentiality safeguards including removal of all personal identifiers from analytic files, and the span is the exact sentence asserting it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::claim-access-balance",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts, under the Accessibility assessment, that releasing both restricted-use and public-use LMFs balances privacy concerns with the desire for granular accessible microdata, and the span is the sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::clm-pii-safeguards",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that NCHS removes all personal identifiers from analytic files as a confidentiality safeguard, and the span is the sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::clm-linkage-implications",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that the linkage process has implications for accuracy as an empirical observation by the authors, and the span states it verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::clm-pii-incomplete",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts, citing the NCHS methodology report, that some participating hospitals omitted the PII required for linkage, and the span is the exact sentence making that empirical claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::concept-nchs-lmfs",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk repeatedly uses NCHS LMFs as the linked mortality data files under assessment, with the aliases LMF and LMF microdata files appearing in the text, and the span explicitly names the NCHS LMFs."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:edge:fairness-project-wiki-home|asserts|fairness-project-wiki-home::claim-geospatial-limits",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts, as a listed key feature, that DCAT-US v3 will overcome DCAT v1.1's geospatial documentation limitations, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::ins-nhcs",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk describes NHCS as an establishment survey (a data collection instrument) with hospitals as sampling unit, and the span itself names and characterizes NHCS as that survey."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::concept-ndlp",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk names the NCHS Data Linkage Program and states it publishes a Linkage Methodology and Analytic Considerations report with every linked data file release, and the span contains exactly that statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:edge:fairness-project-wiki-home::claim-controlled-vocab|about|fairness-project-wiki-home::concept-controlled-vocabularies",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that DCAT-US v3 supports new and updated controlled vocabularies, and the span is the exact sentence making that claim about controlled vocabularies."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:edge:fairness-project-wiki-home|asserts|fairness-project-wiki-home::claim-vendor-support",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's fifth key-feature bullet directly asserts that DCAT-US v3 follows a similar approach to DCAT-AP and that vendor support is already in place, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::concept-data-inventories",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk uses agencies' data inventories as the target of the updated federal metadata standard, and the span directly names them in that role with no invented properties."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:edge:fcsm-23-02-a-framework-for-data-quality-case-studies|asserts|fcsm-23-02-a-framework-for-data-quality-case-studies::claim-microdata-relevance",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts, in the span, that releasing LMF microdata rather than tabulations alone increases relevance to users."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0044:node:fcsm-19-01-transparent-reporting-for-integrated-data-quality::con-linkage-process",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk treats the linkage process as a concept it describes, matching NHCS patient records to NDI records with accuracy implications, and the span explicitly names it and states its accuracy implications."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-2024-b3-3-fairness-project#c0001:edge:fcsm-2024-b3-3-fairness-project::claim-evidence-act-catalog|about|fcsm-2024-b3-3-fairness-project::concept-federal-data-catalog",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that the Evidence Act requires a comprehensive federal data catalog, a claim that is plainly about the concept of a federal data catalog, and the span is the exact bullet asserting it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fairness-project-wiki-home#c0001:node:fairness-project-wiki-home::std-dcat-us-v1-1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span names the Project Open Data Metadata Standard (DCAT-US v1.1) as an existing metadata standard used by Data.gov, and both the name and version are read directly from the text."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:fcsm-23-02-a-framework-for-data-quality-case-studies#c0004:node:fcsm-23-02-a-framework-for-data-quality-case-studies::claim-nchs-incorporating",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly asserts that NCHS was already incorporating many FCSM Framework components in its documentation before publication, an empirical practitioner assertion, and the span is the sentence that states it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 7,
+     "chunks_parsed": 7,
+     "grounded": 100,
+     "ungrounded": 13,
+     "schema_rejected": 17,
+     "non_item_dropped": 0,
+     "refused_semantic": 0,
+     "mentions": 26,
+     "diverted": 7,
+     "chars": 20768,
+     "span_normalized": 0,
+     "ungrounded_span_partial": 5,
+     "ungrounded_span_not_found": 8,
+     "units": 7,
+     "grounding_rate": 0.8849557522123894,
+     "protocol_failure_rate": 0.0,
+     "schema_rejected_share": 0.13076923076923078,
+     "yield_per_1000_chars": 4.815100154083205,
+     "weighted_tokens": 531593.1,
+     "weighted_per_call": 75941.9,
+     "weighted_per_chunk": 75941.9
+    }
+   }
+  },
+  "standard": {
+   "S": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 0.9795918367346939,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": false,
+      "detail": "48 grounded of 49 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.0,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": true,
+      "detail": "0 of 6 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 0.85,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "17 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": false,
+    "rating": {
+     "sampled": 20,
+     "yes": 17,
+     "agreement": 0.85,
+     "agreement_after_adjudication": 0.85,
+     "disagreements": 3,
+     "rows": [
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::c2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The Definitions table explicitly defines Code as a class/concept in the information model, and the span is that verbatim definition naming and describing it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:llmstxt-proposal#c0009:node:llmstxt-proposal::cl1",
+       "rater": {
+        "claim_made": false,
+        "span_is_evidence": false,
+        "rationale": "The chunk provided is empty, so it neither asserts the claim nor contains the quoted span."
+       },
+       "adjudicator": {
+        "claim_made": false,
+        "span_is_evidence": false,
+        "rationale": "The chunk is empty, so it neither asserts the claim nor contains the quoted span; judged on the chunk's text alone, nothing supports the item."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:dcat-us-3-dataset-series#c0011:node:dcat-us-3-dataset-series::c2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk names PeriodOfTime as a class and gives its definition verbatim, and the span is the line stating that name and description."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::d3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The Definitions table in section 4.3.3.2 explicitly defines CodelistExtension with the verbatim description given, and the span is that table entry."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:edge:schema-org-dataset|recommends|schema-org-dataset::p2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The maintainer property description in the chunk explicitly advises using isBasedOn to indicate upstream relationships between datasets to clarify maintenance roles, and the span contains that exact statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:statdcat-ap-1-0-1#c0031:edge:statdcat-ap-1-0-1|mentions|statdcat-ap-1-0-1::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's example SDMX category explicitly names 'Transport' and describes it as a concept identifying datasets covering transport, so the document does mention the concept and the span is exactly where it is named."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:edge:schema-org-dataset::cl1|about|schema-org-dataset::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span is the maintainer property description, which explicitly states the claim that the upstream source may have a different maintainer, and the claim is about the concept of maintainer."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:edge:schema-org-dataset|defines|schema-org-dataset::d1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span is the schema.org property-table row that explicitly defines maintainer as a Person or Organization that manages contributions to or publication of an artifact, so the document does define this term and the span states it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol|asserts|rfc-9309-robots-exclusion-protocol::k2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states, in explaining the barbot/bazbot group of the example, that the crawlers are not allowed to access URLs with the /example/page.html path prefix, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:edge:schema-org-dataset|asserts|schema-org-dataset::cl1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The maintainer property description explicitly asserts that when maintainer is applied to a specific version, it is always possible the upstream source has a different maintainer, and the span contains that exact statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::d1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The Definitions table in the chunk explicitly defines Codelist with the exact verbatim text, and the span contains that definition line."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:statdcat-ap-1-0-1#c0031:node:statdcat-ap-1-0-1::cl1",
+       "rater": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The text is a sample license annotation value inside an illustrative SDMX XML example, not a normative claim the StatDCAT-AP document itself asserts, though the span does contain the quoted text verbatim."
+       },
+       "adjudicator": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The license text is a sample annotation value inside an illustrative SDMX XML example, not a normative claim the StatDCAT-AP document asserts, though the span does contain that text verbatim."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol|asserts|rfc-9309-robots-exclusion-protocol::k3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states, for the quxbot empty-group example, that the crawler has unrestricted access to the URLs on the site, and the span is that exact sentence, though the claim is example-specific to quxbot rather than a general assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:node:schema-org-dataset::p2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk recommends using isBasedOn to indicate upstream relationships between datasets to clarify maintenance roles, which is a practice the text describes, and the span contains that exact statement."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol::k1|about|rfc-9309-robots-exclusion-protocol::c3",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states the claim about foobot's access to two URL path prefixes, and the span is the verbatim sentence making that claim and naming the concept."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:llmstxt-proposal#c0009:node:llmstxt-proposal::c_llmstxt",
+       "rater": {
+        "claim_made": false,
+        "span_is_evidence": false,
+        "rationale": "The chunk provided is empty, so it neither presents llms.txt as a concept nor contains the quoted span."
+       },
+       "adjudicator": {
+        "claim_made": false,
+        "span_is_evidence": false,
+        "rationale": "The chunk is empty, so it cannot present llms.txt as a concept and does not contain the quoted span."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::c1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk defines Codelist as a class in its Definitions table, and the span contains that definition naming Codelist and describing it as a list from which coded concepts take their values."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:schema-org-dataset#c0004:node:schema-org-dataset::c2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk describes isBasedOn as a schema.org property, and the maintainer-row span explicitly names it and states it can indicate derivation relationships between datasets to make different maintenance roles clear, matching the item's description."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|defines|sdmx-3-1-section-2-information-model::d1",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span is the document's Definitions table entry giving the definition of Codelist as 'A list from which some statistical concepts (coded concepts) take their values', so the document defines Codelist and the span states it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:S:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|defines|sdmx-3-1-section-2-information-model::d2",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's Definitions table explicitly defines Code as 'a language independent set of letters, numbers or symbols that represent a concept whose meaning is described in a natural language', and the span is that verbatim definition."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 6,
+     "chunks_parsed": 6,
+     "grounded": 48,
+     "ungrounded": 1,
+     "schema_rejected": 0,
+     "non_item_dropped": 1,
+     "refused_semantic": 3,
+     "mentions": 14,
+     "diverted": 6,
+     "chars": 17226,
+     "span_normalized": 0,
+     "ungrounded_span_partial": 1,
+     "units": 6,
+     "grounding_rate": 0.9795918367346939,
+     "protocol_failure_rate": 0.0,
+     "schema_rejected_share": 0.0,
+     "yield_per_1000_chars": 2.7864855451062347,
+     "weighted_tokens": 141795.5,
+     "weighted_per_call": 23632.6,
+     "weighted_per_chunk": 23632.6
+    }
+   },
+   "H": {
+    "lines": [
+     {
+      "name": "grounding_rate",
+      "value": 1.0,
+      "threshold": 0.98,
+      "direction": ">=",
+      "passed": true,
+      "detail": "59 grounded of 59 returned"
+     },
+     {
+      "name": "protocol_failure_rate",
+      "value": 0.0,
+      "threshold": 0.02,
+      "direction": "<=",
+      "passed": true,
+      "detail": "0 of 6 calls"
+     },
+     {
+      "name": "positive_control",
+      "value": true,
+      "threshold": true,
+      "direction": "==",
+      "passed": true,
+      "detail": "both halves passed"
+     },
+     {
+      "name": "rater_agreement",
+      "value": 0.9,
+      "threshold": 0.85,
+      "direction": ">=",
+      "passed": true,
+      "detail": "18 of 20 sampled items yes on both before adjudication"
+     }
+    ],
+    "passed": true,
+    "rating": {
+     "sampled": 20,
+     "yes": 18,
+     "agreement": 0.9,
+     "agreement_after_adjudication": 0.9,
+     "disagreements": 2,
+     "rows": [
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|asserts|sdmx-3-1-section-2-information-model::claim-child-code-one-parent",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly asserts that a child Code can have only one parent Code in the hierarchy association, and the span is the exact sentence stating that claim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|defines|sdmx-3-1-section-2-information-model::def-codelist-extension",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's Definitions table explicitly defines CodelistExtension as 'The association between Codelists that may extend other Codelists', and the span is exactly that definition entry."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:edge:schema-org-dataset|defines|schema-org-dataset::def-keywords",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is a property table for Dataset and this row gives the definition of the keywords property ('Keywords or tags used to describe some item...'), so the document does define Keywords and the span is the text stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:edge:schema-org-dataset|mentions|schema-org-dataset::concept-keywords",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's Dataset property table describes the keywords property as 'Keywords or tags used to describe some item', so the document does mention the concept of keywords, and the span is the exact row stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:edge:schema-org-dataset|mentions|schema-org-dataset::concept-genre",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The span is the property row describing 'Genre of the creative work, broadcast channel or group', so the document does mention genre as a concept and the span names it directly."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol|defines|rfc-9309-robots-exclusion-protocol::def-asterisk-wildcard",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states what the \"*\" character designates (any character, including the otherwise-required forward slash), which is a definition the document gives, and the span is the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:edge:schema-org-dataset|defines|schema-org-dataset::def-headline",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is a schema.org property table whose row 'Headline of the article.' is the document's own definition of the headline property, and the span is exactly that defining description."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::claim-child-code-one-parent",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly asserts the normative constraint that a child Code has only one parent in the hierarchy association, and the span is the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:rfc-9309-robots-exclusion-protocol#c0009:node:rfc-9309-robots-exclusion-protocol::claim-optional-space",
+       "rater": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The sentence is a descriptive observation about the example's formatting, not a normative claim, so the 'normative' type is a misreading, though the span does literally state the text."
+       },
+       "adjudicator": {
+        "claim_made": false,
+        "span_is_evidence": true,
+        "rationale": "The span literally states that the foobot group's rules lack the optional space, but this describes the example's formatting rather than making a normative claim, and the claim_text is a truncated fragment, so the 'normative' typing is a misreading."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::concept-codelist",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": false,
+        "rationale": "The chunk's definitions table (line 930) defines Codelist exactly as described, but the selected span is the Codelist Extension heading and narrative, which merely mentions Codelist without stating the definition or the 'comprises Codes' property."
+       },
+       "adjudicator": {
+        "claim_made": true,
+        "span_is_evidence": false,
+        "rationale": "The chunk defines Codelist (line 930 definitions table) and states it comprises one or more Codes (line 919), but the span is the Codelist Extension heading/narrative, which only mentions Codelist without giving that definition or property."
+       },
+       "agree": false,
+       "final_verdict": "no",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:edge:schema-org-dataset|mentions|schema-org-dataset::concept-license",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk describes the license property as 'A license document that applies to this content', so the document does mention the concept of a license and the span is the text that names it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:schema-org-dataset#c0004:node:schema-org-dataset::concept-keywords",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk is a schema.org property table and this row defines the keywords property verbatim as 'Keywords or tags used to describe some item', so the concept, its description, and aliases are all read directly from the span."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol::claim-crawler-access|about|rfc-9309-robots-exclusion-protocol::concept-crawler",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk states that the foobot crawler only has access to two URL path prefixes, so the claim is made and is about the crawler, and the span is the exact sentence asserting it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:rfc-9309-robots-exclusion-protocol#c0009:edge:rfc-9309-robots-exclusion-protocol::claim-crawler-access|about|rfc-9309-robots-exclusion-protocol::concept-url-path-prefixes",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk explicitly states that the foobot crawler only has access to two URL path prefixes, a claim directly concerning the concept of URL path prefixes, and the span is the exact sentence stating it."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::def-codelist-extension",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's 4.3.3.2 Definitions table explicitly defines CodelistExtension with the quoted verbatim description, and the span is that table entry."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|asserts|sdmx-3-1-section-2-information-model::claim-partial-identical",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk directly states that a partial Codelist with isPartial true is identical to a Codelist, and the span is the verbatim sentence making that assertion."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:statdcat-ap-1-0-1#c0031:node:statdcat-ap-1-0-1::concept-transport",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk defines a Category with id TRAN, name Transport, and the exact description text, so the item is a concept the text presents and the span contains the defining XML element verbatim."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::concept-inclusive-code-selection",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk defines InclusiveCodeSelection verbatim as 'The subset of Codes to be included when extending a Codelist' and the span names it while describing its role of including a selection of Codes from extended Codelists."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:edge:sdmx-3-1-section-2-information-model|asserts|sdmx-3-1-section-2-information-model::claim-latest-overrides",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The chunk's definition of the sequence feature of CodelistExtension states verbatim that the latest Codelist used overrides any previous Codelist, and the span is that exact sentence."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      },
+      {
+       "id": "item:H:sdmx-3-1-section-2-information-model#c0015:node:sdmx-3-1-section-2-information-model::def-codelist",
+       "rater": {
+        "claim_made": true,
+        "span_is_evidence": true,
+        "rationale": "The Definitions table in the chunk explicitly defines Codelist with the exact verbatim text, and the span contains that definition row."
+       },
+       "adjudicator": null,
+       "agree": true,
+       "final_verdict": "yes",
+       "rater_model": "claude-fable-5-1"
+      }
+     ]
+    },
+    "measured": {
+     "calls": 6,
+     "chunks_parsed": 6,
+     "grounded": 59,
+     "ungrounded": 0,
+     "schema_rejected": 0,
+     "non_item_dropped": 0,
+     "refused_semantic": 3,
+     "mentions": 12,
+     "diverted": 6,
+     "chars": 17226,
+     "span_normalized": 0,
+     "units": 6,
+     "grounding_rate": 1.0,
+     "protocol_failure_rate": 0.0,
+     "schema_rejected_share": 0.0,
+     "yield_per_1000_chars": 3.42505514919308,
+     "weighted_tokens": 304907.3,
+     "weighted_per_call": 50817.9,
+     "weighted_per_chunk": 50817.9
+    }
+   }
+  }
+ },
+ "rule": "control.yaml pilot_arms.adoption"
+}

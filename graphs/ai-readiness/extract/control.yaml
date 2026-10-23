@@ -144,3 +144,24 @@ pilot_arms:
     wall_seconds: 3600
   progress_every_seconds: 60
   evidence_dir: evidence/sq021       # relative to the graph root
+
+# ---- SQ-021 Part C: the adopted extraction tier per document class (written by `python -m tools.sq021_pilot adopt`) ----
+# A class's tier is the cheapest arm that passed every line of the pilot gate on that class (pilot_arms.adoption);
+# a closed class takes no new extraction until a later pilot passes on it. Evidence: the gate record named.
+tiers:
+  academic:
+    closed: true
+    why: "S failed grounding_rate 0.9277 (needs >= 0.98); protocol_failure_rate 0.1429 (needs <= 0.02); H failed protocol_failure_rate 0.1429 (needs <= 0.02)"
+    evidence: evidence/sq021/pilot_gate.json
+    decided_at: "2026-10-23T02:37:21.953380+00:00"
+  federal:
+    closed: true
+    why: "S failed grounding_rate 0.9221 (needs >= 0.98); H failed grounding_rate 0.885 (needs >= 0.98)"
+    evidence: evidence/sq021/pilot_gate.json
+    decided_at: "2026-10-23T02:37:21.953380+00:00"
+  standard:
+    arm: H
+    role: background
+    protocol: bulk_v038
+    evidence: evidence/sq021/pilot_gate.json
+    decided_at: "2026-10-23T02:37:21.953380+00:00"

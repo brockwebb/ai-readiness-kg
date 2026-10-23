@@ -1,0 +1,46 @@
+{
+ "declare": {
+  "record": "declare",
+  "job": "sq021:extract:H:claude-haiku-5-5",
+  "lane": "ai_readiness:sq021",
+  "model": "claude-haiku-5-5",
+  "profile": "scaffold=minimal,nonessential=off,effort=medium,session=fresh,system=e3b0c442",
+  "node": "sq021_pilot_extract",
+  "units": 20,
+  "estimate": 1766047.35,
+  "floor": 1766047.35,
+  "basis": {
+   "source": "dry_run",
+   "file": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/sq021/dry_run_extract.json",
+   "sha256": "dcccab0fc4e0925570c9305fbe503c8ff12649c8b273192674546f28210b0afd",
+   "n": 20,
+   "spacing_seconds": null,
+   "cache_window_seconds": 300.0,
+   "pricing": "every call cold (spacing outside the cache window, or not declared)",
+   "weights_basis": "Anthropic API list-price ratios (assumption; the Max plan's limit accounting is not published)",
+   "rate_cold": 88302.368,
+   "rate_warm": 88302.368
+  },
+  "token_cap": 2000000.0,
+  "call_cap": 40,
+  "approval_dir": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/extract",
+  "graph": "ai_readiness",
+  "bands": {
+   "warn": 0.1,
+   "stop": 0.2
+  },
+  "weights": {
+   "input": 1.0,
+   "output": 5.0,
+   "cache_write": 1.25,
+   "cache_read": 0.1
+  },
+  "ts": "2026-10-23T02:23:33.756947+00:00",
+  "pid": 70826,
+  "host": "HexagonMBP.local"
+ },
+ "role": "background",
+ "model": "claude-haiku-5-5",
+ "profile": "scaffold=minimal,nonessential=off,effort=medium,session=fresh,system=e3b0c442",
+ "cli": "/Users/brock/.local/share/seldon/claude-cli/2.1.309/node_modules/.bin/claude"
+}
