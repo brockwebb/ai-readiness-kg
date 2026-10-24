@@ -4,6 +4,13 @@
             "additionalProperties": false,
             "description": "(Claim)-[:ABOUT]->(Concept): What the claim concerns (pairs: Claim->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -56,6 +63,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -88,6 +102,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -97,6 +118,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -160,6 +188,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -374,6 +416,13 @@
             "additionalProperties": false,
             "description": "(Practice | Measure)-[:APPLIES_TO]->(Concept): Practice/Measure targets this asset class or concept (pairs: Practice->Concept; Measure->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -426,6 +475,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -458,6 +514,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -467,6 +530,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -530,6 +600,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -606,6 +690,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:ASSERTS]->(Claim): Source makes this claim (pairs: Document->Claim)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -658,6 +749,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -690,6 +788,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -699,6 +804,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -762,6 +874,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -828,6 +954,13 @@
             "additionalProperties": false,
             "description": "(Standard | Framework)-[:BUILDS_ON]->(Standard | Framework): e.g. FCSM 25-03 builds_on OPEN Gov Data Act (pairs: Standard->Standard; Standard->Framework; Framework->Standard; Framework->Framework)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -880,6 +1013,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -912,6 +1052,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -921,6 +1068,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -984,6 +1138,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -1050,6 +1218,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:CITES]->(Document): Citation within the corpus (pairs: Document->Document)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -1102,6 +1277,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -1134,6 +1316,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -1143,6 +1332,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -1206,6 +1402,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -1378,6 +1588,13 @@
                         "null"
                     ]
                 },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The readable, source-scoped key the graph minted at admission. It never changes and is never reused; a name is a property (DI-060, DI-062, OD-4 \u00a73.1).",
                     "type": "string"
@@ -1398,6 +1615,13 @@
                 },
                 "method": {
                     "description": "How the assertion was made (manifest, crossref, openalex, github, human_ruling, ...).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "a hand-asserted claim's label",
                     "type": [
                         "string",
                         "null"
@@ -1653,6 +1877,13 @@
                         "null"
                     ]
                 },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The readable, source-scoped key the graph minted at admission. It never changes and is never reused; a name is a property (DI-060, DI-062, OD-4 \u00a73.1).",
                     "type": "string"
@@ -1845,6 +2076,13 @@
             "additionalProperties": false,
             "description": "(Definition | Claim)-[:CONFLICTS_WITH]->(Definition | Claim): Incompatible. The \"no shared definition\" evidence layer (pairs: Definition->Definition; Claim->Claim)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -1897,6 +2135,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -1929,6 +2174,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -1938,6 +2190,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -2001,6 +2260,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -2144,6 +2417,13 @@
                     "description": "the verbatim quote the item was extracted on",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -2346,6 +2626,13 @@
             "additionalProperties": false,
             "description": "(Platform)-[:CONSUMES]->(Standard): Platform reads / honors this spec (pairs: Platform->Standard)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -2398,6 +2685,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -2430,6 +2724,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -2439,6 +2740,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -2502,6 +2810,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -2568,6 +2890,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:DEFINES]->(Definition): Source gives this definition (pairs: Document->Definition)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -2620,6 +2949,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -2652,6 +2988,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -2661,6 +3004,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -2724,6 +3074,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -2825,6 +3189,41 @@
                         "null"
                     ]
                 },
+                "component_access_methods": {
+                    "description": "one component of the definition, a fragment of its span",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "component_discoverable": {
+                    "description": "one component of the definition, a fragment of its span",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "component_documentation": {
+                    "description": "one component of the definition, a fragment of its span",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "component_machine_readable_understandable": {
+                    "description": "one component of the definition, a fragment of its span",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "component_sufficient_quality": {
+                    "description": "one component of the definition, a fragment of its span",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "doc_id": {
                     "type": [
                         "string",
@@ -2870,6 +3269,13 @@
                         "null"
                     ]
                 },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The readable, source-scoped key the graph minted at admission. It never changes and is never reused; a name is a property (DI-060, DI-062, OD-4 \u00a73.1).",
                     "type": "string"
@@ -2890,6 +3296,13 @@
                 },
                 "method": {
                     "description": "How the assertion was made (manifest, crossref, openalex, github, human_ruling, ...).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "a hand-asserted definition's label",
                     "type": [
                         "string",
                         "null"
@@ -3060,6 +3473,13 @@
                 },
                 "term": {
                     "description": "`term` of the source Definition",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "term_as_ocrd": {
+                    "description": "the term as the OCR read it, kept beside the corrected `term`",
                     "type": [
                         "string",
                         "null"
@@ -3511,6 +3931,13 @@
             "additionalProperties": false,
             "description": "(Definition | Framework)-[:EXTENDS]->(Definition | Framework): Builds on, adds to (pairs: Definition->Definition; Framework->Framework)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -3563,6 +3990,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -3595,6 +4029,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -3604,6 +4045,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -3672,6 +4120,20 @@
                         "null"
                     ]
                 },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "ruling_id": {
                     "description": "The event id of the human ruling that authorized this assertion, when one did.",
                     "type": [
@@ -3733,6 +4195,16 @@
             "additionalProperties": false,
             "description": "A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).",
             "properties": {
+                "aliases": {
+                    "description": "the item's other surface forms, as the extractor recorded them",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -3803,6 +4275,13 @@
                     "description": "the verbatim quote the item was extracted on",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -3995,11 +4474,19 @@
                     ]
                 },
                 "year": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "`year` of the source Framework",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "integer"
                 }
             },
             "required": [
@@ -4040,6 +4527,13 @@
             "additionalProperties": false,
             "description": "(Construct)-[:GROUNDS]->(Definition): Construct's authority traces to this definition (pairs: Construct->Definition)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -4092,6 +4586,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -4124,6 +4625,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -4133,6 +4641,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -4196,6 +4711,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -4262,6 +4791,13 @@
             "additionalProperties": false,
             "description": "(Framework | Concept)-[:HAS_COMPONENT]->(Concept): Framework/Concept has this component part (part-whole, not subclass) (pairs: Framework->Concept; Concept->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -4314,6 +4850,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -4346,6 +4889,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -4355,6 +4905,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -4418,6 +4975,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -4484,6 +5055,13 @@
             "additionalProperties": false,
             "description": "(Measure)-[:IMPLEMENTED_BY]->(Tool): This software computes / runs the measure (pairs: Measure->Tool)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -4536,6 +5114,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -4568,6 +5153,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -4577,6 +5169,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -4640,6 +5239,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -4706,6 +5319,13 @@
             "additionalProperties": false,
             "description": "(Standard)-[:IMPLEMENTS]->(Concept): Spec realizes a concept (pairs: Standard->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -4758,6 +5378,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -4790,6 +5417,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -4799,6 +5433,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -4867,6 +5508,20 @@
                         "null"
                     ]
                 },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "ruling_id": {
                     "description": "The event id of the human ruling that authorized this assertion, when one did.",
                     "type": [
@@ -4928,6 +5583,16 @@
             "additionalProperties": false,
             "description": "An existing assessment, survey, index, or benchmark.",
             "properties": {
+                "aliases": {
+                    "description": "the item's other surface forms, as the extractor recorded them",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -4937,6 +5602,13 @@
                 },
                 "asserted_at": {
                     "description": "When the assertion was made, ISO 8601 UTC.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "attribute_anchors": {
+                    "description": "the extractor's per-attribute anchor map for owner/year/method, as JSON",
                     "type": [
                         "string",
                         "null"
@@ -5008,6 +5680,13 @@
                         "null"
                     ]
                 },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The readable, source-scoped key the graph minted at admission. It never changes and is never reused; a name is a property (DI-060, DI-062, OD-4 \u00a73.1).",
                     "type": "string"
@@ -5044,6 +5723,16 @@
                     "description": "`name` of the source Instrument",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "nulled_at_parse": {
+                    "description": "attributes the parser nulled because no covering span was given",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
                         "null"
                     ]
                 },
@@ -5204,11 +5893,19 @@
                     ]
                 },
                 "year": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "`year` of the source Instrument",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "integer"
                 }
             },
             "required": [
@@ -5418,6 +6115,13 @@
                     "description": "`grounding_span` of the source Measure",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -5632,6 +6336,13 @@
             "additionalProperties": false,
             "description": "(Measure | Instrument)-[:MEASURES]->(Construct | Concept): Item- or instrument-level mapping to the construct/concept it measures (pairs: Measure->Construct; Measure->Concept; Instrument->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -5684,6 +6395,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -5716,6 +6434,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -5725,6 +6450,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -5788,6 +6520,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -5854,6 +6600,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:MENTIONS]->(Concept): Concept appears substantively (not keyword match) (pairs: Document->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -5906,6 +6659,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -5938,6 +6698,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -5947,6 +6714,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -6010,6 +6784,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -6175,6 +6963,13 @@
             "additionalProperties": false,
             "description": "(Framework)-[:OPERATIONALIZED_BY]->(Instrument): The framework is operationalized by this instrument \u2014 the instrument is the framework's measuring apparatus, not merely a thing it mentions (pairs: Framework->Instrument)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -6227,6 +7022,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -6259,6 +7061,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -6268,6 +7077,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -6331,6 +7147,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -6397,6 +7227,13 @@
             "additionalProperties": false,
             "description": "(Instrument)-[:OPERATIONALIZES]->(Construct): Instrument measures this dimension (pairs: Instrument->Construct)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -6449,6 +7286,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -6481,6 +7325,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -6490,6 +7341,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -6553,6 +7411,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -6696,6 +7568,13 @@
                     "description": "`grounding_span` of the source Platform",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -6978,6 +7857,13 @@
                         "null"
                     ]
                 },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "id": {
                     "description": "The readable, source-scoped key the graph minted at admission. It never changes and is never reused; a name is a property (DI-060, DI-062, OD-4 \u00a73.1).",
                     "type": "string"
@@ -7187,6 +8073,13 @@
             "additionalProperties": false,
             "description": "(Concept)-[:PRECEDES]->(Concept): Concept precedes another (ordinal/temporal precedence) (pairs: Concept->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -7239,6 +8132,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -7271,6 +8171,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -7280,6 +8187,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -7343,6 +8257,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -7409,6 +8337,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:RECOMMENDS]->(Practice): Source makes this normative recommendation (pairs: Document->Practice)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -7461,6 +8396,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -7493,6 +8435,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -7502,6 +8451,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -7570,6 +8526,20 @@
                         "null"
                     ]
                 },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "ruling_id": {
                     "description": "The event id of the human ruling that authorized this assertion, when one did.",
                     "type": [
@@ -7631,6 +8601,16 @@
             "additionalProperties": false,
             "description": "A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP).",
             "properties": {
+                "aliases": {
+                    "description": "the item's other surface forms, as the extractor recorded them",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -7708,6 +8688,13 @@
                     "description": "the verbatim quote the item was extracted on",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -7917,6 +8904,13 @@
             "additionalProperties": false,
             "description": "(Concept)-[:SUBTYPE_OF]->(Concept): Concept is a subtype (subclass) of another concept (pairs: Concept->Concept)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -7969,6 +8963,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -8001,6 +9002,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -8010,6 +9018,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -8073,6 +9088,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -8139,6 +9168,13 @@
             "additionalProperties": false,
             "description": "(Document)-[:SUPERSEDES]->(Document): Newer document replaces an earlier version (pairs: Document->Document)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -8191,6 +9227,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -8223,6 +9266,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -8232,6 +9282,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -8295,6 +9352,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -8361,6 +9432,13 @@
             "additionalProperties": false,
             "description": "(Practice)-[:SUPPORTED_BY]->(Claim): The practice rests on this claim (the claim's evidence_grade is the strength behind the recommendation, DD-010) (pairs: Practice->Claim)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -8413,6 +9491,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -8445,6 +9530,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -8454,6 +9546,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -8517,6 +9616,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -8583,6 +9696,13 @@
             "additionalProperties": false,
             "description": "(Practice)-[:TARGETS]->(Platform): Practice is aimed at this machine consumer (pairs: Practice->Platform)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -8635,6 +9755,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -8667,6 +9794,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -8676,6 +9810,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -8739,6 +9880,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -8882,6 +10037,13 @@
                     "description": "`grounding_span` of the source Tool",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "grounding_thin": {
+                    "description": "DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source projection's own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens outside the name; absent otherwise. Built by the graph's emitter, which calls that function, never a copy of it",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -9098,6 +10260,13 @@
             "additionalProperties": false,
             "description": "(Instrument)-[:USES_MEASURE]->(Measure): Instrument uses this measure/item (pairs: Instrument->Measure)",
             "properties": {
+                "adjudicated": {
+                    "description": "a qualified edge was adjudicated",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
                 "anchor": {
                     "description": "the locator the extractor returned (the anchor contract, v0.3.7)",
                     "type": [
@@ -9150,6 +10319,13 @@
                     ],
                     "description": "Where in the source the harness located the text behind this assertion. Located and cut by the harness from the parsed intermediate, never quoted by the model (ai-readiness-kg's anchor contract, S-001 finding 2). A span the harness cannot locate is a failed extraction, never a stored assertion."
                 },
+                "grounding_span_to": {
+                    "description": "a qualified edge's quote at its target",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "grounding_text": {
                     "description": "the verbatim quote the edge was extracted on",
                     "type": [
@@ -9182,6 +10358,13 @@
                         "null"
                     ]
                 },
+                "prov_doc": {
+                    "description": "the document of the event that asserted the edge",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "prov_extractor": {
                     "description": "The instrument that made an extracted assertion, as `<provider>:<alias asked for>` (`claude_cli_max_oauth:sonnet`). Absent on a deterministic assertion, and that absence is itself the signal.",
                     "type": [
@@ -9191,6 +10374,13 @@
                 },
                 "prov_extractor_version": {
                     "description": "The model id the client ACTUALLY RESOLVED the alias to, read from the CLI envelope of the call that made the assertion; never the alias (DI-023: recording an alias as the model is citing a document that quotes a statute as if it were the statute).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "prov_method": {
+                    "description": "how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`",
                     "type": [
                         "string",
                         "null"
@@ -9254,6 +10444,20 @@
                 },
                 "prov_wasGeneratedBy": {
                     "description": "Run id of the activity that made the assertion.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_kind": {
+                    "description": "a qualified edge's `kind`",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "qualified_source": {
+                    "description": "a qualified edge's `source`",
                     "type": [
                         "string",
                         "null"
@@ -9454,6 +10658,6 @@
     },
     "title": "ai_readiness",
     "type": "object",
-    "version": "0.2.0"
+    "version": "0.3.2"
 }
 

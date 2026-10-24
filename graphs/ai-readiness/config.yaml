@@ -1,4 +1,4 @@
-# squiddy-generated: graph config | spec sha256 3db45c1c1e25cecd6fca096bc39df003640ab96cf30ccfe107e97dd7ffa72521
+# squiddy-generated: graph config | spec sha256 ada7eee9a135d3ef2ae0c6deb0ef6e22c604dd4dcf8188cd45395ddf00eeeaaf
 # Do not edit. Edit the spec and re-run `squiddy init`; `squiddy init --check` reports drift.
 #
 # Rendered by `squiddy init` from graph.yaml. Every value here is either a choice in
@@ -257,6 +257,25 @@ domain:
     source_schema: /Users/brock/GitHub/ai-readiness-kg/kg/schema.yaml
     source_schema_sha256: 240a3d60f039c4a3ecd1fe3e3e9488be98b77461bd223936ba9b09f7b8380093
     source_schema_version: 0.4.0
+    renamed_extra:
+      kind: qualified_kind
+      source: qualified_source
+    derived_annotations:
+      grounding_thin:
+        built: true
+        builder: the graph's emit.py, `emit_extraction`
+        rule: ai-readiness-kg/scripts/build_projection.py:977 is_thin_span(grounding_span, name), for
+          an item with a name; true or absent
+        slots_read:
+        - grounding_text
+        - name
+      unresolved:
+        built: false
+        rule: 'ai-readiness-kg/scripts/build_projection.py:698 _resolve_node and :723 _write_resolutions:
+          a named item whose name resolves to other than exactly one term of ai-readiness-kg''s controlled
+          vocabulary (kg/vocab, its alias index per label, and the log''s term_link_judged events)'
+        why_not: the rule reads ai-readiness-kg's vocabulary log and judged links, which are not slots
+          of this graph; the parity calls that read it take it as a non-answer (ai-readiness-kg docs/evidence/sq022/parity_queries_ERRATUM_02.yaml)
     assessment_node_types:
     - Action
     - AssessmentConstruct

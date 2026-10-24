@@ -112,12 +112,16 @@ def create_server(graph: T.Graph | None = ..., database: str | None = None, run=
     server. `run` points the verbs at an adopter's frame directory (`Tools`). The database rail fires HERE, at startup, before a driver exists: a mis-scoped
     server must never serve.
     """
+    corpus = ...                 # an injected graph (a test, the doc generator) serves both layers, as before
     if graph is ...:
         graph = T.Graph(database)
+        # squiddy SQ-022b (DN-050 R-223): the corpus layer reads the kit graph's own database, repointed on parity
+        # run 4 (docs/evidence/sq022/run4, 0 of 71 calls untraced); the assessment layer stays on the project database
+        corpus = T.Graph(guard.corpus_database(), layer="corpus")
     elif database is not None:
         guard.assert_allowed_db(database)
     mcp = FastMCP(SERVER_NAME, instructions=INSTRUCTIONS)
-    tools = T.Tools(graph=graph, run=run)
+    tools = T.Tools(graph=graph, run=run, corpus=corpus)
     _register(mcp, tools)
     registered = [t for t in mcp._tool_manager._tools] if hasattr(mcp, "_tool_manager") else []
     del registered

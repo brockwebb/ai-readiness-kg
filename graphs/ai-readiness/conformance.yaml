@@ -19,7 +19,16 @@ resolution_fields:
     text: the acquired text's own record, projected through fields.sha256 and local_path
     http: the transport trail of the fetches
     resolved: each source's raw answer; the evidence the fields were elected from
-  not_emitted: {}
+  # squiddy SQ-022b: SQ-021's inbox admission is the first entry with an acquisition record, and the release gate then
+  # read these three manifest fields as unprojected. They are the manifest's acquisition bookkeeping, which no
+  # Document of this graph carries (a dixie entry holds them too, with no record to compare against); the node
+  # carries the held file's `sha256` and `local_path` instead.
+  not_emitted:
+    acquisition_status: acquisition bookkeeping; the Document carries sha256 and local_path, not the fetch state
+    bytes: the held file's size, a manifest fact; the Document carries its sha256
+    verification_status: the manifest's verification state; the Document carries the sha256 it was verified by
+    retrieved_date: when the held file was obtained, a manifest fact; the Document carries no acquisition dates
+    verification_method: how the held file was verified, a manifest fact; the Document carries the sha256 it names
 
 # item 2: declare each edge class the schema says is one per pair (see graphs/library/conformance.yaml).
 pair_edges: []

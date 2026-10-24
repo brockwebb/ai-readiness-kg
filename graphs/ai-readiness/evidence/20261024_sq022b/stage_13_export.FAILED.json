@@ -1,0 +1,28 @@
+{
+  "stage": 13,
+  "sub": null,
+  "label": "13",
+  "name": "export",
+  "question": "",
+  "pass": false,
+  "decision_stop": false,
+  "returncode": 1,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.export",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--version",
+    "20261024_sq022b",
+    "--date",
+    "2026-10-24"
+  ],
+  "wall_seconds": 5.5,
+  "finished_utc": "2026-10-24T18:14:40.834539+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "FATAL: /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261024_sq022b_2026-10-24.json already exists and is not this ledger's export; a versioned export is never overwritten (DI-110). Use a new version label."
+  ],
+  "first_line": "FATAL: /Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261024_sq022b_2026-10-24.json already exists and is not this ledger's export; a versioned export is never overwritten (DI-110). Use a new version label."
+}

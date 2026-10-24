@@ -1,0 +1,27 @@
+{
+  "stage": 18,
+  "sub": null,
+  "label": "18",
+  "name": "seal",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-c",
+    "from squiddy.cli import seal_release; import sys; raise SystemExit(seal_release(*sys.argv[1:4]))",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "20261024_sq022b_r2",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261024_sq022b_r2_2026-10-24.json"
+  ],
+  "wall_seconds": 4.99,
+  "finished_utc": "2026-10-24T18:18:36.470733+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[seal] 20261024_sq022b_r2.000.jsonl: 16,660 events, 40,001,879 bytes, sha256 17168ca0a825b58a, epoch 0.3.0+340e3edac02a",
+    "[seal] 20261024_sq022b_r2.001.jsonl: 17,590 events, 40,001,419 bytes, sha256 b0d80b96ddde3fbd, epoch 0.3.0+340e3edac02a",
+    "[seal] 20261024_sq022b_r2.002.jsonl: 2,141 events, 4,894,857 bytes, sha256 51aff58514c8daa2, epoch 0.3.2+2095de47aed9"
+  ],
+  "first_line": "[seal] 20261024_sq022b_r2.000.jsonl: 16,660 events, 40,001,879 bytes, sha256 17168ca0a825b58a, epoch 0.3.0+340e3edac02a"
+}

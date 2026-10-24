@@ -1,0 +1,40 @@
+{
+  "stage": 15,
+  "sub": null,
+  "label": "15",
+  "name": "anchors-by-id",
+  "question": "",
+  "pass": true,
+  "decision_stop": false,
+  "returncode": 0,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.conformance",
+    "run",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--export",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261024_sq022b_2026-10-24.json",
+    "--scope",
+    "graph",
+    "--gate",
+    "scope_anchors_covered",
+    "--anchors",
+    "identifier",
+    "--controls",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261024_sq022b/anchors_by_id_20261024_sq022b.json"
+  ],
+  "wall_seconds": 1.67,
+  "finished_utc": "2026-10-24T18:05:27.857801+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[N/A    ] 29 scope_anchors_covered  (the graph's scope names no anchors (DN-028 R-129: they are optional); nothing to check, and nothing checked is not a pass)",
+    "[control caught ] 29 scope_anchors_covered",
+    "Received notification from DBMS server: <GqlStatusObject gql_status='01N50', status_description='warn: label does not exist. The label `Work` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=10, offset=9>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 9, 'line': 1, 'column': 10}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (n:`Work`) RETURN n.id AS k, properties(n) AS p'",
+    "Received notification from DBMS server: <GqlStatusObject gql_status='01N50', status_description='warn: label does not exist. The label `Expression` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=10, offset=9>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 9, 'line': 1, 'column': 10}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (n:`Expression`) RETURN n.id AS k, properties(n) AS p'",
+    "Received notification from DBMS server: <GqlStatusObject gql_status='01N50', status_description='warn: label does not exist. The label `Software` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=1, column=10, offset=9>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_severity': 'WARNING', '_position': {'offset': 9, 'line': 1, 'column': 10}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: 'MATCH (n:`Software`) RETURN n.id AS k, properties(n) AS p'"
+  ],
+  "first_line": "[N/A    ] 29 scope_anchors_covered  (the graph's scope names no anchors (DN-028 R-129: they are optional); nothing to check, and nothing checked is not a pass)"
+}

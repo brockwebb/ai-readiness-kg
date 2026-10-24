@@ -1,0 +1,46 @@
+{
+  "phase": "before the index",
+  "ruling": "DN-041 R-175",
+  "ran": [
+    "conform",
+    "dangling",
+    "conformance",
+    "presence",
+    "halts",
+    "text_held",
+    "anchors-by-id"
+  ],
+  "failed": [
+    {
+      "stage": 14,
+      "name": "conform",
+      "rc": 1,
+      "record": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261024_sq022b/stage_14_conform.FAILED.json",
+      "question": "",
+      "defect_of_record": null,
+      "reason": "[schema] validated 30995 nodes and 34048 links against ai_readiness.schema.json: 2 distinct failure row(s)",
+      "findings": null
+    },
+    {
+      "stage": 15,
+      "name": "conformance",
+      "rc": 1,
+      "record": "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261024_sq022b/stage_15_conformance.FAILED.json",
+      "question": "",
+      "defect_of_record": null,
+      "reason": "[FAIL   ]  1 resolution_fields_projected",
+      "findings": null
+    }
+  ],
+  "blocked": [],
+  "not_run": [
+    "index",
+    "index-parity",
+    "anchors",
+    "claims-reachable",
+    "diff",
+    "registers",
+    "seal"
+  ],
+  "finished_utc": "2026-10-24T18:05:27.858504+00:00"
+}

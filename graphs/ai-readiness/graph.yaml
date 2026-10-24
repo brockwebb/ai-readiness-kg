@@ -13,6 +13,15 @@
 # SQ-022 (cc_tasks/2026-10-22_SQ-022_..._consumer_repointed.md) keeps this head at squiddy
 # docs/evidence/sq022/ai_readiness_graph_head.yaml: `version` 0.2.0 for R-217's `span_raw_equal` slot (DN-049 ADDENDUM
 # 01; an added optional slot, a minor version), and Part B's own database (below, `serve`).
+# SQ-022b (cc_tasks/2026-10-24_SQ-022b_..._consumer_repointed.md, DN-050 R-219 to R-221) keeps it at squiddy
+# docs/evidence/sq022b/ai_readiness_graph_head.yaml, cut from the live graph.yaml so that SQ-021's in-place additions
+# (the inbox intake, `extract.protocol`) are kept: `version` 0.3.0. The slots added are optional, but `year` changes
+# range (string to integer, R-221), which a reader of 0.2.0 typed as a string; so a minor version and a new schema
+# epoch. The derived annotations (DI-003, R-220) are declared in the generated `domain.airkg_schema`.
+# 0.3.1: `year` widened back to integer-or-string. 0.3.0's integer-only range made 8 events SQ-019 wrote fail the
+# replay's validation (the kit validates history against the current classes); the emitter still writes integers only.
+# 0.3.2: the same union with `range: integer` beside it, so the generated JSON Schema (the release's conform gate) says
+# integer for every served value, as R-221 means; 0.3.1's JSON Schema said string (LinkML's default range).
 #
 # `scope.topic` is ai-readiness-kg/README.md lines 3-5 VERBATIM: the graph's own statement of what it answers. The
 # operator has stated no separate scope for it on the kit; this is the nearest record in his project.
@@ -29,7 +38,7 @@ description: >-
   platforms its extractions asserted, each re-grounded in the text it was extracted from and carrying its original
   provenance. The assessment layer (criteria, indicators, observations, findings, actions) stays in ai-readiness-kg
   and reads this graph by doc_id.
-version: 0.2.0
+version: 0.3.2
 namespace: https://github.com/brockwebb/ai-readiness-kg/graphs/ai-readiness/
 # The kit's core schema at its canonical checkout, as arnold-evidence's schema imports it. Left to `init`, the import is
 # the absolute path of whichever kit checkout ran it, and SQ-019 ran in a worktree that is removed after its merge.
@@ -140,6 +149,25 @@ domain:
     source_schema: /Users/brock/GitHub/ai-readiness-kg/kg/schema.yaml
     source_schema_sha256: 240a3d60f039c4a3ecd1fe3e3e9488be98b77461bd223936ba9b09f7b8380093
     source_schema_version: 0.4.0
+    renamed_extra:
+      kind: qualified_kind
+      source: qualified_source
+    derived_annotations:
+      grounding_thin:
+        built: true
+        builder: the graph's emit.py, `emit_extraction`
+        rule: ai-readiness-kg/scripts/build_projection.py:977 is_thin_span(grounding_span, name), for an item with
+          a name; true or absent
+        slots_read:
+        - grounding_text
+        - name
+      unresolved:
+        built: false
+        rule: 'ai-readiness-kg/scripts/build_projection.py:698 _resolve_node and :723 _write_resolutions: a named
+          item whose name resolves to other than exactly one term of ai-readiness-kg''s controlled vocabulary (kg/vocab,
+          its alias index per label, and the log''s term_link_judged events)'
+        why_not: the rule reads ai-readiness-kg's vocabulary log and judged links, which are not slots of this graph;
+          the parity calls that read it take it as a non-answer (ai-readiness-kg docs/evidence/sq022/parity_queries_ERRATUM_02.yaml)
     assessment_node_types:
     - Action
     - AssessmentConstruct
@@ -377,6 +405,50 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    name:
+      description: a hand-asserted definition's label
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:123 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    term_as_ocrd:
+      description: the term as the OCR read it, kept beside the corrected `term`
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:129 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    component_discoverable:
+      description: one component of the definition, a fragment of its span
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:64 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    component_machine_readable_understandable:
+      description: one component of the definition, a fragment of its span
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:65 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    component_sufficient_quality:
+      description: one component of the definition, a fragment of its span
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:67 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    component_documentation:
+      description: one component of the definition, a fragment of its span
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:68 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    component_access_methods:
+      description: one component of the definition, a fragment of its span
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:69 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Concept
   is_a: Node
   override: true
@@ -493,6 +565,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Construct
   is_a: Node
   description: A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted
@@ -608,6 +689,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Instrument
   is_a: Node
   description: An existing assessment, survey, index, or benchmark.
@@ -626,8 +716,13 @@ classes:
       - 'source: ai-readiness-kg/kg/schema.yaml:148'
     year:
       description: '`year` of the source Instrument'
+      range: integer
+      any_of:
+      - range: integer
+      - range: string
       comments:
-      - 'source: ai-readiness-kg/kg/schema.yaml:149'
+      - 'source: ai-readiness-kg/kg/schema.yaml:149; integer by squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-221, with a string arm for the events written before it (squiddy cc_tasks/2026-10-24_SQ-022b_..._RESULT.md)'
     instrument_method:
       description: '`method` of the source Instrument'
       comments:
@@ -730,6 +825,32 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    aliases:
+      description: the item's other surface forms, as the extractor recorded them
+      multivalued: true
+      comments:
+      - 'source: ai-readiness-kg/kg/extraction/prompt_template_v0_3_9.md:69 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    attribute_anchors:
+      description: the extractor's per-attribute anchor map for owner/year/method, as JSON
+      comments:
+      - 'source: ai-readiness-kg/kg/extraction/prompt_template_v0_3_9.md:143 (REQUIRED map, prompt v0.3.7 on) (squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-219)'
+    nulled_at_parse:
+      description: attributes the parser nulled because no covering span was given
+      multivalued: true
+      comments:
+      - 'source: ai-readiness-kg/kg/schema.yaml:36; ai-readiness-kg/kg/extraction/parser.py:119 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Measure
   is_a: Node
   description: An individual item or metric inside an Instrument.
@@ -848,6 +969,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Claim
   is_a: Node
   override: true
@@ -973,6 +1103,20 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    name:
+      description: a hand-asserted claim's label
+      comments:
+      - 'source: ai-readiness-kg/scripts/assert_noaa_definition.py:138 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Standard
   is_a: Node
   override: true
@@ -1092,6 +1236,21 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    aliases:
+      description: the item's other surface forms, as the extractor recorded them
+      multivalued: true
+      comments:
+      - 'source: ai-readiness-kg/kg/extraction/prompt_template_v0_3_9.md:69 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Framework
   is_a: Node
   description: A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).
@@ -1110,8 +1269,13 @@ classes:
       - 'source: ai-readiness-kg/kg/schema.yaml:223'
     year:
       description: '`year` of the source Framework'
+      range: integer
+      any_of:
+      - range: integer
+      - range: string
       comments:
-      - 'source: ai-readiness-kg/kg/schema.yaml:224'
+      - 'source: ai-readiness-kg/kg/schema.yaml:224; integer by squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-221, with a string arm for the events written before it (squiddy cc_tasks/2026-10-24_SQ-022b_..._RESULT.md)'
     grounding_text:
       description: the verbatim quote the item was extracted on
       comments:
@@ -1206,6 +1370,21 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    aliases:
+      description: the item's other surface forms, as the extractor recorded them
+      multivalued: true
+      comments:
+      - 'source: ai-readiness-kg/kg/extraction/prompt_template_v0_3_9.md:69 (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Practice
   is_a: Node
   description: A normative recommendation a source makes about how to publish, structure, expose, or maintain data
@@ -1330,6 +1509,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Tool
   is_a: Node
   description: Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker, GoAccess,
@@ -1453,6 +1641,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Platform
   is_a: Node
   description: A machine consumer whose behavior is targeted or described (Google Search, Bing, a named crawler,
@@ -1568,6 +1765,15 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    grounding_thin:
+      description: 'DERIVED (DI-003; DN-050 R-220): true when the item has a name and its quote is thin by the source
+        projection''s own rule, `is_thin_span(grounding_span, name)`: fewer than 8 tokens and fewer than 3 tokens
+        outside the name; absent otherwise. Built by the graph''s emitter, which calls that function, never a copy
+        of it'
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:977 (`is_thin_span`), :713 (`_flag_thin_spans`); squiddy
+        docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md R-220'
 - name: Defines
   is_a: Edge
   description: '(Document)-[:DEFINES]->(Definition): Source gives this definition (pairs: Document->Definition)'
@@ -1648,6 +1854,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Mentions
   is_a: Edge
   override: true
@@ -1729,6 +1968,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Asserts
   is_a: Edge
   override: true
@@ -1810,6 +2082,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: About
   is_a: Edge
   description: '(Claim)-[:ABOUT]->(Concept): What the claim concerns (pairs: Claim->Concept)'
@@ -1890,6 +2195,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Operationalizes
   is_a: Edge
   description: '(Instrument)-[:OPERATIONALIZES]->(Construct): Instrument measures this dimension (pairs: Instrument->Construct)'
@@ -1970,6 +2308,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: OperationalizedBy
   is_a: Edge
   description: '(Framework)-[:OPERATIONALIZED_BY]->(Instrument): The framework is operationalized by this instrument
@@ -2051,6 +2422,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Measures
   is_a: Edge
   description: '(Measure | Instrument)-[:MEASURES]->(Construct | Concept): Item- or instrument-level mapping to
@@ -2133,6 +2537,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Grounds
   is_a: Edge
   description: '(Construct)-[:GROUNDS]->(Definition): Construct''s authority traces to this definition (pairs: Construct->Definition)'
@@ -2213,6 +2650,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Extends
   is_a: Edge
   description: '(Definition | Framework)-[:EXTENDS]->(Definition | Framework): Builds on, adds to (pairs: Definition->Definition;
@@ -2294,6 +2764,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: ConflictsWith
   is_a: Edge
   description: '(Definition | Claim)-[:CONFLICTS_WITH]->(Definition | Claim): Incompatible. The "no shared definition"
@@ -2375,6 +2878,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Cites
   is_a: Edge
   override: true
@@ -2456,6 +2992,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: BuildsOn
   is_a: Edge
   description: '(Standard | Framework)-[:BUILDS_ON]->(Standard | Framework): e.g. FCSM 25-03 builds_on OPEN Gov
@@ -2537,6 +3106,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Implements
   is_a: Edge
   description: '(Standard)-[:IMPLEMENTS]->(Concept): Spec realizes a concept (pairs: Standard->Concept)'
@@ -2617,6 +3219,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: UsesMeasure
   is_a: Edge
   description: '(Instrument)-[:USES_MEASURE]->(Measure): Instrument uses this measure/item (pairs: Instrument->Measure)'
@@ -2698,6 +3333,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: HasComponent
   is_a: Edge
   description: '(Framework | Concept)-[:HAS_COMPONENT]->(Concept): Framework/Concept has this component part (part-whole,
@@ -2780,6 +3448,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: SubtypeOf
   is_a: Edge
   description: '(Concept)-[:SUBTYPE_OF]->(Concept): Concept is a subtype (subclass) of another concept (pairs: Concept->Concept)'
@@ -2861,6 +3562,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Precedes
   is_a: Edge
   description: '(Concept)-[:PRECEDES]->(Concept): Concept precedes another (ordinal/temporal precedence) (pairs:
@@ -2943,6 +3677,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Recommends
   is_a: Edge
   description: '(Document)-[:RECOMMENDS]->(Practice): Source makes this normative recommendation (pairs: Document->Practice)'
@@ -3024,6 +3791,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: SupportedBy
   is_a: Edge
   description: '(Practice)-[:SUPPORTED_BY]->(Claim): The practice rests on this claim (the claim''s evidence_grade
@@ -3106,6 +3906,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: ImplementedBy
   is_a: Edge
   description: '(Measure)-[:IMPLEMENTED_BY]->(Tool): This software computes / runs the measure (pairs: Measure->Tool)'
@@ -3187,6 +4020,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Consumes
   is_a: Edge
   description: '(Platform)-[:CONSUMES]->(Standard): Platform reads / honors this spec (pairs: Platform->Standard)'
@@ -3268,6 +4134,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: AppliesTo
   is_a: Edge
   description: '(Practice | Measure)-[:APPLIES_TO]->(Concept): Practice/Measure targets this asset class or concept
@@ -3350,6 +4249,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Targets
   is_a: Edge
   description: '(Practice)-[:TARGETS]->(Platform): Practice is aimed at this machine consumer (pairs: Practice->Platform)'
@@ -3431,6 +4363,39 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
 - name: Supersedes
   is_a: Edge
   override: true
@@ -3513,3 +4478,36 @@ classes:
       description: 'the projected item whole, as JSON: every property it carries, listed in the schema or not'
       comments:
       - 'source: squiddy docs/design/2026-10-21_DN-049_ai_readiness_kg_onto_the_kit.md R-208 (never edited to fit)'
+    prov_method:
+      description: 'how the asserting event made the edge: its provenance `method`, else its `model_id`, else `asserted`'
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    prov_doc:
+      description: the document of the event that asserted the edge
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:559 and :574 (`project_edge`) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    grounding_span_to:
+      description: a qualified edge's quote at its target
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_kind:
+      description: a qualified edge's `kind`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `kind` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    qualified_source:
+      description: a qualified edge's `source`
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES); renamed from
+        `source` (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'
+    adjudicated:
+      description: a qualified edge was adjudicated
+      range: boolean
+      comments:
+      - 'source: ai-readiness-kg/scripts/build_projection.py:508 (QUALIFIED_EDGE_ITEM_PROPERTIES) (squiddy docs/design/2026-10-24_DN-050_sq022_slots_filled_gate_as_sampling_plan_hazbrief_filings_triaged.md
+        R-219)'

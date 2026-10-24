@@ -1,0 +1,31 @@
+{
+  "stage": 14,
+  "sub": null,
+  "label": "14",
+  "name": "conform",
+  "question": "",
+  "pass": false,
+  "decision_stop": false,
+  "returncode": 1,
+  "command": [
+    "/Users/brock/GitHub/squiddy/.venv/bin/python",
+    "-m",
+    "squiddy.gates",
+    "schema",
+    "--graph",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness",
+    "--export",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/exports/ai_readiness_graph_20261024_sq022b_2026-10-24.json",
+    "--json",
+    "/Users/brock/GitHub/ai-readiness-kg/graphs/ai-readiness/evidence/20261024_sq022b/schema_gate_20261024_sq022b.json"
+  ],
+  "wall_seconds": 8.02,
+  "finished_utc": "2026-10-24T18:05:10.163497+00:00",
+  "defect_of_record": null,
+  "output_tail": [
+    "[schema] validated 30995 nodes and 34048 links against ai_readiness.schema.json: 2 distinct failure row(s)",
+    "  Framework         year                        wrong_type                  218  \"int not string\"",
+    "  Instrument        year                        wrong_type                  130  \"int not string\""
+  ],
+  "first_line": "[schema] validated 30995 nodes and 34048 links against ai_readiness.schema.json: 2 distinct failure row(s)"
+}
