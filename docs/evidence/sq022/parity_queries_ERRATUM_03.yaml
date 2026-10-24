@@ -1,0 +1,34 @@
+# SQ-022b Part C, ERRATUM 03 to parity_queries.yaml (committed 8ce578c1, not edited), after ERRATA 01 and 02 (not
+# edited). WRITTEN AFTER RUN 3 READ ITS ANSWERS, as ERRATUM 01 was written after run 1 (squiddy SQ-022), and
+# committed before run 4. The operator may revert it; the repoint it lets through is one line (mcp/airkg_server.py).
+#
+# FOUND BY run 3 (docs/evidence/sq022/run3/ and run3_tracer_fixed/differences.jsonl): no value differs and no old
+# item is missing unexplained. Every one of the 174 untraced items is NEW-ONLY and belongs to ONE document,
+# `inbox_820f624e0b0884af` (RFC 8288, Web Linking), with its 9 Definitions, 83 Concepts, 30 Claims, 13 Standards,
+# 2 Practices and 27 ABOUT edges.
+#
+# WHY THE BASE RULE COUNTS THEM. "An item present in the NEW store and absent from the OLD is never traced (nothing
+# kept out explains an addition)". When that was written (SQ-022, 2026-10-22), the kit graph was ai-readiness-kg's
+# corpus re-admitted, so the two stores held one corpus by construction and a new-only item could only be the kit
+# inventing one. On 2026-10-23 squiddy SQ-021 Part D admitted this document into the kit graph through the kit's
+# governed admission (DN-043; DN-049 R-212), admission `adm-20261023T045444Z-134012bb` (165 ledger events carry it;
+# work/admissions/inbox_820f624e0b0884af.jsonl). The old store never manifested it: ai-readiness-kg's log has no
+# `manifest_add` for it and the old database no Document of that id. The old projection is not where new documents
+# go any more, so an item the kit admitted after it is an addition the old store cannot give, not an invention.
+#
+# WHAT CHANGES. A new-only item (a node whose key's document part, or a Document whose id, or an edge both of whose
+# endpoints' document parts) names a document listed below is TRACED `admitted_after_freeze:<admission id>`, when, at
+# run time, the old store holds no Document of that id. Nothing else: an old-only item, a value difference, or a
+# new-only item of any other document is untraced exactly as before. Listed by id, never by pattern.
+#
+# ALSO RECORDED (no rule change): scripts/sq022_parity.py's C10 tracer queried the new store with the old store's
+# relationship name, so run 3 reported 2,781 spurious new-only Definitions behind a C10 answer of 36 against 27; ERRATUM
+# 01's mapping now reaches that query (run3_tracer_fixed). The 9 left there are this document's.
+erratum_of: parity_queries.yaml
+committed_base: 8ce578c1
+after: [parity_queries_ERRATUM_01.yaml, parity_queries_ERRATUM_02.yaml]
+found_by: docs/evidence/sq022/run3_tracer_fixed/differences.jsonl
+admitted_after_freeze:
+  - doc_id: inbox_820f624e0b0884af
+    admission_id: adm-20261023T045444Z-134012bb
+    by: squiddy SQ-021 Part D (DN-049 R-212), squiddy admit on the standard tier

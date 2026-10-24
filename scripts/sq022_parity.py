@@ -36,7 +36,8 @@ import airkg_tools as T  # noqa: E402
 QUERIES = REPO / "docs" / "evidence" / "sq022" / "parity_queries.yaml"
 #: the query file's corrections, each a file beside it, applied in order when present (never an edit of the file)
 ERRATA = [REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_01.yaml",
-          REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_02.yaml"]
+          REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_02.yaml",
+          REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_03.yaml"]
 KIT_CONFIG = REPO / "graphs" / "ai-readiness" / "config.yaml"
 
 #: The verbs' own keys on a get_document answer; every other top-level key is a Document property (`{**p, ...}`).
@@ -74,6 +75,9 @@ def load_spec() -> dict:
             src = yaml.safe_load((REPO / "kg" / "schema.yaml").read_text(encoding="utf-8"))
             spec["not_corpus"] = sorted(src["node_types"])
         spec["nested_lists"] = spec["nested_lists"] or bool(er.get("canonicalize_nested_lists"))
+        # ERRATUM 03: documents the kit admitted after the old store froze (verified against the old store in main)
+        spec.setdefault("after_freeze", {}).update(
+            {a["doc_id"]: a["admission_id"] for a in er.get("admitted_after_freeze") or []})
         if "relationship_types" in (er.get("dialect_add") or {}):
             cfg = yaml.safe_load(KIT_CONFIG.read_text(encoding="utf-8"))
             class_of = cfg["domain"]["airkg_schema"]["class_of"]
@@ -299,7 +303,10 @@ def item_sets(call: dict, st: Stores, side: str) -> dict:
     if cid == "C09":
         return {"edge": st.triples(side, "ASSERTS", ":Document", ":Concept")}
     if cid == "C10":
-        return {"node:Definition": st.ids(side, "Definition", "WHERE NOT ()-[:DEFINES]->(n)")}
+        # ERRATUM 01's relationship-type dialect applies here too (run 3 found the new side read with the old name,
+        # so every kit Definition looked edgeless to the tracer while the answer itself, rewritten, was right)
+        rel = "DEFINES" if side == "old" else st.reltypes.get("DEFINES", "DEFINES")
+        return {"node:Definition": st.ids(side, "Definition", f"WHERE NOT ()-[:{rel}]->(n)")}
     return {}
 
 
@@ -354,9 +361,16 @@ def trace_items(old_only: dict, new_only: dict, kept: dict, spec: dict | None = 
                 why = f"declared:{d['rule']}" if d else None
             (traced if why else untraced).append({"side": "old_only", "kind": kind, "item": list(it)
                                                   if isinstance(it, tuple) else it, "kept_out_as": why})
+    after = (spec or {}).get("after_freeze") or {}
     for kind, items in new_only.items():
         for it in sorted(items, key=str):
-            untraced.append({"side": "new_only", "kind": kind, "item": list(it) if isinstance(it, tuple) else it})
+            # ERRATUM 03: an item of a document the kit admitted after the old store froze, listed by id
+            docs = {str(x).split("::", 1)[0] for x in ((it[0], it[2]) if kind == "edge" else (it,))}
+            row = {"side": "new_only", "kind": kind, "item": list(it) if isinstance(it, tuple) else it}
+            if len(docs) == 1 and next(iter(docs)) in after:
+                traced.append({**row, "kept_out_as": f"admitted_after_freeze:{after[next(iter(docs))]}"})
+            else:
+                untraced.append(row)
     return traced, untraced
 
 
@@ -543,6 +557,11 @@ def main(argv=None) -> int:
                                      "answer": answers[side][c["id"]]}, ensure_ascii=False, default=str) + "\n")
                 fh.flush()
     st = Stores(g_old, g_kit, spec["reltypes"], spec)
+    # ERRATUM 03's run-time condition: a listed document the OLD store holds is not an addition, and is dropped
+    held_old = st.ids("old", "Document")
+    for d in [d for d in spec.get("after_freeze") or {} if d in held_old]:
+        print(f"ERRATUM 03: {d} is in the old store, so its items are not additions; not applied")
+        spec["after_freeze"].pop(d)
     table = defaultdict(Counter)
     with (out / "differences.jsonl").open("w", encoding="utf-8") as fh:
         for c in calls:
