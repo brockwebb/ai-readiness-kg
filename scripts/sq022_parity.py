@@ -35,7 +35,8 @@ import airkg_tools as T  # noqa: E402
 
 QUERIES = REPO / "docs" / "evidence" / "sq022" / "parity_queries.yaml"
 #: the query file's corrections, each a file beside it, applied in order when present (never an edit of the file)
-ERRATA = [REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_01.yaml"]
+ERRATA = [REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_01.yaml",
+          REPO / "docs" / "evidence" / "sq022" / "parity_queries_ERRATUM_02.yaml"]
 KIT_CONFIG = REPO / "graphs" / "ai-readiness" / "config.yaml"
 
 #: The verbs' own keys on a get_document answer; every other top-level key is a Document property (`{**p, ...}`).
@@ -51,11 +52,28 @@ def load_spec() -> dict:
     import yaml
     spec = yaml.safe_load(QUERIES.read_text(encoding="utf-8"))
     spec["reltypes"], spec["errata"] = {}, []
+    spec.update(non_answer=set(), declared={}, year_rule=None, aggregate={}, not_corpus=None, nested_lists=False,
+                extra_files={})
     for e in ERRATA:
         if not e.is_file():
             continue
         er = yaml.safe_load(e.read_text(encoding="utf-8"))
         spec["errata"].append(str(e.relative_to(REPO)))
+        # ERRATUM 02 (squiddy SQ-022b): non-answers, declared differences, aggregate tracing, the non-corpus edges,
+        # and the base file's own list rule applied inside rows
+        spec["non_answer"] |= set(er.get("non_answer_properties") or [])
+        if er.get("declared_differences"):
+            path = e.parent / er["declared_differences"]
+            spec["extra_files"][str(path.relative_to(REPO))] = hashlib.sha256(path.read_bytes()).hexdigest()
+            for ln in path.read_text(encoding="utf-8").splitlines():
+                d = json.loads(ln)
+                spec["declared"][(d["kind"], d["key"], d["property"])] = d
+        spec["year_rule"] = er.get("year_type_rule") or spec["year_rule"]
+        spec["aggregate"].update(er.get("aggregate_tracing") or {})
+        if er.get("not_corpus_layer"):
+            src = yaml.safe_load((REPO / "kg" / "schema.yaml").read_text(encoding="utf-8"))
+            spec["not_corpus"] = sorted(src["node_types"])
+        spec["nested_lists"] = spec["nested_lists"] or bool(er.get("canonicalize_nested_lists"))
         if "relationship_types" in (er.get("dialect_add") or {}):
             cfg = yaml.safe_load(KIT_CONFIG.read_text(encoding="utf-8"))
             class_of = cfg["domain"]["airkg_schema"]["class_of"]
@@ -132,6 +150,8 @@ def canon_props(p: dict, side: str, spec: dict) -> tuple[str | None, dict]:
     # own stamp of the same old name (`method: extraction`)
     for k in spec["canonicalize"]["store_bookkeeping_properties"][side]:
         p.pop(k, None)
+    for k in spec.get("non_answer") or ():                     # ERRATUM 02 item 1 (R-220), both sides
+        p.pop(k, None)
     if side == "new":
         for kit, old in spec["dialect"]["renamed_properties"].items():
             if kit in p:
@@ -171,6 +191,10 @@ def canonicalize(call: dict, ans: dict, side: str, spec: dict) -> dict:
     if call["verb"] == "search_text":
         for h in a.get("hits") or []:
             h["locator"] = canon_locator(h.get("locator"), spec)
+    unordered = spec.get("nested_lists") and (call["verb"] != "run_cypher"
+                                               or "ORDER BY" not in str((call.get("args") or {}).get("query", "")))
+    if call["verb"] == "get_document" and "properties" in a and spec.get("nested_lists"):
+        a["properties"] = sort_lists(a["properties"])
     if call["verb"] == "run_cypher" and "rows" in a:
         rows = []
         for r in a["rows"]:
@@ -178,10 +202,21 @@ def canonicalize(call: dict, ans: dict, side: str, spec: dict) -> dict:
             for k, v in list(r.items()):
                 if isinstance(v, dict):
                     nk, pv = canon_props(v, side, spec)
-                    r[k] = {"__key__": nk, **pv}
+                    r[k] = {"__key__": nk, **(sort_lists(pv) if unordered else pv)}
+                elif isinstance(v, list) and unordered:
+                    r[k] = sort_lists(v)
             rows.append(r)
         a["rows"] = rows
     return a
+
+
+def sort_lists(x):
+    """ERRATUM 02 item 5: the base file's `canonicalize.lists`, applied to every list inside an unordered answer."""
+    if isinstance(x, dict):
+        return {k: sort_lists(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return sorted((sort_lists(v) for v in x), key=lambda v: json.dumps(v, sort_keys=True, default=str))
+    return x
 
 
 # ------------------------------------------------------------------ comparison
@@ -212,9 +247,19 @@ def diff(a, b, path="") -> list[tuple[str, object, object]]:
 class Stores:
     """Direct reads of both stores' item sets, for tracing only (never through the verbs' row cap)."""
 
-    def __init__(self, old: T.Graph, new: T.Graph, reltypes: dict | None = None):
+    def __init__(self, old: T.Graph, new: T.Graph, reltypes: dict | None = None, spec: dict | None = None):
         self.old, self.new = old, new
         self.reltypes = reltypes or {}
+        self.spec = spec or {}
+
+    def not_corpus_only(self, typ: str) -> bool:
+        """ERRATUM 02 item 4: every old edge of this type with a null endpoint key joins two non-corpus nodes."""
+        rows, _ = self.old.read(
+            f"MATCH (x)-[e:{typ}]->(y) WHERE NOT x:AssessmentIndicator AND NOT x:Observation AND NOT x:Finding "
+            f"AND (coalesce(x.key, x.doc_id) IS NULL OR coalesce(y.key, y.doc_id) IS NULL) "
+            f"RETURN count(e) AS n, sum(CASE WHEN any(l IN labels(x) + labels(y) WHERE l IN $L) THEN 1 ELSE 0 END) "
+            f"AS corpus", limit=10, L=self.spec["not_corpus"])
+        return bool(rows) and rows[0]["n"] > 0 and rows[0]["corpus"] == 0
 
     def ids(self, side: str, label: str, where: str = "", **params) -> set:
         g = self.old if side == "old" else self.new
@@ -258,8 +303,44 @@ def item_sets(call: dict, st: Stores, side: str) -> dict:
     return {}
 
 
-def trace_items(old_only: dict, new_only: dict, kept: dict) -> tuple[list, list]:
-    """(traced, untraced) item descriptions: an old-only item traces by its kept-out key; a new-only item never does."""
+def declared(spec: dict, kind: str, key, prop, old, new) -> str | None:
+    """ERRATUM 02 item 2: `declared:<rule>` when this value difference is a listed declared difference with the listed
+    values, or R-221's type rule (the old store's string, the kit's integer of it); None otherwise."""
+    d = (spec.get("declared") or {}).get((kind, key, prop))
+    if d is not None and old == d["old"] and (new in ("<absent>", None) if d["new"] is None else new == d["new"]):
+        return f"declared:{d['rule']}"
+    yr = spec.get("year_rule")
+    if yr and prop == yr["property"] and isinstance(old, str) and isinstance(new, int) and not isinstance(new, bool) \
+            and old.strip().lstrip("-").isdigit() and int(old.strip()) == new:
+        return f"declared:{yr['rule']}"
+    return None
+
+
+def trace_aggregate(st: "Stores", kept: dict, queries: list[str], key, old, new) -> str | None:
+    """ERRATUM 02 item 3: a collect() value differs; traced when nothing is new-only and every old-only element is
+    reached, on every old-store path, through a kept-out edge or node."""
+    if not isinstance(old, list) or not isinstance(new, list):
+        return None
+    old_only = {json.dumps(v, sort_keys=True) for v in old} - {json.dumps(v, sort_keys=True) for v in new}
+    if not old_only or {json.dumps(v, sort_keys=True) for v in new} - {json.dumps(v, sort_keys=True) for v in old}:
+        return None
+    for el in old_only:
+        paths = []
+        for q in queries:
+            rows, _ = st.old.read(q, limit=100_000, i=key, n=json.loads(el))
+            paths += rows
+        if not paths:
+            return None
+        for r in paths:
+            if not (any(("edge", json.dumps(e)) in kept for e in r["edges"])
+                    or any(("node", json.dumps(n)) in kept for n in r["nodes"])):
+                return None
+    return "kept_out (aggregate)"
+
+
+def trace_items(old_only: dict, new_only: dict, kept: dict, spec: dict | None = None) -> tuple[list, list]:
+    """(traced, untraced) item descriptions: an old-only item traces by its kept-out key, or (ERRATUM 02) as a listed
+    declared difference of the whole item; a new-only item never does."""
     traced, untraced = [], []
     for kind, items in old_only.items():
         for it in sorted(items, key=str):
@@ -267,9 +348,12 @@ def trace_items(old_only: dict, new_only: dict, kept: dict) -> tuple[list, list]
                 k = ("edge", json.dumps([it[0], it[1], it[2]]))
             else:
                 k = ("node", json.dumps([it, kind.split(":", 1)[1]]))
-            (traced if k in kept else untraced).append({"side": "old_only", "kind": kind, "item": list(it)
-                                                        if isinstance(it, tuple) else it,
-                                                        "kept_out_as": kept.get(k)})
+            why = kept.get(k)
+            if why is None and kind != "edge":
+                d = ((spec or {}).get("declared") or {}).get((kind, it, None))
+                why = f"declared:{d['rule']}" if d else None
+            (traced if why else untraced).append({"side": "old_only", "kind": kind, "item": list(it)
+                                                  if isinstance(it, tuple) else it, "kept_out_as": why})
     for kind, items in new_only.items():
         for it in sorted(items, key=str):
             untraced.append({"side": "new_only", "kind": kind, "item": list(it) if isinstance(it, tuple) else it})
@@ -286,7 +370,14 @@ def trace(call, a_old, a_new, diffs, st: Stores, kept: dict, answers_old: dict, 
         so, sn = item_sets(call, st, "old"), item_sets(call, st, "new")
         old_only = {k: so[k] - sn.get(k, set()) for k in so}
         new_only = {k: sn[k] - so.get(k, set()) for k in sn}
-        t, u = trace_items(old_only, new_only, kept)
+        t, u = trace_items(old_only, new_only, kept, st.spec)
+        # ERRATUM 02 item 4: C12's non-corpus writers (null endpoint keys, no corpus label on either end)
+        if cid.startswith("C12.") and st.spec.get("not_corpus"):
+            for x in list(u):
+                if x["side"] == "old_only" and x["kind"] == "edge" and x["item"][0] is None and x["item"][2] is None \
+                        and st.not_corpus_only(x["item"][1]):
+                    u.remove(x)
+                    t.append({**x, "kept_out_as": "not_corpus_layer"})
         return {"traced": t, "untraced": u, "notes": [f"items: {sum(map(len, so.values()))} old, "
                                                       f"{sum(map(len, sn.values()))} new"]}
     # ROWS: by node key (C01 Documents by doc_id; C03/C07 by the property map's key; C04 by key; C06 by (a, b))
@@ -316,13 +407,24 @@ def trace(call, a_old, a_new, diffs, st: Stores, kept: dict, answers_old: dict, 
                     notes.append(f"{len(disp)} new-only row(s) displaced: held by the old store beyond the row cap")
                     traced += [{"side": "new_only", "kind": kind, "item": x, "displaced": True} for x in sorted(disp)]
                     nn[kind] -= disp
-        t, u = trace_items(oo, nn, kept)
+        t, u = trace_items(oo, nn, kept, st.spec)
         traced += t
         untraced += u
         for k in set(ro) & set(rn):
-            for path, x, y in diff(ro[k], rn[k], f"rows[{k[1]}]"):
+            head = f"rows[{k[1]}]"
+            for path, x, y in diff(ro[k], rn[k], head):
                 if ".+" in path:
                     notes.append(f"addition {path}")
+                    continue
+                rest = path[len(head):]
+                prop = "content_hash" if (cid == "C01" and rest == ".h") else rest[3:] if rest.startswith(".p.") else None
+                why = declared(st.spec, k[0], k[1], prop, x, y) if prop else None
+                agg = (st.spec.get("aggregate") or {}).get(cid) or {}
+                if why is None and rest[1:] in agg:
+                    why = trace_aggregate(st, kept, agg[rest[1:]], k[1], x, y)
+                if why:
+                    traced.append({"side": "both", "kind": "value", "path": path, "old": x, "new": y,
+                                   "kept_out_as": why})
                 else:
                     untraced.append({"side": "both", "kind": "value", "path": path, "old": x, "new": y})
         for path, x, y in diffs:
@@ -345,13 +447,16 @@ def trace(call, a_old, a_new, diffs, st: Stores, kept: dict, answers_old: dict, 
                     continue
                 so = st.ids("old", lab, "WHERE n.doc_id = $d", d=doc)
                 sn = st.ids("new", lab, "WHERE n.doc_id = $d", d=doc)
-                t, u = trace_items({f"node:{lab}": so - sn}, {f"node:{lab}": sn - so}, kept)
+                t, u = trace_items({f"node:{lab}": so - sn}, {f"node:{lab}": sn - so}, kept, st.spec)
                 traced += t
                 untraced += u
             elif ".+" in path:
                 notes.append(f"addition {path}")
             else:
-                untraced.append({"side": "both", "kind": "value", "path": path, "old": x, "new": y})
+                prop = path[len(".properties."):] if path.startswith(".properties.") else None
+                why = declared(st.spec, "node:Document", doc, prop, x, y) if prop else None
+                (traced if why else untraced).append({"side": "both", "kind": "value", "path": path, "old": x,
+                                                      "new": y, **({"kept_out_as": why} if why else {})})
         return {"traced": traced, "untraced": untraced, "notes": notes}
     # search_text: definition hits by key; a limited list's new-only hit is displaced when the old store holds it
     if verb == "search_text":
@@ -437,7 +542,7 @@ def main(argv=None) -> int:
                 fh.write(json.dumps({"id": c["id"], "verb": c["verb"], "args": a,
                                      "answer": answers[side][c["id"]]}, ensure_ascii=False, default=str) + "\n")
                 fh.flush()
-    st = Stores(g_old, g_kit, spec["reltypes"])
+    st = Stores(g_old, g_kit, spec["reltypes"], spec)
     table = defaultdict(Counter)
     with (out / "differences.jsonl").open("w", encoding="utf-8") as fh:
         for c in calls:
@@ -471,6 +576,7 @@ def main(argv=None) -> int:
     result = {"queries": str(QUERIES.relative_to(REPO)),
               "queries_sha256": hashlib.sha256(QUERIES.read_bytes()).hexdigest(),
               "errata": {e: hashlib.sha256((REPO / e).read_bytes()).hexdigest() for e in spec["errata"]},
+              "errata_files": spec["extra_files"],
               "kept_out": str(kept_path), "kept_out_sha256": hashlib.sha256(kept_path.read_bytes()).hexdigest(),
               "databases": {"assessment": project_db, "corpus_old": project_db, "corpus_new": kit_db},
               "calls": len(calls), "seconds": round(time.monotonic() - t0, 1),

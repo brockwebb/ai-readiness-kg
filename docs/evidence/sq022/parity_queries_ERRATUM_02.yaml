@@ -1,0 +1,55 @@
+# SQ-022b Part B (squiddy DN-050 R-220, R-222, R-223), ERRATUM 02 to parity_queries.yaml (committed 8ce578c1, not
+# edited) after ERRATUM 01 (not edited). Committed BEFORE run 3, the run it governs (squiddy docs/S-008_rules.md).
+#
+# FOUND BY run 2 (docs/evidence/sq022/run2/differences.jsonl, squiddy SQ-022 RESULT, Part C causes 1 to 7). Causes 1,
+# 3, 5 and 6 are slots the kit now fills (squiddy SQ-022b Part A; R-219, R-221): nothing here answers them, and if
+# they still differ in run 3 the emitter is wrong, not this file (DN-050's falsifier for R-219). What this file adds:
+#
+# 1. A NON-ANSWER (R-220). `unresolved` was set by the old projection at projection time from ai-readiness-kg's
+#    controlled vocabulary and judged links (scripts/build_projection.py `_resolve_node`, `_write_resolutions`); the
+#    rule reads no slot of the kit graph, so the kit cannot rebuild it (graphs/ai-readiness/graph.yaml
+#    `domain.airkg_schema.derived_annotations.unresolved`, `built: false`). It is removed from property maps on both
+#    sides, as store bookkeeping is. `grounding_thin` IS rebuilt by the kit (same rule, `is_thin_span`) and stays
+#    compared. The calls that read `unresolved` (C03, C07 `properties(...)`) are otherwise unchanged.
+#
+# 2. DECLARED DIFFERENCES (R-219 rule 1, R-221, R-222): each a value the kit holds by a ruling, the old value recorded
+#    beside it, listed one per row in `parity_declared_differences_02.jsonl` (written by squiddy
+#    docs/evidence/sq022b/declared_differences.py from that directory's evidence). A difference is TRACED as
+#    `declared:<rule>` when its item and property are listed and the two values are the ones listed (a property value
+#    whose old value is the listed old value and whose new value is the listed new value or absent); a whole item is
+#    traced when it is listed with no property. Also R-221's type rule: a `year` whose old value is a string and whose
+#    new value is that string's integer (the old store kept the extractor's type; the kit writes the schema's).
+#
+# 3. AN AGGREGATE OF ITEMS IS TRACED AS A COUNT IS. A `collect(...)` value inside a row (C07 `direct`, `via_measures`)
+#    is the image of an item set, not a property: an element present in the OLD answer only is traced when every
+#    old-store path the query takes to reach it passes through an item in the kept-out list (C07 `direct`: the
+#    MEASURES edge or the Concept; `via_measures`: the USES_MEASURE edge, the Measure, the MEASURES edge or the
+#    Concept). An element in the new answer only is never traced. The base file's rule for a property value is
+#    unchanged.
+#
+# 4. NOT THE CORPUS LAYER. C12's clause excludes edges from AssessmentIndicator, Observation and Finding, so that "the
+#    corpus edge only" is counted (the base file's own closing comment). Two more non-corpus writers use corpus type
+#    names in the old database: ai-readiness-kg's Rule -[:MEASURES]-> AssessmentIndicator and Seldon's
+#    Artifact -[:PRECEDES]-> Artifact. Their endpoints carry no `key`, so run 2 reported them as one edge
+#    (null, TYPE, null). Such an old-only C12 item is traced `not_corpus_layer` when every old edge of that type with a
+#    null endpoint key has two endpoints carrying no label of kg/schema.yaml's node_types.
+#
+# 5. THE BASE FILE'S LIST RULE, APPLIED WHERE THE HARNESS DID NOT. "Lists: sorted by their canonical JSON wherever the
+#    verb or query does not ORDER BY" (canonicalize.lists). Run 2's harness sorted no list inside a row, so C07's
+#    `direct` and `via_measures` differed by order alone. scripts/sq022_parity.py now sorts every list inside a
+#    run_cypher answer whose query has no ORDER BY, and every list in get_document's properties. No rule changes.
+#
+# WHAT DOES NOT CHANGE. The calls, their arguments, both dialect maps, the kept-out list and the base tracing rule.
+erratum_of: parity_queries.yaml
+committed_base: 8ce578c1
+after: [parity_queries_ERRATUM_01.yaml]
+found_by: docs/evidence/sq022/run2/differences.jsonl
+non_answer_properties: [unresolved]
+declared_differences: parity_declared_differences_02.jsonl
+year_type_rule: {property: year, rule: R-221}
+aggregate_tracing:
+  C07:
+    direct: ["MATCH (i:Instrument {key: $i})-[e:MEASURES]->(c:Concept {name: $n}) RETURN [[i.key, 'MEASURES', c.key]] AS edges, [[c.key, 'Concept']] AS nodes"]
+    via_measures: ["MATCH (i:Instrument {key: $i})-[:USES_MEASURE]->(m:Measure)-[:MEASURES]->(c:Concept {name: $n}) RETURN [[i.key, 'USES_MEASURE', m.key], [m.key, 'MEASURES', c.key]] AS edges, [[m.key, 'Measure'], [c.key, 'Concept']] AS nodes"]
+not_corpus_layer: {calls: C12, labels_from: kg/schema.yaml#node_types}
+canonicalize_nested_lists: true
