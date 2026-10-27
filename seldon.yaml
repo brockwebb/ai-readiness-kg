@@ -154,3 +154,30 @@ prior_art:
 # `**Parts:**` header (`parts_undeclared`). Tasks registered before the gate are baseline.
 qc:
   parts_baseline: docs/evidence/sel006/parts_baseline.txt
+
+recall:
+  # RECALL-001 (seldon): `seldon cc register` puts this repository's own history (RESULTs, Issues, kept and
+  # superseded tasks) in front of the task. Turned on by seldon RECALL-002R. Every value is seldon.yaml's `recall:`
+  # block copied, never a new number; each reason is stated there and only named here. The loader
+  # (seldon/core/recall.py `settings`) has no `ref:` form, so the values are copies: move them in seldon.yaml first.
+  #
+  # This repository declares no `decisions:` block, so recall searches this repository alone (it reads siblings
+  # only from decisions.repositories, and adding that block turns on AD-033's register gates here: a separate
+  # adoption). Its name in recall ids is `project.name`, which is `blank`.
+  top_n: 8                      # seldon.yaml recall.top_n
+  min_shared_terms: 3           # seldon.yaml recall.min_shared_terms: untuned first value, RECALL-001's chart moves it
+  max_file_bytes: 2000000       # seldon.yaml recall.max_file_bytes: the prior-art arm's data-dump limit
+  headline_chars: 120           # seldon.yaml recall.headline_chars
+  result_globs: ['cc_tasks/*_RESULT*.md', 'cc_tasks/*_result*.md']   # seldon.yaml recall.result_globs
+  # seldon.yaml recall.failure_terms: the words the dispatcher's outcomes and refusals use.
+  failure_terms: [fail, unpassed, blocked, breaker, conflict, refus, error, abandon, revert, regress, wrong]
+  bm25: {k1: 1.2, b: 0.75}      # seldon.yaml recall.bm25: Robertson and Zaragoza 2009, untuned
+  served:
+    # OFF, and why: this repository has no governed history graph (no `governed/`; AD-031-R1 is unmet here, and
+    # squiddy SQ-087 rebuilt only squiddy's, seldon's and arnold's). `graphs/ai-readiness` is the domain corpus,
+    # whose documents are never RESULTs, so it could rank no candidate. The lexical arm runs alone until a governed
+    # graph exists; then set enabled: true and graphs to its directory.
+    enabled: false
+    k: 20                       # seldon.yaml recall.served.k
+    rrf_k: 60                   # seldon.yaml recall.served.rrf_k: Cormack, Clarke and Buettcher 2009
+    graphs: {}
