@@ -47,12 +47,18 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: `AssessmentTool` and `Precondition` joined on 2026-09-18 with the requirements layer
 #: (`cc_tasks/2026-09-18_requirements_layer.md`). NOT `Tool`: that is a KG label, owned by
 #: `build_projection.py`'s reset, and a label in both lists is deleted by whichever ran last.
+#: `FcsmConcern` joined on 2026-10-21 with the validity layer
+#: (`cc_tasks/2026-10-21_fcsm_concern_edges_and_sixteen_checks_one_pager.md`, DN-018): four
+#: authored nodes, reconstructible from the JSON alone, which is the only condition for being
+#: owned here. Not a KG label (`tests/test_requirements.py::test_the_kg_tool_label_is_never_reused`).
 ASSESSMENT_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
                      "MeasurementSpec", "AssessmentInternalRef", "Action", "AssessmentTool",
-                     "Precondition")
+                     "Precondition", "FcsmConcern")
 #: Edge types this loader may write. A literal whitelist, never a payload value — invariant 4.
+#: `SERVES_FCSM_CONCERN` joined on 2026-10-21 (DN-018); it carries `role`, so it has its own
+#: branch below rather than the generic property-dropping one.
 ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", "MEASURED_BY",
-                    "REMEDIATES", "REQUIRES")
+                    "REMEDIATES", "REQUIRES", "SERVES_FCSM_CONCERN")
 
 #: A property whose value is a MAP is flattened onto named scalars rather than dropped or
 #: str()-ed. Neo4j has no map property type, and the write-backs of 2026-09-07 put three maps
@@ -160,6 +166,18 @@ def load(session, g: dict) -> dict:
                         "MATCH (r) WHERE r.id = $t AND (r:AssessmentTool OR r:Precondition) "
                         "MERGE (i)-[x:REQUIRES]->(r) SET x += $props",
                         f=e["from"], t=e["to"], props=e.get("properties") or {})
+            counts["edges"] += 1
+            continue
+        if t == "SERVES_FCSM_CONCERN":
+            # Carries `role` (primary / also), DN-018 section 4. A spec can serve two concerns,
+            # so its identity is (from, to, role): a plain MERGE on (from, to) alone would be
+            # right here only because the two edges go to different concerns, but keying on the
+            # same triple the JSON uses keeps the round-trip gate honest if that ever changes.
+            props = e.get("properties") or {}
+            session.run("MATCH (m:MeasurementSpec {id: $f}) "
+                        "MATCH (c:FcsmConcern {id: $t}) "
+                        "MERGE (m)-[r:SERVES_FCSM_CONCERN {role: $role}]->(c) SET r += $props",
+                        f=e["from"], t=e["to"], role=props.get("role"), props=props)
             counts["edges"] += 1
             continue
         if t == "EVIDENCED_BY_INTERNAL":

@@ -114,7 +114,7 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
     got_nodes = {r["l"]: r["c"] for r in graph.run(
         "MATCH (n) WHERE n:AssessmentCriterion OR n:AssessmentConstruct "
         "OR n:AssessmentIndicator OR n:MeasurementSpec OR n:AssessmentInternalRef "
-        "OR n:Action OR n:AssessmentTool OR n:Precondition "
+        "OR n:Action OR n:AssessmentTool OR n:Precondition OR n:FcsmConcern "
         "RETURN labels(n)[0] AS l, count(*) AS c")}
     assert got_nodes == dict(want_nodes)
 
@@ -157,6 +157,23 @@ def test_every_requires_edge_reached_the_graph_with_its_properties(graph, doc):
         "MATCH (i:AssessmentIndicator)-[x:REQUIRES]->(r) "
         "WHERE r:AssessmentTool OR r:Precondition "
         "RETURN i.id AS f, r.id AS t, properties(x) AS p")}
+    assert got == want
+
+
+def test_every_serves_fcsm_concern_edge_reached_the_graph_with_its_role(graph, doc):
+    """`SERVES_FCSM_CONCERN` carries `role` (DN-018), and a spec serves up to two concerns, so
+    the generic property-dropping MERGE would be wrong twice over — it drops `role` and could
+    collapse two edges. Its identity is (from, to, role). The JSON is the expectation, edge for
+    edge; 16 `primary` and 7 `also` = 23."""
+    want = {(e["from"], e["to"], (e.get("properties") or {}).get("role")): (e.get("properties") or {})
+            for e in doc["edges"] if e["type"] == "SERVES_FCSM_CONCERN"}
+    assert want, "the record holds no SERVES_FCSM_CONCERN edges; this proves nothing"
+    assert len(want) == 23, len(want)
+    roles = [r for *_, r in want]
+    assert roles.count("primary") == 16 and roles.count("also") == 7
+    got = {(r["f"], r["t"], r["p"].get("role")): dict(r["p"]) for r in graph.run(
+        "MATCH (m:MeasurementSpec)-[x:SERVES_FCSM_CONCERN]->(c:FcsmConcern) "
+        "RETURN m.id AS f, c.id AS t, properties(x) AS p")}
     assert got == want
 
 
