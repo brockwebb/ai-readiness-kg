@@ -3,7 +3,7 @@ generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_r
   whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
   the generator.'
 cycle_of_record: scan_2026-10-07_composite_d
-framework_record_commit: d0d5a40fda4c
+framework_record_commit: 37b3b82ae3de
 claims:
 - id: CL-001
   key: q1.partition
@@ -1811,8 +1811,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 287 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 54 on or after it, of which 25 are captured scan surfaces rather
+    and holds 289 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 56 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1826,6 +1826,10 @@ claims:
     id: git.framework_start
     locator: scripts/build_evidence_map.py::QUERIES['git.framework_start']
     note: 51d2526e1ad2ede2520281e3c3c2a60b256dbd1a
+  - kind: document
+    id: basili-caldiera-rombach-1994-gqm
+    locator: events/batch-001.jsonl:136
+    note: first manifest_add 2026-11-02; provenance measurement_theory_2026-11-02
   - kind: document
     id: cc-by-4-0-deed
     locator: events/batch-001.jsonl:132
@@ -1902,6 +1906,10 @@ claims:
     id: generative-ai-and-open-data-guidelines-and-best-practices-de
     locator: events/batch-001.jsonl:112
     note: first manifest_add 2026-10-04; provenance candidate_register, fss_policy_kg_ledger
+  - kind: document
+    id: iso-iec-ieee-15939-2017
+    locator: events/batch-001.jsonl:135
+    note: first manifest_add 2026-11-02; provenance measurement_theory_2026-11-02
   - kind: document
     id: nao-201-118-software-governance-and-public-release
     locator: events/batch-001.jsonl:108
@@ -2045,11 +2053,11 @@ claims:
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '287'
+  - value: '289'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '54'
+  - value: '56'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2417,7 +2425,7 @@ claims:
   question: Q5
   text: 'Evidence coverage in the record: 12 of 50 indicator evidence cells carry a pinpoint locator;
     40 of 209 `EVIDENCED_BY` edges point at a located document; 14 indicators have no `EVIDENCED_BY` edge;
-    and 92 of the 287 admitted documents are cited by one.'
+    and 92 of the 289 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2487,7 +2495,7 @@ claims:
     source: indicators with no EVIDENCED_BY edge
   - value: '92'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '287'
+  - value: '289'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-059
@@ -6578,6 +6586,8 @@ tables:
     documents: 2
   - first_admitted: '2026-10-11'
     documents: 5
+  - first_admitted: '2026-11-02'
+    documents: 2
   q5_numbers_that_differ_from_the_pack:
   - number: EVIDENCED_BY edges
     pack: '160'

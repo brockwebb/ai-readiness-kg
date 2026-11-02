@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-11T15:27:36.957522+00:00",
+ "generated_at": "2026-11-02T16:16:46.127732+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 287,
+  "included": 289,
   "excluded": 73,
   "pending_refetch": 42,
   "pending_review": 1
@@ -3313,6 +3313,109 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "basili-caldiera-rombach-1994-gqm": {
+   "doc_id": "basili-caldiera-rombach-1994-gqm",
+   "identity": {
+    "sha256": "f8db1b69d78f30197eda85162db0bb3d0983c1bd2ce23ac5924b7cbb82c79dee",
+    "canonical_path": "corpus/crosswalk/basili-caldiera-rombach-1994-gqm.md",
+    "title": "The Goal Question Metric Approach",
+    "authors_or_org": [
+     "Victor R. Basili",
+     "Gianluigi Caldiera",
+     "H. Dieter Rombach"
+    ],
+    "pub_year": "1994",
+    "doc_type": "academic",
+    "source_url": "https://www.cs.umd.edu/~mvz/handouts/gqm.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-11-02T16:16:45.836970+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "19726 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "19725 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-11-02T16:16:45.837204+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "DN-019 (staged 2026-11-02, PASS sha256 d2a9152f197b) section 2 cites Goal Question Metric as the older, simpler form of the measurement information model the V3 sheet renders. Admitted as the open University of Maryland copy, the full chapter. No rule cites it; it backs the design note's citation.",
+    "decided_by": "cc",
+    "decided_at": "2026-11-02T16:16:43.121478+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "measurement_theory_2026-11-02"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://www.cs.umd.edu/~mvz/handouts/gqm.pdf at 2026-11-02T16:03:06.239336+00:00 (logs/2026-11-02_v3_partA_fetch.jsonl, capture sha256 afcfc464b299da4e894b400de79541196977d9784cf1eea728e06cf76dc0083f); docling-rendered to markdown (188 lines, 19381 chars) for the sweep. Extent: full. Licence: author copy hosted by the University of Maryland for teaching"
+    ],
+    "observed_files": {
+     "corpus/crosswalk/basili-caldiera-rombach-1994-gqm.md": {
+      "sha256": "f8db1b69d78f30197eda85162db0bb3d0983c1bd2ce23ac5924b7cbb82c79dee",
+      "size": 19726,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/basili-caldiera-rombach-1994-gqm.md": {
+      "path": "corpus/crosswalk/basili-caldiera-rombach-1994-gqm.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "19726 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "19725 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-11-02T16:16:45.837204+00:00"
+     }
+    },
+    "added_in": "measurement-theory-2026-11-02"
    }
   },
   "beyond-model-readiness-institutional-readiness-for-ai-deploy": {
@@ -18355,6 +18458,107 @@
     "notes": [
      "A privacy-measurement note cited as a score input by AIDRIN-lineage work. Off-construct and closed access."
     ]
+   }
+  },
+  "iso-iec-ieee-15939-2017": {
+   "doc_id": "iso-iec-ieee-15939-2017",
+   "identity": {
+    "sha256": "8d8006e52380cb03a16a792860118d172ddb5f8f584bb120d993593f67c695fc",
+    "canonical_path": "corpus/crosswalk/iso-iec-ieee-15939-2017.md",
+    "title": "ISO/IEC/IEEE 15939:2017 Systems and software engineering: measurement process",
+    "authors_or_org": [
+     "ISO/IEC/IEEE"
+    ],
+    "pub_year": "2017",
+    "doc_type": "standard",
+    "source_url": "https://www.iso.org/standard/71197.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-11-02T16:16:45.837434+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "7664 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "7664 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-11-02T16:16:45.837600+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "DN-019 (staged 2026-11-02, PASS sha256 d2a9152f197b) section 2 cites ISO/IEC/IEEE 15939's measurement information model as the field set under the V3 measurement sheet. The standard is paywalled; only the public ISO catalogue and abstract page is admitted (abstract-only). No rule cites it; it backs the design note's citation.",
+    "decided_by": "cc",
+    "decided_at": "2026-11-02T16:16:43.121478+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "measurement_theory_2026-11-02"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://www.iso.org/standard/71197.html at 2026-11-02T16:02:33.049173+00:00 (logs/2026-11-02_v3_partA_fetch.jsonl, capture sha256 d155ffb5cfab8a803a94fc58101802ecba25f188ac89ab74fd51dc096f9dddef); docling-rendered to markdown (195 lines, 7316 chars) for the sweep. Extent: abstract_only. Licence: ISO copyright; catalogue and abstract page is public, the standard is paywalled"
+    ],
+    "observed_files": {
+     "corpus/crosswalk/iso-iec-ieee-15939-2017.md": {
+      "sha256": "8d8006e52380cb03a16a792860118d172ddb5f8f584bb120d993593f67c695fc",
+      "size": 7664,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/iso-iec-ieee-15939-2017.md": {
+      "path": "corpus/crosswalk/iso-iec-ieee-15939-2017.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "7664 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "7664 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-11-02T16:16:45.837600+00:00"
+     }
+    },
+    "added_in": "measurement-theory-2026-11-02"
    }
   },
   "itu-ai-ready-analysis-towards-a-standardized-readiness-frame": {

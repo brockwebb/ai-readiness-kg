@@ -53,6 +53,12 @@ corpus/triage/
 # primary_url + content_hash (CLAUDE.md, invariant 2).
 corpus/crosswalk/
 
+# Measurement-theory capture dir (task 2026-11-02_v3_measurement_sheet Part A). The raw ISO
+# catalogue page and GQM chapter captures; same rule as every other corpus dir: bytes stay
+# local, provenance (primary_url + content_hash + the fetch log) travels in the manifest and
+# events/batch-001.jsonl.
+corpus/measurement_theory/
+
 # Round-2 acquisition captures (task 2026-08-30_acquisition_round2 §3). Same rule as every
 # other corpus dir: the bytes stay local, provenance survives in events/batch-020.jsonl via
 # primary_url + content_hash (CLAUDE.md, invariant 2).
