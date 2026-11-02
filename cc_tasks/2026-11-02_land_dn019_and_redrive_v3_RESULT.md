@@ -164,10 +164,16 @@ Log paths (all under gitignored `logs/`, local to this worktree):
 ## 6. Session usage
 
 Reported by `seldon dispatch part-complete` from the dispatch log's stream-json usage (input + cache writes +
-output); see the two `part_complete` records this session appended (Part A share 0.70, Part B share 0.30) and
-their printed token counts. The task's estimate was 0.15M tokens; the dominant cost was compute, not tokens —
-two ~5-minute `gate-fast` pytest runs (the second forced only by the unseeded-worktree condition of §4), which
-spend wall-clock, not model tokens.
+output). The two `part_complete` records this session appended:
+
+```
+part_complete 4b329769 Part A: planned share 0.7, tokens so far 115107, wall 1223.0s
+part_complete 4b329769 Part B: planned share 0.3, tokens so far 115582, wall 1227.7s
+```
+
+**~115.6K tokens, ~20 min wall** — well under the task's 0.15M-token estimate. The dominant cost was compute,
+not tokens: two ~5-minute `gate-fast` pytest runs (the second forced only by the unseeded-worktree condition
+of §4), which spend wall-clock, not model tokens.
 
 ---
 
