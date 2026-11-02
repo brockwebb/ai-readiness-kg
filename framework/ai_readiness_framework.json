@@ -24,7 +24,10 @@
   "requires_on_candidate_indicators": 0,
   "evidenced_by_spec": 49,
   "fcsm_concern_nodes": 4,
-  "serves_fcsm_concern_edges": 23
+  "serves_fcsm_concern_edges": 23,
+  "aiready_criterion_nodes": 4,
+  "extension_group_nodes": 3,
+  "descends_from_edges": 16
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -7318,6 +7321,104 @@
     "rmf_equivalent": "none",
     "definition_segment": "fcsm_20_04#s389"
    }
+  },
+  {
+   "id": "aiready:accessible",
+   "labels": [
+    "AiReadyCriterion"
+   ],
+   "properties": {
+    "letter": "A",
+    "name": "Accessible",
+    "text": "Data Must Be Machine-Readable and Easy to Access",
+    "source": "USAFacts 2026 (usafacts-ai-ready-data-guide)",
+    "source_file": "state/docling_md/usafacts-ai-ready-data-guide.md",
+    "docling_lines": "37 (name), 39 (statement)"
+   }
+  },
+  {
+   "id": "aiready:understandable",
+   "labels": [
+    "AiReadyCriterion"
+   ],
+   "properties": {
+    "letter": "B",
+    "name": "Understandable",
+    "text": "Data Must Be Machine Understandable with Easily Retrievable, WellStructured Documentation and Metadata",
+    "source": "USAFacts 2026 (usafacts-ai-ready-data-guide)",
+    "source_file": "state/docling_md/usafacts-ai-ready-data-guide.md",
+    "docling_lines": "54 (name), 56 (statement)"
+   }
+  },
+  {
+   "id": "aiready:accurate",
+   "labels": [
+    "AiReadyCriterion"
+   ],
+   "properties": {
+    "letter": "C",
+    "name": "Accurate",
+    "text": "Agencies Should Provide Clear Evaluation Benchmarks and Make Them Public",
+    "source": "USAFacts 2026 (usafacts-ai-ready-data-guide)",
+    "source_file": "state/docling_md/usafacts-ai-ready-data-guide.md",
+    "docling_lines": "72 (name), 74 (statement)"
+   }
+  },
+  {
+   "id": "aiready:open",
+   "labels": [
+    "AiReadyCriterion"
+   ],
+   "properties": {
+    "letter": "D",
+    "name": "Open",
+    "text": "Data Must Be Unencumbered and Open to All Citizens",
+    "source": "USAFacts 2026 (usafacts-ai-ready-data-guide)",
+    "source_file": "state/docling_md/usafacts-ai-ready-data-guide.md",
+    "docling_lines": "87 (name), 89 (statement)"
+   }
+  },
+  {
+   "id": "ext:E",
+   "labels": [
+    "ExtensionGroup"
+   ],
+   "properties": {
+    "letter": "E",
+    "name": "TEVV loop",
+    "text": "Verification/validation split, pre-registered acceptance thresholds, instrument versioning, contamination policy, positive controls, failure attribution, corrective-action closure, drift sentinels, adversarial evaluation.",
+    "source": "docs/crosswalk/usafacts_operationalization_brief.md",
+    "brief_section": "Shape of the instrument",
+    "brief_lines": "37"
+   }
+  },
+  {
+   "id": "ext:F",
+   "labels": [
+    "ExtensionGroup"
+   ],
+   "properties": {
+    "letter": "F",
+    "name": "Release engineering",
+    "text": "Pre-release gates, contract stability, vintage-transition regression, change legibility, staged rollout, release authenticity.",
+    "source": "docs/crosswalk/usafacts_operationalization_brief.md",
+    "brief_section": "Shape of the instrument",
+    "brief_lines": "38"
+   }
+  },
+  {
+   "id": "ext:G",
+   "labels": [
+    "ExtensionGroup"
+   ],
+   "properties": {
+    "letter": "G",
+    "name": "Statistical-system constructs",
+    "text": "Uncertainty legibility, revision semantics, classification identity, authority metadata, disclosure semantics, measurement-protocol provenance.",
+    "source": "docs/crosswalk/usafacts_operationalization_brief.md",
+    "brief_section": "Shape of the instrument",
+    "brief_lines": "39"
+   }
   }
  ],
  "edges": [
@@ -11197,6 +11298,86 @@
    "properties": {
     "role": "primary"
    }
+  },
+  {
+   "from": "spec:A1",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A2",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A3",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A4",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A5",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A6",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A8",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A9",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A10",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:B3",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:understandable"
+  },
+  {
+   "from": "spec:D1",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:open"
+  },
+  {
+   "from": "spec:D4",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:open"
+  },
+  {
+   "from": "spec:F4",
+   "type": "DESCENDS_FROM",
+   "to": "ext:F"
+  },
+  {
+   "from": "spec:A12",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
+  },
+  {
+   "from": "spec:A13",
+   "type": "DESCENDS_FROM",
+   "to": "aiready:accessible"
   }
  ],
  "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision, evidenced_by_spec) include every spec, adopted or not; evidenced_by_spec is the instrument's own EVIDENCED_BY edges from a MeasurementSpec to the corpus documents its entry cites (DN-016 ruling 4), kept separate from the framework's construct-evidence count evidenced_by, which is indicator-sourced and candidate-excluded. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. tools and preconditions count the requirements layer's AssessmentTool and Precondition nodes, which belong to no indicator and so have no candidate split; requires counts REQUIRES edges from the framework's indicators and requires_on_candidate_indicators the rest, on the same DD-054 split. Regenerated by scripts/framework_writeback.py::recount on every write-back.",

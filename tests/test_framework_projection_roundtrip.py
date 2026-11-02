@@ -115,6 +115,7 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
         "MATCH (n) WHERE n:AssessmentCriterion OR n:AssessmentConstruct "
         "OR n:AssessmentIndicator OR n:MeasurementSpec OR n:AssessmentInternalRef "
         "OR n:Action OR n:AssessmentTool OR n:Precondition OR n:FcsmConcern "
+        "OR n:AiReadyCriterion OR n:ExtensionGroup "
         "RETURN labels(n)[0] AS l, count(*) AS c")}
     assert got_nodes == dict(want_nodes)
 

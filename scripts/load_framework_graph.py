@@ -51,14 +51,20 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: (`cc_tasks/2026-10-21_fcsm_concern_edges_and_sixteen_checks_one_pager.md`, DN-018): four
 #: authored nodes, reconstructible from the JSON alone, which is the only condition for being
 #: owned here. Not a KG label (`tests/test_requirements.py::test_the_kg_tool_label_is_never_reused`).
+#: `AiReadyCriterion` and `ExtensionGroup` joined on 2026-11-02 with the AI-ready lineage layer
+#: (`cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_checks.md`, DN-005 section 2.1): the four
+#: USAFacts criteria and the three extension groups each check descends from, seven authored nodes
+#: reconstructible from the JSON alone. Not KG labels (same `test_the_kg_tool_label_is_never_reused`).
 ASSESSMENT_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
                      "MeasurementSpec", "AssessmentInternalRef", "Action", "AssessmentTool",
-                     "Precondition", "FcsmConcern")
+                     "Precondition", "FcsmConcern", "AiReadyCriterion", "ExtensionGroup")
 #: Edge types this loader may write. A literal whitelist, never a payload value — invariant 4.
 #: `SERVES_FCSM_CONCERN` joined on 2026-10-21 (DN-018); it carries `role`, so it has its own
-#: branch below rather than the generic property-dropping one.
+#: branch below rather than the generic property-dropping one. `DESCENDS_FROM` joined on
+#: 2026-11-02 (DN-005 section 2.1): a spec -> criterion/group edge with no properties, so the
+#: generic MERGE branch below projects it.
 ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", "MEASURED_BY",
-                    "REMEDIATES", "REQUIRES", "SERVES_FCSM_CONCERN")
+                    "REMEDIATES", "REQUIRES", "SERVES_FCSM_CONCERN", "DESCENDS_FROM")
 
 #: A property whose value is a MAP is flattened onto named scalars rather than dropped or
 #: str()-ed. Neo4j has no map property type, and the write-backs of 2026-09-07 put three maps

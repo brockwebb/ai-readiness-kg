@@ -81,7 +81,11 @@ FRAMEWORK_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentInd
                     # The validity layer (DN-018): the FCSM 20-04 Accessibility concern each
                     # instrument check serves. A framework node like the rest, so the projection
                     # gate compares it cell for cell and a locator may name it.
-                    "FcsmConcern")
+                    "FcsmConcern",
+                    # The AI-ready lineage layer (DN-005 section 2.1): the four USAFacts criteria
+                    # and the three extension groups each check descends from. Framework nodes
+                    # like the rest, so the projection gate compares them cell for cell.
+                    "AiReadyCriterion", "ExtensionGroup")
 
 #: Labels a `graph` locator may name. A LITERAL whitelist, never a value off a payload —
 #: invariant 4: this repository never interpolates payload text into Cypher, and a locator is

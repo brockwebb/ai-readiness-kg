@@ -364,17 +364,25 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # edges_and_sixteen_checks_one_pager.md` Part A, DN-018) added four `FcsmConcern` nodes and
     # 23 `SERVES_FCSM_CONCERN` edges, written by `scripts/apply_fcsm_concerns.py` through the
     # single writer. The skeleton does not author the validity layer, so both are preserved here.
+    # 2026-11-02: the AI-ready lineage layer (`cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_
+    # checks.md` Part A, DN-005 section 2.1) added four `AiReadyCriterion` and three
+    # `ExtensionGroup` nodes and 16 `DESCENDS_FROM` edges, written by
+    # `scripts/add_aiready_lineage.py` through the single writer. The skeleton does not author
+    # the lineage from a check to the USAFacts criterion it operationalizes, so all are preserved.
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
         {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
-         "Action": 64, "AssessmentTool": 13, "Precondition": 19, "FcsmConcern": 4}
+         "Action": 64, "AssessmentTool": 13, "Precondition": 19, "FcsmConcern": 4,
+         "AiReadyCriterion": 4, "ExtensionGroup": 3}
     # 2026-10-15: the readiness diagnostic package (`cc_tasks/2026-10-15_readiness_diagnostic_
     # package.md` Part A, DN-016 ruling 4) added 49 `EVIDENCED_BY` edges from the sixteen
     # instrument MeasurementSpecs to the corpus documents each entry cites, written by
     # `scripts/apply_instrument_fields.py` through the single writer. The skeleton authors only
     # indicator-sourced EVIDENCED_BY, so these are preserved here: 8 -> 57.
+    # 2026-11-02: 16 `DESCENDS_FROM` edges (DN-005 section 2.1), from each instrument spec to the
+    # criterion or group it operationalizes; the skeleton does not author them.
     assert Counter(e["type"] for e in preserved_edges) == \
         {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 57,
-         "REMEDIATES": 64, "REQUIRES": 37, "SERVES_FCSM_CONCERN": 23}
+         "REMEDIATES": 64, "REQUIRES": 37, "SERVES_FCSM_CONCERN": 23, "DESCENDS_FROM": 16}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
@@ -384,7 +392,10 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
          # MeasurementSpec, which the skeleton does not author.
          "evidenced_by_spec",
          # The FCSM concern layer's two counts (DN-018, Part A), written by the single writer.
-         "fcsm_concern_nodes", "serves_fcsm_concern_edges"}
+         "fcsm_concern_nodes", "serves_fcsm_concern_edges",
+         # The AI-ready lineage layer's three counts (DN-005 section 2.1, Part A), written by the
+         # single writer (`scripts/add_aiready_lineage.py`).
+         "aiready_criterion_nodes", "extension_group_nodes", "descends_from_edges"}
     # and nothing the skeleton authors is missing from the record
     assert not (gen_ids - {n["id"] for n in cur["nodes"]})
     assert not (gen_edges - {fw._edge_key(e) for e in cur["edges"]})
