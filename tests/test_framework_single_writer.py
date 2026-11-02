@@ -360,9 +360,13 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # 2026-10-11: a sixth A13 evidence edge, to `rfc-9727-api-catalog`, added by
     # `add_candidate_indicator.py --refresh` once the RFC was admitted
     # (`cc_tasks/2026-10-11_evidence_map_carries_discoverability_and_admits_a2_d1_a13_standards.md`).
+    # 2026-10-21: the FCSM 20-04 Accessibility concern layer (`cc_tasks/2026-10-21_fcsm_concern_
+    # edges_and_sixteen_checks_one_pager.md` Part A, DN-018) added four `FcsmConcern` nodes and
+    # 23 `SERVES_FCSM_CONCERN` edges, written by `scripts/apply_fcsm_concerns.py` through the
+    # single writer. The skeleton does not author the validity layer, so both are preserved here.
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
         {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
-         "Action": 64, "AssessmentTool": 13, "Precondition": 19}
+         "Action": 64, "AssessmentTool": 13, "Precondition": 19, "FcsmConcern": 4}
     # 2026-10-15: the readiness diagnostic package (`cc_tasks/2026-10-15_readiness_diagnostic_
     # package.md` Part A, DN-016 ruling 4) added 49 `EVIDENCED_BY` edges from the sixteen
     # instrument MeasurementSpecs to the corpus documents each entry cites, written by
@@ -370,7 +374,7 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # indicator-sourced EVIDENCED_BY, so these are preserved here: 8 -> 57.
     assert Counter(e["type"] for e in preserved_edges) == \
         {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 57,
-         "REMEDIATES": 64, "REQUIRES": 37}
+         "REMEDIATES": 64, "REQUIRES": 37, "SERVES_FCSM_CONCERN": 23}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
@@ -378,7 +382,9 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
          "requires_on_candidate_indicators",
          # The instrument's own evidence count (DN-016 ruling 4): EVIDENCED_BY edges from a
          # MeasurementSpec, which the skeleton does not author.
-         "evidenced_by_spec"}
+         "evidenced_by_spec",
+         # The FCSM concern layer's two counts (DN-018, Part A), written by the single writer.
+         "fcsm_concern_nodes", "serves_fcsm_concern_edges"}
     # and nothing the skeleton authors is missing from the record
     assert not (gen_ids - {n["id"] for n in cur["nodes"]})
     assert not (gen_edges - {fw._edge_key(e) for e in cur["edges"]})

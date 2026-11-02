@@ -22,7 +22,9 @@
   "preconditions": 19,
   "requires": 37,
   "requires_on_candidate_indicators": 0,
-  "evidenced_by_spec": 49
+  "evidenced_by_spec": 49,
+  "fcsm_concern_nodes": 4,
+  "serves_fcsm_concern_edges": 23
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -7256,6 +7258,66 @@
     "applies_to_note": "The subject is the publisher's product page and host; what is provisional is the indicator.",
     "note": "A13 is a CANDIDATE indicator (DD-054): its rule runs, its Findings are reported, and they enter no framework numerator until the operator adopts it. The action is recorded on the same terms. RFC 9727 is named for its location and is not an admitted corpus document; the quoted sources are."
    }
+  },
+  {
+   "id": "fcsm_20_04_accessibility_c1",
+   "labels": [
+    "FcsmConcern"
+   ],
+   "properties": {
+    "dimension": "Accessibility",
+    "domain": "Utility",
+    "framework": "FCSM 20-04",
+    "text": "Users can locate and obtain the data product",
+    "source": "Webb 2026, doi:10.5281/zenodo.18772590, v2",
+    "rmf_equivalent": "none",
+    "definition_segment": "fcsm_20_04#s389"
+   }
+  },
+  {
+   "id": "fcsm_20_04_accessibility_c2",
+   "labels": [
+    "FcsmConcern"
+   ],
+   "properties": {
+    "dimension": "Accessibility",
+    "domain": "Utility",
+    "framework": "FCSM 20-04",
+    "text": "Documentation is sufficient for users to understand the data product",
+    "source": "Webb 2026, doi:10.5281/zenodo.18772590, v2",
+    "rmf_equivalent": "none",
+    "definition_segment": "fcsm_20_04#s389"
+   }
+  },
+  {
+   "id": "fcsm_20_04_accessibility_c3",
+   "labels": [
+    "FcsmConcern"
+   ],
+   "properties": {
+    "dimension": "Accessibility",
+    "domain": "Utility",
+    "framework": "FCSM 20-04",
+    "text": "Data products are available in formats suitable for diverse users",
+    "source": "Webb 2026, doi:10.5281/zenodo.18772590, v2",
+    "rmf_equivalent": "none",
+    "definition_segment": "fcsm_20_04#s389"
+   }
+  },
+  {
+   "id": "fcsm_20_04_accessibility_c4",
+   "labels": [
+    "FcsmConcern"
+   ],
+   "properties": {
+    "dimension": "Accessibility",
+    "domain": "Utility",
+    "framework": "FCSM 20-04",
+    "text": "Metadata and supporting materials are provided",
+    "source": "Webb 2026, doi:10.5281/zenodo.18772590, v2",
+    "rmf_equivalent": "none",
+    "definition_segment": "fcsm_20_04#s389"
+   }
   }
  ],
  "edges": [
@@ -10950,6 +11012,190 @@
    "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
    "properties": {
     "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c3",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c2",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c3",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A5",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:A8",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A9",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A9",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c3",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:A10",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c3",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A12",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A13",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:A13",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:B3",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c2",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c1",
+   "properties": {
+    "role": "primary"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "also"
+   }
+  },
+  {
+   "from": "spec:F4",
+   "type": "SERVES_FCSM_CONCERN",
+   "to": "fcsm_20_04_accessibility_c4",
+   "properties": {
+    "role": "primary"
    }
   }
  ],

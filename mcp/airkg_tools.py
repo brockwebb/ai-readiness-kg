@@ -77,7 +77,11 @@ INTERNAL_PREFIX = "internal:"
 #: The labels the framework record owns, in the order `scripts/load_framework_graph.py` lists
 #: them. Used only by the projection-gate comparison.
 FRAMEWORK_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
-                    "MeasurementSpec", "Action", "AssessmentTool", "Precondition")
+                    "MeasurementSpec", "Action", "AssessmentTool", "Precondition",
+                    # The validity layer (DN-018): the FCSM 20-04 Accessibility concern each
+                    # instrument check serves. A framework node like the rest, so the projection
+                    # gate compares it cell for cell and a locator may name it.
+                    "FcsmConcern")
 
 #: Labels a `graph` locator may name. A LITERAL whitelist, never a value off a payload —
 #: invariant 4: this repository never interpolates payload text into Cypher, and a locator is

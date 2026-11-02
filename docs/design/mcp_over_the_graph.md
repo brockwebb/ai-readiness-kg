@@ -55,7 +55,7 @@ The interpreter is named explicitly because `fastmcp`, the Neo4j driver and `pyy
 
 ## The projection gate, at generation time
 
-`green` — every node of the record is in the graph with every property equal (232 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
+`green` — every node of the record is in the graph with every property equal (236 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
 
 ## The tools
 
@@ -124,11 +124,13 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "preconditions": 19,
       "requires": 37,
       "requires_on_candidate_indicators": 0,
-      "evidenced_by_spec": 49
+      "evidenced_by_spec": 49,
+      "fcsm_concern_nodes": 4,
+      "serves_fcsm_concern_edges": 23
     },
     "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators count… [1476 chars]",
-    "nodes": 232,
-    "edges": 462,
+    "nodes": 236,
+    "edges": 485,
     "actions": 64,
     "remediates_edges": 64,
     "tools": 13,
@@ -240,7 +242,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       }
     ],
     "status": "green",
-    "nodes_compared": 232,
+    "nodes_compared": 236,
     "mismatches": [],
     "reason": "every node of the record is in the graph with every property equal"
   },
