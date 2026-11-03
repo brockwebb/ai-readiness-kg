@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-11-02T16:16:46.127732+00:00",
+ "generated_at": "2026-11-03T04:43:28.926711+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 289,
+  "included": 291,
   "excluded": 73,
   "pending_refetch": 42,
   "pending_review": 1
@@ -35305,6 +35305,210 @@
       "checked_at": "2026-08-29T12:08:24.276990+00:00"
      }
     }
+   }
+  },
+  "usafacts-ai-ready-framework-deck-2026-08": {
+   "doc_id": "usafacts-ai-ready-framework-deck-2026-08",
+   "identity": {
+    "sha256": "9cbe6ae32203f9d015d486765d4b00202e1540c08a3f4a158a5780036abbfb0b",
+    "canonical_path": "corpus/crosswalk/usafacts-ai-ready-framework-deck-2026-08.pdf",
+    "title": "AI-Ready Government Data: A Framework for Trust in the Age of AI (August 2026)",
+    "authors_or_org": [
+     "USAFacts",
+     "Ben Gitis",
+     "Pieter van Noordennen"
+    ],
+    "pub_year": "2026",
+    "doc_type": "practitioner",
+    "source_url": "urn:usafacts:ai-ready-data-framework:2026-08-roundtable:slide-deck",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "operator_inbox",
+    "acquired_at": "2026-11-03T04:43:28.405790+00:00",
+    "acquired_by": "operator"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3701919 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "24 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-11-03T04:43:28.525137+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "USAFacts' successor to usafacts-ai-ready-data-guide: a three-track framework (Agentic Access, Agentic Context, Agentic Evaluation), three levels within each track, modeled on SLSA (slsa.dev), with three prerequisites (open by default, discoverable, clearly licensed). It is the framework the readiness diagnostic re-parents the sixteen checks onto (DN-019 section 5; DN-020). Unpublished draft, distributed at the 2026-08-26 Federal Data Excellence roundtable; no public URL (URN primary_url; the event page is discovered_via). From the operator's inbox copy.",
+    "decided_by": "cc",
+    "decided_at": "2026-11-03T04:43:28.175149+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "usafacts_three_track_2026-11-02"
+   ],
+   "extra": {
+    "notes": [
+     "operator inbox drop, cc_tasks/2026-11-02_admit_usafacts_three_track_framework_ADDENDUM_01.md; acquired_at (inbox file mtime) 2026-11-02T17:50:10.999093+00:00; sha256 9cbe6ae32203f9d015d486765d4b00202e1540c08a3f4a158a5780036abbfb0b (3701919 bytes); grounding_surface slides; unpublished draft, no public URL (URN primary_url urn:usafacts:ai-ready-data-framework:2026-08-roundtable:slide-deck); discovered_via: operator inbox, per cc_tasks/2026-11-02_admit_usafacts_three_track_framework_ADDENDUM_01.md; presented at the Partnership for Public Service Federal Data Excellence roundtable 2026-08-26 (https://ourpublicservice.org/events/framework-for-ai-ready-data-2026-federal-data-excellence-roundtable)"
+    ],
+    "observed_files": {
+     "corpus/crosswalk/usafacts-ai-ready-framework-deck-2026-08.pdf": {
+      "sha256": "9cbe6ae32203f9d015d486765d4b00202e1540c08a3f4a158a5780036abbfb0b",
+      "size": 3701919,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/usafacts-ai-ready-framework-deck-2026-08.pdf": {
+      "path": "corpus/crosswalk/usafacts-ai-ready-framework-deck-2026-08.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3701919 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "24 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-11-03T04:43:28.525137+00:00"
+     }
+    },
+    "added_in": "usafacts-three-track-2026-11-02"
+   }
+  },
+  "usafacts-ai-ready-framework-overview-2026": {
+   "doc_id": "usafacts-ai-ready-framework-overview-2026",
+   "identity": {
+    "sha256": "e47c5bc63d3c70a0ab47a9b029f699ca21d1ea396e3d6dccfd5700747d7876fc",
+    "canonical_path": "corpus/crosswalk/usafacts-ai-ready-framework-overview-2026.pdf",
+    "title": "Overview of USAFacts Project on AI-Ready Government Data",
+    "authors_or_org": [
+     "USAFacts"
+    ],
+    "pub_year": "2026",
+    "doc_type": "practitioner",
+    "source_url": "urn:usafacts:ai-ready-data-framework:2026-08-roundtable:overview",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "operator_inbox",
+    "acquired_at": "2026-11-03T04:43:28.525980+00:00",
+    "acquired_by": "operator"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "370754 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "1 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-11-03T04:43:28.540900+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "The one-page overview of the USAFacts AI-ready government data project, distributed alongside the deck at the 2026-08-26 Federal Data Excellence roundtable. Unpublished draft, no public URL (URN primary_url; the event page is discovered_via). From the operator's inbox copy; the plain-language companion to usafacts-ai-ready-framework-deck-2026-08 that DN-020 cites.",
+    "decided_by": "cc",
+    "decided_at": "2026-11-03T04:43:28.175149+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "usafacts_three_track_2026-11-02"
+   ],
+   "extra": {
+    "notes": [
+     "operator inbox drop, cc_tasks/2026-11-02_admit_usafacts_three_track_framework_ADDENDUM_01.md; acquired_at (inbox file mtime) 2026-11-02T17:50:15.004385+00:00; sha256 e47c5bc63d3c70a0ab47a9b029f699ca21d1ea396e3d6dccfd5700747d7876fc (370754 bytes); grounding_surface document; unpublished draft, no public URL (URN primary_url urn:usafacts:ai-ready-data-framework:2026-08-roundtable:overview); discovered_via: operator inbox, per cc_tasks/2026-11-02_admit_usafacts_three_track_framework_ADDENDUM_01.md; presented at the Partnership for Public Service Federal Data Excellence roundtable 2026-08-26 (https://ourpublicservice.org/events/framework-for-ai-ready-data-2026-federal-data-excellence-roundtable)"
+    ],
+    "observed_files": {
+     "corpus/crosswalk/usafacts-ai-ready-framework-overview-2026.pdf": {
+      "sha256": "e47c5bc63d3c70a0ab47a9b029f699ca21d1ea396e3d6dccfd5700747d7876fc",
+      "size": 370754,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/usafacts-ai-ready-framework-overview-2026.pdf": {
+      "path": "corpus/crosswalk/usafacts-ai-ready-framework-overview-2026.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "370754 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "1 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-11-03T04:43:28.540900+00:00"
+     }
+    },
+    "added_in": "usafacts-three-track-2026-11-02"
    }
   },
   "usafacts-fde-standards-detailed": {
