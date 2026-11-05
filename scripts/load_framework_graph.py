@@ -55,9 +55,15 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: (`cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_checks.md`, DN-005 section 2.1): the four
 #: USAFacts criteria and the three extension groups each check descends from, seven authored nodes
 #: reconstructible from the JSON alone. Not KG labels (same `test_the_kg_tool_label_is_never_reused`).
+#: `UsafactsTrack`, `UsafactsLevel` and `UsafactsPrerequisite` joined on 2026-11-04 with the
+#: USAFacts three-track lineage layer (`cc_tasks/2026-11-04_sixteen_checks_on_the_usafacts_ladder_
+#: and_the_two_audience_documents.md`, DN-020): three tracks, nine levels and three prerequisites,
+#: fifteen authored nodes reconstructible from the JSON alone, the base document the sixteen checks
+#: are now placed on. Not KG labels (same reasoning; Usaf* is not a parser node type).
 ASSESSMENT_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
                      "MeasurementSpec", "AssessmentInternalRef", "Action", "AssessmentTool",
-                     "Precondition", "FcsmConcern", "AiReadyCriterion", "ExtensionGroup")
+                     "Precondition", "FcsmConcern", "AiReadyCriterion", "ExtensionGroup",
+                     "UsafactsTrack", "UsafactsLevel", "UsafactsPrerequisite")
 #: Edge types this loader may write. A literal whitelist, never a payload value — invariant 4.
 #: `SERVES_FCSM_CONCERN` joined on 2026-10-21 (DN-018); it carries `role`, so it has its own
 #: branch below rather than the generic property-dropping one. `DESCENDS_FROM` joined on

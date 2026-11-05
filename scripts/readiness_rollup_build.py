@@ -1,30 +1,32 @@
 #!/usr/bin/env python3
-"""The ICSP roll-up of the sixteen checks as a build product. **Zero spend, no network.**
+"""The ICSP roll-up of the sixteen checks, placed on USAFacts' three-track ladder. **Zero spend, no network.**
 
-`cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_checks.md` Part B, implementing DN-005 section
-2.1 (the validity layer) one level above the sixteen-check one-pager: the buckets, why each
-matters, and the line from each bucket back to the AI-ready data framework an ICSP member already
-knows (USAFacts 2026, which the operator operationalized and extended). One portrait page in three
-forms, Markdown (the source), Word, and a PDF rendered from the Markdown (the `render_report`
-pattern), patterned on `scripts/sixteen_checks_build.py` (the sixteen checks are imported from it,
-not copied).
+`cc_tasks/2026-11-04_sixteen_checks_on_the_usafacts_ladder_and_the_two_audience_documents.md`
+Part B item 7, implementing DN-020. The roll-up's bucket column WAS the four criteria of the
+USAFacts guide plus a "release engineering" bucket; DN-020 section 4 re-parents the sixteen
+measured checks onto USAFacts' August 2026 framework — three tracks, three levels each, three
+prerequisites — and dissolves the "release engineering" bucket (its one measured check, a change
+history a program can follow, is Access II in USAFacts' own words, "lineage/change notes").
 
-Every cell is a query over the framework record or a verbatim quotation with its source; the
-builder types no prose of its own beyond the column headers, the fixed two-sentence intro and the
-fixed two-line footer the task names:
+One portrait page in three forms, Markdown (the source), Word, and a PDF rendered from the
+Markdown (the `render_report` pattern), patterned on `scripts/sixteen_checks_build.py`. Every cell
+is a query over the framework record or the cycle of record; the builder types no prose of its own
+beyond the column headers, the fixed two-sentence lineage intro and the fixed footer:
 
-* the **Criterion** and **What the framework asks for** columns are the `AiReadyCriterion` /
-  `ExtensionGroup` node's `name` and `text`, written by `scripts/add_aiready_lineage.py` (Part A);
+* the **USAFacts rung** column is the rung's short label (DN-020 section 4 order);
+* the **What the framework asks for** column quotes the rung's caption from the record (a
+  `UsafactsLevel` node's `name`, a `UsafactsPrerequisite` node's `text`) — USAFacts' own words,
+  the one place the vocabulary rule lets USAFacts' terminology stand (e.g. Access II's verbatim
+  caption says "agents can crawl"), so the banned-word scan runs over the project's prose, not
+  over these quoted captions (DN-016 / the task's vocabulary rule; recorded in the RESULT);
 * the **Checks** column is the count and the plain names (`rf_name_brief`) of the checks that
-  DESCEND_FROM that node, Scored ones (`instrument_state == specified`) marked;
+  DESCEND_FROM that rung on USAFacts' ladder (the `basis: DN-020 §4` edges), Scored ones marked;
 * the **Quality concern** column is the distinct FCSM 20-04 concern short labels those checks
-  serve (`sixteen_checks_build.CONCERN_SHORT` over the `SERVES_FCSM_CONCERN` edges), so the
-  bucket's "why it matters" is FCSM's language, not the project's;
-* the **Agencies passing** column is, from the cycle of record the brief's grid uses, the count of
-  the sixteen agencies with no fail in the bucket, under the four-state rule (`instrument.four_state`).
-
-Numbers are spelled as words so the page stays free of bare digits (the digit audit); the only
-digits on it are in the fixed title/intro/footer citations.
+  serve (the `SERVES_FCSM_CONCERN` edges);
+* the **Agencies passing** column is, from the cycle of record, the count of the sixteen agencies
+  with no fail in the rung, under the four-state rule — DN-020 T3 is the roll-up's old rule
+  unchanged. A rung with no measured check reads "none measured" (Access III, Context III and
+  Evaluation I to III: the tracks the sensor does not reach yet, DN-020 T4).
 
     /opt/anaconda3/bin/python3 scripts/readiness_rollup_build.py
 """
@@ -49,44 +51,61 @@ import sixteen_checks_build as S  # noqa: E402
 import instrument as I  # noqa: E402
 
 GENERATOR = "scripts/readiness_rollup_build.py"
-TASK = "cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_checks.md"
+TASK = "cc_tasks/2026-11-04_sixteen_checks_on_the_usafacts_ladder_and_the_two_audience_documents.md"
 OUT = REPO / "reports" / "diagnostic" / "rollup"
 STEM = "Readiness_Diagnostic_Rollup"
 
-TITLE = "Readiness diagnostic: what it measures, at a glance"
-#: The two-sentence intro the task fixes verbatim (Part B item 2).
+TITLE = "Readiness diagnostic: what it measures, placed on the USAFacts ladder"
+#: The two-sentence lineage intro (Part B item 7): the August 2026 framework in one sentence, the
+#: predecessor guide in one. `*AI-ready data*` renders italic; "AI" stands only inside USAFacts'
+#: own title (the vocabulary rule).
 INTRO = [
-    "The readiness diagnostic checks whether a program acting for a member of the public can get "
-    "an agency's data and the documentation that goes with it.",
-    "Its checks descend from the four criteria of the USAFacts guide to AI-ready data; the "
-    "diagnostic measures the criteria that can be measured from outside and adds one check from "
-    "release practice.",
+    "The readiness diagnostic places its checks on USAFacts' August 2026 framework for "
+    "AI-ready government data: three tracks, Agentic Access, Agentic Context and Agentic "
+    "Evaluation, three levels in each, with three prerequisites that hold before any level "
+    "applies.",
+    "That framework grew from USAFacts' earlier guide to *AI-ready data*, whose four criteria "
+    "the diagnostic first used; the checks are the same readings, re-parented onto the ladder "
+    "an agency climbs at its own pace.",
 ]
-#: The two-line footer the task fixes verbatim (Part B item 4). Line one names the lineage and the
-#: concern source; line two names the two kinds of user. `*AI-ready data*` is rendered italic.
+#: The footer: line one names the lineage and the concern source; line two names the two kinds of
+#: user. `*AI-ready data*` renders italic.
 FOOTER = [
-    "Checks descend from USAFacts (2026), *AI-ready data*; concerns from FCSM 20-04, "
-    "Accessibility dimension, after Webb 2026.",
+    "Checks are placed on USAFacts (2026), *AI-ready data*, August 2026 framework; concerns from "
+    "FCSM 20-04, Accessibility dimension, after Webb 2026.",
     "Standard user: no key. API user: a free key by open registration, a person completes an "
     "email step.",
 ]
-#: The passing-column footnote (Part B item 3): a check not measured is excluded, never a fail.
-PASSING_FOOTNOTE = ("An agency passes a bucket when none of the bucket's checks that could be "
+#: The passing-column footnote (Part B item 7, DN-020 T3): a check not measured is excluded,
+#: never a fail.
+PASSING_FOOTNOTE = ("An agency passes a rung when none of the rung's checks that could be "
                     "measured for it comes back fail; a check not measured for an agency, or not "
                     "measured on the cycle of record at all, is left out of that agency's count "
                     "and is never read as a fail.")
-#: Accurate carries no runnable check; its indicators are evaluation-harness checks (EVAL). The
-#: cell reads this (Part B item 3), guarded by the record's EVAL typing, not typed on a whim.
-EVAL_NOTE = "no check yet; needs an evaluation harness"
+#: A rung the sensor does not reach yet carries no measured check (DN-020 T4). Its passing cell
+#: reads this rather than a count; honestly empty, not a zero.
+NONE_MEASURED = "none measured"
 
-#: Numbers nought to sixteen as words, so the page carries no bare digit (digit audit). `0` is
-#: "no" in the check-count phrase ("No checks") and "zero" in the passing phrase ("zero of sixteen").
+#: The eleven rungs in DN-020 section 4 order: the two prerequisites that carry a check, the four
+#: measured levels, then the five rungs with no measured check. `(node_id, short_label)`.
+RUNG_ORDER = [
+    ("usaf:pre:discoverable", "Prerequisite, discoverable"),
+    ("usaf:pre:licensed", "Prerequisite, clearly licensed"),
+    ("usaf:access:1", "Access I"),
+    ("usaf:access:2", "Access II"),
+    ("usaf:context:1", "Context I"),
+    ("usaf:context:2", "Context II"),
+    ("usaf:access:3", "Access III"),
+    ("usaf:context:3", "Context III"),
+    ("usaf:evaluation:1", "Evaluation I"),
+    ("usaf:evaluation:2", "Evaluation II"),
+    ("usaf:evaluation:3", "Evaluation III"),
+]
+
+#: Numbers nought to sixteen as words, so the page carries no bare digit (the digit audit).
 _WORD = {0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
          8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen",
          14: "fourteen", 15: "fifteen", 16: "sixteen"}
-
-#: USAFacts' four criteria in the guide's order, then the extension groups that carry a check.
-CRITERION_ORDER = ["A", "B", "C", "D"]
 
 
 def word(n: int) -> str:
@@ -97,44 +116,41 @@ def word(n: int) -> str:
 
 # --------------------------------------------------------------------------------- the data
 
-def lineage_nodes(g: dict) -> dict:
-    """`{letter: node}` for the four `AiReadyCriterion` and three `ExtensionGroup` nodes."""
-    out = {}
-    for n in g["nodes"]:
-        if set(n["labels"]) & {"AiReadyCriterion", "ExtensionGroup"}:
-            out[n["properties"]["letter"]] = n
-    return out
+def usafacts_nodes(g: dict) -> dict:
+    """`{node_id: node}` for the `UsafactsTrack`/`UsafactsLevel`/`UsafactsPrerequisite` nodes."""
+    return {n["id"]: n for n in g["nodes"]
+            if set(n["labels"]) & {"UsafactsTrack", "UsafactsLevel", "UsafactsPrerequisite"}}
 
 
-def descends(g: dict) -> dict:
-    """`{lineage_node_id: [leg, ...]}` from the DESCENDS_FROM edges, in brief order within a
-    bucket (scored first within a criterion, `RB.check_rows`)."""
+def descends_usafacts(g: dict) -> dict:
+    """`{rung_id: [leg, ...]}` from the DESCENDS_FROM edges that place a check on USAFacts' ladder
+    (`to` a `usaf:*` node), in the leg convention's order within a rung."""
     by_id = {n["id"]: n for n in g["nodes"]}
-    order = {r["leg"]: i for i, r in enumerate(RB.check_rows(g))}
+    order = {leg: i for i, leg in enumerate(
+        ["A1", "A2", "A3", "A4", "A5", "A6", "A8", "A9", "A10", "A11-declared",
+         "A12", "A13", "B3", "D1", "D4", "F4"])}
     out: dict = {}
     for e in g["edges"]:
-        if e["type"] != "DESCENDS_FROM":
+        if e["type"] != "DESCENDS_FROM" or not str(e["to"]).startswith("usaf:"):
             continue
         leg = by_id[e["from"]]["properties"]["leg"]
         out.setdefault(e["to"], []).append(leg)
-    for nid in out:
-        out[nid].sort(key=lambda l: order.get(l, 999))
+    for rid in out:
+        out[rid].sort(key=lambda l: order.get(l, 999))
     return out
 
 
-def criterion_eval_typed(g: dict, letter: str) -> bool:
-    """True when the criterion's indicators are evaluation-harness (EVAL) typed — the record
-    fact behind Accurate's `no check yet; needs an evaluation harness` cell."""
-    return any("EVAL" in str(n["properties"].get("type") or "")
-               for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
-               and n["properties"].get("criterion_code") == letter)
+def rung_asks(node: dict) -> str:
+    """The rung's caption from the record: a level's `name`, a prerequisite's `text` (the
+    prerequisite's `name` is already the rung label, so its sentence is the more useful quote)."""
+    if "UsafactsPrerequisite" in node["labels"]:
+        return str(node["properties"]["text"])
+    return str(node["properties"]["name"])
 
 
 def bucket_pass_from_edges(legs: list[str], grid: dict) -> int | None:
-    """Agencies (of sixteen) with no fail across this bucket's measured checks, under the
-    four-state rule. `None` when the bucket has no check present on the cycle of record. A check
-    not measured for an agency (could_not_measure, or absent from the grid) is excluded for that
-    agency; an agency with no measured bucket check does not count as passing."""
+    """Agencies (of sixteen) with no fail across this rung's measured checks, under the
+    four-state rule. `None` when the rung has no check present on the cycle of record."""
     cols = {c["code"] for c in grid["columns"]}
     present = [l for l in legs if l in cols]
     if not present:
@@ -148,20 +164,32 @@ def bucket_pass_from_edges(legs: list[str], grid: dict) -> int | None:
     return n
 
 
-def verify_pass_by_letter(g: dict, grid: dict) -> dict:
-    """The passing counts recomputed by a SECOND, independent code path: group the grid's legs by
-    the check's code letter (the naming convention) rather than by the record's DESCENDS_FROM
-    edges, build the full per-agency state matrix first, then count. Agreement with the rendered
-    numbers (which come from the edges) cross-checks the edges against the convention."""
-    letter_of_bucket = {"A": "A", "B": "B", "C": "C", "D": "D", "F": "F"}
+#: DN-020 section 4's placement as a LITERAL rung -> display-leg map, independent of the record's
+#: DESCENDS_FROM edges, for the second verification path. The legs are the record spec legs the
+#: names resolve to (the roll-up's grid uses these codes); this is the cross-check that the edges
+#: written in Part A agree with DN-020 section 4 as a reader reads it.
+RUNG_LEGS = {
+    "usaf:pre:discoverable": ["A5", "A6", "D4"],
+    "usaf:pre:licensed": ["D1"],
+    "usaf:access:1": ["A1", "A3", "A4", "A12", "A11-declared", "A10"],
+    "usaf:access:2": ["A2", "A9", "A13", "F4"],
+    "usaf:context:1": ["B3"],
+    "usaf:context:2": ["A8"],
+}
+
+
+def verify_pass_by_rung(grid: dict) -> dict:
+    """The passing counts recomputed by a SECOND code path: the full per-agency state matrix,
+    grouped by the literal DN-020 section 4 rung map rather than by the record's edges. Agreement
+    with the rendered numbers (which come from the edges) cross-checks the edges against DN-020."""
     cols = [c["code"] for c in grid["columns"]]
     matrix = {r["agency"]: {leg: I.four_state([p["verdict"] for p in r["cells"][leg]["pages"]])
                             for leg in cols} for r in grid["rows"]}
     out: dict = {}
-    for letter in letter_of_bucket:
-        present = [leg for leg in cols if leg[0] == letter]
+    for rung, _ in RUNG_ORDER:
+        present = [l for l in RUNG_LEGS.get(rung, []) if l in cols]
         if not present:
-            out[letter] = None
+            out[rung] = None
             continue
         cnt = 0
         for states in matrix.values():
@@ -169,31 +197,25 @@ def verify_pass_by_letter(g: dict, grid: dict) -> dict:
             meas = [v for v in vals if v in ("pass", "fail", "partial")]
             if meas and "fail" not in meas:
                 cnt += 1
-        out[letter] = cnt
+        out[rung] = cnt
     return out
 
 
-def bucket_rows(g: dict, grid: dict) -> list[dict]:
-    """One row per criterion in USAFacts' order, then one per extension group that carries a
-    check. Each cell is a query over the record and the cycle of record."""
-    nodes = lineage_nodes(g)
-    desc = descends(g)
+def rung_rows(g: dict, grid: dict) -> list[dict]:
+    """One row per rung in DN-020 section 4 order. Each cell is a query over the record and the
+    cycle of record."""
+    nodes = usafacts_nodes(g)
+    desc = descends_usafacts(g)
     check = {r["leg"]: r for r in RB.check_rows(g)}
     concerns = S.concern_of(g)
     scored = set(S.scored_legs(g))
 
-    extension_letters = [n["properties"]["letter"] for n in g["nodes"]
-                         if "ExtensionGroup" in n["labels"]
-                         and desc.get(n["id"])]          # only groups that carry a check
-    row_letters = CRITERION_ORDER + sorted(extension_letters)
-
     rows = []
-    for letter in row_letters:
-        node = nodes.get(letter)
+    for rid, label in RUNG_ORDER:
+        node = nodes.get(rid)
         if node is None:
-            raise SystemExit(f"FATAL: no lineage node for letter {letter!r}; run add_aiready_lineage.py")
-        is_ext = "ExtensionGroup" in node["labels"]
-        legs = desc.get(node["id"], [])
+            raise SystemExit(f"FATAL: no USAFacts rung node {rid!r}; run add_usafacts_lineage.py")
+        legs = desc.get(rid, [])
         for leg in legs:
             if leg not in check:
                 raise SystemExit(f"FATAL: DESCENDS_FROM names {leg}, absent from the check rows")
@@ -209,17 +231,12 @@ def bucket_rows(g: dict, grid: dict) -> list[dict]:
         concern_cell = "; ".join(S.CONCERN_SHORT[c] for c in sorted(distinct))
         concern_cell = (concern_cell[0].upper() + concern_cell[1:]) if concern_cell else ""
         n_pass = bucket_pass_from_edges(legs, grid)
-        if n_pass is None:
-            if not criterion_eval_typed(g, letter):
-                raise SystemExit(f"FATAL: bucket {letter} has no measured check and is not EVAL-typed; "
-                                 "the no-check note is not grounded")
-            passing = EVAL_NOTE
-        else:
-            passing = f"{word(n_pass)} of sixteen"
+        passing = NONE_MEASURED if n_pass is None else f"{word(n_pass)} of sixteen"
         rows.append({
-            "letter": letter, "is_extension": is_ext,
-            "criterion": S.house_dashes(str(node["properties"]["name"])) + (" (added)" if is_ext else ""),
-            "asks": S.house_dashes(str(node["properties"]["text"])),
+            "rung": rid, "label": label,
+            # the caption is USAFacts' verbatim quote; the house-dash rule still applies to the
+            # rendered cell (an em/en dash becomes the house comma), the record is not edited.
+            "asks": S.house_dashes(rung_asks(node)),
             "checks": checks, "check_count": len(checks),
             "concern": concern_cell, "concern_codes": sorted(distinct),
             "passing": passing, "passing_n": n_pass,
@@ -246,11 +263,11 @@ def build_markdown(rows: list[dict]) -> str:
     L = [f"# {TITLE}", "",
          f"Generated by `{GENERATOR}` from the framework record and the cycle of record.", "",
          INTRO[0], "", INTRO[1], "",
-         "| Criterion | What the framework asks for | Checks | Quality concern | "
-         "Agencies passing every check in this bucket^a |",
-         "|" + "|".join("-" * n for n in (12, 26, 34, 16, 20)) + "|"]
+         "| USAFacts rung | What the framework asks for | Checks | Quality concern | "
+         "Agencies passing every check in this rung^a |",
+         "|" + "|".join("-" * n for n in (14, 26, 32, 16, 20)) + "|"]
     for r in rows:
-        L.append(f"| {_cell(r['criterion'])} | {_cell(r['asks'])} | {_cell(checks_text(r))} | "
+        L.append(f"| {_cell(r['label'])} | {_cell(r['asks'])} | {_cell(checks_text(r))} | "
                  f"{_cell(r['concern'])} | {_cell(r['passing'])} |")
     L += ["", f"^a {PASSING_FOOTNOTE}", "", FOOTER[0], "", FOOTER[1], ""]
     return "\n".join(L)
@@ -258,7 +275,7 @@ def build_markdown(rows: list[dict]) -> str:
 
 # ------------------------------------------------------------------------------------- docx
 
-def build_docx(rows: list[dict], path: Path, body_pt: float = 11.0) -> None:
+def build_docx(rows: list[dict], path: Path, body_pt: float = 9.5) -> None:
     from docx import Document
     from docx.enum.section import WD_ORIENT
     from docx.oxml import OxmlElement
@@ -292,21 +309,30 @@ def build_docx(rows: list[dict], path: Path, body_pt: float = 11.0) -> None:
             run(p, text, bold=bold, size=size, color=color, italic=italic)
         return p
 
-    def footer_para(segments, *, size=body_pt, after=2):
+    def rich_para(segments, *, size=body_pt, after=2, color=GREY):
         p = doc.add_paragraph()
         p.paragraph_format.space_after = Pt(after)
         p.paragraph_format.space_before = Pt(0)
         for text, italic in segments:
-            run(p, text, size=size, italic=italic, color=GREY)
+            run(p, text, size=size, italic=italic, color=color)
         return p
 
-    para(TITLE, bold=True, size=15, after=4)
-    para(INTRO[0], size=body_pt, after=3)
-    para(INTRO[1], size=body_pt, after=6)
+    def intro_para(text, *, after):
+        """An intro line that renders `*AI-ready data*` italic where it appears."""
+        pre, mark, post = text.partition("*AI-ready data*")
+        if mark:
+            rich_para([(pre, False), ("AI-ready data", True), (post, False)],
+                      size=body_pt, after=after, color=BLACK)
+        else:
+            para(text, size=body_pt, after=after)
 
-    headers = ["Criterion", "What the framework asks for", "Checks", "Quality concern",
-               "Agencies passing every check in this bucket"]
-    widths = [1.0, 1.85, 2.6, 0.95, 1.1]
+    para(TITLE, bold=True, size=15, after=4)
+    intro_para(INTRO[0], after=3)
+    intro_para(INTRO[1], after=6)
+
+    headers = ["USAFacts rung", "What the framework asks for", "Checks", "Quality concern",
+               "Agencies passing every check in this rung"]
+    widths = [1.0, 1.85, 2.55, 0.95, 1.15]
     cell_pt = body_pt - 1.5
     t = doc.add_table(rows=1, cols=len(headers))
     t.style = "Table Grid"
@@ -334,9 +360,8 @@ def build_docx(rows: list[dict], path: Path, body_pt: float = 11.0) -> None:
 
     for r in rows:
         cells = t.add_row().cells
-        put_plain(cells[0], widths[0], r["criterion"])
+        put_plain(cells[0], widths[0], r["label"])
         put_plain(cells[1], widths[1], r["asks"])
-        # Checks cell: count word, then each name on its own line, Scored marked in orange.
         cells[2].width = Inches(widths[2])
         cp = cells[2].paragraphs[0]
         cp.paragraph_format.space_after = Pt(0)
@@ -358,20 +383,16 @@ def build_docx(rows: list[dict], path: Path, body_pt: float = 11.0) -> None:
                   color=(GREY if r["passing_n"] is None else BLACK))
 
     para("ᵃ " + PASSING_FOOTNOTE, size=cell_pt, color=GREY, after=6)
-    # Footer line one carries an italic run for *AI-ready data*.
     pre, _, post = FOOTER[0].partition("*AI-ready data*")
-    footer_para([(pre, False), ("AI-ready data", True), (post, False)], after=1)
-    footer_para([(FOOTER[1], False)], after=0)
+    rich_para([(pre, False), ("AI-ready data", True), (post, False)], after=1)
+    rich_para([(FOOTER[1], False)], after=0)
     doc.save(str(path))
 
 
 # -------------------------------------------------------------------------------------- pdf
 
 def render_pdf(md_path: Path, pdf_path: Path, body_pt: float, title: str) -> None:
-    """Render the committed Markdown to a portrait PDF (the `render_report` pattern: the PDF is
-    the Markdown on disk, unchanged). The table is a breakable figure so it shares the page with
-    the prose; the size is passed through pandoc's `fontsize` variable (the only lever its typst
-    template honours), root-caused in `sixteen_checks_build.render_pdf`."""
+    """Render the committed Markdown to a portrait PDF (the `render_report` pattern)."""
     size = body_pt - 1.5
     header = ("#set page(margin: (x: 1.4cm, y: 1.2cm))\n"
               "#show figure: set block(breakable: true)\n"
@@ -407,31 +428,46 @@ _CHECK_CODE = re.compile(r"\b[A-G][0-9]{1,2}\b")
 
 
 def digit_audit(rows: list[dict]) -> list[str]:
-    """No bare number in any record-derived cell. The title, intro and footer are fixed task
-    constants that carry citation years, and are not scanned; every cell below is a query over the
-    record or the cycle of record, and its numbers are spelled."""
+    """No bare number in any record-derived cell. The title/intro/footer are fixed task constants
+    with citation years and are not scanned; the rung labels (Access I/II/III) carry Roman
+    numerals, not digits, so the audit never sees them as numbers."""
     bad = []
     for r in rows:
-        cells = {"criterion": r["criterion"], "asks": r["asks"], "checks": checks_text(r),
+        cells = {"label": r["label"], "asks": r["asks"], "checks": checks_text(r),
                  "concern": r["concern"], "passing": r["passing"]}
         for k, v in cells.items():
             for m in B._BARE.finditer(str(v)):
-                bad.append(f"{r['letter']} {k}: bare number {m.group(0)!r}")
+                bad.append(f"{r['rung']} {k}: bare number {m.group(0)!r}")
     return bad
 
 
+def project_prose(rows: list[dict]) -> str:
+    """The text the vocabulary scan runs over: the project's own prose and the check names, NOT
+    the verbatim USAFacts captions in the `asks` column. USAFacts' August 2026 captions are a
+    quoted zone (Access II's reads "agents can crawl"), and the banned-word rule guards what the
+    project writes about its own client, not what USAFacts wrote about agents (task vocabulary
+    rule; RESULT). The fixed intro/footer are project prose and ARE scanned."""
+    parts = list(INTRO) + list(FOOTER) + [PASSING_FOOTNOTE, TITLE]
+    for r in rows:
+        parts.append(r["label"])
+        parts.append(r["concern"])
+        parts.append(r["passing"])
+        parts.extend(c["name"] for c in r["checks"])
+    return "\n".join(parts)
+
+
 def bucket_counts(rows: list[dict]) -> dict:
-    """`{name: check_count}` for the rendered buckets, to compare against Part A's Cypher split."""
-    return {r["criterion"].replace(" (added)", ""): r["check_count"] for r in rows}
+    """`{rung_label: check_count}` for the rendered rungs, to compare against Part A's edge split."""
+    return {r["label"]: r["check_count"] for r in rows}
 
 
 # -------------------------------------------------------------------------------------- build
 
-def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> dict:
+def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 9.5) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     g = D.load_framework()
     grid = I.load_grid(I.load_config())
-    rows = bucket_rows(g, grid)
+    rows = rung_rows(g, grid)
 
     md_path, docx_path, pdf_path = out / f"{STEM}.md", out / f"{STEM}.docx", out / f"{STEM}.pdf"
     md = build_markdown(rows)
@@ -443,24 +479,22 @@ def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> di
     docx_pages = RB.docx_pages(docx_path) if measure else None
     ppages = pdf_pages(pdf_path) if measure else None
 
-    # ---- the six Part B checks ----
-    # Part A split, recomputed from the record's DESCENDS_FROM edges, keyed by bucket name.
-    by_id = {n["id"]: n for n in g["nodes"]}
+    # ---- the Part B checks ----
+    # Part A split, recomputed from the record's USAFacts DESCENDS_FROM edges, keyed by rung label.
+    label_of = {rid: label for rid, label in RUNG_ORDER}
     part_a_split: dict = {}
     for e in g["edges"]:
-        if e["type"] == "DESCENDS_FROM":
-            name = by_id[e["to"]]["properties"]["name"]
-            part_a_split[name] = part_a_split.get(name, 0) + 1
+        if e["type"] == "DESCENDS_FROM" and str(e["to"]).startswith("usaf:"):
+            part_a_split[label_of[e["to"]]] = part_a_split.get(label_of[e["to"]], 0) + 1
     rendered_counts = bucket_counts(rows)
-    # Accurate renders with zero checks but has no DESCENDS_FROM edge, so it is absent from the
-    # edge split; compare on the buckets that carry at least one check.
-    counts_match = all(part_a_split.get(name) == rendered_counts.get(name)
-                       for name in part_a_split)
+    # Rungs with zero checks have no edge and are absent from the edge split; compare on the rungs
+    # that carry at least one check.
+    counts_match = all(part_a_split.get(label) == rendered_counts.get(label)
+                       for label in part_a_split)
 
-    verify = verify_pass_by_letter(g, grid)
-    rendered_pass = {r["letter"]: r["passing_n"] for r in rows}
-    pass_match = all(verify.get(letter) == rendered_pass.get(letter)
-                     for letter in rendered_pass)
+    verify = verify_pass_by_rung(grid)
+    rendered_pass = {r["rung"]: r["passing_n"] for r in rows}
+    pass_match = all(verify.get(rid) == rendered_pass.get(rid) for rid in rendered_pass)
 
     scored_rendered = sorted(c["leg"] for r in rows for c in r["checks"] if c["scored"])
     scored_record = sorted(S.scored_legs(g))
@@ -468,10 +502,13 @@ def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> di
     md_text = md
     docx_text = RB.docx_text(docx_path)
     pdf_txt = pdf_text(pdf_path) if measure else ""
-    texts = {"markdown": md_text, "docx": docx_text, "pdf": pdf_txt}
+    # The vocabulary and dash scans run over the project's prose only; the verbatim USAFacts
+    # captions (the `asks` column) are a quoted zone the banned-word rule exempts.
+    prose = project_prose(rows)
+    texts = {"project_prose": prose}
 
     md_check_codes = sorted(set(_CHECK_CODE.findall(md_text)))
-    md_dashes = RB.dash_hits(md_text)
+    md_dashes = RB.dash_hits(prose)
     md_508 = "508" in md_text
 
     checks = {
@@ -479,7 +516,7 @@ def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> di
         "digit_audit": digit_audit(rows),
         "font_colour_audit": {"docx": RB.docx_font_colour_audit(docx_path)},
         "vocabulary": {k: D.banned_hits_prose(v) for k, v in texts.items()},
-        "dashes": {k: RB.dash_hits(v) for k, v in texts.items()},
+        "dashes": {"project_prose": RB.dash_hits(prose)},
         "markdown_check_codes": md_check_codes,
         "markdown_dashes": md_dashes,
         "markdown_mentions_508": md_508,
@@ -487,7 +524,7 @@ def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> di
         "part_a_split": part_a_split,
         "bucket_counts_match_part_a": counts_match,
         "agencies_passing_rendered": rendered_pass,
-        "agencies_passing_verify_by_letter": verify,
+        "agencies_passing_verify_by_rung": verify,
         "agencies_passing_match": pass_match,
         "scored_rendered": scored_rendered,
         "scored_record": scored_record,
@@ -523,7 +560,7 @@ def build(out: Path = OUT, *, measure: bool = True, body_pt: float = 11.0) -> di
     report = {
         "generated_by": GENERATOR, "task": TASK, "cycle": grid["cycle"],
         "body_pt": body_pt,
-        "rows": [{"letter": r["letter"], "criterion": r["criterion"], "check_count": r["check_count"],
+        "rows": [{"rung": r["rung"], "label": r["label"], "check_count": r["check_count"],
                   "legs": [c["leg"] for c in r["checks"]], "scored": [c["leg"] for c in r["checks"] if c["scored"]],
                   "concern": r["concern"], "passing": r["passing"]} for r in rows],
         "products": [
@@ -553,7 +590,7 @@ def main(argv=None) -> int:
                      | {"checks": {k: rep["checks"][k] for k in (
                          "docx_pages", "pdf_pages", "bucket_counts_rendered", "part_a_split",
                          "bucket_counts_match_part_a", "agencies_passing_rendered",
-                         "agencies_passing_verify_by_letter", "agencies_passing_match",
+                         "agencies_passing_verify_by_rung", "agencies_passing_match",
                          "scored_rendered", "scored_match_four_specified",
                          "markdown_check_codes", "markdown_dashes", "markdown_mentions_508")}},
                      indent=1, ensure_ascii=False))

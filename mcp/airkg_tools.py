@@ -85,7 +85,11 @@ FRAMEWORK_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentInd
                     # The AI-ready lineage layer (DN-005 section 2.1): the four USAFacts criteria
                     # and the three extension groups each check descends from. Framework nodes
                     # like the rest, so the projection gate compares them cell for cell.
-                    "AiReadyCriterion", "ExtensionGroup")
+                    "AiReadyCriterion", "ExtensionGroup",
+                    # The USAFacts three-track lineage layer (DN-020): the base document the
+                    # sixteen checks are placed on — three tracks, nine levels, three
+                    # prerequisites. Framework nodes like the rest, compared cell for cell.
+                    "UsafactsTrack", "UsafactsLevel", "UsafactsPrerequisite")
 
 #: Labels a `graph` locator may name. A LITERAL whitelist, never a value off a payload —
 #: invariant 4: this repository never interpolates payload text into Cypher, and a locator is

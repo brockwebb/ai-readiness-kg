@@ -55,7 +55,7 @@ The interpreter is named explicitly because `fastmcp`, the Neo4j driver and `pyy
 
 ## The projection gate, at generation time
 
-`green` — every node of the record is in the graph with every property equal (243 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
+`green` — every node of the record is in the graph with every property equal (258 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
 
 ## The tools
 
@@ -129,11 +129,15 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "serves_fcsm_concern_edges": 23,
       "aiready_criterion_nodes": 4,
       "extension_group_nodes": 3,
-      "descends_from_edges": 16
+      "descends_from_edges": 16,
+      "usafacts_track_nodes": 3,
+      "usafacts_level_nodes": 9,
+      "usafacts_prerequisite_nodes": 3,
+      "usafacts_descends_from_edges": 16
     },
     "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators count… [1476 chars]",
-    "nodes": 243,
-    "edges": 501,
+    "nodes": 258,
+    "edges": 526,
     "actions": 64,
     "remediates_edges": 64,
     "tools": 13,
@@ -245,7 +249,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       }
     ],
     "status": "green",
-    "nodes_compared": 243,
+    "nodes_compared": 258,
     "mismatches": [],
     "reason": "every node of the record is in the graph with every property equal"
   },

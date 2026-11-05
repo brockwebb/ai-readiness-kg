@@ -116,6 +116,7 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
         "OR n:AssessmentIndicator OR n:MeasurementSpec OR n:AssessmentInternalRef "
         "OR n:Action OR n:AssessmentTool OR n:Precondition OR n:FcsmConcern "
         "OR n:AiReadyCriterion OR n:ExtensionGroup "
+        "OR n:UsafactsTrack OR n:UsafactsLevel OR n:UsafactsPrerequisite "
         "RETURN labels(n)[0] AS l, count(*) AS c")}
     assert got_nodes == dict(want_nodes)
 
@@ -123,9 +124,12 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
     # MeasurementSpec joined the edge-source labels with the readiness diagnostic package
     # (`cc_tasks/2026-10-15_readiness_diagnostic_package.md` Part A, DN-016 ruling 4): a spec
     # now carries its own EVIDENCED_BY edges to the corpus documents its entry cites.
+    # UsafactsTrack joined the edge-source labels on 2026-11-04 (DN-020): a track
+    # DECOMPOSES_INTO its three levels, the one edge in the USAFacts lineage layer whose source
+    # is one of the three new labels (the sixteen DESCENDS_FROM placements are spec-sourced).
     got_edges = {r["t"]: r["c"] for r in graph.run(
         "MATCH (a)-[x]->(b) WHERE a:AssessmentCriterion OR a:AssessmentConstruct "
-        "OR a:AssessmentIndicator OR a:Action OR a:MeasurementSpec "
+        "OR a:AssessmentIndicator OR a:Action OR a:MeasurementSpec OR a:UsafactsTrack "
         "RETURN type(x) AS t, count(*) AS c")}
     assert got_edges == dict(want_edges)
 

@@ -1,38 +1,72 @@
 {
  "generated_by": "scripts/readiness_rollup_build.py",
- "task": "cc_tasks/2026-11-02_icsp_rollup_of_the_sixteen_checks.md",
+ "task": "cc_tasks/2026-11-04_sixteen_checks_on_the_usafacts_ladder_and_the_two_audience_documents.md",
  "cycle": "scan_2026-10-07_composite_d",
- "body_pt": 11.0,
+ "body_pt": 9.5,
  "rows": [
   {
-   "letter": "A",
-   "criterion": "Accessible",
-   "check_count": 12,
+   "rung": "usaf:pre:discoverable",
+   "label": "Prerequisite, discoverable",
+   "check_count": 3,
+   "legs": [
+    "A5",
+    "A6",
+    "D4"
+   ],
+   "scored": [
+    "A5",
+    "D4"
+   ],
+   "concern": "Find and obtain; metadata",
+   "passing": "zero of sixteen"
+  },
+  {
+   "rung": "usaf:pre:licensed",
+   "label": "Prerequisite, clearly licensed",
+   "check_count": 1,
+   "legs": [
+    "D1"
+   ],
+   "scored": [],
+   "concern": "Metadata",
+   "passing": "zero of sixteen"
+  },
+  {
+   "rung": "usaf:access:1",
+   "label": "Access I",
+   "check_count": 6,
    "legs": [
     "A1",
     "A3",
-    "A5",
-    "A2",
     "A4",
-    "A6",
-    "A8",
-    "A9",
     "A10",
     "A11-declared",
-    "A12",
-    "A13"
+    "A12"
    ],
    "scored": [
     "A1",
-    "A3",
-    "A5"
+    "A3"
    ],
-   "concern": "Find and obtain; understand; usable format; metadata",
-   "passing": "two of sixteen"
+   "concern": "Find and obtain; usable format",
+   "passing": "eleven of sixteen"
   },
   {
-   "letter": "B",
-   "criterion": "Understandable",
+   "rung": "usaf:access:2",
+   "label": "Access II",
+   "check_count": 4,
+   "legs": [
+    "A2",
+    "A9",
+    "A13",
+    "F4"
+   ],
+   "scored": [],
+   "concern": "Find and obtain; understand; usable format; metadata",
+   "passing": "one of sixteen"
+  },
+  {
+   "rung": "usaf:context:1",
+   "label": "Context I",
    "check_count": 1,
    "legs": [
     "B3"
@@ -42,105 +76,143 @@
    "passing": "two of sixteen"
   },
   {
-   "letter": "C",
-   "criterion": "Accurate",
+   "rung": "usaf:context:2",
+   "label": "Context II",
+   "check_count": 1,
+   "legs": [
+    "A8"
+   ],
+   "scored": [],
+   "concern": "Metadata",
+   "passing": "one of sixteen"
+  },
+  {
+   "rung": "usaf:access:3",
+   "label": "Access III",
    "check_count": 0,
    "legs": [],
    "scored": [],
    "concern": "",
-   "passing": "no check yet; needs an evaluation harness"
+   "passing": "none measured"
   },
   {
-   "letter": "D",
-   "criterion": "Open",
-   "check_count": 2,
-   "legs": [
-    "D4",
-    "D1"
-   ],
-   "scored": [
-    "D4"
-   ],
-   "concern": "Find and obtain; metadata",
-   "passing": "zero of sixteen"
-  },
-  {
-   "letter": "F",
-   "criterion": "Release engineering (added)",
-   "check_count": 1,
-   "legs": [
-    "F4"
-   ],
+   "rung": "usaf:context:3",
+   "label": "Context III",
+   "check_count": 0,
+   "legs": [],
    "scored": [],
-   "concern": "Metadata",
-   "passing": "zero of sixteen"
+   "concern": "",
+   "passing": "none measured"
+  },
+  {
+   "rung": "usaf:evaluation:1",
+   "label": "Evaluation I",
+   "check_count": 0,
+   "legs": [],
+   "scored": [],
+   "concern": "",
+   "passing": "none measured"
+  },
+  {
+   "rung": "usaf:evaluation:2",
+   "label": "Evaluation II",
+   "check_count": 0,
+   "legs": [],
+   "scored": [],
+   "concern": "",
+   "passing": "none measured"
+  },
+  {
+   "rung": "usaf:evaluation:3",
+   "label": "Evaluation III",
+   "check_count": 0,
+   "legs": [],
+   "scored": [],
+   "concern": "",
+   "passing": "none measured"
   }
  ],
  "products": [
   {
    "name": "Readiness_Diagnostic_Rollup.md",
-   "md_sha256": "2e8d1c98709c53aeffebb8e0d36ba7b4c9f9131007cf171a6f7a4e4bcd9b2fcf"
+   "md_sha256": "7d6a0217bb0476f05f526a1a39c23d6c55c3785f4f16c1bf76a0a9cb4fa2f939"
   },
   {
    "name": "Readiness_Diagnostic_Rollup.docx",
-   "md_sha256": "2e8d1c98709c53aeffebb8e0d36ba7b4c9f9131007cf171a6f7a4e4bcd9b2fcf",
-   "sha256": "2bd2b35f31014f47e5d1c902cc712154d22468ae6c34307b8bdbf32319fd8a08",
-   "pages": 2
+   "md_sha256": "7d6a0217bb0476f05f526a1a39c23d6c55c3785f4f16c1bf76a0a9cb4fa2f939",
+   "sha256": "866aae82f185130fdabbf02243aa6ff7fcd8e91c9a6f48377c5b23c92ccb07c4",
+   "pages": 1
   },
   {
    "name": "Readiness_Diagnostic_Rollup.pdf",
-   "md_sha256": "2e8d1c98709c53aeffebb8e0d36ba7b4c9f9131007cf171a6f7a4e4bcd9b2fcf",
-   "sha256": "8de2c4e161968e3c3190f313d995533146f51104af90d392c8559874bab73df4",
-   "pages": 2
+   "md_sha256": "7d6a0217bb0476f05f526a1a39c23d6c55c3785f4f16c1bf76a0a9cb4fa2f939",
+   "sha256": "088067a3d8533251a2878bbd41dd0750653ab16fd7f9822ff1096b8ca2fa2f37",
+   "pages": 1
   }
  ],
  "checks": {
-  "docx_pages": 2,
-  "pdf_pages": 2,
+  "docx_pages": 1,
+  "pdf_pages": 1,
   "digit_audit": [],
   "font_colour_audit": {
    "docx": []
   },
   "vocabulary": {
-   "markdown": [],
-   "docx": [],
-   "pdf": []
+   "project_prose": []
   },
   "dashes": {
-   "markdown": [],
-   "docx": [],
-   "pdf": []
+   "project_prose": []
   },
   "markdown_check_codes": [],
   "markdown_dashes": [],
   "markdown_mentions_508": false,
   "bucket_counts_rendered": {
-   "Accessible": 12,
-   "Understandable": 1,
-   "Accurate": 0,
-   "Open": 2,
-   "Release engineering": 1
+   "Prerequisite, discoverable": 3,
+   "Prerequisite, clearly licensed": 1,
+   "Access I": 6,
+   "Access II": 4,
+   "Context I": 1,
+   "Context II": 1,
+   "Access III": 0,
+   "Context III": 0,
+   "Evaluation I": 0,
+   "Evaluation II": 0,
+   "Evaluation III": 0
   },
   "part_a_split": {
-   "Accessible": 12,
-   "Understandable": 1,
-   "Open": 2,
-   "Release engineering": 1
+   "Prerequisite, discoverable": 3,
+   "Prerequisite, clearly licensed": 1,
+   "Access I": 6,
+   "Access II": 4,
+   "Context I": 1,
+   "Context II": 1
   },
   "bucket_counts_match_part_a": true,
   "agencies_passing_rendered": {
-   "A": 2,
-   "B": 2,
-   "C": null,
-   "D": 0,
-   "F": 0
+   "usaf:pre:discoverable": 0,
+   "usaf:pre:licensed": 0,
+   "usaf:access:1": 11,
+   "usaf:access:2": 1,
+   "usaf:context:1": 2,
+   "usaf:context:2": 1,
+   "usaf:access:3": null,
+   "usaf:context:3": null,
+   "usaf:evaluation:1": null,
+   "usaf:evaluation:2": null,
+   "usaf:evaluation:3": null
   },
-  "agencies_passing_verify_by_letter": {
-   "A": 2,
-   "B": 2,
-   "C": null,
-   "D": 0,
-   "F": 0
+  "agencies_passing_verify_by_rung": {
+   "usaf:pre:discoverable": 0,
+   "usaf:pre:licensed": 0,
+   "usaf:access:1": 11,
+   "usaf:access:2": 1,
+   "usaf:context:1": 2,
+   "usaf:context:2": 1,
+   "usaf:access:3": null,
+   "usaf:context:3": null,
+   "usaf:evaluation:1": null,
+   "usaf:evaluation:2": null,
+   "usaf:evaluation:3": null
   },
   "agencies_passing_match": true,
   "scored_rendered": [

@@ -683,12 +683,42 @@ assessment_layer:
         kind: [site_owner_account, page_script, agency_records, benchmark_set, second_cycle,
                publisher_grant]
         who_provides: [publisher, this_project, third_party]
+    # The USAFacts three-track lineage layer (2026-11-04, DN-020): the base document the sixteen
+    # measured checks are placed on. Authored, parser-invisible like the rest of this block. The
+    # two AUTHORED lineage layers before it (FcsmConcern 2026-10-21; AiReadyCriterion /
+    # ExtensionGroup 2026-11-02) were added to the loader, the MCP label list and the roundtrip
+    # test but NOT documented here; this layer is, and DESCENDS_FROM is added to edge_types below
+    # for the same reason (it has been used since 2026-11-02 and was never catalogued).
+    UsafactsTrack:
+      what: One of USAFacts' three tracks (Agentic Access, Agentic Context, Agentic Evaluation),
+            August 2026 framework. `text` is the track's one-line description, verbatim.
+      properties: [name, text, source, source_file, docling_lines]
+    UsafactsLevel:
+      what: One rung of a track (level 1, 2 or 3). `name` is the deck's level caption, `text`
+            the detail-slide bullets, both verbatim. Nine in all; levels are cumulative (SLSA).
+      properties: [track, level, name, text, source, source_file, docling_lines]
+      property_values:
+        level: [1, 2, 3]
+    UsafactsPrerequisite:
+      what: One of the three conditions that must hold before any level applies (open by
+            default, discoverable, clearly licensed). `name` and `text` verbatim from slide 15.
+      properties: [name, text, source, source_file, docling_lines]
 
   edge_types:
     DECOMPOSES_INTO:
       pairs: [[AssessmentCriterion, AssessmentConstruct],
-              [AssessmentConstruct, AssessmentIndicator]]
-      meaning: The framework's decomposition, criterion -> construct -> indicator.
+              [AssessmentConstruct, AssessmentIndicator],
+              [UsafactsTrack, UsafactsLevel]]
+      meaning: The framework's decomposition, criterion -> construct -> indicator; and, since
+               2026-11-04 (DN-020), a USAFacts track -> its three levels.
+    DESCENDS_FROM:
+      pairs: [[MeasurementSpec, AiReadyCriterion], [MeasurementSpec, ExtensionGroup],
+              [MeasurementSpec, UsafactsTrack], [MeasurementSpec, UsafactsLevel],
+              [MeasurementSpec, UsafactsPrerequisite]]
+      meaning: A measured check descends from the framework rung it operationalizes. Each spec
+               carries two such edges, one to the predecessor four-criteria guide (property
+               lineage=predecessor, 2026-11-02, DN-005 section 2.1) and one to its rung on
+               USAFacts' August 2026 ladder (property basis=DN-020 section 4, 2026-11-04).
     EVIDENCED_BY:
       pairs: [[AssessmentIndicator, Document]]
       meaning: An admitted corpus doc_id from the indicator's Evidence cell. Written only when

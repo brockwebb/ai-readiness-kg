@@ -27,7 +27,11 @@
   "serves_fcsm_concern_edges": 23,
   "aiready_criterion_nodes": 4,
   "extension_group_nodes": 3,
-  "descends_from_edges": 16
+  "descends_from_edges": 16,
+  "usafacts_track_nodes": 3,
+  "usafacts_level_nodes": 9,
+  "usafacts_prerequisite_nodes": 3,
+  "usafacts_descends_from_edges": 16
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -7419,6 +7423,219 @@
     "brief_section": "Shape of the instrument",
     "brief_lines": "39"
    }
+  },
+  {
+   "id": "usaf:access",
+   "labels": [
+    "UsafactsTrack"
+   ],
+   "properties": {
+    "name": "Agentic Access",
+    "text": "Enable agents to easily access and parse published government data in an unencumbered way.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-overview-2026.md",
+    "docling_lines": "13 (overview, track description)"
+   }
+  },
+  {
+   "id": "usaf:context",
+   "labels": [
+    "UsafactsTrack"
+   ],
+   "properties": {
+    "name": "Agentic Context",
+    "text": "Provide proper context and documentation so that agents can consistently and accurately understand and use government data.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-overview-2026.md",
+    "docling_lines": "14 (overview, track description)"
+   }
+  },
+  {
+   "id": "usaf:evaluation",
+   "labels": [
+    "UsafactsTrack"
+   ],
+   "properties": {
+    "name": "Agentic Evaluation",
+    "text": "Publish public evaluation datasets and run benchmarks on common models to ensure government data is consistently cited by AI models in an accurate way and with proper context.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-overview-2026.md",
+    "docling_lines": "15 (overview, track description; OCR 'publ ic' -> 'public')"
+   }
+  },
+  {
+   "id": "usaf:access:1",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:access",
+    "level": 1,
+    "name": "Data is published in machine-readable files",
+    "text": "Data is published in machine-readable files.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "441 (caption); Access detail slide 18 OCR captured no Level I bullet, text repeats the caption"
+   }
+  },
+  {
+   "id": "usaf:access:2",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:access",
+    "level": 2,
+    "name": "Stable, documented endpoints agents can crawl",
+    "text": "Lineage/change notes.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "443 (caption), 491 (detail)"
+   }
+  },
+  {
+   "id": "usaf:access:3",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:access",
+    "level": 3,
+    "name": "Agent-native interface for live, structured queries",
+    "text": "Pilot programs on emerging technology and patterns.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "445 (caption), 493-495 (detail)"
+   }
+  },
+  {
+   "id": "usaf:context:1",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:context",
+    "level": 1,
+    "name": "Definitions and units documented for humans",
+    "text": "Published methodology documentation; Made available on the open web without restriction.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "449 (caption), 537-539 (detail)"
+   }
+  },
+  {
+   "id": "usaf:context:2",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:context",
+    "level": 2,
+    "name": "Methodology and caveats travel with each dataset",
+    "text": "Field-level descriptions; Provenance and update cadence; Documented best practices.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "451 (caption), 543-547 (detail)"
+   }
+  },
+  {
+   "id": "usaf:context:3",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:context",
+    "level": 3,
+    "name": "Context is machine-readable and citable in an answer",
+    "text": "Pragmatics and additional expert context; Documented edge cases; Context-specific MCP access.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "453 (caption), 551-555 (detail)"
+   }
+  },
+  {
+   "id": "usaf:evaluation:1",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:evaluation",
+    "level": 1,
+    "name": "A published evaluation set with reported pass rates",
+    "text": "Public evaluation dataset; Published under an open license; Available for review and re-use.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "457 (caption), 587-591 (detail)"
+   }
+  },
+  {
+   "id": "usaf:evaluation:2",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:evaluation",
+    "level": 2,
+    "name": "Continuous automated evaluation at scale",
+    "text": "Regular benchmarks run against commercial models; Scores and failures published publicly; Feedback loop to address failures.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "459 (caption), 595-599 (detail)"
+   }
+  },
+  {
+   "id": "usaf:evaluation:3",
+   "labels": [
+    "UsafactsLevel"
+   ],
+   "properties": {
+    "track": "usaf:evaluation",
+    "level": 3,
+    "name": "Integrated quality assurance programs across agencies and industry",
+    "text": "Coordinated evaluation across peer agencies; Red-teaming and adversarial testing; Communication programs with AI Labs.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "461 (caption), 603-607 (detail)"
+   }
+  },
+  {
+   "id": "usaf:pre:open",
+   "labels": [
+    "UsafactsPrerequisite"
+   ],
+   "properties": {
+    "name": "Open by default",
+    "text": "Data should be published as open data under the OPEN Government Data Act, with no unresolved licensing or classification questions.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "471"
+   }
+  },
+  {
+   "id": "usaf:pre:discoverable",
+   "labels": [
+    "UsafactsPrerequisite"
+   ],
+   "properties": {
+    "name": "Discoverable",
+    "text": "Data should be registered on Data.gov or otherwise accessible through the open web.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "473 (OCR 'the open the web' -> 'the open web')"
+   }
+  },
+  {
+   "id": "usaf:pre:licensed",
+   "labels": [
+    "UsafactsPrerequisite"
+   ],
+   "properties": {
+    "name": "Clearly licensed",
+    "text": "The data's usage license stated in plain language on the data product's landing page, not just buried in metadata.",
+    "source": "USAFacts 2026-08 (usafacts-ai-ready-framework-deck-2026-08)",
+    "source_file": "state/docling_md/usafacts-ai-ready-framework-deck-2026-08.md",
+    "docling_lines": "475"
+   }
   }
  ],
  "edges": [
@@ -11302,82 +11519,303 @@
   {
    "from": "spec:A1",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A2",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A3",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A4",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A5",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A6",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A8",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A9",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A10",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A11-declared",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:B3",
    "type": "DESCENDS_FROM",
-   "to": "aiready:understandable"
+   "to": "aiready:understandable",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:D1",
    "type": "DESCENDS_FROM",
-   "to": "aiready:open"
+   "to": "aiready:open",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:D4",
    "type": "DESCENDS_FROM",
-   "to": "aiready:open"
+   "to": "aiready:open",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:F4",
    "type": "DESCENDS_FROM",
-   "to": "ext:F"
+   "to": "ext:F",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A12",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
   },
   {
    "from": "spec:A13",
    "type": "DESCENDS_FROM",
-   "to": "aiready:accessible"
+   "to": "aiready:accessible",
+   "properties": {
+    "lineage": "predecessor"
+   }
+  },
+  {
+   "from": "usaf:access",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:access:1"
+  },
+  {
+   "from": "usaf:access",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:access:2"
+  },
+  {
+   "from": "usaf:access",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:access:3"
+  },
+  {
+   "from": "usaf:context",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:context:1"
+  },
+  {
+   "from": "usaf:context",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:context:2"
+  },
+  {
+   "from": "usaf:context",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:context:3"
+  },
+  {
+   "from": "usaf:evaluation",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:evaluation:1"
+  },
+  {
+   "from": "usaf:evaluation",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:evaluation:2"
+  },
+  {
+   "from": "usaf:evaluation",
+   "type": "DECOMPOSES_INTO",
+   "to": "usaf:evaluation:3"
+  },
+  {
+   "from": "spec:A5",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:pre:discoverable",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A6",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:pre:discoverable",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:D4",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:pre:discoverable",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:D1",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:pre:licensed",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A1",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A3",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A4",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A12",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A11-declared",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A10",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A2",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:2",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A9",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:2",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A13",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:2",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:F4",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:access:2",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:B3",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:context:1",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
+  },
+  {
+   "from": "spec:A8",
+   "type": "DESCENDS_FROM",
+   "to": "usaf:context:2",
+   "properties": {
+    "basis": "DN-020 §4"
+   }
   }
  ],
  "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision, evidenced_by_spec) include every spec, adopted or not; evidenced_by_spec is the instrument's own EVIDENCED_BY edges from a MeasurementSpec to the corpus documents its entry cites (DN-016 ruling 4), kept separate from the framework's construct-evidence count evidenced_by, which is indicator-sourced and candidate-excluded. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. tools and preconditions count the requirements layer's AssessmentTool and Precondition nodes, which belong to no indicator and so have no candidate split; requires counts REQUIRES edges from the framework's indicators and requires_on_candidate_indicators the rest, on the same DD-054 split. Regenerated by scripts/framework_writeback.py::recount on every write-back.",

@@ -128,9 +128,34 @@ def concern_cell(entry: dict) -> str:
     return cell[0].upper() + cell[1:]
 
 
+#: The eleven USAFacts rungs in DN-020 section 4 order; the one-pager groups its rows by rung,
+#: following the roll-up (Part B item 8). The five rungs with no measured check never hold a row,
+#: but they fix the order of the rungs that do.
+USAFACTS_RUNG_ORDER = ["usaf:pre:discoverable", "usaf:pre:licensed", "usaf:access:1",
+                       "usaf:access:2", "usaf:context:1", "usaf:context:2", "usaf:access:3",
+                       "usaf:context:3", "usaf:evaluation:1", "usaf:evaluation:2",
+                       "usaf:evaluation:3"]
+
+
+def rung_of(g: dict) -> dict:
+    """`{leg: rung_id}` from the DESCENDS_FROM edges that place a check on USAFacts' ladder."""
+    by_id = {n["id"]: n for n in g["nodes"]}
+    out = {}
+    for e in g["edges"]:
+        if e["type"] == "DESCENDS_FROM" and str(e["to"]).startswith("usaf:"):
+            out[by_id[e["from"]]["properties"]["leg"]] = e["to"]
+    return out
+
+
 def rows(g: dict | None = None, *, where_mode: str = "full", passes_mode: str = "sentence") -> list[dict]:
-    """The sixteen rows in the brief's order, each with its six columns. Exits non-zero on a
-    missing field; the Quality concern comes from the record's SERVES_FCSM_CONCERN edges.
+    """The sixteen rows grouped by USAFacts rung (DN-020 section 4 order, scored first within a
+    rung), each with its six columns. Exits non-zero on a missing field; the Quality concern
+    comes from the record's SERVES_FCSM_CONCERN edges.
+
+    The grouping follows the roll-up (Part B item 8): where the one-pager used the brief's
+    criterion order, it now walks the rungs in DN-020 section 4 order, so a reader sees the same
+    sequence on the roll-up and the one-pager. There is no rung column (it would not fit one
+    landscape page); the grouping is in the row order and the `#` numbers it 1..16.
 
     `where_mode` and `passes_mode` are the fit levers. "What we look at" is always cut to one
     sentence (`full`) and, when space is tight, to its first clause (`first_clause`) — the
@@ -141,6 +166,17 @@ def rows(g: dict | None = None, *, where_mode: str = "full", passes_mode: str = 
     by_id = {n["id"]: n for n in g["nodes"]}
     concerns = concern_of(g)
     brief_rows = RB.check_rows(g)                       # brief order, scored-first within group
+    # Re-group by USAFacts rung (Part B item 8): rung order first, scored first within a rung,
+    # the brief's order as the stable tie-break.
+    rung = rung_of(g)
+    rank = {rid: i for i, rid in enumerate(USAFACTS_RUNG_ORDER)}
+    orig = {r["leg"]: i for i, r in enumerate(brief_rows)}
+    missing_rung = [r["leg"] for r in brief_rows if r["leg"] not in rung]
+    if missing_rung:
+        raise SystemExit("FATAL: these checks have no USAFacts rung edge (run "
+                         f"add_usafacts_lineage.py): {missing_rung}")
+    brief_rows = sorted(brief_rows,
+                        key=lambda r: (rank[rung[r["leg"]]], not r["scored"], orig[r["leg"]]))
     missing, out = [], []
     for i, r in enumerate(brief_rows, start=1):
         leg = r["leg"]

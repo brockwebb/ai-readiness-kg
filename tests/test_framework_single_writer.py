@@ -369,10 +369,17 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # `ExtensionGroup` nodes and 16 `DESCENDS_FROM` edges, written by
     # `scripts/add_aiready_lineage.py` through the single writer. The skeleton does not author
     # the lineage from a check to the USAFacts criterion it operationalizes, so all are preserved.
+    # 2026-11-04: the USAFacts three-track lineage layer (`cc_tasks/2026-11-04_sixteen_checks_on_
+    # the_usafacts_ladder_and_the_two_audience_documents.md` Part A, DN-020) added three
+    # `UsafactsTrack`, nine `UsafactsLevel` and three `UsafactsPrerequisite` nodes, nine
+    # `DECOMPOSES_INTO` edges (track -> level) and 16 `DESCENDS_FROM` edges (each check to its
+    # rung), written by `scripts/add_usafacts_lineage.py` through the single writer. The skeleton
+    # does not author the base document the checks are placed on, so all are preserved.
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
         {"MeasurementSpec": 30, "AssessmentConstruct": 2, "AssessmentIndicator": 2,
          "Action": 64, "AssessmentTool": 13, "Precondition": 19, "FcsmConcern": 4,
-         "AiReadyCriterion": 4, "ExtensionGroup": 3}
+         "AiReadyCriterion": 4, "ExtensionGroup": 3,
+         "UsafactsTrack": 3, "UsafactsLevel": 9, "UsafactsPrerequisite": 3}
     # 2026-10-15: the readiness diagnostic package (`cc_tasks/2026-10-15_readiness_diagnostic_
     # package.md` Part A, DN-016 ruling 4) added 49 `EVIDENCED_BY` edges from the sixteen
     # instrument MeasurementSpecs to the corpus documents each entry cites, written by
@@ -380,9 +387,11 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # indicator-sourced EVIDENCED_BY, so these are preserved here: 8 -> 57.
     # 2026-11-02: 16 `DESCENDS_FROM` edges (DN-005 section 2.1), from each instrument spec to the
     # criterion or group it operationalizes; the skeleton does not author them.
+    # 2026-11-04 (DN-020): 9 `DECOMPOSES_INTO` (track -> level, 4 -> 13) and 16 more
+    # `DESCENDS_FROM` (each check to its USAFacts rung, 16 -> 32); the skeleton authors neither.
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 4, "EVIDENCED_BY": 57,
-         "REMEDIATES": 64, "REQUIRES": 37, "SERVES_FCSM_CONCERN": 23, "DESCENDS_FROM": 16}
+        {"MEASURED_BY": 30, "EVIDENCED_BY_INTERNAL": 6, "DECOMPOSES_INTO": 13, "EVIDENCED_BY": 57,
+         "REMEDIATES": 64, "REQUIRES": 37, "SERVES_FCSM_CONCERN": 23, "DESCENDS_FROM": 32}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
@@ -395,7 +404,11 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
          "fcsm_concern_nodes", "serves_fcsm_concern_edges",
          # The AI-ready lineage layer's three counts (DN-005 section 2.1, Part A), written by the
          # single writer (`scripts/add_aiready_lineage.py`).
-         "aiready_criterion_nodes", "extension_group_nodes", "descends_from_edges"}
+         "aiready_criterion_nodes", "extension_group_nodes", "descends_from_edges",
+         # The USAFacts three-track lineage layer's four counts (DN-020, Part A), written by the
+         # single writer (`scripts/add_usafacts_lineage.py`).
+         "usafacts_track_nodes", "usafacts_level_nodes", "usafacts_prerequisite_nodes",
+         "usafacts_descends_from_edges"}
     # and nothing the skeleton authors is missing from the record
     assert not (gen_ids - {n["id"] for n in cur["nodes"]})
     assert not (gen_edges - {fw._edge_key(e) for e in cur["edges"]})

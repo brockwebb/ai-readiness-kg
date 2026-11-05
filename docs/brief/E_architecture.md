@@ -73,7 +73,7 @@ flowchart TB
 | event log shards events/*.jsonl | `kg/eventlog.py:100` |
 | build_projection.py: KG labels | `scripts/build_projection.py:587` |
 | publish.py --project: Observation/Finding/Rule | `assessment/harness/scan/publish.py:558` |
-| load_framework_graph.py: framework labels | `scripts/load_framework_graph.py:120` |
+| load_framework_graph.py: framework labels | `scripts/load_framework_graph.py:126` |
 | framework/ai_readiness_framework.json | `scripts/build_framework_graph.py:319` |
 | framework_writeback.save: the single writer | `scripts/framework_writeback.py:318` |
 | Neo4j seldon-ai-readiness-kg | `seldon.yaml:4` |
