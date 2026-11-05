@@ -94,6 +94,40 @@ dispatch:
   # a dispatched session's transcript is a local artifact; what ships is the RESULT it wrote.
   log_dir: logs/dispatch
 
+  # GITIGNORED LANES SYMLINKED INTO EVERY WORKTREE (AR-001, 2026-11-04; squiddy SQ-109; Issue
+  # 2b5a296d). A git worktree carries no gitignored file, so a dispatched admission driver that
+  # WROTE `corpus/crosswalk/<id>.pdf` wrote it into the worktree; the merge carried the tracked
+  # `manifest.json` but not the bytes, and `git worktree remove` discarded them — leaving the
+  # primary asserting included+verified for a document it no longer held. `seldon/core/worktree.py
+  # ::link` symlinks each lane below from the primary into the worktree, so a driver's write to a
+  # linked lane lands in the primary and survives the merge, and the gate reads real bytes through
+  # the link instead of a copy-seed.
+  #
+  # THE SET IS NARROW, AND THE TASK'S BROADER SUGGESTION IS A CORRECTED PREMISE. AR-001 Part A
+  # proposed linking every gitignored corpus lane the copy-seed covers (bulk, cisco, scan, …). A
+  # lane is safe to link ONLY if the gate never WRITES into it: a symlinked lane IS the primary's
+  # directory, so a test (or driver) that writes there mutates the primary, and — because
+  # `kg.manifest.add` resolves symlinks before its corpus-containment check — a write through a
+  # linked lane escapes to `<primary>/corpus/...` (now accepted via $SELDON_PRIMARY_CHECKOUT,
+  # kg/manifest.py). `corpus/scan` is written by the scan-harness tests and `corpus/staging` holds
+  # tracked files, so neither is linked; those lanes still rely on the session copy-seed. Linked
+  # here are exactly the lanes that are (a) the admission drivers' write target or read source and
+  # (b) read-only to the gate: `corpus/crosswalk` (drivers write; brief-pack tests read),
+  # `corpus/measurement_theory` (measurement driver reads captures), `state/docling_md` (drivers'
+  # docling renders; many tests read). For these three, the copy-seed can stop. `.env` stays (the
+  # FRICTION-002 default; every task needs credentials). `worktree.link` skips a path the primary
+  # does not hold, so an unused lane costs nothing.
+  #
+  # THE TRADE (AR-001 Part A.3): a session writes into the primary through a link BEFORE its
+  # merge, so a task that fails mid-admission can leave bytes the manifest does not name. They are
+  # content-addressed and `kg.manifest verify` checks only named entries, so they are inert until
+  # a presence check lands (squiddy SQ-111 / the seldon answer, both filed).
+  worktree_links:
+    - .env
+    - corpus/crosswalk
+    - corpus/measurement_theory
+    - state/docling_md
+
   # THE FINISH SIGNAL (cc_tasks/2026-09-17_dispatcher_notifies.md decision 1). A shell command the
   # dispatcher runs once per finished task — after `dispatch_finished`, and after the walk to
   # `blocked` when the finish was not ok. Prior art: cron's MAILTO, systemd's OnSuccess=/

@@ -150,6 +150,48 @@ def test_reject_file_not_under_corpus(repo):
     assert list(eventlog.replay()) == []
 
 
+def test_accepts_file_reached_through_a_linked_lane(tmp_path, monkeypatch):
+    """AR-001: a dispatched session reaches the corpus through a lane the dispatcher symlinks from
+    the primary (dispatch.worktree_links). A write to `<worktree>/corpus/crosswalk/x` resolves,
+    through the symlink, to `<primary>/corpus/crosswalk/x` — not under the worktree's own corpus —
+    and must be ADMITTED, not refused as 'not under corpus/', because it is still a known corpus
+    tree named by $SELDON_PRIMARY_CHECKOUT. This is what makes an admission's bytes survive the
+    worktree merge (Issue 2b5a296d)."""
+    from kg.ingest import gate
+    monkeypatch.setattr(gate, "register_gap_task", lambda *a, **k: "task-stub")
+    primary = tmp_path / "primary"
+    (primary / "corpus" / "crosswalk").mkdir(parents=True)
+    worktree = tmp_path / "primary" / ".claude" / "worktrees" / "w"
+    (worktree / "corpus").mkdir(parents=True)
+    (worktree / "corpus" / "crosswalk").symlink_to(primary / "corpus" / "crosswalk")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", worktree / "events")
+    schema = worktree / "schema.yaml"
+    schema.write_text('schema_version: "0.1"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    monkeypatch.setattr(manifest, "_REPO_ROOT", worktree)
+    monkeypatch.setattr(manifest, "_CORPUS_DIR", worktree / "corpus")
+    monkeypatch.setattr(manifest, "_MANIFEST_PATH", worktree / "corpus" / "manifest.json")
+    monkeypatch.setenv("SELDON_PRIMARY_CHECKOUT", str(primary))
+
+    # Write through the worktree's symlinked lane; the bytes land in the primary.
+    f = worktree / "corpus" / "crosswalk" / "doc.txt"
+    f.write_text("content reached through the linked lane", encoding="utf-8")
+    assert (primary / "corpus" / "crosswalk" / "doc.txt").is_file()  # landed in the primary
+
+    doc_id = manifest.add(str(f), **_good_fields())
+    assert doc_id == "fcsm-25-03"
+    adds = [e for e in eventlog.replay() if e["event_type"] == "manifest_add"]
+    assert len(adds) == 1
+
+    # And with no $SELDON_PRIMARY_CHECKOUT the strict check still refuses the same escaping path.
+    monkeypatch.delenv("SELDON_PRIMARY_CHECKOUT", raising=False)
+    g = worktree / "corpus" / "crosswalk" / "doc2.txt"
+    g.write_text("another", encoding="utf-8")
+    with pytest.raises(manifest.ManifestError, match="not under corpus/"):
+        manifest.add(str(g), **_good_fields(doc_id="fcsm-25-04",
+                                            primary_url="https://example.gov/fcsm-25-04"))
+
+
 def test_reject_duplicate_doc_id(repo):
     manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
         primary_url="https://example.gov/one"))

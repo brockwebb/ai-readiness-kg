@@ -41,6 +41,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from kg import manifest                                             # noqa: E402
 from kg.ingest import convert as C                                 # noqa: E402
+from worktree_primary import assert_outputs_in_primary             # noqa: E402
 from dixie.evidence.config import load_config as dixie_config       # noqa: E402
 from dixie.evidence.eventlog import EventLog as DixieLog            # noqa: E402
 from dixie.evidence.manifest import build_manifest                  # noqa: E402
@@ -163,6 +164,12 @@ def main(argv=None) -> int:
     if "crosswalk" not in cfg["document_dirs"]:
         raise SystemExit("FATAL: `crosswalk` is not a document_dir; the sweep would never "
                          "observe corpus/crosswalk/")
+    # AR-001 guard: refuse before any side effect (not even the mkdir) if these gitignored outputs
+    # would land in a worktree the merge discards rather than in the primary checkout. The
+    # dispatcher's dispatch.worktree_links symlinks corpus/crosswalk into the worktree so the write
+    # lands in the primary; absent that link the admission would be lost at merge (Issue 2b5a296d;
+    # squiddy SQ-109).
+    assert_outputs_in_primary(REPO, [DEST_DIR / f"{d['doc_id']}.md" for d in DOCS])
     DEST_DIR.mkdir(parents=True, exist_ok=True)
     dlog = DixieLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
     ledger = build_manifest(dlog, gate_cfg=cfg.get("identity_gate"))

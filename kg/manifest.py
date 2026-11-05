@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 from datetime import datetime
@@ -389,13 +390,30 @@ def add(filepath, **fields) -> str:
     # 2. File must exist and live under corpus/.
     path = Path(filepath).resolve()
     corpus = _CORPUS_DIR.resolve()
+    primary_corpus = None
     if not path.is_file():
         raise ManifestError(f"file not found: {filepath}")
     if not path.is_relative_to(corpus):
-        raise ManifestError(f"file is not under corpus/: {filepath}")
+        # AR-001: a dispatched session reaches the corpus through lanes the dispatcher symlinks
+        # from the primary checkout (seldon dispatch.worktree_links). `.resolve()` follows a lane
+        # symlink out to `<primary>/corpus/...`, so a legitimately-linked write lands under the
+        # PRIMARY's corpus rather than this worktree's. Accept that too — it is still a known
+        # corpus tree, so the symlink-escape guard (a path outside any corpus is refused) holds.
+        # When $SELDON_PRIMARY_CHECKOUT is unset (every non-dispatched run, and every existing
+        # test) this branch is inert and the strict check is unchanged.
+        primary = os.environ.get("SELDON_PRIMARY_CHECKOUT")
+        primary_corpus = (Path(primary) / "corpus").resolve() if primary else None
+        if not (primary_corpus is not None and path.is_relative_to(primary_corpus)):
+            raise ManifestError(f"file is not under corpus/: {filepath}")
 
     content_hash = _sha256(path)
-    local_path = path.relative_to(_REPO_ROOT.resolve()).as_posix()
+    # The stored local_path is corpus-root-relative and portable (it is the same in the primary
+    # and, through the link, in this worktree). When the lane is linked, the resolved path is
+    # under the primary's corpus, so derive the path from there rather than this worktree's root.
+    if path.is_relative_to(_REPO_ROOT.resolve()):
+        local_path = path.relative_to(_REPO_ROOT.resolve()).as_posix()
+    else:
+        local_path = (Path("corpus") / path.relative_to(primary_corpus)).as_posix()
     primary_url = fields["primary_url"]
     norm_url = _normalize_url(primary_url)
 
