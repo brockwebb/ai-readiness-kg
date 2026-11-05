@@ -183,7 +183,7 @@ Log paths cited: `logs/gate_task.log`, `logs/seldon_verify.log` (gitignored loca
 
 ## §8. Session usage against the 1.0M estimate
 
-No paid model calls were made: Part A–D are deterministic Python (record writeback, projection, builders, pandoc/typst renders) and `pytest`. The spend ledger records no new spend for this task (`model` role `author` was never invoked — nothing in this task calls a model). The 1.0M-token figure in the task's `**Spend:**` header is the Claude Code session's own token budget, not a priced API spend; this session ran well under it (all work was tool-driven builds and tests, no generation). There is no in-band token meter available to the session to print an exact count.
+No paid model calls were made: Part A–D are deterministic Python (record writeback, projection, builders, pandoc/typst renders) and `pytest`. The spend ledger records no new spend for this task (`model` role `author` was never invoked — nothing in this task calls a model). The 1.0M-token figure in the task's `**Spend:**` header is the Claude Code session's own token budget, not a priced API spend. `seldon dispatch part-complete --part D` reports the session's actual usage from the dispatch log's stream-json (input + cache writes + output): **412,183 tokens** over **3437.6s** (~57 min) wall — well under the 1.0M estimate.
 
 ---
 
