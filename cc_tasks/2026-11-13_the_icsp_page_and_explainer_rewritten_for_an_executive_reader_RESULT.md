@@ -161,4 +161,4 @@ The task's gate is `make gate-fast`: the write set touches none of `assessment/h
 
 ## 9. Session usage against 0.6M
 
-The build makes **zero paid model calls** — it is deterministic over the framework record and the cycle's grid, one role (`author`), no review model — so there is no spend-ledger entry for it. The only cost is this Claude Code session's own tokens, which are not machine-metered from inside the session; the work (reads, one builder rewrite, iterative rebuilds, two PDF read-backs, the gate) ran well inside the 0.6M-token estimate. No cap was approached; nothing to escalate.
+The build makes **zero paid model calls** — it is deterministic over the framework record and the cycle's grid, one role (`author`), no review model — so there is no spend-ledger entry for it. The cost is this Claude Code session's own tokens: `seldon dispatch part-complete` reports **265,706 tokens** used (input plus cache writes plus output, from the dispatch log's stream-json usage) at the Part D boundary, against the 0.6M estimate — about 44% of it. No cap was approached; nothing to escalate.
