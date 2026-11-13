@@ -1,113 +1,242 @@
 {
  "generated_by": "scripts/dn020_documents_build.py",
- "task": "cc_tasks/2026-11-04_sixteen_checks_on_the_usafacts_ladder_and_the_two_audience_documents.md",
+ "task": "cc_tasks/2026-11-13_the_icsp_page_and_explainer_rewritten_for_an_executive_reader.md",
  "cycle": "scan_2026-10-07_composite_d",
+ "record_commit": "b5c940ce3aff",
+ "icsp_fit": {
+  "body_pt": 9.5,
+  "figure1_cm": 3.0,
+  "figure3_cm": 2.6,
+  "pages": 1
+ },
  "documents": {
   "icsp": [
    {
     "name": "ICSP_SI_Readiness_One_Page.md",
-    "md_sha256": "8e27e42d69a8a54e9fe0ed5130e9f6c9d0361e850a74823be060d50477e29383"
+    "md_sha256": "c75782838e85ed46e0ffbd490844d7bbd1928ae475345a0fd2a617a8b6012545"
    },
    {
     "name": "ICSP_SI_Readiness_One_Page.docx",
-    "sha256": "956a8714d937d6156581cbce89af59211c17025ae310647ec8c9aaf101577b2c"
+    "md_sha256": "c75782838e85ed46e0ffbd490844d7bbd1928ae475345a0fd2a617a8b6012545",
+    "sha256": "b498ccb0d574753ef60f6e3432ff1c8a73c40ec69b508b224f4b12626c6252b4"
    },
    {
     "name": "ICSP_SI_Readiness_One_Page.pdf",
-    "md_sha256": "8e27e42d69a8a54e9fe0ed5130e9f6c9d0361e850a74823be060d50477e29383",
-    "sha256": "5d918fb969088f773c332d09b6ab89ce78d810d773c926527584995a9acccfb8",
+    "md_sha256": "c75782838e85ed46e0ffbd490844d7bbd1928ae475345a0fd2a617a8b6012545",
+    "sha256": "f717fbd97a0a0075ac688ac699d62545dfb448f34fa9aa8e96800978883874f8",
     "pages": 1
    }
   ],
   "explainer": [
    {
     "name": "SI_Readiness_Working_Group_Explainer.md",
-    "md_sha256": "61b2072b4c8043f2076ee68bcec456dbefa0e683e697677b8d4dc6ccb1be251f"
+    "md_sha256": "9d0e81e2211c0c72a06c5fddb24c2a01a1bc75cc99673d624db76650549607d9"
    },
    {
     "name": "SI_Readiness_Working_Group_Explainer.docx",
-    "sha256": "a86982b9d9191e3e220402c08efaeea1baf72e00f2222a78f6e73d1a3a387576"
+    "md_sha256": "9d0e81e2211c0c72a06c5fddb24c2a01a1bc75cc99673d624db76650549607d9",
+    "sha256": "aa54a5cd63eb0d88271da0bda38aa1e627cf0d01a613d12751cccd59079979a8"
    },
    {
     "name": "SI_Readiness_Working_Group_Explainer.pdf",
-    "md_sha256": "61b2072b4c8043f2076ee68bcec456dbefa0e683e697677b8d4dc6ccb1be251f",
-    "sha256": "3dc0ab808b70bb5cd43d13287b9bb2205d93a89580ba4731e1d979b136e77391",
-    "pages": 4
+    "md_sha256": "9d0e81e2211c0c72a06c5fddb24c2a01a1bc75cc99673d624db76650549607d9",
+    "sha256": "8b37af11083a40fdccd8f307b9f98516082e41fa3bedd0e7ecf1b7944bc04bc8",
+    "pages": 5
    }
   ]
  },
+ "basics": [
+  {
+   "leg": "A5",
+   "name": "The data page is in the site's list of pages",
+   "counts": {
+    "pass": 3,
+    "fail": 10,
+    "partial": 0,
+    "not_measured": 3
+   },
+   "scored": true,
+   "bar": "a published requirement"
+  },
+  {
+   "leg": "A6",
+   "name": "The page labels itself as a dataset",
+   "counts": {
+    "pass": 1,
+    "fail": 11,
+    "partial": 0,
+    "not_measured": 4
+   },
+   "scored": false,
+   "bar": "this project's reading"
+  },
+  {
+   "leg": "D4",
+   "name": "The product is listed in the agency's data inventory",
+   "counts": {
+    "pass": 0,
+    "fail": 5,
+    "partial": 0,
+    "not_measured": 11
+   },
+   "scored": true,
+   "bar": "a published requirement"
+  },
+  {
+   "leg": "D1",
+   "name": "The terms of reuse, under a recognised name",
+   "counts": {
+    "pass": 0,
+    "fail": 11,
+    "partial": 0,
+    "not_measured": 5
+   },
+   "scored": false,
+   "bar": "this project's reading"
+  }
+ ],
+ "passing_by_level": {
+  "usaf:pre:discoverable": 0,
+  "usaf:pre:licensed": 0,
+  "usaf:access:1": 11,
+  "usaf:access:2": 1,
+  "usaf:context:1": 2,
+  "usaf:context:2": 1,
+  "usaf:access:3": null,
+  "usaf:context:3": null,
+  "usaf:evaluation:1": null,
+  "usaf:evaluation:2": null,
+  "usaf:evaluation:3": null
+ },
+ "captions_cited": [
+  {
+   "caption": "Data is published in machine-readable files",
+   "deck_md_line": 441
+  },
+  {
+   "caption": "Stable, documented endpoints agents can crawl",
+   "deck_md_line": 443
+  },
+  {
+   "caption": "Definitions and units documented for humans",
+   "deck_md_line": 449
+  },
+  {
+   "caption": "Methodology and caveats travel with each dataset",
+   "deck_md_line": 451
+  },
+  {
+   "caption": "Agent-native interface for live, structured queries",
+   "deck_md_line": 445
+  },
+  {
+   "caption": "Context is machine-readable and citable in an answer",
+   "deck_md_line": 453
+  }
+ ],
  "figures": {
   "icsp": [
    {
     "figure": 1,
-    "placed": "placeholder",
-    "path": "reports/figures/dn020/1.png",
-    "present": false
+    "placed": "svg",
+    "svg": "reports/figures/dn020/1.svg",
+    "sha256": "149f5bf1fc8adbaa48469af9385be5ab5c204a90cac2ec8f906762c5cdc0a7ce",
+    "docx_png": "reports/figures/dn020/1.png",
+    "docx_png_sha256": "f1d0949969f745e6b6ffb2b4dc0df9a73f7df0e1d3e24c62ba61773dba412572"
    },
    {
     "figure": 3,
-    "placed": "placeholder",
-    "path": "reports/figures/dn020/3.png",
-    "present": false
+    "placed": "svg",
+    "svg": "reports/figures/dn020/3.svg",
+    "sha256": "9137184d6269965ad5b2fe0352ec901e282624e0b11c0c7663ae33c0bbb2a1ec",
+    "docx_png": "reports/figures/dn020/3.png",
+    "docx_png_sha256": "9bf5018ce4edf9efba3761ec4a4cc926214010202ddbc41fed8a3394882c8158"
    }
   ],
   "explainer": [
    {
+    "figure": 1,
+    "placed": "svg",
+    "svg": "reports/figures/dn020/1.svg",
+    "sha256": "149f5bf1fc8adbaa48469af9385be5ab5c204a90cac2ec8f906762c5cdc0a7ce",
+    "docx_png": "reports/figures/dn020/1.png",
+    "docx_png_sha256": "f1d0949969f745e6b6ffb2b4dc0df9a73f7df0e1d3e24c62ba61773dba412572"
+   },
+   {
     "figure": 2,
-    "placed": "placeholder",
-    "path": "reports/figures/dn020/2.png",
-    "present": false
+    "placed": "svg",
+    "svg": "reports/figures/dn020/2.svg",
+    "sha256": "26c171e1c8f8140efb749b627b42e2475767d72134cd76fe9a0bd093e9d04520",
+    "docx_png": "reports/figures/dn020/2.png",
+    "docx_png_sha256": "ff2fc90579d491abc21e13c45d4e68330e5b0785021c48ec5352df8c2f51ea6d"
+   },
+   {
+    "figure": 3,
+    "placed": "svg",
+    "svg": "reports/figures/dn020/3.svg",
+    "sha256": "9137184d6269965ad5b2fe0352ec901e282624e0b11c0c7663ae33c0bbb2a1ec",
+    "docx_png": "reports/figures/dn020/3.png",
+    "docx_png_sha256": "9bf5018ce4edf9efba3761ec4a4cc926214010202ddbc41fed8a3394882c8158"
    },
    {
     "figure": 4,
-    "placed": "placeholder",
-    "path": "reports/figures/dn020/4.png",
-    "present": false
+    "placed": "svg",
+    "svg": "reports/figures/dn020/4.svg",
+    "sha256": "9f741d4dc710f5a9bf0ddf933665efbfe45bf4c7b2e1ed046e74c3960d251dec",
+    "docx_png": "reports/figures/dn020/4.png",
+    "docx_png_sha256": "2b7e2037204d5105b8fd88e54fe93153ff364f7f6200e0ed19fa86aa8a48531b"
    }
-  ]
+  ],
+  "figure3_counts": {
+   "access_1": 11,
+   "access_2": 1,
+   "context_1": 2,
+   "context_2": 1,
+   "basics_pass": {
+    "A5": 3,
+    "A6": 1,
+    "D4": 0,
+    "D1": 0
+   },
+   "not_misleading": true
+  }
  },
  "checks": {
-  "icsp_pdf_pages": 1,
-  "explainer_pdf_pages": 4,
-  "vocabulary": {
-   "icsp": [],
-   "explainer": []
+  "icsp": {
+   "banned_vocabulary": [],
+   "codes_paths_filenames": [],
+   "dashes": [],
+   "repeated_sentences": [],
+   "si_expansions_not_superintelligence": {
+    "md": [],
+    "pdf": [],
+    "docx": []
+   },
+   "statistical_information_present": {
+    "md": false,
+    "pdf": false,
+    "docx": false
+   },
+   "longest_sentence": "These pages were produced by a program from the project's framework record and its most recent round of public web requests, made in October 2026; every count on them is read from that record, not typed by hand."
   },
-  "dashes": {
-   "icsp": [],
-   "explainer": []
+  "explainer": {
+   "banned_vocabulary": [],
+   "codes_paths_filenames": [],
+   "dashes": [],
+   "repeated_sentences": [],
+   "si_expansions_not_superintelligence": {
+    "md": [],
+    "pdf": [],
+    "docx": []
+   },
+   "statistical_information_present": {
+    "md": false,
+    "pdf": false,
+    "docx": false
+   },
+   "longest_sentence": "The USAFacts framework, August 2026.** The same four ideas, rebuilt as three tracks with levels borrowed from SLSA, a maturity ladder from the software industry where each level is a short list of things you can check."
   },
-  "figures": {
-   "icsp": [
-    {
-     "figure": 1,
-     "placed": "placeholder",
-     "path": "reports/figures/dn020/1.png",
-     "present": false
-    },
-    {
-     "figure": 3,
-     "placed": "placeholder",
-     "path": "reports/figures/dn020/3.png",
-     "present": false
-    }
-   ],
-   "explainer": [
-    {
-     "figure": 2,
-     "placed": "placeholder",
-     "path": "reports/figures/dn020/2.png",
-     "present": false
-    },
-    {
-     "figure": 4,
-     "placed": "placeholder",
-     "path": "reports/figures/dn020/4.png",
-     "present": false
-    }
-   ]
-  },
-  "worked_check": "A6"
+  "explainer_pages": 5
  },
  "failures": []
 }
